@@ -4,7 +4,7 @@
 
 These docs are built using [Docusaurus](https://v2.docusaurus.io/docs/) (v2), deployed on GitHub Pages to [docs.unum.id](https://docs.unum.id/).
 
-**Important:** Publishing to `master` will publish to docs.unum.id! Please don't publish any real documentation yet so we don't run into legal issues with IP protection.
+**Important:** Publishing to `master` will publish to [docs.unum.id](https://docs.unum.id/)! Please don't publish any real documentation yet so we don't run into legal issues with IP protection.
 
 ## Docusaurus (v2)
 
@@ -36,7 +36,7 @@ This command generates static content into the `build` directory and can be serv
 
 ### Deployment
 
-**Important:** Publishing to `master` will publish to docs.unum.id! Please don't publish any real documentation yet, so deploy to a different branch like `private` using:
+**Important:** Publishing to `master` will publish to [docs.unum.id](https://docs.unum.id/)! Please don't publish any real documentation yet, so deploy to a different branch like `private` using:
 
 ```console
 GIT_USER=<Your GitHub username> DEPLOYMENT_BRANCH=private USE_SSH=true yarn deploy

@@ -1,10 +1,10 @@
-name: documentation
+name: deployment
 
 on:
   pull_request:
-    branches: [documentation]
+    branches: [non-build]
   push:
-    branches: [documentation]
+    branches: [non-build]
 
 jobs:
   checks:

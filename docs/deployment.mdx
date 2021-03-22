@@ -1,0 +1,30 @@
+---
+id: deployment
+title: Deployment
+sidebar_label: Deployment
+slug: /deployment
+---
+
+Deploying Unum ID is straightforward.
+
+# Components
+
+Unum ID uses a hybrid deployment model. We provide several lightweight
+SDKs that you install aand use to interact with our Identity Engine cloud.
+These SDKs are:
+- **Mobile SDK:** This works behind the scenes in your mobile app to 
+securely store a user’s credentials. It also lets a user respond to 
+requests for and share those credentials.
+  - <u>iOS</u>: written in Swift, supports Swift and Objective-C apps, 
+  iOS 11.1+, iPhone 6+
+  - <u>Android</u>: supports Kotlin and Java apps, API Level 23+ (Android 6.0+)
+  - ~480 KB
+- **Server SDK:** ​This lets you issue credentials to a user, encrypted so that 
+only their app can decrypt it. It also lets you verify that credentials a 
+user shares are valid.
+  - <u>Option 1​</u>: Node.js SDK (contact us for other languages)
+  - <u>Option 2​</u>: containerized app with exposed API
+- **Web SDK:** ​This lets you display requests for credentials to a user and show the results of
+verifying credentials they share.
+  - React library (contact us for other frameworks)
+

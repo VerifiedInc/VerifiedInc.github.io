@@ -1,0 +1,109 @@
+---
+id: mobile-sdk-ios
+title: Mobile SDK - iOS
+sidebar_label: iOS
+slug: /mobile-sdk-ios
+---
+
+### Import the SDK
+ - todo: how are we going to distribute? probably with cocoa pods?
+
+#### Info.plist
+Descriptions for the following items will need to be added to the Info.plist
+
+- Privacy - Camera Usage Description ( used for QR code scanner)
+- Privacy - Face ID Usage Description ( used for private key generation and storage)
+- URL types - the deeplink schemes the host app should handle
+
+## SDK Setup
+
+### Access to current ViewController
+The SDK does need access to the current View Controller in order to show alert dialogs to the user. The current View Controller should always be passed to the SDK.
+
+    UnumPresenterHelper.currentViewController = viewController
+
+### Initialization
+After a user has successfully log in to the host app, and initialization call should be made to the SDK. The host app should store a reference to the user DID so that it can be passed to the initialization call. If a DID is not provided a new one will be created and returned.
+
+    let userDid = {retreive user DID}
+    let config = UnumInitializationConfiguration(customerId: BuildConfig.CustomerId, 
+    apiKey: BuildConfig.ApiKey, 
+    did: userDid, // returning user DID if available
+    onError: {}, // optional on error logic can be performed by the host app
+    authorizeRecoveryFromBackup: {  } // optional logic to be run when restoring from backup
+    )
+
+    classInitializationCallback: UnumCallback {
+        internal init(_ parent: MainView) {
+            self.parent = parent
+        }
+        
+        let parent: MainView
+        func onSuccess(data: String?) {
+            // returned data will be the user DID if a new one was created
+        }
+    
+        func onSDKError(error: String?) {
+            print("SDK Error: \(error ?? "")")
+        }
+    
+        func onAPIError(code: Int, error: String?) {
+            print("API Error \(error ?? "")")
+        }
+    }
+    UnumID.initialize(configuration: config, callback: InitializationCallback(self))
+
+### Deeplinks
+When a deeplink is received by the application, it can be passed the SDK to be processed. The app developer is responsible for setting up the application to receive the appropriate deeplink schemas, and can optionally add logic to determine if the deeplink should be sent to the SDK.
+
+Example code to send deeplink to SDK in SceneDelegate
+
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        for context in URLContexts {
+            UnumID.acceptDeepLink(link: context.url.absoluteString)
+        }
+    }
+
+### QR Code scanning
+Scanned QR codes can be processed by the SDK in two ways. If the host app already has a way of scanning QR codes, simple pass the scanned code to the SDK.
+
+    UnumID.acceptDeepLink(link: scannedCode)
+
+If there is not already a way of scanning QR codes, there is a QR code scanner provided by the SDK. This scanner will automatically pass the scanned code to the SDK. 
+
+    var  scannerSheet: some  View {
+        UnumCodeScannerView(
+            codeTypes: [.qr],
+            completion: { result in
+                self.isShowingScanner = false
+            }
+        )
+    }
+
+#### example of opening the QR code scanner with a button
+
+    @State  var  isShowingScanner = false
+
+
+    Button(action: {
+        self.isShowingScanner = true
+    }) {
+        Text("Scan QR Code")
+        .font(.headline)
+        .foregroundColor(.white)
+        .padding(.all)
+        .frame(width: 300, height: 50)
+        .background(Color.blue)
+        .cornerRadius(15.0)
+    }.sheet(isPresented: $isShowingScanner) {
+        self.scannerSheet
+    }
+
+### SDK Logging
+The SDK provides a way or turning internal logging on or off. This will allow the developer to either show or hide SDK log messages. The Log message level can also be set.
+
+    UnumID.log.enabled = true
+    UnumID.log.level = .debug
+
+### SDK Callback
+Many of the SDK functions allow an optional callback method to be passed (as shown in the initialization call above). This will allow the developer to be notified if a call succeeds, or if it encounters an error along with error details.

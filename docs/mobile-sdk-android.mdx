@@ -1,0 +1,173 @@
+---
+id: mobile-sdk-android
+title: Mobile SDK - Android
+sidebar_label: Android
+slug: /mobile-sdk-android
+---
+
+#### Installation
+
+```groovy
+implementation "org.unumid:holdersdk:1.0"
+```
+
+#### Initialization
+
+Upon application start up, the Unum ID initialization methods should be called. This will ensure that the SDK is setup properly. If the DID value is included, then the SDK will load any new credentials associated with that DID as part of the initialization process. The UnumCallback is also an optional parameter that can be included to be notified of the result of the initialization call.
+
+Kotlin
+
+```kotlin
+initialize({
+    customerId(BuildConfig.CUSTOMER_ID)
+    apiKey(BuildConfig.API_KEY)
+    onError(::onErrorFunction)
+    did(did) // if stored did, use here
+},
+object : UnumCallback {
+    override fun onSuccess(data: String?) {
+        data?.let { 
+            val did = data
+            // store DID
+         }
+    }
+
+    override fun onSDKError(error: String?) {
+        
+    }
+
+    override fun onAPIError(code: Int, error: String?) {
+        
+    }
+})
+```
+
+Java
+
+```java
+UnumInitializationConfiguration configuration = new UnumInitializationConfiguration.Builder()
+                .customerId(BuildConfig.CustomerId)
+                .apiKey(BuildConfig.ApiKey)
+                .onError(() -> {
+                    onErrorFunction();
+                    return null;
+                })
+                .did(did)
+                .build();
+
+UnumId.INSTANCE.initialize(configuration, new UnumCallback() {
+            @Override
+            public void onSuccess(@Nullable String data) {
+                String did = data;
+                // store DID
+            }
+
+            @Override
+            public void onSDKError(@Nullable String error) {
+            }
+
+            @Override
+            public void onAPIError(int code, @Nullable String error) {
+            }
+        });
+```
+
+Because the SDK supports having multiple users, a DID for each user should be stored in order to properly access that users saved credentials. For a first time user, a new DID will be returned with the initialization call. Once a user returns, the saved DID should be included as part of the initialization call. The initialization call can be made each time a user is identified in the client application. An example of this would be when one user logs out and a new one logs in.
+
+#### Deep Links
+
+The Unum ID SDK does make use of Deep Links. For the Deep Links to work, at least one activity will need to be setup to recieve Unum ID deep links.
+
+```xml
+<activity android:name=".MainActivity">
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+            android:host="www.unumid.org"
+            android:scheme="https" />
+    </intent-filter>
+</activity>
+```
+
+#### Unum Callback
+
+A UnumCallback object is available to be passed to most method calls within the SDK. This adds a listener that will be called with the result of the Unum method call. It can result in a successful call, and SDK error, or an API error. Refer to the Initialization section for an exmple of using the Unum Callback.
+
+#### QR Code Scanner
+
+Accessing the QR Code can be done by simply starting the QR Code activity. This activity will then return a URI in the results.
+
+Kotlin
+```kotlin
+private fun showQRCodeScanner() {
+        val launchIntent = UnumQRCodeActivity.getLaunchIntent(this, true, false)
+        startActivityForResult(launchIntent, REQUEST_CODE)
+    }
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE && data != null) {
+            val barcode: Barcode? =
+                data.getParcelableExtra(UnumQRCodeActivity.KEY_CAPTURED_BARCODE)
+            barcode?.let {
+                Toast.makeText(this, barcode.rawValue, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+```
+
+Java
+```java
+private void startQRCodeScanner() {
+        Intent launch = UnumQRCodeActivity.Companion.getLaunchIntent(
+                QrCodeScannerActivity.this,
+                true,
+                false);
+        startActivityForResult(launch, REQUEST_CODE);
+    }
+
+@Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE && data != null) {
+            Barcode barcode = data.getParcelableExtra(UnumQRCodeActivity.Companion.getKEY_CAPTURED_BARCODE());
+            if (barcode != null) {
+                Toast.makeText(this, barcode.rawValue, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+```
+#### TroubleShooting
+
+##### Secure lock screen not set
+Before the initialization call can be completed successfully, the android secure lock screen will need to be enabled. If it is not enabled an SDKError error will
+be returned with the following message:
+
+```java.lang.IllegalStateException: Secure lock screen must be enabled to create keys requiring user authentication```
+
+A way to check for this would be to check for this error in the SDKError message, and then send the user to the secure lock setup screen. Once the user has setup the 
+lock, a result code will be sent back to the application, and the initialization process can be restarted.
+
+Kotlin
+```kotlin
+fun goToLockScreenSetup() {
+        val intent = Intent(DevicePolicyManager.ACTION_SET_NEW_PASSWORD)
+        startActivityForResult(intent, LOCK_CODE)
+    }
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == LOCK_CODE) {
+            makeToast("Lock Screen set")
+            initializeSDK()
+        }
+    }
+
+```

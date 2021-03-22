@@ -1,0 +1,21 @@
+{
+  "unversionedId": "terminology",
+  "id": "terminology",
+  "isDocsHomePage": false,
+  "title": "Terminology",
+  "description": "Unum ID uses a few specialized terms and concepts:",
+  "source": "@site/docs/terminology.mdx",
+  "slug": "/terminology",
+  "permalink": "/terminology",
+  "version": "current",
+  "sidebar_label": "Terminology",
+  "sidebar": "sidebar",
+  "previous": {
+    "title": "About Unum ID",
+    "permalink": "/about-unum-id"
+  },
+  "next": {
+    "title": "Deployment",
+    "permalink": "/deployment"
+  }
+}

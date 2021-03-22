@@ -1,0 +1,20 @@
+{
+  "unversionedId": "reference-mobile-apps",
+  "id": "reference-mobile-apps",
+  "isDocsHomePage": false,
+  "title": "Reference Mobile Apps",
+  "source": "@site/docs/reference-mobile-apps.mdx",
+  "slug": "/reference-mobile-apps",
+  "permalink": "/reference-mobile-apps",
+  "version": "current",
+  "sidebar_label": "Reference Mobile Apps",
+  "sidebar": "sidebar",
+  "previous": {
+    "title": "Mobile SDK - iOS",
+    "permalink": "/mobile-sdk-ios"
+  },
+  "next": {
+    "title": "Web SDK",
+    "permalink": "/web-sdk"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "unversionedId": "deployment",
+  "id": "deployment",
+  "isDocsHomePage": false,
+  "title": "Deployment",
+  "description": "Deploying Unum ID is straightforward.",
+  "source": "@site/docs/deployment.mdx",
+  "slug": "/deployment",
+  "permalink": "/deployment",
+  "version": "current",
+  "sidebar_label": "Deployment",
+  "sidebar": "sidebar",
+  "previous": {
+    "title": "Terminology",
+    "permalink": "/terminology"
+  },
+  "next": {
+    "title": "Security",
+    "permalink": "/security"
+  }
+}

@@ -1,0 +1,405 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "loadedVersions": [
+        {
+          "versionName": "current",
+          "versionLabel": "Next",
+          "versionPath": "/",
+          "isLast": true,
+          "routePriority": -1,
+          "sidebarFilePath": "/Users/raysmets/dev/UnumID.github.io/sidebars.js",
+          "docsDirPath": "/Users/raysmets/dev/UnumID.github.io/docs",
+          "docsDirPathLocalized": "/Users/raysmets/dev/UnumID.github.io/i18n/en/docusaurus-plugin-content-docs/current",
+          "mainDocId": "usage-guide",
+          "sidebars": {
+            "sidebar": [
+              {
+                "type": "doc",
+                "id": "usage-guide"
+              },
+              {
+                "collapsed": false,
+                "type": "category",
+                "label": "Introduction",
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "about-unum-id"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "terminology"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "deployment"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "security"
+                  }
+                ]
+              },
+              {
+                "collapsed": false,
+                "type": "category",
+                "label": "Components",
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "server-sdk"
+                  },
+                  {
+                    "collapsed": false,
+                    "type": "category",
+                    "label": "Mobile SDK",
+                    "items": [
+                      {
+                        "type": "doc",
+                        "id": "mobile-sdk-android"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "mobile-sdk-ios"
+                      },
+                      {
+                        "type": "doc",
+                        "id": "reference-mobile-apps"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "doc",
+                    "id": "web-sdk"
+                  }
+                ]
+              },
+              {
+                "collapsed": false,
+                "type": "category",
+                "label": "Demos",
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "developer-demo"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "acme-demo"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "hooli-demo"
+                  }
+                ]
+              }
+            ]
+          },
+          "permalinkToSidebar": {
+            "/about-unum-id": "sidebar",
+            "/acme-demo": "sidebar",
+            "/deployment": "sidebar",
+            "/developer-demo": "sidebar",
+            "/hooli-demo": "sidebar",
+            "/mobile-sdk-android": "sidebar",
+            "/mobile-sdk-ios": "sidebar",
+            "/reference-mobile-apps": "sidebar",
+            "/security": "sidebar",
+            "/server-sdk": "sidebar",
+            "/terminology": "sidebar",
+            "/": "sidebar",
+            "/web-sdk": "sidebar"
+          },
+          "docs": [
+            {
+              "unversionedId": "about-unum-id",
+              "id": "about-unum-id",
+              "isDocsHomePage": false,
+              "title": "About Unum ID",
+              "description": "Unum ID is the sharified identity™ network. You can use our software",
+              "source": "@site/docs/about-unum-id.mdx",
+              "slug": "/about-unum-id",
+              "permalink": "/about-unum-id",
+              "version": "current",
+              "sidebar_label": "About Unum ID",
+              "sidebar": "sidebar",
+              "previous": {
+                "title": "Usage Guide",
+                "permalink": "/"
+              },
+              "next": {
+                "title": "Terminology",
+                "permalink": "/terminology"
+              }
+            },
+            {
+              "unversionedId": "acme-demo",
+              "id": "acme-demo",
+              "isDocsHomePage": false,
+              "title": "ACME Demo",
+              "description": "The ACME Demo shows our Beyond Passwordless&trade;",
+              "source": "@site/docs/acme-demo.mdx",
+              "slug": "/acme-demo",
+              "permalink": "/acme-demo",
+              "version": "current",
+              "sidebar_label": "ACME Demo",
+              "sidebar": "sidebar",
+              "previous": {
+                "title": "Developer Demo",
+                "permalink": "/developer-demo"
+              },
+              "next": {
+                "title": "Hooli Demo",
+                "permalink": "/hooli-demo"
+              }
+            },
+            {
+              "unversionedId": "deployment",
+              "id": "deployment",
+              "isDocsHomePage": false,
+              "title": "Deployment",
+              "description": "Deploying Unum ID is straightforward.",
+              "source": "@site/docs/deployment.mdx",
+              "slug": "/deployment",
+              "permalink": "/deployment",
+              "version": "current",
+              "sidebar_label": "Deployment",
+              "sidebar": "sidebar",
+              "previous": {
+                "title": "Terminology",
+                "permalink": "/terminology"
+              },
+              "next": {
+                "title": "Security",
+                "permalink": "/security"
+              }
+            },
+            {
+              "unversionedId": "developer-demo",
+              "id": "developer-demo",
+              "isDocsHomePage": false,
+              "title": "Developer Demo",
+              "description": "The Developer Demo provides a brief, interactive walkthrough of how",
+              "source": "@site/docs/developer-demo.mdx",
+              "slug": "/developer-demo",
+              "permalink": "/developer-demo",
+              "version": "current",
+              "sidebar_label": "Developer Demo",
+              "sidebar": "sidebar",
+              "previous": {
+                "title": "Web SDK",
+                "permalink": "/web-sdk"
+              },
+              "next": {
+                "title": "ACME Demo",
+                "permalink": "/acme-demo"
+              }
+            },
+            {
+              "unversionedId": "hooli-demo",
+              "id": "hooli-demo",
+              "isDocsHomePage": false,
+              "title": "Hooli Demo",
+              "description": "The Hooli Demo shows our Verify with X&trade;",
+              "source": "@site/docs/hooli-demo.mdx",
+              "slug": "/hooli-demo",
+              "permalink": "/hooli-demo",
+              "version": "current",
+              "sidebar_label": "Hooli Demo",
+              "sidebar": "sidebar",
+              "previous": {
+                "title": "ACME Demo",
+                "permalink": "/acme-demo"
+              }
+            },
+            {
+              "unversionedId": "mobile-sdk-android",
+              "id": "mobile-sdk-android",
+              "isDocsHomePage": false,
+              "title": "Mobile SDK - Android",
+              "description": "Installation",
+              "source": "@site/docs/mobile-sdk-android.mdx",
+              "slug": "/mobile-sdk-android",
+              "permalink": "/mobile-sdk-android",
+              "version": "current",
+              "sidebar_label": "Android",
+              "sidebar": "sidebar",
+              "previous": {
+                "title": "Server SDK",
+                "permalink": "/server-sdk"
+              },
+              "next": {
+                "title": "Mobile SDK - iOS",
+                "permalink": "/mobile-sdk-ios"
+              }
+            },
+            {
+              "unversionedId": "mobile-sdk-ios",
+              "id": "mobile-sdk-ios",
+              "isDocsHomePage": false,
+              "title": "Mobile SDK - iOS",
+              "description": "Import the SDK",
+              "source": "@site/docs/mobile-sdk-ios.mdx",
+              "slug": "/mobile-sdk-ios",
+              "permalink": "/mobile-sdk-ios",
+              "version": "current",
+              "sidebar_label": "iOS",
+              "sidebar": "sidebar",
+              "previous": {
+                "title": "Mobile SDK - Android",
+                "permalink": "/mobile-sdk-android"
+              },
+              "next": {
+                "title": "Reference Mobile Apps",
+                "permalink": "/reference-mobile-apps"
+              }
+            },
+            {
+              "unversionedId": "reference-mobile-apps",
+              "id": "reference-mobile-apps",
+              "isDocsHomePage": false,
+              "title": "Reference Mobile Apps",
+              "source": "@site/docs/reference-mobile-apps.mdx",
+              "slug": "/reference-mobile-apps",
+              "permalink": "/reference-mobile-apps",
+              "version": "current",
+              "sidebar_label": "Reference Mobile Apps",
+              "sidebar": "sidebar",
+              "previous": {
+                "title": "Mobile SDK - iOS",
+                "permalink": "/mobile-sdk-ios"
+              },
+              "next": {
+                "title": "Web SDK",
+                "permalink": "/web-sdk"
+              }
+            },
+            {
+              "unversionedId": "security",
+              "id": "security",
+              "isDocsHomePage": false,
+              "title": "Security",
+              "description": "As noted in About Unum ID, what distinguishes Unum",
+              "source": "@site/docs/security.mdx",
+              "slug": "/security",
+              "permalink": "/security",
+              "version": "current",
+              "sidebar_label": "Security",
+              "sidebar": "sidebar",
+              "previous": {
+                "title": "Deployment",
+                "permalink": "/deployment"
+              },
+              "next": {
+                "title": "Server SDK",
+                "permalink": "/server-sdk"
+              }
+            },
+            {
+              "unversionedId": "server-sdk",
+              "id": "server-sdk",
+              "isDocsHomePage": false,
+              "title": "Server SDK",
+              "description": "This SDK combines the functionality of an Issuer and Verifier entity to work with UnumID's SaaS.",
+              "source": "@site/docs/server-sdk.mdx",
+              "slug": "/server-sdk",
+              "permalink": "/server-sdk",
+              "version": "current",
+              "sidebar_label": "Server SDK",
+              "sidebar": "sidebar",
+              "previous": {
+                "title": "Security",
+                "permalink": "/security"
+              },
+              "next": {
+                "title": "Mobile SDK - Android",
+                "permalink": "/mobile-sdk-android"
+              }
+            },
+            {
+              "unversionedId": "terminology",
+              "id": "terminology",
+              "isDocsHomePage": false,
+              "title": "Terminology",
+              "description": "Unum ID uses a few specialized terms and concepts:",
+              "source": "@site/docs/terminology.mdx",
+              "slug": "/terminology",
+              "permalink": "/terminology",
+              "version": "current",
+              "sidebar_label": "Terminology",
+              "sidebar": "sidebar",
+              "previous": {
+                "title": "About Unum ID",
+                "permalink": "/about-unum-id"
+              },
+              "next": {
+                "title": "Deployment",
+                "permalink": "/deployment"
+              }
+            },
+            {
+              "unversionedId": "usage-guide",
+              "id": "usage-guide",
+              "isDocsHomePage": false,
+              "title": "Usage Guide",
+              "description": "Write content using GitHub-flavored Markdown syntax.",
+              "source": "@site/docs/usage-guide.mdx",
+              "slug": "/",
+              "permalink": "/",
+              "version": "current",
+              "sidebar_label": "Usage Guide",
+              "sidebar": "sidebar",
+              "next": {
+                "title": "About Unum ID",
+                "permalink": "/about-unum-id"
+              }
+            },
+            {
+              "unversionedId": "web-sdk",
+              "id": "web-sdk",
+              "isDocsHomePage": false,
+              "title": "Web SDK",
+              "description": "SDK which helps the client to manage how deeplink can be presented to holder",
+              "source": "@site/docs/web-sdk.mdx",
+              "slug": "/web-sdk",
+              "permalink": "/web-sdk",
+              "version": "current",
+              "sidebar_label": "Web SDK",
+              "sidebar": "sidebar",
+              "previous": {
+                "title": "Reference Mobile Apps",
+                "permalink": "/reference-mobile-apps"
+              },
+              "next": {
+                "title": "Developer Demo",
+                "permalink": "/developer-demo"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "docusaurus-plugin-content-blog": {
+    "default": null
+  },
+  "docusaurus-plugin-content-pages": {
+    "default": [
+      {
+        "type": "mdx",
+        "permalink": "/markdown-page",
+        "source": "@site/src/pages/markdown-page.md"
+      }
+    ]
+  },
+  "docusaurus-plugin-debug": {
+    "default": null
+  },
+  "docusaurus-theme-classic": {
+    "default": null
+  },
+  "docusaurus-theme-live-codeblock": {
+    "default": null
+  }
+}

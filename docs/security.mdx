@@ -1,0 +1,57 @@
+---
+id: security
+title: Security
+sidebar_label: Security
+slug: /security
+---
+
+As noted in [About Unum ID](/about-unum-id), what distinguishes Unum 
+ID from other identity solutions is that each user’s data is stored 
+in their own app, and only you and that specific user ever have 
+access to it. ​**We coordinate sharing of data without ever being 
+able to interact with it in plaintext.** ​This provides unparalleled 
+security and privacy. As the “encrypted domain” in our diagrams 
+indicates, sensitive data is never decrypted.
+
+How exactly we do this is complex and proprietary, but at a high 
+level it works as follows. When you issue a credential (containing
+some data) to a user, that credential is encrypted with the user’s 
+public key. (The Server SDK does this on your server and sends the 
+encrypted version to us.) We temporarily store and route the 
+encrypted credential to the correct user’s app but have no ability 
+to decrypt the data. The user’s app then receives and decrypts the 
+credential. See the diagram below.
+
+<!-- ADD DIAGRAM -->
+
+Then, when a user responds to a request for a credential, that 
+credential is encrypted with your publickey. (The Mobile SDK does 
+this in the user’s app and sends the encrypted version to us.) 
+We store metadata about the encrypted credential and route it to 
+you but have no ability to decrypt the data. You then receive and 
+decrypt the credential. See the diagram below.
+
+<!-- ADD DIAGRAM -->
+
+We accomplish all this with a state-of-the-art *​distributed* system — 
+not a massive central database vulnerable to attack and privacy 
+violations. This is the real magic of Unum ID:
+- **We ​never ​have access to ​*any* ​sensitive user data.** All such 
+data is encrypted before we receive it, in such a way that only that 
+specific user can access it. Other solutions pool user data from many 
+sources in central databases, which are honeypots extremely vulnerable 
+to attack. Our distributed architecture is extremely security 
+conscious and ensures neither your company nor Unum ID will ever join 
+this infamous club:
+<!-- ADD DATA BREACHES IMAGE -->
+- **The user has full control over their data.** The data is stored 
+only on their device, and it’s only shared with their consent. 
+Unum ID is a solution custom built for an age of GDPR, CCPA, and 
+countless other emerging privacy regulations. We are well beyond 
+compliant.
+- **The user’s data is robustly tied back to a single human being.** 
+​Verified user data is only reliable if there’s a secure, 1:1 
+connection between that data a person in the real world. Unum ID 
+establishes and maintains that connection. We use a complex, 
+proprietary combination of cryptography to tie the data to a device 
+and biometrics and behavioral auth to tie that device a single user.

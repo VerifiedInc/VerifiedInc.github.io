@@ -2,9 +2,9 @@ name: deployment
 
 on:
   pull_request:
-    branches: [non-build]
+    branches: [deploy]
   push:
-    branches: [non-build]
+    branches: [deploy]
 
 jobs:
   checks:

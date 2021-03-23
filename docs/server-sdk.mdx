@@ -14,9 +14,11 @@ More detailed, but less styled documentation can be found [here](https://docs.un
 ## SDK Functionality
 The Server SDK uses the **UnumDto** type to facilitate handling many response body types while providing a reliable structure to access the result.
 
-```jsx title="UnumDto"
-authToken: string; // The JWT auth token which is used by the SDK to authenticate with UnumID's SaaS. This is periodically refreshed thus its value should be read and stored in every resultant function call. 
-body: T; // The placeholder for the function's response type is function specific. 
+```typescript title="UnumDto"
+{
+  "authToken": string; // The JWT auth token which is used by the SDK to authenticate with UnumID's SaaS. This is periodically refreshed thus its value should be read and stored in every resultant function call. 
+  "body": T; // The placeholder for the function's response type is function specific. 
+}
 ```
 
 **Authentication**
@@ -39,8 +41,8 @@ Parameters:
 "apiKey": string // a unique Issuer API key obtained from Unum ID
 ```
 
-Response Body: **RegisteredIssuer**
-```typescript
+Response Body:  [**RegisteredIssuer**](https://docs.unum.id/Server-SDK-Typescript/interfaces/registeredissuer.html)
+```typescript title="RegisteredIssuer"
 {
   "uuid": string, // identifies the new Issuer in the Unum ID database
   "customerUuid": string, // identifies the customer which Created the Issuer
@@ -80,8 +82,8 @@ Parameters
 "eccPrivateKey": string // your Issuer's Private Key
 ```
 
-Response Body: **Credential**
-```typescript
+Response Body: [**Credential**](https://docs.unum.id/Server-SDK-Typescript/interfaces/credential.html)
+```typescript title="Credential"
 {
     "@context": ["https://www.w3.org/2018/credentials/v1"], // this field is specified in the W3C Verifiable Credential spec
     "credentialStatus": {
@@ -113,8 +115,7 @@ Parameters
 }
 ```
 
-Response Body: Empty 
-If unsuccessful and exception will be thrown.
+Response Body: **Empty**. If unsuccessful and exception will be thrown.
 ```typescript
 {}
 ```
@@ -134,8 +135,8 @@ Parameters
 "apiKey": string // a unique Verifier API key obtained from Unum ID
 ```
 
-Response body: **RegisteredVerifier**
-```typescript
+Response body: [**RegisteredVerifier**](https://docs.unum.id/Server-SDK-Typescript/interfaces/registeredverifier.html)
+```typescript title="RegisteredVerifier"
 {
   "uuid": string, // identifies the new Verifier in the Unum ID database
   "customerUuid": string, // identifies the customer which Created the Verifier
@@ -177,8 +178,8 @@ Parameters
 "metadata": object // any additional data to include in the PresentationRequest
 ```
 
-Response Body: **PresentationRequestResponse**
-```typescript
+Response Body: [**PresentationRequestResponse**](https://docs.unum.id/Server-SDK-Typescript/interfaces/presentationrequestresponse.html)
+```typescript title="PresentationRequestResponse"
 {
   "presentationRequest": {
     "uuid": string, // identifies the PresentationRequest in the Unum ID database
@@ -223,8 +224,8 @@ Parameters
 ```
 
 
-Response Body: **DecryptedPresentation**
-```typescript
+Response Body: [**DecryptedPresentation**](https://docs.unum.id/Server-SDK-Typescript/interfaces/decryptedpresentation.html)
+```typescript title="DecryptedPresentation"
 {
   isVerified: boolean; // boolean indicating wether the signatures signed by the subject (user) is valid 
   type: 'VerifiablePresentation' | 'NoPresentation' // type of the presentation. NoPresentation means the presentation request was declined by the user.
@@ -247,8 +248,7 @@ Parameters
 }
 ```
 
-Response Body: Empty 
-If unsuccessful and exception will be thrown.
+Response Body: **Empty**. If unsuccessful and exception will be thrown.
 ```typescript
 {}
 ```
@@ -259,7 +259,7 @@ Use to send a deep link to a user by email. The message will be delivered from D
 To request (a presentation of) credentials from a user, you first create the request object and receive a deep link that references it. The user need to receive this deep link, which will open the correct app on their phone and prompt them to share the credentials. Email is one convenient channel, though keep in mind that the user will need to click the link from their phone for the deep link to work.
 
 :::tip
-Note: JSON special characters such a double quote or backslash in the `subject` or `htmlBody` fields will need to be escaped with a backslash, i.e. "the best org in the country" must be \"the best org in the country\".
+JSON special characters such a double quote or backslash in the `subject` or `htmlBody` fields will need to be escaped with a backslash, i.e. "the best org in the country" must be \"the best org in the country\".
 :::
 
 Parameters
@@ -273,8 +273,7 @@ Parameters
 }
 ```
 
-Response Body: Empty 
-If unsuccessful and exception will be thrown.
+Response Body: **Empty**. If unsuccessful and exception will be thrown.
 ```typescript
 {}
 ```

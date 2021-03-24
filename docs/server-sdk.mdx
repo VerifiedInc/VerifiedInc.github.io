@@ -21,10 +21,10 @@ The Server SDK uses the **UnumDto** type to facilitate handling many response bo
 }
 ```
 
-**Authentication**
+### Authentication
 Every request detailed below requires a Bearer `authToken` as a first parameter which is used to authenticate request to UnumID's SaaS on your behalf. As mention above this auth token updated upon every subsequent function call and should be read via the `authToken` attribute and persisted accordingly for later requests. 
 
-**Errors** 
+### Errors
 Errors returned by UnumID's SaaS will also be wrapped in the UnumDto object so that the potentially updated `authToken` can be retrieved. Validation errors which are created prior to any internal calls to UnumID's SaaS will be of type Error and are thrown. This is due to never making a network call with the provided authToken so no potential new authToken to pass back. For this reason we recommend wrapping all SDK calls in a try/catch.
 
 ## Issuer

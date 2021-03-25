@@ -14,12 +14,22 @@ import ReactTooltip from 'react-tooltip';
   effect="solid"
   multiline={true} // use <br> e.g. data-tip="Multiple <br> lines!"
   textColor="white"
-  backgroundColor="black"
-  border={true} // helpful for dark mode
-  borderColor="white"
+  backgroundColor="#5e5e5e"
   delayHide={250}
   resizeHide={false} // don't hide when resizing page
 />
+<ReactTooltip id="gobbledygook"
+  type="dark"
+  place="top"
+  effect="solid"
+  multiline={true} // use <br> e.g. data-tip="Multiple <br> lines!"
+  textColor="white"
+  backgroundColor="#5e5e5e"
+  delayHide={250}
+  resizeHide={false} // don't hide when resizing page
+>
+  Random <br></br> <strong>malarkey!</strong>
+</ReactTooltip>
 
 Write content using [GitHub-flavored Markdown syntax](https://github.github.com/gfm/).
 
@@ -222,7 +232,8 @@ There must be at least 3 dashes separating each header cell. The outer pipes (|)
 
 ## Tooltips
 
-We can use tooltips (hover over <span data-tip="Wow, a tooltip!">this</span>) with the help of [`react-tooltip`](https://www.npmjs.com/package/react-tooltip).
+We can use tooltips like <u data-tip="Wow, a tooltip!">this</u>
+with the help of [`react-tooltip`](https://www.npmjs.com/package/react-tooltip).
 
 I'm not sure how to enable tooltips globally, so for now at least 
 we have to add them to each `.mdx` page and set the same defaults
@@ -245,35 +256,69 @@ import ReactTooltip from 'react-tooltip';
 />
 ```
 
-Many of these are defaults of the `react-tooltip` package, but it's 
-useful to make them explicit here as a reminder of the most relevant
-options.
+Many of these are defaults of the `react-tooltip` package, but it's useful to make them explicit here as a reminder of the most relevant options.
 
-To make a tooltip, use an HTML `<span>` element (you can add it inline within
-the `.mdx` file) and set the `data-tip` attribute. For example:
+To make a tooltip, use an HTML `<u>` element (you can add it inline within the `.mdx` file) and set the `data-tip` attribute. For example:
 
 ```html live
-<span data-tip="This is a tooltip!">hover over me</span>
+<u data-tip="This is a tooltip!">hover over me</u>
 ```
 
-Avoid using other elements like `<div>`, which fills the width of the parent 
-element because they have `display: block;`, which makes the tooltip appear 
-in the middle of the parent element. 
+Avoid using other elements like `<div>`, which fills the width of the parent element because they have `display: block;`, which makes the tooltip appear in the middle of the parent element. You can also use an element like `<span>`,but using `<u>` creates an underline, which is a nice visual indicator that there's a tooltip, so we should use that by convention.
 
 You can make multiline tooltips using `<br>`. For example:
 
 ```html live
-<span data-tip="Multiple <br> lines <br> 🤩">hover over me</span>
+<u data-tip="Multiple <br> lines <br> 🤩">hover over me</u>
 ```
 
 And you can set override the default options for individual tooltips. For example:
 
 ```html live
-<span 
+<u 
   data-tip="Super duper custom tooltip... <br> I take forever to disappear"
   data-background-color="green"
   data-delay-hide="5000"
->hover over me</span>
+>hover over me</u>
 ```
+
+Very helpfully, you can also set a single tooltip to be used multiple times. To do so, you use a `ReactTooltip` component and set an `id` for it. Then, you leave `data-tip` unspecified (but you still need to include it) and set `data-for` to the `id` of the component. For example, if you define this...
+
+```jsx
+<ReactTooltip id="gobbledygook"
+  type="dark"
+  place="top"
+  effect="solid"
+  multiline={true} // use <br> e.g. data-tip="Multiple <br> lines!"
+  textColor="white"
+  backgroundColor="#5e5e5e"
+  delayHide={250}
+  resizeHide={false} // don't hide when resizing page
+>
+  Random <br></br> <strong>malarkey!</strong>
+</ReactTooltip>
+```
+
+... you can then create multiple copies of the same tooltip:
+
+```html live
+<>
+<u data-tip data-for="gobbledygook">
+  blah blah blah
+</u>
+
+<br></br>
+
+<u data-tip data-for="gobbledygook">complete and utter nonsense</u>
+
+<br></br>
+
+<u data-tip data-for="gobbledygook">entropy, yo</u>
+</>
+```
+
+A couple notes on this:
+- It seems that you have to set the same defaults on each of these tooltips, too, even if you already have on a `ReactTooltip` component *without* an `id`. This is obnoxious and seems wrong, but I'm not sure how to change it.
+- You can use HTML in these tooltips. You're supposed to be able to in other ones by setting `html={true}`, but there must be a bug because this isn't working. Note that in the other ones you only need the `<br` tag for a newline, but with these you oddly enough need the closing tag too, as in `<br></br>`.
 
 See the full list of options on the `react-tooltip` [npm page](https://www.npmjs.com/package/react-tooltip).

@@ -18,8 +18,8 @@ The Android Mobile SDK is a fully native SDK that allows a host application to b
 - Currently only English is supported
 
 ##### Required Permissions:
-- Camera
-- Biometrics
+- Camera (requested when showing QR code scanner)
+- Biometrics (requested when creating private keys)
 
 
 Notes:
@@ -59,6 +59,8 @@ implementation "org.unumid:holdersdk:1.0"
 #### Initialization
 
 Upon application start up, the Unum ID initialization methods should be called. This will ensure that the SDK is setup properly. If the DID value is included, then the SDK will load any new credentials associated with that DID as part of the initialization process. The UnumCallback is also an optional parameter that can be included to be notified of the result of the initialization call.
+
+Because the SDK contains secure encryption functionality, it does require the use of OS level user authentication. This could be in the form of a biometric check (if available on device), or a lock screen code or password. If this is not already setup by the user, the SDK will prompt the user to set this up.
 
 <Tabs
   defaultValue="kotlin"
@@ -131,6 +133,8 @@ UnumId.INSTANCE.initialize(configuration, new UnumCallback() {
   </TabItem>
 </Tabs>
 
+As part of the initialization process, private keys will be created for the user. The user will be asked to authenticate by either biometrics or a passcode. If they have not setup any type of OS level authentication before, they will be promted to do so.
+
 #### Deep Links
 
 The Unum ID SDK does make use of Deep Links. Deep links are used by other application to ask the SDK to share encrypted credentials. A deep link is a way for data to be passed around by multiple applications. An example of a deep link might be clicking a button on a webpage, and having an application open. Deep links in the SDK allow for credentials to be requested by other sources. The SDK will catch these requests and process them. For the Deep Links to work, at least one activity will need to be setup to receive Unum ID deep links.
@@ -149,6 +153,9 @@ The Unum ID SDK does make use of Deep Links. Deep links are used by other applic
     </intent-filter>
 </activity>
 ```
+
+This will catch a deeplink similar to this: unumid://acme.com/presentationRequest/123456
+
 When a deep link is received, a popup will be shown to the user asking them if they would like to respond to the deep link request
 
 ![Credential Request Popup](../assets/images/presentation-request.png)
@@ -222,7 +229,7 @@ UnumId.INSTANCE.initialize(configuration, new UnumCallback() {
 </Tabs>
 
 #### QR Code Scanner
-A QR code is another way of passing deep links on a mobile device. Any QR code scanner is able to retrieve a deep link. The native camera app is also capable of scanning qr codes. If you have correctly set up the previous deep link section, then the SDK will catch any deep links that are received thorough QR codes.
+A QR code is another way of passing deep links on a mobile device. Any QR code scanner is able to retrieve a deep link. Some phones native camera supports QR code scanning, while others require an application to implement scanning functionality. If you have correctly set up the previous deep link section, then the SDK will catch any deep links that are received thorough QR codes.
 
 The host application can have its own QR code scanner, which can pass QR codes directly to the SDK.
 
@@ -286,6 +293,8 @@ private void startQRCodeScanner() {
 
 </TabItem>
 </Tabs>
+
+![QR code scanner](../assets/images/android-scanner.png)
 
 #### TroubleShooting
 

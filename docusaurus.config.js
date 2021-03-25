@@ -11,6 +11,9 @@ module.exports = {
   organizationName: 'UnumID', // Usually your GitHub org/user name.
   projectName: 'UnumID.github.io', // Usually your repo name.
   themeConfig: {
+    prism: {
+      additionalLanguages: ['swift', 'kotlin', 'java'],
+    },
     navbar: {
       title: 'Docs',
       logo: {

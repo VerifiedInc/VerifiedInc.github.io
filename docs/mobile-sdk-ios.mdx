@@ -5,10 +5,45 @@ sidebar_label: iOS
 slug: /mobile-sdk-ios
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Click here for the [Android native SDK](mobile-sdk-android.mdx)
+
+#### iOS Mobile SDK
+The iOS Mobile SDK is a fully native SDK that allows a host application to become an application that is capable of receiving, storing, and sending encrypted credentials. The SDK works with both Swift and Objective-C native applications.
+
+##### Application minimum requirements:
+- iOS 12 and above
+- Currently only English is supported
+
+
+#### Mapping users
+
+The SDK is able to support multiple users. That means that each time a new user is authorized in the host application, a new DID will be issued for the user. A DID (decentralized identifier) is a URI that uniquely identifies a user. The newly generated DID will be returned to the host app, and should be stored. Each time a user is re-authrozed in the app, the stored DID should be sent to the SDK as part of the initialization, in order to signify that it is a returning user.
+
+All the data in the SDK relies on the user DID. It is important that the host app correctly stores and retrives the correct DID for each user. Otherwise a user will not have access to correct information.initialization
+
+**Example Multiple User Flow:**
+
+New user 1 logs into host app
+- SDK is initialized with no DID
+- SDK returns newly generated DID
+- Host app associates DID with user and stores
+
+New user 2 logs into host app
+- SDK is initialized with no DID
+- SDK returns newly generated DID
+- Host app associates DID with user and stores
+
+Returning user 1 logs into host app
+- Host app retrieves DID for user and sends to SDK as part of initialization
+- SDK recognizes this is a returning user and does not generate a new DID
+
 ### Import the SDK
  - todo: how are we going to distribute? probably with cocoa pods?
 
-#### Info.plist
+#### Info.plist and required permissions
 Descriptions for the following items will need to be added to the Info.plist
 
 - Privacy - Camera Usage Description ( used for QR code scanner)
@@ -53,7 +88,12 @@ After a user has successfully log in to the host app, and initialization call sh
     }
     UnumID.initialize(configuration: config, callback: InitializationCallback(self))
 
+As part of the initialization proccess, private keys will be created for the user. The user will be asked to authenticate by either biometrics or a passcode. If they have not setup any type of OS level authentication before, they will be promted to do so.
+
+
 ### Deeplinks
+The Unum ID SDK does make use of Deep Links. Deep links are used by other application to ask the SDK to share encrypted credentials. A deep link is a way for data to be passed around by multiple applications. An example of a deep link might be clicking a button on a webpage, and having an application open. Deep links in the SDK allow for credentials to be requested by other sources.
+
 When a deeplink is received by the application, it can be passed the SDK to be processed. The app developer is responsible for setting up the application to receive the appropriate deeplink schemas, and can optionally add logic to determine if the deeplink should be sent to the SDK.
 
 Example code to send deeplink to SDK in SceneDelegate
@@ -63,6 +103,7 @@ Example code to send deeplink to SDK in SceneDelegate
             UnumID.acceptDeepLink(link: context.url.absoluteString)
         }
     }
+When a deep link is received, a popup will be shown to the user asking them if they would like to respond to the deep link request
 
 ### QR Code scanning
 Scanned QR codes can be processed by the SDK in two ways. If the host app already has a way of scanning QR codes, simple pass the scanned code to the SDK.

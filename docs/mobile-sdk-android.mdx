@@ -5,6 +5,51 @@ sidebar_label: Android
 slug: /mobile-sdk-android
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Click here for the [iOS native SDK](mobile-sdk-ios.mdx)
+
+#### Android Mobile SDK
+The Android Mobile SDK is a fully native SDK that allows a host application to become an application that is capable of receiving, storing, and sending encrypted credentials. The SDK works with both Kotlin and Java native applications.
+
+##### Application minimum requirements:
+- Android 6.0 (Marshmallow) and above
+- Currently only English is supported
+
+##### Required Permissions:
+- Camera
+- Biometrics
+
+
+Notes:
+- These permissions will be requested by the SDK. No action is required by the host application.
+- Because the SDK contains secure encryption functionality, it does require the use of OS level user authentication. This could be in the form of a biometric check (if available on device), or a lock screen code or password. If this is not already setup by the user, the SDK will prompt the user to set this up.
+
+#### Mapping users
+
+The SDK is able to support multiple users. That means that each time a new user is authorized in the host application, a new DID will be issued for the user. A DID (decentralized identifier) is a URI that uniquely identifies a user. The newly generated DID will be returned to the host app, and should be stored. Each time a user is re-authrozed in the app, the stored DID should be sent to the SDK as part of the initialization, in order to signify that it is a returning user.
+
+All the data in the SDK relies on the user DID. It is important that the host app correctly stores and retrives the correct DID for each user. Otherwise a user will not have access to correct information.initialization
+
+**Example Multiple User Flow:**
+
+New user 1 logs into host app
+- SDK is initialized with no DID
+- SDK returns newly generated DID
+- Host app associates DID with user and stores
+
+New user 2 logs into host app
+- SDK is initialized with no DID
+- SDK returns newly generated DID
+- Host app associates DID with user and stores
+
+Returning user 1 logs into host app
+- Host app retrieves DID for user and sends to SDK as part of initialization
+- SDK recognizes this is a returning user and does not generate a new DID
+
+### SDK Basic Usage
+
 #### Installation
 
 ```groovy
@@ -15,68 +60,80 @@ implementation "org.unumid:holdersdk:1.0"
 
 Upon application start up, the Unum ID initialization methods should be called. This will ensure that the SDK is setup properly. If the DID value is included, then the SDK will load any new credentials associated with that DID as part of the initialization process. The UnumCallback is also an optional parameter that can be included to be notified of the result of the initialization call.
 
-Kotlin
+<Tabs
+  defaultValue="kotlin"
+  values={[
+    {label: 'Kotlin', value: 'kotlin'},
+    {label: 'Java', value: 'java'}
+  ]}>
+  <TabItem value="kotlin">
 
 ```kotlin
 initialize({
-    customerId(BuildConfig.CUSTOMER_ID)
-    apiKey(BuildConfig.API_KEY)
-    onError(::onErrorFunction)
-    did(did) // if stored did, use here
+    customerId(BuildConfig.CUSTOMER_ID) // the provided customer id
+    apiKey(BuildConfig.API_KEY) // the provided api key
+    onError(::onErrorFunction) // a function to be run if an error is encountered (optional)
+    did(did) // if returning user, include DID. If new user, leave this empty
 },
 object : UnumCallback {
     override fun onSuccess(data: String?) {
-        data?.let { 
+        data?.let {
             val did = data
             // store DID
          }
     }
 
     override fun onSDKError(error: String?) {
-        
+
     }
 
     override fun onAPIError(code: Int, error: String?) {
-        
+
     }
 })
 ```
+  </TabItem>
+  <TabItem value="java">
 
-Java
 
 ```java
 UnumInitializationConfiguration configuration = new UnumInitializationConfiguration.Builder()
-                .customerId(BuildConfig.CustomerId)
-                .apiKey(BuildConfig.ApiKey)
-                .onError(() -> {
-                    onErrorFunction();
-                    return null;
-                })
-                .did(did)
-                .build();
+        .customerId(BuildConfig.CustomerId) // the provided customer id
+        .apiKey(BuildConfig.ApiKey) // the provided api key
+        .onError(() -> { // a function to be run if an error is encountered (optional)
+            onErrorFunction();
+            return null;
+        })
+        // if returning user, include DID. If new user, leave this empty
+        .did(did)
+        .build();
 
 UnumId.INSTANCE.initialize(configuration, new UnumCallback() {
-            @Override
-            public void onSuccess(@Nullable String data) {
-                String did = data;
-                // store DID
-            }
+    @Override
+    public void onSuccess(Object data) {
+        if (data != null && data instanceof String) {
+            // returned data is a string version of the user DID
+            // store DID with user here
+        }
+    }
 
-            @Override
-            public void onSDKError(@Nullable String error) {
-            }
+    @Override
+    public void onSDKError(@Nullable String error) {
+        Log.e("MainActivity", "SDK Error");
+    }
 
-            @Override
-            public void onAPIError(int code, @Nullable String error) {
-            }
-        });
+    @Override
+    public void onAPIError(int code, @Nullable String error) {
+        Log.e("MainActivity", "API Error");
+    }
+});
 ```
-
-Because the SDK supports having multiple users, a DID for each user should be stored in order to properly access that users saved credentials. For a first time user, a new DID will be returned with the initialization call. Once a user returns, the saved DID should be included as part of the initialization call. The initialization call can be made each time a user is identified in the client application. An example of this would be when one user logs out and a new one logs in.
+  </TabItem>
+</Tabs>
 
 #### Deep Links
 
-The Unum ID SDK does make use of Deep Links. For the Deep Links to work, at least one activity will need to be setup to recieve Unum ID deep links.
+The Unum ID SDK does make use of Deep Links. Deep links are used by other application to ask the SDK to share encrypted credentials. A deep link is a way for data to be passed around by multiple applications. An example of a deep link might be clicking a button on a webpage, and having an application open. Deep links in the SDK allow for credentials to be requested by other sources. The SDK will catch these requests and process them. For the Deep Links to work, at least one activity will need to be setup to receive Unum ID deep links.
 
 ```xml
 <activity android:name=".MainActivity">
@@ -87,21 +144,102 @@ The Unum ID SDK does make use of Deep Links. For the Deep Links to work, at leas
         <category android:name="android.intent.category.BROWSABLE" />
 
         <data
-            android:host="www.unumid.org"
-            android:scheme="https" />
+            android:host="unumid"
+            android:scheme="acme" />
     </intent-filter>
 </activity>
 ```
+When a deep link is received, a popup will be shown to the user asking them if they would like to respond to the deep link request
+
+![Credential Request Popup](../assets/images/presentation-request.png)
 
 #### Unum Callback
 
 A UnumCallback object is available to be passed to most method calls within the SDK. This adds a listener that will be called with the result of the Unum method call. It can result in a successful call, and SDK error, or an API error. Refer to the Initialization section for an exmple of using the Unum Callback.
 
+<Tabs
+  defaultValue="kotlin"
+  values={[
+    {label: 'Kotlin', value: 'kotlin'},
+    {label: 'Java', value: 'java'}
+  ]}>
+  <TabItem value="kotlin">
+
+```kotlin
+initialize({
+    customerId(BuildConfig.CUSTOMER_ID)
+    apiKey(BuildConfig.API_KEY)
+    onError(::onErrorFunction)
+},
+object : UnumCallback {
+    override fun onSuccess(data: Any?) {
+        data?.let {
+            if (it is String && it.isNotEmpty()) {
+                // do something with returned data
+            }
+         }
+    }
+
+    override fun onSDKError(error: String?) {
+        Log.e("MainActivity", "SDK Error");
+        // view string error
+    }
+
+    override fun onAPIError(code: Int, error: String?) {
+        Log.e("MainActivity", "API Error");
+        // view string error
+    }
+})
+```
+  </TabItem>
+  <TabItem value="java">
+
+
+```java
+
+UnumId.INSTANCE.initialize(configuration, new UnumCallback() {
+    @Override
+    public void onSuccess(Object data) {
+        if (data != null && data instanceof String) {
+            // do something with returned data
+        }
+    }
+
+    @Override
+    public void onSDKError(@Nullable String error) {
+        Log.e("MainActivity", "SDK Error");
+        // view string error
+    }
+
+    @Override
+    public void onAPIError(int code, @Nullable String error) {
+        Log.e("MainActivity", "API Error");
+        // view string error
+    }
+});
+```
+  </TabItem>
+</Tabs>
+
 #### QR Code Scanner
+A QR code is another way of passing deep links on a mobile device. Any QR code scanner is able to retrieve a deep link. The native camera app is also capable of scanning qr codes. If you have correctly set up the previous deep link section, then the SDK will catch any deep links that are received thorough QR codes.
 
-Accessing the QR Code can be done by simply starting the QR Code activity. This activity will then return a URI in the results.
+The host application can have its own QR code scanner, which can pass QR codes directly to the SDK.
 
-Kotlin
+``` kotlin
+UnumId.handleLink(Uri.parse(qrCode))
+```
+
+If the host application does not have its own QR code scanner, it can use the QR code scanner included as part of the SDK.Accessing the QR Code can be done by simply starting the QR Code activity. This activity will then return a URI in the results. The deep link will automatically be passed to the SDK, so no further action is needed from the host applicaiton.
+
+<Tabs
+  defaultValue="kotlin"
+  values={[
+    {label: 'Kotlin', value: 'kotlin'},
+    {label: 'Java', value: 'java'}
+  ]}>
+  <TabItem value="kotlin">
+
 ```kotlin
 private fun showQRCodeScanner() {
         val launchIntent = UnumQRCodeActivity.getLaunchIntent(this, true, false)
@@ -121,7 +259,9 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
     }
 ```
 
-Java
+</TabItem>
+<TabItem value="java">
+
 ```java
 private void startQRCodeScanner() {
         Intent launch = UnumQRCodeActivity.Companion.getLaunchIntent(
@@ -143,6 +283,10 @@ private void startQRCodeScanner() {
         }
     }
 ```
+
+</TabItem>
+</Tabs>
+
 #### TroubleShooting
 
 ##### Secure lock screen not set

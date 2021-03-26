@@ -10,14 +10,13 @@ import TabItem from '@theme/TabItem';
 
 Click here for the [iOS native SDK](mobile-sdk-ios.mdx)
 
-#### Android Mobile SDK
 The Android Mobile SDK is a fully native SDK that allows a host application to become an application that is capable of receiving, storing, and sending encrypted credentials. The SDK works with both Kotlin and Java native applications.
 
-##### Application minimum requirements:
+### Application minimum requirements:
 - Android 6.0 (Marshmallow) and above
 - Currently only English is supported
 
-##### Required Permissions:
+### Required Permissions:
 - Camera (requested when showing QR code scanner)
 - Biometrics (requested when creating private keys)
 
@@ -26,7 +25,7 @@ Notes:
 - These permissions will be requested by the SDK. No action is required by the host application.
 - Because the SDK contains secure encryption functionality, it does require the use of OS level user authentication. This could be in the form of a biometric check (if available on device), or a lock screen code or password. If this is not already setup by the user, the SDK will prompt the user to set this up.
 
-#### Mapping users
+### Mapping users
 
 The SDK is able to support multiple users. That means that each time a new user is authorized in the host application, a new DID will be issued for the user. A DID (decentralized identifier) is a URI that uniquely identifies a user. The newly generated DID will be returned to the host app, and should be stored. Each time a user is re-authrozed in the app, the stored DID should be sent to the SDK as part of the initialization, in order to signify that it is a returning user.
 
@@ -48,15 +47,13 @@ Returning user 1 logs into host app
 - Host app retrieves DID for user and sends to SDK as part of initialization
 - SDK recognizes this is a returning user and does not generate a new DID
 
-### SDK Basic Usage
+## SDK Setup
 
-#### Installation
+### Installation
 
-```groovy
-implementation "org.unumid:holdersdk:1.0"
-```
+The SDK will be given provided by Unum ID as a compiled binary library.
 
-#### Initialization
+### Initialization
 
 Upon application start up, the Unum ID initialization methods should be called. This will ensure that the SDK is setup properly. If the DID value is included, then the SDK will load any new credentials associated with that DID as part of the initialization process. The UnumCallback is also an optional parameter that can be included to be notified of the result of the initialization call.
 
@@ -160,7 +157,7 @@ When a deep link is received, a popup will be shown to the user asking them if t
 
 ![Credential Request Popup](../assets/images/presentation-request.png)
 
-#### Unum Callback
+### Unum Callback
 
 A UnumCallback object is available to be passed to most method calls within the SDK. This adds a listener that will be called with the result of the Unum method call. It can result in a successful call, and SDK error, or an API error. Refer to the Initialization section for an exmple of using the Unum Callback.
 
@@ -228,7 +225,7 @@ UnumId.INSTANCE.initialize(configuration, new UnumCallback() {
   </TabItem>
 </Tabs>
 
-#### QR Code Scanner
+### QR Code Scanner
 A QR code is another way of passing deep links on a mobile device. Any QR code scanner is able to retrieve a deep link. Some phones native camera supports QR code scanning, while others require an application to implement scanning functionality. If you have correctly set up the previous deep link section, then the SDK will catch any deep links that are received thorough QR codes.
 
 The host application can have its own QR code scanner, which can pass QR codes directly to the SDK.
@@ -296,7 +293,7 @@ private void startQRCodeScanner() {
 
 ![QR code scanner](../assets/images/android-scanner.png)
 
-#### TroubleShooting
+### TroubleShooting
 
 ##### Secure lock screen not set
 Before the initialization call can be completed successfully, the android secure lock screen will need to be enabled. If it is not enabled an SDKError error will

@@ -10,15 +10,13 @@ import TabItem from '@theme/TabItem';
 
 Click here for the [Android native SDK](mobile-sdk-android.mdx)
 
-#### iOS Mobile SDK
 The iOS Mobile SDK is a fully native SDK that allows a host application to become an application that is capable of receiving, storing, and sending encrypted credentials. The SDK works with both Swift and Objective-C native applications.
 
-##### Application minimum requirements:
+### Application minimum requirements:
 - iOS 12 and above
 - Currently only English is supported
 
-
-#### Mapping users
+### Mapping users
 
 The SDK is able to support multiple users. That means that each time a new user is authorized in the host application, a new DID will be issued for the user. A DID (decentralized identifier) is a URI that uniquely identifies a user. The newly generated DID will be returned to the host app, and should be stored. Each time a user is re-authrozed in the app, the stored DID should be sent to the SDK as part of the initialization, in order to signify that it is a returning user.
 
@@ -40,26 +38,31 @@ Returning user 1 logs into host app
 - Host app retrieves DID for user and sends to SDK as part of initialization
 - SDK recognizes this is a returning user and does not generate a new DID
 
-### Import the SDK
- - todo: how are we going to distribute? probably with cocoa pods?
-
 #### Info.plist and required permissions
 Descriptions for the following items will need to be added to the Info.plist
 
 - Privacy - Camera Usage Description ( used for QR code scanner)
+    - sample: This app would like to use the camera for QR code scanning.
 - Privacy - Face ID Usage Description ( used for private key generation and storage)
-- URL types - the deeplink schemes the host app should handle
+    - This app would like to use Face ID for authorization.
 
 ## SDK Setup
+
+### Installation
+
+The SDK will be given provided by Unum ID as a compiled binary library.
 
 ### Access to current ViewController
 The SDK does need access to the current View Controller in order to show alert dialogs to the user. The current View Controller should always be passed to the SDK.
 
+```swift
     UnumPresenterHelper.currentViewController = viewController
+```
 
 ### Initialization
 After a user has successfully log in to the host app, and initialization call should be made to the SDK. The host app should store a reference to the user DID so that it can be passed to the initialization call. If a DID is not provided a new one will be created and returned.
 
+```swift
     let userDid = {retreive user DID}
     let config = UnumInitializationConfiguration(customerId: BuildConfig.CustomerId, 
     apiKey: BuildConfig.ApiKey, 
@@ -87,6 +90,7 @@ After a user has successfully log in to the host app, and initialization call sh
         }
     }
     UnumID.initialize(configuration: config, callback: InitializationCallback(self))
+```
 
 As part of the initialization proccess, private keys will be created for the user. The user will be asked to authenticate by either biometrics or a passcode. If they have not setup any type of OS level authentication before, they will be promted to do so.
 
@@ -96,22 +100,34 @@ The Unum ID SDK does make use of Deep Links. Deep links are used by other applic
 
 When a deeplink is received by the application, it can be passed the SDK to be processed. The app developer is responsible for setting up the application to receive the appropriate deeplink schemas, and can optionally add logic to determine if the deeplink should be sent to the SDK.
 
+The host application can be setup to catch deeplinks under the Target -> Info tab.initialization
+
+![Url type](../assets/images/url-types.png)
+
 Example code to send deeplink to SDK in SceneDelegate
 
+```swift
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         for context in URLContexts {
             UnumID.acceptDeepLink(link: context.url.absoluteString)
         }
     }
+```
+
 When a deep link is received, a popup will be shown to the user asking them if they would like to respond to the deep link request
 
 ### QR Code scanning
+A QR code is another way of passing deep links on a mobile device. Any QR code scanner is able to retrieve a deep link. The native phone application is capable of scanning QR codes, and there are stand along qr code scanning applications. If you have correctly set up the previous deep link section, then the SDK will catch any deep links that are received thorough QR codes.
+
 Scanned QR codes can be processed by the SDK in two ways. If the host app already has a way of scanning QR codes, simple pass the scanned code to the SDK.
 
+```swift
     UnumID.acceptDeepLink(link: scannedCode)
+```
 
 If there is not already a way of scanning QR codes, there is a QR code scanner provided by the SDK. This scanner will automatically pass the scanned code to the SDK. 
 
+```swift
     var  scannerSheet: some  View {
         UnumCodeScannerView(
             codeTypes: [.qr],
@@ -120,9 +136,11 @@ If there is not already a way of scanning QR codes, there is a QR code scanner p
             }
         )
     }
+```
 
 #### example of opening the QR code scanner with a button
 
+```swift
     @State  var  isShowingScanner = false
 
 
@@ -139,12 +157,37 @@ If there is not already a way of scanning QR codes, there is a QR code scanner p
     }.sheet(isPresented: $isShowingScanner) {
         self.scannerSheet
     }
+```
 
 ### SDK Logging
 The SDK provides a way or turning internal logging on or off. This will allow the developer to either show or hide SDK log messages. The Log message level can also be set.
 
+```swift
     UnumID.log.enabled = true
     UnumID.log.level = .debug
+```
 
 ### SDK Callback
-Many of the SDK functions allow an optional callback method to be passed (as shown in the initialization call above). This will allow the developer to be notified if a call succeeds, or if it encounters an error along with error details.
+Many of the SDK functions allow an optional callback method to be passed. This will allow the developer to be notified if a call succeeds, or if it encounters an error along with error details.
+
+```swift
+    classInitializationCallback: UnumCallback {
+        internal init(_ parent: MainView) {
+            self.parent = parent
+        }
+
+        let parent: MainView
+        func onSuccess(data: String?) {
+            // returned data will be the user DID if a new one was created
+        }
+
+        func onSDKError(error: String?) {
+            print("SDK Error: \(error ?? "")")
+        }
+
+        func onAPIError(code: Int, error: String?) {
+            print("API Error \(error ?? "")")
+        }
+    }
+    UnumID.initialize(configuration: config, callback: InitializationCallback(self))
+```

@@ -63,10 +63,11 @@
   --ifm-color-danger-lightest: #f54d62;
   
   /* FONTS */
-  /* code */
-  --ifm-code-font-size: 95%;
   /* base */
   --ifm-font-family-base: 'Lato';
+  --ifm-line-height-base: 1.4;
+  /* code */
+  --ifm-code-font-size: 95%;
 }
 
 /* ADMONITIONS */
@@ -112,4 +113,11 @@
 /* DARK MODE */
 html[data-theme='dark'] {
 
+}
+
+/* TOOLTIPS */
+.tooltip {
+  max-width: 350px !important;
+  padding: 8px 14px 10px 14px !important;
+  font-size: calc(var(--ifm-font-size-base) * 0.85) !important;
 }

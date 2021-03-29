@@ -5,31 +5,8 @@ sidebar_label: Usage Guide
 slug: /
 ---
 
-<!-- TOOLTIPS -->
-import ReactTooltip from 'react-tooltip';
-
-<ReactTooltip 
-  type="dark"
-  place="top"
-  effect="solid"
-  multiline={true} // use <br> e.g. data-tip="Multiple <br> lines!"
-  textColor="white"
-  backgroundColor="#5e5e5e"
-  delayHide={250}
-  resizeHide={false} // don't hide when resizing page
-/>
-<ReactTooltip id="gobbledygook"
-  type="dark"
-  place="top"
-  effect="solid"
-  multiline={true} // use <br> e.g. data-tip="Multiple <br> lines!"
-  textColor="white"
-  backgroundColor="#5e5e5e"
-  delayHide={250}
-  resizeHide={false} // don't hide when resizing page
->
-  Random <br></br> <strong>malarkey!</strong>
-</ReactTooltip>
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
 
 Write content using [GitHub-flavored Markdown syntax](https://github.github.com/gfm/).
 
@@ -232,93 +209,45 @@ There must be at least 3 dashes separating each header cell. The outer pipes (|)
 
 ## Tooltips
 
-We can use tooltips like <u data-tip="Wow, a tooltip!">this</u>
-with the help of [`react-tooltip`](https://www.npmjs.com/package/react-tooltip).
+We can use tooltips like <Tip text="Wow, a tooltip!">this</Tip> to provide quick, inline definitions and explanations. 
 
-I'm not sure how to enable tooltips globally, so for now at least 
-we have to add them to each `.mdx` page and set the same defaults
-there like so:
+Using these is super simple. Add these lines at the top of a `.mdx` file (below the file metadata):
 
 ```jsx title="example.mdx"
-import ReactTooltip from 'react-tooltip';
-
-<ReactTooltip 
-  type="dark"
-  place="top"
-  effect="solid"
-  multiline={true} // use <br> e.g. data-tip="Multiple <br> lines!"
-  textColor="white"
-  backgroundColor="black"
-  border={true} // helpful for dark mode
-  borderColor="white"
-  delayHide={250}
-  resizeHide={false} // don't hide when resizing page
-/>
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
 ```
 
-Many of these are defaults of the `react-tooltip` package, but it's useful to make them explicit here as a reminder of the most relevant options.
+And then you're ready to go. There are two kinds of tooltip:
+1. local (for one-time use), and
+2. global (for multiple uses).
 
-To make a tooltip, use an HTML `<u>` element (you can add it inline within the `.mdx` file) and set the `data-tip` attribute. For example:
+### Local
 
-```html live
-<u data-tip="This is a tooltip!">hover over me</u>
-```
-
-Avoid using other elements like `<div>`, which fills the width of the parent element because they have `display: block;`, which makes the tooltip appear in the middle of the parent element. You can also use an element like `<span>`,but using `<u>` creates an underline, which is a nice visual indicator that there's a tooltip, so we should use that by convention.
-
-You can make multiline tooltips using `<br>`. For example:
-
-```html live
-<u data-tip="Multiple <br> lines <br> 🤩">hover over me</u>
-```
-
-And you can set override the default options for individual tooltips. For example:
-
-```html live
-<u 
-  data-tip="Super duper custom tooltip... <br> I take forever to disappear"
-  data-background-color="green"
-  data-delay-hide="5000"
->hover over me</u>
-```
-
-Very helpfully, you can also set a single tooltip to be used multiple times. To do so, you use a `ReactTooltip` component and set an `id` for it. Then, you leave `data-tip` unspecified (but you still need to include it) and set `data-for` to the `id` of the component. For example, if you define this...
+Local tooltips are defined on the spot, so they're best for one-time use. Just use a `<Tip>` element and set the `text` attribute. For example, this...
 
 ```jsx
-<ReactTooltip id="gobbledygook"
-  type="dark"
-  place="top"
-  effect="solid"
-  multiline={true} // use <br> e.g. data-tip="Multiple <br> lines!"
-  textColor="white"
-  backgroundColor="#5e5e5e"
-  delayHide={250}
-  resizeHide={false} // don't hide when resizing page
->
-  Random <br></br> <strong>malarkey!</strong>
-</ReactTooltip>
+<Tip text="Super helpful tooltip!">display text</Tip>
 ```
 
-... you can then create multiple copies of the same tooltip:
+... renders to: <Tip text="Super helpful tooltip!">display text</Tip>.
 
-```html live
-<>
-<u data-tip data-for="gobbledygook">
-  blah blah blah
-</u>
+### Global
 
-<br></br>
+Global tooltips are defined globally so they can be used multiple times. This is especially useful for definitions. Just use an empty `<Tip>` element and set the `type` attribute (the display text is part of the definition). For example, this...
 
-<u data-tip data-for="gobbledygook">complete and utter nonsense</u>
-
-<br></br>
-
-<u data-tip data-for="gobbledygook">entropy, yo</u>
-</>
+```jsx
+<Tip type="credential"/>
 ```
 
-A couple notes on this:
-- It seems that you have to set the same defaults on each of these tooltips, too, even if you already have on a `ReactTooltip` component *without* an `id`. This is obnoxious and seems wrong, but I'm not sure how to change it.
-- You can use HTML in these tooltips. You're supposed to be able to in other ones by setting `html={true}`, but there must be a bug because this isn't working. Note that in the other ones you only need the `<br` tag for a newline, but with these you oddly enough need the closing tag too, as in `<br></br>`.
+... renders to: <Tip type="credential"/>. (Setting the `text` attribute or putting text in between `<Tip></Tip>` tags does nothing.)
 
-See the full list of options on the `react-tooltip` [npm page](https://www.npmjs.com/package/react-tooltip).
+To define a global tooltip, add an entry to the `tooltips` object in `/src/components/Tip.jsx` like so:
+
+```jsx
+const tooltips =  {
+  "display text": "tooltip text",
+}
+```
+
+You can use a simple string like above, but you can also use any HTML to make much richer tooltips with multiple lines, formatting, links, etc.

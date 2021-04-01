@@ -11,7 +11,9 @@ import Tip from '../src/components/Tip';
 Unum ID uses a few specialized terms and concepts. It's not necessary to understand these in full detail, but knowing a little about them will help you deploy and use Unum ID tech.
 
 :::tip
-**We've included helpful tooltips** like <Tip text="Whoa, a tooltip! 😎">this one</Tip> (hover over it) throughout the docs. These offer quick definitions, examples, and links to dive in deeper. They often refer to the terms described in full detail here (for example: <Tip type="credential"/>).
+**We've included helpful tooltips** like <Tip text="Whoa, a tooltip! 😎">this one</Tip> (hover over it) throughout the docs. These offer quick definitions, examples, and links to dive in deeper. Anytime you see an underline, hover over it to see the tooltip!
+
+The tooltips you'll see the most refer to the terms described in this section (for example: <Tip type="credential"/>).
 :::
 
 **The [main terms](#main-terms) to know are:**
@@ -27,6 +29,7 @@ The [less important terms](#less-important-terms) are:
 - [holder](#holder)
 - [subject](#subject)
 - [verifier](#verifier)
+- [DID](#did)
 
 When possible, we avoid using these less important terms to make the docs more readable and lighter on jargon.
 
@@ -297,3 +300,17 @@ To register a verifier and recieve a verifier API key, a company (already regist
 1. name (human readable)
 2. endpoint (to receive presentations)
 The name is used in the [Mobile SDK](/mobile-sdk-overview) and [Web SDK](/web-sdk) to display content to users. We send (encrypted) presentations to the endpoint, which passes them to the [Server SDK](/server-sdk) to be verified. (We provide an OpenAPI spec and reference endpoint, so creating the endpoint is very simple.)
+
+### DID
+
+> A **DID** (or <i>decentralized identifier</i>) identifies a participant in the Unum ID ecosystem. A participant is an <a href="/terminology#issuer"><Tip type="issuer"/></a>, <a href="/terminology#subject"><Tip type="subject"/></a>, or <a href="/terminology#verifier"><Tip type="verifier"/></a>.
+
+:::note
+The technical details of DIDs are not relevant to deploying or using Unum ID. You can think of DIDs as identifiers in the normal sense — unique, random strings of characters like UUIDs.
+
+However, if you're curious to learn more, read the emerging [W3C specification](https://www.w3.org/TR/did-core/).
+:::
+
+**Example:** ACME Bank is identified by two DIDs, one for acting as an issuer and another for acting as a verifier. Richard, an ACME subject (user), is identified by one DID. Hooli FinTech, which acts as a verifier, is identified by one DID.
+
+**Components:** The <a href="/server-sdk">Server SDK</a> returns DIDs for issuers and verifiers, and the <a href="/mobile-sdk">Mobile SDK</a> returns DIDs for subjects.

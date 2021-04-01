@@ -34,12 +34,6 @@ module.exports = {
           label: 'GitHub',
           position: 'right',
         },
-        {
-          to: '/',
-          activeBasePath: 'api',
-          label: 'API',
-          position: 'right',
-        },
       ],
     },
     footer: {
@@ -64,10 +58,6 @@ module.exports = {
             {
               label: 'GitHub',
               href: 'https://github.com/UnumID',
-            },
-            {
-              label: 'API',
-              href: '/',
             },
           ],
         },

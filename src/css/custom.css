@@ -112,6 +112,10 @@
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
 }
+/* turn on line wrap within code blocks */
+/* .prism-code > div {
+  white-space : pre-wrap;
+} */
 
 /* FOOTER */
 /* copyright */
@@ -120,16 +124,12 @@
   font-weight: var(--ifm-font-weight-light);
 }
 
-/* DARK MODE */
-html[data-theme='dark'] {
-
-}
-
 /* TOOLTIPS */
 .tooltip {
   max-width: 350px !important;
   padding: 8px 14px 10px 14px !important;
   font-size: calc(var(--ifm-font-size-base) * 0.85) !important;
+  margin-top: 0 !important;
 }
 /* add spacing between divs */
 .tooltip div:not(:last-child) {
@@ -146,4 +146,9 @@ html[data-theme='dark'] {
 }
 .Collapsible__trigger:hover {
   cursor: pointer;
+}
+
+/* DARK MODE */
+html[data-theme='dark'] {
+  --ifm-blockquote-color: #a5a5a5;
 }

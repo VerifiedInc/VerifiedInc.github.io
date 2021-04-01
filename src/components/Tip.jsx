@@ -141,7 +141,7 @@ const tooltips =  {
     "verifier":
         <>
         <div>
-            <b>A <a href="/terminology#verifier">verifier</a> is a role a company can play to verify <a href="/terminology#presentation">presentations</a> shared by <a href="/terminology#subject">subjects</a> (users). A verifier can also make <a href="/terminology#request"></a> for presentations and send them to subjects.</b>
+            <b>A <a href="/terminology#verifier">verifier</a> is a role a company can play to verify <a href="/terminology#presentation">presentations</a> shared by <a href="/terminology#subject">subjects</a> (users). A verifier can also make <a href="/terminology#request">requests</a> for presentations and send them to subjects.</b>
         </div>
         <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
             <div>
@@ -151,5 +151,19 @@ const tooltips =  {
                 <b>Components:</b> A verifier requests and verifies presentations using the <a href="/server-sdk">Server SDK</a>.
             </div>
         </Collapsible>
+        </>,
+    "DID":
+    <>
+    <div>
+        <b>A <a href="/terminology#DID">DID</a> (or <i>decentralized identifier</i>) identifies a participant in the Unum ID ecosystem.</b> A participant is an <a href="/terminology#issuer">issuer</a>, <a href="/terminology#subject">subject</a>, or <a href="/terminology#verifier">verifier</a>.
+    </div>
+    <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
+        <div>
+            <b>Example:</b> ACME Bank is identified by two DIDs, one for acting as an issuer and another for acting as a verifier. Richard, an ACME subject (user), is identified by one DID. Hooli FinTech, which acts as a verifier, is identified by one DID.
+        </div>
+        <div>
+            <b>Components:</b> The <a href="/server-sdk">Server SDK</a> returns DIDs for issuers and verifiers, and the <a href="/mobile-sdk">Mobile SDK</a> returns DIDs for subjects.
+        </div>
+    </Collapsible>
     </>,
 }

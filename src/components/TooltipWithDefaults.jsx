@@ -9,8 +9,7 @@ export default ({ children, ...props}) => (
     multiline={true} // use <br> e.g. data-tip="Multiple <br> lines!"
     textColor="white"
     backgroundColor="#2e2e2e"
-    border={true}
-    borderColor="#ffffff"
+    arrowColor="transparent"
     delayHide={250}
     delayUpdate={250}
     resizeHide={false} // don't hide when resizing page

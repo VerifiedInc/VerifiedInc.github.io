@@ -90,6 +90,6 @@ module.exports = {
     ],
   ],
   themes: [
-    '@docusaurus/theme-live-codeblock'
+    '@docusaurus/theme-live-codeblock',
   ],
 };

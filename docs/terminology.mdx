@@ -5,27 +5,51 @@ sidebar_label: Terminology
 slug: /terminology
 ---
 
-Unum ID uses a few specialized terms and concepts:
-- [credential](#credential)
-- [presentation](#presentation)
-- [request](#request)
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
 
-## Credential
+Unum ID uses a few specialized terms and concepts. It's not necessary to understand these in full detail, but knowing a little about them will help you deploy and use Unum ID tech.
 
-A **credential** is just a collection of data about a person, as verified
-by an entity. For example, ACME Bank can create a credential containing
-verified account information about Wile E. Coyote.
+:::tip
+**We've included helpful tooltips** like <Tip text="Whoa, a tooltip! 😎">this one</Tip> (hover over it) throughout the docs. These offer quick definitions, examples, and links to dive in deeper. They often refer to the terms described in full detail here (for example: <Tip type="credential"/>).
+:::
 
-A credential has four basic elements:
-- a type
-- an identifier for the entity 
-- an identifier for the person
-- data about the person 
-The data can be anything at all (any valid JSON) — contact information,
-proof of government ID, medical data, etc.
+**The [main terms](#main-terms) to know are:**
 
-A credential is cryptographically signed by the entity that creates it.
-This allows a company who later receives it to verify that it's valid.
+- **[credential](#credential)**
+- **[presentation](#presentation)**
+- **[request](#request)**
+
+The [less important terms](#less-important-terms) are:
+
+- [issuer](#issuer)
+- [holder app](#holder-app)
+- [holder](#holder)
+- [subject](#subject)
+- [verifier](#verifier)
+
+When possible, we avoid using these less important terms to make the docs more readable and lighter on jargon.
+
+## Main Terms
+
+### Credential
+
+> A **credential** is a collection of data about a person. It's issued by a company (i.e. created and sent to a user) and stored in the company's app, on that user's device.
+
+**Example:** ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard's contact information and account numbers, as well as a level of confidence in the accuracy of the data.
+
+**Components:** A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
+
+To issue a credential, a company inputs four pieces of information (into the [Server SDK](/server-sdk), which handles the rest):
+1. type of credential
+2. identifier for the person 
+3. data about the person
+4. identifier for the company
+The data can be anything at all (any valid JSON) — contact information, proof of government ID, medical data, etc.
+
+The credential is cryptographically signed with the company's private key. This makes it possible to later check that the credential is valid and was issued by that company.
+
+The full details of the credential object aren't that important or helpful to know, but here's an example:
 
 ```json
 {
@@ -36,38 +60,59 @@ This allows a company who later receives it to verify that it's valid.
     "updatedAt": "2020-05-26T23:07:12.770Z",
     "uuid":"c3974fa3-396e-42ee-81a9-9ab69efce031"
   },
+  // type of credential
+  // highlight-next-line
+  "type":["VerifiableCredential","DummyCredential"]
   "credentialSubject": {
+    // identifier for the person
+    // highlight-next-line
     "id": "did:unum:89460433-c0b7-4892-aeb2-f2ece77af141",
+    // data about the person
+    // highlight-next-line
     "value":"dummy value"
   },
   "id": "0c93beb0-2605-4650-b698-3fd92eb110b9",
   "issuanceDate": "2020-05-26T23:07:12.770Z",
+  // identifier for the company
+  // highlight-next-line
   "issuer": "did:unum:e1281297-268b-4700-8f17-7fa826effe35",
+  // cryptographic signature, created with company's private key
+  // highlight-start
   "proof": {
     "created": "2020-05-26T23:07:12.770Z",
     "proofPurpose":"assertionMethod",
     "signatureValue": "381yXZTKWaZj6QRgeHJ5X5REv1jDrmSgLFpsYZLKQ8wGecFfL6CFx4inzqWcepyuZhALXUrS3LaAXzsLfgv9StbrotEkWzPn",
     "type": "secp256r1Signature2020",
     "verificationMethod": "did:unum:756450ab-ab01-420c-838e-cfa0bebdc2ba#5b134be0-7cb4-4983-95b1-bdec218cb55b"
-  },
-  "type":["VerifiableCredential","DummyCredential"]
+  }
+  // highlight-end
 }
 ```
 
-## Presentation
+### Presentation
 
-A **presentation** is just a collection of one or more credentials. When
-a user agrees to share data with a company, the mobile app they're using
-creates a presentation and sends it to the company.
+> A **presentation** is a set of one or more <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a>. It's shared with (or <i>presented</i> to) a company by a user.
 
-A presentation is cryptographically signed by the mobile app that creates 
-it for the user. This allows a company who later receives it to verify that 
-it's valid.
+**Example:** Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.
+
+**Components:** A user's app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.
+
+A user typically (but not always) shares a presentation in response to a <Tip type="request"/>. The user's app first asks them if they want to share the requested information. Then, if the user chooses to share, the app prompts them to pass a biometric/passcode check. If the user passes that check, the app creates a presentation and sends it out.
+
+The presentation is cryptographically signed with the user's private key. This makes it possible to later check that the presentation is valid and was created by the user's app on their device.
+
+:::note
+Each credential within the presentation is *itself* cryptographically signed but with the private key of the company that issued it. So, for example, a presentation of three credentials has four total signatures: one on each credential and one on the whole presentation.
+:::
+
+The full details of the presentation object aren't that important or helpful to know, but here's an example:
 
 ```json
 {
   "@context": ["https://www.w3.org/2018/credentials/v1"],
   "type": ["VerifiablePresentation"],
+  // credentials contained in presentation, in this case just one
+  // highlight-start
   "verifiableCredential": [
     {
       "@context": ["https://www.w3.org/2018/credentials/v1"],
@@ -94,7 +139,12 @@ it's valid.
       "type":["VerifiableCredential","DummyCredential"]
     }
   ],
+  // highlight-end
+  // request presentation is in response to
+  // highlight-next-line
   "presentationRequestUuid": "5abc66a6-ae43-42ba-a616-0228b1a679b5",
+  // cryptographic signature, created with user's private key
+  // highlight-start
   "proof": {
     "created": "2020-06-02T18:11:03.179Z",
     "signatureValue": "381yXZQRsEcmYPCvfzQ9tfa8jXyY9NtW4Zs7dZeP2J5rVNQXT1JNvLFZJESV6oJwon3yUmngS5rSrzm14omsibwXKqmWQ27W",
@@ -102,38 +152,56 @@ it's valid.
     "verificationMethod": "did:unum:fc937ba6-1685-4b69-bcec-6857f57faf44#79e48b82-1038-4cbb-b5e9-5942782313ad",
     "proofPurpose": "assertionMethod"
   }
+  // highlight-end
 }
 ```
 
-## Request 
+### Request 
 
-A **request** is what a company creates to request a presentation (of
-credentials) from a user.
+> A **request** (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation"><Tip type="presentation"/></a>. It's sent by a company to a user, who chooses whether to share a presentation in response.
 
-A request has four basic elements:
-- an identifier for the company 
-- a list of requested credentials
-For each credential, the request specifies which type it should be and
-which entity should have created it. For example, Hooli FinTech can request
-a KYC verification credential that was created by ACME Bank.
+**Example:** Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank.
 
-A request is cryptographically signed by the company that creates it.
-This allows a user's mobile app to verify that it's valid.
+**Components:** A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user's app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
+
+To create a request, a company inputs four pieces of information (into the [Server SDK](/server-sdk), which handles the rest):
+1. identifier for the company
+
+and a list containing, for each credential:
+
+2. type of credential
+3. acceptable <Tip type="issuer">issuer(s)</Tip> of credential
+
+If multiple issuers are listed, a credential (of the correct type) from any one of them is acceptable.
+
+:::important
+The <Tip type="issuer"/> of the credential can be *the same company* as the one making the request (the <Tip type="verifier"/>)! This is the case for our authentication product ([Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordless)™). A single company issues an authentication credential to a user, who later shares a presentation containing that credential to authenticate. Try this yourself with our [ACME demo](/acme-demo).
+:::
+
+The request is cryptographically signed with the company's private key. This makes it possible to later check that the request is valid and was created by that company, which helps prevent attacks like phishing.
 
 ```json
 {
   "uuid": "5abc66a6-ae43-42ba-a616-0228b1a679b5",
   "createdAt": "2020-06-02T18:11:03.179Z",
   "updatedAt": "2020-06-02T18:11:03.179Z",
+  // default is 10 minutes after creation, but this can be overriden
+  // highlight-next-line
   "expiresAt": "2020-06-02T18:21:03.179Z",
   "verifier": {
     "name": "ACME, Inc.",
+    // identifier for the company
+    // highlight-next-line
     "did": "did:unum:fc937ba6-1685-4b69-bcec-6857f57faf44",
     "url": "https://api-demo-server.unumid.org/presentation"
   },
+  // credentials requested to be included in presentation, in this case only one
+  // highlight-start
   "credentialRequests": [
     {
+      // type of credential
       "type": "Dummy_Credential",
+      // accetable issuer(s) of credential, in this case only one
       "issuers": [
         {
           "did": "did:unum:437ce603-7f1f-4ff7-bbcf-83fed7f716a2",
@@ -143,6 +211,9 @@ This allows a user's mobile app to verify that it's valid.
       ]
     }
   ],
+  // highlight-end
+  // cryptographic signature, created with company's private key
+  // highlight-start
   "proof": {
     "created": "2020-06-02T18:11:03.179Z",
     "signatureValue": "AN1rKpM716iPUrJjkVTpbVAfhNWpUm2nH4LAcFQi9BcBNoqgXYD54q1EcPXDduz7LXCC3i471VTw6vRtXf9cmVYD2Hp7trmqE",
@@ -150,5 +221,79 @@ This allows a user's mobile app to verify that it's valid.
     "verificationMethod": "did:unum:fc937ba6-1685-4b69-bcec-6857f57faf44#79e48b82-1038-4cbb-b5e9-5942782313ad",
     "proofPurpose": "assertionMethod"
   }
+  // highlight-end
 }
 ```
+
+## Less Important Terms
+
+When possible, we avoid using these less important terms when possible to make the docs more readable and lighter on jargon. However, there are cases where it's necessary to use more precise language, so this section serves as a reference to that end.
+
+### Issuer
+
+> An **issuer** is a role a company can play to issue <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a> to <a href="/terminology#subject"><Tip type="subject">subjects</Tip></a> (users). An issuer can also change credential statuses, for example to revoke credentials.
+
+:::important
+A company can be both an <Tip type="issuer"/> and a <Tip type="verifier"/>! In fact, it can play the roles of many different issuers and verifiers. For example, to implement our authentication product ([Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordless)™), a single company issues an authentication credential to a user, who later shares a presentation (containing that credential), which the company verifies. Try this authentication flow yourself with our [ACME demo](/acme-demo).
+:::
+
+**Example:** ACME Bank issues a KYC verification credential to Richard (an ACME user). It later revokes that credential and issues a new one to Richard to update his information.
+
+**Components:** An issuer issues credentials and changes credential statuses using the <a href="/server-sdk">Server SDK</a>.
+
+To register an issuer and recieve an issuer API key, a company (already registered as an Unum ID customer) submits to us three pieces of information:
+1. name (human readable)
+2. logo icon
+3. brand colors
+These are used in the [Mobile SDK](/mobile-sdk-overview) and [Web SDK](/web-sdk) to display content to users.
+
+### Holder App
+
+> A **holder app** is an Unum ID enabled mobile app. <i>See also: <a href="/terminology#holder-app">holder</a>.</i>
+
+**Example:** ACME Bank adds Unum ID technology to its mobile app, making it a holder app.
+
+**Components:** A holder app is one using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
+
+### Holder
+
+> A **holder** is an instance of a <a href="/terminology#holder-app"><Tip type="holder app"/></a>, installed on a particular device. It stores (or <i>holds</i>) <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a> for a <a href="/terminology#subject"><Tip type="subject"/></a> (user). It also allows the subject to respond to <a href="/terminology#request"><Tip type="request">requests</Tip></a> and share <a href="presentation"><Tip type="presentation">presentations</Tip></a>.
+
+:::note
+The definition of a holder includes an app *instance* on a *particular device* for two reasons:
+1. A holder app stores different credentials for different users.
+2. A user's private keys are stored in the secure hardware of their phone (and never leave that device).
+:::
+
+**Example:** The ACME Bank app (installed on Richard's phone) stores a KYC verification credential for Richard. When Hooli FinTech requests an ACME KYC verification, the app lets Richard respond with a presentation of the KYC verification credential.
+
+**Components:** A holder app is one using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a holder is an instance of that installed on a particular device.
+
+### Subject
+
+> A **subject** is a user of a <a href="terminology#holder-app"><Tip type="holder app"/></a>. Each subject uses one or more <a href="terminology#holder"><Tip type="holder">holders</Tip></a>.
+
+:::tip
+We use "user" instead of "subject" as much as possible, since these are almost always interchangeable, but you'll see "subject" at the code level (for example in `credentialSubject`).
+:::
+
+**Example:** Richard is a subject (user) of the ACME Bank mobile app. He uses two holders: the app installed on his phone and his tablet.
+
+**Components:** A holder app is one using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a holder is an instance of that installed on a particular device. A subject uses one or more holders.
+
+### Verifier
+
+> A **verifier** is a role a company can play to verify <a href="/terminology#presentation"><Tip type="presentation">presentations</Tip></a> shared by <a href="/terminology#subject"><Tip type="subject">subjects</Tip></a> (users). A verifier can also make <a href="/terminology#request"><Tip type="request">requests</Tip></a> for presentations and send them to subjects.
+
+:::important
+A company can be both an <Tip type="issuer"/> and a <Tip type="verifier"/>! In fact, it can play the roles of many different issuers and verifiers. For example, to implement our authentication product ([Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordless)™), a single company issues an authentication credential to a user, who later shares a presentation (containing that credential), which the company verifies. Try this authentication flow yourself with our [ACME demo](/acme-demo).
+:::
+
+**Example:** Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank. When Richard shares the presentation, Hooli verifies it.
+
+**Components:** A verifier verifies presentations and makes requests using the <a href="/server-sdk">Server SDK</a>. It displays requests using the <a href="/web-sdk">Web SDK</a> and sends them to subjects using the <a href="/server-sdk">Server SDK</a>.
+
+To register a verifier and recieve a verifier API key, a company (already registered as an Unum ID customer) submits to us two pieces of information:
+1. name (human readable)
+2. endpoint (to receive presentations)
+The name is used in the [Mobile SDK](/mobile-sdk-overview) and [Web SDK](/web-sdk) to display content to users. We send (encrypted) presentations to the endpoint, which passes them to the [Server SDK](/server-sdk) to be verified. (We provide an OpenAPI spec and reference endpoint, so creating the endpoint is very simple.)

@@ -5,33 +5,10 @@ sidebar_label: Security
 slug: /security
 ---
 
-As noted in [About Unum ID](/about-unum-id), what distinguishes Unum 
-ID from other identity solutions is that each user’s data is stored 
-in their own app, and only you and that specific user ever have 
-access to it. ​**We coordinate sharing of data without ever being 
-able to interact with it in plaintext.** ​This provides unparalleled 
-security and privacy. As the “encrypted domain” in our diagrams 
-indicates, sensitive data is never decrypted.
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
 
-How exactly we do this is complex and proprietary, but at a high 
-level it works as follows. When you issue a credential (containing
-some data) to a user, that credential is encrypted with the user’s 
-public key. (The Server SDK does this on your server and sends the 
-encrypted version to us.) We temporarily store and route the 
-encrypted credential to the correct user’s app but have no ability 
-to decrypt the data. The user’s app then receives and decrypts the 
-credential. See the diagram below.
-
-<!-- ADD DIAGRAM -->
-
-Then, when a user responds to a request for a credential, that 
-credential is encrypted with your publickey. (The Mobile SDK does 
-this in the user’s app and sends the encrypted version to us.) 
-We store metadata about the encrypted credential and route it to 
-you but have no ability to decrypt the data. You then receive and 
-decrypt the credential. See the diagram below.
-
-<!-- ADD DIAGRAM -->
+Our [Encrypted Domain](#encrypted-domain) approach 
 
 We accomplish all this with a state-of-the-art *​distributed* system — 
 not a massive central database vulnerable to attack and privacy 
@@ -55,3 +32,55 @@ connection between that data a person in the real world. Unum ID
 establishes and maintains that connection. We use a complex, 
 proprietary combination of cryptography to tie the data to a device 
 and biometrics and behavioral auth to tie that device a single user.
+
+## Encrypted Domain
+
+A user’s Unum ID <Tip type="credential">credentials</Tip> are stored locally on their device (in an app using our [Mobile SDK](/mobile-sdk-overview)), and only you and that specific user ever have access to them. ​**We coordinate sharing of data without ever being able to interact with the data in plaintext.** ​This is the unparalleled security and privacy enabled by our Encrypted Domain approach.
+
+### Example
+
+ When you issue (send) a <Tip type="credential"/> to a user, that credential is encrypted with the user’s public key. (The [Server SDK](/server-sdk) does this locally on your server and sends the encrypted version to us.) We temporarily store and route the encrypted credential to the correct user’s app but have no ability to decrypt the data. The user’s app then receives and decrypts the credential. See the diagram below.
+
+![](/img/issuance.png)
+*<b>Issuing a Credential:</b> The Server SDK encrypts a credential with a user’s public key before sending it to us. This ensures that only you and that specific user have access to the plaintext data — Unum ID never does.*
+
+Then, when a user responds to a request for a credential, that credential is encrypted with *your *public key.(The Mobile SDK does this locally on the user’s device and sends the encrypted version to us.) We store nonsensitive metadata about the encrypted credential and route it to you but have no ability to decrypt the data. You then receive and decrypt the credential. See the diagram below.
+
+![](/img/sharing.png)
+*<b>Sharing a Credential:</b> The Mobile SDK encrypts a credential with your public key before sending it to us. This ensures that only the user and you have access to the underlying plaintext data — Unum ID never does.*
+
+:::note
+The shared credential is actually contained in a <Tip type="presentation"/> object. See the [Mobile SDK](/mobile-sdk-overview) and [Server SDK](/server-sdk) docs for full details.
+:::
+
+:::important
+The encryption described above is ​*in addition to* the standard encryption like TLS that applies to all data in transit and at rest. This encryption done with a specific public key ensures only the holder of the private key can decrypt the credential.
+:::
+
+## Solution Properties
+
+Unum ID solutions have best-in-class security properties:
+
+#### Multi-Layer Encryption
+
+Standard encryption like TLS applies to all data in transit and at rest, but there’s an additional layer. When you send a credential to a user, it’s encrypted locally on your server such that only that user’s device can decrypt it (using your app). When the user shares the credential, it’s encrypted locally on their device (in your app) so that only the intended recipient can decrypt it. In other words, Unum ID coordinates sharing of verified identity data, but **​we *​never* h​ave access to sensitive data in plaintext.** This is the power of our ​[Encrypted Domain](#encrypted-domain) approach  (see above for more).
+
+#### Secure Mobile Hardware 
+
+A user’s credentials are stored locally on their device, encrypted in your app. This is tied to the trusted execution environment (TEE) and secure hardware of the user’s phone so that the credentials can only be accessed or shared by passing a biometric check.
+
+#### Privacy and Consent
+
+Data is ​*only* ​shared with full consent of the user. Unum ID goes far beyond what’s needed for compliance with GDPR and other privacy regulations.
+
+#### Local Cryptography 
+
+All cryptography (key generation, signing, encryption, etc.) is done locally, on your server or in your app on the user’s device. We provide software that makes this easy to do, but all operations are done independently off Unum ID. This ensures ​**your security is under your control.**
+
+#### No Shared Secrets
+
+We use zero shared secrets: no passwords, passcodes, PINs, or otherwise. Unum ID instead uses **​public key cryptography** tied to the secure hardware of users’ phones. This completely eliminates common account takeover attacks like SIM swapping and behavioral fraud more generally. How? Because there’s no secret to intercept. See our white paper [​How Unum ID Stops Account Takeover​](https://www.unum.id/resources#white-papers) for more.
+
+#### Bi-Directional Auth
+
+The security of our passwordless auth solution ([​Beyond Passwordless​](https://www.unum.id/solutions/beyond-passwordless)™) applies to ​all ​interactions in Unum ID. This authentication is bi-directional: y​ ou authenticate the user, ​and ​the user authenticates you! This eliminates phishing attacks because the user is unable to share data with anyone other than your company, no matter how convincing the phishing material may be.

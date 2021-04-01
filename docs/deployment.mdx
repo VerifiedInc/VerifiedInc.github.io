@@ -5,26 +5,123 @@ sidebar_label: Deployment
 slug: /deployment
 ---
 
-Deploying Unum ID is straightforward.
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
 
-# Components
+This section provides a brief overview of Unum ID [components](#components) and the deployment [process](#process). For a more technical and less conceptual overview, please see the documentation for each component (linked below).
 
-Unum ID uses a hybrid deployment model. We provide several lightweight
-SDKs that you install aand use to interact with our Identity Engine cloud.
-These SDKs are:
-- **Mobile SDK:** This works behind the scenes in your mobile app to 
-securely store a user’s credentials. It also lets a user respond to 
-requests for and share those credentials.
-  - <u>iOS</u>: written in Swift, supports Swift and Objective-C apps, 
+## Components
+
+Unum ID uses a hybrid deployment model. We provide several lightweight components that you install aand use to interact with our Identity Engine cloud:
+- **[Mobile SDK](#mobile-sdk):** This works behind the scenes in your company's mobile app to securely store a user’s <Tip type="credential">credentials</Tip>. It also lets a user respond to <Tip type="request">requests</Tip> and share <Tip type="presentation">presentations</Tip> (of credentials).
+  - **iOS:** written in Swift, supports Swift and Objective-C apps, 
   iOS 11.1+, iPhone 6+
-  - <u>Android</u>: supports Kotlin and Java apps, API Level 23+ (Android 6.0+)
+  - **Android:** supports Kotlin and Java apps, API Level 23+ (Android 6.0+)
   - ~480 KB
-- **Server SDK:** ​This lets you issue credentials to a user, encrypted so that 
-only their app can decrypt it. It also lets you verify that credentials a 
-user shares are valid.
-  - <u>Option 1​</u>: Node.js SDK (contact us for other languages)
-  - <u>Option 2​</u>: containerized app with exposed API
-- **Web SDK:** ​This lets you display requests for credentials to a user and show the results of
-verifying credentials they share.
-  - React library (contact us for other frameworks)
+- **[Server SDK](#server-sdk):** ​This lets you issue <Tip type="credential">credentials</Tip> to a user and verify <Tip type="presentation">presentations</Tip> (of credentials) a user sends to you.
+  - **Option 1​:** Node.js SDK (contact us for other languages)
+  - **Option 2​:** containerized app with exposed API
+- **[Web SDK](#web-sdk):** ​This lets you display <Tip type="request">requests</Tip> to users and show the results of
+verifying <Tip type="credential">credentials</Tip> they share.
+  - **React library** (contact us for other frameworks)
 
+![](/img/architecture.png)
+*<b>Architecture:</b> You use SDKs to interact with our Identity Engine cloud.*
+
+## Process 
+
+Each Unum ID component is simple to install and use. Your development team should be able to try the platform in a matter of hours and complete an integration suitable for a pilot in a few days. We provide dedicated engineering support to make the process as easy as possible.
+
+For pilots, we can also provide a ​**simulated deployment,** which allows you to try Unum ID technology with zero integration work. We host all the components for you and provide a dedicated mobile app and website with your branding. Your testers can then try the platform by simply installing the app and using the website. This is a great way to build the business case for Unum ID before progressing to a full deployment. Please ​[contact sales​](mailto:sales@Unum.ID) for more.
+
+### Installing Components
+
+When you register as an Unum ID customer, we send you API keys for each component.
+
+#### Mobile SDK
+
+*See full documentation [here](/mobile-sdk-overview).*
+
+1. Add the SDK to your mobile app (e.g. through Maven/CocoaPods).
+2. Publish an update to the app stores.
+3. Store the user identifier the SDK returns in your database.
+
+As noted in the [​FAQ​](#faq), you can add Unum ID on top of your existing account system. To do so, simply initialize the Mobile SDK after a user logs into their account. You can later transition away from the account system to fully eliminate passwords.
+
+The Mobile SDK works entirely behind the scenes, benefitting users without intruding on the UI/UX of your app. The only components exposed to the user are system alerts and a QR code scanner, which you can trigger from anywhere in the app (e.g. with a Scan button).
+
+#### Server SDK
+
+*See full documentation [here](/server-sdk).*
+
+*You can also choose to deploy this as a (containerized) app that you interact with through an API.*
+
+1. Install the SDK on your server (e.g. through NPM).
+2. Store the private keys that the SDK returns securely in your database.
+3. Create an interface the Web SDK can use to interact with the Server SDK.
+4. Create an endpoint to receive encrypted data from our Identity Engine cloud.
+
+For steps (3) and (4), we provide OpenAPI specifications and references to make this easy.
+
+Using the Server SDK is straightforward. To issue (send) a credential to a user, you input identity data and the user’s identifier. And to request a credential from a user, you input the type of credential and the user’s identifier. The SDK handles the rest.
+
+#### Web SDK
+
+*See full documentation [here](/web-sdk).*
+
+1. Add the SDK to your web client (e.g. through NPM).
+2. Point the Web SDK at the Server SDK interface you created in step (3) above.
+3. Define a redirect on successful credential sharing (e.g. granting the user access).
+
+Using the Web SDK is simple. Just call the Server SDK to create requests for credentials from users. The Web SDK takes care of everything else — the user interface, fallback options, error handling, etc.
+
+## FAQ 
+
+<details>
+  <summary>
+  <b>Do we have to replace our account system?</b>
+  </summary>
+  <br/>
+  <p>
+    <b>No.</b> Unum ID can sit on top of your existing account system, facilitating a gradual transition away from passwords. You don’t have to eliminate them right away, or ever if you prefer.
+  </p>
+  <p>
+    We recommend first using Unum ID as a second step in the authentication process, on top of your existing account system. Then, you can gradually replace that system entirely to fully eliminate passwords and remove the weak link.
+  </p>
+</details>
+<br/>
+<details>
+  <summary>
+  <b>Are there setup steps for users?</b>
+  </summary>
+  <br/>
+  <p>
+    <b>No, for users everything works automatically, behind the scenes.</b> When you set up Unum ID, you add our Mobile SDK to your app and publish an update to the app store. The next time the user opens the app, they’ll have all the functionality Unum ID provides without having to do anything. It’s just like a normal feature update.
+  </p>
+</details>
+<br/>
+<details>
+  <summary>
+  <b>What if a user loses their phone?</b>
+  </summary>
+  <br/>
+  <p>
+    <b>Not a problem.</b> The user’s app is backed up, and they can remotely deactivate their lost phone, just like they can cancel a credit card.
+  </p>
+  <p>
+    The default backup is to the user’s iCloud (on iOS) or Google Drive (on Android) account, so when they get a new phone everything will work like before. We also provide an easy way for you to store a backup on the user’s behalf.
+  </p>
+  <p>
+    Unum ID requires that the user has a device biometric and passcode set up. Lost phones that have these enabled are extremely secure. (Even the FBI couldn’t break into an iPhone.) But for extra protection, we provide a way for the user to remotely deactivate the app on the lost phone, making it useless even if an attacker breaks through the biometric. And for ultimate protection, the user can choose to remotely erase their device.
+  </p>
+</details>
+<br/>
+<details>
+  <summary>
+  <b>What if a user has multiple phones?</b>
+  </summary>
+  <br/>
+  <p>
+    <b>They can use all of them</b> and keep them synchronized.
+  </p>
+</details>

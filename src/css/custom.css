@@ -80,6 +80,16 @@
 .admonition svg {
   margin-right: 5px;
 }
+/* override link unstyling within admonitions */
+.alert a {
+  color: var(--ifm-link-color);
+  text-decoration: var(--ifm-link-decoration);
+  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}
+.alert a:hover {
+  color: var(--ifm-link-hover-color);
+  text-decoration: var(--ifm-link-hover-decoration);
+}
 
 /* NAVBAR */
 /* adjust spacing between rightmost navbar iem and dark mode toggle */
@@ -120,4 +130,20 @@ html[data-theme='dark'] {
   max-width: 350px !important;
   padding: 8px 14px 10px 14px !important;
   font-size: calc(var(--ifm-font-size-base) * 0.85) !important;
+}
+/* add spacing between divs */
+.tooltip div:not(:last-child) {
+  padding-bottom: 10px;;
+}
+.tooltip * {
+  margin-bottom: 0;
+}
+/* accordion trigger */
+.Collapsible__trigger {
+  font-style: italic;
+  float: right;
+  margin-left: 10px;
+}
+.Collapsible__trigger:hover {
+  cursor: pointer;
 }

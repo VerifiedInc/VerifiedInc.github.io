@@ -2,6 +2,10 @@ module.exports = {
   sidebar: [
     {
       type: 'doc',
+      id: 'quick-start-guide',
+    },
+    {
+      type: 'doc',
       id: 'usage-guide',
     },
     {
@@ -29,9 +33,9 @@ module.exports = {
           /* should change when we have lots of docs */
           collapsed: false,
           items: [
+            'mobile-sdk-overview',
             'mobile-sdk-android', 
             'mobile-sdk-ios',
-            'reference-mobile-apps',
           ],
         },
         'web-sdk',

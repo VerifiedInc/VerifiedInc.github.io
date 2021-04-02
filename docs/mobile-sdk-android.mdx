@@ -205,6 +205,10 @@ If you don't have a QR code scanner, you can use the one included in the SDK. Si
     <TabItem value="kotlin">
 
 ```kotlin
+qrButton.setOnClickListener {
+    showQRCodeScanner()
+}
+
 private fun showQRCodeScanner() {
     val launchIntent = UnumQRCodeActivity.getLaunchIntent(this, true, false)
     startActivityForResult(launchIntent, REQUEST_CODE)
@@ -227,6 +231,14 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 <TabItem value="java">
 
 ```java
+
+findViewById(R.id.qrButton).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        startQRCodeScanner();
+    }
+});
+
 private void startQRCodeScanner() {
     Intent launch = UnumQRCodeActivity.Companion.getLaunchIntent(
             QrCodeScannerActivity.this,
@@ -256,6 +268,43 @@ You can call this on a trigger of your choice. For example, you can create a "Sc
 The QR code scanner lookss like this:
 
 ![QR code scanner](../assets/images/android-scanner.png)
+
+### Logging
+
+You can turn SDK logging on and off and set the log level:
+
+<Tabs
+    groupId="languages"
+    defaultValue="kotlin"
+    values={[
+        {label: 'Kotlin', value: 'kotlin'},
+        {label: 'Java', value: 'java'}
+    ]}>
+    <TabItem value="kotlin">
+
+```kotlin
+    // Turn the Unum ID logger on or off. This will allow
+    // you to show or hide log messages from the SDK
+    UnumLogger.enableUnumLogging = true
+
+    // If the SDK Logger is enabled, set the desired message log level
+    UnumLogger.loggingLevel = UnumLogger.VERBOSE
+```
+</TabItem>
+<TabItem value="java">
+
+```java
+
+    // Turn the Unum ID logger on or off. This will allow
+    // you to show or hide log messages from the SDK
+    UnumLogger.Companion.setEnableUnumLogging(true);
+
+    // If the SDK Logger is enabled, set the desired message log level
+    UnumLogger.Companion.setLoggingLevel(UnumLogger.VERBOSE);
+```
+
+</TabItem>
+</Tabs>
 
 ### Callback
 

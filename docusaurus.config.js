@@ -40,14 +40,64 @@ module.exports = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'Introduction',
           items: [
             {
-              label: 'Usage Guide',
-              to: '/',
+              label: 'About Unum ID',
+              to: '/about-unum-id',
+            },
+            {
+              label: 'Terminology',
+              to: '/terminology',
+            },
+            {
+              label: 'Architecture',
+              to: '/architecture',
+            },
+            {
+              label: 'Deployment Overview',
+              to: '/deployment-overview',
+            },
+            {
+              label: 'Privacy and Security',
+              to: '/privacy-and-security',
             },
           ],
         },
+        {
+          title: 'Components',
+          items: [
+            {
+              label: 'Server SDK',
+              to: '/server-sdk',
+            },
+            {
+              label: 'Mobile SDK',
+              to: '/mobile-sdk-overview',
+            },
+            {
+              label: 'Web SDK',
+              to: '/web-sdk',
+            },
+          ],
+        },
+        // {
+        //   title: 'Demos',
+        //   items: [
+        //     {
+        //       label: 'Developer Demo',
+        //       to: '/developer-demo',
+        //     },
+        //     {
+        //       label: 'ACME Demo',
+        //       to: '/acme-demo',
+        //     },
+        //     {
+        //       label: 'Hooli Demo',
+        //       to: '/hooli-demo',
+        //     },
+        //   ],
+        // },
         {
           title: 'More',
           items: [

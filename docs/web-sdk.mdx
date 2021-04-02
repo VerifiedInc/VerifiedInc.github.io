@@ -12,10 +12,14 @@ import Tip from '../src/components/Tip';
 
 This is a lightweight React library that allows a web client to display and sends <Tip type="request">requests</Tip> to users, who can respond with <Tip type="presentation">presentations</Tip>.
 
+:::note
+Please [contact us](mailto:support@Unum.ID) for frameworks other than React.
+:::
+
 ## Overview 
 
 ### Minimum Requirements
-- React v16.8.0 and above
+- **React v16.8.0 and above**
 - **English language** (internationalization coming soon)
 
 ### TypeScript support
@@ -79,10 +83,20 @@ PresentationRequests are shared to an Unum ID-powered mobile app a user's device
 - **Button:** On mobile browsers, the SDK will default to displaying the deep link as a button.
 
 #### Fallbacks
-In some situations, neither a QR code nor a button is convenient, so the SDK uses fallback options:
-- **Push Notification:** sends a push notification to the user's device.
-- **SMS:** sends the user an SMS message containing the deep link, which they open on their mobile device.
-- **Email**: sends the user an email containing the deep link, which they open on their mobile device.
+In some situations, neither a QR code nor a button is convenient, so the SDK uses fallback options in this order:
+1. **Push Notification:** sends a push notification to the user's device.
+2. **SMS:** sends the user an SMS message containing the deep link, which they open on their mobile device.
+3. **Email**: sends the user an email containing the deep link, which they open on their mobile device.
+
+:::tip
+Using all fallbacks allows you to handle the vast majority of edge cases:
+- **Broken phone camera / doesn't know how to scan:** 
+<br/> QR code &rarr; push notification
+- **Didn't accept / disabled push notifications:**
+<br/> push notification &rarr; SMS
+- **No cell service:**
+<br/> SMS &rarr; email
+:::
 
 These are called fallbacks in part because they require some information about the user to work (unlike QR codes and buttons). To send push notifications, you need to provide a push notification identifier for the user. To send SMS messages, you need to provide a phone number for the user. And to send emails, you need to provide an email for the user.
 

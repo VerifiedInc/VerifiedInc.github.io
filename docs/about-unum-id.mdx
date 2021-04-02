@@ -5,17 +5,33 @@ sidebar_label: About Unum ID
 slug: /about-unum-id
 ---
 
-Unum ID is the sharified identity™ network. You can use our software 
-within your organization to enable use cases like passwordless auth. 
-And you can use it with other organizations to securely share verified 
-identity data with user consent and in full compliance. This enables 
-instant onboarding to new services and opens up new revenue 
-opportunities for organizations providing the data.
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
 
-The magic of Unum ID, and what distinguishes it from other identity 
-solutions, is that each user’s data is stored in their own app, and 
-*only* you and that specific user ever have access to it. ​**We 
-coordinate sharing of data without ever being able to interact with 
-it in plaintext.** ​This provides unparalleled security and privacy. 
-It’s a solution optimized for a world of GDPR, constant data breaches, 
-and decreasing user trust. See [Security​](/security) for more information.
+**[Unum ID](https://www.Unum.ID) is the sharified identity™ network.** Our tech allows companies to securely access and share verified identity data, with full user consent. Our core products are:
+- **[Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordless)™:** Instant multi-factor auth, using your mobile app. *No passwords or other shared secrets.*
+- **[Verify with X](https://www.unum.id/solutions/verify-with-x)™.:** A marketplace for verified identity data, enabling instant onboarding and more. Data recipients pay data providers for access.
+
+## Docs Overview
+
+These docs provide detailed, technical information about how to deploy and use Unum ID tech. We recommend starting starting with the Introduction sections, but feel free to dive into the Components sections for code level details.
+
+Below is an annotated table of contents, which offers a sneak peek of each section. 
+
+### Introduction
+
+- **[Terminology](/terminology):** a few specialized terms that are helpful to know.
+- **[Architecture](/architecture):** overview of Unum ID components and how the interact with each other and our Identity Engine cloud.
+- **[Deployment Overview](/deployment-overview):** conceptual overview of deploying all Unum ID components.
+- **[Privacy and Security](/privacy-and-security):** the unparalled benefits of our Encrypted Domain approach.
+
+### Components
+- **[Server SDK](/server-sdk):** lets you act as an <Tip type="issuer"/> or <Tip type="verifier"/>.
+- **Mobile SDK:** stores <Tip type="credential">credentials</Tip> for your users and lets them share <Tip type="presentation">presentations</Tip>.
+    - **[Overview](/mobile-sdk-overview):** high level information about the SDK.
+    - **[Android](/mobile-sdk-android):** for native Kotlin and Java apps.
+    - **[iOS](/mobile-sdk-ios):** for native Swift and Objective-C apps.
+- **[Web SDK](/web-sdk):** lets you display and send <Tip type="request">requests</Tip> to users. 
+
+### Demos
+*Coming soon!*

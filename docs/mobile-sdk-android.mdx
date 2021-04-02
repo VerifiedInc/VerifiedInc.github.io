@@ -205,10 +205,6 @@ If you don't have a QR code scanner, you can use the one included in the SDK. Si
     <TabItem value="kotlin">
 
 ```kotlin
-qrButton.setOnClickListener {
-    showQRCodeScanner()
-}
-
 private fun showQRCodeScanner() {
     val launchIntent = UnumQRCodeActivity.getLaunchIntent(this, true, false)
     startActivityForResult(launchIntent, REQUEST_CODE)
@@ -224,21 +220,13 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
             Toast.makeText(this, barcode.rawValue, Toast.LENGTH_LONG).show()
         }
     }
-    }
+ }
 ```
 
 </TabItem>
 <TabItem value="java">
 
 ```java
-
-findViewById(R.id.qrButton).setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        startQRCodeScanner();
-    }
-});
-
 private void startQRCodeScanner() {
     Intent launch = UnumQRCodeActivity.Companion.getLaunchIntent(
             QrCodeScannerActivity.this,
@@ -263,7 +251,37 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
 </TabItem>
 </Tabs>
 
-You can call this on a trigger of your choice. For example, you can create a "Scan QR Code" button that starts the activity when the user clicks it.
+You can call this on a trigger of your choice. For example, you can create a "Scan QR Code" button that starts the activity when the user clicks it:
+
+<Tabs
+    groupId="languages"
+    defaultValue="kotlin"
+    values={[
+        {label: 'Kotlin', value: 'kotlin'},
+        {label: 'Java', value: 'java'}
+    ]}>
+    <TabItem value="kotlin">
+
+```kotlin
+qrButton.setOnClickListener {
+    showQRCodeScanner()
+}
+```
+
+</TabItem>
+<TabItem value="java">
+
+```java
+findViewById(R.id.qrButton).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        startQRCodeScanner();
+    }
+});
+```
+
+</TabItem>
+</Tabs>
 
 The QR code scanner lookss like this:
 
@@ -283,12 +301,10 @@ You can turn SDK logging on and off and set the log level:
     <TabItem value="kotlin">
 
 ```kotlin
-    // Turn the Unum ID logger on or off. This will allow
-    // you to show or hide log messages from the SDK
-    UnumLogger.enableUnumLogging = true
-
-    // If the SDK Logger is enabled, set the desired message log level
-    UnumLogger.loggingLevel = UnumLogger.VERBOSE
+// Turn the SDK logger on or off
+UnumLogger.enableUnumLogging = true
+// If logger enabled, set desired message log level
+UnumLogger.loggingLevel = UnumLogger.VERBOSE
 ```
 </TabItem>
 <TabItem value="java">

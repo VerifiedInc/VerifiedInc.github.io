@@ -1,13 +1,13 @@
 module.exports = {
   sidebar: [
-    {
-      type: 'doc',
-      id: 'quick-start-guide',
-    },
-    {
-      type: 'doc',
-      id: 'usage-guide',
-    },
+    // {
+    //   type: 'doc',
+    //   id: 'quick-start-guide',
+    // },
+    // {
+    //   type: 'doc',
+    //   id: 'usage-guide',
+    // },
     {
       type: 'category',
       label: 'Introduction',
@@ -16,8 +16,9 @@ module.exports = {
       items: [
         'about-unum-id',
         'terminology',
-        'deployment',
-        'security',
+        'architecture',
+        'deployment-overview',
+        'privacy-and-security',
       ],
     },
     {
@@ -41,16 +42,16 @@ module.exports = {
         'web-sdk',
       ],
     },
-    {
-      type: 'category',
-      label: 'Demos',
-      /* should change when we have lots of docs */
-      collapsed: false,
-      items: [
-        'developer-demo',
-        'acme-demo',
-        'hooli-demo',
-      ]
-    },
+    // {
+    //   type: 'category',
+    //   label: 'Demos',
+    //   /* should change when we have lots of docs */
+    //   collapsed: false,
+    //   items: [
+    //     'developer-demo',
+    //     'acme-demo',
+    //     'hooli-demo',
+    //   ]
+    // },
   ],
 };

@@ -153,7 +153,7 @@ var scannerSheet: some  View {
 }
 ```
 
-You can open this on a trigger of your choice. For example, you can create a "Scan QR Code" button that starts the activity when the user clicks it:
+You can open this on a trigger of your choice. For example, you can create a "Scan QR Code" button that opens the scanner when the user clicks it:
 
 ```swift
 @State var isShowingScanner = false
@@ -179,7 +179,9 @@ Button(action: {
 You can turn SDK logging on and off and set the log level:
 
 ```swift
+// Turn the SDK logger on or off
 UnumID.log.enabled = true
+// If logger enabled, set desired message log level
 UnumID.log.level = .debug
 ```
 

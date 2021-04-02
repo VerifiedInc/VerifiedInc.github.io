@@ -1,44 +1,30 @@
 ---
-id: deployment
-title: Deployment
-sidebar_label: Deployment
-slug: /deployment
+id: deployment-overview
+title: Deployment Overview
+sidebar_label: Deployment Overview
+slug: /deployment-overview
 ---
 
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-This section provides a brief overview of Unum ID [components](#components) and the deployment [process](#process). For a more technical and less conceptual overview, please see the documentation for each component (linked below).
-
-## Components
-
-Unum ID uses a hybrid deployment model. We provide several lightweight components that you install aand use to interact with our Identity Engine cloud:
-- **[Mobile SDK](#mobile-sdk):** This works behind the scenes in your company's mobile app to securely store a user’s <Tip type="credential">credentials</Tip>. It also lets a user respond to <Tip type="request">requests</Tip> and share <Tip type="presentation">presentations</Tip> (of credentials).
-  - **iOS:** written in Swift, supports Swift and Objective-C apps, 
-  iOS 11.1+, iPhone 6+
-  - **Android:** supports Kotlin and Java apps, API Level 23+ (Android 6.0+)
-  - ~480 KB
-- **[Server SDK](#server-sdk):** ​This lets you issue <Tip type="credential">credentials</Tip> to a user and verify <Tip type="presentation">presentations</Tip> (of credentials) a user sends to you.
-  - **Option 1​:** Node.js SDK (contact us for other languages)
-  - **Option 2​:** containerized app with exposed API
-- **[Web SDK](#web-sdk):** ​This lets you display <Tip type="request">requests</Tip> to users and show the results of
-verifying <Tip type="credential">credentials</Tip> they share.
-  - **React library** (contact us for other frameworks)
-
-![](/img/architecture.png)
-*<b>Architecture:</b> You use SDKs to interact with our Identity Engine cloud.*
+This section provides a brief overview of how your company can deploy Unum ID tech. For fullt technical details, see the documentation for each component (linked below).
 
 ## Process 
 
 Each Unum ID component is simple to install and use. Your development team should be able to try the platform in a matter of hours and complete an integration suitable for a pilot in a few days. We provide dedicated engineering support to make the process as easy as possible.
 
-For pilots, we can also provide a ​**simulated deployment,** which allows you to try Unum ID technology with zero integration work. We host all the components for you and provide a dedicated mobile app and website with your branding. Your testers can then try the platform by simply installing the app and using the website. This is a great way to build the business case for Unum ID before progressing to a full deployment. Please ​[contact sales​](mailto:sales@Unum.ID) for more.
+### Simulated Deployment
 
-### Installing Components
+For pilots, we can also provide a ​**simulated deployment,** which allows you to try Unum ID technology with zero integration work. We host all the components for you and provide a dedicated mobile app and website with your branding. Your testers can then try the platform by simply installing the app and using the website. 
+
+This is a great way to build the business case for Unum ID before progressing to a full deployment. Please ​[contact sales​](mailto:sales@Unum.ID) for more.
+
+## Installing Components
 
 When you register as an Unum ID customer, we send you API keys for each component.
 
-#### Mobile SDK
+### Mobile SDK
 
 *See full documentation [here](/mobile-sdk-overview).*
 
@@ -50,7 +36,7 @@ As noted in the [​FAQ​](#faq), you can add Unum ID on top of your existing a
 
 The Mobile SDK works entirely behind the scenes, benefitting users without intruding on the UI/UX of your app. The only components exposed to the user are system alerts and a QR code scanner, which you can trigger from anywhere in the app (e.g. with a Scan button).
 
-#### Server SDK
+### Server SDK
 
 *See full documentation [here](/server-sdk).*
 
@@ -65,7 +51,7 @@ For steps (3) and (4), we provide OpenAPI specifications and references to make 
 
 Using the Server SDK is straightforward. To issue (send) a credential to a user, you input identity data and the user’s identifier. And to request a credential from a user, you input the type of credential and the user’s identifier. The SDK handles the rest.
 
-#### Web SDK
+### Web SDK
 
 *See full documentation [here](/web-sdk).*
 

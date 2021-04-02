@@ -8,7 +8,10 @@ slug: /deployment-overview
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-This section provides a brief overview of how your company can deploy Unum ID tech. For fullt technical details, see the documentation for each component (linked below).
+This section provides a brief overview of how your company can deploy Unum ID tech. For full technical details, see the documentation for each component:
+- [Server SDK](/server-sdk)
+- [Mobile SDK](/mobile-sdk)
+- [Web SDK](/web-sdk)
 
 ## Process 
 
@@ -47,9 +50,9 @@ The Mobile SDK works entirely behind the scenes, benefitting users without intru
 3. Create an interface the Web SDK can use to interact with the Server SDK.
 4. Create an endpoint to receive encrypted data from our Identity Engine cloud.
 
-For steps (3) and (4), we provide OpenAPI specifications and references to make this easy.
+For steps (3) and (4), we provide OpenAPI specifications and reference implementations to make this easy.
 
-Using the Server SDK is straightforward. To issue (send) a credential to a user, you input identity data and the user’s identifier. And to request a credential from a user, you input the type of credential and the user’s identifier. The SDK handles the rest.
+Using the Server SDK is straightforward. To issue (send) a <Tip type="credential"/> to a user, you input identity data and the user’s identifier. And to <Tip type="request"/> a <Tip type="presentation"/> from a user, you input the type of credential and acceptable <Tip type="issuer">issuers</Tip>. The SDK handles the rest.
 
 ### Web SDK
 
@@ -57,9 +60,9 @@ Using the Server SDK is straightforward. To issue (send) a credential to a user,
 
 1. Add the SDK to your web client (e.g. through NPM).
 2. Point the Web SDK at the Server SDK interface you created in step (3) above.
-3. Define a redirect on successful credential sharing (e.g. granting the user access).
+3. Define a redirect for when a <Tip type="presentation"/> is verified (e.g. granting the user access).
 
-Using the Web SDK is simple. Just call the Server SDK to create requests for credentials from users. The Web SDK takes care of everything else — the user interface, fallback options, error handling, etc.
+Using the Web SDK is simple. Just call the Server SDK to create <Tip type="request">requests</Tip> for presentations from users. The Web SDK takes care of everything else — the user interface, fallback options, error handling, etc.
 
 ## FAQ 
 

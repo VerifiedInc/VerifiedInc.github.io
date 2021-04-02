@@ -42,13 +42,13 @@ The upshot is this: **Unum ID coordinates sharing of verified identity data, but
 The shared credential is actually contained in a <Tip type="presentation"/> object, but this is unimportant jargon in this context. See the [Mobile SDK](/mobile-sdk-overview) and [Server SDK](/server-sdk) docs for full details.
 :::
 
-Then, when a user responds to a request for a credential, that credential is encrypted with *your* public key.(The [Mobile SDK](/mobile-sdk) does this locally on the user’s device and sends the encrypted version to us.) We store nonsensitive metadata about the encrypted credential and route it to you, but we have no ability to decrypt the data. You then receive and decrypt the credential. See the diagram below.
+Then, when a user responds to a <Tip type="request"/> for a credential, that credential is encrypted with *your* public key.(The [Mobile SDK](/mobile-sdk) does this locally on the user’s device and sends the encrypted version to us.) We store nonsensitive metadata about the encrypted credential and route it to you, but we have no ability to decrypt the data. You then receive and decrypt the credential. See the diagram below.
 
 ![](/img/sharing.png)
 *<b>Sharing:</b> The Mobile SDK encrypts a credential with your public key before sending it to us. This ensures that only the user and you have access to the underlying plaintext data — Unum ID never does.*
 
 :::important
-The encryption described above is ​*in addition to* the standard encryption like TLS that applies to all data in transit and at rest. This encryption is done with a specific public key ensures only the holder of the corresponding private key can decrypt the data.
+The encryption described above is ​*in addition to* the standard encryption like TLS that applies to all data in transit and at rest. This encryption is done with a specific public key and ensures only the holder of the corresponding private key can decrypt the data.
 :::
 
 ## Features
@@ -64,18 +64,18 @@ Standard encryption like TLS applies to all data in transit and at rest, but the
 A user’s credentials are stored locally on their device, encrypted in your app. This is tied to the trusted execution environment (TEE) and secure hardware of the user’s phone so that the credentials can only be accessed or shared by passing a biometric or passcode check.
 
 :::note
-The secure hardware in a mobile device has the amazing property that an app can use it to create key pairs and use the private keys *without ever directly accessing those private keys.* Those private keys never leave the device, and even the manufacturer has no ability to access them.
+The secure hardware in a mobile device has the amazing property that an app can ask it to create key pairs and use the private keys *without ever directly accessing those private keys.* The private keys never leave the device, and even the manufacturer has no ability to access them.
 
-Unum ID leverages this to enable end-to-end public key cryptography. But, crucially, we package it behind a simple user experience so that users never need to even know what a public key is.
+Unum ID uses this to enable end-to-end public key cryptography. But, crucially, we package it behind a simple user experience so that users never need to even know what a public key is.
 :::
 
 ### Privacy and Consent
 
-Data is ​*only* ​shared with full consent of the user. Unum ID goes far beyond what’s needed for compliance with GDPR and other privacy regulations.
+Data is ​*only* ​shared with full consent of the user. Unum ID goes far beyond what’s needed for compliance with GDPR, CCPA, and other privacy regulations.
 
 ### Local Cryptography 
 
-All cryptography (key generation, signing, encryption, etc.) is done locally, on your server or in your app on the user’s device. We provide software that makes this easy to do, but all operations are done independently off Unum ID. This ensures ​**your security is under your control.**
+All cryptography (key generation, signing, encryption, etc.) is done locally, on your server or in your app on the user’s device. We provide software that makes this easy to do, but all operations are done independently of Unum ID. This ensures ​**your security is under your control.**
 
 ### No Shared Secrets
 

@@ -8,9 +8,9 @@ slug: /server-sdk
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-This is a lightweight TypeScript SDK that lets your company act as one or more <Tip type="issuer">issuers</Tip> and <Tip  type="verifier">verifiers</Tip>.
+This is a lightweight TypeScript SDK that lets your company act as one or more <Tip type="issuer">issuers</Tip> and/or <Tip  type="verifier">verifiers</Tip>.
 
-**Before you begin:** You need to be registered as Unum ID customer, and you need to register at least one issuer or verifier. (You can register zero to many of each, depending on your use case.) You'll receive issuer and verifier API keys to use with this SDK.
+**Before you begin:** You need to be registered as an Unum ID customer, and you need to register at least one issuer or verifier. (You can register zero to many of each, depending on your use case.) You'll receive issuer and verifier API keys to use with this SDK.
 
 :::note
 More detailed but less styled documentation can be found [here](https://docs.unum.id/Server-SDK-Typescript/index.html). This serves as a useful technical reference. 
@@ -33,7 +33,7 @@ Every request detailed below requires a bearer `authToken` as a first parameter.
 Errors returned by the Unum ID cloud will also be wrapped in the `UnumDto` object so that the potentially updated `authToken` can be retrieved. Validation errors, which are created prior to any calls to Unum ID, will be of type `Error` and are thrown. Because in this case a network call is never made, there's no potential new `authToken` to pass back. For this reason, **we recommend wrapping all SDK calls in a try/catch.**
 
 ### Distribution
-Currently this project is still closed source, so standard distribution options via public source code or NPM repository are not viable. Downstream projects are leveraging this project via it's git url using Docker Buildkit to provide SSH credentials for access to this Github source code repo. An example of such a buildkit configuration can be found in the [hooli-demo-server](https://github.com/UnumID/hooli-demo-server) `Dockerfile` and `.circleci/config.yaml`.
+The SDK will soon be available via NPM and Yarn, as well as on [GitHub](https://github.com/UnumID/Server-SDK-Typescript).
 
 ### Global Dependencies
 - [Node.js](https://nodejs.org/en/) v14.0.0 or higher (preferably v14.15.0 or higher)
@@ -111,12 +111,13 @@ You need to provide:
 1. your issuer <Tip type="DID"/> 
 2. your issuer signing private key
 3. credential type
+4. data about the <Tip type="subject"/>
 
-The first two are returned by [`registerIssuer`](#registerIssuer). The third (credential type) is part of what verifiers use to <Tip type="request"/> credentials from users. For example, Hooli FinTech might request a credential of type `KYCVerification`, issued by ACME Bank.
+The first two are returned by [`registerIssuer`](#registerIssuer). The third (credential type) is part of what verifiers use to <Tip type="request"/> credentials from users. For example, Hooli FinTech might request a credential of type `KYCVerification`, issued by ACME Bank. The fourth (data about the subject) can be any valid JSON.
 
 You can optionally provide:
 
-4. expiration date
+5. expiration date
 
 :::note
 An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it (see [`revokeCredential`](#revokeCredential)).

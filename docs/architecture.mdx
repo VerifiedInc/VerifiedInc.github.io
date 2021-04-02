@@ -8,11 +8,11 @@ slug: /architecture
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-This section provides a brief overview of Unum ID's architecture and the various components are used.
+This section provides a brief overview of Unum ID's architecture and how the various components are used.
 
 ## Components
 
-We provides several lightweight SDKs that you use to interact with our Identity Engine cloud.
+We provide several lightweight SDKs that you use to interact with our Identity Engine cloud.
 
 ![](/img/architecture.png)
 *<b>Architecture:</b> You use SDKs to interact with our Identity Engine cloud.*
@@ -43,10 +43,10 @@ verifying <Tip type="presentation">presentations</Tip> they share with you.
 
 ### Passwordless Auth
 
-In this example, **ACME Bank** uses Unum ID for passwordless authentication. Richard is an ACME user. 
+In this example, **ACME Bank** uses Unum ID for passwordless authentication. **Richard** is an ACME user. 
 
 :::note
-This is our [Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordless)™ in action. [Contact sales](mailto:sales@Unum.ID) to learn more.
+This is our [Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordless)™ product in action. [Contact sales](mailto:sales@Unum.ID) to learn more.
 :::
 
 1. ACME's server uses the [Server SDK](/server-sdk) to issue an authentication <Tip type="credential"/> to Richard.
@@ -60,10 +60,10 @@ This is our [Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordl
 
 ### Instant Onboarding
 
-In this example, **Hooli FinTech** uses Unum ID for instant onboarding. It uses Richard's ACME information, which he chooses to share, to create a pre-approved Hooli  account for him.
+In this example, **Hooli FinTech** uses Unum ID for instant onboarding. It uses **Richard's** **ACME** information (which he chooses to share) to create a pre-approved Hooli account for him.
 
 :::note
-This is our [Verify with X](https://www.unum.id/solutions/verify-with-x)™ in action. [Contact sales](mailto:sales@Unum.ID) to learn more.
+This is our [Verify with X](https://www.unum.id/solutions/verify-with-x)™ product in action. [Contact sales](mailto:sales@Unum.ID) to learn more.
 :::
 
 1. Hooli's server uses the [Server SDK](/server-sdk) create a <Tip type="request"/> for a <Tip type="presentation"/> (of the ACME KYC verification <Tip type="credential"/>).

@@ -43,11 +43,12 @@ When possible, we avoid using these less important terms to make the docs more r
 
 **Components:** A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
 
-To issue a credential, a company inputs four pieces of information (into the [Server SDK](/server-sdk), which handles the rest):
-1. type of credential
+At a high level, to issue a credential a company inputs four pieces of information (into the [Server SDK](/server-sdk), which handles the rest):
+1. type of the credential
 2. identifier for the person 
 3. data about the person
 4. identifier for the company
+
 The data can be anything at all (any valid JSON) — contact information, proof of government ID, medical data, etc.
 
 The credential is cryptographically signed with the company's private key. This makes it possible to later check that the credential is valid and was issued by that company.
@@ -100,9 +101,9 @@ The full details of the credential object aren't that important or helpful to kn
 
 **Components:** A user's app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.
 
-A user typically (but not always) shares a presentation in response to a <Tip type="request"/>. The user's app first asks them if they want to share the requested information. Then, if the user chooses to share, the app prompts them to pass a biometric/passcode check. If the user passes that check, the app creates a presentation and sends it out.
+A user typically (but not always) shares a presentation in response to a <Tip type="request"/>. The user's app first asks them if they want to share the requested information. Then, if the user chooses to share, the app prompts them to pass a biometric/passcode check. If the user passes that check, the app creates a presentation and sends it.
 
-The presentation is cryptographically signed with the user's private key. This makes it possible to later check that the presentation is valid and was created by the user's app on their device.
+The presentation is cryptographically signed with the user's private key. This makes it possible to later check that the presentation is valid and was created by the user's app, on their device.
 
 :::note
 Each credential within the presentation is *itself* cryptographically signed but with the private key of the company that issued it. So, for example, a presentation of three credentials has four total signatures: one on each credential and one on the whole presentation.
@@ -167,18 +168,18 @@ The full details of the presentation object aren't that important or helpful to 
 
 **Components:** A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user's app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
 
-To create a request, a company inputs four pieces of information (into the [Server SDK](/server-sdk), which handles the rest):
+At a high level, to create a request a company inputs three pieces of information (into the [Server SDK](/server-sdk), which handles the rest):
 1. identifier for the company
 
 and a list containing, for each credential:
 
-2. type of credential
-3. acceptable <Tip type="issuer">issuer(s)</Tip> of credential
+2. type of the credential
+3. acceptable <Tip type="issuer">issuer(s)</Tip> of the credential
 
 If multiple issuers are listed, a credential (of the correct type) from any one of them is acceptable.
 
 :::important
-The <Tip type="issuer"/> of the credential can be *the same company* as the one making the request (the <Tip type="verifier"/>)! This is the case for our authentication product ([Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordless)™). A single company issues an authentication credential to a user, who later shares a presentation containing that credential to authenticate. Try this yourself with our [ACME demo](/acme-demo).
+The <Tip type="issuer"/> of the credential can be *the same company* as the one making the request (the <Tip type="verifier"/>)! This is the case for our authentication product ([Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordless)™). A single company issues an authentication credential to a user, who later shares a presentation containing that credential back with the company to authenticate.
 :::
 
 The request is cryptographically signed with the company's private key. This makes it possible to later check that the request is valid and was created by that company, which helps prevent attacks like phishing.
@@ -230,14 +231,14 @@ The request is cryptographically signed with the company's private key. This mak
 
 ## Less Important Terms
 
-When possible, we avoid using these less important terms when possible to make the docs more readable and lighter on jargon. However, there are cases where it's necessary to use more precise language, so this section serves as a reference to that end.
+When possible, we avoid using these less important terms to make the docs more readable and lighter on jargon. However, there are cases where it's necessary to use more precise language, so this section serves as a useful reference.
 
 ### Issuer
 
 > An **issuer** is a role a company can play to issue <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a> to <a href="/terminology#subject"><Tip type="subject">subjects</Tip></a> (users). An issuer can also change credential statuses, for example to revoke credentials.
 
 :::important
-A company can be both an <Tip type="issuer"/> and a <Tip type="verifier"/>! In fact, it can play the roles of many different issuers and verifiers. For example, to implement our authentication product ([Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordless)™), a single company issues an authentication credential to a user, who later shares a presentation (containing that credential), which the company verifies. Try this authentication flow yourself with our [ACME demo](/acme-demo).
+A company can be both an <Tip type="issuer"/> and a <Tip type="verifier"/>! In fact, it can play the roles of many different issuers and verifiers. For example, to implement our authentication product ([Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordless)™), a single company issues an authentication credential to a user, who later shares a presentation (containing that credential), which the company verifies.
 :::
 
 **Example:** ACME Bank issues a KYC verification credential to Richard (an ACME user). It later revokes that credential and issues a new one to Richard to update his information.
@@ -248,11 +249,12 @@ To register an issuer and recieve an issuer API key, a company (already register
 1. name (human readable)
 2. logo icon
 3. brand colors
+
 These are used in the [Mobile SDK](/mobile-sdk-overview) and [Web SDK](/web-sdk) to display content to users.
 
 ### Holder App
 
-> A **holder app** is an Unum ID enabled mobile app. <i>See also: <a href="/terminology#holder-app">holder</a>.</i>
+> A **holder app** is an Unum ID enabled mobile app. <i>See also: <a href="/terminology#holder"><Tip type="holder"/></a>.</i>
 
 **Example:** ACME Bank adds Unum ID technology to its mobile app, making it a holder app.
 
@@ -289,7 +291,7 @@ We use "user" instead of "subject" as much as possible, since these are almost a
 > A **verifier** is a role a company can play to verify <a href="/terminology#presentation"><Tip type="presentation">presentations</Tip></a> shared by <a href="/terminology#subject"><Tip type="subject">subjects</Tip></a> (users). A verifier can also make <a href="/terminology#request"><Tip type="request">requests</Tip></a> for presentations and send them to subjects.
 
 :::important
-A company can be both an <Tip type="issuer"/> and a <Tip type="verifier"/>! In fact, it can play the roles of many different issuers and verifiers. For example, to implement our authentication product ([Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordless)™), a single company issues an authentication credential to a user, who later shares a presentation (containing that credential), which the company verifies. Try this authentication flow yourself with our [ACME demo](/acme-demo).
+A company can be both an <Tip type="issuer"/> and a <Tip type="verifier"/>! In fact, it can play the roles of many different issuers and verifiers. For example, to implement our authentication product ([Beyond Passwordless](https://www.unum.id/solutions/beyond-passwordless)™), a single company issues an authentication credential to a user, who later shares a presentation (containing that credential), which the company verifies.
 :::
 
 **Example:** Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank. When Richard shares the presentation, Hooli verifies it.
@@ -299,6 +301,7 @@ A company can be both an <Tip type="issuer"/> and a <Tip type="verifier"/>! In f
 To register a verifier and recieve a verifier API key, a company (already registered as an Unum ID customer) submits to us two pieces of information:
 1. name (human readable)
 2. endpoint (to receive presentations)
+
 The name is used in the [Mobile SDK](/mobile-sdk-overview) and [Web SDK](/web-sdk) to display content to users. We send (encrypted) presentations to the endpoint, which passes them to the [Server SDK](/server-sdk) to be verified. (We provide an OpenAPI spec and reference endpoint, so creating the endpoint is very simple.)
 
 ### DID
@@ -306,7 +309,7 @@ The name is used in the [Mobile SDK](/mobile-sdk-overview) and [Web SDK](/web-sd
 > A **DID** (or <i>decentralized identifier</i>) identifies a participant in the Unum ID ecosystem. A participant is an <a href="/terminology#issuer"><Tip type="issuer"/></a>, <a href="/terminology#subject"><Tip type="subject"/></a>, or <a href="/terminology#verifier"><Tip type="verifier"/></a>.
 
 :::note
-The technical details of DIDs are not relevant to deploying or using Unum ID. You can think of DIDs as identifiers in the normal sense — unique, random strings of characters like UUIDs.
+The technical details of DIDs are not relevant to deploying or using Unum ID. You can think of DIDs as identifiers in the normal sense — unique, random strings of characters (like UUIDs).
 
 However, if you're curious to learn more, read the emerging [W3C specification](https://www.w3.org/TR/did-core/).
 :::

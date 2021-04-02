@@ -203,7 +203,6 @@ const App = () => {
 
 ```tsx
 import { FC } from 'react';
-
 import WidgetHostAndController, { PresentationRequestResponse } from '@unumid/web-sdk';
 
 // Import an image to use for the (mobile) deep link button.
@@ -286,7 +285,50 @@ const App = () => {
 <TabItem value="tsx">
 
 ```tsx
-// coming soon
+import { FC } from 'React';
+import WidgetHostAndController, {
+  EmailOptions,
+  SmsOptions,
+  PresentationRequestResponse,
+  SuccessResponse
+} from '@unumid/web-sdk';
+
+// Import an image to use for the (mobile) deeplink button.
+// In this example, images are stored in an 'assets' directory. Your application may be different.
+import deeplinkImgSrc from '../assets/deeplink-button-image.png';
+
+const App: FC = () => {
+  const createPresentationRequest = async (): Promise<PresentationRequestResponse> => {
+    // Call your Server SDK to create a PresentationRequest and return the response.
+  };
+
+  const sendEmail = async (options: EmailOptions): Promise<SuccessResponse> => {
+    // Call your Server SDK to send a deep link via email and return the response.
+  };
+
+  const sendSms = async (options: SmsOptions): Promise<SuccessResponse> => {
+    // Call your Server SDK to send a deep link via SMS and return the response.
+  };
+
+  const goToLogin = (): void => {
+    // Navigate to your login page.
+  };
+
+  return (
+    <WidgetHostAndController
+      applicationTitle="My Application"
+      userInfo={{
+        email: 'mrplow@gmail.com', // The user's email is required to enable the email fallback.
+        phone: 'KL5-5555' // The user's phone number is required to enable the SMS fallback.
+      }}
+      createPresentationRequest={createPresentationRequest}
+      deeplinkImgSrc={deeplinkImgSrc}
+      sendEmail={sendEmail}
+      sendSms={sendSms}
+      goToLogin={goToLogin}
+    />
+  );
+};
 ```
 
 </TabItem>
@@ -307,7 +349,6 @@ Gives your application more control over when the initial PresentationRequest is
 
 ```jsx
 import { useState } from 'react';
-
 import WidgetHostAndController from '@unumid/web-sdk';
 
 // Import an image to use for the (mobile) deep link button.
@@ -367,7 +408,66 @@ const App = () => {
 <TabItem value="tsx">
 
 ```tsx
-// coming soon
+import { FC, useState } from 'react';
+import WidgetHostAndController, {
+  EmailOptions,
+  SmsOptions,
+  PresentationRequestResponse,
+  SuccessResponse
+} from '@unumid/web-sdk';
+import { PresentationRequestOptions } from '@unumid/types';
+
+// Import an image to use for the (mobile) deeplink button.
+// In this example, images are stored in an 'assets' directory. Your application may be different.
+import deeplinkImgSrc from '../assets/deeplink-button-image.png';
+
+const App: FC = () => {
+  // Save the PresentationRequest in local component state.
+  const [presentationRequest, setPresentationRequest] = useState();
+
+  const createPresentationRequest = async (): Promise<void> => {
+    const options = {
+      // Customizable PresentationRequest options.
+      credentialRequests: [{
+        type: 'LoginCredential',
+        issuers: ['did:unum:5235d82e-5aac-4df4-adf2-7c6cc0cbec95']
+      }],
+      verifier: 'did:unum:a74fce7c-7dfa-4702-b85f-f68a854c3cfe'
+    };
+    // Call your Server SDK to create a PresentationRequest and save in the component state.
+    const response = await callBackend(options);
+    setPresentationRequest(response);
+  };
+
+  const sendEmail = async (options: EmailOptions): Promise<SuccessResponse> => {
+    // Call your Server SDK to send a deep link via email and return the response.
+  };
+
+  const sendSms = async (options: SmsOptions): Promise<SuccessResponse> => {
+    // Call your Server SDK to send a deep link via SMS and return the response.
+  };
+
+  const goToLogin = (): void => {
+    // Navigate to your login page.
+  };
+
+  return (
+    <WidgetHostAndController
+      applicationTitle="My Application"
+      userInfo={{
+        email: 'mrplow@gmail.com', // The user's email is required to enable the email fallback.
+        phone: 'KL5-5555' // The user's mobile phone number is required to enable the sms fallback.
+      }}
+      presentationRequest={presentationRequest} // Provide the Web SDK with an already-created PresentationRequest.
+      createInitialPresentationRequest={false} // Prevent the Web SDK from immediately creating a new PresentationRequest on load.
+      createPresentationRequest={createPresentationRequest} // We still need to provide the Web SDK with a createPresentationRequest function so that it can create a new PresentationRequest before the current one expires.
+      deeplinkImgSrc={deeplinkImgSrc}
+      sendEmail={sendEmail}
+      sendSms={sendSms}
+      goToLogin={goToLogin}
+    />
+  );
+};
 ```
 
 </TabItem>
@@ -389,7 +489,6 @@ In this example, we're providing the SDK with our `createPresentationRequest` ac
 
 ```jsx
 import { useSelector } from 'react-redux';
-
 import WidgetHostAndController from '@unumid/web-sdk';
 
 // Import your action creators. They have been wrapped in React hooks in this example, but your application may be different.
@@ -436,7 +535,48 @@ const App = () => {
 <TabItem value="tsx">
 
 ```tsx
-// coming soon
+import { useSelector } from 'react-redux';
+
+ import WidgetHostAndController '@unumid/web-sdk';
+
+ // Import your action creators. They have been wrapped in React hooks in this example, but your application may be different.
+ import { useActionCreators } from './hooks/actionCreators';
+
+ // Import an image to use for the (mobile) deeplink button.
+ // In this example, images are stored in an 'assets' directory. Your application may be different.
+ import deeplinkImgSrc from '../assets/deeplink-button-image.png';
+
+ const App = () => {
+   // These functions can be defined as async action creators using redux-thunk, redux-saga, or other libraries.
+   const { createPresentationRequest, sendSms, sendEmail } = useActionCreators();
+
+   // Select a previously created PresentationRequest from state.
+   const presentationRequest = useSelector(state => state.presentationRequest);
+
+   // Select the logged in user from state.
+   const loggedInUser = useSelector(state => state.loggedInUser);
+
+   const goToLogin = (): void => {
+     // Navigate to your login page.
+   };
+
+   return (
+     <WidgetHostAndController
+       applicationTitle="My Application"
+       userInfo={{
+         email: loggedInUser.email, // The user's email is required to enable the email fallback.
+         phone: loggedInUser.mobilePhoneNumber // The user's  phone number is required to enable the SMS fallback.
+       }}
+       presentationRequest={presentationRequest} // Provide the SDK with an already-created PresentationRequest.
+       createInitialPresentationRequest={true} // The SDK should immediately create a PresentationRequest on load.
+       createPresentationRequest={createPresentationRequest} // We still need to provide the SDK with a createPresentationRequest function so that it can create a new PresentationRequest before the current one expires.
+       deeplinkImgSrc={deeplinkImgSrc}
+       sendEmail={sendEmail}
+       sendSms={sendSms}
+       goToLogin={goToLogin}
+     />
+   );
+ };
 ```
 
 </TabItem>

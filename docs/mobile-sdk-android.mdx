@@ -10,13 +10,11 @@ import TabItem from '@theme/TabItem';
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-*Docs for the iOS SDK are [here](mobile-sdk-ios.mdx).*
+*Docs for the iOS SDK are [here](mobile-sdk-ios).*
 
-The Android Mobile SDK is a lightweight, fully native SDK that allows a host app to receive and store <Tip type="credential">credentials</Tip>, receive <Tip type="request">requests</Tip>, and share <Tip type="presentation">presentations</Tip>.
+This is a lightweight, fully native SDK that allows a host app to receive and store <Tip type="credential">credentials</Tip>, receive <Tip type="request">requests</Tip>, and share <Tip type="presentation">presentations</Tip>. It works with both Kotlin and Java native apps.
 
-The SDK works with both Kotlin and Java native apps.
-
-**Before you begin:** You need to be registered as Unum ID customer, and you need to register at least one holder app. (You can register zero to many, depending on your use case.) You'll receive a holder app API key to use with this SDK.
+**Before you begin:** You need to be registered as Unum ID customer, and you need to register at least one <Tip type="holder app"/>. (You can register zero to many, depending on your use case.) You'll receive a holder app API key to use with this SDK.
 
 :::note
 More detailed but less styled documentation can be found [here](http://docs.unum.id/Holder-SDK-Android/). This serves as a useful technical reference.
@@ -34,7 +32,7 @@ More detailed but less styled documentation can be found [here](http://docs.unum
 
 These permissions are requested by the SDK — no action is required by the host app. 
 
-Because the SDK leverages the secure hardware of the user's device for cryptographic operations, it requires OS level user authentication. This means the user must have a lock screen biometric, passcode, or similar. If the user doesn't have this set up, the SDK will prompt the user and direct them to the correct place in Settings to do so.
+Because the SDK leverages the secure hardware of the user's device for cryptographic operations, it requires OS level user authentication. This means **the user must have a lock screen biometric, passcode, or similar.** If the user doesn't have this set up, the SDK will prompt the user and direct them to the correct place in Settings to do so.
 
 :::note
 Device biometrics are typically *aliases* for passcodes (or similar options like PINs and patterns) and fall back to those. This is all handled at the OS level.
@@ -44,38 +42,37 @@ Device biometrics are typically *aliases* for passcodes (or similar options like
 
 ### Installation
 
-When you register a holder app, we will send you the SDK as a compiled binary library.
+When you register a <Tip type="holder app"/>, we will send you the SDK as a compiled binary library.
 
 ### Initialization
 
 You should initialize the SDK when the app starts up. This will ensure the SDK is set up properly. 
 
-You can optionally include a <Tip type="DID"/>, which identifies a user (technically called a <Tip type="subject"/>) in the Unum ID ecosystem. You should include this for a returning user, so the loads any new credentials associated with that DID as part of the initialization process. 
+You can optionally include a <Tip type="DID"/> (`did`), which identifies a user (technically called a <Tip type="subject"/>) in the Unum ID ecosystem. A returning user will already have a DID, so you should include this to ensure the SDK loads any new credentials associated with that DID as part of the initialization process. 
 
-The UnumCallback is also an optional parameter that can be included to be notified of the result of the initialization call.
-
-Because the SDK contains secure encryption functionality, it does require the use of OS level user authentication. This could be in the form of a biometric check (if available on device), or a lock screen code or password. If this is not already setup by the user, the SDK will prompt the user to set this up.
+You can optionally include the `UnumCallback` to be notified of the result of the initialization call.
 
 <Tabs
-  defaultValue="kotlin"
-  values={[
-    {label: 'Kotlin', value: 'kotlin'},
-    {label: 'Java', value: 'java'}
-  ]}>
+    groupId="languages"
+    defaultValue="kotlin"
+    values={[
+        {label: 'Kotlin', value: 'kotlin'},
+        {label: 'Java', value: 'java'}
+    ]}>
   <TabItem value="kotlin">
 
 ```kotlin
 initialize({
-    customerId(BuildConfig.CUSTOMER_ID) // the provided customer id
-    apiKey(BuildConfig.API_KEY) // the provided api key
-    onError(::onErrorFunction) // a function to be run if an error is encountered (optional)
-    did(did) // if returning user, include DID. If new user, leave this empty
+    customerId(BuildConfig.CUSTOMER_ID) // your customer UUID
+    apiKey(BuildConfig.API_KEY) // your holder app API key
+    onError(::onErrorFunction) // (optional) run if there's an error
+    did(did) // (optional) include this for returning users — otherwise leave empty
 },
 object : UnumCallback {
     override fun onSuccess(data: String?) {
         data?.let {
             val did = data
-            // store DID
+            // store DID — associate with user in your database
          }
     }
 
@@ -91,25 +88,23 @@ object : UnumCallback {
   </TabItem>
   <TabItem value="java">
 
-
 ```java
 UnumInitializationConfiguration configuration = new UnumInitializationConfiguration.Builder()
-        .customerId(BuildConfig.CustomerId) // the provided customer id
-        .apiKey(BuildConfig.ApiKey) // the provided api key
-        .onError(() -> { // a function to be run if an error is encountered (optional)
-            onErrorFunction();
-            return null;
-        })
-        // if returning user, include DID. If new user, leave this empty
-        .did(did)
-        .build();
+    .customerId(BuildConfig.CustomerId) // your customer UUID
+    .apiKey(BuildConfig.ApiKey) // your holder app API key
+    .onError(() -> { // (optional) run if there's an error
+        onErrorFunction();
+        return null;
+    })
+    .did(did) // (optional) include this for returning users — otherwise leave empty
+    .build();
 
 UnumId.INSTANCE.initialize(configuration, new UnumCallback() {
     @Override
     public void onSuccess(Object data) {
         if (data != null && data instanceof String) {
-            // returned data is a string version of the user DID
-            // store DID with user here
+            // returned data is string version of subject (user) DID
+            // store DID — associate with user in your database
         }
     }
 
@@ -127,11 +122,19 @@ UnumId.INSTANCE.initialize(configuration, new UnumCallback() {
   </TabItem>
 </Tabs>
 
-As part of the initialization process, private keys will be created for the user. The user will be asked to authenticate by either biometrics or a passcode. If they have not setup any type of OS level authentication before, they will be promted to do so.
+The initialization process involves creating private keys for the user using the secure hardware of the device. This requires OS level authentication, so the user will be prompted to pass a biometric check, enter their passcode, or authenticate in an analogous way. If they don't have this set up, the SDK will direct them to the correct place in Settings to do so.
 
-#### Deep Links
+### Deep Links
 
-The Unum ID SDK does make use of Deep Links. Deep links are used by other application to ask the SDK to share encrypted credentials. A deep link is a way for data to be passed around by multiple applications. An example of a deep link might be clicking a button on a webpage, and having an application open. Deep links in the SDK allow for credentials to be requested by other sources. The SDK will catch these requests and process them. For the Deep Links to work, at least one activity will need to be setup to receive Unum ID deep links.
+In the context of Unum ID, a **deep link** is a URL that opens a specific <Tip type="holder app"/>. For example, a link that opens the ACME Bank mobile app might look like this:
+
+```
+unumid://acme/presentationRequest/88d37012-f83b-453a-a1f1-d4a1bcf86aa3
+```
+
+The SDK uses deep links to retrieve and display a <Tip type="request"/> to a user, who decides whether to share data in response. Users will typically encounter deep links displayed in the [Web SDK](/web-sdk) (in QR code or button form) or sent over a communication channel (like push notification, SMS, or email).
+
+You need to pass Unum ID deep links to the SDK to be processed. To do so, set up an activity as shown below. This will catch a deep link like the example one shown above.
 
 ```xml
 <activity android:name=".MainActivity">
@@ -148,23 +151,122 @@ The Unum ID SDK does make use of Deep Links. Deep links are used by other applic
 </activity>
 ```
 
-This will catch a deeplink similar to this: unumid://acme.com/presentationRequest/123456
-
-When a deep link is received, a popup will be shown to the user asking them if they would like to respond to the deep link request
+When it receives a deep link, the SDK will display a system alert, asking the user how they want to respond to the <Tip type="request"/> (that the deep link references).
 
 ![Credential Request Popup](../assets/images/presentation-request.png)
 
-### Unum Callback
+The SDK will do the following based on the user's action. If the user clicks:
+- **"Yes":** the SDK will send a <Tip type="presentation"/> (of the requested <Tip type="credentiaal">credentials</Tip>) to the company that made the request.
+- **"No":** the SDK will send an empty presentation that indicates that the user declined the request.
+- **"Something's wrong...":** the SDK will flag the request as suspicious.
 
-A UnumCallback object is available to be passed to most method calls within the SDK. This adds a listener that will be called with the result of the Unum method call. It can result in a successful call, and SDK error, or an API error. Refer to the Initialization section for an exmple of using the Unum Callback.
+### QR Code Scanner
+
+The Unum ID [deep links](#/deep-links) described above can be displayed in QR code form. This is important for cases when a user is on a non-mobile device. For example, the ACME Bank website might request that a user share an authentication credential to log into the ACME website on desktop. ACME would do so by displaying a QR code that the user scans. This would open the ACME mobile app on the user's phone and prompt the user to share the requested data.
+
+Any QR code scanner can read an Unum ID deep link in QR code form. Some but not all devices support scanning directly from the native camera, so you should make it possible for the user to scan codes from within your app. 
+
+If you already have a QR code scanner, you can pass QR codes directly to the SDK like so:
 
 <Tabs
-  defaultValue="kotlin"
-  values={[
-    {label: 'Kotlin', value: 'kotlin'},
-    {label: 'Java', value: 'java'}
-  ]}>
-  <TabItem value="kotlin">
+    groupId="languages"
+    defaultValue="kotlin"
+    values={[
+        {label: 'Kotlin', value: 'kotlin'},
+        {label: 'Java', value: 'java'}
+    ]}>
+    <TabItem value="kotlin">
+
+``` kotlin
+UnumId.handleLink(Uri.parse(qrCode))
+```
+
+</TabItem>
+<TabItem value="java">
+
+```java
+UnumId.INSTANCE.handleLink(Uri.parse(qrCode));
+```
+
+</TabItem>
+</Tabs>
+
+If you don't have a QR code scanner, you can use the one included in the SDK. Simply start the QR code activity as shwon below. This will automatically pass the deep link to the SDK — no further action is needed from the host app.
+
+<Tabs
+    groupId="languages"
+    defaultValue="kotlin"
+    values={[
+        {label: 'Kotlin', value: 'kotlin'},
+        {label: 'Java', value: 'java'}
+    ]}>
+    <TabItem value="kotlin">
+
+```kotlin
+private fun showQRCodeScanner() {
+    val launchIntent = UnumQRCodeActivity.getLaunchIntent(this, true, false)
+    startActivityForResult(launchIntent, REQUEST_CODE)
+}
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+
+    if (requestCode == REQUEST_CODE && data != null) {
+        val barcode: Barcode? =
+            data.getParcelableExtra(UnumQRCodeActivity.KEY_CAPTURED_BARCODE)
+        barcode?.let {
+            Toast.makeText(this, barcode.rawValue, Toast.LENGTH_LONG).show()
+        }
+    }
+    }
+```
+
+</TabItem>
+<TabItem value="java">
+
+```java
+private void startQRCodeScanner() {
+    Intent launch = UnumQRCodeActivity.Companion.getLaunchIntent(
+            QrCodeScannerActivity.this,
+            true,
+            false);
+    startActivityForResult(launch, REQUEST_CODE);
+}
+
+@Override
+protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    if (requestCode == REQUEST_CODE && data != null) {
+        Barcode barcode = data.getParcelableExtra(UnumQRCodeActivity.Companion.getKEY_CAPTURED_BARCODE());
+        if (barcode != null) {
+            Toast.makeText(this, barcode.rawValue, Toast.LENGTH_LONG).show();
+        }
+    }
+}
+```
+
+</TabItem>
+</Tabs>
+
+You can call this on a trigger of your choice. For example, you can create a "Scan QR Code" button that starts the activity when the user clicks it.
+
+The QR code scanner lookss like this:
+
+![QR code scanner](../assets/images/android-scanner.png)
+
+### Callback
+
+You can pass the `UnumCallback` to most method calls within the SDK. This adds a listener that records the result of the method call – a successful call, an SDK error, or an API error. The [Initialization](#initialization) section shows one example of this, and here's another:
+
+<Tabs
+    groupId="languages"
+    defaultValue="kotlin"
+    values={[
+        {label: 'Kotlin', value: 'kotlin'},
+        {label: 'Java', value: 'java'}
+    ]}>
+    <TabItem value="kotlin">
 
 ```kotlin
 initialize({
@@ -195,7 +297,6 @@ object : UnumCallback {
   </TabItem>
   <TabItem value="java">
 
-
 ```java
 
 UnumId.INSTANCE.initialize(configuration, new UnumCallback() {
@@ -222,121 +323,36 @@ UnumId.INSTANCE.initialize(configuration, new UnumCallback() {
   </TabItem>
 </Tabs>
 
-### QR Code Scanner
-A QR code is another way of passing deep links on a mobile device. Any QR code scanner is able to retrieve a deep link. Some phones native camera supports QR code scanning, while others require an application to implement scanning functionality. If you have correctly set up the previous deep link section, then the SDK will catch any deep links that are received thorough QR codes.
+## Handling Multiple Users
 
-The host application can have its own QR code scanner, which can pass QR codes directly to the SDK.
+Each user is identified by some user ID in your system and by a <Tip type="DID"/> in the Unum ID ecosystem. You simply need to store an association between each user ID and DID. That way, when your host app has a particular user ID (for example once a user is logged into your existing account system), it can pass the corresponding DID to the SDK.
 
-``` kotlin
-UnumId.handleLink(Uri.parse(qrCode))
-```
+If you don't have existing user IDs, you *could* use the DIDs themselves as user IDs. However, we recommend using separate identifiers (internal to your company), to distinguish them from DIDs, which are global to the Unum ID ecosystem.
 
-If the host application does not have its own QR code scanner, it can use the QR code scanner included as part of the SDK.Accessing the QR Code can be done by simply starting the QR Code activity. This activity will then return a URI in the results. The deep link will automatically be passed to the SDK, so no further action is needed from the host applicaiton.
+:::note
+The technical details of DIDs are not relevant to deploying or using Unum ID. You can think of DIDs as identifiers in the normal sense — unique, random strings of characters like UUIDs.
+:::
 
-<Tabs
-  defaultValue="kotlin"
-  values={[
-    {label: 'Kotlin', value: 'kotlin'},
-    {label: 'Java', value: 'java'}
-  ]}>
-  <TabItem value="kotlin">
+When you [initialize](#initialize) the SDK, you can optionally include a DID. 
+- **Don't include a DID for user who's new to the SDK.** The SDK will generate a new one that you should store, associated with the user ID in your system.
+- **Do include a DID for a user who returns to the SDK.** The SDK will use this DID to access the correct stored data for that user.
 
-```kotlin
-private fun showQRCodeScanner() {
-        val launchIntent = UnumQRCodeActivity.getLaunchIntent(this, true, false)
-        startActivityForResult(launchIntent, REQUEST_CODE)
-    }
+:::important
+DIDs are the *only* identifiers the SDK understands, so it relies entirely on the host app to pass the correct one. 
 
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+For example, suppose Users 1 and 2 are associated with DIDs 1 and 2, respectively. If User 1 is using the host app, but the app passes DID 2 to the SDK, the SDK will give User 1 access to to User 2's data.
+:::
 
-        if (requestCode == REQUEST_CODE && data != null) {
-            val barcode: Barcode? =
-                data.getParcelableExtra(UnumQRCodeActivity.KEY_CAPTURED_BARCODE)
-            barcode?.let {
-                Toast.makeText(this, barcode.rawValue, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-```
+### Example Flow
 
-</TabItem>
-<TabItem value="java">
-
-```java
-private void startQRCodeScanner() {
-        Intent launch = UnumQRCodeActivity.Companion.getLaunchIntent(
-                QrCodeScannerActivity.this,
-                true,
-                false);
-        startActivityForResult(launch, REQUEST_CODE);
-    }
-
-@Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_CODE && data != null) {
-            Barcode barcode = data.getParcelableExtra(UnumQRCodeActivity.Companion.getKEY_CAPTURED_BARCODE());
-            if (barcode != null) {
-                Toast.makeText(this, barcode.rawValue, Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-```
-
-</TabItem>
-</Tabs>
-
-![QR code scanner](../assets/images/android-scanner.png)
-
-### TroubleShooting
-
-##### Secure lock screen not set
-Before the initialization call can be completed successfully, the android secure lock screen will need to be enabled. If it is not enabled an SDKError error will
-be returned with the following message:
-
-```java.lang.IllegalStateException: Secure lock screen must be enabled to create keys requiring user authentication```
-
-A way to check for this would be to check for this error in the SDKError message, and then send the user to the secure lock setup screen. Once the user has setup the 
-lock, a result code will be sent back to the application, and the initialization process can be restarted.
-
-Kotlin
-```kotlin
-fun goToLockScreenSetup() {
-        val intent = Intent(DevicePolicyManager.ACTION_SET_NEW_PASSWORD)
-        startActivityForResult(intent, LOCK_CODE)
-    }
-
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == LOCK_CODE) {
-            makeToast("Lock Screen set")
-            initializeSDK()
-        }
-    }
-
-```
-
-### Mapping users
-
-The SDK is able to support multiple users. That means that each time a new user is authorized in the host application, a new DID will be issued for the user. A DID (decentralized identifier) is a URI that uniquely identifies a user. The newly generated DID will be returned to the host app, and should be stored. Each time a user is re-authrozed in the app, the stored DID should be sent to the SDK as part of the initialization, in order to signify that it is a returning user.
-
-All the data in the SDK relies on the user DID. It is important that the host app correctly stores and retrives the correct DID for each user. Otherwise a user will not have access to correct information.initialization
-
-**Example Multiple User Flow:**
-
-New user 1 logs into host app
-- SDK is initialized with no DID
-- SDK returns newly generated DID
-- Host app associates DID with user and stores
-
-New user 2 logs into host app
-- SDK is initialized with no DID
-- SDK returns newly generated DID
-- Host app associates DID with user and stores
-
-Returning user 1 logs into host app
-- Host app retrieves DID for user and sends to SDK as part of initialization
-- SDK recognizes this is a returning user and does not generate a new DID
+1. **New User 1 logs into host app.**
+    - SDK is initialized with no DID.
+    - SDK returns newly generated DID 1.
+    - Host app stores DID 1 and associates it with User 1.
+2. **New User 2 logs into host app.**
+    - SDK is initialized with no DID.
+    - SDK returns newly generated DID 2.
+    - Host app stores DID 2 and associates it with User 2.
+3. **Returning User 1 logs into host app.**
+    - Host app retrieves DID 1 and includes it in SDK initialization.
+    - SDK recognizes this is a returning user and does not generate a new DID.

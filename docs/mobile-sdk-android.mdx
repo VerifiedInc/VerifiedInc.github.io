@@ -59,7 +59,7 @@ You can optionally include the `UnumCallback` to be notified of the result of th
         {label: 'Kotlin', value: 'kotlin'},
         {label: 'Java', value: 'java'}
     ]}>
-  <TabItem value="kotlin">
+<TabItem value="kotlin">
 
 ```kotlin
 initialize({
@@ -85,8 +85,9 @@ object : UnumCallback {
     }
 })
 ```
-  </TabItem>
-  <TabItem value="java">
+
+</TabItem>
+<TabItem value="java">
 
 ```java
 UnumInitializationConfiguration configuration = new UnumInitializationConfiguration.Builder()
@@ -119,7 +120,8 @@ UnumId.INSTANCE.initialize(configuration, new UnumCallback() {
     }
 });
 ```
-  </TabItem>
+
+</TabItem>
 </Tabs>
 
 The initialization process involves creating private keys for the user using the secure hardware of the device. This requires OS level authentication, so the user will be prompted to pass a biometric check, enter their passcode, or authenticate in an analogous way. If they don't have this set up, the SDK will direct them to the correct place in Settings to do so.

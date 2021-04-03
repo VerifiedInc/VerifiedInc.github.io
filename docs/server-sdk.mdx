@@ -440,3 +440,24 @@ If unsuccessful, an exception will be thrown.
 ```typescript
 {}
 ```
+
+### `checkCredentialStatus`
+Used to check the status of a credential. Currently the only valid status are: verified and revoked.
+
+Parameters
+```typescript
+{
+  "credentialId": string, // the id of the credential in question
+  "authorization": string // auth token
+}
+```
+
+#### Response Body: [`CredentialStatusInfo`](https://docs.unum.id/Server-SDK-Typescript/interfaces/credentialstatusinfo.html).
+```typescript title="CredentialStatusInfo"
+{
+  createdAt: Date; // the time  the credential was recorded as created in the UnumID SaaS db
+  updatedAt: Date; // the time  the credential was recorded as updated in the UnumID SaaS db
+  credentialId: string; // the did (aka id) of the credential this status is in regard to
+  status: 'valid' | 'revoked'; // the status
+}
+```

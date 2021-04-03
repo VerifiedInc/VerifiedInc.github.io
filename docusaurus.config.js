@@ -44,7 +44,7 @@ module.exports = {
           items: [
             {
               label: 'About Unum ID',
-              to: '/about-unum-id',
+              to: '/',
             },
             {
               label: 'Terminology',

@@ -135,15 +135,14 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 
 #### Parameters
 ```typescript
+"type": string || string[], // The Credential type(s)
+"issuer": string, // your issuer DID
 "credentialSubject": {
   "id": string, // subject DID
   [key: string]: any, // data about subject (any valid JSON)
 },
-"type": string || string[], // credential type(s)
-"issuer": string, // your issuer DID
-"expirationDate": string, // when credential will no longer be valid (ISO 8601 date/time)
-"eccPrivateKey": string // your issuer signing private key
-/* NEED OTHER KEY */
+"signingPrivateKey": string // your issuer signing private key
+"expirationDate"?: string, // (optional) when credential will no longer be valid (ISO 8601 date/time)
 ```
 
 #### Response Body: [`Credential`](https://docs.unum.id/Server-SDK-Typescript/interfaces/credential.html)
@@ -224,6 +223,7 @@ The DID and public keys are nonsensitive, but **you should store the private key
 ```typescript
 "name": string, // human readable name for verifier. Displayed to users in mobile apps when you make requests.
 "customerUuid": string, // your customer UUID
+"url": string, // the url of which UnumID's SaaS will interface with
 "apiKey": string // your verifier API key
 ```
 
@@ -292,10 +292,10 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 ```typescript
 "verifier": string, // your verifier DID
 "credentialRequests": CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.
-"eccPrivateKey": string, // your verifier signing private key
+"signingPrivateKey": string, // your verifier signing private key
 "holderAppUuid": string, // identifies mobile app subjects will share presentations from
-"expiresAt": string, // (optional) when PresentationRequest will no longer be valid (ISO 8601 date/time). Default is 10 minutes after creation.
-"metadata": object // (optional) any additional data to include in PresentationRequest
+"expiresAt"?: string, // (optional) when PresentationRequest will no longer be valid (ISO 8601 date/time). Default is 10 minutes after creation.
+"metadata"?: object // (optional) any additional data to include in PresentationRequest
 ```
 
 #### Response Body: [`PresentationRequestResponse`](https://docs.unum.id/Server-SDK-Typescript/interfaces/presentationrequestresponse.html)
@@ -360,10 +360,10 @@ Unum ID *never* has access to sensitive data contained in presentations. The [Mo
 #### Response Body: [`DecryptedPresentation`](https://docs.unum.id/Server-SDK-Typescript/interfaces/decryptedpresentation.html)
 ```typescript title="DecryptedPresentation"
 {
-  isVerified: boolean; // whether the presentation is valid
-  type: 'VerifiablePresentation' | 'NoPresentation' // type of presentation. NoPresentation means user declined request.
-  presentation: Presentation | NoPresentation, // decrypted Presentation (or NoPresentation) object
-  message?: string; // (optional) included if isVerified is false. Explains why verification failed.
+  "isVerified": boolean; // whether the presentation is valid
+  "type": 'VerifiablePresentation' | 'NoPresentation' // type of presentation. NoPresentation means user declined request.
+  "presentation": Presentation | NoPresentation, // decrypted Presentation (or NoPresentation) object
+  "message"?: string; // (optional) included if isVerified is false. Explains why verification failed.
 }
 ```
 
@@ -426,8 +426,8 @@ JSON special characters (like double quotes or backslashes) in the `subject` or 
   "from": string, // from email address
   "replyTo": string, // replyTo email address
   "subject": string, // email subject
-  "textBody?": string, // (optional) email message body (cannot be used with htmlBody)
-  "htmlBody?": string, // (optional) email html message body (cannot be used with textBody)
+  "textBody"?: string, // (optional) email message body (cannot be used with htmlBody)
+  "htmlBody"?: string, // (optional) email html message body (cannot be used with textBody)
 }
 ```
 
@@ -455,9 +455,9 @@ Parameters
 #### Response Body: [`CredentialStatusInfo`](https://docs.unum.id/Server-SDK-Typescript/interfaces/credentialstatusinfo.html).
 ```typescript title="CredentialStatusInfo"
 {
-  createdAt: Date; // the time  the credential was recorded as created in the UnumID SaaS db
-  updatedAt: Date; // the time  the credential was recorded as updated in the UnumID SaaS db
-  credentialId: string; // the did (aka id) of the credential this status is in regard to
-  status: 'valid' | 'revoked'; // the status
+  "createdAt": Date; // the time  the credential was recorded as created in the UnumID SaaS db
+  "updatedAt": Date; // the time  the credential was recorded as updated in the UnumID SaaS db
+  "credentialId": string; // the did (aka id) of the credential this status is in regard to
+  "status": 'valid' | 'revoked'; // the status
 }
 ```

@@ -4,9 +4,8 @@ on:
   pull_request:
     branches: [deploy]
   push:
-    branches: [deploy]
-  tags:
-    'v*'
+    tags:
+      - 'v*'
 
 jobs:
   checks:

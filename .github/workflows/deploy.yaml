@@ -1,8 +1,6 @@
 name: deployment
 
 on:
-  pull_request:
-    branches: [deploy]
   push:
     tags:
       - 'v*'

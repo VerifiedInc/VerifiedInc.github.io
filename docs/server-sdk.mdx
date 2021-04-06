@@ -447,13 +447,18 @@ If unsuccessful, an exception will be thrown.
 ```
 ---
 ### `checkCredentialStatus`
-Used to check the status of a credential. Currently the only valid status are: verified and revoked.
+Used to check the status of a credential. 
+
+The `status` attribute of the response is of type [CredentialStatusOptions](https://docs.unum.id/types/modules.html#credentialstatusoptions). Currently the only valid status are: verified and revoked.
+
+```typescript title="CredentialStatusOptions"
+export type CredentialStatusOptions = 'valid' | 'revoked';
+```
 
 Parameters
 ```typescript
 {
   "credentialId": string, // the id of the credential in question
-  "authorization": string // auth token
 }
 ```
 
@@ -463,6 +468,6 @@ Parameters
   "createdAt": Date; // the time  the credential was recorded as created in the UnumID SaaS db
   "updatedAt": Date; // the time  the credential was recorded as updated in the UnumID SaaS db
   "credentialId": string; // the did (aka id) of the credential this status is in regard to
-  "status": 'valid' | 'revoked'; // the status
+  "status": CredentialStatusOptions; // a string literal type that currently only consists of 'valid' and 'revoked'
 }
 ```

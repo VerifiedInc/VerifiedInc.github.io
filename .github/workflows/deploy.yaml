@@ -5,6 +5,8 @@ on:
     branches: [deploy]
   push:
     branches: [deploy]
+  tags:
+    'v*'
 
 jobs:
   checks:

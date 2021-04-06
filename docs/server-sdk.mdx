@@ -170,19 +170,24 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 
 ---
 
-### `revokeCredential`
+### `updateCredentialStatus`
 > Revoke a <Tip type="credential"/> (i.e. make it invalid).
 
-You need to provide the credential `id`, which [`issueCredential`](#issueCredential) returns.
+You need to provide the credential `id` (which [`issueCredential`](#issueCredential) returns) and a [CredentialStatusOptions](https://docs.unum.id/types/modules.html#credentialstatusoptions) `status`. Currently there are only two valid statuses: "valid" and "revoked".
 
 :::note
 As noted in [`issueCredential`](#issueCredential), **we recommend storing the entire credential, indexed on the credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
 :::
 
+```typescript title="CredentialStatusOptions"
+export type CredentialStatusOptions = 'valid' | 'revoked';
+```
+
 #### Parameters
 ```typescript
 {
-  "credentialId": string // id of credential to revoke
+  "credentialId": string, // id of the credential
+  "status": CredentialStatusOptions // status to update the credential to (defaults to 'revoked')
 }
 ```
 
@@ -200,7 +205,7 @@ You can use the Server SDK to act as an <Tip type="verifier"/>, for example to m
 Jump to:
 - [`registerVerifier`](#registerVerifier)
 - [`sendRequest`](#sendRequest)
-- [`verifyEncryptedPresentation`](#verifyEncryptedPresentation)
+- [`verifyPresentation`](#verifyPresentation)
 - [`sendSms`](#sendSms)
 - [`sendEmail`](#sendEmail)
 
@@ -333,10 +338,10 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 
 ---
 
-### `verifyEncryptedPresentation`
+### `verifyPresentation`
 > Verify <Tip type="presentation"/> shared by <Tip type="subject"/>.
 
-You need to be able to receive presentations from users and pass them to this function. To do this, you need to create a `/presentation` endpoint that conforms to our [OpenAPI specification](https://unumid.postman.co/workspace/Unum-ID-Team-Workspace~48b1f312-a6e6-4bcc-86a0-aa4bc37df9b4/api/09ad0ccd-c614-4d54-a1b4-ff9ae85b8449?version=c217a461-fc05-4476-a792-6c9163f2a198&tab=define). The Unum ID cloud sends encrypted presentations to this endpoint, which should pass those presentations to the `verifyEncryptedPresentation` function to be decrypted and verified.
+You need to be able to receive presentations from users and pass them to this function. To do this, you need to create a `/presentation` endpoint that conforms to our [OpenAPI specification](https://unumid.postman.co/workspace/Unum-ID-Team-Workspace~48b1f312-a6e6-4bcc-86a0-aa4bc37df9b4/api/09ad0ccd-c614-4d54-a1b4-ff9ae85b8449?version=c217a461-fc05-4476-a792-6c9163f2a198&tab=define). The Unum ID cloud sends encrypted presentations to this endpoint, which should pass those presentations to the `verifyPresentation` function to be decrypted and verified.
 
 You need to provide:
 

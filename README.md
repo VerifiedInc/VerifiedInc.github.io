@@ -44,6 +44,8 @@ GIT_USER=<Your GitHub username> DEPLOYMENT_BRANCH=private USE_SSH=true yarn depl
 
 If you don't include `DEPLOYMENT_BRANCH`, it defaults to master.
 
+However, you should *not* deploy from your local machine. There is now a CI job using Github Actions which will auto deploy when a tag with a preceding 'v' is pushed to a branch or when changes are merged into the `deploy` branch. When one of this two triggering events happen, a "build" version of the docs is auto committed to the `master` branch. So, no need to ever commit directly to master.
+
 ## GitHub Pages
 
 Every GitHub user and organization gets a free [GitHub Pages](https://pages.github.com/) page. Docusaurus offers this as a simple deployment and hosting option. The setup (which feels a little arbitrary!) is:

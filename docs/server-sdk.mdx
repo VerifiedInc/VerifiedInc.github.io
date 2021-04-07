@@ -348,6 +348,7 @@ You need to provide:
 1. your verifier <Tip type="DID"/> 
 2. your verifier encryption private key
 3. encrypted presentation (received at `/presentation` endpoint)
+4. (optional, but recommended) presentation request (received at `/presentation` endpoint)
 
 The fist two are returned by [`registerVerifier`](#registerVerifier).
 
@@ -355,11 +356,16 @@ The fist two are returned by [`registerVerifier`](#registerVerifier).
 Unum ID *never* has access to sensitive data contained in presentations. The [Mobile SDK](mobile-sdk-overview) encrypts each presentation (with your verifier encryption public key) before sending it to us. We have no ability to decrypt the data — only you do.
 :::
 
+:::note
+`presentationRequest` is optional in order for the server sdk can handle verifying presentations that may not have a corresponding request. However, if `presentationRequest` is supplied from UnumID's SaaS via the `/presentation` endpoint, it is strongly recommended that it is provided as it performs additional validation checks on your behalf.
+:::
+
 #### Parameters
 ```typescript
 "encryptedPresentation": EncryptedData, // encrypted presentation
 "verifierDid": string, // your verifier DID
 "encryptionPrivateKey": string // your verifier encryption private key
+"presentationRequest"?: PresentationRequestDto // (optional) presentation request dto object to verify presentation credentials meet request requirements. This is an optional param to support the future use case of handling verifying presentations that are not in response to PresentationRequest
 ```
 
 #### Response Body: [`DecryptedPresentation`](https://docs.unum.id/Server-SDK-Typescript/interfaces/decryptedpresentation.html)

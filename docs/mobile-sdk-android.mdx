@@ -42,7 +42,30 @@ Device biometrics are typically *aliases* for passcodes (or similar options like
 
 ### Installation
 
-When you register a <Tip type="holder app"/>, we will send you the SDK as a compiled binary library.
+When you register a <Tip type="holder app"/>, we will send you a artifactory username and password
+
+In the top level build.gradle add your artifactory username, password, and artifactory url to the all projects block
+
+```groovy
+allprojects {
+    repositories {
+        maven {
+            credentials {
+                username 'username'
+                password 'password'
+                url 'https://unumid.jfrog.io/artifactory/android-SDK/'
+            }
+
+        }
+    }
+}
+```
+
+In the app level build.gradle add the reference to the SDK
+
+```groovy
+implementation "id.unum:androidSDK:1.20.0"
+```
 
 ### Initialization
 

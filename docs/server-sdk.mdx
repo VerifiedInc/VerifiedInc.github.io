@@ -120,14 +120,14 @@ You need to provide:
 3. credential type
 4. data about the <Tip type="subject"/>
 
-The first two are returned by [`registerIssuer`](#registerIssuer). The third (credential type) is part of what verifiers use to <Tip type="request"/> credentials from users. For example, Hooli FinTech might request a credential of type `KYCVerification`, issued by ACME Bank. The fourth (data about the subject) can be any valid JSON.
+The first two are returned by [`registerIssuer`](#registerissuer). The third (credential type) is part of what verifiers use to <Tip type="request"/> credentials from users. For example, Hooli FinTech might request a credential of type `KYCVerification`, issued by ACME Bank. The fourth (data about the subject) can be any valid JSON.
 
 You can optionally provide:
 
 5. expiration date
 
 :::note
-An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it (see [`revokeCredential`](#revokeCredential)).
+An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it (see [`updateCredentialStatus`](#updatecredentialstatus)).
 :::
 
 `issueCredential` returns a credential `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
@@ -180,10 +180,10 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 ### `updateCredentialStatus`
 > Revoke a <Tip type="credential"/> (i.e. make it invalid).
 
-You need to provide the credential `id` (which [`issueCredential`](#issueCredential) returns) and a [CredentialStatusOptions](https://docs.unum.id/types/modules.html#credentialstatusoptions) `status`. Currently there are only two valid statuses: "valid" and "revoked".
+You need to provide the credential `id` (which [`issueCredential`](#issuecredential) returns) and a [CredentialStatusOptions](https://docs.unum.id/types/modules.html#credentialstatusoptions) `status`. Currently there are only two valid statuses: "valid" and "revoked".
 
 :::note
-As noted in [`issueCredential`](#issueCredential), **we recommend storing the entire credential, indexed on the credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
+As noted in [`issueCredential`](#issuecredential), **we recommend storing the entire credential, indexed on the credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
 :::
 
 ```typescript title="CredentialStatusOptions"
@@ -277,7 +277,7 @@ You need to provide:
 3. <Tip type="holder app"/> UUID
 4. credential request(s)
 
-The first two are returned by [`registerVerifier`](#registerVerifier). The third (holder app UUID) identifies the mobile app users will share <Tip type="presentation">presentations</Tip> from. For example, Hooli FinTech might use the UUID for ACME Bank's mobile app, so the user is prompted to share a presentation from that app.
+The first two are returned by [`registerVerifier`](#registerverifier). The third (holder app UUID) identifies the mobile app users will share <Tip type="presentation">presentations</Tip> from. For example, Hooli FinTech might use the UUID for ACME Bank's mobile app, so the user is prompted to share a presentation from that app.
 
 The fourth (credential requests) encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.unum.id/types/interfaces/credentialrequest.html) objects (defined in the [Unum ID generic types project](https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117)):
 
@@ -357,7 +357,7 @@ You need to provide:
 3. encrypted presentation (received at `/presentation` endpoint)
 4. (optional, but recommended) presentation request (received at `/presentation` endpoint)
 
-The fist two are returned by [`registerVerifier`](#registerVerifier).
+The fist two are returned by [`registerVerifier`](#registerverifier).
 
 :::important
 Unum ID *never* has access to sensitive data contained in presentations. The [Mobile SDK](mobile-sdk-overview) encrypts each presentation (with your verifier encryption public key) before sending it to us. We have no ability to decrypt the data — only you do.
@@ -398,7 +398,7 @@ Messages you send will (necessarily) be delivered from an Unum ID associated pho
 
 To request a <Tip type="presentation"/> from a user, you need to:
 
-1. create the <Tip type="request"/> object using [`sendRequest`](#sendRequest), which includes a deep link that references the request
+1. create the <Tip type="request"/> object using [`sendRequest`](#sendrequest), which includes a deep link that references the request
 2. send or display the deep link to the user
 
 SMS is one way to send the deep link. The SMS message will be in the format:
@@ -433,7 +433,7 @@ Emails you send will be delivered from no-reply@unum.id. You can of course use y
 
 To request a <Tip type="presentation"/> from a user, you need to:
 
-1. create the <Tip type="request"/> object using [`sendRequest`](#sendRequest), which includes a deep link that references the request
+1. create the <Tip type="request"/> object using [`sendRequest`](#sendrequest), which includes a deep link that references the request
 2. send or display the deep link to the user
 
 Email is one way to send the deep link. The email will be in the format:

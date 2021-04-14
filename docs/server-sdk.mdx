@@ -401,13 +401,18 @@ To request a <Tip type="presentation"/> from a user, you need to:
 1. create the <Tip type="request"/> object using [`sendRequest`](#sendRequest), which includes a deep link that references the request
 2. send or display the deep link to the user
 
-SMS is one way to send the deep link.
+SMS is one way to send the deep link. The SMS message will be in the format:
+> Verification Request: [verifier_name]. Click here to complete: [deep_link]
+
+:::note
+The verifier is corresponding to the presentation request from which the deeplink references. Because you are the acting verifier, the name will be what ever you provided during [verifier registration](#registerverifier). 
+:::
 
 #### Parameters
 ```typescript
 {
   "to": string, // phone number to send SMS to
-  "msg": string // message to send
+  "deeplink": string // the deeplink corresponding to the presentation request you would like served to the user
 }
 ```
 
@@ -431,27 +436,22 @@ To request a <Tip type="presentation"/> from a user, you need to:
 1. create the <Tip type="request"/> object using [`sendRequest`](#sendRequest), which includes a deep link that references the request
 2. send or display the deep link to the user
 
-Email is one way to send the deep link.
+Email is one way to send the deep link. The email will be in the format:
+>   - *subject:* Verification Request: [verifier_name]
+  - *body:* Click here to complete: [deep_link]
 
-:::tip
-JSON special characters (like double quotes or backslashes) in the `subject` or `htmlBody` fields will need to be escaped with a single backslash (\\). For example, **"Unum ID rocks!"** must be written as **\\"Unum ID rocks!\\"**.
+
+:::note
+The verifier is corresponding to the presentation request from which the deeplink references. Because you are the acting verifier, the name will be what ever you provided during [verifier registration](#registerverifier). 
 :::
 
 #### Parameters
 ```typescript
 {
   "to": string, // email address to send email to
-  "from": string, // from email address
-  "replyTo": string, // replyTo email address
-  "subject": string, // email subject
-  "textBody"?: string, // (optional) email message body (cannot be used with htmlBody)
-  "htmlBody"?: string, // (optional) email html message body (cannot be used with textBody)
+  "deeplink": string // the deeplink corresponding to the presentation request you would like served to the user
 }
 ```
-
-:::note
-You can only use `textBody` *or* `htmlBody`, not both.
-:::
 
 #### Response Body: Empty 
 If unsuccessful, an exception will be thrown.

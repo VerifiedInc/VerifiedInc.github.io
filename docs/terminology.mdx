@@ -57,39 +57,39 @@ The full details of the credential object aren't that important or helpful to kn
 
 ```json
 {
-  "@context": ["https://www.w3.org/2018/credentials/v1"],
-  "credentialStatus": {
-    "createdAt": "2020-05-26T23:07:12.770Z",
-    "status": "valid",
-    "updatedAt": "2020-05-26T23:07:12.770Z",
-    "uuid":"c3974fa3-396e-42ee-81a9-9ab69efce031"
-  },
-  // type of credential
-  // highlight-next-line
-  "type":["VerifiableCredential","DummyCredential"]
-  "credentialSubject": {
-    // identifier for the person
+    "@context": ["https://www.w3.org/2018/credentials/v1"],
+    "credentialStatus": {
+        "id": "https://api.unum.id/credentialStatus/f8287c1e-0c56-460a-92af-5519f5c10cbf",
+        "type": "CredentialStatus"
+    },
+    // type of credential
     // highlight-next-line
-    "id": "did:unum:89460433-c0b7-4892-aeb2-f2ece77af141",
-    // data about the person
+    "type": ["VerifiableCredential", "UsernameCredential"],
+    "credentialSubject": {
+        // identifier for the person
+        // highlight-next-line
+        "id": "did:unum:5f5eb3dd-d0e0-4356-bfdd-96bc1393c705",
+        // data about the person
+        // highlight-next-line
+        "username": "Analyst-Shoes-278"
+    },
+    // identifier for the company
     // highlight-next-line
-    "value":"dummy value"
-  },
-  "id": "0c93beb0-2605-4650-b698-3fd92eb110b9",
-  "issuanceDate": "2020-05-26T23:07:12.770Z",
-  // identifier for the company
-  // highlight-next-line
-  "issuer": "did:unum:e1281297-268b-4700-8f17-7fa826effe35",
-  // cryptographic signature, created with company's private key
-  // highlight-start
-  "proof": {
-    "created": "2020-05-26T23:07:12.770Z",
-    "proofPurpose":"assertionMethod",
-    "signatureValue": "381yXZTKWaZj6QRgeHJ5X5REv1jDrmSgLFpsYZLKQ8wGecFfL6CFx4inzqWcepyuZhALXUrS3LaAXzsLfgv9StbrotEkWzPn",
-    "type": "secp256r1Signature2020",
-    "verificationMethod": "did:unum:756450ab-ab01-420c-838e-cfa0bebdc2ba#5b134be0-7cb4-4983-95b1-bdec218cb55b"
-  }
-  // highlight-end
+    "issuer": "did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5",
+    "id": "f8287c1e-0c56-460a-92af-5519f5c10cbf",
+    "issuanceDate": "2021-01-09T02:23:54.844Z",
+    "expirationDate": "2022-01-09T00:00:00.000Z",
+    // cryptographic signature, created with company's private key
+    // highlight-start
+    "proof": {
+        "created": "2021-01-09T02:23:54.844Z",
+        "signatureValue": "AN1rKrsBLQWXcn3H6cD34FuN9w3crhpD3aogteduJZtu7NRKPYpgnfxFvJC1xMENaCZpcWpchWdpMZ5TYZmGohv8Y3kCpgUNG",
+        "unsignedValue": "{\"@context\":[\"https://www.w3.org/2018/credentials/v1\"],\"credentialStatus\":{\"id\":\"https://api.unum.id/credentialStatus/f8287c1e-0c56-460a-92af-5519f5c10cbf\",\"type\":\"CredentialStatus\"},\"credentialSubject\":{\"id\":\"did:unum:5f5eb3dd-d0e0-4356-bfdd-96bc1393c705\",\"username\":\"Analyst-Shoes-278\"},\"issuer\":\"did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5\",\"type\":[\"VerifiableCredential\",\"UsernameCredential\"],\"id\":\"f8287c1e-0c56-460a-92af-5519f5c10cbf\",\"issuanceDate\":\"2021-01-09T02:23:54.844Z\",\"expirationDate\":\"2022-01-09T00:00:00.000Z\"}",
+        "type": "secp256r1Signature2020",
+        "verificationMethod": "did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5",
+        "proofPurpose": "AssertionMethod"
+    }
+    // highlight-end
 }
 ```
 
@@ -113,50 +113,53 @@ The full details of the presentation object aren't that important or helpful to 
 
 ```json
 {
-  "@context": ["https://www.w3.org/2018/credentials/v1"],
-  "type": ["VerifiablePresentation"],
-  // credentials contained in presentation, in this case just one
-  // highlight-start
-  "verifiableCredential": [
-    {
-      "@context": ["https://www.w3.org/2018/credentials/v1"],
-      "credentialStatus": {
-        "createdAt": "2020-05-26T23:07:12.770Z",
-        "status": "valid",
-        "updatedAt": "2020-05-26T23:07:12.770Z",
-        "uuid":"c3974fa3-396e-42ee-81a9-9ab69efce031"
-      },
-      "credentialSubject": {
-        "id": "did:unum:89460433-c0b7-4892-aeb2-f2ece77af141",
-        "value":"dummy value"
-      },
-      "id": "0c93beb0-2605-4650-b698-3fd92eb110b9",
-      "issuanceDate": "2020-05-26T23:07:12.770Z",
-      "issuer": "did:unum:e1281297-268b-4700-8f17-7fa826effe35",
-      "proof": {
-        "created": "2020-05-26T23:07:12.770Z",
-        "proofPurpose":"assertionMethod",
-        "signatureValue": "381yXZTKWaZj6QRgeHJ5X5REv1jDrmSgLFpsYZLKQ8wGecFfL6CFx4inzqWcepyuZhALXUrS3LaAXzsLfgv9StbrotEkWzPn",
+    "@context": ["https://www.w3.org/2018/credentials/v1"],
+    "type": ["VerifiablePresentation"],
+    // credentials contained in presentation, in this case just one
+    // highlight-start
+    "verifiableCredential": [
+        {
+            "@context": ["https://www.w3.org/2018/credentials/v1"],
+            "credentialStatus": {
+                "id": "https://api.dev-unumid.org//credentialStatus/f8287c1e-0c56-460a-92af-5519f5c10cbf",
+                "type": "CredentialStatus"
+            },
+            "credentialSubject": {
+                "id": "did:unum:5f5eb3dd-d0e0-4356-bfdd-96bc1393c705",
+                "username": "Analyst-Shoes-278"
+            },
+            "issuer": "did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5",
+            "type": ["VerifiableCredential", "UsernameCredential"],
+            "id": "f8287c1e-0c56-460a-92af-5519f5c10cbf",
+            "issuanceDate": "2021-01-09T02:23:54.844Z",
+            "expirationDate": "2022-01-09T00:00:00.000Z",
+            "proof": {
+                "created": "2021-01-09T02:23:54.844Z",
+                "signatureValue": "AN1rKrsBLQWXcn3H6cD34FuN9w3crhpD3aogteduJZtu7NRKPYpgnfxFvJC1xMENaCZpcWpchWdpMZ5TYZmGohv8Y3kCpgUNG",
+                "type": "secp256r1Signature2020",
+                "verificationMethod": "did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5",
+                "proofPurpose": "AssertionMethod"
+            }
+        }
+    ],
+    // highlight-end
+    // request presentation is in response to
+    // highlight-next-line
+    "presentationRequestUuid": "0b46168a-3f7c-4675-a8df-87930b253482",
+    // verifier DID that the presentation is meant for
+    // highlight-next-line
+    "verifierDid": "did:unum:5f5eb3dd-d0e0-4356-bfdd-96bc1393c707",
+    // cryptographic signature, created with user's private key
+    // highlight-start
+    "proof": {
+        "created": "2021-04-21T01:45:43.390Z",
+        "signatureValue": "381yXZTdpHAZ5QvX8j5cXHLGXRms2KoW2cXg3rvQEhJx6eDqAzAADu8pkxqU1CoSMeMF6QsYAvpJj7ykMkAkzPMEzBLdY7BF",
+        "unsignedValue": "{\"@context\":[\"https://www.w3.org/2018/credentials/v1\"],\"presentationRequestUuid\":\"0b46168a-3f7c-4675-a8df-87930b253482\",\"type\":[\"VerifiablePresentation\"],\"verifiableCredentials\":[{\"@context\":[\"https://www.w3.org/2018/credentials/v1\"],\"credentialStatus\":{\"id\":\"https://api.dev-unumid.org//credentialStatus/f8287c1e-0c56-460a-92af-5519f5c10cbf\",\"type\":\"CredentialStatus\"},\"credentialSubject\":{\"id\":\"did:unum:5f5eb3dd-d0e0-4356-bfdd-96bc1393c705\",\"username\":\"Analyst-Shoes-278\"},\"expirationDate\":\"2022-01-09T00:00:00.000Z\",\"id\":\"f8287c1e-0c56-460a-92af-5519f5c10cbf\",\"issuanceDate\":\"2021-01-09T02:23:54.844Z\",\"issuer\":\"did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5\",\"proof\":{\"created\":\"2021-01-09T02:23:54.844Z\",\"proofPurpose\":\"AssertionMethod\",\"signatureValue\":\"AN1rKrsBLQWXcn3H6cD34FuN9w3crhpD3aogteduJZtu7NRKPYpgnfxFvJC1xMENaCZpcWpchWdpMZ5TYZmGohv8Y3kCpgUNG\",\"type\":\"secp256r1Signature2020\",\"verificationMethod\":\"did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5\"},\"type\":[\"VerifiableCredential\",\"UsernameCredential\"]}],\"verifierDid\":\"did:unum:5f5eb3dd-d0e0-4356-bfdd-96bc1393c707\"}",
         "type": "secp256r1Signature2020",
-        "verificationMethod": "did:unum:756450ab-ab01-420c-838e-cfa0bebdc2ba#5b134be0-7cb4-4983-95b1-bdec218cb55b"
-      },
-      "type":["VerifiableCredential","DummyCredential"]
+        "verificationMethod": "did:unum:9d79fab6-65d7-455d-9160-780b4c152ef6#38de59ae-d475-45b1-8d6b-38764aeec96f",
+        "proofPurpose": "assertionMethod"
     }
-  ],
-  // highlight-end
-  // request presentation is in response to
-  // highlight-next-line
-  "presentationRequestUuid": "5abc66a6-ae43-42ba-a616-0228b1a679b5",
-  // cryptographic signature, created with user's private key
-  // highlight-start
-  "proof": {
-    "created": "2020-06-02T18:11:03.179Z",
-    "signatureValue": "381yXZQRsEcmYPCvfzQ9tfa8jXyY9NtW4Zs7dZeP2J5rVNQXT1JNvLFZJESV6oJwon3yUmngS5rSrzm14omsibwXKqmWQ27W",
-    "type": "secp256r1Signature2020",
-    "verificationMethod": "did:unum:fc937ba6-1685-4b69-bcec-6857f57faf44#79e48b82-1038-4cbb-b5e9-5942782313ad",
-    "proofPurpose": "assertionMethod"
-  }
-  // highlight-end
+    // highlight-end
 }
 ```
 
@@ -186,46 +189,76 @@ The request is cryptographically signed with the company's private key. This mak
 
 ```json
 {
-  "uuid": "5abc66a6-ae43-42ba-a616-0228b1a679b5",
-  "createdAt": "2020-06-02T18:11:03.179Z",
-  "updatedAt": "2020-06-02T18:11:03.179Z",
-  // default is 10 minutes after creation, but this can be overriden
-  // highlight-next-line
-  "expiresAt": "2020-06-02T18:21:03.179Z",
-  "verifier": {
-    "name": "ACME, Inc.",
-    // identifier for the company
-    // highlight-next-line
-    "did": "did:unum:fc937ba6-1685-4b69-bcec-6857f57faf44",
-    "url": "https://api-demo-server.unumid.org/presentation"
+  // the base presentation object
+  "presentationRequest": {
+      "uuid": "47609f52-2cd9-4844-8cec-4fc289c7ddcd",
+      "createdAt": "2021-04-21T01:39:26.983Z",
+      "updatedAt": "2021-04-21T01:39:26.983Z",
+      // default is 10 minutes after creation, but this can be overriden
+      // highlight-next-line
+      "expiresAt": "2021-04-21T01:49:26.983Z",
+      // identifier for the company
+      // highlight-next-line
+      "verifier": "did:unum:f2054199-1069-4337-a588-83d099e79d44",
+      // credentials requested to be included in presentation, in this case only one
+      // highlight-start
+      "credentialRequests": [
+          {
+              // type of credential
+              "type": "UsernameCredential",
+              // acceptable issuer(s) of credential, in this case only one
+              "issuers": [
+                  "did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5"
+              ],
+              "required": true
+          }
+      ],
+      // highlight-end
+      // cryptographic signature, created with company's private key
+      // highlight-start
+      "proof": {
+          "created": "2021-04-21T01:39:26.984Z",
+          "signatureValue": "AN1rKoiKg91BdpsLTFg6nBctDJwJEjYu6fBJheP6G5se5bRs4oWXu5TR3pdP9WZ5RgiiFWP4bKgfrBgBSmtHfxnwURKDq7das",
+          "unsignedValue": "{\"createdAt\":\"2021-04-21T01:39:26.983Z\",\"credentialRequests\":[{\"issuers\":[\"did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5\"],\"required\":true,\"type\":\"UsernameCredential\"}],\"expiresAt\":\"2021-04-21T01:49:26.983Z\",\"holderAppUuid\":\"91514d8e-b5b2-41d9-9744-3cbb2bb9a85d\",\"metadata\":{},\"updatedAt\":\"2021-04-21T01:39:26.983Z\",\"uuid\":\"47609f52-2cd9-4844-8cec-4fc289c7ddcd\",\"verifier\":\"did:unum:f2054199-1069-4337-a588-83d099e79d44\"}",
+          "type": "secp256r1Signature2020",
+          "verificationMethod": "did:unum:f2054199-1069-4337-a588-83d099e79d44",
+          "proofPurpose": "AssertionMethod"
+      },
+      // highlight-end
+      "metadata": {},
+      "holderAppUuid": "91514d8e-b5b2-41d9-9744-3cbb2bb9a85d"
   },
-  // credentials requested to be included in presentation, in this case only one
+  // enriched verifier information based on the base presentation request
   // highlight-start
-  "credentialRequests": [
-    {
-      // type of credential
-      "type": "Dummy_Credential",
-      // accetable issuer(s) of credential, in this case only one
-      "issuers": [
-        {
-          "did": "did:unum:437ce603-7f1f-4ff7-bbcf-83fed7f716a2",
-          "name": "ACME, Inc.",
-          "required": true
-        }
-      ]
-    }
-  ],
+  "verifier": {
+      "name": “The Dev Shop“,
+      "did": "did:unum:f2054199-1069-4337-a588-83d099e79d44",
+      "url": "https://developer.demo.unum.id/presentation"
+  },
   // highlight-end
-  // cryptographic signature, created with company's private key
+  // enriched issuer information based on the base presentation request
   // highlight-start
-  "proof": {
-    "created": "2020-06-02T18:11:03.179Z",
-    "signatureValue": "AN1rKpM716iPUrJjkVTpbVAfhNWpUm2nH4LAcFQi9BcBNoqgXYD54q1EcPXDduz7LXCC3i471VTw6vRtXf9cmVYD2Hp7trmqE",
-    "type": "secp256r1Signature2020",
-    "verificationMethod": "did:unum:fc937ba6-1685-4b69-bcec-6857f57faf44#79e48b82-1038-4cbb-b5e9-5942782313ad",
-    "proofPurpose": "assertionMethod"
-  }
+  "issuers": {
+      "did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5": {
+          "name": "Acme Co Issuer",
+          "did": "did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5"
+      }
+  },
   // highlight-end
+  // enriched holder app information based on the base presentation request
+  // highlight-start
+  "holderApp": {
+      "name": "ACME, Inc. Test App",
+      "uriScheme": "unumid://",
+      "deeplinkButtonImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAb4AAABWCAYAAACw7fOyAAAABGdBTUEAALGPC…”
+  },
+  // highlight-end
+  // a deeplink when opened will present the request in the holder app (or take them to the store to download if not installed), facilitating a user responding to the request in the holder app
+  // highlight-next-line
+  "deeplink": "unumid://unumid/presentationRequest/47609f52-2cd9-4844-8cec-4fc289c7ddcd",
+  // a qr code facilitates a user responding to the request in the holder app when scanned
+  // highlight-next-line
+  "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAAAklEQVR4AewaftIAAAWUSURBV…”
 }
 ```
 

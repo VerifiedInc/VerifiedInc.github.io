@@ -16,23 +16,23 @@ This is a lightweight React library that allows a web client to display and send
 Please [contact us](mailto:support@Unum.ID) for frameworks other than React.
 :::
 
-## Overview 
+# Overview
 
-### Minimum Requirements
+## Minimum Requirements
 - **React v16.8.0 and above**
 - **English language** (internationalization coming soon)
 
 ### TypeScript support
 The SDK is written in TypeScript and exports relevant types. Some types are pulled from our shared types library, [`@unumid/types`](https://github.com/UnumID/types). We recommend adding `@unumid/types` as a dependency to ensure full type support between this Web SDK and the [Server SDK](/server-sdk).
 
-### Reference Client Application
-This is available at Git and can be cloned using:
+## Reference Client Application
+This is available via Github and can be cloned by running:
 
 ```
 git clone https://github.com/UnumID/Verifier-Client-SDK-Client-Reference-App.git
 ```
 
-## Installation
+# Installation
 
 The Web SDK is currently only available via GitHub, but will be available via the NPM and Yarn registries soon.
 
@@ -64,9 +64,9 @@ Alternatively, you can add the following to your `package.json` and run `npm ins
 "@unumid/web-sdk": "https://github.com/UnumID/Verifier-Client-SDK.git"
 ```
 
-## Functionality
+# Functionality
 
-### Create `PresentationRequests`
+## Create `PresentationRequests`
 By default, the SDK will create a `PresentationRequest` as soon as it is rendered. It will periodically regenerate the `PresentationRequest` (to ensure it doesn't expire) until the user shares data or declines the request, or the widget is unmounted. 
 
 :::tip
@@ -75,18 +75,57 @@ An Unum ID <Tip type="request"/> is what a company uses to request a <Tip type="
 
 You can use different combinations of props (see below) to choose how much control you want to have. For example, instead of automatically creating a `PresentationRequest` on load, you may want to trigger its creation based on a user interaction like a button click.
 
-### Display Deep Links
+## Display Deep Links
 PresentationRequests are shared to an Unum ID-powered mobile app a user's device via deep links. The Web SDK determines how it displays them based on the browser's userAgent.
 
-#### Defaults 
-- **QR Code:** On non-mobile browsers, the SDK will default to displaying the deep link as a QR code (which a user scans with their mobile device).
-- **Button:** On mobile browsers, the SDK will default to displaying the deep link as a button.
+### Defaults
+#### QR Code
+On non-mobile browsers, the SDK will default to displaying the deep link as a QR code (which a user scans with their mobile device).
+![](/img/QRCodeExample.png)
 
-#### Fallbacks
-In some situations, neither a QR code nor a button is convenient, so the SDK uses fallback options in this order:
-1. **Push Notification:** sends a push notification to the user's device.
+#### Button
+On mobile browsers, the SDK will default to displaying the deep link as a button. Tapping the button opens the corresponding app on their device.
+
+![](/img/ButtonExample.png)
+<!-- - **QR Code:** On non-mobile browsers, the SDK will default to displaying the deep link as a QR code (which a user scans with their mobile device).
+- **Button:** On mobile browsers, the SDK will default to displaying the deep link as a button. Tapping the button opens the corresponding app on their device. -->
+
+### Fallbacks
+In some situations, neither a QR code nor a button is convenient, so the SDK uses fallback options in this order: push notification, sms, email.
+
+These are called fallbacks in part because they require some information about the user to work (unlike QR codes and buttons).
+To send push notifications, you need to provide a push notification identifier for the user, to send SMS messages, you need to provide a phone number for the user, and to send emails, you need to provide an email for the user.
+
+You may have this information stored in your database, associated with the user. If so, you can ask them to log into your existing account system, retrieve the necessary information, and then use the fallbacks options described above. THe SDK accepts a `goToLogin` prop for this purpose.
+
+#### Push Notification
+Sends a push notification to the user's device.
+Tapping the push notification will open the corresponding app on the user's device and prompt them to share the requested credentials.
+In order to use this fallback, you will need to provide the `userInfo` prop with a `pushToken` field containing a push notification identifier for the user's device AND EITHER:
+- Provide a function the SDK can call to send a custom push notification via the `sendPushNotification` prop
+
+OR
+
+- Upload your push notification credentials to Unum ID ([contact us](mailto:support@Unum.ID) for details) so that we can send push notifications to your mobile app.
+#### SMS
+Sends the user an SMS containing the deep link, which they open on their mobile device.
+Tapping the link in the message will open the corresponding app on the user's device and prompt them to share the requested credentials.
+In order to use this fallback, you will need to provide the `userInfo` prop containing the user's mobile phone number.
+You may send custom SMS messages by including the `sendSms` prop.
+
+#### Email
+Sends the user an email containing the deep link, which they open on their mobile device.
+Tapping the link in the email will open the corresponding app on the user's device and prompt them to share the requested credentials.
+In order to use this fallback, you will need to provide the `userInfo` prop containing the user's email address.
+You may send custom emails by including the `sendEmail` prop.
+<!-- 1. **Push Notification:** sends a push notification to the user's device.
 2. **SMS:** sends the user an SMS message containing the deep link, which they open on their mobile device.
-3. **Email**: sends the user an email containing the deep link, which they open on their mobile device.
+3. **Email**: sends the user an email containing the deep link, which they open on their mobile device. -->
+
+#### Trying the next fallback
+If for some reason the first fallback option offered to a user doesn't work for them (maybe they turned off push notifications or any number of other things), the SDK will offer the next available option.
+
+![](/img/fallback-error.png)
 
 :::tip
 Using all fallbacks allows you to handle the vast majority of edge cases:
@@ -98,29 +137,30 @@ Using all fallbacks allows you to handle the vast majority of edge cases:
 <br/> SMS &rarr; email
 :::
 
-These are called fallbacks in part because they require some information about the user to work (unlike QR codes and buttons). To send push notifications, you need to provide a push notification identifier for the user. To send SMS messages, you need to provide a phone number for the user. And to send emails, you need to provide an email for the user.
+# API
 
-You may have this information stored in your database, associated with the user. If so, you can ask them to log into your existing account system, retrieve the necessary information, and then use the fallbacks options described above. We provide a `goToLogin()` function for this purpose.
+The SDK exports a single `UnumIDWidget` component, which encapsulates all of its functionality. You configure it by setting its props.
 
-## API
-
-The SDK exports a single `UnumIDWidget` component, which encapsulates all of its functionality.
-
-### env
+## Props
+### `env`
 - string
 - _required_
 - one of 'development', 'sandbox' or 'production'
 - Determines which Unum ID SaaS environment the Web SDK will connect to.
 
-## apiKey
+### `apiKey`
 - string
 - _required_
 - Your Web SDK api key (obtained from Unum ID).
+- __NOTE__: Web SDK api keys are environment-specific (see above). Make sure you are using the correct key!
 
-### `userInfo` 
+### `userInfo`
 - `UserInfo`
 - _optional_
-- Information about the user (push notification identifier(s), phone number, and/or email). 
+- Information about the user (push notification identifier, phone number, and/or email).
+  - __email__: The user's email address. Including this enables us to send deep links via email.
+  - __phone__: The user's mobile phone number. Including this enables us to send deep links via SMS.
+  - __pushToken__: An object containing a push notification identifier from the user's device as well as your push notification provider ('APNS' for Apple Push Notification Service or 'FCM' for Firebase Cloud Messaging)
 - The SDK will use this to determine which fallback options are available.
 
 ### `presentationRequest` 
@@ -157,7 +197,7 @@ The SDK exports a single `UnumIDWidget` component, which encapsulates all of its
 - If this prop is not provided, the SMS fallback option will send the Unum ID SaaS's default SMS message.
 - If provided, this function will be used _instead of_ the default SMS fallback.
 
-### `sendPushNotification
+### `sendPushNotification`
 - `(options: PushNotificationOptions) => Promise<SuccessResponse>`
 - _optional_
 - A function that takes a `PushNotificationOptions` object and calls your backend to send a deep link via push notification.
@@ -171,9 +211,9 @@ The SDK exports a single `UnumIDWidget` component, which encapsulates all of its
 - A function that redirects the user to your existing login page. 
 - You should provide this if you are using Unum ID as an additional authentication factor on top of your existing login. - If this prop is not provided, the login fallback option will not be available.
 
-## Examples
+# Examples
 
-### No Fallbacks
+## No Fallbacks
 The simplest possible use case. It allows the SDK to handle all `PresentationRequest` creation, and does not provide any additional fallback options.
 
 <Tabs
@@ -186,7 +226,7 @@ The simplest possible use case. It allows the SDK to handle all `PresentationReq
 <TabItem value="jsx">
 
 ```jsx
-import WidgetHostAndController from '@unumid/web-sdk';
+import UnumIDWidget from '@unumid/web-sdk';
 
 const App = () => {
   const createPresentationRequest = async () => {
@@ -194,7 +234,11 @@ const App = () => {
   };
 
   return (
-    <WidgetHostAndController createPresentationRequest={createPresentationRequest} />
+    <UnumIDWidget
+      env='sandbox'
+      apiKey='my_sandbox_api_key'
+      createPresentationRequest={createPresentationRequest}
+    />
   );
 };
 ```
@@ -204,7 +248,7 @@ const App = () => {
 
 ```tsx
 import { FC } from 'react';
-import WidgetHostAndController, { PresentationRequestResponse } from '@unumid/web-sdk';
+import UnumIDWidget, { PresentationRequestResponse } from '@unumid/web-sdk';
 
 const App: FC = () => {
   const createPresentationRequest = async (): Promise<PresentationRequestResponse> => {
@@ -212,7 +256,11 @@ const App: FC = () => {
   };
 
   return (
-    <WidgetHostAndController createPresentationRequest={createPresentationRequest} />
+    <UnumIDWidget
+      env='sandbox'
+      apiKey='my_sandbox_api_key'
+      createPresentationRequest={createPresentationRequest}
+    />
   );
 };
 ```
@@ -220,7 +268,7 @@ const App: FC = () => {
 </TabItem>
 </Tabs>
 
-### Fallbacks
+## Fallbacks
 A slightly more complex use case which allows the SDK to handle PresentationRequest creation, but enables fallback options by providing user info.
 
 <Tabs
@@ -233,11 +281,13 @@ A slightly more complex use case which allows the SDK to handle PresentationRequ
 <TabItem value="jsx">
 
 ```jsx
-import WidgetHostAndController from '@unumid/web-sdk';
+import UnumIDWidget from '@unumid/web-sdk';
 
 const App = () => {
   return (
-    <WidgetHostAndController
+    <UnumIDWidget
+      env='sandbox'
+      apiKey='my_sandbox_api_key'
       userInfo={{
         pushToken: {
           provider: 'FCM', // push notification provider to use. 'FCM' = Firebase Cloud Messaging, 'APNS' = Apple Push Notification Service
@@ -257,7 +307,7 @@ const App = () => {
 
 ```tsx
 import { FC } from 'React';
-import WidgetHostAndController, {
+import UnumIDWidget, {
   EmailOptions,
   SmsOptions,
   PresentationRequestResponse,
@@ -266,7 +316,9 @@ import WidgetHostAndController, {
 
 const App: FC = () => {
   return (
-    <WidgetHostAndController
+    <UnumIDWidget
+      env='sandbox'
+      apiKey='my_sandbox_api_key'
       userInfo={{
         pushToken: {
           provider: 'FCM', // push notification provider to use. 'FCM' = Firebase Cloud Messaging, 'APNS' = Apple Push Notification Service
@@ -287,7 +339,7 @@ const App: FC = () => {
 </TabItem>
 </Tabs>
 
-### Controlled Request Creation
+## Controlled Request Creation
 
 Gives your application more control over when the initial PresentationRequest is created. Enables custom email, sms, and push notification fallbacks.
 
@@ -302,7 +354,7 @@ Gives your application more control over when the initial PresentationRequest is
 
 ```jsx
 import { useState } from 'react';
-import WidgetHostAndController from '@unumid/web-sdk';
+import UnumIDWidget from '@unumid/web-sdk';
 
 const App = () => {
   // Save the PresentationRequest in local component state.
@@ -335,7 +387,9 @@ const App = () => {
   };
 
   return (
-    <WidgetHostAndController
+    <UnumIDWidget
+      env='sandbox'
+      apiKey='my_sandbox_api_key'
       userInfo={{
         pushToken: {
           provider: 'FCM', // push notification provider to use. 'FCM' = Firebase Cloud Messaging, 'APNS' = Apple Push Notification Service
@@ -360,7 +414,7 @@ const App = () => {
 
 ```tsx
 import { FC, useState } from 'react';
-import WidgetHostAndController, {
+import UnumIDWidget, {
   EmailOptions,
   SmsOptions,
   PresentationRequestResponse,
@@ -399,7 +453,9 @@ const App: FC = () => {
   };
 
   return (
-    <WidgetHostAndController
+    <UnumIDWidget
+      env='sandbox'
+      apiKey='my_sandbox_api_key'
       userInfo={{
         pushToken: {
           provider: 'FCM', // push notification provider to use. 'FCM' = Firebase Cloud Messaging, 'APNS' = Apple Push Notification Service
@@ -422,7 +478,7 @@ const App: FC = () => {
 </TabItem>
 </Tabs>
 
-### Redux
+## Redux
 Applications using Redux and other similar state management libraries have some unique challenges. Side effects like creating resources usually happen in action creator functions, which dispatch actions to the store rather than returning values. 
 
 In this example, we're providing the SDK with our `createPresentationRequest` action creator to call, then selecting the created `PresentationRequest` from the store to provide separately.
@@ -438,7 +494,7 @@ In this example, we're providing the SDK with our `createPresentationRequest` ac
 
 ```jsx
 import { useSelector } from 'react-redux';
-import WidgetHostAndController from '@unumid/web-sdk';
+import UnumIDWidget from '@unumid/web-sdk';
 
 // Import your action creators. They have been wrapped in React hooks in this example, but your application may be different.
 import { useActionCreators } from './hooks/actionCreators';
@@ -458,7 +514,9 @@ const App = () => {
   };
 
   return (
-    <WidgetHostAndController
+    <UnumIDWidget
+      env='sandbox'
+      apiKey='my_sandbox_api_key'
       userInfo={{
         pushToken: {
           provider: 'FCM', // push notification provider to use. 'FCM' = Firebase Cloud Messaging, 'APNS' = Apple Push Notification Service
@@ -482,38 +540,40 @@ const App = () => {
 ```tsx
 import { useSelector } from 'react-redux';
 
- import WidgetHostAndController '@unumid/web-sdk';
+import UnumIDWidget '@unumid/web-sdk';
 
- // Import your action creators. They have been wrapped in React hooks in this example, but your application may be different.
- import { useActionCreators } from './hooks/actionCreators';
+// Import your action creators. They have been wrapped in React hooks in this example, but your application may be different.
+import { useActionCreators } from './hooks/actionCreators';
 
- const App = () => {
-   // These functions can be defined as async action creators using redux-thunk, redux-saga, or other libraries.
-   const { createPresentationRequest } = useActionCreators();
+const App = () => {
+  // These functions can be defined as async action creators using redux-thunk, redux-saga, or other libraries.
+  const { createPresentationRequest } = useActionCreators();
 
-   // Select a previously created PresentationRequest from state.
-   const presentationRequest = useSelector(state => state.presentationRequest);
+  // Select a previously created PresentationRequest from state.
+  const presentationRequest = useSelector(state => state.presentationRequest);
 
-   // Select the logged in user from state.
-   const loggedInUser = useSelector(state => state.loggedInUser);
+  // Select the logged in user from state.
+  const loggedInUser = useSelector(state => state.loggedInUser);
 
-   const goToLogin = (): void => {
-     // Navigate to your login page.
-   };
+  const goToLogin = (): void => {
+    // Navigate to your login page.
+  };
 
-   return (
-     <WidgetHostAndController
-       userInfo={{
-         email: loggedInUser.email, // The user's email is required to enable the email fallback.
-         phone: loggedInUser.mobilePhoneNumber // The user's  phone number is required to enable the SMS fallback.
-       }}
-       presentationRequest={presentationRequest} // Provide the SDK with an already-created PresentationRequest.
-       createInitialPresentationRequest={true} // The SDK should immediately create a PresentationRequest on load.
-       createPresentationRequest={createPresentationRequest} // We still need to provide the SDK with a createPresentationRequest function so that it can create a new PresentationRequest before the current one expires.
-       goToLogin={goToLogin}
-     />
-   );
- };
+  return (
+    <UnumIDWidget
+      env='sandbox'
+      apiKey='my_sandbox_api_key'
+      userInfo={{
+        email: loggedInUser.email, // The user's email is required to enable the email fallback.
+        phone: loggedInUser.mobilePhoneNumber // The user's  phone number is required to enable the SMS fallback.
+      }}
+      presentationRequest={presentationRequest} // Provide the SDK with an already-created PresentationRequest.
+      createInitialPresentationRequest={true} // The SDK should immediately create a PresentationRequest on load.
+      createPresentationRequest={createPresentationRequest} // We still need to provide the SDK with a createPresentationRequest function so that it can create a new PresentationRequest before the current one expires.
+      goToLogin={goToLogin}
+    />
+  );
+};
 ```
 
 </TabItem>

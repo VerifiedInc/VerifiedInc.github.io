@@ -87,8 +87,6 @@ On non-mobile browsers, the SDK will default to displaying the deep link as a QR
 On mobile browsers, the SDK will default to displaying the deep link as a button. Tapping the button opens the corresponding app on their device.
 
 ![](/img/ButtonExample.png)
-<!-- - **QR Code:** On non-mobile browsers, the SDK will default to displaying the deep link as a QR code (which a user scans with their mobile device).
-- **Button:** On mobile browsers, the SDK will default to displaying the deep link as a button. Tapping the button opens the corresponding app on their device. -->
 
 ### Fallbacks
 In some situations, neither a QR code nor a button is convenient, so the SDK uses fallback options in this order: push notification, sms, email.
@@ -118,9 +116,6 @@ Sends the user an email containing the deep link, which they open on their mobil
 Tapping the link in the email will open the corresponding app on the user's device and prompt them to share the requested credentials.
 In order to use this fallback, you will need to provide the `userInfo` prop containing the user's email address.
 You may send custom emails by including the `sendEmail` prop.
-<!-- 1. **Push Notification:** sends a push notification to the user's device.
-2. **SMS:** sends the user an SMS message containing the deep link, which they open on their mobile device.
-3. **Email**: sends the user an email containing the deep link, which they open on their mobile device. -->
 
 #### Trying the next fallback
 If for some reason the first fallback option offered to a user doesn't work for them (maybe they turned off push notifications or any number of other things), the SDK will offer the next available option.

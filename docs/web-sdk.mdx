@@ -153,10 +153,11 @@ The SDK exports a single `UnumIDWidget` component, which encapsulates all of its
 - `UserInfo`
 - _optional_
 - Information about the user (push notification identifier, phone number, and/or email).
-  - __email__: The user's email address. Including this enables us to send deep links via email.
-  - __phone__: The user's mobile phone number. Including this enables us to send deep links via SMS.
-  - __pushToken__: An object containing a push notification identifier from the user's device as well as your push notification provider ('APNS' for Apple Push Notification Service or 'FCM' for Firebase Cloud Messaging)
-- The SDK will use this to determine which fallback options are available.
+  - __email__ (optional): The user's email address. Including this enables us to send deep links via email.
+  - __phone__ (optional): The user's mobile phone number. Including this enables us to send deep links via SMS.
+  - __pushToken__ (optional): An object containing a push notification identifier from the user's device as well as your push notification provider, or an array of these objects.
+    - __value__ (required): the push notification token from the user's device.
+    - __provider__ (optional): The push notification provider. Supported values are 'APNS' (Apple Push Notification Service) and 'FCM' (Firebase Cloud Messaging). This is optional, but highly recommended. If it is not included we will attempt to determine the provider based on the token value and your uploaded push notification credentials.
 
 ### `presentationRequest` 
 - `PresentationRequestPostDto`

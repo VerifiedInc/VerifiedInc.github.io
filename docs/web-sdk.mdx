@@ -74,6 +74,7 @@ PresentationRequests are shared to an Unum ID-powered mobile app a user's device
 ### Defaults
 #### QR Code
 On non-mobile browsers, the SDK will default to displaying the deep link as a QR code (which a user scans with their mobile device).
+
 ![](/img/QRCodeExample.png)
 
 #### Button
@@ -94,7 +95,7 @@ You may have this information stored in your database, associated with the user.
 
 #### Push Notification
 Sends a push notification to the user's device.
-Tapping the push notification will open the corresponding app on the user's device and prompt them to share (a <Tip type="presentation"/> of) the requested <Tip type="credential"credentials/>.
+Tapping the push notification will open the corresponding app on the user's device and prompt them to share (a <Tip type="presentation"/> of) the requested <Tip type="credential">credentials<Tip/>.
 
 In order to use this fallback, you will need to provide the `userInfo` prop with a `pushToken` field containing a push notification identifier for the user's device and **either**
 
@@ -102,7 +103,11 @@ In order to use this fallback, you will need to provide the `userInfo` prop with
 
 **or**
 
-2.  upload your push notification credentials to Unum ID ([contact us](mailto:support@Unum.ID) for details) so we can send push notifications to your mobile app.
+2.  upload your push notification credentials to Unum ID so we can send push notifications to your mobile app.
+
+:::tip
+[Contact us](mailto:support@Unum.ID) for details on how to upload your push notification credentials.
+:::
 
 #### SMS
 Sends the user an SMS containing the deep link, which they open on their mobile device.
@@ -151,8 +156,8 @@ The SDK exports a single `UnumIDWidget` component, which encapsulates all of its
 - _required_
 - Your Web SDK API key (obtained from Unum ID).
 
-:::important
-Web SDK API keys are environment-specific (see above). Make sure you are using the correct key!
+:::warning
+Web SDK API keys are environment specific (see above). Make sure you are using the correct key!
 :::
 
 ### `userInfo`

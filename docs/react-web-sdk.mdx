@@ -1,8 +1,8 @@
 ---
-id: web-sdk
-title: Web SDK
-sidebar_label: Web SDK
-slug: /web-sdk
+id: react-web-sdk
+title: React Web SDK
+sidebar_label: React
+slug: /react-web-sdk
 ---
 
 import Tabs from '@theme/Tabs';
@@ -23,11 +23,12 @@ Please [contact us](mailto:support@Unum.ID) for frameworks other than React.
 - **English language** (internationalization coming soon)
 
 ## TypeScript Support
-The SDK is written in TypeScript and exports relevant types. Some types are pulled from our shared types library, [`@unumid/types`](https://github.com/UnumID/types). We recommend adding `@unumid/types` as a dependency to ensure full type support between this Web SDK and the [Server SDK](/server-sdk).
+The SDK is written in TypeScript and exports relevant types. Some types are pulled from our shared types library, [`@unumid/types`](https://github.com/UnumID/types). We recommend adding `@unumid/types` as a dependency to ensure full type support between this React Web SDK and the [Server SDK](/server-sdk).
 
 # Installation
 
-The Web SDK is currently only available via GitHub, but will be available via the NPM and Yarn registries soon.
+<!-- The React Web SDK is currently only available via GitHub, but will be available via the NPM and Yarn registries soon. -->
+The React Web SDK is available via [NPM](https://www.npmjs.com/)/[Yarn](https://yarnpkg.com/) or Github.
 
 <Tabs
     defaultValue="npm"
@@ -38,24 +39,43 @@ The Web SDK is currently only available via GitHub, but will be available via th
 <TabItem value="npm">
 
 ```
-npm install @unumid/web-sdk@https://github.com/UnumID/Verifier-Client-SDK.git
+npm install @unumid/react-web-sdk
 ```
 
 </TabItem>
 <TabItem value="yarn">
 
 ```
-yarn add @unumid/web-sdk@https://github.com/UnumID/Verifier-Client-SDK.git
+yarn add @unumid/react-web-sdk
 ```
 
 </TabItem>
 </Tabs>
 
-Alternatively, you can add the following to your `package.json` and run `npm install` or `yarn install`:
+
+Alternatively, you can install it directly from Github.
+
+<Tabs
+    defaultValue="npm"
+    values={[
+        {label: 'NPM', value: 'npm'},
+        {label: 'Yarn', value: 'yarn'}
+    ]}>
+<TabItem value="npm">
 
 ```
-"@unumid/web-sdk": "https://github.com/UnumID/Verifier-Client-SDK.git"
+npm install @unumid/react-web-sdk@https://github.com/UnumID/react-web-sdk.git
 ```
+
+</TabItem>
+<TabItem value="yarn">
+
+```
+yarn add @unumid/react-web-sdk@https://github.com/UnumID/react-web-sdk.git
+```
+
+</TabItem>
+</Tabs>
 
 # Functionality
 
@@ -69,7 +89,7 @@ An Unum ID <Tip type="request"/> is what a company uses to request a <Tip type="
 You can use different combinations of props (see below) to choose how much control you want to have. For example, instead of automatically creating a `PresentationRequest` on load, you may want to trigger its creation based on a user interaction like a button click.
 
 ## Display Deep Links
-PresentationRequests are shared to an Unum ID-powered mobile app a user's device via deep links. The Web SDK determines how it displays them based on the browser's userAgent.
+PresentationRequests are shared to an Unum ID-powered mobile app a user's device via deep links. The React Web SDK determines how it displays them based on the browser's userAgent.
 
 ### Defaults
 #### QR Code
@@ -149,7 +169,7 @@ The SDK exports a single `UnumIDWidget` component, which encapsulates all of its
 - string
 - _required_
 - either `sandbox` or `production`
-- Determines which Unum ID SaaS environment the Web SDK will connect to.
+- Determines which Unum ID SaaS environment the React Web SDK will connect to.
 
 ### `apiKey`
 - string
@@ -237,7 +257,7 @@ The simplest possible use case. It allows the SDK to handle all `PresentationReq
 <TabItem value="jsx">
 
 ```jsx
-import UnumIDWidget from '@unumid/web-sdk';
+import UnumIDWidget from '@unumid/react-web-sdk';
 
 const App = () => {
   const createPresentationRequest = async () => {
@@ -259,7 +279,7 @@ const App = () => {
 
 ```tsx
 import { FC } from 'react';
-import UnumIDWidget, { PresentationRequestResponse } from '@unumid/web-sdk';
+import UnumIDWidget, { PresentationRequestResponse } from '@unumid/react-web-sdk';
 
 const App: FC = () => {
   const createPresentationRequest = async (): Promise<PresentationRequestResponse> => {
@@ -292,7 +312,7 @@ A slightly more complex use case which allows the SDK to handle PresentationRequ
 <TabItem value="jsx">
 
 ```jsx
-import UnumIDWidget from '@unumid/web-sdk';
+import UnumIDWidget from '@unumid/react-web-sdk';
 
 const App = () => {
   return (
@@ -323,7 +343,7 @@ import UnumIDWidget, {
   SmsOptions,
   PresentationRequestResponse,
   SuccessResponse
-} from '@unumid/web-sdk';
+} from '@unumid/react-web-sdk';
 
 const App: FC = () => {
   return (
@@ -365,7 +385,7 @@ Gives your application more control over when the initial PresentationRequest is
 
 ```jsx
 import { useState } from 'react';
-import UnumIDWidget from '@unumid/web-sdk';
+import UnumIDWidget from '@unumid/react-web-sdk';
 
 const App = () => {
   // Save the PresentationRequest in local component state.
@@ -430,7 +450,7 @@ import UnumIDWidget, {
   SmsOptions,
   PresentationRequestResponse,
   SuccessResponse
-} from '@unumid/web-sdk';
+} from '@unumid/react-web-sdk';
 import { PresentationRequestOptions } from '@unumid/types';
 
 const App: FC = () => {
@@ -475,9 +495,9 @@ const App: FC = () => {
         email: 'mrplow@gmail.com', // The user's email is required to enable the email fallback.
         phone: 'KL5-5555' // The user's phone number is required to enable the SMS fallback.
       }}
-      presentationRequest={presentationRequest} // Provide the Web SDK with an already-created PresentationRequest.
-      createInitialPresentationRequest={false} // Prevent the Web SDK from immediately creating a new PresentationRequest on load.
-      createPresentationRequest={createPresentationRequest} // We still need to provide the Web SDK with a createPresentationRequest function so that it can create a new PresentationRequest before the current one expires.
+      presentationRequest={presentationRequest} // Provide the SDK with an already-created PresentationRequest.
+      createInitialPresentationRequest={false} // Prevent the SDK from immediately creating a new PresentationRequest on load.
+      createPresentationRequest={createPresentationRequest} // We still need to provide the SDK with a createPresentationRequest function so that it can create a new PresentationRequest before the current one expires.
       sendEmail={sendEmail}
       sendSms={sendSms}
       goToLogin={goToLogin}
@@ -505,7 +525,7 @@ In this example, we're providing the SDK with our `createPresentationRequest` ac
 
 ```jsx
 import { useSelector } from 'react-redux';
-import UnumIDWidget from '@unumid/web-sdk';
+import UnumIDWidget from '@unumid/react-web-sdk';
 
 // Import your action creators. They have been wrapped in React hooks in this example, but your application may be different.
 import { useActionCreators } from './hooks/actionCreators';
@@ -551,7 +571,7 @@ const App = () => {
 ```tsx
 import { useSelector } from 'react-redux';
 
-import UnumIDWidget '@unumid/web-sdk';
+import UnumIDWidget '@unumid/react-web-sdk';
 
 // Import your action creators. They have been wrapped in React hooks in this example, but your application may be different.
 import { useActionCreators } from './hooks/actionCreators';

@@ -39,7 +39,15 @@ module.exports = {
             'mobile-sdk-ios',
           ],
         },
-        'web-sdk',
+        {
+          type: 'category',
+          label: 'Web SDK',
+          collapsed: false,
+          items: [
+            'web-sdk-overview',
+            'react-web-sdk'
+          ]
+        }
       ],
     },
     // {

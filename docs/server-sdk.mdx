@@ -160,10 +160,11 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
         "id": string, // a url for credential's status
         "type": "CredentialStatus"
     },
-    "credentialSubject": {
+    // a string representation of a object with any keys and with an id attribute
+    "credentialSubject": stringify({
         "id": string, // subject DID
         [key: string]: any, // // data about subject
-    },
+    }),
     "issuer": string, // issuer DID
     "type": string[], // credential type(s), always begins with "VerifiableCredential"
     /* To store: */

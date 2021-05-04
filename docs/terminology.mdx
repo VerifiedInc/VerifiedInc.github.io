@@ -65,14 +65,15 @@ The full details of the credential object aren't that important or helpful to kn
     // type of credential
     // highlight-next-line
     "type": ["VerifiableCredential", "UsernameCredential"],
-    "credentialSubject": {
+    // a string representation of a object with any keys and with an id attribute
+    "credentialSubject": stringify({
         // identifier for the person
         // highlight-next-line
         "id": "did:unum:5f5eb3dd-d0e0-4356-bfdd-96bc1393c705",
         // data about the person
         // highlight-next-line
         "username": "Analyst-Shoes-278"
-    },
+    }),
     // identifier for the company
     // highlight-next-line
     "issuer": "did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5",
@@ -124,10 +125,10 @@ The full details of the presentation object aren't that important or helpful to 
                 "type": "CredentialStatus"
             },
             "type": ["VerifiableCredential", "UsernameCredential"],
-            "credentialSubject": {
+            "credentialSubject": stringify({
                 "id": "did:unum:5f5eb3dd-d0e0-4356-bfdd-96bc1393c705",
                 "username": "Analyst-Shoes-278"
-            },
+            }),
             "issuer": "did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5",
             "id": "f8287c1e-0c56-460a-92af-5519f5c10cbf",
             "issuanceDate": "2021-01-09T02:23:54.844Z",

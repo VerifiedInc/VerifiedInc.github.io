@@ -380,8 +380,8 @@ Unum ID *never* has access to sensitive data contained in presentations. The [Mo
 ```typescript title="DecryptedPresentation"
 {
   "isVerified": boolean; // whether the presentation is valid
-  "type": 'VerifiablePresentation' | 'NoPresentation' // type of presentation. NoPresentation means user declined request.
-  "presentation": Presentation | NoPresentation, // decrypted Presentation (or NoPresentation) object
+  "type": 'VerifiablePresentation' | 'DeclinedPresentation' // type of presentation. DeclinedPresentation means user declined request and the submitted presentation's VerifiableCredential attribute was undefined or an empty array.
+  "presentation": Presentation, // decrypted Presentation object
   "message"?: string; // (optional) included if isVerified is false. Explains why verification failed.
 }
 ```

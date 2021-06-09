@@ -64,6 +64,16 @@ Using the Server SDK is straightforward. To issue (send) a <Tip type="credential
 
 Using the Web SDK is simple. Just call the Server SDK to create <Tip type="request">requests</Tip> for presentations from users. The Web SDK takes care of everything else — the user interface, fallback options, error handling, etc.
 
+## Versioning Strategy
+The Unum ID [Server](/server-sdk), [Mobile](/mobile-sdk-overview), and [Web](/web-sdk) SDK major versions correspond to one another. Each major version is backwards compatible with all older SDK versions. However, it is recommended to keep the Web and Server SDK versions aligned with one another for the best experience. For example, if using version `3.1.0` of the Server SDK it is advised to use version `3.x.x` of the Web SDK.
+
+The Server and Web SDKs are fully backwards compatible with every version of the Mobile SDK allowing for standard mobile application development versioning strategies of server side led development.
+For example version `3.0.3` of the Server SDK is backwards compatible with version `2.2.1` of the Mobile SDK.
+
+:::note
+Upon leveraging a new Mobile SDK major version or testing a Server SDK major version end to end we ask that the version information corresponding to your <a href="/terminology#verifier"><Tip type="verifier"/></a> is updated so we know how to route <a href="/terminology#presentation"><Tip type="presentation"/></a>s to the version of your application with corresponding Server SDK version. This information is originally provided during [registration](https://docs.unum.id/server-sdk#registerverifier).
+:::
+
 ## FAQ 
 
 <details>

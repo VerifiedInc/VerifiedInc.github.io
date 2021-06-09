@@ -238,7 +238,10 @@ The DID and public keys are nonsensitive, but **you should store the private key
 "customerUuid": string, // your customer UUID
 "url": string, // the url of which UnumID's SaaS will interface with
 "apiKey": string // your verifier API key
+"versionInfoList": VersionInfo[] // the versioning information of your application corresponding to various Unum ID Server SDK versions.
 ```
+
+The [`VersionInfo`](https://docs.unum.id/types/interfaces/versioninfo.html) object is how the Presentations from the Unum ID SaaS, which originates from the Mobile SDK, should be routed to your application in order for the corresponding Server SDK version to preform verifications.
 
 #### Response Body: [`RegisteredVerifier`](https://docs.unum.id/Server-SDK-Typescript/interfaces/registeredverifier.html)
 ```typescript title="RegisteredVerifier"

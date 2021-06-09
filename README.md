@@ -44,7 +44,7 @@ GIT_USER=<Your GitHub username> DEPLOYMENT_BRANCH=private USE_SSH=true yarn depl
 
 If you don't include `DEPLOYMENT_BRANCH`, it defaults to master.
 
-However, you should *not* deploy from your local machine. There is now a CI job using Github Actions which will auto deploy when a tag with a preceding `v` is pushed to any branch. By convention we have been using the `dev` branch as the source of truth. That said `v` tags ought to only be pushed to `dev` branch. This triggers a "build" version of the docs is auto committed to the `master` branch. Reiterating, no need to ever commit directly to master. 
+However, you should *not* deploy from your local machine. There is now a CI job using Github Actions which will auto deploy when a tag with a preceding `v` is pushed to any branch. By convention we have been using the `dev` branch as the source of truth. That said, `v` tags should really only be pushed to `dev` branch. This triggers a "build" version of the docs that is auto committed to the `master` branch. Reiterating, no need to ever commit directly to master. 
 
 It is also preferred if one could create an official Github release (also makes a tag) with a preceding `v` so that the Github Slack integration sends a message to the whole team letting them know that a docs release is happening. One can do this via the Github web UI or via the CLI with the `gh` [cli tool](https://cli.github.com/manual/gh_release_create), `gh release create <tag> [<files>...]`. For example, `gh release create v1.0.0 -n "Initial documentation release v1.0.0"`, will add the tag and release on the repo's main branch, `dev`, and trigger a release which is an automatic compiled commit from the Action CI job to the `master` branch.
 

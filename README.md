@@ -36,13 +36,13 @@ This command generates static content into the `build` directory and can be serv
 
 ### Deployment
 
-**Important:** Publishing to `master` will publish to [docs.unum.id](https://docs.unum.id/)! Please don't publish any real documentation yet, so deploy to a different branch like `private` using:
+**Important:** Publishing to `master` will publish to [docs.unum.id](https://docs.unum.id/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
 
 ```console
 GIT_USER=<Your GitHub username> DEPLOYMENT_BRANCH=private USE_SSH=true yarn deploy
 ```
 
-If you don't include `DEPLOYMENT_BRANCH`, it defaults to master.
+If you don't include `DEPLOYMENT_BRANCH`, it defaults to master. 
 
 However, you should *not* deploy from your local machine. There is now a CI job using Github Actions which will auto deploy when a tag with a preceding `v` is pushed to any branch. By convention we have been using the `dev` branch as the source of truth. That said, `v` tags should really only be pushed to `dev` branch. This triggers a "build" version of the docs that is auto committed to the `master` branch. Reiterating, no need to ever commit directly to master. 
 

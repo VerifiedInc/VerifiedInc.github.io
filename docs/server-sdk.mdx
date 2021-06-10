@@ -224,6 +224,8 @@ Jump to:
 
 As a customer, you can register as many verifiers as you like (or none at all), depending on your use case. Note, however, that you'll need a unique verifier API key for each one.
 
+The [`VersionInfo`](https://docs.unum.id/types/interfaces/versioninfo.html) denotes how encrypted <a href="/terminology#presentation"><Tip type="presentation"/></a>s from Unum ID's SaaS, which originate from the Mobile SDK, should be routed to your application in order for the corresponding Server SDK version to preform verifications.
+
 :::important
 You need to store the <Tip type="DID"/> (`did`) and encryption and signing key pairs (`keys`) that this returns. You'll need these to make requests and verify presentations.
 :::
@@ -240,8 +242,6 @@ The DID and public keys are nonsensitive, but **you should store the private key
 "apiKey": string // your verifier API key
 "versionInfoList": VersionInfo[] // the versioning information of your application corresponding to various Unum ID Server SDK versions.
 ```
-
-The [`VersionInfo`](https://docs.unum.id/types/interfaces/versioninfo.html) object is how the Presentations from the Unum ID SaaS, which originates from the Mobile SDK, should be routed to your application in order for the corresponding Server SDK version to preform verifications.
 
 #### Response Body: [`RegisteredVerifier`](https://docs.unum.id/Server-SDK-Typescript/interfaces/registeredverifier.html)
 ```typescript title="RegisteredVerifier"

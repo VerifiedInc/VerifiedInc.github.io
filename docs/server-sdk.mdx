@@ -13,7 +13,7 @@ This is a lightweight TypeScript SDK that lets your company act as one or more <
 **Before you begin:** You need to be registered as an Unum ID customer, and you need to register at least one issuer or verifier. (You can register zero to many of each, depending on your use case.) You'll receive issuer and verifier API keys to use with this SDK.
 
 :::note
-More detailed but less styled documentation can be found [here](https://docs.unum.id/Server-SDK-Typescript/index.html). This serves as a useful technical reference. 
+More detailed but less styled documentation can be found [here](https://docs.unum.id/server-sdk-typescript/index.html). This serves as a useful technical reference. 
 :::
 
 ## Overview
@@ -33,7 +33,7 @@ Every request detailed below requires a bearer `authToken` as a first parameter.
 Errors returned by the Unum ID cloud will also be wrapped in the `UnumDto` object so that the potentially updated `authToken` can be retrieved. Validation errors, which are created prior to any calls to Unum ID, will be of type `Error` and are thrown. Because in this case a network call is never made, there's no potential new `authToken` to pass back. For this reason, **we recommend wrapping all SDK calls in a try/catch.**
 
 ### Distribution
-This project is open [source]((https://github.com/UnumID/Server-SDK-Typescript)) and publicly published on the official npm [registry](https://www.npmjs.com/package/@unumid/server-sdk). For example it can be pulled with: 
+This project is open [source]((https://github.com/UnumID/server-sdk-typescript)) and publicly published on the official npm [registry](https://www.npmjs.com/package/@unumid/server-sdk). For example it can be pulled with: 
 ```
 npm i @unumid/server-sdk
 ``` 
@@ -81,7 +81,7 @@ The DID and public keys are nonsensitive, but **you should store the private key
 "apiKey": string // your issuer API key
 ```
 
-#### Response Body: [`RegisteredIssuer`](https://docs.unum.id/Server-SDK-Typescript/interfaces/registeredissuer.html)
+#### Response Body: [`RegisteredIssuer`](https://docs.unum.id/server-sdk-typescript/interfaces/registeredissuer.html)
 ```typescript title="RegisteredIssuer"
 {
   "uuid": string, // identifies issuer in Unum ID database
@@ -152,7 +152,7 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 "expirationDate"?: string, // (optional) when credential will no longer be valid (ISO 8601 date/time)
 ```
 
-#### Response Body: [`Credential`](https://docs.unum.id/Server-SDK-Typescript/interfaces/credential.html)
+#### Response Body: [`Credential`](https://docs.unum.id/server-sdk-typescript/interfaces/credential.html)
 ```typescript title="Credential"
 {
     "@context": ["https://www.w3.org/2018/credentials/v1"], // for conformance with W3C Verifiable Credential spec
@@ -243,7 +243,7 @@ The DID and public keys are nonsensitive, but **you should store the private key
 "versionInfoList": VersionInfo[] // the versioning information of your application corresponding to various Unum ID Server SDK versions.
 ```
 
-#### Response Body: [`RegisteredVerifier`](https://docs.unum.id/Server-SDK-Typescript/interfaces/registeredverifier.html)
+#### Response Body: [`RegisteredVerifier`](https://docs.unum.id/server-sdk-typescript/interfaces/registeredverifier.html)
 ```typescript title="RegisteredVerifier"
 {
   "uuid": string, // identifies verifier in Unum ID database
@@ -314,7 +314,7 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 "metadata"?: object // (optional) any additional data to include in PresentationRequest
 ```
 
-#### Response Body: [`PresentationRequestResponse`](https://docs.unum.id/Server-SDK-Typescript/interfaces/presentationrequestresponse.html)
+#### Response Body: [`PresentationRequestResponse`](https://docs.unum.id/server-sdk-typescript/interfaces/presentationrequestresponse.html)
 ```typescript title="PresentationRequestResponse"
 {
   "presentationRequest": {
@@ -379,7 +379,7 @@ Unum ID *never* has access to sensitive data contained in presentations. The [Mo
 "presentationRequest"?: PresentationRequestDto // (optional) presentation request dto object to verify presentation credentials meet request requirements. This is an optional param to support the future use case of handling verifying presentations that are not in response to PresentationRequest
 ```
 
-#### Response Body: [`DecryptedPresentation`](https://docs.unum.id/Server-SDK-Typescript/interfaces/decryptedpresentation.html)
+#### Response Body: [`DecryptedPresentation`](https://docs.unum.id/server-sdk-typescript/interfaces/decryptedpresentation.html)
 ```typescript title="DecryptedPresentation"
 {
   "isVerified": boolean; // whether the presentation is valid
@@ -479,7 +479,7 @@ Parameters
 }
 ```
 
-#### Response Body: [`CredentialStatusInfo`](https://docs.unum.id/Server-SDK-Typescript/interfaces/credentialstatusinfo.html).
+#### Response Body: [`CredentialStatusInfo`](https://docs.unum.id/server-sdk-typescript/interfaces/credentialstatusinfo.html).
 ```typescript title="CredentialStatusInfo"
 {
   "createdAt": Date; // the time  the credential was recorded as created in the UnumID SaaS db

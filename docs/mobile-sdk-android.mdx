@@ -42,29 +42,40 @@ Device biometrics are typically *aliases* for passcodes (or similar options like
 
 ### Installation
 
-When you register a <Tip type="holder app"/>, we will send you a artifactory username and password
+When you register a <Tip type="holder app"/>, we will send you a GitHub personal access token. Create a github.properties file within in the root
 
-In the top level build.gradle add your artifactory username, password, and artifactory url to the all projects block
+In the app level build.gradle add your GitHub username, personal access token to the repositories block inside of the android block.
+It is suggested to add this file to .gitignore so it is not committed to your repo.
+Add properties gpr.usr=GITHUB_USERID and gpr.key=PERSONAL_ACCESS_TOKEN
+Replace GITHUB_USERID with personal / organization Github User ID and PERSONAL_ACCESS_TOKEN with the token sent to you.
 
 ```groovy
-allprojects {
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+
+android {
     repositories {
         maven {
-            credentials {
-                username 'username'
-                password 'password'
-                url 'https://unumid.jfrog.io/artifactory/android-SDK/'
-            }
+            name = "GitHubPackages"
 
+            url = uri("https://maven.pkg.github.com/UnumID/Holder-SDK-Android")
+            credentials {
+                /** Create github.properties in root project folder file with
+                 ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN
+                 ** Set env variable GPR_USER & GPR_API_KEY if not adding a properties file**/
+                username = githubProperties['gpr.usr'] ?: System.getenv("")
+                password = githubProperties['gpr.key'] ?: System.getenv("")
+            }
         }
     }
-}
+
+   ......
 ```
 
 In the app level build.gradle add the reference to the SDK
 
 ```groovy
-implementation "id.unum:androidSDK:1.20.0"
+implementation "id.unum:androidsdk:1.2.0"
 ```
 
 ### Initialization

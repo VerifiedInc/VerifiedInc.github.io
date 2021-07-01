@@ -17,7 +17,7 @@ This is a lightweight, fully native SDK that allows a host app to receive and st
 ## Overview
 
 ### Minimum Requirements
-- **iOS 12 and above**
+- **iOS 13 and above**
 - **English language** (internationalization coming soon)
 
 ### Required Permissions
@@ -36,7 +36,7 @@ Device biometrics are typically *aliases* for passcodes (or similar options like
 
 ### `Info.plist`
 
-Because the SDK requires camera and biometric/passcode [permissions](#permissions), you need to add desciptions like these to the `Info.plist` file:
+Because the SDK requires camera and biometric/passcode [permissions](#permissions), you need to add descriptions like these to the `Info.plist` file:
 
 #### Privacy - Camera Usage Description 
 > This app would like to use the camera for QR code scanning.
@@ -226,7 +226,7 @@ The technical details of DIDs are not relevant to deploying or using Unum ID. Yo
 :::
 
 When you [initialize](#initialize) the SDK, you can optionally include a DID. 
-- **Don't include a DID for user who's new to the SDK.** The SDK will generate a new one that you should store, associated with the user ID in your system.
+- **Don't include a DID for a user who's new to the SDK.** The SDK will generate a new one that you should store, associated with the user ID in your system.
 - **Do include a DID for a user who returns to the SDK.** The SDK will use this DID to access the correct stored data for that user.
 
 :::important

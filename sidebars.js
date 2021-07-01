@@ -37,6 +37,7 @@ module.exports = {
             'mobile-sdk-overview',
             'mobile-sdk-android', 
             'mobile-sdk-ios',
+            'mobile-sdk-flutter',
           ],
         },
         {

@@ -46,7 +46,7 @@ module.exports = {
           collapsed: false,
           items: [
             'web-sdk-overview',
-            'react-web-sdk'
+            'web-sdk-react'
           ]
         }
       ],

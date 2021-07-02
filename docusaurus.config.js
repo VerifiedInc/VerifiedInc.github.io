@@ -12,7 +12,7 @@ module.exports = {
   projectName: 'UnumID.github.io', // Usually your repo name.
   themeConfig: {
     prism: {
-      additionalLanguages: ['swift', 'kotlin', 'java', 'dart'],
+      additionalLanguages: ['swift', 'kotlin', 'java', 'dart', 'groovy'],
     },
     navbar: {
       title: 'Docs',

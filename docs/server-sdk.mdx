@@ -33,7 +33,7 @@ Every request detailed below requires a bearer `authToken` as a first parameter.
 Errors returned by the Unum ID cloud will also be wrapped in the `UnumDto` object so that the potentially updated `authToken` can be retrieved. Validation errors, which are created prior to any calls to Unum ID, will be of type `Error` and are thrown. Because in this case a network call is never made, there's no potential new `authToken` to pass back. For this reason, **we recommend wrapping all SDK calls in a try/catch.**
 
 ### Distribution
-This project is open [source]((https://github.com/UnumID/server-sdk-typescript)) and publicly published on the official npm [registry](https://www.npmjs.com/package/@unumid/server-sdk). For example it can be pulled with: 
+This project is open [source](https://github.com/UnumID/server-sdk-typescript) and publicly published on the official npm [registry](https://www.npmjs.com/package/@unumid/server-sdk). For example it can be pulled with: 
 ```
 npm i @unumid/server-sdk
 ``` 

@@ -51,16 +51,16 @@ module.exports = {
         }
       ],
     },
-    // {
-    //   type: 'category',
-    //   label: 'Demos',
-    //   /* should change when we have lots of docs */
-    //   collapsed: false,
-    //   items: [
-    //     'developer-demo',
-    //     'acme-demo',
-    //     'hooli-demo',
-    //   ]
-    // },
+    {
+      type: 'category',
+      label: 'Demos',
+      /* should change when we have lots of docs */
+      collapsed: false,
+      items: [
+        'developer-demo',
+        'acme-demo',
+        'hooli-demo',
+      ]
+    },
   ],
 };

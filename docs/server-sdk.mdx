@@ -21,13 +21,13 @@ The Server SDK uses the `UnumDto` type to facilitate handling many response body
 
 ```typescript title="UnumDto"
 {
-  "authToken": string; // The JWT auth token which is used by the SDK to authenticate with UnumID's SaaS. This is periodically refreshed thus its value should be read and stored in every resultant function call. 
+  "authToken": string; // The JWT which is used by the SDK to authenticate with UnumID's SaaS. This is periodically refreshed thus its value should be read and stored in every resultant function call. 
   "body": T; // The placeholder for the function's response type is function specific. 
 }
 ```
 
 ### Authentication
-Every request detailed below requires a bearer `authToken` as a first parameter. This is used to authenticate requests to the Unum ID cloud. This auth token is updated on every subsequent function call and should be read via the `authToken` attribute and persisted accordingly for later requests. 
+Every request detailed below requires a JWT bearer `authToken` as a first parameter (aside from registration calls which require an entity scoped ApiKey). This is used to authenticate requests to the Unum ID cloud. This auth token is updated on every subsequent function call and should be read via the `authToken` attribute and persisted accordingly for later requests. 
 
 ### Errors
 Errors returned by the Unum ID cloud will also be wrapped in the `UnumDto` object so that the potentially updated `authToken` can be retrieved. Validation errors, which are created prior to any calls to Unum ID, will be of type `Error` and are thrown. Because in this case a network call is never made, there's no potential new `authToken` to pass back. For this reason, **we recommend wrapping all SDK calls in a try/catch.**
@@ -141,6 +141,7 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 
 #### Parameters
 ```typescript
+"authToken": string, // your auth token
 "type": string || string[], // The Credential type(s)
 "issuer": string, // your issuer DID
 "credentialSubject": {
@@ -193,6 +194,7 @@ export type CredentialStatusOptions = 'valid' | 'revoked';
 #### Parameters
 ```typescript
 {
+  "authToken": string, // your auth token
   "credentialId": string, // id of the credential
   "status": CredentialStatusOptions // status to update the credential to (defaults to 'revoked')
 }
@@ -304,6 +306,7 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 
 #### Parameters
 ```typescript
+"authToken": string, // your auth token
 "verifier": string, // your verifier DID
 "credentialRequests": CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.
 "signingPrivateKey": string, // your verifier signing private key
@@ -371,6 +374,7 @@ Unum ID *never* has access to sensitive data contained in presentations. The [Mo
 
 #### Parameters
 ```typescript
+"authToken": string, // your auth token
 "encryptedPresentation": EncryptedData, // encrypted presentation
 "verifierDid": string, // your verifier DID
 "encryptionPrivateKey": string // your verifier encryption private key
@@ -413,6 +417,7 @@ The verifier is corresponding to the presentation request from which the deeplin
 #### Parameters
 ```typescript
 {
+  "authToken": string, // your auth token
   "to": string, // phone number to send SMS to
   "deeplink": string // the deeplink corresponding to the presentation request you would like served to the user
 }
@@ -450,6 +455,7 @@ The verifier is corresponding to the presentation request from which the deeplin
 #### Parameters
 ```typescript
 {
+  "authToken": string, // your auth token
   "to": string, // email address to send email to
   "deeplink": string // the deeplink corresponding to the presentation request you would like served to the user
 }
@@ -473,6 +479,7 @@ export type CredentialStatusOptions = 'valid' | 'revoked';
 Parameters
 ```typescript
 {
+  "authToken": string, // your auth token
   "credentialId": string, // the id of the credential in question
 }
 ```

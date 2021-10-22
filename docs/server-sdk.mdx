@@ -56,7 +56,6 @@ You can use the Server SDK to act as an <Tip type="issuer"/>, for example to iss
 
 Jump to:
 - [`registerIssuer`](#registerissuer)
-- [`issueCredential`](#issuecredential)
 - [`issueCredentials`](#issuecredentials)
 - [`updateCredentialStatus`](#updatecredentialstatus)
 
@@ -105,75 +104,6 @@ The DID and public keys are nonsensitive, but **you should store the private key
     }
   }
   // highlight-end
-}
-```
-
----
-
-### `issueCredential`
-> Issue a <Tip type="credential"/> to a <Tip type="subject"/>.
-
-You need to provide:
-
-1. your issuer <Tip type="DID"/> 
-2. your issuer signing private key
-3. credential type
-4. data about the <Tip type="subject"/>
-
-The first two are returned by [`registerIssuer`](#registerissuer). The third (credential type) is part of what verifiers use to <Tip type="request"/> credentials from users. For example, Hooli FinTech might request a credential of type `KYCVerification`, issued by ACME Bank. The fourth (data about the subject) can be any valid JSON.
-
-You can optionally provide:
-
-5. expiration date
-
-:::note
-An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it (see [`updateCredentialStatus`](#updatecredentialstatus)).
-:::
-
-`issueCredential` returns a credential `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
-
-:::note
-In the full `credential` object that is returned, there are also `id` fields within `credentialSubject` and `credentialStatus`, but these are different. They refer to the subject <Tip type="DID"/> and credential status identifiers, respectively, as defined in the emerging [W3C Verifiable Credential specification](https://www.w3.org/TR/vc-data-model/#credential-subject).
-:::
-
-:::important
-The private key *never* leaves your server. The Server SDK only needs it to perform cryptographic functions on your behalf.
-:::
-
-#### Parameters
-```typescript
-"authToken": string, // your auth token
-"type": string, // The Credential type
-"issuer": string, // your issuer DID
-"credentialSubject": {
-  "id": string, // subject DID
-  [key: string]: any, // data about subject (any valid JSON)
-},
-"signingPrivateKey": string // your issuer signing private key
-"expirationDate"?: string, // (optional) when credential will no longer be valid (ISO 8601 date/time)
-```
-
-#### Response Body: [`Credential`](https://docs.unum.id/types/interfaces/credential.html)
-```typescript title="Credential"
-{
-    "@context": ["https://www.w3.org/2018/credentials/v1"], // for conformance with W3C Verifiable Credential spec
-    "credentialStatus": {
-        "id": string, // a url for credential's status
-        "type": "CredentialStatus"
-    },
-    // a string representation of an object with  with an id attribute and any number of arbitrary key value pairs.
-    "credentialSubject": stringify({
-        "id": string, // subject DID
-        [key: string]: any, // // data about subject
-    }),
-    "issuer": string, // issuer DID
-    "type": string[], // credential type(s), always begins with "VerifiableCredential" per W3C standard
-    /* To store: */
-    // highlight-next-line
-    "id": string, // identifies credential (version 4 UUID)
-    "issuanceDate": string, // when credential was issued (ISO 8601 date/time)
-    "expirationDate": string, // when credential will no longer be valid (ISO 8601 date-time)
-    "proof": Proof // cryptographic proof created by signing credential with your issuer signing private key. Can be used to verify credential.
 }
 ```
 
@@ -251,10 +181,10 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 ### `updateCredentialStatus`
 > Revoke a <Tip type="credential"/> (i.e. make it invalid).
 
-You need to provide the credential `id` (which [`issueCredential`](#issuecredential) returns) and a [CredentialStatusOptions](https://docs.unum.id/types/modules.html#credentialstatusoptions) `status`. Currently there are only two valid statuses: "valid" and "revoked".
+You need to provide the credential `id` (which is [`issueCredentials`](#issuecredentials) returns per <Tip type="credential">credential</Tip>) and a [CredentialStatusOptions](https://docs.unum.id/types/modules.html#credentialstatusoptions) `status`. Currently there are only two valid statuses: "valid" and "revoked".
 
 :::note
-As noted in [`issueCredential`](#issuecredential), **we recommend storing the entire credential, indexed on the credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
+As noted in [`issueCredentials`](#issuecredentials), **we recommend storing the each entire credential, indexed on their credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
 :::
 
 ```typescript title="CredentialStatusOptions"

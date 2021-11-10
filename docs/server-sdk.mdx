@@ -99,8 +99,8 @@ The DID and public keys are nonsensitive, but **you should store the private key
       "publicKey": string, // subjects and verifiers use this to verify your signatures on credentials
     }
     "encryption": {
-      "privateKey": string, // you use this to encrypt credentials you send to subjects
-      "publicKey": string, // subjects use this to decrypt credentials they receive from you
+      "privateKey": string, // could be used to decrypted data, however the encryption key pair is not currently used by issuers
+      "publicKey": string, // could be used for others to encrypt data, however the encryption key pair is not currently used by issuers
     }
   }
   // highlight-end

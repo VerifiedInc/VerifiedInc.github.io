@@ -46,13 +46,22 @@ yarn add @unumid/server-sdk
 - [Node.js](https://nodejs.org/en/) v14.0.0 or higher (preferably v14.15.0 or higher)
 - [Yarn](https://yarnpkg.com/)
 
-### Setup
-One needs to provide the SDK the the environment it is running in, i.e. Production. For the Typescript SDK this done via the NODE_ENV environment variable. The three relevant values are: `Production`, `Staging`, `Dev`. You need to use one of these exactly in order for the SDK to communicate with Unum ID's SaaS. 
+### Usage
+The following environment variables are required to be set to use the SDK properly.
+- `UNUM_ENV`
+- `LOG_LEVEL`
+- `DEBUG`
 
-### Logging
+#### UNUM_ENV
+One needs to provide the SDK the with an environment variable to denote its run time environment, i.e. `production`. For the Typescript SDK this done via the `UNUM_ENV` environment variable. The three relevant values are: `production`, `sandbox`, `dev`. You need to use one of these exactly in order for the SDK to communicate with Unum ID's SaaS. The default value if nothing is supplied is `sandbox`.
+
+#### LOG_LEVEL
 The default logs level is `info`. You can change this to `debug` for more information (set the environment variable `LOG_LEVEL = debug`). The logs default to `stdout`, so you can easily aggregate them from disk using the log provider of your choice.
 
 We use standard NPM log levels. Learn more about these [here](https://github.com/winstonjs/winston#logging-levels).
+
+#### DEBUG
+The `DEBUG` environment variable defaults to `false`. Setting to `true` enables logging of decrypted presentations at the `debug` level. Due to presentations containing potentially sensitive information it is *not* advised to use in a production environment. Note: the `LOG_LEVEL` environment variable also needs to be set to at least `debug` level in order to be visible.
 
 ## Issuer
 You can use the Server SDK to act as an <Tip type="issuer"/>, for example to issue credentials and change credential statuses.

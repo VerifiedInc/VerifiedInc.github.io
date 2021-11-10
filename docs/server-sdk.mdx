@@ -46,6 +46,9 @@ yarn add @unumid/server-sdk
 - [Node.js](https://nodejs.org/en/) v14.0.0 or higher (preferably v14.15.0 or higher)
 - [Yarn](https://yarnpkg.com/)
 
+### Setup
+One needs to provide the SDK the the environment it is running in, i.e. Production. For the Typescript SDK this done via the NODE_ENV environment variable. The three relevant values are: `Production`, `Staging`, `Dev`. You need to use one of these exactly in order for the SDK to communicate with Unum ID's SaaS. 
+
 ### Logging
 The default logs level is `info`. You can change this to `debug` for more information (set the environment variable `LOG_LEVEL = debug`). The logs default to `stdout`, so you can easily aggregate them from disk using the log provider of your choice.
 

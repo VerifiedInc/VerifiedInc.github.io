@@ -18,8 +18,8 @@ module.exports = {
       title: 'Docs',
       logo: {
         alt: 'Unum ID Logo',
-        src:  'img/logo.svg',
-        srcDark: 'img/logo_dark.svg',
+        src:  'img/logo.png',
+        srcDark: 'img/logo_dark.png',
       },
       items: [
         {
@@ -81,23 +81,23 @@ module.exports = {
             },
           ],
         },
-        // {
-        //   title: 'Demos',
-        //   items: [
-        //     {
-        //       label: 'Developer Demo',
-        //       to: '/developer-demo',
-        //     },
-        //     {
-        //       label: 'ACME Demo',
-        //       to: '/acme-demo',
-        //     },
-        //     {
-        //       label: 'Hooli Demo',
-        //       to: '/hooli-demo',
-        //     },
-        //   ],
-        // },
+        {
+          title: 'Demos',
+          items: [
+            {
+              label: 'Developer Demo',
+              to: '/developer-demo',
+            },
+            {
+              label: 'ACME Demo',
+              to: '/acme-demo',
+            },
+            {
+              label: 'Hooli Demo',
+              to: '/hooli-demo',
+            },
+          ],
+        },
         {
           title: 'More',
           items: [

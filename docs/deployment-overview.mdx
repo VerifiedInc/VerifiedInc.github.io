@@ -50,11 +50,11 @@ The Mobile SDK works entirely behind the scenes, benefitting users without intru
 
 #### If acting as a [Verifier](/terminology#verifier)
 1. Create an interface the Web SDK can use to interact with the Server SDK. For example so a presentation request created by the Server SDK can be displayed on the client.
-2. Create an [endpoint](https://gist.github.com/rsmets/eccfd998473599c6d6b0cc962d10c086) to receive encrypted [Presentation](/terminology#presentation) data from our Identity Engine cloud. 
+2. Create an [endpoint](https://gist.github.com/UnumIDAdmin/2bffdf092594196beba48ce7738b60fa) to receive encrypted [Presentation](/terminology#presentation) data from our Identity Engine cloud. 
 
 #### If acting as an [Issuer](terminology#issuer)
-1. Create an [endpoint](https://gist.github.com/rsmets/7dfd807dfaefae1ec6a3aa695c69360d) to receive user [DID](/terminology#did) data from our Identity Engine cloud.
-2. Create an [endpoint](https://gist.github.com/rsmets/c9a789ebeecda8077105597575efbec9) to receive signed [Subject](/terminology#subject) credential requests from our Identity Engine wallet.
+1. Create an [endpoint](https://gist.github.com/UnumIDAdmin/4548f589140bcd42407cff45d63794e2) to receive user [DID](/terminology#did) data from our Identity Engine cloud.
+2. Create an [endpoint](https://gist.github.com/UnumIDAdmin/d76d9fe46e459e529d7f7b6f9319a0b6) to receive signed [Subject](/terminology#subject) credential requests from our Identity Engine wallet.
 
 Using the Server SDK is straightforward. To issue (send) a <Tip type="credential"/> to a user, you input identity data and the user’s <Tip type="DID">DID</Tip>. And to <Tip type="request"/> a <Tip type="presentation"/> from a user, you input the type of credential and acceptable <Tip type="issuer">issuers</Tip>. The SDK handles the rest.
 

@@ -43,18 +43,15 @@ The Mobile SDK works entirely behind the scenes, benefitting users without intru
 
 *See full documentation [here](/server-sdk).*
 
-*You can also choose to deploy this as a (containerized) app that you interact with through an API.*
+1. Install the SDK on your server (e.g. through NPM). *You can also choose to deploy the server-sdk as a (containerized) [app](https://github.com/UnumID/issuer-verifier-app) that you interact with through an API.*
+2. Use the SDK to perform a one time setup to register <Tip type="issuer">issuers</Tip> and/or <Tip  type="verifier">verifiers</Tip>. Store the private keys that the SDK returns securely in your database associated with the registered entities.
 
-1. Install the SDK on your server (e.g. through NPM).
-2. Store the private keys that the SDK returns securely in your database.
+#### If acting as an [Issuer](terminology#issuer)
+1. Create an endpoint adhering to the OpenApi [specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188) to receive signed [Subject](/terminology#subject) credential requests from our Identity Engine wallet. This endpoint also handles receiving user [DID](/terminology#did) data from our Identity Engine cloud.
 
 #### If acting as a [Verifier](/terminology#verifier)
 1. Create an interface the Web SDK can use to interact with the Server SDK. For example so a presentation request created by the Server SDK can be displayed on the client.
-2. Create an [endpoint](https://gist.github.com/UnumIDAdmin/2bffdf092594196beba48ce7738b60fa) to receive encrypted [Presentation](/terminology#presentation) data from our Identity Engine cloud. 
-
-#### If acting as an [Issuer](terminology#issuer)
-1. Create an [endpoint](https://gist.github.com/UnumIDAdmin/4548f589140bcd42407cff45d63794e2) to receive user [DID](/terminology#did) data from our Identity Engine cloud.
-2. Create an [endpoint](https://gist.github.com/UnumIDAdmin/d76d9fe46e459e529d7f7b6f9319a0b6) to receive signed [Subject](/terminology#subject) credential requests from our Identity Engine wallet.
+2. Create an endpoint adhering to the OpenApi [specification](https://gist.github.com/UnumIDAdmin/2bffdf092594196beba48ce7738b60fa) for receiving encrypted [Presentation](/terminology#presentation) data from our Identity Engine cloud. 
 
 Using the Server SDK is straightforward. To issue (send) a <Tip type="credential"/> to a user, you input identity data and the user’s <Tip type="DID">DID</Tip>. And to <Tip type="request"/> a <Tip type="presentation"/> from a user, you input the type of credential and acceptable <Tip type="issuer">issuers</Tip>. The SDK handles the rest.
 

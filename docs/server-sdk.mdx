@@ -191,7 +191,7 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 ---
 
 ### `updateCredentialStatus`
-> Revoke a <Tip type="credential"/> (i.e. make it invalid).
+> Update a <Tip type="credential"/>'s status (i.e. make it invalid).
 
 You need to provide the credential `id` (which is [`issueCredentials`](#issuecredentials) returns per <Tip type="credential">credential</Tip>) and a [CredentialStatusOptions](https://docs.unum.id/types/modules.html#credentialstatusoptions) `status`. Currently there are only two valid statuses: "valid" and "revoked".
 
@@ -209,6 +209,30 @@ export type CredentialStatusOptions = 'valid' | 'revoked';
   "authToken": string, // your auth token
   "credentialId": string, // id of the credential
   "status": CredentialStatusOptions // status to update the credential to (defaults to 'revoked')
+}
+```
+
+#### Response Body: Empty
+If unsuccessful, an exception will be thrown.
+```typescript
+{}
+```
+
+### `revokeAllCredentials`
+> Revoke all <Tip type="credential"/>s (i.e. make all invalid).
+
+You need to provide your issuer's `did` and `signingPrivateKey` also the target `subjectDid`. Only credentials issued by the associated issuer are revoked from the subject. The signing private key is necessary for the request signature to be created within the SDK. The signature is necessary to be verified by the SaaS prior to revoking all the credentials. 
+
+:::important
+The signing private key *never* leaves your server. The Server SDK only needs it to perform cryptographic functions on your behalf.
+:::
+
+#### Parameters
+```typescript
+{
+  "issuerDid": string // did of the issuer of credential you would like to revoke
+  "signingPrivateKey": string // issuer's signing private key
+  "subjectDid": string // did of target subject whom to revoke all the credentials issued by the issuer
 }
 ```
 

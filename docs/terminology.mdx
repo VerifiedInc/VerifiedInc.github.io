@@ -59,7 +59,7 @@ The full details of the credential object aren't that important or helpful to kn
 {
     "@context": ["https://www.w3.org/2018/credentials/v1"],
     "credentialStatus": {
-        "id": "https://api.unum.id/credentialStatus/f8287c1e-0c56-460a-92af-5519f5c10cbf",
+        "id": "https://api.unumid.co/credentialStatus/f8287c1e-0c56-460a-92af-5519f5c10cbf",
         "type": "CredentialStatus"
     },
     // type of credential
@@ -121,7 +121,7 @@ The full details of the presentation object aren't that important or helpful to 
         {
             "@context": ["https://www.w3.org/2018/credentials/v1"],
             "credentialStatus": {
-                "id": "https://api.unum.id/credentialStatus/f8287c1e-0c56-460a-92af-5519f5c10cbf",
+                "id": "https://api.unumid.co/credentialStatus/f8287c1e-0c56-460a-92af-5519f5c10cbf",
                 "type": "CredentialStatus"
             },
             "type": ["VerifiableCredential", "UsernameCredential"],
@@ -181,7 +181,7 @@ and a list containing, for each credential:
 If multiple issuers are listed, a credential (of the correct type) from any one of them is acceptable.
 
 :::important
-The <Tip type="issuer"/> of the credential can be *the same company* as the one making the request (the <Tip type="verifier"/>)! This is the case for our [Passwordless Auth](https://www.unum.id/solutions/passwordless-auth) product. A single company issues an authentication credential to a user, who later shares a presentation containing that credential back with the company to authenticate.
+The <Tip type="issuer"/> of the credential can be *the same company* as the one making the request (the <Tip type="verifier"/>)! This is the case for our [Passwordless Auth](https://www.unumid.co/solutions/passwordless-auth) product. A single company issues an authentication credential to a user, who later shares a presentation containing that credential back with the company to authenticate.
 :::
 
 The request is cryptographically signed with the company's private key. This makes it possible to later check that the request is valid and was created by that company, which helps prevent attacks like phishing.
@@ -231,7 +231,7 @@ The request is cryptographically signed with the company's private key. This mak
   "verifier": {
       "name": “The Dev Shop“,
       "did": "did:unum:f2054199-1069-4337-a588-83d099e79d44",
-      "url": "https://developer.demo.unum.id/presentation"
+      "url": "https://developer.demo.unumid.co/presentation"
   },
   // highlight-end
   // enriched issuer information based on the base presentation request
@@ -269,7 +269,7 @@ When possible, we avoid using these less important terms to make the docs more r
 > An **issuer** is a role a company can play to issue <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a> to <a href="/terminology#subject"><Tip type="subject">subjects</Tip></a> (users). An issuer can also change credential statuses, for example to revoke credentials.
 
 :::important
-A company can be both an <Tip type="issuer"/> and a <Tip type="verifier"/>! In fact, it can play the roles of many different issuers and verifiers. For example, to implement our [Passwordless Auth](https://www.unum.id/solutions/passwordless-auth), a single company issues an authentication credential to a user, who later shares a presentation (containing that credential), which the company verifies.
+A company can be both an <Tip type="issuer"/> and a <Tip type="verifier"/>! In fact, it can play the roles of many different issuers and verifiers. For example, to implement our [Passwordless Auth](https://www.unumid.co/solutions/passwordless-auth), a single company issues an authentication credential to a user, who later shares a presentation (containing that credential), which the company verifies.
 :::
 
 **Example:** ACME Bank issues a KYC verification credential to Richard (an ACME user). It later revokes that credential and issues a new one to Richard to update his information.
@@ -322,7 +322,7 @@ We use "user" instead of "subject" as much as possible, since these are almost a
 > A **verifier** is a role a company can play to verify <a href="/terminology#presentation"><Tip type="presentation">presentations</Tip></a> shared by <a href="/terminology#subject"><Tip type="subject">subjects</Tip></a> (users). A verifier can also make <a href="/terminology#request"><Tip type="request">requests</Tip></a> for presentations and send them to subjects.
 
 :::important
-A company can be both an <Tip type="issuer"/> and a <Tip type="verifier"/>! In fact, it can play the roles of many different issuers and verifiers. For example, to implement our [Passwordless Auth](https://www.unum.id/solutions/passwordless-auth) product, a single company issues an authentication credential to a user, who later shares a presentation (containing that credential), which the company verifies.
+A company can be both an <Tip type="issuer"/> and a <Tip type="verifier"/>! In fact, it can play the roles of many different issuers and verifiers. For example, to implement our [Passwordless Auth](https://www.unumid.co/solutions/passwordless-auth) product, a single company issues an authentication credential to a user, who later shares a presentation (containing that credential), which the company verifies.
 :::
 
 **Example:** Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank. When Richard shares the presentation, Hooli verifies it.

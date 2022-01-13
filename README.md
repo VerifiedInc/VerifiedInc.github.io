@@ -2,15 +2,15 @@
 
 # Docs
 
-These docs are built using [Docusaurus](https://v2.docusaurus.io/docs/) (v2), deployed on GitHub Pages to [docs.unum.id](https://docs.unum.id/).
+These docs are built using [Docusaurus](https://v2.docusaurus.io/docs/) (v2), deployed on GitHub Pages to [docs.unumid.co](https://docs.unumid.co/).
 
-**Important:** Publishing to `master` will publish to [docs.unum.id](https://docs.unum.id/)! Please don't publish any real documentation yet so we don't run into legal issues with IP protection.
+**Important:** Publishing to `master` will publish to [docs.unumid.co](https://docs.unumid.co/)! Please don't publish any real documentation yet so we don't run into legal issues with IP protection.
 
 ## Docusaurus (v2)
 
 **Note:** Make sure _not_ to use the v1 Docusaurus docs.
 
-[Docusaurus](https://v2.docusaurus.io/docs/) is a Facebook open source project that makes creating documentation easy. The result is a React app displaying GitHub flavored Markdown. A basic usage guide is currently at [docs.unum.id](https://docs.unum.id/) showing some of the nice features like live code editors. Because it's React based, we may be able to leverage some of our existing demo content (written in React) right in the documentation itself, which would be cool.
+[Docusaurus](https://v2.docusaurus.io/docs/) is a Facebook open source project that makes creating documentation easy. The result is a React app displaying GitHub flavored Markdown. A basic usage guide is currently at [docs.unumid.co](https://docs.unumid.co/) showing some of the nice features like live code editors. Because it's React based, we may be able to leverage some of our existing demo content (written in React) right in the documentation itself, which would be cool.
 
 ### Installation
 
@@ -36,7 +36,7 @@ This command generates static content into the `build` directory and can be serv
 
 ### Deployment
 
-**Important:** Publishing to `master` will publish to [docs.unum.id](https://docs.unum.id/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
+**Important:** Publishing to `master` will publish to [docs.unumid.co](https://docs.unumid.co/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
 
 ```console
 GIT_USER=<Your GitHub username> DEPLOYMENT_BRANCH=private USE_SSH=true yarn deploy

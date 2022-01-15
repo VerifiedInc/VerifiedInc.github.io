@@ -242,6 +242,13 @@ You will have to upload your Apple and/or Firebase push notification credentials
 - You should provide this if you are using Unum ID as an additional authentication factor on top of your existing login. 
 - If this prop is not provided, the login fallback option will not be available.
 
+#### `userCode`
+- `string`
+- _optional_
+- A code that is associated with a unique user in your system. It should be short-lived (i.e. not a primary key in your database).
+- Allows the [Holder App](/terminology#holder-app) to call back to your system and reference a specific user
+- Example uses include associating a user in your system with the [DID](/terminology#DID) identifying them in Unum ID and just-in-time credential issuance.
+
 ## Examples
 
 ### No Fallbacks
@@ -279,7 +286,7 @@ const App = () => {
 
 ```tsx
 import { FC } from 'react';
-import UnumIDWidget, { PresentationRequestResponse } from '@unumid/web-sdk-react';
+import UnumIDWidget, { PresentationRequestDto } from '@unumid/web-sdk-react';
 
 const App: FC = () => {
   const createPresentationRequest = async (): Promise<PresentationRequestResponse> => {
@@ -300,7 +307,7 @@ const App: FC = () => {
 </Tabs>
 
 ### Fallbacks
-A slightly more complex use case which allows the SDK to handle PresentationRequest creation, but enables fallback options by providing user info.
+A slightly more complex use case which allows the SDK to handle PresentationRequest creation, but enables fallback options by providing user info
 
 <Tabs
     groupId="languages"
@@ -339,9 +346,7 @@ const App = () => {
 ```tsx
 import { FC } from 'React';
 import UnumIDWidget, {
-  EmailOptions,
-  SmsOptions,
-  PresentationRequestResponse,
+  PresentationRequestDto,
   SuccessResponse
 } from '@unumid/web-sdk-react';
 
@@ -362,6 +367,79 @@ const App: FC = () => {
       sendEmail={sendEmail}
       sendSms={sendSms}
       goToLogin={goToLogin}
+      userCode='my-user-code' // uniquely identifies the user in your system
+    />
+  );
+};
+```
+
+</TabItem>
+</Tabs>
+
+### User Bootstrapping and/or Just-In-Time Credential Issuance
+Allows the [Holder App](/terminology#holder-app) to call back to your system with the user's [DID](/terminology#DID),
+enabling functionality like user bootstrapping and just-in-time credential issuance (see also: [verifySubjectCredentialRequests](/server-sdk#verifysubjectcredentialrequests))
+
+<Tabs
+    groupId="languages"
+    defaultValue="jsx"
+    values={[
+        {label: 'JSX', value: 'jsx'},
+        {label: 'TSX', value: 'tsx'}
+    ]}>
+<TabItem value="jsx">
+
+```jsx
+import UnumIDWidget from '@unumid/web-sdk-react';
+
+const App = () => {
+  return (
+    <UnumIDWidget
+      env='sandbox'
+      apiKey='my_sandbox_api_key'
+      userInfo={{
+        pushToken: {
+          provider: 'FCM', // push notification provider to use. 'FCM' = Firebase Cloud Messaging, 'APNS' = Apple Push Notification Service
+          value: 'eWxqQQDXRWCcKTA9Uey6SZ:APA91bHlrRXETfqqi-LXESlPGN3hVq1qP54hfvzZoMosE3Rw5tQ1D4fuLJIqPiMv50NUYB5Rn_dPPMI709UeZjGGq7Uv2u1QWHytu7FXfQvUyDOwyLtQhWLEs-XxFMMYMOwgWgiItiqF' // token obtained from your app on the user's device
+        }
+        email: 'mrplow@gmail.com', // The user's email is required to enable the email fallback.
+        phone: 'KL5-5555' // The user's phone number is required to enable the SMS fallback.
+      }}
+      createPresentationRequest={createPresentationRequest}
+      userCode='my-user-code' // uniquely identifies the user in your system
+    />
+  );
+};
+```
+
+</TabItem>
+<TabItem value="tsx">
+
+```tsx
+import { FC } from 'React';
+import UnumIDWidget, {
+  PresentationRequestDto,
+  SuccessResponse
+} from '@unumid/web-sdk-react';
+
+const App: FC = () => {
+  return (
+    <UnumIDWidget
+      env='sandbox'
+      apiKey='my_sandbox_api_key'
+      userInfo={{
+        pushToken: {
+          provider: 'FCM', // push notification provider to use. 'FCM' = Firebase Cloud Messaging, 'APNS' = Apple Push Notification Service
+          value: 'eWxqQQDXRWCcKTA9Uey6SZ:APA91bHlrRXETfqqi-LXESlPGN3hVq1qP54hfvzZoMosE3Rw5tQ1D4fuLJIqPiMv50NUYB5Rn_dPPMI709UeZjGGq7Uv2u1QWHytu7FXfQvUyDOwyLtQhWLEs-XxFMMYMOwgWgiItiqF' // token obtained from your app on the user's device
+        }
+        email: 'mrplow@gmail.com', // The user's email is required to enable the email fallback.
+        phone: 'KL5-5555' // The user's phone number is required to enable the SMS fallback.
+      }}
+      createPresentationRequest={createPresentationRequest}
+      sendEmail={sendEmail}
+      sendSms={sendSms}
+      goToLogin={goToLogin}
+      userCode='my-user-code' // uniquely identifies the user in your system
     />
   );
 };
@@ -435,6 +513,7 @@ const App = () => {
       sendEmail={sendEmail}
       sendSms={sendSms}
       goToLogin={goToLogin}
+      userCode='my-user-code' // uniquely identifies the user in your system
     />
   );
 };
@@ -446,9 +525,8 @@ const App = () => {
 ```tsx
 import { FC, useState } from 'react';
 import UnumIDWidget, {
-  EmailOptions,
-  SmsOptions,
-  PresentationRequestResponse,
+  ExternalChannelMessageInput,
+  PresentationRequestDto,
   SuccessResponse
 } from '@unumid/web-sdk-react';
 import { PresentationRequestOptions } from '@unumid/types';
@@ -471,11 +549,11 @@ const App: FC = () => {
     setPresentationRequest(response);
   };
 
-  const sendEmail = async (options: EmailOptions): Promise<SuccessResponse> => {
+  const sendEmail = async (options: ExternalChannelMessageInput): Promise<SuccessResponse> => {
     // Call your Server SDK to send a deep link via email and return the response.
   };
 
-  const sendSms = async (options: SmsOptions): Promise<SuccessResponse> => {
+  const sendSms = async (options: ExternalChannelMessageInput): Promise<SuccessResponse> => {
     // Call your Server SDK to send a deep link via SMS and return the response.
   };
 

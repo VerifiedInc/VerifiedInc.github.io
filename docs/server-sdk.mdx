@@ -245,7 +245,7 @@ If unsuccessful, an exception will be thrown.
 ### `verifySubjectCredentialRequests`
 > Verify a <Tip type="subject"/>'s request for <Tip type="credential"/>s.
 
-You need to be able to receive these credential requests from Unum ID and pass them to this function. To do this, you need to create a `/credentialRequest` endpoint that conforms to our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/d76d9fe46e459e529d7f7b6f9319a0b6). 
+You need to be able to receive these credential requests from Unum ID and pass them to this function. To do this, you need to create a `/userCredentialRequests` endpoint that conforms to our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188). 
 
 Each request is cryptographically signed by the <Tip type="subject"/>'s private key. This function verifies the signatures are valid. Furthermore, it validates that all requests are from the same subject and that requested Issuer requirements are met. After which, your application code will need to evaluate wether it can issue the requested credentials. An example implementation can be found [here](https://github.com/UnumID/demo-issuer-server/blob/main/src/services/api/credentialRequest/credentialRequest.class.ts).
 
@@ -274,7 +274,7 @@ export interface SubjectCredentialRequest {
 ```
 
 :::important
-The SubjectCredentialRequest array ought to be able to be passed as is from the specified OpenApi [/credentialRequest](https://gist.github.com/UnumIDAdmin/d76d9fe46e459e529d7f7b6f9319a0b6) endpoint.
+The SubjectCredentialRequest array ought to be able to be passed as is from the specified OpenApi [/userCredentialRequests](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188) endpoint.
 :::
 
 #### Response Body: [`SubjectCredentialRequestVerifiedStatus`](https://docs.unumid.co/server-sdk-typescript/interfaces/subjectcredentialrequestverifiedstatus.html)

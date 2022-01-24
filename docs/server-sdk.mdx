@@ -218,6 +218,8 @@ If unsuccessful, an exception will be thrown.
 {}
 ```
 
+---
+
 ### `revokeAllCredentials`
 > Revoke all <Tip type="credential"/>s (i.e. make all invalid).
 
@@ -242,25 +244,34 @@ If unsuccessful, an exception will be thrown.
 {}
 ```
 
+---
+
 ### `verifySubjectCredentialRequests`
 > Verify a <Tip type="subject"/>'s request for <Tip type="credential"/>s.
 
-You need to be able to receive these credential requests from Unum ID and pass them to this function. To do this, you need to create a `/credentialRequest` endpoint that conforms to our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/d76d9fe46e459e529d7f7b6f9319a0b6). 
+You need to be able to receive these credential requests from Unum ID and pass them to this function. To do this, you need to create a `/userCredentialRequests` endpoint that conforms to our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188). 
 
 Each request is cryptographically signed by the <Tip type="subject"/>'s private key. This function verifies the signatures are valid. Furthermore, it validates that all requests are from the same subject and that requested Issuer requirements are met. After which, your application code will need to evaluate wether it can issue the requested credentials. An example implementation can be found [here](https://github.com/UnumID/demo-issuer-server/blob/main/src/services/api/credentialRequest/credentialRequest.class.ts).
 
 The main use case of this to allow bootstrapping users that just installed the Unum ID Wallet with credentials necessary to use across the network, i.e for instant sign ups with a partner. 
 
 :::note
-Despite this having "verify" in its name, this function only serves Issuers in determining whether a subject's request for credentials is valid. It is up to you application logic to determine whether you have the data relating to the the subject to issue the requested credentials.
+Despite this having "verify" in its name, this function serves Issuers in determining whether a subject's request for credentials is valid. It is up to your application logic to determine whether you have the data relating to the the subject to issue the requested credentials.
 :::
 
-```typescript title="SubjectCredentialRequest"
-export interface SubjectCredentialRequest {
+
+```typescript title="CredentialRequest"
+{
   type: string; // the string matching the desire credential type
-  issuers: string[]; // list of acceptable issuer DIDs that have issued the credential
-  required: boolean; // to denote wether this particular credential is required. Defaults behavior resolves this to true. 
-  proof: Proof; // Cryptographic proof information
+  issuers: string[]; //list of acceptable issuer DIDs that have issued the credential
+  required: boolean; // to denote wether this particular credential is required. Defaults behavior resolves this to true.
+}
+```
+
+```typescript title="SubjectCredentialRequests"
+{
+  credentialRequests: CredentialRequests[]; // the string matching the desire credential type
+  proof: Proof; // proof signed by the subject
 }
 ```
 
@@ -268,19 +279,19 @@ export interface SubjectCredentialRequest {
 ```typescript
 {
   "authToken": string, // your auth token
-  "issuerDid": string, // did of your issuer
-  "credentialRequests": SubjectCredentialRequest[] // list of signed credential requests. This ought to be provided verbatim via the spec'd /credentialRequests endpoint.
+  "issuerDid": string, // the did of your issuer
+  "subjectDid": string // the did of the subject
+  "subjectCredentialRequests: SubjectCredentialRequests // object containing list of CredentialRequests with a Proof signed by the Subject.
 }
 ```
 
 :::important
-The SubjectCredentialRequest array ought to be able to be passed as is from the specified OpenApi [/credentialRequest](https://gist.github.com/UnumIDAdmin/d76d9fe46e459e529d7f7b6f9319a0b6) endpoint.
+All parameters aside from the authToken ought to be provided verbatim via the specified OpenApi [/userCredentialRequests](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188) endpoint.
 :::
 
-#### Response Body: [`SubjectCredentialRequestVerifiedStatus`](https://docs.unumid.co/server-sdk-typescript/interfaces/subjectcredentialrequestverifiedstatus.html)
-```typescript title="SubjectCredentialRequestVerifiedStatus"
+#### Response Body: [`VerifiedStatus`](https://docs.unumid.co/server-sdk-typescript/interfaces/verifiedstatus.html)
+```typescript title="VerifiedStatus"
 {
-  subjectDid: string; // returns the subject DID that made and signed all the requests
   isVerified: boolean; // returns true if all requests are verified and validation requirements are met
   message?: string; // (optional) only populated iff isVerified is false
 }

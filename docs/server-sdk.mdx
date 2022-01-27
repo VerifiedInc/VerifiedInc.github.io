@@ -78,6 +78,8 @@ Jump to:
 
 As a customer, you can register as many issuers as you like (or none at all), depending on your use case. Note, however, that you'll need a unique issuer API key for each one.
 
+The optional [VersionInfo](https://docs.unumid.co/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how a <a href="/terminology#subject"><Tip type="subject"/></a>'s [CredentialRequests](https://docs.unumid.co/types/interfaces/subjectcredentialrequests.html) should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Unum ID [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used.
+
 :::important
 You need to store the <Tip type="DID"/> (`did`) and encryption and signing key pairs (`keys`) that this returns. You'll need these to issue credentials to users.
 :::
@@ -88,8 +90,9 @@ The DID and public keys are nonsensitive, but **you should store the private key
 
 #### Parameters
 ```typescript
-"customerUuid": string, // your customer UUID
 "apiKey": string // your issuer API key
+"url": string, // the base url of which UnumID's SaaS will interface with
+"versionInfo"?: VersionInfo[] // optional arrays of objects for how to contact specific versions of your issuer and subsequently the sever sdk. 
 ```
 
 #### Response Body: [`RegisteredIssuer`](https://docs.unumid.co/server-sdk-typescript/interfaces/registeredissuer.html)
@@ -199,16 +202,12 @@ You need to provide the credential `id` (which is [`issueCredentials`](#issuecre
 As noted in [`issueCredentials`](#issuecredentials), **we recommend storing the each entire credential, indexed on their credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
 :::
 
-```typescript title="CredentialStatusOptions"
-export type CredentialStatusOptions = 'valid' | 'revoked';
-```
-
 #### Parameters
 ```typescript
 {
   "authToken": string, // your auth token
   "credentialId": string, // id of the credential
-  "status": CredentialStatusOptions // status to update the credential to (defaults to 'revoked')
+  "status": 'valid' | 'revoked' // status to update the credential to (defaults to 'revoked')
 }
 ```
 
@@ -316,7 +315,7 @@ Jump to:
 
 As a customer, you can register as many verifiers as you like (or none at all), depending on your use case. Note, however, that you'll need a unique verifier API key for each one.
 
-The [`VersionInfo`](https://docs.unumid.co/types/interfaces/versioninfo.html) denotes how encrypted <a href="/terminology#presentation"><Tip type="presentation"/></a>s from Unum ID's SaaS, which originate from the Mobile SDK, should be routed to your application in order for the corresponding Server SDK version to preform verifications.
+The optional [VersionInfo](https://docs.unumid.co/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how encrypted <a href="/terminology#presentation"><Tip type="presentation"/></a>s from Unum ID's SaaS, which originate from the Mobile SDK, should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Unum ID [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used. 
 
 :::important
 You need to store the <Tip type="DID"/> (`did`) and encryption and signing key pairs (`keys`) that this returns. You'll need these to make requests and verify presentations.
@@ -328,10 +327,9 @@ The DID and public keys are nonsensitive, but **you should store the private key
 
 #### Parameters
 ```typescript
-"customerUuid": string, // your customer UUID
-"url": string, // the url of which UnumID's SaaS will interface with
+"url": string, // the base url of which UnumID's SaaS will interface with
 "apiKey": string // your verifier API key
-"versionInfoList": VersionInfo[] // the versioning information of your application corresponding to various Unum ID Server SDK versions.
+"versionInfoList?": VersionInfo[] // optional versioning information of your application corresponding to various Unum ID Server SDK versions.
 ```
 
 #### Response Body: [`RegisteredVerifier`](https://docs.unumid.co/server-sdk-typescript/interfaces/registeredverifier.html)
@@ -563,16 +561,12 @@ Used to check the status of individual credentials.
 
 The `status` attribute of the response's [CredentialStatusInfo](https://docs.unumid.co/types/interfaces/credentialstatusinfo.html) is of type [CredentialStatusOptions](https://docs.unumid.co/types/modules.html#credentialstatusoptions). Currently the only valid status are: verified and revoked.
 
-```typescript
-export type CredentialStatusOptions = 'valid' | 'revoked';
-```
-
-```typescript
-export type CredentialStatusInfo {
+```typescript title="CredentialStatusInfo"
+{
   "createdAt": Date; // the time  the credential was recorded as created in the UnumID SaaS db
   "updatedAt": Date; // the time  the credential was recorded as updated in the UnumID SaaS db
   "credentialId": string; // the did (aka id) of the credential this status is in regard to
-  "status": CredentialStatusOptions; // a string literal type that currently only consists of 'valid' and 'revoked'
+  "status": 'valid' | 'revoked'; // status of the credential
 }
 ```
 

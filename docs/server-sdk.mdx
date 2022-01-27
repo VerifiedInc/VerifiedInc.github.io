@@ -86,24 +86,7 @@ You need to store the <Tip type="DID"/> (`did`) and encryption and signing key p
 The DID and public keys are nonsensitive, but **you should store the private keys securely and *never* share them.**
 :::
 
-The optional [`VersionInfo`](https://docs.unumid.co/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how a <a href="/terminology#subject"><Tip type="subject"/></a>'s [CredentialRequests](https://docs.unumid.co/types/interfaces/subjectcredentialrequests.html) should be routed to your application in order for the corresponding Server SDK version to preform verifications. 
-
-The [VersionInfo](https://docs.unumid.co/types/interfaces/versioninfo.html) is for specifying required headers in order to hit your API. It is also for the inevitable versioning of your API or the Unum SDK. Because we understand there are many viable API versioning strategies using [TargetInfo](https://docs.unumid.co/types/interfaces/targetinfo.html) you can specify exactly how to reach different versions of your API and subsequently the SDK. 
-Note: VersionInfo is an optional parameter and if not supplied the `url` attribute will simply be used.
-
-```typescript title="TargetInfo"
-{
-  [key: string]: any, // To be able to handle generic HTTP header requirements, i.e. version, accept, appId, etc.
-  url?: string // Versions denoted via a different url.
-}
-```
-
-```typescript title="VersionInfo"
-{
-  target: TargetInfo, // The information of how to target a customer's application to communication with the corresponding Server SDK versions.
-  sdkVersion: string // Server SDK version.
-}
-```
+The optional [VersionInfo](https://docs.unumid.co/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how a <a href="/terminology#subject"><Tip type="subject"/></a>'s [CredentialRequests](https://docs.unumid.co/types/interfaces/subjectcredentialrequests.html) should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Unum ID [dashboard](https://dashboard.sandbox-unum.id/#/login).
 
 #### Parameters
 ```typescript
@@ -332,7 +315,7 @@ Jump to:
 
 As a customer, you can register as many verifiers as you like (or none at all), depending on your use case. Note, however, that you'll need a unique verifier API key for each one.
 
-The [`VersionInfo`](https://docs.unumid.co/types/interfaces/versioninfo.html) denotes how encrypted <a href="/terminology#presentation"><Tip type="presentation"/></a>s from Unum ID's SaaS, which originate from the Mobile SDK, should be routed to your application in order for the corresponding Server SDK version to preform verifications.
+The optional [VersionInfo](https://docs.unumid.co/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how a <a href="/terminology#subject"><Tip type="subject"/></a>'s [CredentialRequests](https://docs.unumid.co/types/interfaces/subjectcredentialrequests.html) should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Unum ID [dashboard](https://dashboard.sandbox-unum.id/#/login).
 
 :::important
 You need to store the <Tip type="DID"/> (`did`) and encryption and signing key pairs (`keys`) that this returns. You'll need these to make requests and verify presentations.
@@ -344,10 +327,9 @@ The DID and public keys are nonsensitive, but **you should store the private key
 
 #### Parameters
 ```typescript
-"customerUuid": string, // your customer UUID
 "url": string, // the url of which UnumID's SaaS will interface with
 "apiKey": string // your verifier API key
-"versionInfoList": VersionInfo[] // the versioning information of your application corresponding to various Unum ID Server SDK versions.
+"versionInfoList?": VersionInfo[] // optional versioning information of your application corresponding to various Unum ID Server SDK versions.
 ```
 
 #### Response Body: [`RegisteredVerifier`](https://docs.unumid.co/server-sdk-typescript/interfaces/registeredverifier.html)

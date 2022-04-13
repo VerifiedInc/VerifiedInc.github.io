@@ -425,7 +425,8 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
   "issuers": {
       "IssuerDid:string": { // map keyed on issuer DID(s) that issued requested credential(s)
         "name": string, // human readable name for issuer
-        "did": string // issuer DID
+        "did": string, // issuer DID
+        "cardImageUrl": string // issuer's card image URL
       }
   },
   /* You send this to a user with the Web SDK: */

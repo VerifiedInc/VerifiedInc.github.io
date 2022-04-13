@@ -393,6 +393,19 @@ You can optionally provide:
 The private key *never* leaves your server. The Server SDK only needs it to perform cryptographic functions on your behalf.
 :::
 
+The response body consists of enriched information regarding entities referenced in the request. For example, the verifier's encryption and signing [PublicKeyInfo](https://docs.unumid.co/types/interfaces/publickeyinfo.html) is included to facilitate verifying the presentation request's signature and submitting and encrypted presentation in response.
+```typescript title="PublicKeyInfo"
+{
+    "id": string, // key id
+    "type": "secp256r1" || "RSA, // key type
+    "status": "valid" || "invalid", // key status
+    "encoding": "pem" || "base58", // key encoding
+    "publicKey": string, // public key value
+    "createdAt": Date, // when key was created 
+    "updatedAt": Date, // when key status was last updated
+}
+```
+
 #### Parameters
 ```typescript
 "authToken": string, // your auth token
@@ -420,7 +433,8 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
   "verifier": {
       "name": string, // human readable name for verifier. Displayed to users in mobile apps.
       "did": string, // your verifier DID
-      "url": string // endpoint you use to receive presentations
+      "encryptionPublicKey": PublicKeyInfo, // PublicKeyInfo for the RSA key
+      "signingPublicKey": PublicKeyInfo // PublicKeyInfo for the secp256r1 key
   },
   "issuers": {
       "IssuerDid:string": { // map keyed on issuer DID(s) that issued requested credential(s)

@@ -301,11 +301,13 @@ All parameters aside from the authToken ought to be provided verbatim via the sp
 ### `verifySignedDid`
 Verify a signed <Tip type="DID"/>, aka Decentralized Identifier.
 
-You need to provide the your issuer's `did` along with the signed DID object.
+You need to provide the your `issuerdid` along with the signed `DID` object.
 
-The DID string is signed by the subject's ECC private key. This function verifies the cryptographic signature is valid. 
+The DID object is a string identifier signed by the subject's ECC private key. This function verifies the cryptographic signature is valid. 
 
-The main use case is for the `/userCredentialRequests` required Issuer endpoint. It facilitates getting DID information for users within your service. The User DID is necessary to then issue re-usable identity credentials to.
+:::note
+The main use case is for the `/userCredentialRequests` required Issuer endpoint defined in our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188). It facilitates getting DID information for users within your service. The User DID is necessary to then issue re-usable identity credentials to.
+:::
 
 ```typescript title="DID"
 {

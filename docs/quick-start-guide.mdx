@@ -74,7 +74,7 @@ const response = await registerVerifier('0Hner7ibF/aHWLBvUyY4iDJ1xymbef0lzMxiS0e
 3. Create the `/presentation` endpoint adhering to the OpenApi [specification](https://gist.github.com/UnumIDMachine/a2d71f12b0596a62c9dcc4de7a255f4f) for receiving encrypted <Tip type="presentation"/> data from our Identity Engine cloud. Examples of this can be found in our Demo applications.
 
 ## Issue Credentials
-Once you have registered an Issuer, stored the resultant private signing and encryption keys along with the DID, and have the `/userCredentialRequests` you can issue credentials to Unum ID users. However users must also have a DID and key pairs to properly receive (and eventually share) encrypted credentials. They need to have their Unum ID Wallet setup. To get associate a user with a DID and prompt them to create a wallet you will need to:
+Once you have registered an Issuer, stored the resultant private signing and encryption keys along with the DID, and have the `/userCredentialRequests` you can issue credentials to Unum ID users. However users must also have a DID and key pairs to properly receive (and eventually share) encrypted credentials. They need to have their Unum ID Wallet setup. To associate a user with a DID and prompt them to create a wallet you will need to:
 
 ### Associate Users with Unum ID DIDs
 1. Create and persist a unique, short-lived, one-time-use `userCode` along side your User Entity.
@@ -85,7 +85,7 @@ Once you have registered an Issuer, stored the resultant private signing and enc
 https://wallet.unumid.co/authenticate?userCode=f85fc85b-7467-4b3f-8581-f138d8b4798g&issuer=did:unum:8b642752-aa85-491a-80d3-cd6c0ef9426n
 ```
 
-3. This will prompt the individual to verify their email address, perform a biometric, and create a wallet. The result of this will be a call back to your provided issuer URL on the `/userCredentialRequests` endpoint with the `userDidAssociation` attribute populated containing the `userCode` along with newly created `DID`.
+3. This will prompt the individual to verify their email address, perform a biometric, and create a wallet. The result of this will be a call back to your provided issuer URL on the `/userCredentialRequests` endpoint with the `userDidAssociation` attribute populated containing the `userCode` along with the newly created `DID`.
 
 4. Store the associated `DID` in the callback response along side your User entity. The used `userCode` attribute should be deleted from the User entity as well.
 
@@ -106,9 +106,9 @@ const result: UnumDto<CredentialPb> = await issueCredentials(
 ```
 
 ## Requesting Credentials
-Once you have registered a Verifier, you can make a request for credentials. There is no requirement to issue Credential in order to request credentials. To request credentials:
+Once you have registered a Verifier, you can make a request for credentials. There is no requirement to issue credentials in order to request credentials. To request credentials:
 
-1. Use the Server SDK's [sendRequest](https://docs.unumid.co/server-sdk#sendrequest) method along with the Verifier authorization token to create a request for credentials.
+1. Use the Server SDK's [sendRequest](https://docs.unumid.co/server-sdk#sendrequest) method along with the Verifier authorization token.
 
 ```typescript title="Example sendRequest"
 const response = await sendRequest(

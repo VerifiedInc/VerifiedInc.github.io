@@ -8,7 +8,7 @@ slug: /quick-start-guide
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-*Get started with an Unum ID deployment in 20 minutes.*
+*Get started with an Unum ID deployment.*
 
 This guide provides an abbreviated step-by-step guide for how to get setup as an Unum ID Issuer and/or Verifier. For full technical details, see the documentation for each component.
 
@@ -26,7 +26,7 @@ Once you have access to the Dashboard you can create and manage Issuer and Verif
 
 1. Navigate to the Entities tab on the Company page.
 
-2. Click "Create Issuer" or "Create Verifier" to create an API Key for one of the other respectively. The Verifier API Key only requires a name, but an Issuer requires a name and a card imagine. The card image is displayed in Users' wallets when they hold credentials from you or your credentials are being requested.
+2. Click "Create Issuer" or "Create Verifier" to create an API Key for one or the other respectively. The Verifier API Key only requires a name. The Issuer API Key requires a name and a card imagine. The card image is displayed in Users' wallets when they hold credentials from you or your credentials are being requested.
 
 ## Server SDK
 After creating an Issuer and/or Verifier API Key you will need to leverage it in the [Server SDK](https://github.com/UnumID/server-sdk-typescript). Registration via the Server SDK is required to be in your application because of the generation of sensitive private signing and encryption keys. You will also need to a persisted data store accessible. To properly register:
@@ -43,10 +43,12 @@ If using a different runtime language, you can use the SDK via HTTP. To deploy t
 
 *Coming Soon: Publicly accessible docker image repository.*
 
-An example demo project that interfaces with the SDK over HTTP is the Developer Demo.
+:::note
+An example demo project that interfaces with the SDK over HTTP is the [Developer Demo](/developer-demo).
+:::
 
 #### Register Issuer
-Once the Server SDK is accessible and there is a persisted data store available, you can register a Issuer:
+Once the Server SDK is accessible and there is a persisted data store available, you can register an Issuer:
 
 1. Use the module's [registerIssuer](https://docs.unumid.co/server-sdk#registerissuer) method with your respective API Key.
 
@@ -54,13 +56,9 @@ Once the Server SDK is accessible and there is a persisted data store available,
 const response = await registerIssuer('U7nbHmEpmZuRZMTA2ItFltan64SGKoDLYn7cMnpe4w2=', 'https://api.acme.com');
 ```
 
-```typescript title="Example registerVerifier"
-const response = await registerVerifier('0Hner7ibF/aHWLBvUyY4iDJ1xymbef0lzMxiS0eTGoS=', 'https://api.acme.com');
-```
-
 2. The resultant private signing and encryption key need to be persisted along with the DID.
 
-3. Create the /userCredentialRequests endpoint adhering to the OpenApi [specification](https://gist.github.com/UnumIDMachine/146a0a428c683b756efd8240b31a4678) to receive signed Subject credential requests and user DID information from Unum ID. Examples of this can be found in our Demo applications.
+3. Create the `/userCredentialRequests` endpoint adhering to the OpenApi [specification](https://gist.github.com/UnumIDMachine/146a0a428c683b756efd8240b31a4678) to receive signed <Tip type="subject"/> credential requests and user <Tip type="DID"/> information from Unum ID. Examples of this can be found in our Demo applications.
 
 #### Register Verifier
 Once the Server SDK is accessible and there is a persisted data store available, you can register a Verifier:
@@ -73,23 +71,23 @@ const response = await registerVerifier('0Hner7ibF/aHWLBvUyY4iDJ1xymbef0lzMxiS0e
 
 2. The resultant private signing and encryption key need to be persisted along with the DID.
 
-3. Create the `/presentation` endpoint adhering to the OpenApi [specification](https://gist.github.com/UnumIDMachine/a2d71f12b0596a62c9dcc4de7a255f4f) for receiving encrypted Presentation data from our Identity Engine cloud. Examples of this can be found in our Demo applications.
+3. Create the `/presentation` endpoint adhering to the OpenApi [specification](https://gist.github.com/UnumIDMachine/a2d71f12b0596a62c9dcc4de7a255f4f) for receiving encrypted <Tip type="presentation"/> data from our Identity Engine cloud. Examples of this can be found in our Demo applications.
 
 ## Issue Credentials
-Once you have registered your Issuer, have stored the resultant private signing and encryption keys along with the DID, and have the `/userCredentialRequests` you can issue credentials to Unum ID users. However users must also have a DID and key pairs to properly receive (and eventually share) encrypted credentials. They need to have their Unum ID Wallet setup. To get associate a user with a DID and prompt them to create a wallet you will need to:
+Once you have registered an Issuer, stored the resultant private signing and encryption keys along with the DID, and have the `/userCredentialRequests` you can issue credentials to Unum ID users. However users must also have a DID and key pairs to properly receive (and eventually share) encrypted credentials. They need to have their Unum ID Wallet setup. To get associate a user with a DID and prompt them to create a wallet you will need to:
 
-### Associating Users with Unum ID DIDs
+### Associate Users with Unum ID DIDs
 1. Create and persist a unique, short-lived, one-time-use `userCode` along side your User Entity.
 
-2. Provide the userCode value as a query param along with your Issuer DID to https://wallet.unumid.co/authenticate. For example:
+2. Redirect to the Unum ID Wallet url https://wallet.unumid.co/authenticate while providing the userCode value as a query param along with your Issuer DID. For example:
 
 ```
 https://wallet.unumid.co/authenticate?userCode=f85fc85b-7467-4b3f-8581-f138d8b4798g&issuer=did:unum:8b642752-aa85-491a-80d3-cd6c0ef9426n
 ```
 
-3. This will prompt the individual to verify their email address, perform a biometric, and create a wallet. The result of this will be a call back to your provided issuer URL on the /userCredentialRequests endpoint with the `userDidAssociation` attribute populated with the `userCode` provided along with newly created `DID`.
+3. This will prompt the individual to verify their email address, perform a biometric, and create a wallet. The result of this will be a call back to your provided issuer URL on the `/userCredentialRequests` endpoint with the `userDidAssociation` attribute populated containing the `userCode` along with newly created `DID`.
 
-4. Store the associated `DID` in the callback along side your User entity. The used `userCode` attribute should be deleted as well.
+4. Store the associated `DID` in the callback response along side your User entity. The used `userCode` attribute should be deleted from the User entity as well.
 
 ### Giving Users Credentials
 1. Now that the User has a DID you can use the SDK's [issueCredentials](https://docs.unumid.co/server-sdk#issuecredentials) method to issue credentials to the User. For example: 
@@ -106,3 +104,12 @@ const result: UnumDto<CredentialPb> = await issueCredentials(
       '-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgw7wRQL1EUsLk08auyjhlHV0atw0wqQGjtP3wkAIz8uChRANCAARfUK8OjrArOokLQau9W3siHlxxtt9/FGjdiiL1YM8PqHqhmgscc6oSdUUKfA/HZaf9m2yEQqQPyoFR1R16Ck/8\n-----END PRIVATE KEY-----'
     );
 ```
+
+## Requesting Credentials
+Once you have registered a Verifier, you can make a request for credentials. There is no requirement to issue Credential in order to request credentials. 
+
+### React
+
+1. If using React, install the [Web SDK](https://github.com/UnumID/web-sdk-react) React [module](npm install @unumid/web-sdk-react), `npm install @unumid/web-sdk-react`.
+
+2. Use to create and display Presentation Requests.

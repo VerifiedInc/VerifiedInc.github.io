@@ -59,6 +59,10 @@ module.exports = {
               to: '/deployment-overview',
             },
             {
+              label: 'Quick Start Guide',
+              to: '/quick-start-guide',
+            },
+            {
               label: 'Privacy and Security',
               to: '/privacy-and-security',
             },

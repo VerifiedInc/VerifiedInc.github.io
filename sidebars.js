@@ -23,6 +23,15 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Guides',
+      /* should change when we have lots of docs */
+      collapsed: false,
+      items: [
+        'quick-start-guide',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Components',
       /* should change when we have lots of docs */
       collapsed: false,

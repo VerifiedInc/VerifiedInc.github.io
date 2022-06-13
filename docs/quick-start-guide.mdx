@@ -8,8 +8,101 @@ slug: /quick-start-guide
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-*Coming soon!*
+*Get started with an Unum ID deployment in 20 minutes.*
 
-Get started with Unum ID in 20 minutes.
+This guide provides an abbreviated step-by-step guide for how to get setup as an Unum ID Issuer and/or Verifier. For full technical details, see the documentation for each component.
 
-### 
+## Dashboard Access
+The Unum ID Dashboard is a tiered permissions, self-service portal where one can manage their organization's API Keys and view their usage statistics. To gain access:
+
+1. Go to the Unum ID [dashboard](https://dashboard.unumid.co/).
+
+2. In order to sign up to use the dashboard you will need to create an Unum ID Wallet account. Initiate the sign up flow by scanning the QR code found on the login page with your mobile device.
+
+3. After creating an Unum ID Wallet account you can use it to login into the dashboard by scanning the QR code again and completing the presentation share prompts. 
+
+## API Keys
+Once you have access to the Dashboard you can create and manage Issuer and Verifier API Keys. To create an API Key:
+
+1. Navigate to the Entities tab on the Company page.
+
+2. Click "Create Issuer" or "Create Verifier" to create an API Key for one of the other respectively. The Verifier API Key only requires a name, but an Issuer requires a name and a card imagine. The card image is displayed in Users' wallets when they hold credentials from you or your credentials are being requested.
+
+## Server SDK
+After creating an Issuer and/or Verifier API Key you will need to leverage it in the [Server SDK](https://github.com/UnumID/server-sdk-typescript). Registration via the Server SDK is required to be in your application because of the generation of sensitive private signing and encryption keys. You will also need to a persisted data store accessible. To properly register:
+
+### Node.js
+1. If using Node.js, install the SDK [module](https://www.npmjs.com/package/@unumid/server-sdk) using `npm i @unumid/server-sdk`.
+
+### Other Runtime Languages 
+If using a different runtime language, you can use the SDK via HTTP. To deploy the [Issuer-Verifier](https://github.com/UnumID/issuer-verifier-app) HTTP wrapper project:
+
+1. Go to the open source Issuer-Verifier Github [repo](https://github.com/UnumID/issuer-verifier-app).
+
+2. Pull the project and deploy it along side your other apps using whatever method you are most comfortable with. The project contains a Dockerfile and as well as a CircleCI CD config file for automated deployments.
+
+*Coming Soon: Publicly accessible docker image repository.*
+
+An example demo project that interfaces with the SDK over HTTP is the Developer Demo.
+
+#### Register Issuer
+Once the Server SDK is accessible and there is a persisted data store available, you can register a Issuer:
+
+1. Use the module's [registerIssuer](https://docs.unumid.co/server-sdk#registerissuer) method with your respective API Key.
+
+```typescript title="Example registerIssuer"
+const response = await registerIssuer('U7nbHmEpmZuRZMTA2ItFltan64SGKoDLYn7cMnpe4w2=', 'https://api.acme.com');
+```
+
+```typescript title="Example registerVerifier"
+const response = await registerVerifier('0Hner7ibF/aHWLBvUyY4iDJ1xymbef0lzMxiS0eTGoS=', 'https://api.acme.com');
+```
+
+2. The resultant private signing and encryption key need to be persisted along with the DID.
+
+3. Create the /userCredentialRequests endpoint adhering to the OpenApi [specification](https://gist.github.com/UnumIDMachine/146a0a428c683b756efd8240b31a4678) to receive signed Subject credential requests and user DID information from Unum ID. Examples of this can be found in our Demo applications.
+
+#### Register Verifier
+Once the Server SDK is accessible and there is a persisted data store available, you can register a Verifier:
+
+1. Use the SDK's [registerVerifier](https://docs.unumid.co/server-sdk#registerverifier) method with your respective API Key.
+
+```typescript title="Example registerVerifier"
+const response = await registerVerifier('0Hner7ibF/aHWLBvUyY4iDJ1xymbef0lzMxiS0eTGoS=', 'https://api.acme.com');
+```
+
+2. The resultant private signing and encryption key need to be persisted along with the DID.
+
+3. Create the `/presentation` endpoint adhering to the OpenApi [specification](https://gist.github.com/UnumIDMachine/a2d71f12b0596a62c9dcc4de7a255f4f) for receiving encrypted Presentation data from our Identity Engine cloud. Examples of this can be found in our Demo applications.
+
+## Issue Credentials
+Once you have registered your Issuer, have stored the resultant private signing and encryption keys along with the DID, and have the `/userCredentialRequests` you can issue credentials to Unum ID users. However users must also have a DID and key pairs to properly receive (and eventually share) encrypted credentials. They need to have their Unum ID Wallet setup. To get associate a user with a DID and prompt them to create a wallet you will need to:
+
+### Associating Users with Unum ID DIDs
+1. Create and persist a unique, short-lived, one-time-use `userCode` along side your User Entity.
+
+2. Provide the userCode value as a query param along with your Issuer DID to https://wallet.unumid.co/authenticate. For example:
+
+```
+https://wallet.unumid.co/authenticate?userCode=f85fc85b-7467-4b3f-8581-f138d8b4798g&issuer=did:unum:8b642752-aa85-491a-80d3-cd6c0ef9426n
+```
+
+3. This will prompt the individual to verify their email address, perform a biometric, and create a wallet. The result of this will be a call back to your provided issuer URL on the /userCredentialRequests endpoint with the `userDidAssociation` attribute populated with the `userCode` provided along with newly created `DID`.
+
+4. Store the associated `DID` in the callback along side your User entity. The used `userCode` attribute should be deleted as well.
+
+### Giving Users Credentials
+1. Now that the User has a DID you can use the SDK's [issueCredentials](https://docs.unumid.co/server-sdk#issuecredentials) method to issue credentials to the User. For example: 
+
+```typescript title="Example issueCredentials"
+const result: UnumDto<CredentialPb> = await issueCredentials(
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJ1dWlkIjoiODg1ZDQxZjktYWFiNS00YTQ1LWE2ZTUtYWY1NjM1YjlkNGI5IiwiZGlkIjpudWxsLCJlbWFpbCI6InJheSs4MDAwQHVudW1pZC5jbyIsImlhdCI6MTY1NDMwODUxNCwiZXhwIjoxNjYyOTQ4NTE0LCJhdWQiOiJsb2NhbGhvc3QiLCJpc3MiOiJmZWF0aGVycyIsInN1YiI6Ijg4NWQ0MWY5LWFhYjUtNGE0NS1hNmU1LWFmNTYzNWI5ZDRiOSIsImp0aSI6ImJjOTNjNGMyLTg5NDQtNDMxYS1iZTY5LTQ2ZjBjNDA2MjBjYSJ9.zS5ZWBxjotHpuBHUN3pDn8J8ygDFYGD3ASmJVYSt7Wc',
+      'did:unum:8b642752-aa85-491a-80d3-cd6c0ef9426n',
+      'did:unum:a0cd2e20-5f3e-423c-8382-afc722eaca9e',
+      [{
+          'type': 'SsnCredential',
+          'ssn': '123-45-5678
+      }],
+      '-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgw7wRQL1EUsLk08auyjhlHV0atw0wqQGjtP3wkAIz8uChRANCAARfUK8OjrArOokLQau9W3siHlxxtt9/FGjdiiL1YM8PqHqhmgscc6oSdUUKfA/HZaf9m2yEQqQPyoFR1R16Ck/8\n-----END PRIVATE KEY-----'
+    );
+```

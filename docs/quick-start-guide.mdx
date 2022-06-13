@@ -19,7 +19,7 @@ The Unum ID Dashboard is a tiered permissions, self-service portal where one can
 
 2. In order to sign up to use the dashboard you will need to create an Unum ID Wallet account. Initiate the sign up flow by scanning the QR code found on the login page with your mobile device.
 
-3. After creating an Unum ID Wallet account you can use it to login into the dashboard by scanning the QR code again and completing the presentation share prompts. 
+3. After creating an Unum ID Wallet account the presentation share prompts will appear. Accept the presentation share prompt.
 
 ## API Keys
 Once you have access to the Dashboard you can create and manage Issuer and Verifier API Keys. To create an API Key:
@@ -56,7 +56,7 @@ Once the Server SDK is accessible and there is a persisted data store available,
 const response = await registerIssuer('U7nbHmEpmZuRZMTA2ItFltan64SGKoDLYn7cMnpe4w2=', 'https://api.acme.com');
 ```
 
-2. The resultant private signing and encryption key need to be persisted along with the DID.
+2. The resultant private signing and encryption key need to be persisted along with the DID and authorization token.
 
 3. Create the `/userCredentialRequests` endpoint adhering to the OpenApi [specification](https://gist.github.com/UnumIDMachine/146a0a428c683b756efd8240b31a4678) to receive signed <Tip type="subject"/> credential requests and user <Tip type="DID"/> information from Unum ID. Examples of this can be found in our Demo applications.
 
@@ -69,7 +69,7 @@ Once the Server SDK is accessible and there is a persisted data store available,
 const response = await registerVerifier('0Hner7ibF/aHWLBvUyY4iDJ1xymbef0lzMxiS0eTGoS=', 'https://api.acme.com');
 ```
 
-2. The resultant private signing and encryption key need to be persisted along with the DID.
+2. The resultant private signing and encryption key need to be persisted along with the DID and authorization token.
 
 3. Create the `/presentation` endpoint adhering to the OpenApi [specification](https://gist.github.com/UnumIDMachine/a2d71f12b0596a62c9dcc4de7a255f4f) for receiving encrypted <Tip type="presentation"/> data from our Identity Engine cloud. Examples of this can be found in our Demo applications.
 
@@ -106,10 +106,26 @@ const result: UnumDto<CredentialPb> = await issueCredentials(
 ```
 
 ## Requesting Credentials
-Once you have registered a Verifier, you can make a request for credentials. There is no requirement to issue Credential in order to request credentials. 
+Once you have registered a Verifier, you can make a request for credentials. There is no requirement to issue Credential in order to request credentials. To request credentials:
 
-### React
+1. Use the Server SDK's [sendRequest](https://docs.unumid.co/server-sdk#sendrequest) method along with the Verifier authorization token to create a request for credentials.
 
-1. If using React, install the [Web SDK](https://github.com/UnumID/web-sdk-react) React [module](npm install @unumid/web-sdk-react), `npm install @unumid/web-sdk-react`.
+```typescript title="Example sendRequest"
+const response = await sendRequest(
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoidmVyaWZpZXIiLCJ1dWlkIjoiNWJmZTZkNzktMzdkNy00ODNiLTgyZGMtYzZhYWJhMjUzOTE2IiwiZGlkIjoiZGlkOnVudW06ZDdhZDczMWUtNzBkNy00MzQxLWJlNGQtM2U3ZWIwNmRmNzZlIiwiZXhwIjoxNjQzMTc0NjM4Ljc4NCwiaWF0IjoxNjQzMTc0NjcyfQ.WLNlP-A_8DjTvmmKt6z8CfD6whh5aQHIYgT9nYjuPn0',
+    'did:unum:d7ad731e-70d7-4341-be4d-3e7eb06df76e',
+    [
+        {
+            'type':'EmailCredential',
+            'issuers': [
+                'did:unum:8b642752-aa85-491a-80d3-cd6c0ef9426n'
+            ], 
+            'required': true
+        }
+    ],
+    '-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgw7wRQL1EUsLk08auyjhlHV0atw0wqQGjtP3wkAIz8uChRANCAARfUK8OjrArOokLQau9W3siHlxxtt9/FGjdiiL1YM8PqHqhmgscc6oSdUUKfA/HZaf9m2yEQqQPyoFR1R16Ck/8\n-----END PRIVATE KEY-----',
+    '7a1b0e37-efda-4b92-873b-ad7a8491175d'
+);
+```
 
-2. Use to create and display Presentation Requests.
+2. Direct the user to the response's `deeplink` URL for them to use the Unum ID Wallet to respond to the request and present their credentials.

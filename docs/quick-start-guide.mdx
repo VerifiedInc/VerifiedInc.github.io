@@ -30,14 +30,14 @@ Using the Dashboard, you can create and manage issuer and verifier API keys. To 
 After creating an issuer or verifier API key, you should use it with the [Server SDK](https://github.com/UnumID/server-sdk-typescript) to register the issuer or verifier entity. This registration must be done on your server, not Unum ID's, because it involves generate private keys, which only your organization should ever access. You should store these keys securely in your own persisted data store. To register an issuer or verifier:
 
 ### Node.js
-1. If using Node.js, install the SDK [module](https://www.npmjs.com/package/@unumid/server-sdk) using `npm i @unumid/server-sdk`.
+1. **If using Node.js, install the SDK [module](https://www.npmjs.com/package/@unumid/server-sdk) using `npm i @unumid/server-sdk`.**
 
 ### Other Runtime Languages 
 If using a different runtime language, you can use the SDK via HTTP. To deploy the [Issuer-Verifier](https://github.com/UnumID/issuer-verifier-app) HTTP wrapper project:
 
-1. Go to the open source Issuer-Verifier Github [repo](https://github.com/UnumID/issuer-verifier-app).
+1. **Go to the open source Issuer-Verifier Github [repo](https://github.com/UnumID/issuer-verifier-app).**
 
-2. Pull the project and deploy it along side your other apps using whatever method you are most comfortable with. The project contains a Dockerfile and as well as a CircleCI CD config file for automated deployments.
+2. **Pull the project and deploy it along side your other apps using whatever method you are most comfortable with.** The project contains a Dockerfile and as well as a CircleCI CD config file for automated deployments.
 
 *Coming Soon: Publicly accessible docker image repository.*
 
@@ -48,7 +48,7 @@ An example demo project that interfaces with the SDK over HTTP is the [Developer
 #### Register Issuer
 Once the Server SDK is accessible and there is a persisted data store available, you can register an issuer:
 
-1. **Use the module's [`registerIssuer`](https://docs.unumid.co/server-sdk#registerissuer) method with your respective API key.**
+1. **Use the SDK's [`registerIssuer`](https://docs.unumid.co/server-sdk#registerissuer) method with your respective API key.**
 
 ```typescript title="Example registerIssuer"
 const response = await registerIssuer('U7nbHmEpmZuRZMTA2ItFltan64SGKoDLYn7cMnpe4w2=', 'https://api.acme.com');
@@ -85,7 +85,7 @@ https://wallet.unumid.co/authenticate?userCode=f85fc85b-7467-4b3f-8581-f138d8b47
 
 This will prompt the user to input and verify their email and pass a biometric check. When they do so, the Unum ID Wallet will call your issuer URL on the `/userCredentialRequests` endpoint with the `userDidAssociation` attribute populated with the `userCode` and the newly created user `DID`.
 
-3. Store the user `DID` from the callback response on your user entity. The `userCode` attribute you created in step (1) should be deleted from the user entity at this point.
+3. **Store the user `DID` from the callback response on your user entity.** The `userCode` attribute you created in step (1) should be deleted from the user entity at this point.
 
 ### Giving Users Credentials
 1. **Use the Server SDK's [`issueCredentials`](https://docs.unumid.co/server-sdk#issuecredentials) method to issue credentials to the user.** For example: 
@@ -106,7 +106,7 @@ const result: UnumDto<CredentialPb> = await issueCredentials(
 ## Requesting Credentials
 Once you have registered a verifier, you can make a presentation <Tip type="request"/>. (There is no requirement to issue credentials in order to make such a request.) To make a request:
 
-1. Use the Server SDK's [`sendRequest`](https://docs.unumid.co/server-sdk#sendrequest) method along with your verifier authorization token.
+1. **Use the Server SDK's [`sendRequest`](https://docs.unumid.co/server-sdk#sendrequest) method along with your verifier authorization token.**
 
 ```typescript title="Example sendRequest"
 const response = await sendRequest(
@@ -126,4 +126,4 @@ const response = await sendRequest(
 );
 ```
 
-2. Direct the user to the response's `deeplink` URL for them to use the Unum ID Wallet to respond to the request by sharing their data.
+2. **Direct the user to the response's `deeplink` URL for them to use the Unum ID Wallet to respond to the request by sharing their data.**

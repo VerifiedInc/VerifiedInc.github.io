@@ -448,7 +448,7 @@ The response body consists of enriched information regarding entities referenced
 "verifier": string, // your verifier DID
 "credentialRequests": CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.
 "signingPrivateKey": string, // your verifier signing private key
-"holderAppUuid": string, // identifies mobile app subjects will share presentations from
+"holderAppUuid"?: string, // (optional) identifies mobile app subjects will share presentations from. If not present then defaults the Unum ID Wallet app, which is the recommend holder to use.
 "expiresAt"?: string, // (optional) when PresentationRequest will no longer be valid (ISO 8601 date/time). Default is 10 minutes after creation.
 "metadata"?: object // (optional) any additional data to include in PresentationRequest
 ```

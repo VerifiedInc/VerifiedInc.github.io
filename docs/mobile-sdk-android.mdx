@@ -75,8 +75,36 @@ android {
 In the app level build.gradle add the reference to the SDK
 
 ```groovy
-implementation "id.unum:androidsdk:1.2.0"
+implementation "id.unum:androidsdk:1.7.45"
 ```
+
+### Configuration
+
+The Android SDK has the ability for some aspects of its functionality to be customized to the client application. The following preferences can be set at a global level for the SDK.
+- `useFullScreenDialog` :  If the SDK handles showing a presentation request, should it be shown in a system dialog or a full screen presentation.
+- `returnPresentationDetails` :  Should the presentation request be handled by the client application. This would allow the client application to show a custom UI for presentation requests.
+
+<Tabs
+    groupId="languages"
+    defaultValue="kotlin"
+    values={[
+        {label: 'Kotlin', value: 'kotlin'},
+        {label: 'Java', value: 'java'}
+    ]}>
+<TabItem value="kotlin">
+
+```kotlin
+UnumId.configure(UnumSDKConfig(useFullScreenDialog = true, returnPresentationDetails = false))
+```
+
+</TabItem>
+<TabItem value="java">
+
+```java
+UnumId.configure(new UnumSDKConfig(true, false));
+```
+</TabItem>
+</Tabs>
 
 ### Initialization
 
@@ -162,7 +190,7 @@ The initialization process involves creating private keys for the user using the
 
 ### Deep Links
 
-In the context of Unum ID, a **deep link** is a URL that opens a specific <Tip type="holder app"/>. For example, a link that opens the ACME Bank mobile app might look like this:
+In the context of Unum ID, a **deep link** is a URL that opens a specific <Tip type="holder app"/>. For example, a link that opens the ACME mobile app might look like this:
 
 ```
 unumid://acme/presentationRequest/88d37012-f83b-453a-a1f1-d4a1bcf86aa3
@@ -195,6 +223,28 @@ The SDK will do the following based on the user's action. If the user clicks:
 - **"Yes":** the SDK will send a <Tip type="presentation"/> (of the requested <Tip type="credentiaal">credentials</Tip>) to the company that made the request.
 - **"No":** the SDK will send an empty presentation that indicates that the user declined the request.
 - **"Something's wrong...":** the SDK will flag the request as suspicious.
+
+### Event Listener
+
+In the case that the client application would like to be responsible to showing a custom UI for presentation requests, the
+`UnumEventLister` should be set by the client application. This will allow the client application to listen for SDK events.
+Events will be sent to the client application with a `EventType` and a `JSON` payload.
+
+To set the listen in the SDK call:
+
+```kotlin
+UnumID.setEventListener(listener: UnumEventListener)
+```
+### Presentation Response
+
+When the client application is handling the UI for a presentation request, the selected results for the request can be sent
+to the SDK with `onPresentationResponse`. This should include an enum of the response (Accept, Decline, FLag), and the original JSON payload. However,
+the payload can be modified by the client application to only include selected credentials in the case that some credentials are optional, or there are
+multiple values for same credential type.
+
+```kotlin
+UnumID.onPresentationResponse(responseType: PresentationResponse, json: String)
+```
 
 ### QR Code Scanner
 

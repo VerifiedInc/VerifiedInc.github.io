@@ -59,6 +59,16 @@ The SDK needs access to the current view controller to show system alerts to the
 UnumPresenterHelper.currentViewController = viewController
 ```
 
+### Configuration
+
+The Android SDK has the ability for some aspects of its functionality to be customized to the client application. The following preferences can be set at a global level for the SDK.
+- `useFullScreenDialog` :  If the SDK handles showing a presentation request, should it be shown in a system dialog or a full screen presentation.
+- `returnPresentationDetails` :  Should the presentation request be handled by the client application. This would allow the client application to show a custom UI for presentation requests.
+
+```swift
+UnumId.configure(UnumSDKConfig(useFullScreenDialog = true, returnPresentationDetails = false))
+```
+
 ### Initialization
 
 You should initialize the SDK when the app starts up. This will ensure the SDK is set up properly. 
@@ -127,6 +137,30 @@ func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>)
 ```
 
 When it receives a deep link, the SDK will display a system alert, asking the user how they want to respond to the <Tip type="request"/> (that the deep link references).
+
+
+### Event Listener
+
+In the case that the client application would like to be responsible to showing a custom UI for presentation requests, the
+`UnumEventLister` should be set by the client application. This will allow the client application to listen for SDK events.
+Events will be sent to the client application with a `EventType` and a `JSON` payload.
+
+To set the listen in the SDK call:
+
+```swift
+UnumID.setEventListener(listener: UnumEventListener)
+```
+### Presentation Response
+
+When the client application is handling the UI for a presentation request, the selected results for the request can be sent
+to the SDK with `onPresentationResponse`. This should include an enum of the response (Accept, Decline, FLag), and the original JSON payload. However,
+the payload can be modified by the client application to only include selected credentials in the case that some credentials are optional, or there are
+multiple values for same credential type.
+
+```swift
+UnumID.onPresentationResponse(responseType: PresentationResponse, json: String)
+```
+
 
 ### QR Code Scanner
 

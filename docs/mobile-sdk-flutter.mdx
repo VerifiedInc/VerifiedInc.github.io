@@ -77,6 +77,7 @@ import 'package:unumidflutter/unumidflutter.dart';
 Unumidflutter.handleLink("deepLinkUri");
 ```
 
+
 ### SDK QR Code Scanner
 
 Used to scan a QR code using the build in scanner. If you would like to use a custom scanner, simple send the received url to the handleLink api.
@@ -95,6 +96,37 @@ Turn on SDK Logging
 import 'package:unumidflutter/unumidflutter.dart';
 
 Unumidflutter.turnOnLogging();
+```
+
+### SDK Logout
+
+Log the current user out of the SDK.
+
+```dart
+import 'package:unumidflutter/unumidflutter.dart';
+
+Unumidflutter.logout();
+```
+
+### SDK Event Listener
+
+If the client application would like to be notified of SDK events (like presentation requests), then the `FlutterEventLister` can be set.
+
+```dart
+import 'package:unumidflutter/unumidflutter.dart';
+
+Unumidflutter.setupEventListener(FlutterEventListener listener);
+```
+
+### SDK Presentation Response
+
+If the client application is handling presentation requests with a custom UI, then the response can be sent back to the SDK with `handlePresentationResponse`.
+This should include an enum of the response (Accept, Decline, FLag), and the original JSON payload. However, the payload can be modified by the client application to only include selected credentials in the case that some credentials are optional, or there are multiple values for same credential type.
+
+```dart
+import 'package:unumidflutter/unumidflutter.dart';
+
+Unumidflutter.handlePresentationResponse(String response, String json);
 ```
 
 ## Handling Multiple Users

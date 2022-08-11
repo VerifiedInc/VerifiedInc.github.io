@@ -40,7 +40,7 @@ jobs:
       - name: Release to GitHub Pages
         env:
           USE_SSH: true
-          CURRENT_BRANCH: master
+          DEPLOYMENT_BRANCH: master
           GIT_USER: git
         run: |
           git config --global user.email "actions@github.com"

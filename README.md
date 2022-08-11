@@ -13,15 +13,17 @@ These docs are built using [Docusaurus](https://v2.docusaurus.io/docs/) (v2), de
 [Docusaurus](https://v2.docusaurus.io/docs/) is a Facebook open source project that makes creating documentation easy. The result is a React app displaying GitHub flavored Markdown. A basic usage guide is currently at [docs.unumid.co](https://docs.unumid.co/) showing some of the nice features like live code editors. Because it's React based, we may be able to leverage some of our existing demo content (written in React) right in the documentation itself, which would be cool.
 
 ### Installation
-
 ```console
-yarn install
+npm install
 ```
+
+#### Requirements
+Node version 16.14+, latest minimum version can be found [here](https://docusaurus.io/docs/installation#requirements). It is recommended to use NVM to install and use different Node versions. For most of our projects are still using a super old v14 so better to only bump to v16 for this project temporarily until we get most of our other projects updated.
 
 ### Local Development
 
 ```console
-yarn start
+npm run start
 ```
 
 This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
@@ -29,7 +31,7 @@ This command starts a local development server and open up a browser window. Mos
 ### Build
 
 ```console
-yarn build
+npm run build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
@@ -41,7 +43,6 @@ This command generates static content into the `build` directory and can be serv
 ```console
 GIT_USER=<Your GitHub username> DEPLOYMENT_BRANCH=private USE_SSH=true yarn deploy
 ```
-If you don't include `DEPLOYMENT_BRANCH`, it defaults to master. 
 
 However, you should **not** deploy from your local machine. There is now a CI job using Github Actions which will auto deploy when a tag with a preceding `v` is pushed to any branch. By convention we have been using the `dev` branch as the source of truth. That said, `v` tags should really only be pushed to `dev` branch. This triggers a "build" version of the docs that is auto committed to the `master` branch.
 

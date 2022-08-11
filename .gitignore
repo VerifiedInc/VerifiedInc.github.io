@@ -22,3 +22,5 @@ yarn-error.log*
 .idea/modules.xml
 .idea/UnumID.github.io.iml
 .idea/vcs.xml
+
+.vscode/*

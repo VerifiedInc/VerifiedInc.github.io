@@ -54,7 +54,7 @@ Once the Server SDK is accessible and there is a persisted data store available,
 const response = await registerIssuer('U7nbHmEpmZuRZMTA2ItFltan64SGKoDLYn7cMnpe4w2=', 'https://api.acme.com');
 ```
 
-2. **Securely store the private signing and encryption keys this returns, along with the <Tip type="DID"/> and authorization token.**
+2. **Securely store the private signing and encryption keys this returns, along with the <Tip type="DID"/>, key ids, and authorization token.**
 
 3. **Create a `/userCredentialRequests` endpoint, adhering to our OpenApi [specification](https://gist.github.com/UnumIDMachine/146a0a428c683b756efd8240b31a4678).** This will allow you to receive signed <Tip type="subject"/> credential requests and user DID information from Unum ID. Our demo applications show examples of this.
 

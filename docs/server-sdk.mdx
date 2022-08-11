@@ -81,7 +81,7 @@ As a customer, you can register as many issuers as you like (or none at all), de
 The optional [VersionInfo](https://docs.unumid.co/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how a <a href="/terminology#subject"><Tip type="subject"/></a>'s [CredentialRequests](https://docs.unumid.co/types/interfaces/subjectcredentialrequests.html) should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Unum ID [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used.
 
 :::important
-You need to store the <Tip type="DID"/> (`did`) and encryption and signing key pairs (`keys`) that this returns. You'll need these to issue credentials to users.
+You need to store the <Tip type="DID"/> (`did`) and values in encryption and signing key pairs (`keys`) object that this returns. You'll need these to issue credentials to users. 
 :::
 
 :::danger
@@ -110,12 +110,14 @@ The DID and public keys are nonsensitive, but **you should store the private key
   // highlight-start
   "keys": {
     "signing": {
-      "privateKey": string, // you use this to create signatures on credentials
-      "publicKey": string, // subjects and verifiers use this to verify your signatures on credentials
+      "id": string, // this is very helpful to identify the key pair. You need to store this.
+      "privateKey": string, // you use this to create signatures on credentials You need to store this.
+      "publicKey": string, // subjects and verifiers use this to verify your signatures on credentials. This is not so necessary to store because is publicly accessible.
     }
     "encryption": {
-      "privateKey": string, // could be used to decrypted data, however the encryption key pair is not currently used by issuers
-      "publicKey": string, // could be used for others to encrypt data, however the encryption key pair is not currently used by issuers
+      "id": string, // this is very helpful to identify the key pair. You need to store this.
+      "privateKey": string, // used to decrypted data. You need to store this.
+      "publicKey": string, // used for others to encrypt data. This is not so necessary to store because is publicly accessible.
     }
   }
   // highlight-end
@@ -354,7 +356,7 @@ As a customer, you can register as many verifiers as you like (or none at all), 
 The optional [VersionInfo](https://docs.unumid.co/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how encrypted <a href="/terminology#presentation"><Tip type="presentation"/></a>s from Unum ID's SaaS, which originate from the Mobile SDK, should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Unum ID [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used. 
 
 :::important
-You need to store the <Tip type="DID"/> (`did`) and encryption and signing key pairs (`keys`) that this returns. You'll need these to make requests and verify presentations.
+You need to store the <Tip type="DID"/> (`did`) and values in encryption and signing key pairs (`keys`) object that this returns. You'll need these to make requests and verify presentations.
 :::
 
 :::danger
@@ -383,9 +385,11 @@ The DID and public keys are nonsensitive, but **you should store the private key
   // highlight-start
   "keys": {
     "signing": {
+      "id": string, // this is very helpful to identify the key pair. You need to store this.
       "privateKey": string, // you use this to create signatures on requests
       "publicKey": string, // subjects use this to verify your signatures on requests
     }, "encryption": {
+      "id": string, // this is very helpful to identify the key pair. You need to store this.
       "privateKey": string, // you use this to decrypt presentations you receive from subjects
       "publicKey": string, // subjects use this to encrypt presentations they send to you
     }

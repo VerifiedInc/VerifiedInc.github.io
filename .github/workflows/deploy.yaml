@@ -37,11 +37,6 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.GH_PAGES_DEPLOY }}
       
-      # ensure on dev branch, ref: https://stackoverflow.com/questions/59874409/trigger-github-workflow-only-if-pushed-to-specific-branch-and-tag-exists
-      - name: Exit if not pushing release tag on dev branch
-        if: endsWith(github.ref, 'dev') == false
-        run: exit -1
-      
       - name: Release to GitHub Pages
         env:
           USE_SSH: true

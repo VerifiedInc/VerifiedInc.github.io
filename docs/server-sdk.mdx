@@ -69,7 +69,8 @@ You can use the Server SDK to act as an <Tip type="issuer"/>, for example to iss
 Jump to:
 - [`registerIssuer`](#registerissuer)
 - [`issueCredentials`](#issuecredentials)
-- [`updateCredentialStatus`](#updatecredentialstatus)
+- [`updateCredentialStatuses`](#updatecredentialstatuses)
+- [`revokeAllCredentials`](#revokeallcredentials)
 
 ---
 
@@ -143,7 +144,7 @@ You can optionally provide:
 5. expiration date
 
 :::note
-An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it (see [`updateCredentialStatus`](#updatecredentialstatus)).
+An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it (see [`updateCredentialStatuses`](#updatecredentialstatuses)).
 :::
 
 Each issued credential contains a credential `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
@@ -195,20 +196,20 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 
 ---
 
-### `updateCredentialStatus`
+### `updateCredentialStatuses`
 > Update a <Tip type="credential"/>'s status (i.e. make it invalid).
 
-You need to provide the credential `id` (which is [`issueCredentials`](#issuecredentials) returns per <Tip type="credential">credential</Tip>) and a [CredentialStatusOptions](https://docs.unumid.co/types/modules.html#credentialstatusoptions) `status`. Currently there are only two valid statuses: "valid" and "revoked".
+You need to provide the credential id list, `credentialIds`, (which [`issueCredentials`](#issuecredentials) returns per <Tip type="credential">credential</Tip>) and a [CredentialStatusOptions](https://docs.unumid.co/types/modules.html#credentialstatusoptions) `status`. Currently there are only two valid statuses: "valid" and "revoked".
 
 :::note
-As noted in [`issueCredentials`](#issuecredentials), **we recommend storing the each entire credential, indexed on their credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
+As noted in [`issueCredentials`](#issuecredentials), **we recommend storing at least the credential type along with the subject associated with it, if not each entire credential, indexed on their credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
 :::
 
 #### Parameters
 ```typescript
 {
   "authToken": string, // your auth token
-  "credentialId": string, // id of the credential
+  "credentialIds": string[], // ids of the credentials to update
   "status": 'valid' | 'revoked' // status to update the credential to (defaults to 'revoked')
 }
 ```

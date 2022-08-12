@@ -426,6 +426,7 @@ Jump to:
 - [`verifyPresentation`](#verifypresentation)
 - [`sendSms`](#sendsms)
 - [`sendEmail`](#sendemail)
+- [`checkCredentialStatuses`](#checkcredentialstatuses)
 
 ---
 
@@ -693,7 +694,7 @@ If unsuccessful, an exception will be thrown.
 ```
 ---
 ### `checkCredentialStatuses`
-Used to check the status of individual credentials. 
+Used to check the status of individual credentials. This done on the Verifier's behalf in [`verifyPresentation`](#verifypresentation), however exposing for extra utility.
 
 The `status` attribute of the response's [CredentialStatusInfo](https://docs.unumid.co/types/interfaces/credentialstatusinfo.html) is of type [CredentialStatusOptions](https://docs.unumid.co/types/modules.html#credentialstatusoptions). Currently the only valid status are: verified and revoked.
 

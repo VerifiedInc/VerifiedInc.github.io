@@ -42,12 +42,11 @@ Device biometrics are typically *aliases* for passcodes (or similar options like
 
 ### Installation
 
-When you register a <Tip type="holder app"/>, we will send you a GitHub personal access token. Create a github.properties file within in the root
+When you register a <Tip type="holder app"/>, we will send you a GitHub personal access token. Create a github.properties file in the root of your project.
 
 In the app level build.gradle add your GitHub username, personal access token to the repositories block inside of the android block.
-It is suggested to add this file to .gitignore so it is not committed to your repo.
-Add properties gpr.usr=GITHUB_USERID and gpr.key=PERSONAL_ACCESS_TOKEN
-Replace GITHUB_USERID with personal / organization Github User ID and PERSONAL_ACCESS_TOKEN with the token sent to you.
+It is suggested to add this file to .gitignore so it is not committed to your repo. Add properties `gpr.usr=GITHUB_USERID` and `gpr.key=PERSONAL_ACCESS_TOKEN`
+Replace `GITHUB_USERID` with personal / organization Github User ID and `PERSONAL_ACCESS_TOKEN` with the token sent to you.
 
 ```groovy
 def githubProperties = new Properties()

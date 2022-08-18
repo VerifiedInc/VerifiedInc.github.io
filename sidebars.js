@@ -44,8 +44,10 @@ module.exports = {
           collapsed: false,
           items: [
             'mobile-sdk-overview',
-            'mobile-sdk-android', 
+            'mobile-sdk-android',
+            'mobile-webwallet-sdk-android',
             'mobile-sdk-ios',
+            'mobile-webwallet-sdk-ios',
             'mobile-sdk-flutter',
           ],
         },

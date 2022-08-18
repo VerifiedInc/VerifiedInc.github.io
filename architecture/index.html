@@ -5,26 +5,26 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="generator" content="Docusaurus v2.0.1">
 <title data-rh="true">Architecture | Unum ID Docs</title><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.unumid.co/architecture"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Architecture | Unum ID Docs"><meta data-rh="true" name="description" content="This section provides a brief overview of Unum ID&#x27;s architecture and how the various components are used."><meta data-rh="true" property="og:description" content="This section provides a brief overview of Unum ID&#x27;s architecture and how the various components are used."><link data-rh="true" rel="icon" href="/img/favicon.png"><link data-rh="true" rel="canonical" href="https://docs.unumid.co/architecture"><link data-rh="true" rel="alternate" href="https://docs.unumid.co/architecture" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.unumid.co/architecture" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.39b553c6.css">
-<link rel="preload" href="/assets/js/runtime~main.fe151a09.js" as="script">
-<link rel="preload" href="/assets/js/main.793f110d.js" as="script">
+<link rel="preload" href="/assets/js/runtime~main.fccf0c93.js" as="script">
+<link rel="preload" href="/assets/js/main.8575b07a.js" as="script">
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){var t=null;try{t=localStorage.getItem("theme")}catch(t){}return t}();t(null!==e?e:"light")}()</script><div id="__docusaurus">
-<div role="region"><a href="#" class="skipToContent_fXgn">Skip to main content</a></div><nav class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Navigation bar toggle" class="navbar__toggle clean-btn" type="button" tabindex="0"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo.png" alt="Unum ID Logo" class="themedImage_ToTc themedImage--light_HNdA"><img src="/img/logo_dark.png" alt="Unum ID Logo" class="themedImage_ToTc themedImage--dark_i4oU"></div><b class="navbar__title text--truncate">Docs</b></a></div><div class="navbar__items navbar__items--right"><a href="https://www.Unum.ID" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Home</a><a href="https://github.com/UnumID" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub</a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="searchBox_ZlJk"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div class="main-wrapper mainWrapper_z2l0 docsWrapper_BCFX"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docPage__5DB"><aside class="theme-doc-sidebar-container docSidebarContainer_b6E3"><div class="sidebar_njMd"><nav class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" aria-expanded="true" href="/">Introduction</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/">About Unum ID</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/terminology">Terminology</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/architecture">Architecture</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/deployment-overview">Deployment Overview</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/privacy-and-security">Privacy and Security</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="true" href="/quick-start-guide">Guides</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/quick-start-guide">Quick Start Guide</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="true" href="/server-sdk">Components</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/server-sdk">Server SDK</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="true" tabindex="0" href="/mobile-sdk-overview">Mobile SDK</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/mobile-sdk-overview">Overview</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/mobile-sdk-android">Android</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/mobile-sdk-ios">iOS</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/mobile-sdk-flutter">Flutter</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="true" tabindex="0" href="/web-sdk-overview">Web SDK</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/web-sdk-overview">Overview</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/web-sdk-react">React</a></li></ul></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="true" href="/developer-demo">Demos</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/developer-demo">Developer Demo</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/acme-demo">ACME Demo</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/hooli-demo">Hooli Demo</a></li></ul></li></ul></nav></div></aside><main class="docMainContainer_gTbr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_OVgt"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Introduction</span><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Architecture</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Architecture</h1></header><p>This section provides a brief overview of Unum ID&#x27;s architecture and how the various components are used.</p><h2 class="anchor anchorWithStickyNavbar_LWe7" id="components">Components<a class="hash-link" href="#components" title="Direct link to heading">​</a></h2><p>We provide several lightweight SDKs that you use to interact with our Identity Engine cloud.</p><p><img loading="lazy" src="/assets/images/architecture-a2005fb41ed8ffde70cba0d556fb2dca.png" width="1000" height="752" class="img_ev3q">
-<em><b>Architecture:</b> You use SDKs to interact with our Identity Engine cloud.</em></p><p>For more information on the Encrypted Domain shown in this diagram, see the <a href="/security">Security</a> section.</p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="mobile-sdk">Mobile SDK<a class="hash-link" href="#mobile-sdk" title="Direct link to heading">​</a></h3><p>The <a href="/mobile-sdk-overview">Mobile SDK</a> works behind the scenes in your company&#x27;s mobile app to securely store a user’s <span class="__react_component_tooltip tdd394a17-5b2a-4695-9731-73ed1c252de6 place-top type-dark allow_hover" id="b6e55d41-9568-493a-9ab6-da8334ff0a34" data-id="tooltip"><style aria-hidden="true">
-  	.tdd394a17-5b2a-4695-9731-73ed1c252de6 {
+<div role="region"><a href="#" class="skipToContent_fXgn">Skip to main content</a></div><nav class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Navigation bar toggle" class="navbar__toggle clean-btn" type="button" tabindex="0"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo.png" alt="Unum ID Logo" class="themedImage_ToTc themedImage--light_HNdA"><img src="/img/logo_dark.png" alt="Unum ID Logo" class="themedImage_ToTc themedImage--dark_i4oU"></div><b class="navbar__title text--truncate">Docs</b></a></div><div class="navbar__items navbar__items--right"><a href="https://www.Unum.ID" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Home</a><a href="https://github.com/UnumID" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub</a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="searchBox_ZlJk"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div class="main-wrapper mainWrapper_z2l0 docsWrapper_BCFX"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docPage__5DB"><aside class="theme-doc-sidebar-container docSidebarContainer_b6E3"><div class="sidebar_njMd"><nav class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" aria-expanded="true" href="/">Introduction</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/">About Unum ID</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/terminology">Terminology</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/architecture">Architecture</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/deployment-overview">Deployment Overview</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/privacy-and-security">Privacy and Security</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="true" href="/quick-start-guide">Guides</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/quick-start-guide">Quick Start Guide</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="true" href="/server-sdk">Components</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/server-sdk">Server SDK</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="true" tabindex="0" href="/mobile-sdk-overview">Mobile SDK</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/mobile-sdk-overview">Overview</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/mobile-sdk-android">Android</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/mobile-webwallet-sdk-android">Android WebWallet</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/mobile-sdk-ios">iOS</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/mobile-webwallet-sdk-ios">iOS WebWallet</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/mobile-sdk-flutter">Flutter</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="true" tabindex="0" href="/web-sdk-overview">Web SDK</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/web-sdk-overview">Overview</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/web-sdk-react">React</a></li></ul></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" aria-expanded="true" href="/developer-demo">Demos</a></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/developer-demo">Developer Demo</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/acme-demo">ACME Demo</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/hooli-demo">Hooli Demo</a></li></ul></li></ul></nav></div></aside><main class="docMainContainer_gTbr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_OVgt"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Introduction</span><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Architecture</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Architecture</h1></header><p>This section provides a brief overview of Unum ID&#x27;s architecture and how the various components are used.</p><h2 class="anchor anchorWithStickyNavbar_LWe7" id="components">Components<a class="hash-link" href="#components" title="Direct link to heading">​</a></h2><p>We provide several lightweight SDKs that you use to interact with our Identity Engine cloud.</p><p><img loading="lazy" src="/assets/images/architecture-a2005fb41ed8ffde70cba0d556fb2dca.png" width="1000" height="752" class="img_ev3q">
+<em><b>Architecture:</b> You use SDKs to interact with our Identity Engine cloud.</em></p><p>For more information on the Encrypted Domain shown in this diagram, see the <a href="/security">Security</a> section.</p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="mobile-sdk">Mobile SDK<a class="hash-link" href="#mobile-sdk" title="Direct link to heading">​</a></h3><p>The <a href="/mobile-sdk-overview">Mobile SDK</a> works behind the scenes in your company&#x27;s mobile app to securely store a user’s <span class="__react_component_tooltip t0c7bcfc3-820b-474b-b9fd-09b88bd62c90 place-top type-dark allow_hover" id="71c4cee6-a033-4514-8043-9fb15e89d7ed" data-id="tooltip"><style aria-hidden="true">
+  	.t0c7bcfc3-820b-474b-b9fd-09b88bd62c90 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.tdd394a17-5b2a-4695-9731-73ed1c252de6.place-top {
+  	.t0c7bcfc3-820b-474b-b9fd-09b88bd62c90.place-top {
         margin-top: -10px;
     }
-    .tdd394a17-5b2a-4695-9731-73ed1c252de6.place-top::before {
+    .t0c7bcfc3-820b-474b-b9fd-09b88bd62c90.place-top::before {
         border-top: 8px solid transparent;
     }
-    .tdd394a17-5b2a-4695-9731-73ed1c252de6.place-top::after {
+    .t0c7bcfc3-820b-474b-b9fd-09b88bd62c90.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -35,13 +35,13 @@
         border-top-width: 6px;
     }
 
-    .tdd394a17-5b2a-4695-9731-73ed1c252de6.place-bottom {
+    .t0c7bcfc3-820b-474b-b9fd-09b88bd62c90.place-bottom {
         margin-top: 10px;
     }
-    .tdd394a17-5b2a-4695-9731-73ed1c252de6.place-bottom::before {
+    .t0c7bcfc3-820b-474b-b9fd-09b88bd62c90.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .tdd394a17-5b2a-4695-9731-73ed1c252de6.place-bottom::after {
+    .t0c7bcfc3-820b-474b-b9fd-09b88bd62c90.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -52,13 +52,13 @@
         border-bottom-width: 6px;
     }
 
-    .tdd394a17-5b2a-4695-9731-73ed1c252de6.place-left {
+    .t0c7bcfc3-820b-474b-b9fd-09b88bd62c90.place-left {
         margin-left: -10px;
     }
-    .tdd394a17-5b2a-4695-9731-73ed1c252de6.place-left::before {
+    .t0c7bcfc3-820b-474b-b9fd-09b88bd62c90.place-left::before {
         border-left: 8px solid transparent;
     }
-    .tdd394a17-5b2a-4695-9731-73ed1c252de6.place-left::after {
+    .t0c7bcfc3-820b-474b-b9fd-09b88bd62c90.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -69,13 +69,13 @@
         border-left-width: 6px;
     }
 
-    .tdd394a17-5b2a-4695-9731-73ed1c252de6.place-right {
+    .t0c7bcfc3-820b-474b-b9fd-09b88bd62c90.place-right {
         margin-left: 10px;
     }
-    .tdd394a17-5b2a-4695-9731-73ed1c252de6.place-right::before {
+    .t0c7bcfc3-820b-474b-b9fd-09b88bd62c90.place-right::before {
         border-right: 8px solid transparent;
     }
-    .tdd394a17-5b2a-4695-9731-73ed1c252de6.place-right::after {
+    .t0c7bcfc3-820b-474b-b9fd-09b88bd62c90.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -85,20 +85,20 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company (i.e. created and sent to a user) and stored in the company&#x27;s app, on that user&#x27;s device.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291783" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291783" role="button">+ More...</span><div id="collapsible-content-1660348291783" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291783"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="b6e55d41-9568-493a-9ab6-da8334ff0a34">credentials</u>. It also lets a user respond to <span class="__react_component_tooltip t09258a4f-d0ea-4888-b56a-33a0d0964a58 place-top type-dark allow_hover" id="3b8abb9b-a0c0-4664-9000-78e8985d8d09" data-id="tooltip"><style aria-hidden="true">
-  	.t09258a4f-d0ea-4888-b56a-33a0d0964a58 {
+  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company (i.e. created and sent to a user) and stored in the company&#x27;s app, on that user&#x27;s device.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308155" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308155" role="button">+ More...</span><div id="collapsible-content-1660839308155" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308155"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="71c4cee6-a033-4514-8043-9fb15e89d7ed">credentials</u>. It also lets a user respond to <span class="__react_component_tooltip t1ea765de-5b4e-4b5c-8c51-919939d138f9 place-top type-dark allow_hover" id="f6380514-dd09-4832-b457-1c42ebd6b6ef" data-id="tooltip"><style aria-hidden="true">
+  	.t1ea765de-5b4e-4b5c-8c51-919939d138f9 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t09258a4f-d0ea-4888-b56a-33a0d0964a58.place-top {
+  	.t1ea765de-5b4e-4b5c-8c51-919939d138f9.place-top {
         margin-top: -10px;
     }
-    .t09258a4f-d0ea-4888-b56a-33a0d0964a58.place-top::before {
+    .t1ea765de-5b4e-4b5c-8c51-919939d138f9.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t09258a4f-d0ea-4888-b56a-33a0d0964a58.place-top::after {
+    .t1ea765de-5b4e-4b5c-8c51-919939d138f9.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -109,13 +109,13 @@
         border-top-width: 6px;
     }
 
-    .t09258a4f-d0ea-4888-b56a-33a0d0964a58.place-bottom {
+    .t1ea765de-5b4e-4b5c-8c51-919939d138f9.place-bottom {
         margin-top: 10px;
     }
-    .t09258a4f-d0ea-4888-b56a-33a0d0964a58.place-bottom::before {
+    .t1ea765de-5b4e-4b5c-8c51-919939d138f9.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t09258a4f-d0ea-4888-b56a-33a0d0964a58.place-bottom::after {
+    .t1ea765de-5b4e-4b5c-8c51-919939d138f9.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -126,13 +126,13 @@
         border-bottom-width: 6px;
     }
 
-    .t09258a4f-d0ea-4888-b56a-33a0d0964a58.place-left {
+    .t1ea765de-5b4e-4b5c-8c51-919939d138f9.place-left {
         margin-left: -10px;
     }
-    .t09258a4f-d0ea-4888-b56a-33a0d0964a58.place-left::before {
+    .t1ea765de-5b4e-4b5c-8c51-919939d138f9.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t09258a4f-d0ea-4888-b56a-33a0d0964a58.place-left::after {
+    .t1ea765de-5b4e-4b5c-8c51-919939d138f9.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -143,13 +143,13 @@
         border-left-width: 6px;
     }
 
-    .t09258a4f-d0ea-4888-b56a-33a0d0964a58.place-right {
+    .t1ea765de-5b4e-4b5c-8c51-919939d138f9.place-right {
         margin-left: 10px;
     }
-    .t09258a4f-d0ea-4888-b56a-33a0d0964a58.place-right::before {
+    .t1ea765de-5b4e-4b5c-8c51-919939d138f9.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t09258a4f-d0ea-4888-b56a-33a0d0964a58.place-right::after {
+    .t1ea765de-5b4e-4b5c-8c51-919939d138f9.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -159,20 +159,20 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It&#x27;s sent by a company to a user, who chooses whether to share a presentation in response.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291784" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291783" role="button">+ More...</span><div id="collapsible-content-1660348291783" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291784"><div class="Collapsible__contentInner"><div><b>Example:</b> Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank.</div><div><b>Components:</b> A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user&#x27;s app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="3b8abb9b-a0c0-4664-9000-78e8985d8d09">requests</u> and share <span class="__react_component_tooltip t6bb9b3c1-c4eb-4208-af77-44df46fc4391 place-top type-dark allow_hover" id="6658e6b9-7753-4c56-911c-c4f0b5ac0644" data-id="tooltip"><style aria-hidden="true">
-  	.t6bb9b3c1-c4eb-4208-af77-44df46fc4391 {
+  </style><div><b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It&#x27;s sent by a company to a user, who chooses whether to share a presentation in response.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308155" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308155" role="button">+ More...</span><div id="collapsible-content-1660839308155" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308155"><div class="Collapsible__contentInner"><div><b>Example:</b> Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank.</div><div><b>Components:</b> A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user&#x27;s app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="f6380514-dd09-4832-b457-1c42ebd6b6ef">requests</u> and share <span class="__react_component_tooltip tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3 place-top type-dark allow_hover" id="aeaee89c-90b6-41db-8ba5-76ca40078f0b" data-id="tooltip"><style aria-hidden="true">
+  	.tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t6bb9b3c1-c4eb-4208-af77-44df46fc4391.place-top {
+  	.tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3.place-top {
         margin-top: -10px;
     }
-    .t6bb9b3c1-c4eb-4208-af77-44df46fc4391.place-top::before {
+    .tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t6bb9b3c1-c4eb-4208-af77-44df46fc4391.place-top::after {
+    .tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -183,13 +183,13 @@
         border-top-width: 6px;
     }
 
-    .t6bb9b3c1-c4eb-4208-af77-44df46fc4391.place-bottom {
+    .tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3.place-bottom {
         margin-top: 10px;
     }
-    .t6bb9b3c1-c4eb-4208-af77-44df46fc4391.place-bottom::before {
+    .tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t6bb9b3c1-c4eb-4208-af77-44df46fc4391.place-bottom::after {
+    .tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -200,13 +200,13 @@
         border-bottom-width: 6px;
     }
 
-    .t6bb9b3c1-c4eb-4208-af77-44df46fc4391.place-left {
+    .tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3.place-left {
         margin-left: -10px;
     }
-    .t6bb9b3c1-c4eb-4208-af77-44df46fc4391.place-left::before {
+    .tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t6bb9b3c1-c4eb-4208-af77-44df46fc4391.place-left::after {
+    .tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -217,13 +217,13 @@
         border-left-width: 6px;
     }
 
-    .t6bb9b3c1-c4eb-4208-af77-44df46fc4391.place-right {
+    .tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3.place-right {
         margin-left: 10px;
     }
-    .t6bb9b3c1-c4eb-4208-af77-44df46fc4391.place-right::before {
+    .tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t6bb9b3c1-c4eb-4208-af77-44df46fc4391.place-right::after {
+    .tab2ae56f-d380-4c2d-9d5b-d3dc30cef2f3.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -233,21 +233,21 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#presentation">presentation</a> is a set of one or more <a href="/terminology#credential">credentials</a>.</b> It&#x27;s shared with (or <i>presented</i> to) a company by a user.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291784" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291784" role="button">+ More...</span><div id="collapsible-content-1660348291784" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291784"><div class="Collapsible__contentInner"><div><b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.</div><div><b>Components:</b> A user&#x27;s app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="6658e6b9-7753-4c56-911c-c4f0b5ac0644">presentations</u>.</p><ul><li><em>~480 KB (unminified)</em></li><li><strong>iOS:</strong> written in Swift, supports Swift and Objective-C apps,
-iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java apps, API Level 23+ (Android 6.0+)</li></ul><h3 class="anchor anchorWithStickyNavbar_LWe7" id="server-sdk">Server SDK<a class="hash-link" href="#server-sdk" title="Direct link to heading">​</a></h3><p>The <a href="/server-sdk">Server SDK</a> lets you issue <span class="__react_component_tooltip t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e place-top type-dark allow_hover" id="6a079c45-7f57-461c-ad2d-c4c3e2f3cbc3" data-id="tooltip"><style aria-hidden="true">
-  	.t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e {
+  </style><div><b>A <a href="/terminology#presentation">presentation</a> is a set of one or more <a href="/terminology#credential">credentials</a>.</b> It&#x27;s shared with (or <i>presented</i> to) a company by a user.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308155" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308155" role="button">+ More...</span><div id="collapsible-content-1660839308155" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308155"><div class="Collapsible__contentInner"><div><b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.</div><div><b>Components:</b> A user&#x27;s app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="aeaee89c-90b6-41db-8ba5-76ca40078f0b">presentations</u>.</p><ul><li><em>~480 KB (unminified)</em></li><li><strong>iOS:</strong> written in Swift, supports Swift and Objective-C apps,
+iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java apps, API Level 23+ (Android 6.0+)</li></ul><h3 class="anchor anchorWithStickyNavbar_LWe7" id="server-sdk">Server SDK<a class="hash-link" href="#server-sdk" title="Direct link to heading">​</a></h3><p>The <a href="/server-sdk">Server SDK</a> lets you issue <span class="__react_component_tooltip t2740f70d-733f-414f-b939-77d709f636f2 place-top type-dark allow_hover" id="e0cb56ac-7554-49f7-bf30-4e0955d8ec7b" data-id="tooltip"><style aria-hidden="true">
+  	.t2740f70d-733f-414f-b939-77d709f636f2 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e.place-top {
+  	.t2740f70d-733f-414f-b939-77d709f636f2.place-top {
         margin-top: -10px;
     }
-    .t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e.place-top::before {
+    .t2740f70d-733f-414f-b939-77d709f636f2.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e.place-top::after {
+    .t2740f70d-733f-414f-b939-77d709f636f2.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -258,13 +258,13 @@ iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java 
         border-top-width: 6px;
     }
 
-    .t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e.place-bottom {
+    .t2740f70d-733f-414f-b939-77d709f636f2.place-bottom {
         margin-top: 10px;
     }
-    .t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e.place-bottom::before {
+    .t2740f70d-733f-414f-b939-77d709f636f2.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e.place-bottom::after {
+    .t2740f70d-733f-414f-b939-77d709f636f2.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -275,13 +275,13 @@ iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java 
         border-bottom-width: 6px;
     }
 
-    .t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e.place-left {
+    .t2740f70d-733f-414f-b939-77d709f636f2.place-left {
         margin-left: -10px;
     }
-    .t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e.place-left::before {
+    .t2740f70d-733f-414f-b939-77d709f636f2.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e.place-left::after {
+    .t2740f70d-733f-414f-b939-77d709f636f2.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -292,13 +292,13 @@ iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java 
         border-left-width: 6px;
     }
 
-    .t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e.place-right {
+    .t2740f70d-733f-414f-b939-77d709f636f2.place-right {
         margin-left: 10px;
     }
-    .t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e.place-right::before {
+    .t2740f70d-733f-414f-b939-77d709f636f2.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t7e93a80a-b6b0-4ee1-95fb-fa47c26e599e.place-right::after {
+    .t2740f70d-733f-414f-b939-77d709f636f2.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -308,20 +308,20 @@ iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java 
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company (i.e. created and sent to a user) and stored in the company&#x27;s app, on that user&#x27;s device.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291785" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291785" role="button">+ More...</span><div id="collapsible-content-1660348291785" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291785"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="6a079c45-7f57-461c-ad2d-c4c3e2f3cbc3">credentials</u> to users and verify <span class="__react_component_tooltip te170bdf3-6b50-4ec2-b321-115b3fabd2a6 place-top type-dark allow_hover" id="f9ef05d3-04cc-48f6-abfd-aecd31658ce8" data-id="tooltip"><style aria-hidden="true">
-  	.te170bdf3-6b50-4ec2-b321-115b3fabd2a6 {
+  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company (i.e. created and sent to a user) and stored in the company&#x27;s app, on that user&#x27;s device.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308156" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308156" role="button">+ More...</span><div id="collapsible-content-1660839308156" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308156"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="e0cb56ac-7554-49f7-bf30-4e0955d8ec7b">credentials</u> to users and verify <span class="__react_component_tooltip t15ea36f9-9da1-4f87-ac0e-62fbe3a22434 place-top type-dark allow_hover" id="5096d904-e6e3-4fe4-8324-1953587836b7" data-id="tooltip"><style aria-hidden="true">
+  	.t15ea36f9-9da1-4f87-ac0e-62fbe3a22434 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.te170bdf3-6b50-4ec2-b321-115b3fabd2a6.place-top {
+  	.t15ea36f9-9da1-4f87-ac0e-62fbe3a22434.place-top {
         margin-top: -10px;
     }
-    .te170bdf3-6b50-4ec2-b321-115b3fabd2a6.place-top::before {
+    .t15ea36f9-9da1-4f87-ac0e-62fbe3a22434.place-top::before {
         border-top: 8px solid transparent;
     }
-    .te170bdf3-6b50-4ec2-b321-115b3fabd2a6.place-top::after {
+    .t15ea36f9-9da1-4f87-ac0e-62fbe3a22434.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -332,13 +332,13 @@ iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java 
         border-top-width: 6px;
     }
 
-    .te170bdf3-6b50-4ec2-b321-115b3fabd2a6.place-bottom {
+    .t15ea36f9-9da1-4f87-ac0e-62fbe3a22434.place-bottom {
         margin-top: 10px;
     }
-    .te170bdf3-6b50-4ec2-b321-115b3fabd2a6.place-bottom::before {
+    .t15ea36f9-9da1-4f87-ac0e-62fbe3a22434.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .te170bdf3-6b50-4ec2-b321-115b3fabd2a6.place-bottom::after {
+    .t15ea36f9-9da1-4f87-ac0e-62fbe3a22434.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -349,13 +349,13 @@ iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java 
         border-bottom-width: 6px;
     }
 
-    .te170bdf3-6b50-4ec2-b321-115b3fabd2a6.place-left {
+    .t15ea36f9-9da1-4f87-ac0e-62fbe3a22434.place-left {
         margin-left: -10px;
     }
-    .te170bdf3-6b50-4ec2-b321-115b3fabd2a6.place-left::before {
+    .t15ea36f9-9da1-4f87-ac0e-62fbe3a22434.place-left::before {
         border-left: 8px solid transparent;
     }
-    .te170bdf3-6b50-4ec2-b321-115b3fabd2a6.place-left::after {
+    .t15ea36f9-9da1-4f87-ac0e-62fbe3a22434.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -366,13 +366,13 @@ iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java 
         border-left-width: 6px;
     }
 
-    .te170bdf3-6b50-4ec2-b321-115b3fabd2a6.place-right {
+    .t15ea36f9-9da1-4f87-ac0e-62fbe3a22434.place-right {
         margin-left: 10px;
     }
-    .te170bdf3-6b50-4ec2-b321-115b3fabd2a6.place-right::before {
+    .t15ea36f9-9da1-4f87-ac0e-62fbe3a22434.place-right::before {
         border-right: 8px solid transparent;
     }
-    .te170bdf3-6b50-4ec2-b321-115b3fabd2a6.place-right::after {
+    .t15ea36f9-9da1-4f87-ac0e-62fbe3a22434.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -382,20 +382,20 @@ iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java 
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#presentation">presentation</a> is a set of one or more <a href="/terminology#credential">credentials</a>.</b> It&#x27;s shared with (or <i>presented</i> to) a company by a user.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291786" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291786" role="button">+ More...</span><div id="collapsible-content-1660348291786" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291786"><div class="Collapsible__contentInner"><div><b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.</div><div><b>Components:</b> A user&#x27;s app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="f9ef05d3-04cc-48f6-abfd-aecd31658ce8">presentations</u> they share with you.</p><ul><li><strong>Option 1​:</strong> Node.js SDK (<a href="mailto:support@Unum.ID" target="_blank" rel="noopener noreferrer">contact us</a> for other languages)</li><li><strong>Option 2​:</strong> containerized app with exposed API</li></ul><h3 class="anchor anchorWithStickyNavbar_LWe7" id="web-sdk">Web SDK<a class="hash-link" href="#web-sdk" title="Direct link to heading">​</a></h3><p>The <a href="/web-sdk">Web SDK</a> lets you display <span class="__react_component_tooltip t5822cf49-5301-41cf-a0fe-4a0a6c58b60c place-top type-dark allow_hover" id="a33c8b37-78d1-4f52-92ec-e8b2dc196612" data-id="tooltip"><style aria-hidden="true">
-  	.t5822cf49-5301-41cf-a0fe-4a0a6c58b60c {
+  </style><div><b>A <a href="/terminology#presentation">presentation</a> is a set of one or more <a href="/terminology#credential">credentials</a>.</b> It&#x27;s shared with (or <i>presented</i> to) a company by a user.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308157" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308157" role="button">+ More...</span><div id="collapsible-content-1660839308157" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308157"><div class="Collapsible__contentInner"><div><b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.</div><div><b>Components:</b> A user&#x27;s app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="5096d904-e6e3-4fe4-8324-1953587836b7">presentations</u> they share with you.</p><ul><li><strong>Option 1​:</strong> Node.js SDK (<a href="mailto:support@Unum.ID" target="_blank" rel="noopener noreferrer">contact us</a> for other languages)</li><li><strong>Option 2​:</strong> containerized app with exposed API</li></ul><h3 class="anchor anchorWithStickyNavbar_LWe7" id="web-sdk">Web SDK<a class="hash-link" href="#web-sdk" title="Direct link to heading">​</a></h3><p>The <a href="/web-sdk">Web SDK</a> lets you display <span class="__react_component_tooltip t4f45efe9-4f6b-46f5-a21a-d0fb589c684e place-top type-dark allow_hover" id="4e51c1a0-1913-4a7e-9355-cad88685e9a2" data-id="tooltip"><style aria-hidden="true">
+  	.t4f45efe9-4f6b-46f5-a21a-d0fb589c684e {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t5822cf49-5301-41cf-a0fe-4a0a6c58b60c.place-top {
+  	.t4f45efe9-4f6b-46f5-a21a-d0fb589c684e.place-top {
         margin-top: -10px;
     }
-    .t5822cf49-5301-41cf-a0fe-4a0a6c58b60c.place-top::before {
+    .t4f45efe9-4f6b-46f5-a21a-d0fb589c684e.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t5822cf49-5301-41cf-a0fe-4a0a6c58b60c.place-top::after {
+    .t4f45efe9-4f6b-46f5-a21a-d0fb589c684e.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -406,13 +406,13 @@ iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java 
         border-top-width: 6px;
     }
 
-    .t5822cf49-5301-41cf-a0fe-4a0a6c58b60c.place-bottom {
+    .t4f45efe9-4f6b-46f5-a21a-d0fb589c684e.place-bottom {
         margin-top: 10px;
     }
-    .t5822cf49-5301-41cf-a0fe-4a0a6c58b60c.place-bottom::before {
+    .t4f45efe9-4f6b-46f5-a21a-d0fb589c684e.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t5822cf49-5301-41cf-a0fe-4a0a6c58b60c.place-bottom::after {
+    .t4f45efe9-4f6b-46f5-a21a-d0fb589c684e.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -423,13 +423,13 @@ iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java 
         border-bottom-width: 6px;
     }
 
-    .t5822cf49-5301-41cf-a0fe-4a0a6c58b60c.place-left {
+    .t4f45efe9-4f6b-46f5-a21a-d0fb589c684e.place-left {
         margin-left: -10px;
     }
-    .t5822cf49-5301-41cf-a0fe-4a0a6c58b60c.place-left::before {
+    .t4f45efe9-4f6b-46f5-a21a-d0fb589c684e.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t5822cf49-5301-41cf-a0fe-4a0a6c58b60c.place-left::after {
+    .t4f45efe9-4f6b-46f5-a21a-d0fb589c684e.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -440,13 +440,13 @@ iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java 
         border-left-width: 6px;
     }
 
-    .t5822cf49-5301-41cf-a0fe-4a0a6c58b60c.place-right {
+    .t4f45efe9-4f6b-46f5-a21a-d0fb589c684e.place-right {
         margin-left: 10px;
     }
-    .t5822cf49-5301-41cf-a0fe-4a0a6c58b60c.place-right::before {
+    .t4f45efe9-4f6b-46f5-a21a-d0fb589c684e.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t5822cf49-5301-41cf-a0fe-4a0a6c58b60c.place-right::after {
+    .t4f45efe9-4f6b-46f5-a21a-d0fb589c684e.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -456,21 +456,21 @@ iOS 11.1+, iPhone 6+</li><li><strong>Android:</strong> supports Kotlin and Java 
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It&#x27;s sent by a company to a user, who chooses whether to share a presentation in response.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291787" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291787" role="button">+ More...</span><div id="collapsible-content-1660348291787" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291787"><div class="Collapsible__contentInner"><div><b>Example:</b> Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank.</div><div><b>Components:</b> A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user&#x27;s app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="a33c8b37-78d1-4f52-92ec-e8b2dc196612">requests</u> to users and show the results of
-verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf3713ec194 place-top type-dark allow_hover" id="e8f71797-65e3-4a53-ac81-64eab9717a26" data-id="tooltip"><style aria-hidden="true">
-  	.t7dcf20f7-079c-4681-a755-7bf3713ec194 {
+  </style><div><b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It&#x27;s sent by a company to a user, who chooses whether to share a presentation in response.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308157" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308157" role="button">+ More...</span><div id="collapsible-content-1660839308157" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308157"><div class="Collapsible__contentInner"><div><b>Example:</b> Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank.</div><div><b>Components:</b> A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user&#x27;s app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="4e51c1a0-1913-4a7e-9355-cad88685e9a2">requests</u> to users and show the results of
+verifying <span class="__react_component_tooltip tdb8fcef8-28c3-4b24-a23d-874bc24ca71e place-top type-dark allow_hover" id="3fb5dc18-47ad-4003-9495-0c1bf005d6c7" data-id="tooltip"><style aria-hidden="true">
+  	.tdb8fcef8-28c3-4b24-a23d-874bc24ca71e {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t7dcf20f7-079c-4681-a755-7bf3713ec194.place-top {
+  	.tdb8fcef8-28c3-4b24-a23d-874bc24ca71e.place-top {
         margin-top: -10px;
     }
-    .t7dcf20f7-079c-4681-a755-7bf3713ec194.place-top::before {
+    .tdb8fcef8-28c3-4b24-a23d-874bc24ca71e.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t7dcf20f7-079c-4681-a755-7bf3713ec194.place-top::after {
+    .tdb8fcef8-28c3-4b24-a23d-874bc24ca71e.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -481,13 +481,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-top-width: 6px;
     }
 
-    .t7dcf20f7-079c-4681-a755-7bf3713ec194.place-bottom {
+    .tdb8fcef8-28c3-4b24-a23d-874bc24ca71e.place-bottom {
         margin-top: 10px;
     }
-    .t7dcf20f7-079c-4681-a755-7bf3713ec194.place-bottom::before {
+    .tdb8fcef8-28c3-4b24-a23d-874bc24ca71e.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t7dcf20f7-079c-4681-a755-7bf3713ec194.place-bottom::after {
+    .tdb8fcef8-28c3-4b24-a23d-874bc24ca71e.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -498,13 +498,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-bottom-width: 6px;
     }
 
-    .t7dcf20f7-079c-4681-a755-7bf3713ec194.place-left {
+    .tdb8fcef8-28c3-4b24-a23d-874bc24ca71e.place-left {
         margin-left: -10px;
     }
-    .t7dcf20f7-079c-4681-a755-7bf3713ec194.place-left::before {
+    .tdb8fcef8-28c3-4b24-a23d-874bc24ca71e.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t7dcf20f7-079c-4681-a755-7bf3713ec194.place-left::after {
+    .tdb8fcef8-28c3-4b24-a23d-874bc24ca71e.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -515,13 +515,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-left-width: 6px;
     }
 
-    .t7dcf20f7-079c-4681-a755-7bf3713ec194.place-right {
+    .tdb8fcef8-28c3-4b24-a23d-874bc24ca71e.place-right {
         margin-left: 10px;
     }
-    .t7dcf20f7-079c-4681-a755-7bf3713ec194.place-right::before {
+    .tdb8fcef8-28c3-4b24-a23d-874bc24ca71e.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t7dcf20f7-079c-4681-a755-7bf3713ec194.place-right::after {
+    .tdb8fcef8-28c3-4b24-a23d-874bc24ca71e.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -531,20 +531,20 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#presentation">presentation</a> is a set of one or more <a href="/terminology#credential">credentials</a>.</b> It&#x27;s shared with (or <i>presented</i> to) a company by a user.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291787" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291787" role="button">+ More...</span><div id="collapsible-content-1660348291787" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291787"><div class="Collapsible__contentInner"><div><b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.</div><div><b>Components:</b> A user&#x27;s app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="e8f71797-65e3-4a53-ac81-64eab9717a26">presentations</u> they share with you.</p><ul><li><strong>React library</strong> (<a href="mailto:support@Unum.ID" target="_blank" rel="noopener noreferrer">contact us</a> for other frameworks)</li></ul><h2 class="anchor anchorWithStickyNavbar_LWe7" id="example-usage">Example Usage<a class="hash-link" href="#example-usage" title="Direct link to heading">​</a></h2><h3 class="anchor anchorWithStickyNavbar_LWe7" id="passwordless-auth">Passwordless Auth<a class="hash-link" href="#passwordless-auth" title="Direct link to heading">​</a></h3><p>In this example, <strong>ACME Bank</strong> uses Unum ID for passwordless authentication. <strong>Richard</strong> is an ACME user. </p><div class="theme-admonition theme-admonition-note alert alert--secondary admonition_LlT9"><div class="admonitionHeading_tbUL"><span class="admonitionIcon_kALy"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_S0QG"><p>This is our <a href="https://www.unumid.co/solutions/passwordless-auth" target="_blank" rel="noopener noreferrer">Passwordless Auth</a> product in action. <a href="mailto:sales@Unum.ID" target="_blank" rel="noopener noreferrer">Contact sales</a> to learn more.</p></div></div><ol><li>ACME&#x27;s server uses the <a href="/server-sdk">Server SDK</a> to issue an authentication <span class="__react_component_tooltip t622bd4ed-b5b8-4298-a00e-4c4acedaab21 place-top type-dark allow_hover" id="01a0c60e-17b4-410a-acfb-9e9007c25100" data-id="tooltip"><style aria-hidden="true">
-  	.t622bd4ed-b5b8-4298-a00e-4c4acedaab21 {
+  </style><div><b>A <a href="/terminology#presentation">presentation</a> is a set of one or more <a href="/terminology#credential">credentials</a>.</b> It&#x27;s shared with (or <i>presented</i> to) a company by a user.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308158" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308158" role="button">+ More...</span><div id="collapsible-content-1660839308158" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308158"><div class="Collapsible__contentInner"><div><b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.</div><div><b>Components:</b> A user&#x27;s app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="3fb5dc18-47ad-4003-9495-0c1bf005d6c7">presentations</u> they share with you.</p><ul><li><strong>React library</strong> (<a href="mailto:support@Unum.ID" target="_blank" rel="noopener noreferrer">contact us</a> for other frameworks)</li></ul><h2 class="anchor anchorWithStickyNavbar_LWe7" id="example-usage">Example Usage<a class="hash-link" href="#example-usage" title="Direct link to heading">​</a></h2><h3 class="anchor anchorWithStickyNavbar_LWe7" id="passwordless-auth">Passwordless Auth<a class="hash-link" href="#passwordless-auth" title="Direct link to heading">​</a></h3><p>In this example, <strong>ACME Bank</strong> uses Unum ID for passwordless authentication. <strong>Richard</strong> is an ACME user. </p><div class="theme-admonition theme-admonition-note alert alert--secondary admonition_LlT9"><div class="admonitionHeading_tbUL"><span class="admonitionIcon_kALy"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_S0QG"><p>This is our <a href="https://www.unumid.co/solutions/passwordless-auth" target="_blank" rel="noopener noreferrer">Passwordless Auth</a> product in action. <a href="mailto:sales@Unum.ID" target="_blank" rel="noopener noreferrer">Contact sales</a> to learn more.</p></div></div><ol><li>ACME&#x27;s server uses the <a href="/server-sdk">Server SDK</a> to issue an authentication <span class="__react_component_tooltip t5a501942-54cb-42ed-bb2a-84b44cafa782 place-top type-dark allow_hover" id="21c0994e-c1bf-4574-9ff8-149589dbbea0" data-id="tooltip"><style aria-hidden="true">
+  	.t5a501942-54cb-42ed-bb2a-84b44cafa782 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t622bd4ed-b5b8-4298-a00e-4c4acedaab21.place-top {
+  	.t5a501942-54cb-42ed-bb2a-84b44cafa782.place-top {
         margin-top: -10px;
     }
-    .t622bd4ed-b5b8-4298-a00e-4c4acedaab21.place-top::before {
+    .t5a501942-54cb-42ed-bb2a-84b44cafa782.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t622bd4ed-b5b8-4298-a00e-4c4acedaab21.place-top::after {
+    .t5a501942-54cb-42ed-bb2a-84b44cafa782.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -555,13 +555,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-top-width: 6px;
     }
 
-    .t622bd4ed-b5b8-4298-a00e-4c4acedaab21.place-bottom {
+    .t5a501942-54cb-42ed-bb2a-84b44cafa782.place-bottom {
         margin-top: 10px;
     }
-    .t622bd4ed-b5b8-4298-a00e-4c4acedaab21.place-bottom::before {
+    .t5a501942-54cb-42ed-bb2a-84b44cafa782.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t622bd4ed-b5b8-4298-a00e-4c4acedaab21.place-bottom::after {
+    .t5a501942-54cb-42ed-bb2a-84b44cafa782.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -572,13 +572,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-bottom-width: 6px;
     }
 
-    .t622bd4ed-b5b8-4298-a00e-4c4acedaab21.place-left {
+    .t5a501942-54cb-42ed-bb2a-84b44cafa782.place-left {
         margin-left: -10px;
     }
-    .t622bd4ed-b5b8-4298-a00e-4c4acedaab21.place-left::before {
+    .t5a501942-54cb-42ed-bb2a-84b44cafa782.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t622bd4ed-b5b8-4298-a00e-4c4acedaab21.place-left::after {
+    .t5a501942-54cb-42ed-bb2a-84b44cafa782.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -589,13 +589,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-left-width: 6px;
     }
 
-    .t622bd4ed-b5b8-4298-a00e-4c4acedaab21.place-right {
+    .t5a501942-54cb-42ed-bb2a-84b44cafa782.place-right {
         margin-left: 10px;
     }
-    .t622bd4ed-b5b8-4298-a00e-4c4acedaab21.place-right::before {
+    .t5a501942-54cb-42ed-bb2a-84b44cafa782.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t622bd4ed-b5b8-4298-a00e-4c4acedaab21.place-right::after {
+    .t5a501942-54cb-42ed-bb2a-84b44cafa782.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -605,20 +605,20 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company (i.e. created and sent to a user) and stored in the company&#x27;s app, on that user&#x27;s device.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291789" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291789" role="button">+ More...</span><div id="collapsible-content-1660348291789" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291789"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="01a0c60e-17b4-410a-acfb-9e9007c25100">credential</u> to Richard.</li><li>Richard&#x27;s ACME app uses the <a href="/mobile-sdk-overview">Mobile SDK</a> to store the credentiaal.</li><li>ACME&#x27;s server uses the Server SDK create a <span class="__react_component_tooltip t6ed273f9-8856-4cf5-8545-f11978e78034 place-top type-dark allow_hover" id="6b563947-274c-445f-bb4f-d641f4375ce9" data-id="tooltip"><style aria-hidden="true">
-  	.t6ed273f9-8856-4cf5-8545-f11978e78034 {
+  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company (i.e. created and sent to a user) and stored in the company&#x27;s app, on that user&#x27;s device.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308160" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308160" role="button">+ More...</span><div id="collapsible-content-1660839308160" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308160"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="21c0994e-c1bf-4574-9ff8-149589dbbea0">credential</u> to Richard.</li><li>Richard&#x27;s ACME app uses the <a href="/mobile-sdk-overview">Mobile SDK</a> to store the credentiaal.</li><li>ACME&#x27;s server uses the Server SDK create a <span class="__react_component_tooltip t74fa6f46-1a22-4728-b0e9-e86e96c1a781 place-top type-dark allow_hover" id="99782af8-0b22-4c45-a546-9947e87f8d0f" data-id="tooltip"><style aria-hidden="true">
+  	.t74fa6f46-1a22-4728-b0e9-e86e96c1a781 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t6ed273f9-8856-4cf5-8545-f11978e78034.place-top {
+  	.t74fa6f46-1a22-4728-b0e9-e86e96c1a781.place-top {
         margin-top: -10px;
     }
-    .t6ed273f9-8856-4cf5-8545-f11978e78034.place-top::before {
+    .t74fa6f46-1a22-4728-b0e9-e86e96c1a781.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t6ed273f9-8856-4cf5-8545-f11978e78034.place-top::after {
+    .t74fa6f46-1a22-4728-b0e9-e86e96c1a781.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -629,13 +629,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-top-width: 6px;
     }
 
-    .t6ed273f9-8856-4cf5-8545-f11978e78034.place-bottom {
+    .t74fa6f46-1a22-4728-b0e9-e86e96c1a781.place-bottom {
         margin-top: 10px;
     }
-    .t6ed273f9-8856-4cf5-8545-f11978e78034.place-bottom::before {
+    .t74fa6f46-1a22-4728-b0e9-e86e96c1a781.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t6ed273f9-8856-4cf5-8545-f11978e78034.place-bottom::after {
+    .t74fa6f46-1a22-4728-b0e9-e86e96c1a781.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -646,13 +646,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-bottom-width: 6px;
     }
 
-    .t6ed273f9-8856-4cf5-8545-f11978e78034.place-left {
+    .t74fa6f46-1a22-4728-b0e9-e86e96c1a781.place-left {
         margin-left: -10px;
     }
-    .t6ed273f9-8856-4cf5-8545-f11978e78034.place-left::before {
+    .t74fa6f46-1a22-4728-b0e9-e86e96c1a781.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t6ed273f9-8856-4cf5-8545-f11978e78034.place-left::after {
+    .t74fa6f46-1a22-4728-b0e9-e86e96c1a781.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -663,13 +663,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-left-width: 6px;
     }
 
-    .t6ed273f9-8856-4cf5-8545-f11978e78034.place-right {
+    .t74fa6f46-1a22-4728-b0e9-e86e96c1a781.place-right {
         margin-left: 10px;
     }
-    .t6ed273f9-8856-4cf5-8545-f11978e78034.place-right::before {
+    .t74fa6f46-1a22-4728-b0e9-e86e96c1a781.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t6ed273f9-8856-4cf5-8545-f11978e78034.place-right::after {
+    .t74fa6f46-1a22-4728-b0e9-e86e96c1a781.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -679,20 +679,20 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It&#x27;s sent by a company to a user, who chooses whether to share a presentation in response.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291791" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291791" role="button">+ More...</span><div id="collapsible-content-1660348291791" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291791"><div class="Collapsible__contentInner"><div><b>Example:</b> Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank.</div><div><b>Components:</b> A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user&#x27;s app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="6b563947-274c-445f-bb4f-d641f4375ce9">request</u> for a <span class="__react_component_tooltip t997b2cba-8b97-4a5d-821a-13dacd838318 place-top type-dark allow_hover" id="0bc0d189-2503-4b11-8f1d-a51e5c9fb01e" data-id="tooltip"><style aria-hidden="true">
-  	.t997b2cba-8b97-4a5d-821a-13dacd838318 {
+  </style><div><b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It&#x27;s sent by a company to a user, who chooses whether to share a presentation in response.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308160" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308160" role="button">+ More...</span><div id="collapsible-content-1660839308160" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308160"><div class="Collapsible__contentInner"><div><b>Example:</b> Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank.</div><div><b>Components:</b> A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user&#x27;s app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="99782af8-0b22-4c45-a546-9947e87f8d0f">request</u> for a <span class="__react_component_tooltip t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd place-top type-dark allow_hover" id="6a88da75-575d-4e9c-b0e0-489a8efad7d7" data-id="tooltip"><style aria-hidden="true">
+  	.t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t997b2cba-8b97-4a5d-821a-13dacd838318.place-top {
+  	.t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd.place-top {
         margin-top: -10px;
     }
-    .t997b2cba-8b97-4a5d-821a-13dacd838318.place-top::before {
+    .t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t997b2cba-8b97-4a5d-821a-13dacd838318.place-top::after {
+    .t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -703,13 +703,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-top-width: 6px;
     }
 
-    .t997b2cba-8b97-4a5d-821a-13dacd838318.place-bottom {
+    .t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd.place-bottom {
         margin-top: 10px;
     }
-    .t997b2cba-8b97-4a5d-821a-13dacd838318.place-bottom::before {
+    .t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t997b2cba-8b97-4a5d-821a-13dacd838318.place-bottom::after {
+    .t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -720,13 +720,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-bottom-width: 6px;
     }
 
-    .t997b2cba-8b97-4a5d-821a-13dacd838318.place-left {
+    .t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd.place-left {
         margin-left: -10px;
     }
-    .t997b2cba-8b97-4a5d-821a-13dacd838318.place-left::before {
+    .t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t997b2cba-8b97-4a5d-821a-13dacd838318.place-left::after {
+    .t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -737,13 +737,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-left-width: 6px;
     }
 
-    .t997b2cba-8b97-4a5d-821a-13dacd838318.place-right {
+    .t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd.place-right {
         margin-left: 10px;
     }
-    .t997b2cba-8b97-4a5d-821a-13dacd838318.place-right::before {
+    .t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t997b2cba-8b97-4a5d-821a-13dacd838318.place-right::after {
+    .t55ec3d9d-0d2a-4a19-aa51-4bfb3715f9cd.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -753,20 +753,20 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#presentation">presentation</a> is a set of one or more <a href="/terminology#credential">credentials</a>.</b> It&#x27;s shared with (or <i>presented</i> to) a company by a user.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291791" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291791" role="button">+ More...</span><div id="collapsible-content-1660348291791" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291791"><div class="Collapsible__contentInner"><div><b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.</div><div><b>Components:</b> A user&#x27;s app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="0bc0d189-2503-4b11-8f1d-a51e5c9fb01e">presentation</u> (of the credential).</li><li>ACME&#x27;s website uses the <a href="/web-sdk">Web SDK</a> to display or send the request to Richard.</li><li>Richard&#x27;s ACME app uses the Mobile SDK to prompt Richard to respond to the request.</li><li>Richard agrees to authenticate, and his ACME app uses the Mobile SDK to send a presentation (of the credential) to ACME&#x27;s server.</li><li>ACME&#x27;s server uses the Server SDK to verify the presentation.</li><li>ACME&#x27;s website uses the Web SDK to get the result of the verification and log Richard in.</li></ol><h3 class="anchor anchorWithStickyNavbar_LWe7" id="instant-onboarding">Instant Onboarding<a class="hash-link" href="#instant-onboarding" title="Direct link to heading">​</a></h3><p>In this example, <strong>Hooli FinTech</strong> uses Unum ID for instant onboarding. It uses <strong>Richard&#x27;s</strong> <strong>ACME</strong> information (which he chooses to share) to create a pre-approved Hooli account for him.</p><div class="theme-admonition theme-admonition-note alert alert--secondary admonition_LlT9"><div class="admonitionHeading_tbUL"><span class="admonitionIcon_kALy"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_S0QG"><p>This is our <a href="https://www.unumid.co/solutions/sharified-identity" target="_blank" rel="noopener noreferrer">Sharified Identity</a> product in action. <a href="mailto:sales@Unum.ID" target="_blank" rel="noopener noreferrer">Contact sales</a> to learn more.</p></div></div><ol><li>Hooli&#x27;s server uses the <a href="/server-sdk">Server SDK</a> create a <span class="__react_component_tooltip t8d02180c-569d-4ae0-80a9-c6077484a0f8 place-top type-dark allow_hover" id="506dc608-76f8-40e5-b52b-371f384147e4" data-id="tooltip"><style aria-hidden="true">
-  	.t8d02180c-569d-4ae0-80a9-c6077484a0f8 {
+  </style><div><b>A <a href="/terminology#presentation">presentation</a> is a set of one or more <a href="/terminology#credential">credentials</a>.</b> It&#x27;s shared with (or <i>presented</i> to) a company by a user.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308161" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308161" role="button">+ More...</span><div id="collapsible-content-1660839308161" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308161"><div class="Collapsible__contentInner"><div><b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.</div><div><b>Components:</b> A user&#x27;s app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="6a88da75-575d-4e9c-b0e0-489a8efad7d7">presentation</u> (of the credential).</li><li>ACME&#x27;s website uses the <a href="/web-sdk">Web SDK</a> to display or send the request to Richard.</li><li>Richard&#x27;s ACME app uses the Mobile SDK to prompt Richard to respond to the request.</li><li>Richard agrees to authenticate, and his ACME app uses the Mobile SDK to send a presentation (of the credential) to ACME&#x27;s server.</li><li>ACME&#x27;s server uses the Server SDK to verify the presentation.</li><li>ACME&#x27;s website uses the Web SDK to get the result of the verification and log Richard in.</li></ol><h3 class="anchor anchorWithStickyNavbar_LWe7" id="instant-onboarding">Instant Onboarding<a class="hash-link" href="#instant-onboarding" title="Direct link to heading">​</a></h3><p>In this example, <strong>Hooli FinTech</strong> uses Unum ID for instant onboarding. It uses <strong>Richard&#x27;s</strong> <strong>ACME</strong> information (which he chooses to share) to create a pre-approved Hooli account for him.</p><div class="theme-admonition theme-admonition-note alert alert--secondary admonition_LlT9"><div class="admonitionHeading_tbUL"><span class="admonitionIcon_kALy"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_S0QG"><p>This is our <a href="https://www.unumid.co/solutions/sharified-identity" target="_blank" rel="noopener noreferrer">Sharified Identity</a> product in action. <a href="mailto:sales@Unum.ID" target="_blank" rel="noopener noreferrer">Contact sales</a> to learn more.</p></div></div><ol><li>Hooli&#x27;s server uses the <a href="/server-sdk">Server SDK</a> create a <span class="__react_component_tooltip t520d68e6-3223-4a0a-bf28-b2a0edc0bade place-top type-dark allow_hover" id="fa9a5dd0-2b7d-47f1-b709-3223f52975a6" data-id="tooltip"><style aria-hidden="true">
+  	.t520d68e6-3223-4a0a-bf28-b2a0edc0bade {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t8d02180c-569d-4ae0-80a9-c6077484a0f8.place-top {
+  	.t520d68e6-3223-4a0a-bf28-b2a0edc0bade.place-top {
         margin-top: -10px;
     }
-    .t8d02180c-569d-4ae0-80a9-c6077484a0f8.place-top::before {
+    .t520d68e6-3223-4a0a-bf28-b2a0edc0bade.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t8d02180c-569d-4ae0-80a9-c6077484a0f8.place-top::after {
+    .t520d68e6-3223-4a0a-bf28-b2a0edc0bade.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -777,13 +777,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-top-width: 6px;
     }
 
-    .t8d02180c-569d-4ae0-80a9-c6077484a0f8.place-bottom {
+    .t520d68e6-3223-4a0a-bf28-b2a0edc0bade.place-bottom {
         margin-top: 10px;
     }
-    .t8d02180c-569d-4ae0-80a9-c6077484a0f8.place-bottom::before {
+    .t520d68e6-3223-4a0a-bf28-b2a0edc0bade.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t8d02180c-569d-4ae0-80a9-c6077484a0f8.place-bottom::after {
+    .t520d68e6-3223-4a0a-bf28-b2a0edc0bade.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -794,13 +794,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-bottom-width: 6px;
     }
 
-    .t8d02180c-569d-4ae0-80a9-c6077484a0f8.place-left {
+    .t520d68e6-3223-4a0a-bf28-b2a0edc0bade.place-left {
         margin-left: -10px;
     }
-    .t8d02180c-569d-4ae0-80a9-c6077484a0f8.place-left::before {
+    .t520d68e6-3223-4a0a-bf28-b2a0edc0bade.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t8d02180c-569d-4ae0-80a9-c6077484a0f8.place-left::after {
+    .t520d68e6-3223-4a0a-bf28-b2a0edc0bade.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -811,13 +811,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-left-width: 6px;
     }
 
-    .t8d02180c-569d-4ae0-80a9-c6077484a0f8.place-right {
+    .t520d68e6-3223-4a0a-bf28-b2a0edc0bade.place-right {
         margin-left: 10px;
     }
-    .t8d02180c-569d-4ae0-80a9-c6077484a0f8.place-right::before {
+    .t520d68e6-3223-4a0a-bf28-b2a0edc0bade.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t8d02180c-569d-4ae0-80a9-c6077484a0f8.place-right::after {
+    .t520d68e6-3223-4a0a-bf28-b2a0edc0bade.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -827,20 +827,20 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It&#x27;s sent by a company to a user, who chooses whether to share a presentation in response.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291792" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291792" role="button">+ More...</span><div id="collapsible-content-1660348291792" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291792"><div class="Collapsible__contentInner"><div><b>Example:</b> Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank.</div><div><b>Components:</b> A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user&#x27;s app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="506dc608-76f8-40e5-b52b-371f384147e4">request</u> for a <span class="__react_component_tooltip t1955cb01-efcf-4ce8-92b4-272bfa7dd471 place-top type-dark allow_hover" id="25c094a3-4086-4db6-8ed4-2dae0412d8c5" data-id="tooltip"><style aria-hidden="true">
-  	.t1955cb01-efcf-4ce8-92b4-272bfa7dd471 {
+  </style><div><b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It&#x27;s sent by a company to a user, who chooses whether to share a presentation in response.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308161" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308161" role="button">+ More...</span><div id="collapsible-content-1660839308161" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308161"><div class="Collapsible__contentInner"><div><b>Example:</b> Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank.</div><div><b>Components:</b> A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user&#x27;s app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="fa9a5dd0-2b7d-47f1-b709-3223f52975a6">request</u> for a <span class="__react_component_tooltip tf63763c4-a4f6-47a1-88da-ef7e26407fe4 place-top type-dark allow_hover" id="3daa14bb-c346-445b-8b63-35ca11465b93" data-id="tooltip"><style aria-hidden="true">
+  	.tf63763c4-a4f6-47a1-88da-ef7e26407fe4 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t1955cb01-efcf-4ce8-92b4-272bfa7dd471.place-top {
+  	.tf63763c4-a4f6-47a1-88da-ef7e26407fe4.place-top {
         margin-top: -10px;
     }
-    .t1955cb01-efcf-4ce8-92b4-272bfa7dd471.place-top::before {
+    .tf63763c4-a4f6-47a1-88da-ef7e26407fe4.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t1955cb01-efcf-4ce8-92b4-272bfa7dd471.place-top::after {
+    .tf63763c4-a4f6-47a1-88da-ef7e26407fe4.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -851,13 +851,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-top-width: 6px;
     }
 
-    .t1955cb01-efcf-4ce8-92b4-272bfa7dd471.place-bottom {
+    .tf63763c4-a4f6-47a1-88da-ef7e26407fe4.place-bottom {
         margin-top: 10px;
     }
-    .t1955cb01-efcf-4ce8-92b4-272bfa7dd471.place-bottom::before {
+    .tf63763c4-a4f6-47a1-88da-ef7e26407fe4.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t1955cb01-efcf-4ce8-92b4-272bfa7dd471.place-bottom::after {
+    .tf63763c4-a4f6-47a1-88da-ef7e26407fe4.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -868,13 +868,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-bottom-width: 6px;
     }
 
-    .t1955cb01-efcf-4ce8-92b4-272bfa7dd471.place-left {
+    .tf63763c4-a4f6-47a1-88da-ef7e26407fe4.place-left {
         margin-left: -10px;
     }
-    .t1955cb01-efcf-4ce8-92b4-272bfa7dd471.place-left::before {
+    .tf63763c4-a4f6-47a1-88da-ef7e26407fe4.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t1955cb01-efcf-4ce8-92b4-272bfa7dd471.place-left::after {
+    .tf63763c4-a4f6-47a1-88da-ef7e26407fe4.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -885,13 +885,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-left-width: 6px;
     }
 
-    .t1955cb01-efcf-4ce8-92b4-272bfa7dd471.place-right {
+    .tf63763c4-a4f6-47a1-88da-ef7e26407fe4.place-right {
         margin-left: 10px;
     }
-    .t1955cb01-efcf-4ce8-92b4-272bfa7dd471.place-right::before {
+    .tf63763c4-a4f6-47a1-88da-ef7e26407fe4.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t1955cb01-efcf-4ce8-92b4-272bfa7dd471.place-right::after {
+    .tf63763c4-a4f6-47a1-88da-ef7e26407fe4.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -901,20 +901,20 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#presentation">presentation</a> is a set of one or more <a href="/terminology#credential">credentials</a>.</b> It&#x27;s shared with (or <i>presented</i> to) a company by a user.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291793" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291793" role="button">+ More...</span><div id="collapsible-content-1660348291793" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291793"><div class="Collapsible__contentInner"><div><b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.</div><div><b>Components:</b> A user&#x27;s app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="25c094a3-4086-4db6-8ed4-2dae0412d8c5">presentation</u> (of the ACME KYC verification <span class="__react_component_tooltip t20bd1716-9667-4336-82b2-ab846f332159 place-top type-dark allow_hover" id="20da08c6-7544-4f70-bf79-c5764832d986" data-id="tooltip"><style aria-hidden="true">
-  	.t20bd1716-9667-4336-82b2-ab846f332159 {
+  </style><div><b>A <a href="/terminology#presentation">presentation</a> is a set of one or more <a href="/terminology#credential">credentials</a>.</b> It&#x27;s shared with (or <i>presented</i> to) a company by a user.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308164" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308164" role="button">+ More...</span><div id="collapsible-content-1660839308164" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308164"><div class="Collapsible__contentInner"><div><b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.</div><div><b>Components:</b> A user&#x27;s app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="3daa14bb-c346-445b-8b63-35ca11465b93">presentation</u> (of the ACME KYC verification <span class="__react_component_tooltip t16dd6b91-a157-4e6b-b344-9711ce67aeed place-top type-dark allow_hover" id="26408b38-67e7-47e8-8a19-b8d9de9b7ff9" data-id="tooltip"><style aria-hidden="true">
+  	.t16dd6b91-a157-4e6b-b344-9711ce67aeed {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t20bd1716-9667-4336-82b2-ab846f332159.place-top {
+  	.t16dd6b91-a157-4e6b-b344-9711ce67aeed.place-top {
         margin-top: -10px;
     }
-    .t20bd1716-9667-4336-82b2-ab846f332159.place-top::before {
+    .t16dd6b91-a157-4e6b-b344-9711ce67aeed.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t20bd1716-9667-4336-82b2-ab846f332159.place-top::after {
+    .t16dd6b91-a157-4e6b-b344-9711ce67aeed.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -925,13 +925,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-top-width: 6px;
     }
 
-    .t20bd1716-9667-4336-82b2-ab846f332159.place-bottom {
+    .t16dd6b91-a157-4e6b-b344-9711ce67aeed.place-bottom {
         margin-top: 10px;
     }
-    .t20bd1716-9667-4336-82b2-ab846f332159.place-bottom::before {
+    .t16dd6b91-a157-4e6b-b344-9711ce67aeed.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t20bd1716-9667-4336-82b2-ab846f332159.place-bottom::after {
+    .t16dd6b91-a157-4e6b-b344-9711ce67aeed.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -942,13 +942,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-bottom-width: 6px;
     }
 
-    .t20bd1716-9667-4336-82b2-ab846f332159.place-left {
+    .t16dd6b91-a157-4e6b-b344-9711ce67aeed.place-left {
         margin-left: -10px;
     }
-    .t20bd1716-9667-4336-82b2-ab846f332159.place-left::before {
+    .t16dd6b91-a157-4e6b-b344-9711ce67aeed.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t20bd1716-9667-4336-82b2-ab846f332159.place-left::after {
+    .t16dd6b91-a157-4e6b-b344-9711ce67aeed.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -959,13 +959,13 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-left-width: 6px;
     }
 
-    .t20bd1716-9667-4336-82b2-ab846f332159.place-right {
+    .t16dd6b91-a157-4e6b-b344-9711ce67aeed.place-right {
         margin-left: 10px;
     }
-    .t20bd1716-9667-4336-82b2-ab846f332159.place-right::before {
+    .t16dd6b91-a157-4e6b-b344-9711ce67aeed.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t20bd1716-9667-4336-82b2-ab846f332159.place-right::after {
+    .t16dd6b91-a157-4e6b-b344-9711ce67aeed.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -975,8 +975,8 @@ verifying <span class="__react_component_tooltip t7dcf20f7-079c-4681-a755-7bf371
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company (i.e. created and sent to a user) and stored in the company&#x27;s app, on that user&#x27;s device.</div><div class="Collapsible"><span id="collapsible-trigger-1660348291796" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660348291796" role="button">+ More...</span><div id="collapsible-content-1660348291796" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660348291796"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="20da08c6-7544-4f70-bf79-c5764832d986">credential</u>).</li><li>Hooli&#x27;s website uses the <a href="/web-sdk">Web SDK</a> to display or send the request to Richard.</li><li>Richard&#x27;s ACME app uses the <a href="/mobile-sdk-overview">Mobile SDK</a> to prompt Richard to respond to the request.</li><li>Richard agrees to share his information, and his ACME app uses the Mobile SDK to send a presentation (of the ACME KYC verification credential) to Hooli&#x27;s server.</li><li>Hooli&#x27;s server uses the Server SDK to verify the presentation.</li><li>Hooli&#x27;s website uses the Web SDK to get the result of the verification and create an account for Richard with the ACME information he shared.</li></ol></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages navigation"><a class="pagination-nav__link pagination-nav__link--prev" href="/terminology"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Terminology</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/deployment-overview"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Deployment Overview</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#components" class="table-of-contents__link toc-highlight">Components</a><ul><li><a href="#mobile-sdk" class="table-of-contents__link toc-highlight">Mobile SDK</a></li><li><a href="#server-sdk" class="table-of-contents__link toc-highlight">Server SDK</a></li><li><a href="#web-sdk" class="table-of-contents__link toc-highlight">Web SDK</a></li></ul></li><li><a href="#example-usage" class="table-of-contents__link toc-highlight">Example Usage</a><ul><li><a href="#passwordless-auth" class="table-of-contents__link toc-highlight">Passwordless Auth</a></li><li><a href="#instant-onboarding" class="table-of-contents__link toc-highlight">Instant Onboarding</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Introduction</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/">About Unum ID</a></li><li class="footer__item"><a class="footer__link-item" href="/terminology">Terminology</a></li><li class="footer__item"><a class="footer__link-item" href="/architecture">Architecture</a></li><li class="footer__item"><a class="footer__link-item" href="/deployment-overview">Deployment Overview</a></li><li class="footer__item"><a class="footer__link-item" href="/quick-start-guide">Quick Start Guide</a></li><li class="footer__item"><a class="footer__link-item" href="/privacy-and-security">Privacy and Security</a></li></ul></div><div class="col footer__col"><div class="footer__title">Components</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/server-sdk">Server SDK</a></li><li class="footer__item"><a class="footer__link-item" href="/mobile-sdk-overview">Mobile SDK</a></li><li class="footer__item"><a class="footer__link-item" href="/web-sdk">Web SDK</a></li></ul></div><div class="col footer__col"><div class="footer__title">Demos</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/developer-demo">Developer Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/acme-demo">ACME Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/hooli-demo">Hooli Demo</a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.Unum.ID" target="_blank" rel="noopener noreferrer" class="footer__link-item">Home<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://github.com/UnumID" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2022 Unum ID, Inc.</div></div></div></footer></div>
-<script src="/assets/js/runtime~main.fe151a09.js"></script>
-<script src="/assets/js/main.793f110d.js"></script>
+  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company (i.e. created and sent to a user) and stored in the company&#x27;s app, on that user&#x27;s device.</div><div class="Collapsible"><span id="collapsible-trigger-1660839308164" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1660839308164" role="button">+ More...</span><div id="collapsible-content-1660839308164" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1660839308164"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="26408b38-67e7-47e8-8a19-b8d9de9b7ff9">credential</u>).</li><li>Hooli&#x27;s website uses the <a href="/web-sdk">Web SDK</a> to display or send the request to Richard.</li><li>Richard&#x27;s ACME app uses the <a href="/mobile-sdk-overview">Mobile SDK</a> to prompt Richard to respond to the request.</li><li>Richard agrees to share his information, and his ACME app uses the Mobile SDK to send a presentation (of the ACME KYC verification credential) to Hooli&#x27;s server.</li><li>Hooli&#x27;s server uses the Server SDK to verify the presentation.</li><li>Hooli&#x27;s website uses the Web SDK to get the result of the verification and create an account for Richard with the ACME information he shared.</li></ol></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages navigation"><a class="pagination-nav__link pagination-nav__link--prev" href="/terminology"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Terminology</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/deployment-overview"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Deployment Overview</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#components" class="table-of-contents__link toc-highlight">Components</a><ul><li><a href="#mobile-sdk" class="table-of-contents__link toc-highlight">Mobile SDK</a></li><li><a href="#server-sdk" class="table-of-contents__link toc-highlight">Server SDK</a></li><li><a href="#web-sdk" class="table-of-contents__link toc-highlight">Web SDK</a></li></ul></li><li><a href="#example-usage" class="table-of-contents__link toc-highlight">Example Usage</a><ul><li><a href="#passwordless-auth" class="table-of-contents__link toc-highlight">Passwordless Auth</a></li><li><a href="#instant-onboarding" class="table-of-contents__link toc-highlight">Instant Onboarding</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Introduction</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/">About Unum ID</a></li><li class="footer__item"><a class="footer__link-item" href="/terminology">Terminology</a></li><li class="footer__item"><a class="footer__link-item" href="/architecture">Architecture</a></li><li class="footer__item"><a class="footer__link-item" href="/deployment-overview">Deployment Overview</a></li><li class="footer__item"><a class="footer__link-item" href="/quick-start-guide">Quick Start Guide</a></li><li class="footer__item"><a class="footer__link-item" href="/privacy-and-security">Privacy and Security</a></li></ul></div><div class="col footer__col"><div class="footer__title">Components</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/server-sdk">Server SDK</a></li><li class="footer__item"><a class="footer__link-item" href="/mobile-sdk-overview">Mobile SDK</a></li><li class="footer__item"><a class="footer__link-item" href="/web-sdk">Web SDK</a></li></ul></div><div class="col footer__col"><div class="footer__title">Demos</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/developer-demo">Developer Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/acme-demo">ACME Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/hooli-demo">Hooli Demo</a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.Unum.ID" target="_blank" rel="noopener noreferrer" class="footer__link-item">Home<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://github.com/UnumID" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2022 Unum ID, Inc.</div></div></div></footer></div>
+<script src="/assets/js/runtime~main.fccf0c93.js"></script>
+<script src="/assets/js/main.8575b07a.js"></script>
 </body>
 </html>

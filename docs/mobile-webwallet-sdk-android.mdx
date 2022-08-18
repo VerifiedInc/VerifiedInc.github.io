@@ -27,29 +27,15 @@ An example project using this SDK can be found [here](https://github.com/UnumID/
 
 ### Installation
 
-When you register with UnumID, we will send you a GitHub personal access token. Create a github.properties file in the root of your project.
-
-In the app level build.gradle add your GitHub username, personal access token to the repositories block inside of the android block.
-It is suggested to add this file to .gitignore so it is not committed to your repo. Add properties `gpr.usr=GITHUB_USERID` and `gpr.key=PERSONAL_ACCESS_TOKEN`
-Replace `GITHUB_USERID` with personal / organization Github User ID and `PERSONAL_ACCESS_TOKEN` with the token sent to you.
+In the app level build.gradle add the following maven repository:
 
 ```groovy
-def githubProperties = new Properties()
-githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
 
 android {
     repositories {
         maven {
             name = "GitHubPackages"
-
-            url = uri("https://maven.pkg.github.com/UnumID/Holder-SDK-Android")
-            credentials {
-                /** Create github.properties in root project folder file with
-                 ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN
-                 ** Set env variable GPR_USER & GPR_API_KEY if not adding a properties file**/
-                username = githubProperties['gpr.usr'] ?: System.getenv("")
-                password = githubProperties['gpr.key'] ?: System.getenv("")
-            }
+            url = uri("https://maven.pkg.github.com/UnumID/UnumIDWebWallet-android")
         }
     }
 
@@ -59,7 +45,7 @@ android {
 In the app level build.gradle add the reference to the SDK
 
 ```groovy
-implementation "id.unum:webwallet:1.0.5"
+implementation "id.unum:webwallet-android:1.0.5"
 ```
 
 ### Performing User DID Association

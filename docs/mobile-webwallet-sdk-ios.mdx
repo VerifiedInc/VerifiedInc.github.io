@@ -1,0 +1,93 @@
+---
+id: mobile-webwallet-sdk-ios
+title: Mobile WebWallet SDK - iOS
+sidebar_label: iOS WebWallet
+slug: /mobile-webwallet-sdk-ios
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
+
+*Docs for the Android WebWallet SDK are [here](mobile-webwallet-sdk-android).*
+
+This is a lightweight, fully native SDK that allows a host app to perform web wallet authentication functionality in a in-app browser. It works with both UIKit and SwiftUI native apps.
+
+**Before you begin:** You need to be registered as Unum ID customer to use this SDK.
+
+:::note
+An example project using this SDK can be found [here](https://github.com/UnumID/UnumIdWebAuth-Android/). This serves as a useful technical reference.
+:::
+
+## Overview
+
+### Minimum Requirements
+- **iOS 13.0 and above**
+
+### Integration Instructions
+
+Add the SDK to your project
+Cocoapods - Add the SDK to your `Podfile` and run `pod install`
+
+```ruby
+target 'YourApp' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  pod 'UnumIDWebWallet'
+end
+```
+
+Then to import the framework, all you have to do is:
+
+```swift
+import UnumIDWebWallet
+```
+
+### Performing User DID Association
+
+When a host application would like to link a user with existing credentials, the user DID association flow can be kicked off. This will require the userCode and the issuer DID to be passed. An optional value for the user email can be passed to help pre-fil data. An optional value of a color can also be passed to help match the color of title bar with the app theme.
+
+``` swift
+/**
+Function for launching the web wallet and performing the user DID association flow.
+
+- parameter viewController UIViewController A provided view controller to launch the Web Wallet controller.
+- parameter parameters: Parameters Values used to setup the presentation.
+- parameter barTintColor: UIColor An optional value to set the color of the navigation bar.
+- parameter controlTintColor: UIColor An optional value to set the tint color of the controls.
+- parameter completion: (() -> Void)? An option completion when the presentation is finished.
+*/
+public static func associate(
+    on viewController: UIViewController,
+    with parameters: Parameters,
+    barTintColor: UIColor? = nil,
+    controlTintColor: UIColor? = nil,
+    completion: (() -> Void)? = nil
+)
+```
+
+
+### Opening a web wallet web auth window
+
+If the host app already has the full url required for showing the web wallet, the url can be passed to the WebWallet SDK to open the web wallet.  An optional value of a color can also be passed to help match the color of title bar with the app theme.
+
+``` swift
+/**
+Function for launching a provided url in-app browser.
+
+- parameter url: URL The url to be launched.
+- parameter viewController: UIViewController A provided view controller to launch the Web Wallet controller.
+- parameter barTintColor: UIColor An optional value to set the color of the navigation bar.
+- parameter controlTintColor: UIColor An optional value to set the tint color of the controls.
+- parameter completion: (() -> Void)? An option completion when the presentation is finished.
+*/
+public static func launch(
+    url: URL,
+    on viewController: UIViewController,
+    barTintColor: UIColor? = nil,
+    controlTintColor: UIColor? = nil,
+    completion: (() -> Void)? = nil
+)
+```

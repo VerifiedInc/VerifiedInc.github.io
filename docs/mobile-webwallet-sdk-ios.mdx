@@ -10,9 +10,9 @@ import TabItem from '@theme/TabItem';
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-*Docs for the Android WebWallet SDK are [here](mobile-webwallet-sdk-android).*
+*Docs for the iOS WebWallet SDK are [here](mobile-webwallet-sdk-ios).*
 
-This is a lightweight, fully native SDK that allows a host app to perform web wallet authentication functionality in a chrome browser. It works with both Kotlin and Java native apps.
+This is a lightweight, fully native SDK that allows a host app to perform web wallet authentication functionality in a in-app browser. It works with both UIKit and SwiftUI native apps.
 
 **Before you begin:** You need to be registered as Unum ID customer to use this SDK.
 
@@ -23,72 +23,71 @@ An example project using this SDK can be found [here](https://github.com/UnumID/
 ## Overview
 
 ### Minimum Requirements
-- **Android 6.0 (Marshmallow) and above**
+- **iOS 13.0 and above**
 
-### Installation
+### Integration Instructions
 
-When you register with UnumID, we will send you a GitHub personal access token. Create a github.properties file in the root of your project.
+Add the SDK to your project
+Cocoapods - Add the SDK to your `Podfile` and run `pod install`
 
-In the app level build.gradle add your GitHub username, personal access token to the repositories block inside of the android block.
-It is suggested to add this file to .gitignore so it is not committed to your repo. Add properties `gpr.usr=GITHUB_USERID` and `gpr.key=PERSONAL_ACCESS_TOKEN`
-Replace `GITHUB_USERID` with personal / organization Github User ID and `PERSONAL_ACCESS_TOKEN` with the token sent to you.
+```ruby
+target 'YourApp' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
 
-```groovy
-def githubProperties = new Properties()
-githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
-
-android {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-
-            url = uri("https://maven.pkg.github.com/UnumID/Holder-SDK-Android")
-            credentials {
-                /** Create github.properties in root project folder file with
-                 ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN
-                 ** Set env variable GPR_USER & GPR_API_KEY if not adding a properties file**/
-                username = githubProperties['gpr.usr'] ?: System.getenv("")
-                password = githubProperties['gpr.key'] ?: System.getenv("")
-            }
-        }
-    }
-
-   ......
+  pod 'UnumIDWebWallet'
+end
 ```
 
-In the app level build.gradle add the reference to the SDK
+Then to import the framework, all you have to do is:
 
-```groovy
-implementation "id.unum:UnumIdWebWallet:1.0.4"
+```swift
+import UnumIDWebWallet
 ```
 
 ### Performing User DID Association
 
-When a host application would like to link a user with existing credentials, the user DID association flow can be kicked off. This will require the userCode and the issuer DID to be passed. An optional value for the user email can be passed to help pre-fil data. An optional value of a color hex string can also be passed to help match the color of title bar with the app theme.
+When a host application would like to link a user with existing credentials, the user DID association flow can be kicked off. This will require the userCode and the issuer DID to be passed. An optional value for the user email can be passed to help pre-fil data. An optional value of a color can also be passed to help match the color of title bar with the app theme.
 
-``` kotlin
+``` swift
 /**
- * Method for launching the web wallet and performing the user DID association flow.
- * @param userCode: String The issuer created user code.
- * @param issuerDid: String The current issuer DID.
- * @param userEmail:String An optional value of the current user email to pre-fil the email input.
- * @param context: Context A provided context to launch the chrome activity.
- * @param toolBarColor: String An optional value to set the color of the chrome tool bar. This should be in hex form "#202020".
- */
-WebWallet.associate(userCode, issuerDid, userEmail, context, toolBarColor)
+Function for launching the web wallet and performing the user DID association flow.
+
+- parameter viewController UIViewController A provided view controller to launch the Web Wallet controller.
+- parameter parameters: Parameters Values used to setup the presentation.
+- parameter barTintColor: UIColor An optional value to set the color of the navigation bar.
+- parameter controlTintColor: UIColor An optional value to set the tint color of the controls.
+- parameter completion: (() -> Void)? An option completion when the presentation is finished.
+*/
+public static func associate(
+    on viewController: UIViewController,
+    with parameters: Parameters,
+    barTintColor: UIColor? = nil,
+    controlTintColor: UIColor? = nil,
+    completion: (() -> Void)? = nil
+)
 ```
 
 
 ### Opening a web wallet web auth window
 
-If the host app already has the full url required for showing the web wallet, the url can be passed to the WebWallet SDK to open the web wallet.  An optional value of a color hex string can also be passed to help match the color of title bar with the app theme.
+If the host app already has the full url required for showing the web wallet, the url can be passed to the WebWallet SDK to open the web wallet.  An optional value of a color can also be passed to help match the color of title bar with the app theme.
 
-``` kotlin
+``` swift
 /**
- * Method for launching a provided url in a chrome custom tab.
- * @param url:String The url to be launched.
- * @param context: Context A provided context to launch the chrome activity.
- * @param toolBarColor: String An optional value to set the color of the chrome tool bar. This should be in hex form "#202020".
- */
-WebWallet.launch(url, context, toolBarColor)
+Function for launching a provided url in-app browser.
+
+- parameter url: URL The url to be launched.
+- parameter viewController: UIViewController A provided view controller to launch the Web Wallet controller.
+- parameter barTintColor: UIColor An optional value to set the color of the navigation bar.
+- parameter controlTintColor: UIColor An optional value to set the tint color of the controls.
+- parameter completion: (() -> Void)? An option completion when the presentation is finished.
+*/
+public static func launch(
+    url: URL,
+    on viewController: UIViewController,
+    barTintColor: UIColor? = nil,
+    controlTintColor: UIColor? = nil,
+    completion: (() -> Void)? = nil
+)
 ```

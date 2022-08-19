@@ -19,6 +19,7 @@ module.exports = {
         'architecture',
         'deployment-overview',
         'privacy-and-security',
+        'schema',
       ],
     },
     {

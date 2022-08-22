@@ -8,12 +8,12 @@ slug: /schema
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-Unum ID enables securely sharing verified <a href="/terminology#credential"><Tip type="credential"/></a> data amongst network participants. While in theory this data can take any shape, a defined schema must be defined and followed for every credential type for the sake of all network participants.
+Unum ID enables securely sharing verified <a href="/terminology#credential"><Tip type="credential"/></a> data amongst network participants. While in theory this data can take any shape, a structured schema must be defined and followed for every credential type for the sake of all network participants.
 
 We opted to format our data using W3C's [Linked Data](https://www.w3.org/standards/semanticweb/data) serialized via [JSON-LD](https://www.w3.org/TR/json-ld11/). It gives us the structure to create a data validation framework along with a human readable vocabulary around the data. We feel this meets our goal to have a credential schema definition that is robust enough to encapsulate and define any data with the property of being easily displayed and validated.
 
 :::note
-JSON-LD is actually the syntax used in the W3C's [Verifiable Credential](https://www.w3.org/TR/vc-data-model/#json-ld) and [Decentralized Identifier](https://www.w3.org/TR/did-core/#json-ld) specs of which our data network is built around.
+JSON-LD is serialization the syntax used in the W3C's [Verifiable Credential](https://www.w3.org/TR/vc-data-model/#json-ld) and [Decentralized Identifier](https://www.w3.org/TR/did-core/#json-ld) recommendations of which our data network is built around.
 :::
 
 Our entire human readable JSON-LD [context](https://www.w3.org/TR/json-ld11/#the-context) semantics file can be download and viewed via, https://schema.unumid.co/context. The context file serves as a building block for the basis for the shared vocabulary that ultimately make up our credential data schemas. However more than likely as an <Tip type="issuer"/> or <Tip type="verifier"/> you want to know what is the schema for a particular credential type.

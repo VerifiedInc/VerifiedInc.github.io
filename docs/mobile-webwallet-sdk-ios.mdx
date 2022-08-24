@@ -17,7 +17,7 @@ This is a lightweight, fully native SDK that allows a host app to perform web wa
 **Before you begin:** You need to be registered as Unum ID customer to use this SDK.
 
 :::note
-An example project using this SDK can be found [here](https://github.com/UnumID/UnumIdWebAuth-Android/). This serves as a useful technical reference.
+An example project using this SDK can be found [here](https://github.com/UnumID/UnumIDWebWallet-iOS). This serves as a useful technical reference.
 :::
 
 ## Overview
@@ -31,8 +31,9 @@ Add the SDK to your project
 Cocoapods - Add the SDK to your `Podfile` and run `pod install`
 
 ```ruby
+source 'https://github.com/CocoaPods/Specs.git'
+
 target 'YourApp' do
-  # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
   pod 'UnumIDWebWallet'
@@ -47,7 +48,9 @@ import UnumIDWebWallet
 
 ### Performing User DID Association
 
-When a host application would like to link a user with existing credentials, the user DID association flow can be kicked off. This will require the userCode and the issuer DID to be passed. An optional value for the user email can be passed to help pre-fil data. An optional value of a color can also be passed to help match the color of title bar with the app theme.
+More details on the <Tip type="DID"/> (`did`) association process can be found [here](https://docs.unumid.co/quick-start-guide#associate-users-with-dids).
+
+When a host application would like to link a user with existing <Tip type="credential">credentials</Tip>, the user <Tip type="DID"/> (`did`) association flow can be kicked off. This will require the userCode and the <Tip type="issuer">issuer</Tip> <Tip type="DID"/> (`did`) to be passed. An optional value for the user email can be passed to help prefill data. An optional value of a color can also be passed to help match the color of title bar with the app appearance.
 
 ``` swift
 /**

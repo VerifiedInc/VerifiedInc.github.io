@@ -52,18 +52,55 @@ For the most current version, visit [here](https://github.com/UnumID/UnumIDWebWa
 
 More details on the <Tip type="DID"/> (`did`) association process can be found [here](https://docs.unumid.co/quick-start-guide#associate-users-with-dids).
 
-When a host application would like to link a user with existing <Tip type="credential">credentials</Tip>, the user <Tip type="DID"/> (`did`) association flow can be kicked off. This will require the userCode and the <Tip type="issuer">issuer</Tip> <Tip type="DID"/> (`did`) to be passed. An optional value for the user email can be passed to help prefill data. An optional value of a color hex string can also be passed to help match the color of title bar with the app theme.
+When a host application would like to perform the credential share flow for the current user, they can do so by calling the `performVerification` method. This will initiate the following flow:
+ - Allow the user to register or log into the UnumID Wallet.
+ - Check to see if the user already has the required credentials.
+ - If the required credentials are found, they will be shared.
+ - If the required credentials are not found, then the user will be taken through the hyperverge verification flow.
+ - Newly created credentials are added to the user's UnumId Wallet and shared.
 
 ``` kotlin
 /**
- * Method for launching the web wallet and performing the user DID association flow.
- * @param userCode: String The issuer created user code.
- * @param issuerDid: String The current issuer DID.
- * @param userEmail:String An optional value of the current user email to prefill the email input.
+ * Method for performing verification for the current user.
+ * @param appId: The hyperverge appId.
+ * @param appKey: The hyperverge appKey.
+ * @param workflowId: The hyperverge workflowId.
+ * @param transformationId: The hyperverge transformationId.
  * @param context: Context A provided context to launch the chrome activity.
- * @param toolBarColor: String An optional value to set the color of the chrome tool bar. This should be in hex form "#202020".
+ * @param customScheme: The customScheme to be used for the callback flow.
  */
-WebWallet.associate(userCode, issuerDid, userEmail, context, toolBarColor)
+WebWallet.performVerification(appId, appKey, workflowId, transformationId, context, customScheme)
+```
+### Deep Links
+
+Deep links will be used by the SDK to provide a callback from the UnumID Wallet. Deep links will need to be registered in the host application. The custom scheme specified in the manifest file will also need to be passed to the `performVerification` method call.
+
+
+```xml
+<activity android:name=".MainActivity">
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+            android:host="auth"
+            android:scheme="{yourScheme}" />
+    </intent-filter>
+</activity>
+```
+
+Finally, any received deep links will need to be passed back to the WebWallet SDK. In the `onCreate` method of the activity receiving the deep link add the following code:
+
+```kotlin
+val intent = intent
+val data = intent.data
+if (data != null) {
+    if (data.toString().contains("://auth") == true) {
+        handleAuthResponse(data, this)
+    }
+}
 ```
 
 

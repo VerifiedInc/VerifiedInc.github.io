@@ -136,16 +136,17 @@ The DID and public keys are nonsensitive, but **you should store the private key
 You need to provide:
 
 1. your <Tip type="issuer"/>  <Tip type="DID"/> 
-2. your issuer signing private key
+2. the target subject DID to receive the credentials
 3. data array about the <Tip type="credential"/>s for the <Tip type="subject"/>
-4. the target subject DID to receive the credentials
+4. your issuer signing private key
 
-The first two are returned by [`registerIssuer`](#registerissuer). The third (credential types) is part of what verifiers use to <Tip type="request"/> credentials from users. For example, Hooli FinTech might request a credential of type `KYCVerification`, issued by ACME Bank. The fourth (data about the subject) can be any valid JSON.
+The first and fourth inputs are returned by [`registerIssuer`](#registerissuer). The second is the target `subject` DID whom to issue the credentials to. 
+The third, data about the subject, must comply with our credential [schema](/schema) definitions.
 
 You can optionally provide:
 
 5. expiration date
-6. decline issuing credentials to self (*not recommended*)
+6. boolean to issue credentials to self (*default value of true is recommended*)
 
 :::note
 An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it (see [`updateCredentialStatuses`](#updatecredentialstatuses)).
@@ -160,7 +161,7 @@ While we store the encrypted credentials, only the entity with the corresponding
 Each issued credential contains a credential `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
 
 :::note
-In the full `credential` objects that are returned, there are also `id` fields within `credentialSubject` and `credentialStatus`, but these are different. They refer to the subject <Tip type="DID"/> and credential status identifiers, respectively, as defined in the emerging [W3C Verifiable Credential specification](https://www.w3.org/TR/vc-data-model/#credential-subject).
+In the full `credential` objects that are returned there are also `id` fields within `credentialSubject` and `credentialStatus`, but these are different. They refer to the subject <Tip type="DID"/> and credential status identifiers, respectively, as defined in the emerging [W3C Verifiable Credential specification](https://www.w3.org/TR/vc-data-model/#credential-subject).
 :::
 
 :::important
@@ -208,7 +209,7 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 ---
 
 ### `reEncryptCredentials`
-> Re-encrypt valid, non-expired credentials <Tip type="credential"/>s for a <Tip type="subject"/>.
+> Re-encrypt valid, non-expired <Tip type="credential"/>s for a <Tip type="subject"/>.
 
 You need to provide:
 
@@ -221,7 +222,7 @@ You need to provide:
 The first four inputs are returned by [`registerIssuer`](#registerissuer). The fifth is the target subject you have issued credentials to previously using [`issueCredentials`](#issuecredentials).
 
 :::important
-It is necessary that the credentials you are wanting to re-encrypt were issued with the default value for `issueCredentialsToSelf` of [`issueCredentials`](#issuecredentials), which is `true`. It necessary that the subject was issued credentials with that setting so that you have access to re-encrypt for target subject.
+To ensure this function be used with total effectiveness it is necessary that the credentials you are wanting to re-encrypt were originally issued with the default value for `issueCredentialsToSelf` of [`issueCredentials`](#issuecredentials), which is `true`.
 :::
 
 You can optionally provide:
@@ -229,7 +230,7 @@ You can optionally provide:
 6. a list of credential types (if not provided then all credentials for the subject are re-encrypted)
 
 :::note
-The main use case is in the `/userCredentialRequests` required Issuer endpoint defined in our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188) which servers as the interface for users to request credentials to be re-encrypted, akin to re-issued, to new devices. The credential types input, more often than not, will come directly for the credential requests
+The main use case for this function is in the `/userCredentialRequests` required Issuer endpoint defined in our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188) which servers as the interface for users to request credentials to be re-encrypted, akin to re-issued, to new devices. The `credentialTypes` input will come directly from the credential requests.
 :::
 
 :::important

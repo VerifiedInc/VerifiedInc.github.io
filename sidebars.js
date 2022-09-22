@@ -19,6 +19,7 @@ module.exports = {
         'architecture',
         'deployment-overview',
         'privacy-and-security',
+        'schema',
       ],
     },
     {
@@ -69,6 +70,7 @@ module.exports = {
       collapsed: false,
       items: [
         'developer-demo',
+        'idv-demo',
         'acme-demo',
         'hooli-demo',
       ]

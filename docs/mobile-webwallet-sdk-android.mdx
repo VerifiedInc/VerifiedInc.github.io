@@ -14,8 +14,6 @@ import Tip from '../src/components/Tip';
 
 This is a lightweight, fully native SDK that allows a host app to perform web wallet authentication functionality in a chrome browser. It works with both Kotlin and Java native apps.
 
-**Before you begin:** You need to be registered as Unum ID customer to use this SDK.
-
 :::note
 An example project using this SDK can be found [here](https://github.com/UnumID/UnumIdWebAuth-Android/). This serves as a useful technical reference.
 :::
@@ -45,19 +43,23 @@ android {
 In the app level build.gradle add the reference to the SDK
 
 ```groovy
-implementation "id.unum:webwallet-android:1.0.5"
+implementation "id.unum:webwallet-android:(insert latest version)"
 ```
+
+For the most current version, visit [here](https://github.com/UnumID/UnumIDWebWallet-android/packages/1603052)
 
 ### Performing User DID Association
 
-When a host application would like to link a user with existing credentials, the user DID association flow can be kicked off. This will require the userCode and the issuer DID to be passed. An optional value for the user email can be passed to help pre-fil data. An optional value of a color hex string can also be passed to help match the color of title bar with the app theme.
+More details on the <Tip type="DID"/> (`did`) association process can be found [here](https://docs.unumid.co/quick-start-guide#associate-users-with-dids).
+
+When a host application would like to link a user with existing <Tip type="credential">credentials</Tip>, the user <Tip type="DID"/> (`did`) association flow can be kicked off. This will require the userCode and the <Tip type="issuer">issuer</Tip> <Tip type="DID"/> (`did`) to be passed. An optional value for the user email can be passed to help prefill data. An optional value of a color hex string can also be passed to help match the color of title bar with the app theme.
 
 ``` kotlin
 /**
  * Method for launching the web wallet and performing the user DID association flow.
  * @param userCode: String The issuer created user code.
  * @param issuerDid: String The current issuer DID.
- * @param userEmail:String An optional value of the current user email to pre-fil the email input.
+ * @param userEmail:String An optional value of the current user email to prefill the email input.
  * @param context: Context A provided context to launch the chrome activity.
  * @param toolBarColor: String An optional value to set the color of the chrome tool bar. This should be in hex form "#202020".
  */
@@ -67,7 +69,7 @@ WebWallet.associate(userCode, issuerDid, userEmail, context, toolBarColor)
 
 ### Opening a web wallet web auth window
 
-If the host app already has the full url required for showing the web wallet, the url can be passed to the WebWallet SDK to open the web wallet.  An optional value of a color hex string can also be passed to help match the color of title bar with the app theme.
+If the host app already has the full url required for loading the Unum ID wallet in the browser, the url can be passed to the WebWallet SDK to open a chrome browser window to that URL.  An optional value of a color hex string can also be passed to help match the color of title bar with the app theme.
 
 ``` kotlin
 /**

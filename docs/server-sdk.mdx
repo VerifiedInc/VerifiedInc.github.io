@@ -302,6 +302,8 @@ You can optionally provide:
 
 6. a list of credential types (if not provided then all credentials for the subject are re-encrypted)
 
+If the verification step fails and an error will be thrown. The response body contains all credentials that were reEncryptedSuccessfully to target subjectDid.
+
 :::note
 The main use case for this function is in the `/userCredentialRequests` required Issuer endpoint defined in our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188) which servers as the interface for users to request credentials to be re-encrypted, akin to re-issued, to new devices. The `credentialTypes` input will come directly from the credential requests.
 :::

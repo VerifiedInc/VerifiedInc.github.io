@@ -1,8 +1,8 @@
 ---
-id: mobile-sdk-flutter
-title: Mobile SDK - Flutter
-sidebar_label: Flutter
-slug: /mobile-sdk-flutter
+id: mobile-webwallet-sdk-flutter
+title: Mobile WebWallet SDK - Flutter
+sidebar_label: Flutter WebWallet
+slug: /mobile-webwallet-sdk-flutter
 ---
 
 import Tabs from '@theme/Tabs';
@@ -18,7 +18,7 @@ This is a cross-platform SDK that allows a host app to receive and store <Tip ty
 
 ### Minimum Requirements
 - **Android 6.0 (Marshmallow) and above**
-- **iOS 13 and above**
+- **iOS 15 and above**
 - **English language** (internationalization coming soon)
 
 ### Required Permissions
@@ -37,7 +37,7 @@ Install the flutter plugin by adding it to your pubspec.yaml file.
 dependencies:
   unumidflutter:
       git:
-        url: git@github.com:UnumID/unumid-sdk-flutter.git
+        url: git@github.com:UnumID/UnumIDWebWallet-Flutter.git
 ```
 
 ## Usage
@@ -47,24 +47,30 @@ dependencies:
 This function initializes the Unum ID SDK, allowing the host app to use it. It must be called before any other SDK functionality can be used. In most cases, it should be called when the application loads/comes to the foreground. Once onSuccess is returned, the developer will then be able to retrieve the saved did.
 
 ```dart
-import 'package:unumidflutter/unumidflutter.dart';
+import 'package:webwallet/webwallet.dart';
 
-Future<void> _sdkInit() async {
-        final prefs = await SharedPreferences.getInstance();
-        var userId = currentUserID;
-        var did = currentUserDid; // can be empty
-        var customerId = "YourCustomerId";
-        var apiKey = "YourApiKey";
-        var results = await Unumidflutter.initialize(userId, did, customerId, apiKey);
-
-        // returned results will be the user DID
-        print("Result: " + results);
-        if (results.toString().isNotEmpty) {
-          // store DID for future reference
-        }
-      }
-
-      _sdkInit();
+ @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('WebWallet plugin example app'),
+        ),
+        body: Center(
+          child: TextButton(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+          ),
+          onPressed: () {
+            _webwalletPlugin.launchWebWallet(true, "userCode", "test@unumid.co", "issuerDid");
+           },
+          child: Text('Launch WebWallet')
+        ),
+        ),
+      ),
+    );
+  }
+}
 ```
 
 ### SDK handle deeplink

@@ -1,0 +1,150 @@
+---
+id: verifier-service
+title: Verifier Service
+sidebar_label: Verifier Service
+slug: /verifier-service
+---
+
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
+
+The Verifier Service is a custodial and managed interface to facilitate handling <Tip type="verifier">Verifier</Tip> operations.
+
+## Overview
+This is a custodial service that is implemented with a security first architecture. It manages your keys and leverages the Server SDK to handle all cryptographic operations on your behalf. The result is a greatly simplified process of being a Verifier and getting instantaneous access to data shared by <Tip type="subject">subjects</Tip>.
+
+:::note
+If you would like to setup your Verifier integration in a non-custodial manner, please see the [Server SDK](/server-sdk) documentation.
+:::
+
+### Setup
+In order to use the Verifier Service you will need to create a Verifier in our self service [dashboard](https://dashboard.unumid.co/). *Please reference the [Quick Start](/quick-start-guide#dashboard) guide for how to use the dashboard.*
+
+### Authentication
+All requests require an Authorization header token that contains your Verifier's `apiKey`. 
+
+## Functionality
+Information of the API methods to create  <Tip type="request">requests</Tip> and verify <Tip type="presentation">presentations</Tip>.
+
+Jump to:
+- [Create a Request](#create-a-request)
+- [Get Presentation Data](#get-presentation-data)
+
+---
+
+### Create a Request
+> Create a <Tip type="request"/> to be displayed or sent to a <Tip type="subject"/>.
+
+You need to provide:
+
+1. credential request(s)
+
+A (credential requests) encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.unumid.co/types/interfaces/credentialrequest.html) objects (defined in the [Unum ID generic types project](https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117)):
+
+```typescript title="CredentialRequest"
+{
+  type: string; // credential type. This must match type of previously issued credential.
+  issuers: string[]; // list of DIDs for acceptable issuers. If multiple, any one is acceptable.
+  required?: boolean; // if credential is required (default is true)
+}
+```
+
+If you list multiple <Tip type="issuer">issuers</Tip>, the user can include a credential issued by *any one* of those listed.
+
+You can optionally provide:
+
+2. expiration date as a Unix timestamp in seconds since the epoch.
+3. metadata
+
+:::caution
+Your Verifier ApiKey provided via the Authorization request header grants you and only you access to the encrypted data. Please keep this key secure.
+:::
+
+The response body consists of enriched information regarding entities referenced in the request. For example, the verifier's encryption and signing [PublicKeyInfo](https://docs.unumid.co/types/interfaces/publickeyinfo.html) is included to facilitate verifying the presentation request's signature and submitting and encrypted presentation in response.
+```typescript title="PublicKeyInfo"
+{
+    "id": string, // key id
+    "type": "secp256r1" || "RSA, // key type
+    "status": "valid" || "invalid", // key status
+    "encoding": "pem" || "base58", // key encoding
+    "publicKey": string, // public key value
+    "createdAt": Date, // when key was created 
+    "updatedAt": Date, // when key status was last updated
+}
+```
+
+#### Request Body
+```typescript
+"credentialRequests": CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.
+"expiresAt"?: number, // (optional) when PresentationRequest will no longer be valid (Unix timestamp). Default is 10 minutes after creation.
+"metadata"?: object // (optional) any additional data to include in PresentationRequest
+```
+
+#### Response Body: [`PresentationRequestPostDto`](https://docs.unumid.co/types/interfaces/presentationrequestpostdto.html)
+```typescript title="PresentationRequestPostDto"
+{
+  "presentationRequest": {
+    "uuid": string, // identifies PresentationRequest in Unum ID database
+    "createdAt": string, // when PresentationRequest was created (ISO 8601 date/time)
+    "updatedAt": string, // when PresentationRequest was last updated (ISO 8601 date/time). Should always be same as createdAt.
+    "expiresAt": string, // when PresentationRequest will no longer be valid (ISO 8601 date/time)
+    "verifier": string, // your verifier DID
+    "credentialRequests": CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.
+    "proof": Proof, // acryptographic proof created by signing PresentationRequest with your verifier signing private key. Can be used to verify PresentationRequest.
+    "metadata": object // any additional data to include in PresentationRequest
+  },
+  "verifier": {
+      "name": string, // human readable name for verifier. Displayed to users in mobile apps.
+      "did": string, // your verifier DID
+      "encryptionPublicKey": PublicKeyInfo, // PublicKeyInfo for the RSA key
+      "signingPublicKey": PublicKeyInfo // PublicKeyInfo for the secp256r1 key
+  },
+  "issuers": {
+      "IssuerDid:string": { // map keyed on issuer DID(s) that issued requested credential(s)
+        "name": string, // human readable name for issuer
+        "did": string, // issuer DID
+        "cardImageUrl": string // issuer's card image URL
+      }
+  },
+  /* You send this to a user with the Web SDK: */
+  // highlight-next-line
+  "deeplink": string, // deep link (URL) that can be used to trigger intended mobile app to load PresentationRequest
+  /* You display this to a user with the Web SDK */
+  // highlight-next-line
+  "qrCode": string // QR code representation of deep link (encoded as data URL)
+}
+```
+
+---
+
+### Get Presentation Data
+> Get verified <Tip type="presentation"/> data shared by <Tip type="subject"/>.
+
+When subjects respond to presentations requests the encrypted data is sent, verified and stored in the Verifier Service. This interface gives you access to the decrypted data the user shared.
+
+You need to provide:
+
+1. the presentation's `uuid` that was returned to your client via your callback handler.
+
+:::important
+Unum ID only ever stores encrypted presentation data and is deleted after 5 minutes of the corresponding Verifier doing the initial data retrieval.
+:::
+
+#### Request Body
+```typescript
+"uuid": string, // uuid of the encrypted presentation data to retrieve
+```
+
+#### Response Body: [`DecryptedPresentation`](https://docs.unumid.co/server-sdk-typescript/interfaces/decryptedpresentation.html)
+```typescript title="DecryptedPresentation"
+{
+  "isVerified": boolean; // whether the presentation is valid
+  "type": 'VerifiablePresentation' | 'DeclinedPresentation' // type of presentation. DeclinedPresentation means user declined request and the submitted presentation's VerifiableCredential attribute was undefined or an empty array.
+  "presentation": Presentation, // decrypted Presentation object
+  "message"?: string; // (optional) included if isVerified is false. Explains why verification failed.
+}
+```
+
+You can decide what to do with the result of the verification. We recommend using the Server SDK's `extractCredentialData` to facilitate getting the data from the presentation.
+
+---

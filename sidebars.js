@@ -37,7 +37,17 @@ module.exports = {
       /* should change when we have lots of docs */
       collapsed: false,
       items: [
-        'server-sdk',
+        {
+          type: 'category',
+          label: 'Backend',
+          /* should change when we have lots of docs */
+          collapsed: false,
+          items: [
+            'server-sdk-overview',
+            'verifier-service',
+            'server-sdk',
+          ],
+        },
         {
           type: 'category',
           label: 'Mobile SDK',

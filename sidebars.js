@@ -11,7 +11,7 @@ module.exports = {
     {
       type: 'category',
       label: 'Introduction',
-      /* should change when we have lots of docs */
+      /* should collapse when we have lots of docs */
       collapsed: false,
       items: [
         'about-unum-id',
@@ -25,7 +25,7 @@ module.exports = {
     {
       type: 'category',
       label: 'Guides',
-      /* should change when we have lots of docs */
+      /* should collapse when we have lots of docs */
       collapsed: false,
       items: [
         'quick-start-guide',
@@ -34,14 +34,14 @@ module.exports = {
     {
       type: 'category',
       label: 'Components',
-      /* should change when we have lots of docs */
+      /* should collapse when we have lots of docs */
       collapsed: false,
       items: [
         {
           type: 'category',
           label: 'Backend',
-          /* should change when we have lots of docs */
-          collapsed: false,
+          /* should collapse when we have lots of docs */
+          collapsed: true,
           items: [
             'server-sdk-overview',
             'verifier-service',
@@ -51,8 +51,8 @@ module.exports = {
         {
           type: 'category',
           label: 'Mobile SDK',
-          /* should change when we have lots of docs */
-          collapsed: false,
+          /* should collapse when we have lots of docs */
+          collapsed: true,
           items: [
             'mobile-sdk-overview',
             'mobile-sdk-android',
@@ -65,7 +65,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Web SDK',
-          collapsed: false,
+          collapsed: true,
           items: [
             'web-sdk-overview',
             'web-sdk-react'

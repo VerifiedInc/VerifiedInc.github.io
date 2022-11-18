@@ -74,8 +74,8 @@ module.exports = {
         'idv-demo',
         'acme-demo',
         'hooli-demo',
-        'kredita-demo-ios',
-        'hooli-demo-ios'
+        'kredita-demo',
+        'hooli-demo-idv'
       ]
     },
   ],

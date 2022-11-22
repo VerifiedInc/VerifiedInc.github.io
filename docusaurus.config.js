@@ -101,12 +101,12 @@ module.exports = {
               to: '/hooli-demo',
             },
             {
-              label: 'Kredita Demo iOS',
-              to: '/kredita-demo-ios'
+              label: 'Kredita Demo',
+              to: '/kredita-demo'
             },
             {
-              label: 'Hooli Demo iOS',
-              to: '/hooli-demo-ios'
+              label: 'Hooli Demo IDV',
+              to: '/hooli-demo-idv'
             }
           ],
         },

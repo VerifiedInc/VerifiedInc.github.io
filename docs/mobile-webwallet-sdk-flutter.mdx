@@ -35,9 +35,9 @@ Install the flutter plugin by adding it to your pubspec.yaml file.
 
 ```yaml
 dependencies:
-  unumidflutter:
-      git:
-        url: git@github.com:UnumID/UnumIDWebWallet-Flutter.git
+  webwallet:
+    git:
+      url: git@github.com:UnumID/UnumIDWebWallet-Flutter.git
 ```
 
 ## Usage
@@ -73,25 +73,43 @@ import 'package:webwallet/webwallet.dart';
 }
 ```
 
-### SDK handle deeplink
+### SDK Handle deeplink
 
-Used to manually handle a link.
-
-```dart
-import 'package:unumidflutter/unumidflutter.dart';
-
-Unumidflutter.handleLink("deepLinkUri");
-```
-
-
-### SDK QR Code Scanner
-
-Used to scan a QR code using the build in scanner. If you would like to use a custom scanner, simple send the received url to the handleLink api.
+An example of handling deeplinks
 
 ```dart
-import 'package:unumidflutter/unumidflutter.dart';
 
-Unumidflutter.scanQrCode();
+import 'package:webwallet/webwallet.dart';
+
+class WebWalletWidget extends StatelessWidget {
+  const WebWalletWidget({super.key});
+  @override
+  Widget build(BuildContext context) {
+    DeepLinkBloc _bloc = Provider.of<DeepLinkBloc>(context);
+    final _webwalletPlugin = Webwallet();
+    return StreamBuilder<String>(
+        stream: _bloc.state,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: Text('No deep link was used'));
+          } else {
+            return Center(
+                child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blue),
+                      ),
+                      onPressed: () {
+                         _webwalletPlugin.launchWebWallet(true, "userCode", "test@unumid.co", "issuerDid");
+                      },
+                      child: Text("${snapshot.data}"),
+                    )));
+          }
+        });
+  }
+}
 ```
 
 ### SDK Logging
@@ -104,42 +122,85 @@ import 'package:unumidflutter/unumidflutter.dart';
 Unumidflutter.turnOnLogging();
 ```
 
-### SDK Logout
+### An example of passing parameters
 
-Log the current user out of the SDK.
-
-```dart
-import 'package:unumidflutter/unumidflutter.dart';
-
-Unumidflutter.logout();
-```
-
-### SDK Event Listener
-
-If the client application would like to be notified of SDK events (like presentation requests), then the `FlutterEventLister` can be set.
+You can easily pass parameters to launch the WebWallet from the code.
 
 ```dart
-import 'package:unumidflutter/unumidflutter.dart';
 
-Unumidflutter.setupEventListener(FlutterEventListener listener);
+@override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text('WebWallet plugin example app'),
+      ),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(children: [
+                TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter user code',
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        userCode = text;
+                      });
+                    }),
+                const SizedBox(height: 10),
+                TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter user email',
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        userEmail = text;
+                      });
+                    }),
+                const SizedBox(height: 10),
+                TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter issuer did',
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        issuerDid = text;
+                      });
+                    })
+              ])),
+          TextButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+            ),
+            onPressed: () {
+              if (Platform.isAndroid) {
+                _webwalletPlugin.androidSetStateValues(
+                    "issuer", userCode, userEmail);
+                _webwalletPlugin.androidPerformVerification("appId", "appKey",
+                    "workflowId", "transactionId", "deepLinkScheme");
+              } else {
+                _webwalletPlugin.launchWebWallet(true, userCode, userEmail,
+                    issuerDid, Colors.blue.toHex(), Colors.white.toHex());
+              }
+            },
+            child: const Text('Launch WebWallet'),
+          ),
+        ],
+      )),
+    ));
+  }
+}
+
 ```
-
-### SDK Presentation Response
-
-If the client application is handling presentation requests with a custom UI, then the response can be sent back to the SDK with `handlePresentationResponse`.
-This should include an enum of the response (Accept, Decline, FLag), and the original JSON payload. However, the payload can be modified by the client application to only include selected credentials in the case that some credentials are optional, or there are multiple values for same credential type.
-
-```dart
-import 'package:unumidflutter/unumidflutter.dart';
-
-Unumidflutter.handlePresentationResponse(String response, String json);
-```
-
-## Handling Multiple Users
-
-Each user is identified by some user ID in your system and by a <Tip type="DID"/> in the Unum ID ecosystem. You simply need to store an association between each user ID and DID. That way, when your host app has a particular user ID (for example once a user is logged into your existing account system), it can pass the corresponding DID to the SDK.
-
-If you don't have existing user IDs, you *could* use the DIDs themselves as user IDs. However, we recommend using separate identifiers (internal to your company), to distinguish them from DIDs, which are global to the Unum ID ecosystem.
 
 :::note
 The technical details of DIDs are not relevant to deploying or using Unum ID. You can think of DIDs as identifiers in the normal sense — unique, random strings of characters like UUIDs.
@@ -154,17 +215,3 @@ DIDs are the *only* identifiers the SDK understands, so it relies entirely on th
 
 For example, suppose Users 1 and 2 are associated with DIDs 1 and 2, respectively. If User 1 is using the host app, but the app passes DID 2 to the SDK, the SDK will give User 1 access to to User 2's data.
 :::
-
-### Example Flow
-
-1. **New User 1 logs into host app.**
-    - SDK is initialized with no DID.
-    - SDK returns newly generated DID 1.
-    - Host app stores DID 1 and associates it with User 1.
-2. **New User 2 logs into host app.**
-    - SDK is initialized with no DID.
-    - SDK returns newly generated DID 2.
-    - Host app stores DID 2 and associates it with User 2.
-3. **Returning User 1 logs into host app.**
-    - Host app retrieves DID 1 and includes it in SDK initialization.
-    - SDK recognizes this is a returning user and does not generate a new DID.

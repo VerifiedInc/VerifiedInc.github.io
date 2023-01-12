@@ -113,7 +113,7 @@ The response body consists of Credential objects with the plaintext user data.
     "type": string, // credential type
     "issuer": string, // credential issuer brandId
     "issuanceDate": number, // when credential was created as a milliseconds since epoch unix timestamp
-    "expirationDate": number, // when credentials expires as a milliseconds since epoch unix timestamp
+    "expirationDate"?: number, // when credentials expires as a milliseconds since epoch unix timestamp
     "data": Map<string, any> // credential data map that matches the credential type's JSON Schema definition
 }
 ```
@@ -133,5 +133,60 @@ To facilitate extracting the credential data we recommend leveraging the Schema 
 ---
 
 ### Issue Credentials
+> Issue <Tip type="credential"/>s to a <Tip type="user"/>.
+
+**Method**: `POST` <br />
+**Path**: `/credentials`
+
+You need to provide:
+
+1. Credentials data array
+2. Either a phone and/or email attribute
+
+Data about the user, must comply with our credential [schema](/schema) definitions.
+
+An exmaple Credentials object is below:
+
+:::info
+The Credentials object used as input is slightly different the resultant Credential object in this response body and also found in a <Tip type="presentation"/>  documented in the [Get Presentation Data](#get-presentation-data) section.
+:::
+
+```typescript title="Credentials"
+{
+  "type": string, // credential type
+  "data": Map<string, any> // credential data map that matches the credential type's JSON Schema definition
+  "expirationDate?": number // when the expires as a milliseconds since epoch unix timestamp; optional
+}
+```
+
+:::note
+An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it. See [Update Credentials](#update-credentials) *coming soon*.
+:::
+
+:::important
+Credential data is stored securely via a data privacy vault that encrypts and tokenizes the data. The data is only retrieved and decrypted for the brand that matches whom the <Tip type="presentation"/> was created for and agreed to share with by the <Tip type="user"/>.
+:::
+
+#### Parameters
+```typescript
+"credentials": Credentials[], // a list of one or more Credentials objects
+"email"?: string, // user's email address; optional if phone is provided
+"phone"?: string, // user's phone number; optional if email is provided
+```
+
+#### Response Body: [`Credential`](https://docs.unumid.co/types/interfaces/credentialpb.html) Array
+```typescript title="Credential[]"
+[{
+  "id": string, // credential id
+  "type": string, // credential type
+  "email": string, // user's email address if provided
+  "phone": string, // user's phone number if provided
+  "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
+  "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
+  "expirationDate?": number // when the expires as a milliseconds since epoch unix timestamp; optional
+}]
+```
+
+The created and issued credentials contains an `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
 
 ---

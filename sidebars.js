@@ -16,10 +16,8 @@ module.exports = {
       items: [
         'about-unum-id',
         'terminology',
-        'architecture',
-        'deployment-overview',
-        'privacy-and-security',
         'schema',
+        'faq-info',
       ],
     },
     {
@@ -37,17 +35,19 @@ module.exports = {
       /* should collapse when we have lots of docs */
       collapsed: false,
       items: [
-        {
-          type: 'category',
-          label: 'Backend',
-          /* should collapse when we have lots of docs */
-          collapsed: true,
-          items: [
-            'server-sdk-overview',
-            'verifier-service',
-            'server-sdk',
-          ],
-        },
+        'api-overview',
+        // {
+        //   type: 'category',
+        //   label: 'Backend',
+        //   /* should collapse when we have lots of docs */
+        //   collapsed: true,
+        //   items: [
+        //     'backend-overview',
+        //     'issuer-service',
+        //     'verifier-service',
+        //     'server-sdk',
+        //   ],
+        // },
         {
           type: 'category',
           label: 'Mobile SDK',

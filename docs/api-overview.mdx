@@ -1,0 +1,817 @@
+---
+id: api-overview
+title: API
+sidebar_label: API
+slug: /api-overview
+---
+
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
+
+Interfacing with the Unum ID API lets your company act as one or more <Tip type="issuer">issuers</Tip> and/or <Tip  type="verifier">verifiers</Tip>.
+
+**Before you begin:** Please read the [deployment overview](deployment-overview#api-overview). You need to be registered as an Unum ID customer, and you need to register at least one issuer or verifier. (You can register zero to many of each, depending on your use case.) You'll receive issuer and verifier API keys to use with this SDK.
+
+:::note
+Auto generated SDK documentation can be found [here](https://docs.unumid.co/api-overview-typescript/index.html). Similar documentation for object definitions can be found [here](https://docs.unumid.co/types/index.html). The auto generated documentation is more granular then this page, however less styled.
+:::
+
+## Overview
+The API uses the `UnumDto` type to facilitate handling many response body types, while providing a reliable structure to access the result body (and, importantly, the rolling JWT `authToken`).
+
+```typescript title="UnumDto"
+{
+  "authToken": string; // The JWT which is used by the SDK to authenticate with UnumID's SaaS. This is periodically refreshed thus its value should be read and stored in every resultant function call. 
+  "body": T; // The placeholder for the function's response type is function specific. 
+}
+```
+
+### Authentication
+Every request detailed below requires a JWT bearer `authToken` as a first parameter (aside from registration calls which require an entity scoped ApiKey). This is used to authenticate requests to the Unum ID cloud. This auth token is updated on every subsequent function call and should be read via the `authToken` attribute and persisted accordingly for later requests. 
+
+### Errors
+Errors returned by the Unum ID cloud will also be wrapped in the `UnumDto` object so that the potentially updated `authToken` can be retrieved. Validation errors, which are created prior to any calls to Unum ID, will be of type `Error` and are thrown. Because in this case a network call is never made, there's no potential new `authToken` to pass back. For this reason, **we recommend wrapping all SDK calls in a try/catch.**
+
+### Distribution
+This project is open [source](https://github.com/UnumID/api-overview-typescript) and publicly published on the official npm [registry](https://www.npmjs.com/package/@unumid/api-overview). For example it can be pulled with: 
+```
+npm i @unumid/api-overview
+``` 
+or 
+```
+yarn add @unumid/api-overview
+```
+
+### Global Dependencies
+- [Node.js](https://nodejs.org/en/) v14.0.0 or higher (preferably v14.15.0 or higher)
+- [Yarn](https://yarnpkg.com/)
+
+### Usage
+The following environment variables are required to be set to use the SDK properly.
+- `UNUM_ENV`
+- `UNUM_DEBUG`
+- `LOG_LEVEL`
+
+#### UNUM_ENV
+One needs to provide the SDK the with an environment variable to denote its run time environment, i.e. `production`. For the Typescript SDK this done via the `UNUM_ENV` environment variable. The three relevant values are: `production`, `sandbox`, `dev`. You need to use one of these exactly in order for the SDK to communicate with Unum ID's SaaS. The default value if nothing is supplied is `sandbox`.
+
+#### UNUM_DEBUG
+The `UNUM_DEBUG` environment variable defaults to `false`. Setting to `true` enables logging of decrypted presentations at the `debug` level. Due to presentations containing potentially sensitive information it is *not* advised to use in a production environment. Note: the `LOG_LEVEL` environment variable also needs to be set to at least `debug` level in order to be visible.
+
+#### LOG_LEVEL
+The default logs level is `info`. You can change this to `debug` for more information (set the environment variable `LOG_LEVEL = debug`). The logs default to `stdout`, so you can easily aggregate them from disk using the log provider of your choice.
+
+We use standard NPM log levels. Learn more about these [here](https://github.com/winstonjs/winston#logging-levels).
+## Issuer
+You can use the API to act as an <Tip type="issuer"/>, for example to issue credentials and change credential statuses.
+
+Jump to:
+- [`registerIssuer`](#registerissuer)
+- [`issueCredentials`](#issuecredentials)
+- [`reEncryptCredentials`](#reencryptcredentials)
+- [`updateCredentialStatuses`](#updatecredentialstatuses)
+- [`revokeAllCredentials`](#revokeallcredentials)
+- [`verifySignedDid`](#verifysigneddid)
+- [`verifySubjectCredentialRequests`](#verifysubjectcredentialrequests)
+
+---
+
+### `registerIssuer`
+> Register an <Tip type="issuer"/> (corresponding to your customer UUID and issuer API key). 
+
+As a customer, you can register as many issuers as you like (or none at all), depending on your use case. Note, however, that you'll need a unique issuer API key for each one.
+
+The optional [VersionInfo](https://docs.unumid.co/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how a <a href="/terminology#subject"><Tip type="subject"/></a>'s [CredentialRequests](https://docs.unumid.co/types/interfaces/subjectcredentialrequests.html) should be routed to your application in order for the corresponding API version to preform verifications. This can be updated at later point from the Unum ID [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used.
+
+:::important
+You need to store the <Tip type="DID"/> (`did`) and values in encryption and signing key pairs (`keys`) object that this returns. You'll need these to issue credentials to users. 
+:::
+
+:::danger
+The DID and public keys are nonsensitive, but **you should store the private keys securely and *never* share them.**
+:::
+
+#### Parameters
+```typescript
+"apiKey": string // your issuer API key
+"url": string, // the base url of which UnumID's SaaS will interface with
+"versionInfo"?: VersionInfo[] // optional arrays of objects for how to contact specific versions of your issuer and subsequently the sever sdk. 
+```
+
+#### Response Body: [`RegisteredIssuer`](https://docs.unumid.co/api-overview-typescript/interfaces/registeredissuer.html)
+```typescript title="RegisteredIssuer"
+{
+  "uuid": string, // identifies issuer in Unum ID database
+  "customerUuid": string, // identifies customer in Unum ID database
+  /* To store: */
+  // highlight-next-line
+  "did": string, // identifies issuer in Unum ID ecosystem
+  "name": string, // human-readable name for issuer. Displayed to users in mobile apps when verifiers request credentials. Comes from the name of the ApiKey used to register the Issuer.
+  "createdAt": string, // when issuer was registered
+  "updatedAt": string, // when issuer was last updated
+  /* To store: */
+  // highlight-start
+  "keys": {
+    "signing": {
+      "id": string, // this is very helpful to identify the key pair. You need to store this.
+      "privateKey": string, // you use this to create signatures on credentials You need to store this.
+      "publicKey": string, // subjects and verifiers use this to verify your signatures on credentials. This is not so necessary to store because is publicly accessible.
+    }
+    "encryption": {
+      "id": string, // this is very helpful to identify the key pair. You need to store this.
+      "privateKey": string, // used to decrypted data. You need to store this.
+      "publicKey": string, // used for others to encrypt data. This is not so necessary to store because is publicly accessible.
+    }
+  }
+  // highlight-end
+}
+```
+
+---
+
+### `issueCredentials`
+> Issue <Tip type="credential"/>s to a <Tip type="subject"/>.
+
+You need to provide:
+
+1. your <Tip type="issuer"/>  <Tip type="DID"/> 
+2. the target subject DID to receive the credentials
+3. data array about the <Tip type="credential"/>s for the <Tip type="subject"/>
+4. your issuer signing private key
+
+The first and fourth inputs are returned by [`registerIssuer`](#registerissuer). The second is the target `subject` DID whom to issue the credentials to. 
+The third, data about the subject, must comply with our credential [schema](/schema) definitions.
+
+You can optionally provide:
+
+5. expiration date
+6. boolean to issue credentials to self (*default value of true is recommended*)
+
+:::note
+An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it (see [`updateCredentialStatuses`](#updatecredentialstatuses)).
+:::
+
+The default value of issueCredentialsToSelf is `true` because it greatly facilitates the availability of the credentials in the case of being called upon for re-issuance via the endpoint `/userCredentialRequests` defined in our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188). In the default state a credential with the same data is encrypted with your Issuer encryption public key so can only be decrypted with your private key. This then allows for you to leverage the SDK function [`reEncryptCredentials`](#reencryptcredentials) to re-encrypt the credential for the subject at a later point. For example, a Subject may make this request is if they have associated new key pairs with their DID.
+
+:::important
+While we store the encrypted credentials, only the entity with the corresponding private key can decrypt them.
+:::
+
+Each issued credential contains a credential `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
+
+:::note
+In the full `credential` objects that are returned there are also `id` fields within `credentialSubject` and `credentialStatus`, but these are different. They refer to the subject <Tip type="DID"/> and credential status identifiers, respectively, as defined in the emerging [W3C Verifiable Credential specification](https://www.w3.org/TR/vc-data-model/#credential-subject).
+:::
+
+:::important
+The private key *never* leaves your server. The API only needs it to perform cryptographic functions on your behalf.
+:::
+
+#### Parameters
+```typescript
+"authToken": string, // your auth token
+"issuer": string, // your issuer DID
+"subject": string, // the target subject DID to receive the credentials
+"credentialDataList": [{
+  "type": string, // The credential type
+  [key: string]: any, // data about subject (any valid JSON)
+}],
+"signingPrivateKey": string // your issuer signing private key
+"expirationDate"?: string, // (optional) when credential will no longer be valid (ISO 8601 date/time)
+"issueCredentialsToSelf"?: boolean // (optional, defaults to true) whether to decline issuing credentials to self
+```
+
+#### Response Body: [`Credential`](https://docs.unumid.co/types/interfaces/credentialpb.html) Array
+```typescript title="Credential"
+[{
+    "context": ["https://www.w3.org/2018/credentials/v1"], // for conformance with W3C Verifiable Credential spec
+    "credentialStatus": {
+        "id": string, // a url for credential's status
+        "type": "CredentialStatus"
+    },
+    // a string representation of an object with  with an id attribute and any number of arbitrary key value pairs.
+    "credentialSubject": stringify({
+        "id": string, // subject DID
+        [key: string]: any, // // credential data about subject
+    }),
+    "issuer": string, // issuer DID
+    "type": string[], // credential type(s), always begins with "VerifiableCredential" per W3C standard
+    /* To store: */
+    // highlight-next-line
+    "id": string, // identifies credential (version 4 UUID)
+    "issuanceDate": string, // when credential was issued (ISO 8601 date/time)
+    "expirationDate": string, // when credential will no longer be valid (ISO 8601 date-time)
+    "proof": Proof // cryptographic proof created by signing credential with your issuer signing private key. Can be used to verify credential.
+}]
+```
+
+---
+
+### `reEncryptCredentials`
+> Re-encrypt valid, non-expired <Tip type="credential"/>s for a <Tip type="subject"/>.
+
+You need to provide:
+
+1. your <Tip type="issuer"/>  <Tip type="DID"/> 
+2. your issuer signing private key
+3. your issuer encryption private key
+4. your issuer encryption key id
+5. the target subject DID to receive the credentials
+
+The first four inputs are returned by [`registerIssuer`](#registerissuer). The fifth is the target subject you have issued credentials to previously using [`issueCredentials`](#issuecredentials).
+
+:::important
+To ensure this function be used with total effectiveness it is necessary that the credentials you are wanting to re-encrypt were originally issued with the default value for `issueCredentialsToSelf` of [`issueCredentials`](#issuecredentials), which is `true`.
+:::
+
+You can optionally provide:
+
+6. a list of credential types (if not provided then all credentials for the subject are re-encrypted)
+
+:::note
+The main use case for this function is in the `/userCredentialRequests` required Issuer endpoint defined in our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188) which servers as the interface for users to request credentials to be re-encrypted, akin to re-issued, to new devices. The `credentialTypes` input will come directly from the credential requests.
+:::
+
+:::important
+The private keys *never* leave your server. The API only needs it to perform cryptographic functions on your behalf.
+:::
+
+#### Parameters
+```typescript
+"authToken": string, // your auth token
+"issuerDid": string, // your issuer DID
+"signingPrivateKey": string, // your Issuer's signing private key
+"encryptionPrivateKey": string, // your Issuer's encryption private key
+"issuerEncryptionKeyId": string, // your Issuer's encryption key id
+"subjectDid": string, // the target subject DID to receive the re-encrypted credentials, must have issued credentials to them previously
+"credentialTypes"?: string[], // (optional) list of credential types to re-encrypt (if not provided then all credentials for the subject are re-encrypted)
+```
+
+#### Response Body: [`Credential`](https://docs.unumid.co/types/interfaces/credentialpb.html) Array
+```typescript title="Credential"
+[{
+    "context": ["https://www.w3.org/2018/credentials/v1"], // for conformance with W3C Verifiable Credential spec
+    "credentialStatus": {
+        "id": string, // a url for credential's status
+        "type": "CredentialStatus"
+    },
+    // a string representation of an object with  with an id attribute and any number of arbitrary key value pairs.
+    "credentialSubject": stringify({
+        "id": string, // subject DID
+        [key: string]: any, // // credential data about subject
+    }),
+    "issuer": string, // issuer DID
+    "type": string[], // credential type(s), always begins with "VerifiableCredential" per W3C standard
+    /* To store: */
+    // highlight-next-line
+    "id": string, // identifies credential (version 4 UUID)
+    "issuanceDate": string, // when credential was issued (ISO 8601 date/time)
+    "expirationDate": string, // when credential will no longer be valid (ISO 8601 date-time)
+    "proof": Proof // cryptographic proof created by signing credential with your issuer signing private key. Can be used to verify credential.
+}]
+```
+
+---
+
+### `handleSubjectCredentialRequests`
+> Handle verifying a subjectCredentialRequest and attempting to re-encrypt valid, non-expired <Tip type="credential"/>s for a <Tip type="subject"/>. The function effectively combines the verifySubjectCredentialRequests with reEncryptCredential. 
+
+For the individual call to verifySubjectCredentialRequests you would need to prove:
+
+1. your <Tip type="issuer"/>  <Tip type="DID"/> 
+2. the <Tip type="subject"/> <Tip type="DID"/>
+3. the subjectCredentialRequests object from the /userCredentialRequests endpoint as defined by the OpenApi Spec.
+
+For an individual call to reEncryptCredentials you would need to provide:
+
+1. your <Tip type="issuer"/>  <Tip type="DID"/> 
+2. your issuer signing private key
+3. your issuer encryption private key
+4. your issuer encryption key id
+5. the target subject DID to receive the credentials
+
+:::note
+The main use case for this function is in the `/userCredentialRequests` required Issuer endpoint defined in our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188) which servers as the interface for users to request credentials to be re-encrypted, akin to re-issued, to new devices. The `credentialTypes` input will come directly from the credential requests. Many of the other inputs can simply be passed via the endpoint as well.
+:::
+
+:::important
+The private keys *never* leave your server. The API only needs it to perform cryptographic functions on your behalf.
+:::
+
+The response body contains all the credential that were able to be re-encrypted to the target subject.
+
+```typescript title="CredentialRequest"
+{
+  type: string; // the string matching the desire credential type
+  issuers: string[]; //list of acceptable issuer DIDs that have issued the credential
+  required: boolean; // to denote wether this particular credential is required. Defaults behavior resolves this to true.
+}
+```
+
+```typescript title="SubjectCredentialRequests"
+{
+  credentialRequests: CredentialRequests[]; // the string matching the desire credential type
+  proof: Proof; // proof signed by the subject
+}
+```
+
+#### Parameters
+```typescript
+/**
+ * A subset of the inputs to reEncryptCredentials.
+ * The complete set of inputs includes inputs shared by verifySubjectCredentialRequests and our first class attributes to HandleSubjectCredentialRequestsOptions.
+ */
+interface HandleSubjectCredentialRequestsReEncryptOptions {
+    signingPrivateKey: string, // your Issuer's signing private key
+    encryptionPrivateKey: string, // your Issuer's encryption private key
+    issuerEncryptionKeyId: string, // your Issuer's encryption key id
+    credentialTypes: string[] // (optional) list of credential types to re-encrypt (if not provided then all credentials for the subject are re-encrypted)
+}
+
+/**
+ * Interface to encapsulate all the attributes necessary to fullfil a verifySubjectCredentialRequests and
+ * a verifySubjectCredentialRequests in the helper function handleSubjectCredentialRequests
+ */
+interface HandleSubjectCredentialRequestsOptions {
+    authorization: string; // your auth token
+    issuerDid: string; // your issuer DID
+    subjectDidWithEncryptionKeyId: string; // the target subject DID to receive the re-encrypted credentials, must have issued credentials to the base DID previously
+    subjectCredentialRequests: SubjectCredentialRequests; // the subject's credential request objects
+    reEncryptCredentialsOptions: HandleSubjectCredentialRequestsReEncryptOptions; // inputs to specific to the reEncryptCredentials function.
+}
+```
+
+#### Response Body: [`Credential`](https://docs.unumid.co/types/interfaces/credentialpb.html) Array
+```typescript title="Credential"
+[{
+    "context": ["https://www.w3.org/2018/credentials/v1"], // for conformance with W3C Verifiable Credential spec
+    "credentialStatus": {
+        "id": string, // a url for credential's status
+        "type": "CredentialStatus"
+    },
+    // a string representation of an object with  with an id attribute and any number of arbitrary key value pairs.
+    "credentialSubject": stringify({
+        "id": string, // subject DID
+        [key: string]: any, // // credential data about subject
+    }),
+    "issuer": string, // issuer DID
+    "type": string[], // credential type(s), always begins with "VerifiableCredential" per W3C standard
+    /* To store: */
+    // highlight-next-line
+    "id": string, // identifies credential (version 4 UUID)
+    "issuanceDate": string, // when credential was issued (ISO 8601 date/time)
+    "expirationDate": string, // when credential will no longer be valid (ISO 8601 date-time)
+    "proof": Proof // cryptographic proof created by signing credential with your issuer signing private key. Can be used to verify credential.
+}]
+```
+
+
+---
+
+### `updateCredentialStatuses`
+> Update a <Tip type="credential"/>'s status (i.e. make it invalid).
+
+You need to provide the credential id list, `credentialIds`, (which [`issueCredentials`](#issuecredentials) returns per <Tip type="credential">credential</Tip>) and a [CredentialStatusOptions](https://docs.unumid.co/types/modules.html#credentialstatusoptions) `status`. Currently there are only two valid statuses: "valid" and "revoked".
+
+:::note
+As noted in [`issueCredentials`](#issuecredentials), **we recommend storing at least the credential type along with the subject associated with it, if not each entire credential, indexed on their credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
+:::
+
+#### Parameters
+```typescript
+{
+  "authToken": string, // your auth token
+  "credentialIds": string[], // ids of the credentials to update
+  "status": 'valid' | 'revoked' // status to update the credential to (defaults to 'revoked')
+}
+```
+
+#### Response Body: Empty
+If unsuccessful, an exception will be thrown.
+```typescript
+{}
+```
+
+---
+
+### `revokeAllCredentials`
+> Revoke all <Tip type="credential"/>s (i.e. make all invalid).
+
+You need to provide your issuer's `did` and `signingPrivateKey` also the target `subjectDid`. Only credentials issued by the associated issuer are revoked from the subject. The signing private key is necessary for the request signature to be created within the SDK. The signature is necessary to be verified by the SaaS prior to revoking all the credentials. 
+
+:::important
+The signing private key *never* leaves your server. The API only needs it to perform cryptographic functions on your behalf.
+:::
+
+#### Parameters
+```typescript
+{
+  "authToken": string, // your auth token
+  "issuerDid": string // did of the issuer of credential you would like to revoke
+  "signingPrivateKey": string // issuer's signing private key
+  "subjectDid": string // did of target subject whom to revoke all the credentials issued by the issuer
+}
+```
+
+#### Response Body: Empty
+If unsuccessful, an exception will be thrown.
+```typescript
+{}
+```
+
+---
+
+### `verifySignedDid`
+Verify a signed <Tip type="DID"/>, aka Decentralized Identifier.
+
+You need to provide the your `issuerdid` along with the signed `DID` object.
+
+The DID object is a string identifier signed by the subject's ECC private key. This function verifies the cryptographic signature is valid. 
+
+:::note
+The main use case is for the `/userCredentialRequests` required Issuer endpoint defined in our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188). It facilitates getting DID information for users within your service. The User DID is necessary to then issue re-usable identity credentials to.
+:::
+
+```typescript title="DID"
+{
+  id: string; // the string matching the desire credential type
+  proof: Proof; //list of acceptable issuer DIDs that have issued the credential
+}
+```
+
+#### Parameters
+```typescript
+{
+  "authToken": string, // your auth token
+  "issuerDid": string // the did of your issuer
+  "signedDid": DID // the signed DID object
+}
+```
+
+#### Response Body: [`VerifiedStatus`](https://docs.unumid.co/api-overview-typescript/interfaces/verifiedstatus.html)
+```typescript title="VerifiedStatus"
+{
+  isVerified: boolean; // returns true if the signature of the DID is verified to be signed by the DID signing key
+  message?: string; // (optional) only populated iff isVerified is false
+}
+```
+
+---
+
+### `verifySubjectCredentialRequests`
+> Verify a <Tip type="subject"/>'s request for <Tip type="credential"/>s.
+
+You need to be able to receive these credential requests from Unum ID and pass them to this function. To do this, you need to create a `/userCredentialRequests` endpoint that conforms to our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188). 
+
+Each request is cryptographically signed by the <Tip type="subject"/>'s private key. This function verifies the signatures are valid. Furthermore, it validates that all requests are from the same subject and that requested Issuer requirements are met. After which, your application code will need to evaluate wether it can issue the requested credentials. An example implementation can be found [here](https://github.com/UnumID/demo-issuer-server/blob/main/src/services/api/credentialRequest/credentialRequest.class.ts).
+
+The main use case of this to allow bootstrapping users that just installed the Unum ID Wallet with credentials necessary to use across the network, i.e for instant sign ups with a partner. 
+
+:::note
+Despite this having "verify" in its name, this function serves Issuers in determining whether a subject's request for credentials is valid. It is up to your application logic to determine whether you have the data relating to the the subject to issue the requested credentials.
+:::
+
+
+```typescript title="CredentialRequest"
+{
+  type: string; // the string matching the desire credential type
+  issuers: string[]; //list of acceptable issuer DIDs that have issued the credential
+  required: boolean; // to denote wether this particular credential is required. Defaults behavior resolves this to true.
+}
+```
+
+```typescript title="SubjectCredentialRequests"
+{
+  credentialRequests: CredentialRequests[]; // the string matching the desire credential type
+  proof: Proof; // proof signed by the subject
+}
+```
+
+#### Parameters
+```typescript
+{
+  "authToken": string, // your auth token
+  "issuerDid": string, // the did of your issuer
+  "subjectDid": string // the did of the subject
+  "subjectCredentialRequests: SubjectCredentialRequests // object containing list of CredentialRequests with a Proof signed by the Subject.
+}
+```
+
+:::important
+All parameters aside from the authToken ought to be provided verbatim via the specified OpenApi [/userCredentialRequests](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188) endpoint.
+:::
+
+#### Response Body: [`VerifiedStatus`](https://docs.unumid.co/api-overview-typescript/interfaces/verifiedstatus.html)
+```typescript title="VerifiedStatus"
+{
+  isVerified: boolean; // returns true if all requests are verified and validation requirements are met
+  message?: string; // (optional) only populated iff isVerified is false
+}
+```
+
+---
+
+
+## Verifier
+You can use the API to act as an <Tip type="verifier"/>, for example to make <Tip type="request">requests</Tip> and verify <Tip type="presentation">presentations</Tip>.
+
+Jump to:
+- [`registerVerifier`](#registerverifier)
+- [`sendRequest`](#sendrequest)
+- [`verifyPresentation`](#verifypresentation)
+- [`sendSms`](#sendsms)
+- [`sendEmail`](#sendemail)
+- [`checkCredentialStatuses`](#checkcredentialstatuses)
+
+---
+
+### `registerVerifier`
+> Register a <Tip type="verifier"/> (corresponding to your customer UUID and verifier API key). 
+
+As a customer, you can register as many verifiers as you like (or none at all), depending on your use case. Note, however, that you'll need a unique verifier API key for each one.
+
+The optional [VersionInfo](https://docs.unumid.co/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how encrypted <a href="/terminology#presentation"><Tip type="presentation"/></a>s from Unum ID's SaaS, which originate from the Mobile SDK, should be routed to your application in order for the corresponding API version to preform verifications. This can be updated at later point from the Unum ID [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used. 
+
+:::important
+You need to store the <Tip type="DID"/> (`did`) and values in encryption and signing key pairs (`keys`) object that this returns. You'll need these to make requests and verify presentations.
+:::
+
+:::danger
+The DID and public keys are nonsensitive, but **you should store the private keys securely and *never* share them.**
+:::
+
+#### Parameters
+```typescript
+"url": string, // the base url of which UnumID's SaaS will interface with
+"apiKey": string // your verifier API key
+"versionInfoList?": VersionInfo[] // optional versioning information of your application corresponding to various Unum ID API versions.
+```
+
+#### Response Body: [`RegisteredVerifier`](https://docs.unumid.co/api-overview-typescript/interfaces/registeredverifier.html)
+```typescript title="RegisteredVerifier"
+{
+  "uuid": string, // identifies verifier in Unum ID database
+  "customerUuid": string, // identifies customer in Unum ID database
+  /* To store: */
+  // highlight-next-line
+  "did": string, // identifiers verifier in Unum ID ecosystem
+  "name": string, // human-readable name for verifier. Displayed to users in mobile apps when you make requests. Comes from the name of the ApiKey used to register the Verifier.
+  "createdAt": string, // when verifier was registered (ISO 8601 date/time)
+  "updatedAt": string, // when verifier was last updated (ISO 8601 date/time)
+  /* To store: */
+  // highlight-start
+  "keys": {
+    "signing": {
+      "id": string, // this is very helpful to identify the key pair. You need to store this.
+      "privateKey": string, // you use this to create signatures on requests
+      "publicKey": string, // subjects use this to verify your signatures on requests
+    }, "encryption": {
+      "id": string, // this is very helpful to identify the key pair. You need to store this.
+      "privateKey": string, // you use this to decrypt presentations you receive from subjects
+      "publicKey": string, // subjects use this to encrypt presentations they send to you
+    }
+  }
+  // highlight-end
+}
+```
+
+---
+
+### `sendRequest`
+> Create a <Tip type="request"/> to be displayed or sent to a <Tip type="subject"/>.
+
+You need to provide:
+
+1. your verifier <Tip type="DID"/> 
+2. your verifier signing private key
+3. <Tip type="holder app"/> UUID
+4. credential request(s)
+
+The first two are returned by [`registerVerifier`](#registerverifier). The third (holder app UUID) identifies the mobile app users will share <Tip type="presentation">presentations</Tip> from. For example, Hooli FinTech might use the UUID for ACME Bank's mobile app, so the user is prompted to share a presentation from that app.
+
+The fourth (credential requests) encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.unumid.co/types/interfaces/credentialrequest.html) objects (defined in the [Unum ID generic types project](https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117)):
+
+```typescript title="CredentialRequest"
+{
+  type: string; // credential type. This must match type of previously issued credential.
+  issuers: string[]; // list of DIDs for acceptable issuers. If multiple, any one is acceptable.
+  required?: boolean; // if credential is required (default is true)
+}
+```
+
+If you list multiple <Tip type="issuer">issuers</Tip>, the user can include a credential issued by *any one* of those listed.
+
+You can optionally provide:
+
+5. expiration date
+6. metadata
+
+:::important
+The private key *never* leaves your server. The API only needs it to perform cryptographic functions on your behalf.
+:::
+
+The response body consists of enriched information regarding entities referenced in the request. For example, the verifier's encryption and signing [PublicKeyInfo](https://docs.unumid.co/types/interfaces/publickeyinfo.html) is included to facilitate verifying the presentation request's signature and submitting and encrypted presentation in response.
+```typescript title="PublicKeyInfo"
+{
+    "id": string, // key id
+    "type": "secp256r1" || "RSA, // key type
+    "status": "valid" || "invalid", // key status
+    "encoding": "pem" || "base58", // key encoding
+    "publicKey": string, // public key value
+    "createdAt": Date, // when key was created 
+    "updatedAt": Date, // when key status was last updated
+}
+```
+
+#### Parameters
+```typescript
+"authToken": string, // your auth token
+"verifier": string, // your verifier DID
+"credentialRequests": CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.
+"signingPrivateKey": string, // your verifier signing private key
+"holderAppUuid"?: string, // (optional) identifies mobile app subjects will share presentations from. If not present then defaults the Unum ID Wallet app, which is the recommend holder to use.
+"expiresAt"?: string, // (optional) when PresentationRequest will no longer be valid (ISO 8601 date/time). Default is 10 minutes after creation.
+"metadata"?: object // (optional) any additional data to include in PresentationRequest
+```
+
+#### Response Body: [`PresentationRequestPostDto`](https://docs.unumid.co/types/interfaces/presentationrequestpostdto.html)
+```typescript title="PresentationRequestPostDto"
+{
+  "presentationRequest": {
+    "uuid": string, // identifies PresentationRequest in Unum ID database
+    "createdAt": string, // when PresentationRequest was created (ISO 8601 date/time)
+    "updatedAt": string, // when PresentationRequest was last updated (ISO 8601 date/time). Should always be same as createdAt.
+    "expiresAt": string, // when PresentationRequest will no longer be valid (ISO 8601 date/time)
+    "verifier": string, // your verifier DID
+    "credentialRequests": CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.
+    "proof": Proof, // acryptographic proof created by signing PresentationRequest with your verifier signing private key. Can be used to verify PresentationRequest.
+    "metadata": object // any additional data to include in PresentationRequest
+  },
+  "verifier": {
+      "name": string, // human readable name for verifier. Displayed to users in mobile apps.
+      "did": string, // your verifier DID
+      "encryptionPublicKey": PublicKeyInfo, // PublicKeyInfo for the RSA key
+      "signingPublicKey": PublicKeyInfo // PublicKeyInfo for the secp256r1 key
+  },
+  "issuers": {
+      "IssuerDid:string": { // map keyed on issuer DID(s) that issued requested credential(s)
+        "name": string, // human readable name for issuer
+        "did": string, // issuer DID
+        "cardImageUrl": string // issuer's card image URL
+      }
+  },
+  /* You send this to a user with the Web SDK: */
+  // highlight-next-line
+  "deeplink": string, // deep link (URL) that can be used to trigger intended mobile app to load PresentationRequest
+  /* You display this to a user with the Web SDK */
+  // highlight-next-line
+  "qrCode": string // QR code representation of deep link (encoded as data URL)
+}
+```
+
+---
+
+### `verifyPresentation`
+> Verify <Tip type="presentation"/> shared by <Tip type="subject"/>.
+
+You need to be able to receive presentations from users and pass them to this function. To do this, you need to create a `/presentation` endpoint that conforms to our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/a81ffe5bd383b1ec36cb1b6bb1ccd26e). The Unum ID cloud sends encrypted presentations to this endpoint, which should pass those presentations to the `verifyPresentation` function to be decrypted and verified.
+
+You need to provide:
+
+1. your verifier <Tip type="DID"/> 
+2. your verifier encryption private key
+3. encrypted presentation (received at `/presentation` endpoint)
+4. (optional, but recommended) presentation request (received at `/presentation` endpoint)
+
+The fist two are returned by [`registerVerifier`](#registerverifier).
+
+:::important
+Unum ID *never* has access to sensitive data contained in presentations. The [Mobile SDK](mobile-sdk-overview) encrypts each presentation (with your verifier encryption public key) before sending it to us. We have no ability to decrypt the data — only you do.
+:::
+
+:::note
+`presentationRequest` is optional in order for the server sdk can handle verifying presentations that may not have a corresponding request. However, if `presentationRequest` is supplied from UnumID's SaaS via the `/presentation` endpoint, it is strongly recommended that it is provided as it performs additional validation checks on your behalf.
+:::
+
+#### Parameters
+```typescript
+"authToken": string, // your auth token
+"encryptedPresentation": EncryptedData, // encrypted presentation
+"verifierDid": string, // your verifier DID
+"encryptionPrivateKey": string // your verifier encryption private key
+"presentationRequest"?: PresentationRequestDto // (optional) presentation request dto object to verify presentation credentials meet request requirements. This is an optional param to support the future use case of handling verifying presentations that are not in response to PresentationRequest
+```
+
+#### Response Body: [`DecryptedPresentation`](https://docs.unumid.co/api-overview-typescript/interfaces/decryptedpresentation.html)
+```typescript title="DecryptedPresentation"
+{
+  "isVerified": boolean; // whether the presentation is valid
+  "type": 'VerifiablePresentation' | 'DeclinedPresentation' // type of presentation. DeclinedPresentation means user declined request and the submitted presentation's VerifiableCredential attribute was undefined or an empty array.
+  "presentation": Presentation, // decrypted Presentation object
+  "message"?: string; // (optional) included if isVerified is false. Explains why verification failed.
+}
+```
+
+You can decide what to do with the result of the verification. We recommend that you require that `isVerified` must be `true`, but depending on your use case you may want to handle this case differently. 
+
+---
+
+### `sendSms`
+*This is a utility function you won't usually need. For most use cases, the [Web SDK](/web-sdk) or a separate service of your choice will handle sending SMS messages. But you can use this function if helpful.*
+
+> Send an SMS containing a deep link to a <Tip type="subject"/>.
+
+Messages you send will (necessarily) be delivered from an Unum ID associated phone number, but this association won't be visible to the user. You can of course use your own SMS sending service if you prefer.
+
+To request a <Tip type="presentation"/> from a user, you need to:
+
+1. create the <Tip type="request"/> object using [`sendRequest`](#sendrequest), which includes a deep link that references the request
+2. send or display the deep link to the user
+
+SMS is one way to send the deep link. The SMS message will be in the format:
+> Verification Request: [verifier_name]. Click here to complete: [deep_link]
+
+:::note
+The verifier is corresponding to the presentation request from which the deeplink references. Because you are the acting verifier, the name will be what ever you provided during [verifier registration](#registerverifier). 
+:::
+
+#### Parameters
+```typescript
+{
+  "authToken": string, // your auth token
+  "to": string, // phone number to send SMS to
+  "deeplink": string // the deeplink corresponding to the presentation request you would like served to the user
+}
+```
+
+#### Response Body: Empty
+If unsuccessful, an exception will be thrown.
+```typescript
+{}
+```
+
+---
+
+### `sendEmail`
+*This is a utility function you won't usually need. For most use cases, the [Web SDK](/web-sdk) or a separate service of your choice will handle sending emails. But you can use this function if helpful.*
+
+> Send an email containing a deep link to a <Tip type="subject"/>.
+
+Emails you send will be delivered from no-reply@unumid.co. You can of course use your own email sending service if you prefer.
+
+To request a <Tip type="presentation"/> from a user, you need to:
+
+1. create the <Tip type="request"/> object using [`sendRequest`](#sendrequest), which includes a deep link that references the request
+2. send or display the deep link to the user
+
+Email is one way to send the deep link. The email will be in the format:
+>   - *subject:* Verification Request: [verifier_name]
+  - *body:* Click here to complete: [deep_link]
+
+
+:::note
+The verifier is corresponding to the presentation request from which the deeplink references. Because you are the acting verifier, the name will be what ever you provided during [verifier registration](#registerverifier). 
+:::
+
+#### Parameters
+```typescript
+{
+  "authToken": string, // your auth token
+  "to": string, // email address to send email to
+  "deeplink": string // the deeplink corresponding to the presentation request you would like served to the user
+}
+```
+
+#### Response Body: Empty 
+If unsuccessful, an exception will be thrown.
+```typescript
+{}
+```
+---
+### `checkCredentialStatuses`
+Used to check the status of individual credentials. This done on the Verifier's behalf in [`verifyPresentation`](#verifypresentation), however exposing for extra utility.
+
+The `status` attribute of the response's [CredentialStatusInfo](https://docs.unumid.co/types/interfaces/credentialstatusinfo.html) is of type [CredentialStatusOptions](https://docs.unumid.co/types/modules.html#credentialstatusoptions). Currently the only valid status are: verified and revoked.
+
+```typescript title="CredentialStatusInfo"
+{
+  "createdAt": Date; // the time  the credential was recorded as created in the UnumID SaaS db
+  "updatedAt": Date; // the time  the credential was recorded as updated in the UnumID SaaS db
+  "credentialId": string; // the did (aka id) of the credential this status is in regard to
+  "status": 'valid' | 'revoked'; // status of the credential
+}
+```
+
+#### Parameters
+```typescript
+{
+  "credentialIds": string[], // the array of ids of the credentials in question
+}
+```
+
+#### Response Body: [`CredentialIdToStatusMap`](https://docs.unumid.co/types/interfaces/credentialidtostatusmap.html).
+```typescript title="CredentialIdToStatusMap"
+{
+  [credentialId: string]: CredentialStatusInfo;
+}
+```

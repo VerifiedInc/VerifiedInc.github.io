@@ -130,77 +130,53 @@ If multiple issuer brands are listed, a credential (of the correct type) from an
 The <Tip type="brand"/> of the credential can be *the same company* as the one making the request! For example, a single company issues an authentication credential to a user, who later shares a presentation containing that credential back with the company to authenticate.
 :::
 
+The full details of the request object aren't that important or helpful to know as it completely internal to Unum ID, but here's an example of a request for a FirstName and LastName credential from the same issuing brand.
+
 ```json
 {
-  // the base presentation object
-  "presentationRequest": {
-      "uuid": "47609f52-2cd9-4844-8cec-4fc289c7ddcd",
-      "createdAt": "2021-04-21T01:39:26.983Z",
-      "updatedAt": "2021-04-21T01:39:26.983Z",
-      // default is 10 minutes after creation, but this can be overriden
-      // highlight-next-line
-      "expiresAt": "2021-04-21T01:49:26.983Z",
-      // identifier for the company
-      // highlight-next-line
-      "verifier": "did:unum:f2054199-1069-4337-a588-83d099e79d44",
-      // credentials requested to be included in presentation, in this case only one
-      // highlight-start
-      "credentialRequests": [
-          {
-              // type of credential
-              "type": "UsernameCredential",
-              // acceptable issuer(s) of credential, in this case only one
-              "issuers": [
-                  "did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5"
-              ],
-              "required": true
-          }
-      ],
-      // highlight-end
-      // cryptographic signature, created with company's private key
-      // highlight-start
-      "proof": {
-          "created": "2021-04-21T01:39:26.984Z",
-          "signatureValue": "AN1rKoiKg91BdpsLTFg6nBctDJwJEjYu6fBJheP6G5se5bRs4oWXu5TR3pdP9WZ5RgiiFWP4bKgfrBgBSmtHfxnwURKDq7das",
-          "type": "secp256r1Signature2020",
-          "verificationMethod": "did:unum:f2054199-1069-4337-a588-83d099e79d44",
-          "proofPurpose": "AssertionMethod"
-      },
-      // highlight-end
-      "metadata": {},
-      "holderAppUuid": "91514d8e-b5b2-41d9-9744-3cbb2bb9a85d"
-  },
-  // enriched verifier information based on the base presentation request
-  // highlight-start
-  "verifier": {
-      "name": “The Dev Shop“,
-      "did": "did:unum:f2054199-1069-4337-a588-83d099e79d44",
-      "url": "https://developer.demo.sandbox-unumid.co/presentation"
-  },
-  // highlight-end
-  // enriched issuer information based on the base presentation request
-  // highlight-start
-  "issuers": {
-      "did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5": {
-          "name": "Acme Co Issuer",
-          "did": "did:unum:7fc1753e-cdb7-428a-b6ce-eefc0e3634e5"
-      }
-  },
-  // highlight-end
-  // enriched holder app information based on the base presentation request
-  // highlight-start
-  "holderApp": {
-      "name": "ACME, Inc. Test App",
-      "uriScheme": "unumid://",
-      "deeplinkButtonImg": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAb4AAABWCAYAAACw7fOyAAAABGdBTUEAALGPC…”
-  },
-  // highlight-end
-  // a deeplink when opened will present the request in the holder app (or take them to the store to download if not installed), facilitating a user responding to the request in the holder app
-  // highlight-next-line
-  "deeplink": "unumid://unumid/presentationRequest/47609f52-2cd9-4844-8cec-4fc289c7ddcd",
-  // a qr code facilitates a user responding to the request in the holder app when scanned
-  // highlight-next-line
-  "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAAAklEQVR4AewaftIAAAWUSURBV…”
+    "uuid": "7c9a2365-a2a3-4fec-b446-99b61a074fa8",
+    "id": "854b9889-013d-40a2-93b9-68b9cf8d2540",
+    "createdAt": "1673470082199",
+    "updatedAt": "1673470082200",
+    "email": "test@unumid.co",
+    "phone": null,
+    // highlight-start
+    "credentialRequests": [
+        {
+            "type": "FirstName",
+            "issuers": [
+                "d14ca24c-5323-4b79-9dfa-6471b014d68c"
+            ],
+            "required": true
+        },
+        {
+            "type": "LastName",
+            "issuers": [
+                "d14ca24c-5323-4b79-9dfa-6471b014d68c"
+            ],
+            "required": true
+        }
+    ],
+    // highlight-end
+    "expirationDate": null,
+    "brand": {
+        "uuid": "8005c39c-54d7-487e-bf4d-9eb5d39ed795",
+        "id": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+        "createdAt": "1671595963109",
+        "updatedAt": "1671595963109",
+        "issuerName": "Hooli Issuer",
+        "receiverName": "Hooli Receiver",
+        "cardImageUrl": "https://unumid-dev-card-images.s3.us-west-2.amazonaws.com/ID+Card+-+Hooli.svg",
+        "customerUuid": "bba94256-5366-4bd5-8e4b-6568be7aaf54"
+    },
+    "user": {
+        "uuid": "77001639-9629-4bad-8d45-4cd0c2b7a7c8",
+        "id": "e31de809-ea49-4384-9d3e-6c70d5ff05c7",
+        "createdAt": "1671242870669",
+        "updatedAt": "1671242870669",
+        "phoneNumbers": ["+14043038080"],
+        "emailAddresses": ["test@unumid.co"]
+    }
 }
 ```
 

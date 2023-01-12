@@ -108,11 +108,13 @@ A presentation's credential data is stored securely via a data privacy vault tha
 
 ### Request 
 
-> A **request** (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation"><Tip type="presentation"/></a>. It's sent by a company to a user, who chooses whether to share a presentation in response.
+> A **request** (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation"><Tip type="presentation"/></a>. It's created when a company successfully checks if a <Tip type="user"/> has matching credentials, via [/hasMatchingCredentials](/api-overview#check-user-credentials). Only if the user has the ability to response with the requested credential data is a request created.
 
-**Example:** Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank.
+**Example:** Hooli FinTech checks if Richard has a SSN credential issued by ACME Bank. Because he does a request is created for a presentation of a SSN credential specifically from ACME Bank. This request is to be presented to Richard via Hooli directing to the resultant `url` in the /hasMatchingCredentials response body.
 
-**Components:** A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user's app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
+**Components:** A company creates a user specific request by using [/hasMatchingCredentials](/api-overview#check-user-credentials). If it is case the <Tip type="user"/> does not have the desired credentials then a request is not created. If it is the case the user does, a request is created and is returned in the form of a `url` attribute in response to the client. 
+
+The client is then expected to direct to the url, which will be to Unum ID Web Wallet, where the user will be required to authenticate then agree to share the data relevant data.
 
 At a high level, to create a request a company inputs three pieces of information (into the [Server SDK](/server-sdk), which handles the rest):
 1. identifier for the company
@@ -122,13 +124,11 @@ and a list containing, for each credential:
 2. type of the credential
 3. acceptable <Tip type="issuer">issuer(s)</Tip> of the credential
 
-If multiple issuers are listed, a credential (of the correct type) from any one of them is acceptable.
+If multiple issuer brands are listed, a credential (of the correct type) from any one of them is acceptable. If none, then any issuer of the desired credential type is acceptable.
 
 :::important
-The <Tip type="issuer"/> of the credential can be *the same company* as the one making the request (the <Tip type="verifier"/>)! This is the case for our [Passwordless Auth](https://www.unumid.co/solutions/passwordless-auth) product. A single company issues an authentication credential to a user, who later shares a presentation containing that credential back with the company to authenticate.
+The <Tip type="brand"/> of the credential can be *the same company* as the one making the request! For example, a single company issues an authentication credential to a user, who later shares a presentation containing that credential back with the company to authenticate.
 :::
-
-The request is cryptographically signed with the company's private key. This makes it possible to later check that the request is valid and was created by that company, which helps prevent attacks like phishing.
 
 ```json
 {
@@ -209,9 +209,19 @@ The request is cryptographically signed with the company's private key. This mak
 > A **user** is an individual in the Unum ID network that can share credential data. Each user one or more phone or email associated with them.
 
 :::note
-To avoid having to defined a shared User "ID", users can be referenced by email and/or phone, identifiers that your already have for your own user accounts.
+To avoid having to define, query, and share the User "ID", users can be simply referenced by email and/or phone, identifiers that your already have for your own user accounts.
 :::
 
 **Example:** Richard is a user in your account system and potentially of the Unum ID network. He has two email addresses and one phone with him. Credentials can be issued to or requested of him using any of these identifiers.
 
 **Components:** Referenced in API endpoints `/hasMatchingCredentials` and `/issueCredentials`. User data is associated by using these user identifiers that you already keep on your users.
+
+```json
+{
+    "id": "e31de809-ea49-4384-9d3e-6c70d5ff05c7",
+    "createdAt": "1671242870669",
+    "updatedAt": "1671242870669",
+    "emailAddresses": ["test@unumid.co"],
+    "phoneNumbers": []
+}
+```

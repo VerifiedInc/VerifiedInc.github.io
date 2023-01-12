@@ -128,7 +128,7 @@ The response body consists of Credential objects with the plaintext user data.
 }
 ```
 
-You can decide what to do with the result of the verification. We recommend using the Server SDK's `extractCredentialData` to facilitate getting the data from the presentation.
+To facilitate extracting the credential data we recommend leveraging the Schema Resolver to get the schema of the credential types. Because Credential schemas are immutable they can then be cached and referenced when retrieving the credential data.
 
 ---
 

@@ -10,7 +10,15 @@ These docs are built using [Docusaurus](https://v2.docusaurus.io/docs/) (v2), de
 
 **Note:** Make sure _not_ to use the v1 Docusaurus docs.
 
-[Docusaurus](https://v2.docusaurus.io/docs/) is a Facebook open source project that makes creating documentation easy. The result is a React app displaying GitHub flavored Markdown. A basic usage guide is currently at [docs.unumid.co](https://docs.unumid.co/) showing some of the nice features like live code editors. Because it's React based, we may be able to leverage some of our existing demo content (written in React) right in the documentation itself, which would be cool.
+[Docusaurus](https://v2.docusaurus.io/docs/) is a Facebook open source project that makes creating documentation easy. The result is a React app displaying GitHub flavored Markdown. 
+
+### Usage Guide
+A basic usage guide is currently at [docs.unumid.co/usage-guide](https://docs.unumid.co/usage-guide) showing some of the nice features like live code editors. Because it's React based, we may be able to leverage some of our existing demo content (written in React) right in the documentation itself, which would be cool. 
+
+The guide also includes examples on how to use custom React code within our `mdx` files, e.g. Tooltips.
+
+#### Custom Components
+Custom React Components can be defined in `/src/components/` and leveraged throughout our `mdx` files. A current example of this is our Tip.jsx component for the tooltip functionality.
 
 ### Installation
 ```console

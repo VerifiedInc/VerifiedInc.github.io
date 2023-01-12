@@ -10,58 +10,21 @@ import Tip from '../src/components/Tip';
 
 Interfacing with the Unum ID API lets your company act as one or more <Tip type="issuer">issuers</Tip> and/or <Tip  type="verifier">verifiers</Tip>.
 
-**Before you begin:** Please read the [deployment overview](deployment-overview#api-overview). You need to be registered as an Unum ID customer, and you need to register at least one issuer or verifier. (You can register zero to many of each, depending on your use case.) You'll receive issuer and verifier API keys to use with this SDK.
+**Before you begin:** You need to be registered as an Unum ID customer, and you need to register at least one issuer or verifier. (You can register zero to many of each, depending on your use case.) For API keys to use with this API please reach out to support@unumid.co. _Our self service dashboard is coming soon!_
 
 :::note
-Auto generated SDK documentation can be found [here](https://docs.unumid.co/api-overview-typescript/index.html). Similar documentation for object definitions can be found [here](https://docs.unumid.co/types/index.html). The auto generated documentation is more granular then this page, however less styled.
+Postman documentation of this API can be found [here](https://docs.api.unumid.co/).
 :::
 
 ## Overview
-The API uses the `UnumDto` type to facilitate handling many response body types, while providing a reliable structure to access the result body (and, importantly, the rolling JWT `authToken`).
-
-```typescript title="UnumDto"
-{
-  "authToken": string; // The JWT which is used by the SDK to authenticate with UnumID's SaaS. This is periodically refreshed thus its value should be read and stored in every resultant function call. 
-  "body": T; // The placeholder for the function's response type is function specific. 
-}
-```
-
+The Unum ID API is a RESTful API that allows you to act as an <Tip type="issuer"/> or <Tip type="verifier"/>. It is an interface to the Unum ID identity data network.
 ### Authentication
-Every request detailed below requires a JWT bearer `authToken` as a first parameter (aside from registration calls which require an entity scoped ApiKey). This is used to authenticate requests to the Unum ID cloud. This auth token is updated on every subsequent function call and should be read via the `authToken` attribute and persisted accordingly for later requests. 
+Every request detailed below requires an Unum ID ApiKey as a Bearer token header, which is used to authenticate requests to the Unum ID cloud.
 
-### Errors
-Errors returned by the Unum ID cloud will also be wrapped in the `UnumDto` object so that the potentially updated `authToken` can be retrieved. Validation errors, which are created prior to any calls to Unum ID, will be of type `Error` and are thrown. Because in this case a network call is never made, there's no potential new `authToken` to pass back. For this reason, **we recommend wrapping all SDK calls in a try/catch.**
+:::caution
+Due to the sensitive nature of the ApiKey please only leverage from a secure backend service environment.
+:::
 
-### Distribution
-This project is open [source](https://github.com/UnumID/api-overview-typescript) and publicly published on the official npm [registry](https://www.npmjs.com/package/@unumid/api-overview). For example it can be pulled with: 
-```
-npm i @unumid/api-overview
-``` 
-or 
-```
-yarn add @unumid/api-overview
-```
-
-### Global Dependencies
-- [Node.js](https://nodejs.org/en/) v14.0.0 or higher (preferably v14.15.0 or higher)
-- [Yarn](https://yarnpkg.com/)
-
-### Usage
-The following environment variables are required to be set to use the SDK properly.
-- `UNUM_ENV`
-- `UNUM_DEBUG`
-- `LOG_LEVEL`
-
-#### UNUM_ENV
-One needs to provide the SDK the with an environment variable to denote its run time environment, i.e. `production`. For the Typescript SDK this done via the `UNUM_ENV` environment variable. The three relevant values are: `production`, `sandbox`, `dev`. You need to use one of these exactly in order for the SDK to communicate with Unum ID's SaaS. The default value if nothing is supplied is `sandbox`.
-
-#### UNUM_DEBUG
-The `UNUM_DEBUG` environment variable defaults to `false`. Setting to `true` enables logging of decrypted presentations at the `debug` level. Due to presentations containing potentially sensitive information it is *not* advised to use in a production environment. Note: the `LOG_LEVEL` environment variable also needs to be set to at least `debug` level in order to be visible.
-
-#### LOG_LEVEL
-The default logs level is `info`. You can change this to `debug` for more information (set the environment variable `LOG_LEVEL = debug`). The logs default to `stdout`, so you can easily aggregate them from disk using the log provider of your choice.
-
-We use standard NPM log levels. Learn more about these [here](https://github.com/winstonjs/winston#logging-levels).
 ## Issuer
 You can use the API to act as an <Tip type="issuer"/>, for example to issue credentials and change credential statuses.
 

@@ -28,6 +28,7 @@ The [less important terms](#less-important-terms) are:
 - [holder app](#holder-app)
 - [holder](#holder)
 - [subject](#subject)
+- [user](#user)
 - [verifier](#verifier)
 - [DID](#did)
 
@@ -316,6 +317,19 @@ We use "user" instead of "subject" as much as possible, since these are almost a
 **Example:** Richard is a subject (user) of the ACME Bank mobile app. He uses two holders: the app installed on his phone and his tablet.
 
 **Components:** A holder app is one using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a holder is an instance of that installed on a particular device. A subject uses one or more holders.
+
+### User
+
+> A **user** is an individual in the Unum ID network that can share credential data. Each user one or more phone or email associated with them.
+
+:::note
+To avoid having to defined a shared User "ID", users can be referenced by email and/or phone, identifiers that your already have for your own user accounts.
+:::
+
+**Example:** Richard is a user in your account system and potentially of the Unum ID network. He has two email addresses and one phone with him. Credentials can be issued to or requested of him using any of these identifiers.
+
+**Components:** Referenced in API endpoints `/hasMatchingCredentials` and `/issueCredentials`. User data is associated by using these user identifiers that you already keep on your users.
+
 
 ### Verifier
 

@@ -138,6 +138,20 @@ const tooltips =  {
             </div>
         </Collapsible>
         </>,
+    "user":
+    <>
+    <div>
+        <b>A <a href="/terminology#user">user</a> is an individual in the Unum ID network.</b> Each user one or more phone or email associated with them which are the identifiers used for reference.
+    </div>
+    <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
+        <div>
+            <b>Example:</b> Richard is a user in your account system and potentially of the Unum ID network. He has two email addresses and one phone with him. Credentials can be issued to or requested of him using any of these identifiers.
+        </div>
+        <div>
+            <b>Components:</b> Referenced in API endpoints `/hasMatchingCredentials` and `/issueCredentials`. User data is associated by using these user identifiers that you already keep on your users.
+        </div>
+    </Collapsible>
+    </>,
     "verifier":
         <>
         <div>

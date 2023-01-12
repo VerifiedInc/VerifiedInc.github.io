@@ -43,8 +43,10 @@ Jump to:
 ---
 
 ### Check User Credentials
-`/hasMatchingCredentials`
 > Check if a user has matching <Tip type="credential">credentials</Tip>. If so, a <Tip type="request"/> is created to get the user's consent to share the data via a <Tip type="presentation">presentation</Tip>.
+
+**Method**: `POST` <br />
+**Path**: `/hasMatchingCredentials`
 
 You need to provide:
 
@@ -86,30 +88,43 @@ phone?: string, // user's phone number; optional if email is provided
 ---
 
 ### Get Presentation Data
-> Get verified <Tip type="presentation"/> data shared by <Tip type="subject"/>.
+> Get verified <Tip type="presentation"/> data shared by a <Tip type="subject"/>.
 
-When subjects respond to presentations requests the encrypted data is sent, verified and stored in the Verifier Service. This interface gives you access to the decrypted data the user shared.
+**Method**: `GET` <br />
+**Path**: `/presentationResult/{uuid}`
+
+When a subject responds to a presentations request the verified data is sent and stored securely awaiting retrieval. Additionally as mentioned above in [Check User Credentials](#check-user-credentials), upon the user responding to the presentation request, the user will be redirected back to your client with the generated presentation's `uuid` as a query parameter.
+
+This endpoint allows you to retrieve the <Tip type="presentation"/> data related to the <Tip type="request"/> created as a result of a successful match from the `/hasMatchingCredentials` endpoint.
 
 You need to provide:
 
-1. the presentation's `uuid` that was returned to your client via your callback handler.
+1. the presentation's `uuid` that was returned to your client.
 
 :::important
-Unum ID only ever stores encrypted presentation data and is deleted after 5 minutes of the corresponding Verifier doing the initial data retrieval.
+Unum ID only ever stores encrypted presentation data and the presentations are deleted after 5 minutes of the initial data retrieval.
 :::
 
-#### Request Body
-```typescript
-"uuid": string, // uuid of the encrypted presentation data to retrieve
+
+The response body consists of Credential objects with the plaintext user data.
+```typescript title="Credential"
+{
+    "id": string, // credential id
+    "type": string, // credential type
+    "issuer": string, // credential issuer brandId
+    "issuanceDate": number, // when credential was created as a milliseconds since epoch unix timestamp
+    "expirationDate": number, // when credentials expires as a milliseconds since epoch unix timestamp
+    "data": Map<string, any> // credential data map that matches the credential type's JSON Schema definition
+}
 ```
 
-#### Response Body: [`DecryptedPresentation`](https://docs.unumid.co/server-sdk-typescript/interfaces/decryptedpresentation.html)
-```typescript title="DecryptedPresentation"
+#### Response Body: [`Presentation`](https://docs.unumid.co/server-sdk-typescript/interfaces/presentation.html)
+```typescript title="Presentation"
 {
-  "isVerified": boolean; // whether the presentation is valid
-  "type": 'VerifiablePresentation' | 'DeclinedPresentation' // type of presentation. DeclinedPresentation means user declined request and the submitted presentation's VerifiableCredential attribute was undefined or an empty array.
-  "presentation": Presentation, // decrypted Presentation object
-  "message"?: string; // (optional) included if isVerified is false. Explains why verification failed.
+  "uuid": string // the presentation's uuid
+  "credentials": Credential[] // a list of one or more Credential objects
+  "email"?: string // the user's email from the input to /hasMatchingCredentials; only present if email was provided
+  "phone"?: string // the user's phone from the input to /hasMatchingCredentials; only present if phone was provided
 }
 ```
 

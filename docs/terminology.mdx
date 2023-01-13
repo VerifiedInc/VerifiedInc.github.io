@@ -27,13 +27,13 @@ The tooltips you'll see most often refer to the terms described in this section 
 
 ### Credential
 
-> A **credential** is a collection of data about a person. It's issued by a company (i.e. created and sent to a user) and stored in the company's app, on that user's device.
+> A **credential** is a collection of data about a person. It's issued by a company and can be requested by other network partcipants, gated by the user's consent.
 
 **Example:** ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard's contact information and account numbers, as well as a level of confidence in the accuracy of the data.
 
-**Components:** A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
+**Components:** A company issues credentials using the [/credentials](/api-overview#issue-credentials) API endpoint. The data is store securely using a data privacy vault and is only avaliable to the user and brands the user agrees to share with.
 
-At a high level, to issue a credential a company inputs four pieces of information (into the [Server SDK](/server-sdk), which handles the rest):
+At a high level, to issue a credential a company inputs three pieces of information:
 1. type of the credential
 2. identifier for the person 
 3. data about the person

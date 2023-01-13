@@ -16,7 +16,6 @@ module.exports = {
       items: [
         'about-unum-id',
         'terminology',
-        'schema',
         'faq-info',
       ],
     },
@@ -36,6 +35,7 @@ module.exports = {
       collapsed: false,
       items: [
         'api-overview',
+        'schema',
         // {
         //   type: 'category',
         //   label: 'Backend',
@@ -48,21 +48,21 @@ module.exports = {
         //     'server-sdk',
         //   ],
         // },
-        {
-          type: 'category',
-          label: 'Mobile SDKs',
-          /* should collapse when we have lots of docs */
-          collapsed: true,
-          items: [
-            // 'mobile-sdk-overview',
-            // 'mobile-sdk-android',
-            'mobile-webwallet-sdk-android',
-            // 'mobile-sdk-ios',
-            'mobile-webwallet-sdk-ios',
-            // 'mobile-sdk-flutter',
-            'mobile-webwallet-sdk-flutter',
-          ],
-        },
+        // {
+        //   type: 'category',
+        //   label: 'Mobile SDKs',
+        //   /* should collapse when we have lots of docs */
+        //   collapsed: true,
+        //   items: [
+        //     // 'mobile-sdk-overview',
+        //     // 'mobile-sdk-android',
+        //     'mobile-webwallet-sdk-android',
+        //     // 'mobile-sdk-ios',
+        //     'mobile-webwallet-sdk-ios',
+        //     // 'mobile-sdk-flutter',
+        //     'mobile-webwallet-sdk-flutter',
+        //   ],
+        // },
         // {
         //   type: 'category',
         //   label: 'Web SDK',

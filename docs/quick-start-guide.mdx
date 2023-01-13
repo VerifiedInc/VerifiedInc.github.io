@@ -37,18 +37,25 @@ The second step to enabling instant 1-click or free onboarding is to check if th
 
 Two outcomes are possible:
 1. The user has all the required credential(s) and the response body contains a `url` attribute that you need to direct the user in their browser.
-2. The user does not have the credential(s), the response body contains a `match` `false` value.
+2. The user does not have the credential(s). This is characterized by the response body contains a `match` `false` value.
 
 #### The User Has the Credential(s)
 If the user has all the required credential(s), you need to direct the user to the `url` to the Unum ID Web Wallet provided in the response body. The user will be prompted to authenticate then select which qualifying credentials they want to share with your brand. Upon agreeing to share a <Tip type="presentation"/> is created and the `uuid` is returned to your client via callback url `presentationUuid` query param.
 
 #### The User Does Not Have the Credential(s)
-If the user does not have the credential, you perform your normal signup and KYC flows to collect the necessary information. Once the verified information is obtained, you need to issue the user the relevant credential(s). *Please proceed to the [Issuing Credentials](#issuing-user-credentials) section.* In doing so you qualify for KYC reimbursement from Unum ID and you stand to gain future revenue when the user shares those credential(s) with other brands.
+If the user does not have the credential, you perform your normal signup and KYC flows to collect the necessary information. Once the verified information is obtained, you need to issue the user the relevant credential(s). **Please proceed to the [Issuing Credentials](#issuing-user-credentials) section.**
+
+### Get Presentation Data
+*For more detailed information please see the API documentation [Get Presentation Data](/api-overview#get-presentation-data) section.*<br/>
+
+
 
 ### Issuing User Credentials
 *For more detailed information please see the API documentation [Issue Credentails](/api-overview#issue-credentials) section.*<br/>
 
 Once you have collected the necessary information from the user, you can issue the user the relevant credential(s). This can be done by calling the `/credentials` endpoint with the user's verified email address and/or phone along with the relevant credential type(s) and the credential data. The data must match the [schema](/schema) of the credential type(s) you are issuing.
+
+*In doing so you qualify for KYC reimbursement from Unum ID and you stand to gain future revenue when the user shares those credential(s) with other brands.*
 
 For example, if you collected the user's SSN, you can issue the user a `SsnCredential` by calling the `/credentials` endpoint with the user's email address and/or phone along with the `SsnCredential` type and the SSN data: 
 
@@ -72,7 +79,3 @@ For example, if you collected the user's SSN, you can issue the user a `SsnCrede
 ```
 
 The format of `data` was from the response body of referencing the properites attribute of the JSON Schema via the Unum ID Schema Resolver, i.e. https://schema.unumid.co/jsonSchema/SsnCredential.
-
-### Get Presentation Data
-*For more detailed information please see the API documentation [Get Presentation Data](/api-overview#get-presentation-data) section.*<br/>
-

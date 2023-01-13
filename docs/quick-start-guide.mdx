@@ -8,128 +8,100 @@ slug: /quick-start-guide
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-*Get started with an Unum ID deployment.*
+*Get started with integrating Unum ID into your user onboarding flow.*
 
-This guide provides an abbreviated step-by-step guide for how to get setup as an Unum ID <Tip type="issuer"/> and/or <Tip type="verifier"/>. For full technical details, see the documentation for each component.
-
-:::important
-This guide is shown using the Production domain, `unumid.co`. However please develope your integration against our Sandbox environment domain, `sandbox-unumid.co`.
-:::
-
-## Dashboard
-The Unum ID Dashboard is a self-service portal where you can manage your organization's API keys and view usage statistics. To gain access:
-
-1. **Go to the Unum ID [dashboard](https://dashboard.unumid.co/).**
-2. **Scan the QR code on the login page with your mobile device.** This will take you to the Unum ID Wallet, where you'll need to create an account if you don't have one already.
-3. **Click the Share Data button when the Wallet prompts you.** This shares your verified email with the Dashboard, so it can create an account for you.
-
-## API Keys
-Using the Dashboard, you can create and manage issuer and verifier Production and Sandbox API keys. To create an API key:
-
-1. **On the Company page, click the Entities tab.**
-
-2. **Ensure the environment toggle matches your desired environment.** For initial development work **please use Sandbox**.
-
-2. **Click the Create Issuer or Create Verifier to create an API key.** The issuer API key requires a name and ID card image. The ID card image is displayed in users' wallets when you issue credentials to them. The verifier API key only requires a name.
-
-## Server SDK
-After creating an issuer or verifier API key, you should use it with the [Server SDK](https://github.com/UnumID/server-sdk-typescript) to register the issuer or verifier entity. This registration must be done on your server, not Unum ID's, because it involves generate private keys, which only your organization should ever access. You should store these keys securely in your own persisted data store. To register an issuer or verifier:
-
-### Node.js
-1. **If using Node.js, install the SDK [module](https://www.npmjs.com/package/@unumid/server-sdk) using `npm i @unumid/server-sdk`.**
-
-### Other Runtime Languages 
-If using a different runtime language, you can use the SDK via HTTP. To deploy the [Issuer-Verifier](https://github.com/UnumID/issuer-verifier-app) HTTP wrapper project:
-
-1. **Go to the open source Issuer-Verifier Github [repo](https://github.com/UnumID/issuer-verifier-app).**
-
-2. **Pull the project and deploy it along side your other apps using whatever method you are most comfortable with.** The project contains a Dockerfile and as well as a CircleCI CD config file for automated deployments.
-
-*Coming Soon: Publicly accessible docker image repository.*
+This guide provides an abbreviated step-by-step guide for how to get setup as an Unum ID <Tip type="brand"/> and enable [1-click or Free Identity Verification](https://www.unumid.co/1-click) user onboarding. For full technical details, see the documentation for each component.
 
 :::note
-An example demo project that interfaces with the SDK over HTTP is the [Developer Demo](/developer-demo).
+This guide only covers the basics via the [api](/api-overview), if you would like to perform an intergration from a mobile application please note we do provide Mobile SDKs along with corresponding [Kredita](/kredita-demo) and [Hooli](/hooli-demo-idv) reference demos. However, using the mobile SDKs is certainly not required.
 :::
 
-#### Register Issuer
-Once the Server SDK is accessible and there is a persisted data store available, you can register an issuer:
+## Brand Registration
+Currently the only way to create a <Tip type="customer"/>, <Tip type="brand">brands</Tip>  and api keys is by emailing support@unumid.co. We will also handle creating a branded card image for use with our [Web Wallet](https://wallet.unumid.co/).<br/>
+*The self service dashboard is coming soon.*
 
-1. **Use the SDK's [`registerIssuer`](https://docs.unumid.co/server-sdk#registerissuer) method with your respective API key.**
+## User Indentifier Information
+The first step to enabling instant 1-click or free onboarding is to collect and verify the user's email address and/or phone number. All future <Tip type="user"/> references are done via the `email` and/or `phone` attributes.
 
-```typescript title="Example registerIssuer"
-const response = await registerIssuer('U7nbHmEpmZuRZMTA2ItFltan64SGKoDLYn7cMnpe4w2=', 'https://api.acme.com');
+## Unum ID API
+After receving a brand API key and verifying the new user's email and/or phone, you can authenticate with our [API](/api-overview) to begin requesting and/or issuing <Tip type="user"/> <Tip type="credential">credentials</Tip>.
+
+:::important
+Pleaes develop your initial integration aganst our Sandbox API [envirnoment](api-overview#environments), `https://api.sandbox-unumid.co`.
+:::
+
+### Checking User Credentials
+*For more detailed information please see the API documentation [Check User Credentails](/api-overview#check-user-credentials) section.*<br/>
+
+The second step to enabling instant 1-click or free onboarding is to check if the user has the necessary credentials to complete your signup flow. This can be done by calling the `/hasMatchingCredentials` endpoint with the user's email address and/or phone along with the credential type(s) you are looking for. 
+
+Two outcomes are possible:
+1. The user has all the required credential(s) and the response body contains a `url` attribute that you need to direct the user in their browser.
+2. The user does not have the credential(s). This is characterized by the response body contains a `match` `false` value.
+
+#### The User Has the Credential(s)
+If the user has all the required credential(s), you need to direct the user to the `url` to the Unum ID Web Wallet provided in the response body. The user will be prompted to authenticate then select which qualifying credentials they want to share with your brand. Upon agreeing to share a <Tip type="presentation"/> is created and the `uuid` is returned to your client via callback url `presentationUuid` query param. **Please proceed to the [Get Presentation Data](#get-presentation-data) section.**
+
+#### The User Does Not Have the Credential(s)
+If the user does not have the credential, you perform your normal signup and KYC flows to collect the necessary information. Once the verified information is obtained, you need to issue the user the relevant credential(s). **Please proceed to the [Issuing Credentials](#issuing-user-credentials) section.**
+
+### Get Presentation Data
+*For more detailed information please see the API documentation [Get Presentation Data](/api-overview#get-presentation-data) section.*<br/>
+
+Upon receiving the <Tip type="presentation"/> uuid from the callback url query param, you can GET the presentation via the `/presentationResult/{uuid}` endpoint. The response body contains an array of <Tip type="credential">credentials</Tip> that the user agreed to shared with your brand.
+
+An example presentation response body looks like:
+
+```typescript title="Example /presentationResult Response Body"
+{
+    "uuid": string // the presentation's uuid
+    "credentials": [{
+        "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
+        "type": "SsnCredential",
+        "data": {
+            "ssn": "111-22-3333"
+        },
+        "issuanceDate": "1671847264479",
+        "expirationDate": "1871839024044",
+        "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+    }],
+    "email"?: string // the user's email from the input to /hasMatchingCredentials; only present if email was provided
+    "phone"?: string // the user's phone from the input to /hasMatchingCredentials; only present if phone was provided
+}
 ```
 
-2. **Securely store the private signing and encryption keys this returns, along with the <Tip type="DID"/>, key ids, and authorization token.**
+To facilitate extracting the credential data we recommend leveraging the Schema Resolver to get the [schema](/schema) of the credential types. Because Credential schemas are immutable they can then be cached and referenced when retrieving the credential data.
 
-3. **Create a `/userCredentialRequests` endpoint, adhering to our OpenApi [specification](https://gist.github.com/UnumIDMachine/146a0a428c683b756efd8240b31a4678).** This will allow you to receive signed <Tip type="subject"/> credential requests and user DID information from Unum ID. Our demo applications show examples of this.
+Upon extractig the data you know have the necessary, verified information to consider the user fully onboarded. **Congrats!** That was easy but must importantly seemless and instant for the user.
 
-#### Register Verifier
-Once the Server SDK is accessible and there is a persisted data store available, you can register a verifier:
+### Issuing User Credentials
+*For more detailed information please see the API documentation [Issue Credentails](/api-overview#issue-credentials) section.*<br/>
 
-1. **Use the SDK's [`registerVerifier`](https://docs.unumid.co/server-sdk#registerverifier) method with your respective API key.**
+Once you have collected the necessary information from the user, you can issue the user the relevant credential(s). This can be done by calling the `/credentials` endpoint with the user's verified email address and/or phone along with the relevant credential type(s) and the credential data. The data must match the [schema](/schema) of the credential type(s) you are issuing.
 
-```typescript title="Example registerVerifier"
-const response = await registerVerifier('0Hner7ibF/aHWLBvUyY4iDJ1xymbef0lzMxiS0eTGoS=', 'https://api.acme.com');
-```
+*In doing so you qualify for KYC reimbursement from Unum ID and you stand to gain future revenue when the user shares those credential(s) with other brands.*
 
-2. **Securely store the private signing and encryption keys this returns, along with the <Tip type="DID"/> and authorization token.**
+For example, if you collected the user's SSN, you can issue the user a `SsnCredential` by calling the `/credentials` endpoint with the user's email address and/or phone along with the `SsnCredential` type and the SSN data: 
 
-3. **Create a `/presentation` endpoint, adhering to our OpenApi [specification](https://gist.github.com/UnumIDMachine/a2d71f12b0596a62c9dcc4de7a255f4f).** This will allow you to receive encrypted <Tip type="presentation"/> data from our Identity Engine cloud. Our demo applications show examples of this.
-
-## Issue Credentials
-Once you have registered an issuer, stored the returned private signing and encryption keys along with the DID, and have the `/userCredentialRequests` endpoint, you can issue credentials to users. However, users must also have a DID and key pairs to properly receive (and eventually share) encrypted credentials. They need to have their Unum ID Wallet setup. To associate a user with a DID and prompt them to create a Wallet account, you will need to:
-
-### Associate Users with DIDs
-1. **Create and persist a unique, short-lived, one-time-use `userCode` to identity your user.**
-
-2. **Redirect to the Unum ID Wallet (https://wallet.unumid.co), adding the `userCode` and your issuer DID as URL parameters.** For example:
-
-```
-https://wallet.unumid.co/authenticate?userCode=f85fc85b-7467-4b3f-8581-f138d8b4798g&issuer=did:unum:8b642752-aa85-491a-80d3-cd6c0ef9426n
-```
-
-This will prompt the user to input and verify their email and pass a biometric check. When they do so, the Unum ID Wallet will call your issuer URL on the `/userCredentialRequests` endpoint with the `userDidAssociation` attribute populated with the `userCode` and the newly created user `DID`.
-
-3. **Store the user `DID` from the callback response on your user entity.** The `userCode` attribute you created in step (1) should be deleted from the user entity at this point.
-
-### Giving Users Credentials
-1. **Use the Server SDK's [`issueCredentials`](https://docs.unumid.co/server-sdk#issuecredentials) method to issue credentials to the user.** For example: 
-
-```typescript title="Example issueCredentials"
-const result: UnumDto<CredentialPb> = await issueCredentials(
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJ1dWlkIjoiODg1ZDQxZjktYWFiNS00YTQ1LWE2ZTUtYWY1NjM1YjlkNGI5IiwiZGlkIjpudWxsLCJlbWFpbCI6InJheSs4MDAwQHVudW1pZC5jbyIsImlhdCI6MTY1NDMwODUxNCwiZXhwIjoxNjYyOTQ4NTE0LCJhdWQiOiJsb2NhbGhvc3QiLCJpc3MiOiJmZWF0aGVycyIsInN1YiI6Ijg4NWQ0MWY5LWFhYjUtNGE0NS1hNmU1LWFmNTYzNWI5ZDRiOSIsImp0aSI6ImJjOTNjNGMyLTg5NDQtNDMxYS1iZTY5LTQ2ZjBjNDA2MjBjYSJ9.zS5ZWBxjotHpuBHUN3pDn8J8ygDFYGD3ASmJVYSt7Wc',
-      'did:unum:8b642752-aa85-491a-80d3-cd6c0ef9426n',
-      'did:unum:a0cd2e20-5f3e-423c-8382-afc722eaca9e',
-      [{
-          'type': 'SsnCredential',
-          'ssn': '123-45-5678
-      }],
-      '-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgw7wRQL1EUsLk08auyjhlHV0atw0wqQGjtP3wkAIz8uChRANCAARfUK8OjrArOokLQau9W3siHlxxtt9/FGjdiiL1YM8PqHqhmgscc6oSdUUKfA/HZaf9m2yEQqQPyoFR1R16Ck/8\n-----END PRIVATE KEY-----'
-    );
-```
-
-## Requesting Credentials
-Once you have registered a verifier, you can make a presentation <Tip type="request"/>. (There is no requirement to issue credentials in order to make such a request.) To make a request:
-
-1. **Use the Server SDK's [`sendRequest`](https://docs.unumid.co/server-sdk#sendrequest) method along with your verifier authorization token.**
-
-```typescript title="Example sendRequest"
-const response = await sendRequest(
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoidmVyaWZpZXIiLCJ1dWlkIjoiNWJmZTZkNzktMzdkNy00ODNiLTgyZGMtYzZhYWJhMjUzOTE2IiwiZGlkIjoiZGlkOnVudW06ZDdhZDczMWUtNzBkNy00MzQxLWJlNGQtM2U3ZWIwNmRmNzZlIiwiZXhwIjoxNjQzMTc0NjM4Ljc4NCwiaWF0IjoxNjQzMTc0NjcyfQ.WLNlP-A_8DjTvmmKt6z8CfD6whh5aQHIYgT9nYjuPn0',
-    'did:unum:d7ad731e-70d7-4341-be4d-3e7eb06df76e',
-    [
+```json title="Example Issue Credentials Request Body"
+{
+    "email": "test@unumid.abcde",
+    "phone": "+421234567890",
+    "credentials": [
         {
-            'type':'EmailCredential',
-            'issuers': [
-                'did:unum:8b642752-aa85-491a-80d3-cd6c0ef9426n'
-            ], 
-            'required': true
+            "type": "SsnCredential",
+            // highlight-start
+            // data format following the properties attribute from https://schema.unumid.co/jsonSchema/SsnCredential
+            "data": {
+                "ssn": "111-22-3333"
+            },
+            // highlight-end
+            "expirationDate": 1893484800
         }
-    ],
-    '-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgw7wRQL1EUsLk08auyjhlHV0atw0wqQGjtP3wkAIz8uChRANCAARfUK8OjrArOokLQau9W3siHlxxtt9/FGjdiiL1YM8PqHqhmgscc6oSdUUKfA/HZaf9m2yEQqQPyoFR1R16Ck/8\n-----END PRIVATE KEY-----',
-    '7a1b0e37-efda-4b92-873b-ad7a8491175d'
-);
+    ]
+}
 ```
 
-2. **Direct the user to the response's `deeplink` URL for them to use the Unum ID Wallet to respond to the request by sharing their data.**
+The format of `data` was from the response body of referencing the properites attribute of the JSON Schema via the Unum ID Schema Resolver, i.e. https://schema.unumid.co/jsonSchema/SsnCredential.
+
+Upon issuing the credential(s) you qualify for KYC reimbursement from Unum ID. Also, you stand to gain future revenue when the user shares those credential(s) with other brands. **Congrats!** That was easy but must importantly seemless with no additional friction for the user.

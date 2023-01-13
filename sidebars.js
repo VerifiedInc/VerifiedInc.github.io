@@ -1,9 +1,9 @@
 module.exports = {
   sidebar: [
-    // {
-    //   type: 'doc',
-    //   id: 'quick-start-guide',
-    // },
+    {
+      type: 'doc',
+      id: 'quick-start-guide',
+    },
     // {
     //   type: 'doc',
     //   id: 'usage-guide',

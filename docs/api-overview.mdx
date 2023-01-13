@@ -93,7 +93,7 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 **Method**: `GET` <br />
 **Path**: `/presentationResult/{uuid}`
 
-When a subject responds to a presentations request the verified data is sent and stored securely awaiting retrieval. Additionally as mentioned above in [Check User Credentials](#check-user-credentials), upon the user responding to the presentation request, the user will be redirected back to your client with the generated presentation's `uuid` as a query parameter.
+When a <Tip type="user"/> responds to a presentation <Tip type="request"/> the verified data is sent and stored securely awaiting retrieval. Additionally as mentioned above in [Check User Credentials](#check-user-credentials), upon the user responding to the presentation request, the user will be redirected back to your client with the generated presentation's `uuid` as a query parameter.
 
 This endpoint allows you to retrieve the <Tip type="presentation"/> data related to the <Tip type="request"/> created as a result of a successful match from the `/hasMatchingCredentials` endpoint.
 
@@ -128,7 +128,7 @@ The response body consists of Credential objects with the plaintext user data.
 }
 ```
 
-To facilitate extracting the credential data we recommend leveraging the Schema Resolver to get the schema of the credential types. Because Credential schemas are immutable they can then be cached and referenced when retrieving the credential data.
+To facilitate extracting the credential data we recommend leveraging the Schema Resolver to get the [schema](/schema) of the credential types. Because Credential schemas are immutable they can then be cached and referenced when retrieving the credential data.
 
 ---
 

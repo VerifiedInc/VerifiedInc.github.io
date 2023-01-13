@@ -20,15 +20,15 @@ module.exports = {
         'faq-info',
       ],
     },
-    {
-      type: 'category',
-      label: 'Guides',
-      /* should collapse when we have lots of docs */
-      collapsed: false,
-      items: [
-        'quick-start-guide',
-      ],
-    },
+    // {
+    //   type: 'category',
+    //   label: 'Guides',
+    //   /* should collapse when we have lots of docs */
+    //   collapsed: false,
+    //   items: [
+    //     'quick-start-guide',
+    //   ],
+    // },
     {
       type: 'category',
       label: 'Components',

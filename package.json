@@ -2,6 +2,10 @@
   "name": "unum-id",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": ">= 16.14.0",
+    "npm": ">=8.19.2"
+  },
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",

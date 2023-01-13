@@ -43,7 +43,7 @@ const tooltips =  {
     "credential": 
         <>
         <div>
-            <b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It's issued by a company (i.e. created and sent to a user) and stored in the company's app, on that user's device.
+            <b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> is a collection of data about a person. It's issued by a company and can be requested by other network participants, gated by the user's consent.
         </div>
         <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
             <div>
@@ -64,105 +64,63 @@ const tooltips =  {
                 <b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.
             </div>
             <div>
-                <b>Components:</b> A user's app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.
+                <b>Components:</b> Upon a user agreeing to share (or <i>present</i>) a presentation using the <a href="/web-wallet">Unum ID Web Wallet</a>, the generated presentation uuid is passed back to the referring customer client and presentation object is securely stored for retrieval in the Unum ID cloud. The `uuid`` is used by the customer to [get presentation data](/api-overview#get-presentation-data) which contains the requested credential data.
             </div>
         </Collapsible>
         </>,
     "request":
         <>
         <div>
-            <b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It's sent by a company to a user, who chooses whether to share a presentation in response.
+            <b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It's created when a company successfully checks if a <a href="/terminology#user">user</a> has matching credentials, via <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>  Only if the user has the ability to response with the requested credential data is a request created.
         </div>
         <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
             <div>
-                <b>Example:</b> Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank.
+                <b>Example:</b> Hooli FinTech checks if Richard has a SSN credential issued by ACME Bank. Because he does a request is created for a presentation of a SSN credential specifically from ACME Bank. This request is to be presented to Richard via Hooli directing to the resultant `url` in the /hasMatchingCredentials response body.
             </div>
             <div>
-                <b>Components:</b> A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user's app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
+                <b>Components:</b> A company creates a user specific request by using <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>. If it is case the <a href="/terminology#user">user</a> does not have the desired credentials then a request is not created. If it is the case the user does, a request is created and is returned in the form of a `url` attribute in response to the client. 
             </div>
         </Collapsible>
         </>,
-    "issuer":
-        <>
-        <div>
-            <b>An <a href="/terminology#issuer">issuer</a> is a role a company can play to issue <a href="/terminology#credential">credentials</a> to <a href="/terminology#subject">subjects</a> (users).</b> An issuer also change credential statuses, for example to revoke credentials.
-        </div>
-        <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
-            <div>
-                <b>Example:</b> ACME Bank issues a KYC verification credential to Richard (an ACME user). It later revokes that credential and issues a new one to Richard to update his information.
-            </div>
-            <div>
-                <b>Components:</b> An issuer issues credentials and changes credential statuses using the <a href="/server-sdk">Server SDK</a>.
-            </div>
-        </Collapsible>
-        </>,
-    "holder app":
-        <>
-        <div>
-            <b>A <a href="/terminology#holder-app">holder app</a> is an Unum ID enabled mobile app.</b> <i>See also: <a href="/terminology#holder-app">holder</a>.</i>
-        </div>
-        <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
-            <div>
-                <b>Example:</b> ACME Bank adds Unum ID technology to its mobile app, making it a holder app.
-            </div>
-            <div>
-                <b>Components:</b> A holder app is one using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
-            </div>
-        </Collapsible>
-        </>,
-    "holder":
-        <>
-        <div>
-            <b>A <a href="/terminology#holder">holder</a> is an instance of a <a href="#">holder app</a>, installed on a particular device.</b> It stores (or <i>holds</i>) <a href="/terminology#credential">credentials</a> for a <a href="/terminology#subject">subject</a> (user). It also allows the subject to respond to <a href="/terminology#request">requests</a> with <a href="presentation">presentations</a>.
-        </div>
-        <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
-            <div>
-                <b>Example:</b> The ACME Bank app (installed on Richard's phone) stores a KYC verification credential for Richard. When Hooli FinTech requests an ACME KYC verification, the app lets Richard respond with a presentation of the KYC verification credential.
-            </div>
-            <div>
-                <b>Components:</b> A holder app is one using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a holder is an instance of that installed on a particular device.
-            </div>
-        </Collapsible>
-        </>,
-    "subject":
-        <>
-        <div>
-            <b>A <a href="/terminology#subject">subject</a> is a user of a <a href="terminology#holder-app">holder app</a>.</b> Each subject uses one or more <a href="terminology#holders">holders</a>.
-        </div>
-        <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
-            <div>
-                <b>Example:</b> Richard is a subject (user) of the ACME Bank mobile app. He uses two holders: the app installed on his phone and his tablet.
-            </div>
-            <div>
-                <b>Components:</b> A holder app is one using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a holder is an instance of that installed on a particular device. A subject uses one or more holders.
-            </div>
-        </Collapsible>
-        </>,
-    "verifier":
-        <>
-        <div>
-            <b>A <a href="/terminology#verifier">verifier</a> is a role a company can play to verify <a href="/terminology#presentation">presentations</a> shared by <a href="/terminology#subject">subjects</a> (users). A verifier can also make <a href="/terminology#request">requests</a> for presentations and send them to subjects.</b>
-        </div>
-        <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
-            <div>
-                <b>Example:</b> Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank. When Richard shares the presentation, Hooli verifies it.
-            </div>
-            <div>
-                <b>Components:</b> A verifier requests and verifies presentations using the <a href="/server-sdk">Server SDK</a>.
-            </div>
-        </Collapsible>
-        </>,
-    "DID":
+    "user":
     <>
     <div>
-        <b>A <a href="/terminology#DID">DID</a> (or <i>decentralized identifier</i>) identifies a participant in the Unum ID ecosystem.</b> A participant is an <a href="/terminology#issuer">issuer</a>, <a href="/terminology#subject">subject</a>, or <a href="/terminology#verifier">verifier</a>.
+        <b>A <a href="/terminology#user">user</a> is an individual in the Unum ID network.</b> Each user has at least one phone or emails associated with them. They can have multiple of either.
     </div>
     <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
         <div>
-            <b>Example:</b> ACME Bank is identified by two DIDs, one for acting as an issuer and another for acting as a verifier. Richard, an ACME subject (user), is identified by one DID. Hooli FinTech, which acts as a verifier, is identified by one DID.
+            <b>Example:</b> Richard is a user in your account system and potentially of the Unum ID network. He has two email addresses and one phone with him. Credentials can be issued to or requested of him using any of these identifiers.
         </div>
         <div>
-            <b>Components:</b> The <a href="/server-sdk">Server SDK</a> returns DIDs for issuers and verifiers, and the <a href="/mobile-sdk">Mobile SDK</a> returns DIDs for subjects.
+            <b>Components:</b> Referenced in API endpoints `/hasMatchingCredentials` and `/issueCredentials`. User data is associated by using these user identifiers that you already keep on your users.
+        </div>
+    </Collapsible>
+    </>,
+    "brand":
+    <>
+    <div>
+        <b>A <a href="/terminology#brand">brand</a> is a company entity that has a corresponding unique api key, name, and card image.</b> Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.
+    </div>
+    <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
+        <div>
+            <b>Example:</b> ACME Bank is an Unum ID customer. However they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.
+        </div>
+        <div>
+            <b>Components:</b> Each brand has an associated umbrella customer. It is totally okay if your customer only has one brand. We want to have the flexibility to support multiple brands per customer.
+        </div>
+    </Collapsible>
+    </>,
+    "customer":
+    <>
+    <div>
+        <b>A <a href="/terminology#customer">customer</a> is a company entity that serves as a parent to brands and their corresponding ApiKeys.</b>
+    </div>
+    <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
+        <div>
+            <b>Example:</b> ACME Bank is the Unum ID customer where their self service dashboard access rights are defined.
+        </div>
+        <div>
+            <b>Components:</b> The admins of the customer can manage individual <a href="/terminology#brand">brand</a> settings.
         </div>
     </Collapsible>
     </>,

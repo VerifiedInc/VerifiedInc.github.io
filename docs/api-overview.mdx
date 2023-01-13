@@ -1,0 +1,194 @@
+---
+id: api-overview
+title: API
+sidebar_label: API
+slug: /api-overview
+---
+
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
+
+**Before you begin:** You need to be registered as an Unum ID customer to create a brand API key. You can register zero to many brands, depending on your use case. For API keys to use for authentication please reach out to support@unumid.co. _Our self service dashboard is coming soon!_
+
+:::note
+Postman documentation of this API can be found [here](https://docs.api.unumid.co/).
+:::
+
+## Overview
+Integrating with Unum ID can be completed with minimal effort by following this documentation. That said if further assistance is desired please do not hesitate to reach out to support@unumid.co. Once complete, you will be able to boast [1-click](https://www.unumid.co/1-click) (or free KYC) onboarding and secure additional revenue streams for any user data leveraged by other network partcipants.
+
+### Authentication
+Every request detailed below requires an Unum ID ApiKey as an Authorization Bearer token header, which is used to authenticate requests to the Unum ID cloud.
+
+:::caution
+**Due to the sensitive nature of the ApiKey please only leverage from a secure backend service environment.** This means that ideally your clients are authenticating with your our own backend service and not directly with the Unum ID API.
+:::
+
+### Environments
+Upon the ApiKey creation you will receive one for each environment: Sandbox and Production. We encourage that all integration work be done against the Sandbox environment. 
+
+The base url for the Sandbox API is `https://api.sandbox-unumid.co`.<br/>
+The base url for the Production API is `https://api.unumid.co`.
+
+## Functionality
+Interfacing with the Unum ID API lets your company partcipate in the Unum ID identity data network. You can use the API methods to check if users have credentials of interest, create <Tip type="request">requests</Tip> for and retrieve user data in the form of <Tip type="presentation">presentations</Tip>. It can also be used to issue <Tip type="credential">credentials</Tip> of user data and update previously issued credential statuses, e.g. invalidate.
+
+Jump to:
+- [Check User Credentials](#check-user-credentials)
+- [Get Presentation Data](#get-presentation-data)
+- [Issue Credentials](#issue-credentials)
+
+---
+
+### Check User Credentials
+> Check if a user has matching <Tip type="credential">credentials</Tip>. If so, a <Tip type="request"/> is created to get the user's consent to share the data via a <Tip type="presentation">presentation</Tip>.
+
+**Method**: `POST` <br />
+**Path**: `/hasMatchingCredentials`
+
+You need to provide:
+
+1. credential request(s)
+
+A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.unumid.co/types/interfaces/credentialrequest.html) objects.
+
+```typescript title="CredentialRequest"
+{
+  type: string; // the type of credential data being requested
+  issuers: string[]; // list of acceptable brandIds; if empty, all issuer brands are valid
+  required?: boolean; // if credential is required (default is true)
+}
+```
+
+If you list multiple <Tip type="issuer">issuers</Tip>, the user can include a credential issued by *any one* of those listed. If `issuers` is left empty the user can include a credential with matching type issued by *any* issuer.
+
+2. user's email or phone
+
+:::caution
+The same ApiKey necessary to call /hasMatchingCredentials grants you and only you access to the encrypted credential data documented in [Get Presentation Data](#get-presentation-data). Please keep this key secure.
+:::
+
+#### Request Body
+```typescript
+{
+  credentialRequests: CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.
+  email?: string, // user's email address; optional if phone is provided
+  phone?: string, // user's phone number; optional if email is provided
+}
+```
+
+#### Response Body:
+```typescript title="HasMatchingCredentials"
+{
+  "match": boolean // indicates whether the user has matching credentials
+  "url": string // Unum ID Web Wallet url to redirect user to for presentation request handling. It will redirect back to your client. Only present if match is true. 
+}
+```
+
+---
+
+### Get Presentation Data
+> Get verified <Tip type="presentation"/> data shared by a <Tip type="subject"/>.
+
+**Method**: `GET` <br />
+**Path**: `/presentationResult/{uuid}`
+
+When a <Tip type="user"/> responds to a presentation <Tip type="request"/> the verified data is sent and stored securely awaiting retrieval. Additionally as mentioned above in [Check User Credentials](#check-user-credentials), upon the user responding to the presentation request, the user will be redirected back to your client with the generated presentation's `uuid` as a query parameter.
+
+This endpoint allows you to retrieve the <Tip type="presentation"/> data related to the <Tip type="request"/> created as a result of a successful match from the `/hasMatchingCredentials` endpoint.
+
+You need to provide:
+
+1. the presentation's `uuid` that was returned to your client.
+
+:::important
+Unum ID only ever stores encrypted presentation data and the presentations are deleted after 5 minutes of the initial data retrieval.
+:::
+
+
+The response body consists of Credential objects with the plaintext user data.
+```typescript title="Credential"
+{
+    "id": string, // credential id
+    "type": string, // credential type
+    "issuer": string, // credential issuer brandId
+    "issuanceDate": number, // when credential was created as a milliseconds since epoch unix timestamp
+    "expirationDate"?: number, // when credentials expires as a milliseconds since epoch unix timestamp
+    "data": Map<string, any> // credential data map that matches the credential type's JSON Schema definition
+}
+```
+
+#### Response Body
+```typescript title="Presentation"
+{
+  "uuid": string // the presentation's uuid
+  "credentials": Credential[] // a list of one or more Credential objects
+  "email"?: string // the user's email from the input to /hasMatchingCredentials; only present if email was provided
+  "phone"?: string // the user's phone from the input to /hasMatchingCredentials; only present if phone was provided
+}
+```
+
+To facilitate extracting the credential data we recommend leveraging the Schema Resolver to get the [schema](/schema) of the credential types. Because Credential schemas are immutable they can then be cached and referenced when retrieving the credential data.
+
+---
+
+### Issue Credentials
+> Issue <Tip type="credential"/>s to a <Tip type="user"/>.
+
+**Method**: `POST` <br />
+**Path**: `/credentials`
+
+You need to provide:
+
+1. Credentials data array
+2. Either a phone and/or email attribute
+
+Data about the user, must comply with our credential [schema](/schema) definitions.
+
+An exmaple Credentials object is below:
+
+:::info
+The Credentials object used as input is slightly different the resultant Credential object in this response body and also found in a <Tip type="presentation"/>  documented in the [Get Presentation Data](#get-presentation-data) section.
+:::
+
+```typescript title="Credentials"
+{
+  "type": string, // credential type
+  "data": Map<string, any> // credential data map that matches the credential type's JSON Schema definition
+  "expirationDate?": number // when the expires as a milliseconds since epoch unix timestamp; optional
+}
+```
+
+:::note
+An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it. See [Update Credentials](#update-credentials) *coming soon*.
+:::
+
+:::important
+Credential data is stored securely via a data privacy vault that encrypts and tokenizes the data. The data is only retrieved and decrypted for the brand that matches whom the <Tip type="presentation"/> was created for and agreed to share with by the <Tip type="user"/>.
+:::
+
+#### Request Body
+```typescript
+{
+  "credentials": Credentials[], // a list of one or more Credentials objects
+  "email"?: string, // user's email address; optional if phone is provided
+  "phone"?: string, // user's phone number; optional if email is provided
+}
+```
+
+#### Response Body:
+```typescript title="Credential[]"
+[{
+  "id": string, // credential id
+  "type": string, // credential type
+  "email": string, // user's email address if provided
+  "phone": string, // user's phone number if provided
+  "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
+  "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
+  "expirationDate?": number // when the expires as a milliseconds since epoch unix timestamp; optional
+}]
+```
+
+The created and issued credentials contains an `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
+
+---

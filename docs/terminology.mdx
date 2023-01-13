@@ -23,6 +23,11 @@ The tooltips you'll see most often refer to the terms described in this section 
 - **[request](#request)**
 - **[user](#user)**
 
+The [less important terms](#less-important-terms) are:
+
+- [brand](#brand)
+- [customer](#customer)
+
 ## Main Terms
 
 ### Credential
@@ -199,6 +204,10 @@ To avoid having to define, query, and share the Unum ID User "ID", users can be 
 }
 ```
 
+## Less Important Terms
+
+When possible, we avoid using these less important terms to make the docs more readable and lighter on jargon. However, there are cases where it's necessary to use more precise language, so this section serves as a useful reference.
+
 ### Brand
 
 > A **brand** is a company entity that has a corresponding unique api key, name, and card image. Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.
@@ -210,3 +219,15 @@ A customer can have one to many brands. A brand can be assoicated with only one 
 **Example:** ACME Bank is an Unum ID customer. However they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.
 
 **Components:** Each brand has an associated parent customer. It is totally okay if your customer only has one brand. We want to have the flexibility to support multiple brands per customer.
+
+### Customer
+
+> A **customer** is a company entity that serves as a parent to brands and their corresponding ApiKeys.
+
+:::note
+The self service Dashboard *coming soon* will authenticate at the Customer level in order to create and manage <Tip type="brand">brands</Tip>.
+:::
+
+**Example:** ACME Bank is the Unum ID customer where their self service dashboard access rights are defined.
+
+**Components:** The admins of the customer can manage individual <Tip type="brand">brand</Tip>. settings.

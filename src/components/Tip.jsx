@@ -82,20 +82,6 @@ const tooltips =  {
             </div>
         </Collapsible>
         </>,
-    "brand":
-        <>
-        <div>
-            <b>A <a href="/terminology#brand">brand</a> is a company entity that has a corresponding unique api key, name, and card image.</b> Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.
-        </div>
-        <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
-            <div>
-                <b>Example:</b> ACME Bank is an Unum ID customer. However they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.
-            </div>
-            <div>
-                <b>Components:</b> Each brand has an associated umbrella customer. It is totally okay if your customer only has one brand. We want to have the flexibility to support multiple brands per customer.
-            </div>
-        </Collapsible>
-        </>,
     "user":
     <>
     <div>
@@ -107,6 +93,34 @@ const tooltips =  {
         </div>
         <div>
             <b>Components:</b> Referenced in API endpoints `/hasMatchingCredentials` and `/issueCredentials`. User data is associated by using these user identifiers that you already keep on your users.
+        </div>
+    </Collapsible>
+    </>,
+    "brand":
+    <>
+    <div>
+        <b>A <a href="/terminology#brand">brand</a> is a company entity that has a corresponding unique api key, name, and card image.</b> Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.
+    </div>
+    <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
+        <div>
+            <b>Example:</b> ACME Bank is an Unum ID customer. However they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.
+        </div>
+        <div>
+            <b>Components:</b> Each brand has an associated umbrella customer. It is totally okay if your customer only has one brand. We want to have the flexibility to support multiple brands per customer.
+        </div>
+    </Collapsible>
+    </>,
+    "customer":
+    <>
+    <div>
+        <b>A <a href="/terminology#customer">customer</a> is a company entity that serves as a parent to brands and their corresponding ApiKeys.</b>
+    </div>
+    <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
+        <div>
+            <b>Example:</b> ACME Bank is the Unum ID customer where their self service dashboard access rights are defined.
+        </div>
+        <div>
+            <b>Components:</b> The admins of the customer can manage individual <a href="/terminology#brand">brand</a> settings.
         </div>
     </Collapsible>
     </>,

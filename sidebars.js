@@ -60,6 +60,7 @@ module.exports = {
             'mobile-sdk-ios',
             'mobile-webwallet-sdk-ios',
             'mobile-sdk-flutter',
+            'mobile-webwallet-sdk-flutter',
           ],
         },
         // {
@@ -73,17 +74,16 @@ module.exports = {
         // }
       ],
     },
-    // {
-    //   type: 'category',
-    //   label: 'Demos',
-    //   /* should change when we have lots of docs */
-    //   collapsed: false,
-    //   items: [
-    //     'developer-demo',
-    //     'idv-demo',
-    //     'acme-demo',
-    //     'hooli-demo',
-    //   ]
-    // },
+    {
+      type: 'category',
+      label: 'Demos',
+      /* should change when we have lots of docs */
+      collapsed: false,
+      items: [
+        // 'idv-demo',
+        'kredita-demo',
+        'hooli-demo-idv'
+      ]
+    },
   ],
 };

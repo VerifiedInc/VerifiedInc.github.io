@@ -34,9 +34,21 @@ Please develop your initial integration aganst our Sandbox API [environment](api
 
 The second step of enabling 1-Click or Free is to check if the user has the necessary credentials to complete your signup flow. To do this, call the `/hasMatchingCredentials` endpoint with the user's email and/or phone along with the credential type(s) you are looking for. 
 
-Two outcomes are possible:
+Two outcomes are possible with their respective response bodies below:
 1. **The user has all the required credentials.** The response body contains a `url` attribute that you should direct the user to.
+```typescript title="Example Match Response Body"
+{
+    "match": true,
+    "url": "https://wallet.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb"
+}
+```
 2. **The user does not have all the required credentials.** The response body contains a `match` value of `false`.
+```typescript title="Example Not a Match Response Body"
+{
+    "match": false,
+    "url": ""
+}
+```
 
 #### (1) The User Has the Credentials
 If the user has all the required credentials, you need to direct the user to the `url` provided in the response body. (This is a link to the Unum ID [Wallet](https://wallet.unumid.co/) with parameters.) The user will be prompted to authenticate and share the credentials you've requested. When they agree to share, a `sharedCredentialsUuid` is returned to your client via a query param. **Please proceed to the [Get Shared Credentials](#get-shared-credentials) section.**

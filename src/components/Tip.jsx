@@ -82,59 +82,17 @@ const tooltips =  {
             </div>
         </Collapsible>
         </>,
-    "issuer":
+    "brand":
         <>
         <div>
-            <b>An <a href="/terminology#issuer">issuer</a> is a role a company can play to issue <a href="/terminology#credential">credentials</a> to <a href="/terminology#subject">subjects</a> (users).</b> An issuer also change credential statuses, for example to revoke credentials.
+            <b>A <a href="/terminology#brand">brand</a> is a company entity that has a corresponding unique api key, name, and card image. Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.</b>
         </div>
         <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
             <div>
-                <b>Example:</b> ACME Bank issues a KYC verification credential to Richard (an ACME user). It later revokes that credential and issues a new one to Richard to update his information.
+                <b>Example:</b> ACME Bank is an Unum ID customer. However they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.
             </div>
             <div>
-                <b>Components:</b> An issuer issues credentials and changes credential statuses using the <a href="/server-sdk">Server SDK</a>.
-            </div>
-        </Collapsible>
-        </>,
-    "holder app":
-        <>
-        <div>
-            <b>A <a href="/terminology#holder-app">holder app</a> is an Unum ID enabled mobile app.</b> <i>See also: <a href="/terminology#holder-app">holder</a>.</i>
-        </div>
-        <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
-            <div>
-                <b>Example:</b> ACME Bank adds Unum ID technology to its mobile app, making it a holder app.
-            </div>
-            <div>
-                <b>Components:</b> A holder app is one using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
-            </div>
-        </Collapsible>
-        </>,
-    "holder":
-        <>
-        <div>
-            <b>A <a href="/terminology#holder">holder</a> is an instance of a <a href="#">holder app</a>, installed on a particular device.</b> It stores (or <i>holds</i>) <a href="/terminology#credential">credentials</a> for a <a href="/terminology#subject">subject</a> (user). It also allows the subject to respond to <a href="/terminology#request">requests</a> with <a href="presentation">presentations</a>.
-        </div>
-        <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
-            <div>
-                <b>Example:</b> The ACME Bank app (installed on Richard's phone) stores a KYC verification credential for Richard. When Hooli FinTech requests an ACME KYC verification, the app lets Richard respond with a presentation of the KYC verification credential.
-            </div>
-            <div>
-                <b>Components:</b> A holder app is one using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a holder is an instance of that installed on a particular device.
-            </div>
-        </Collapsible>
-        </>,
-    "subject":
-        <>
-        <div>
-            <b>A <a href="/terminology#subject">subject</a> is a user of a <a href="terminology#holder-app">holder app</a>.</b> Each subject uses one or more <a href="terminology#holders">holders</a>.
-        </div>
-        <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
-            <div>
-                <b>Example:</b> Richard is a subject (user) of the ACME Bank mobile app. He uses two holders: the app installed on his phone and his tablet.
-            </div>
-            <div>
-                <b>Components:</b> A holder app is one using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a holder is an instance of that installed on a particular device. A subject uses one or more holders.
+                <b>Components:</b> Each brand has an associated umbrella customer. It is totally okay if your customer only has one brand. We want to have the flexibility to support multiple brands per customer.
             </div>
         </Collapsible>
         </>,
@@ -149,34 +107,6 @@ const tooltips =  {
         </div>
         <div>
             <b>Components:</b> Referenced in API endpoints `/hasMatchingCredentials` and `/issueCredentials`. User data is associated by using these user identifiers that you already keep on your users.
-        </div>
-    </Collapsible>
-    </>,
-    "verifier":
-        <>
-        <div>
-            <b>A <a href="/terminology#verifier">verifier</a> is a role a company can play to verify <a href="/terminology#presentation">presentations</a> shared by <a href="/terminology#subject">subjects</a> (users). A verifier can also make <a href="/terminology#request">requests</a> for presentations and send them to subjects.</b>
-        </div>
-        <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
-            <div>
-                <b>Example:</b> Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank. When Richard shares the presentation, Hooli verifies it.
-            </div>
-            <div>
-                <b>Components:</b> A verifier requests and verifies presentations using the <a href="/server-sdk">Server SDK</a>.
-            </div>
-        </Collapsible>
-        </>,
-    "DID":
-    <>
-    <div>
-        <b>A <a href="/terminology#DID">DID</a> (or <i>decentralized identifier</i>) identifies a participant in the Unum ID ecosystem.</b> A participant is an <a href="/terminology#issuer">issuer</a>, <a href="/terminology#subject">subject</a>, or <a href="/terminology#verifier">verifier</a>.
-    </div>
-    <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
-        <div>
-            <b>Example:</b> ACME Bank is identified by two DIDs, one for acting as an issuer and another for acting as a verifier. Richard, an ACME subject (user), is identified by one DID. Hooli FinTech, which acts as a verifier, is identified by one DID.
-        </div>
-        <div>
-            <b>Components:</b> The <a href="/server-sdk">Server SDK</a> returns DIDs for issuers and verifiers, and the <a href="/mobile-sdk">Mobile SDK</a> returns DIDs for subjects.
         </div>
     </Collapsible>
     </>,

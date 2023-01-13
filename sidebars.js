@@ -62,28 +62,28 @@ module.exports = {
             'mobile-sdk-flutter',
           ],
         },
-        {
-          type: 'category',
-          label: 'Web SDK',
-          collapsed: true,
-          items: [
-            'web-sdk-overview',
-            'web-sdk-react'
-          ]
-        }
+        // {
+        //   type: 'category',
+        //   label: 'Web SDK',
+        //   collapsed: true,
+        //   items: [
+        //     'web-sdk-overview',
+        //     'web-sdk-react'
+        //   ]
+        // }
       ],
     },
-    {
-      type: 'category',
-      label: 'Demos',
-      /* should change when we have lots of docs */
-      collapsed: false,
-      items: [
-        'developer-demo',
-        'idv-demo',
-        'acme-demo',
-        'hooli-demo',
-      ]
-    },
+    // {
+    //   type: 'category',
+    //   label: 'Demos',
+    //   /* should change when we have lots of docs */
+    //   collapsed: false,
+    //   items: [
+    //     'developer-demo',
+    //     'idv-demo',
+    //     'acme-demo',
+    //     'hooli-demo',
+    //   ]
+    // },
   ],
 };

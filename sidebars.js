@@ -54,12 +54,12 @@ module.exports = {
           /* should collapse when we have lots of docs */
           collapsed: true,
           items: [
-            'mobile-sdk-overview',
-            'mobile-sdk-android',
+            // 'mobile-sdk-overview',
+            // 'mobile-sdk-android',
             'mobile-webwallet-sdk-android',
-            'mobile-sdk-ios',
+            // 'mobile-sdk-ios',
             'mobile-webwallet-sdk-ios',
-            'mobile-sdk-flutter',
+            // 'mobile-sdk-flutter',
             'mobile-webwallet-sdk-flutter',
           ],
         },

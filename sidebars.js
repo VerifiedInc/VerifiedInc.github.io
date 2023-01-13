@@ -50,7 +50,7 @@ module.exports = {
         // },
         {
           type: 'category',
-          label: 'Mobile SDK',
+          label: 'Mobile SDKs',
           /* should collapse when we have lots of docs */
           collapsed: true,
           items: [

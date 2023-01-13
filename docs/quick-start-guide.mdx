@@ -71,7 +71,7 @@ An example response body looks like:
 
 To facilitate extracting the credential data, we recommend leveraging the Schema Resolver to get the [schema](/schema) of the credential types. Because credential schemas are immutable, they can then be cached and referenced when retrieving the credential data.
 
-When you extract the data, you now have the necessary information to consider the user fully verified. (You can of course perform additional verification checks as you like.) **Congratulations!**
+When you extract the data, you now have the necessary information to consider the user fully verified. (You can of course perform additional verification checks as you like.)
 
 ### Issuing User Credentials
 *For more detailed information, please see the [Issue Credentails](/api-overview#issue-credentials) section of the API documentation.*<br/>
@@ -102,3 +102,5 @@ For example, if you collected the user's SSN, you can issue the user a `SsnCrede
 ```
 
 The format of `data` was from the `json.properties` attribute of the response from the [Schema](/schema) Resolver for the `SsnCredential`, i.e. https://schema.unumid.co/schema/SsnCredential.
+
+Upon issuing credentials you qualify for identity verification monetary reimbursement from Unum ID. Also, you stand to gain future revenue when the user shares those credential with other brands. **Congratulations!** You have now enabled 1-Click or Free ID Verification.

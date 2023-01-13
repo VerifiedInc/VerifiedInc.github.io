@@ -31,7 +31,7 @@ The base url for the Sandbox API is `https://api.sandbox-unumid.co`.<br/>
 The base url for the Production API is `https://api.unumid.co`.
 
 ## Functionality
-Interfacing with the Unum ID API lets your company partcipate in the Unum ID identity data network. You can use the API methods to check if users have credentials of interest, create <Tip type="request">requests</Tip> for and retrieve user data in the form of <Tip type="presentation">presentations</Tip>. It can also be used to issue <Tip type="credential">credentials</Tip> of user data and update previously issued credential statuses, e.g. invalidate.
+Interfacing with the Unum ID API lets your company partcipate in the Unum ID identity data network. You can use the API methods to check if <Tip type="user">users</Tip> have credentials of interest, create <Tip type="request">requests</Tip> for and retrieve user data in the form of <Tip type="credential">credentials</Tip>. It can also be used to issue <Tip type="credential">credentials</Tip> of user data and update previously issued credential statuses, e.g. invalidate.
 
 Jump to:
 - [Check User Credentials](#check-user-credentials)
@@ -41,7 +41,7 @@ Jump to:
 ---
 
 ### Check User Credentials
-> Check if a user has matching <Tip type="credential">credentials</Tip>. If so, a <Tip type="request"/> is created to get the user's consent to share the data via a <Tip type="presentation">presentation</Tip>.
+> Check if a user has matching <Tip type="credential">credentials</Tip>. If so, a <Tip type="request"/> is created to get the <Tip type="user">user</Tip>'s consent to share the data.
 
 **Method**: `POST` <br />
 **Path**: `/hasMatchingCredentials`
@@ -50,7 +50,7 @@ You need to provide:
 
 1. credential request(s)
 
-A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.unumid.co/types/interfaces/credentialrequest.html) objects.
+A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.unumid.co/types/interfaces/credentialrequest.html) objects.
 
 ```typescript title="CredentialRequest"
 {
@@ -71,7 +71,7 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 #### Request Body
 ```typescript
 {
-  credentialRequests: CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.
+  credentialRequests: CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials are being asked for.
   email?: string, // user's email address; optional if phone is provided
   phone?: string, // user's phone number; optional if email is provided
 }
@@ -81,28 +81,28 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 ```typescript title="HasMatchingCredentials"
 {
   "match": boolean // indicates whether the user has matching credentials
-  "url": string // Unum ID Web Wallet url to redirect user to for presentation request handling. It will redirect back to your client. Only present if match is true. 
+  "url": string // Unum ID Web Wallet url to redirect user to for credential request handling. It will redirect back to your client. Only present if match is true. 
 }
 ```
 
 ---
 
 ### Get Shared Credentials
-> Get verified <Tip type="presentation"/> data shared by a <Tip type="subject"/>.
+> Get verified <Tip type="credential"/> data shared by a <Tip type="user"/>.
 
 **Method**: `GET` <br />
-**Path**: `/presentationResult/{uuid}`
+**Path**: `/sharedCredentials/{uuid}`
 
-When a <Tip type="user"/> responds to a presentation <Tip type="request"/> the verified data is sent and stored securely awaiting retrieval. Additionally as mentioned above in [Check User Credentials](#check-user-credentials), upon the user responding to the presentation request, the user will be redirected back to your client with the generated presentation's `uuid` as a query parameter.
+When a <Tip type="user"/> responds to a <Tip type="request"/> the verified data is sent and stored securely awaiting retrieval. Additionally, as mentioned above in [Check User Credentials](#check-user-credentials), upon the user responding to the request, the user will be redirected back to your client with a `uuid` as a query parameter.
 
-This endpoint allows you to retrieve the <Tip type="presentation"/> data related to the <Tip type="request"/> created as a result of a successful match from the `/hasMatchingCredentials` endpoint.
+This endpoint allows you to retrieve the shared <Tip type="credential">credentials</Tip> data related to the <Tip type="request"/> created as a result of a successful match from the `/hasMatchingCredentials` endpoint.
 
 You need to provide:
 
-1. the presentation's `uuid` that was returned to your client.
+1. the `uuid` that was returned after redirecting the user to the `url` attribute from the `/hasMatchingCredentials`response
 
-:::important
-Unum ID only ever stores encrypted presentation data and the presentations are deleted after 5 minutes of the initial data retrieval.
+:::info
+Your brand's access to shared credentials is deleted after 5 minutes of the initial credential data retrieval.
 :::
 
 
@@ -119,9 +119,9 @@ The response body consists of Credential objects with the plaintext user data.
 ```
 
 #### Response Body
-```typescript title="Presentation"
+```typescript title="SharedCredentials"
 {
-  "uuid": string // the presentation's uuid
+  "uuid": string // the uuid from the query parameter of the redirect back to your client; identifies the collection of credentials shared by the user
   "credentials": Credential[] // a list of one or more Credential objects
   "email"?: string // the user's email from the input to /hasMatchingCredentials; only present if email was provided
   "phone"?: string // the user's phone from the input to /hasMatchingCredentials; only present if phone was provided
@@ -147,10 +147,6 @@ Data about the user, must comply with our credential [schema](/schema) definitio
 
 An exmaple Credentials object is below:
 
-:::info
-The Credentials object used as input is slightly different the resultant Credential object in this response body and also found in a <Tip type="presentation"/>  documented in the [Get Shared Credentials](#get-shared-credentials) section.
-:::
-
 ```typescript title="Credentials"
 {
   "type": string, // credential type
@@ -163,8 +159,8 @@ The Credentials object used as input is slightly different the resultant Credent
 An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it. See [Update Credentials](#update-credentials) *coming soon*.
 :::
 
-:::important
-Credential data is stored securely via a data privacy vault that encrypts and tokenizes the data. The data is only retrieved and decrypted for the brand that matches whom the <Tip type="presentation"/> was created for and agreed to share with by the <Tip type="user"/>.
+:::info
+Credential data is stored securely via a data privacy vault that encrypts and tokenizes the data. The data is only retrieved and decrypted for the brand that the <Tip type="user"/> agrees to share with.
 :::
 
 #### Request Body

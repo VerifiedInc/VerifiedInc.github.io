@@ -15,6 +15,10 @@ This guide provides an abbreviated step-by-step guide for how to get setup as an
 ## Brand Registration
 Currently the only way to create a <Tip type="customer"/>, <Tip type="brand">brands</Tip>  and api keys is by emailing support@unumid.co. We will also handle creating a branded card image for use with our [Wallet](https://wallet.unumid.co/). *The self service dashboard is coming soon.*
 
+:::caution
+**Due to the sensitive nature of the API key please only leverage from a secure backend service environment.** This means that ideally your clients are communicating with your our own backend service which calls the Unum ID API. Your clients should never have direct access to your Unum ID API key.
+:::
+
 ## User Indentifier Information
 The first step to enabling instant 1-click or free onboarding is to collect the user's email address and/or phone number. All future <Tip type="user"/> references are done via the `email` and/or `phone` attributes.
 

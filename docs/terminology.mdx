@@ -46,68 +46,22 @@ At a high level, to issue a credential a company inputs three pieces of informat
 The data schema must match the corresponding credential type. Information on the data formats for each type can be found in the [Data Schema](/schema) section.
 
 ```json
+
 {
-    "id": "d09ce4f8-6651-406b-a4e5-e4989b7f5254",
+    "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c", // the credential id
     // highlight-start
-    "type": "SsnCredential", // the type of credential
+    "type": "EmailCredential", // the type of credential
     // highlight-end
-    "userIdentifier": "test@unumid.abcde",
-    "issuanceDate": "1673552399458",
-    "expirationDate": "1701483024054",
+    "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55", // the brand uuid of the issuer
+    "issuanceDate": "1671847264479", // date the credential was issued in milliseconds since unix epoch
+    "expirationDate": "1871839024044", // date the credential expires in milliseconds since unix epoch
     // highlight-start
     // the data attribute must match the SsnCredential JSON schema properties as mentioned in the Data Schema section.
     // i.e. https://schema.unumid.co/jsonSchema/SsnCredential
     "data": {
-        "ssn": "111-22-3333"
+        "email": "test@unumid.co"
     }
     // highlight-end
-}
-```
-
-### Presentation
-
-> A **presentation** is a set of one or more <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a>. It's shared with (or <i>presented</i> to) a company by a user.
-
-**Example:** Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.
-
-**Components:** When a user agrees to share (or <i>present</i>) a presentation using the Unum ID Web Wallet, a presentation UUID is passed to the customer's client, and a presentation object is securely stored for retrieval by the customer. The UUID is used by the customer to [get presentation data](/api-overview#get-shared-credentials), which contains the requested credential data.
-
-A user always shares a presentation in response to a <Tip type="request"/>.
-
-:::note
-A presentation's credential data is stored securely via a data privacy vault that encrypts and tokenizes the data. The data can only be retrieved and decrypted by the customer who made the request for that presentation. The customer must do so using the specific <Tip type="brand"/> they used to make the request.
-:::
-
-```json
-{
-    // highlight-start
-    "uuid": "36dadccb-5f34-4fe9-82d0-8a9bdbaca1b2", // the presentation uuid used for its retrieval
-    // highlight-end
-    "createdAt": "1673494220947",
-    "updatedAt": "1673494220947",
-    // highlight-start
-    "brandUuid": "8005c39c-54d7-487e-bf4d-9eb5d39ed795", // this should always match your own ApiKey's brand uuid.
-    // highlight-end
-    "presentationRequestUuid": "82d0616e-df5a-471a-9029-885e905a3966", // the corresponding presentation request uuid
-    "user": {
-        "id": "e31de809-ea49-4384-9d3e-6c70d5ff05c7",
-        "emailAddresses": ["test@unumid.co"],
-        "phoneNumbers": []
-    },
-    "credentials": [
-        // highlight-start
-        {
-            "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
-            "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
-            "type": "EmailCredential",
-            "data": {
-                "email": "test@unumid.co"
-            },
-            "issuanceDate": "1671847264479",
-            "expirationDate": "1871839024044",
-        }
-        // highlight-end
-    ]
 }
 ```
 
@@ -204,13 +158,9 @@ Users can be referenced by email and/or phone, identifiers that you already have
 }
 ```
 
-## Less Important Terms
-
-When possible, we avoid using these less important terms to make the docs more readable and lighter on jargon. However, there are cases where it's necessary to use more precise language, so this section serves as a useful reference.
-
 ### Brand
 
-> A **brand** is a company entity that has a corresponding unique API key, name, and ID card image. Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.
+> A **brand** is a customer entity that has a corresponding unique API key, name, and ID card image. Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.
 
 :::note
 A customer can have one to many brands. A brand can be assoicated with only one customer.

@@ -43,39 +43,25 @@ const tooltips =  {
     "credential": 
         <>
         <div>
-            <b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> is a collection of data about a person. It's issued by a company and can be requested by other network participants, gated by the user's consent.
+            <b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It's issued by a company and can be requested by other network participants, gated by the user's consent.
         </div>
         <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
             <div>
-                <b>Example:</b> ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard's contact information and account numbers, as well as a level of confidence in the accuracy of the data.
+                <b>Example:</b> ACME Lending issues a KYC verification credential to Richard (an ACME user). This includes Richard's contact information and account numbers, as well as a level of confidence in the accuracy of the data.
             </div>
             <div>
                 <b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
             </div>
         </Collapsible>
         </>,
-    "presentation": 
-        <>
-        <div>
-            <b>A <a href="/terminology#presentation">presentation</a> is a set of one or more <a href="/terminology#credential">credentials</a>.</b> It's shared with (or <i>presented</i> to) a company by a user.
-        </div>
-        <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
-            <div>
-                <b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.
-            </div>
-            <div>
-                <b>Components:</b> Upon a user agreeing to share (or <i>present</i>) a presentation using the <a href="/web-wallet">Unum ID Web Wallet</a>, the generated presentation uuid is passed back to the referring customer client and presentation object is securely stored for retrieval in the Unum ID cloud. The `uuid`` is used by the customer to [get presentation data](/api-overview#get-presentation-data) which contains the requested credential data.
-            </div>
-        </Collapsible>
-        </>,
     "request":
         <>
         <div>
-            <b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It's created when a company successfully checks if a <a href="/terminology#user">user</a> has matching credentials, via <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>  Only if the user has the ability to response with the requested credential data is a request created.
+            <b>A <a href="/terminology#request">request</a> (or <i>credentials request</i>) is a request for a <a href="/terminology#credential">credentials</a> to be shared by a <a href="/terminology#user">user</a>.</b> It's created when a company successfully checks if a user has matching credentials, via <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>  Only if the user has the ability to response with the matching credentials is a request created.
         </div>
         <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
             <div>
-                <b>Example:</b> Hooli FinTech checks if Richard has a SSN credential issued by ACME Bank. Because he does a request is created for a presentation of a SSN credential specifically from ACME Bank. This request is to be presented to Richard via Hooli directing to the resultant `url` in the /hasMatchingCredentials response body.
+                <b>Example:</b> Hooli FinTech checks if Richard has a SSN and LastName credential issued by ACME Lending. Because he does, a request is created for those credentials specifically from ACME Lending. Hooli presents this request to Richard by directing him to the `url` received in the `/hasMatchingCredentials` response body.
             </div>
             <div>
                 <b>Components:</b> A company creates a user specific request by using <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>. If it is case the <a href="/terminology#user">user</a> does not have the desired credentials then a request is not created. If it is the case the user does, a request is created and is returned in the form of a `url` attribute in response to the client. 

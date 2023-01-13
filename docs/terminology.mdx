@@ -30,7 +30,7 @@ The tooltips you'll see most often refer to the terms described in this section 
 
 > A **credential** is a collection of data about a person. It's issued by a company and can be requested by other network participants, gated by the user's consent.
 
-**Example:** ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard's contact information and account numbers, as well as a level of confidence in the accuracy of the data.
+**Example:** ACME Lending issues a KYC verification credential to Richard (an ACME user). This includes Richard's contact information and account numbers, as well as a level of confidence in the accuracy of the data.
 
 **Components:** A company issues credentials using the [/credentials](/api-overview#issue-credentials) API endpoint. The data is stored securely using a data privacy vault and is only available to the user and brands the user agrees to share with.
 
@@ -65,7 +65,7 @@ The data schema must match the corresponding credential type. Information on the
 
 > A **request** (or <i>credentials request</i>) is a request for <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a>. It's created when a customer successfully checks if a<a href="/terminology#user"> <Tip type="user"/></a> has matching credentials, via [`/hasMatchingCredentials`](/api-overview#check-user-credentials). A request is only created if the user has the type of credentials the customer needs.
 
-**Example:** Hooli FinTech checks if Richard has a SSN and LastName credential issued by ACME Bank. Because he does, a request is created for his SSN and LastName credential specifically from ACME Bank. Hooli presents this request to Richard by directing him to the `url` received in the `/hasMatchingCredentials` response body.
+**Example:** Hooli FinTech checks if Richard has a SSN and LastName credential issued by ACME Lending. Because he does, a request is created for those credentials specifically from ACME Lending. Hooli presents this request to Richard by directing him to the `url` received in the `/hasMatchingCredentials` response body.
 
 **Components:** A customer checks if a user has the needed types of credentials by using `/hasMatchingCredentials`. If the <Tip type="user"/> does not have the right credentials, then a request is not created. If the user does, a request is created and returned to the customer via the `url` attribute in the `/hasMatchingCredentials` response body. 
 
@@ -97,14 +97,14 @@ The full details of the request object aren't that important or helpful to know,
     // highlight-start
     "credentialRequests": [
         {
-            "type": "FirstName",
+            "type": "SsnCredential",
             "issuers": [
                 "d14ca24c-5323-4b79-9dfa-6471b014d68c"
             ],
             "required": true
         },
         {
-            "type": "LastName",
+            "type": "LastNameCredential",
             "issuers": [
                 "d14ca24c-5323-4b79-9dfa-6471b014d68c"
             ],

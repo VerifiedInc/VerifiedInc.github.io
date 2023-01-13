@@ -36,7 +36,7 @@ The [less important terms](#less-important-terms) are:
 
 **Example:** ACME Bank issues a KYC verification credential to Richard (an ACME user). This includes Richard's contact information and account numbers, as well as a level of confidence in the accuracy of the data.
 
-**Components:** A company issues credentials using the [/credentials](/api-overview#issue-credentials) API endpoint. The data is store securely using a data privacy vault and is only avaliable to the user and brands the user agrees to share with.
+**Components:** A company issues credentials using the [/credentials](/api-overview#issue-credentials) API endpoint. The data is stored securely using a data privacy vault and is only available to the user and brands the user agrees to share with.
 
 At a high level, to issue a credential a company inputs three pieces of information:
 1. type of the credential
@@ -70,12 +70,12 @@ The data schema must match the corresponding credential type. Information on the
 
 **Example:** Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.
 
-**Components:** Upon a user agreeing to share (or <i>present</i>) a presentation using the <a href="/web-wallet">Unum ID Web Wallet</a>, the generated presentation uuid is passed back to the referring customer client and presentation object is securely stored for retrieval in the Unum ID cloud. The `uuid`` is used by the customer to [get presentation data](/api-overview#get-presentation-data) which contains the requested credential data.
+**Components:** When a user agrees to share (or <i>present</i>) a presentation using the Unum ID Web Wallet, a presentation UUID is passed to the customer's client, and a presentation object is securely stored for retrieval by the customer. The UUID is used by the customer to [get presentation data](/api-overview#get-presentation-data), which contains the requested credential data.
 
 A user always shares a presentation in response to a <Tip type="request"/>.
 
 :::note
-A presentation's credential data is stored securely via a data privacy vault that encrypts and tokenizes the data. The data is only retrieved and decrypted for the brand that matches whom the presentation was created for and agreed to share with by the user.
+A presentation's credential data is stored securely via a data privacy vault that encrypts and tokenizes the data. The data can only be retrieved and decrypted by the customer who made the request for that presentation. The customer must do so using the specific <Tip type="brand"/> they used to make the request.
 :::
 
 ```json
@@ -113,26 +113,26 @@ A presentation's credential data is stored securely via a data privacy vault tha
 
 ### Request 
 
-> A **request** (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation"><Tip type="presentation"/></a>. It's created when a company successfully checks if a <Tip type="user"/> has matching credentials, via [/hasMatchingCredentials](/api-overview#check-user-credentials). Only if the user has the ability to response with the requested credential data is a request created.
+> A **request** (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation"><Tip type="presentation"/></a>. It's created when a customer successfully checks if a <Tip type="user"/> has matching credentials, via [`/hasMatchingCredentials`](/api-overview#check-user-credentials). A request is only created if the user has the type of credentials the customer needs.
 
-**Example:** Hooli FinTech checks if Richard has a SSN credential issued by ACME Bank. Because he does a request is created for a presentation of a SSN credential specifically from ACME Bank. This request is to be presented to Richard via Hooli directing to the resultant `url` in the /hasMatchingCredentials response body.
+**Example:** Hooli FinTech checks if Richard has a SSN credential issued by ACME Bank. Because he does, a request is created for a presentation of a SSN credential specifically from ACME Bank. Hooli presents this request to Richard by directing him to the `url` received in the `/hasMatchingCredentials` response body.
 
-**Components:** A company creates a user specific request by using [/hasMatchingCredentials](/api-overview#check-user-credentials). If it is case the <Tip type="user"/> does not have the desired credentials then a request is not created. If it is the case the user does, a request is created and is returned in the form of a `url` attribute in response to the client. 
+**Components:** A customer checks if a user has the needed types of credentials by using `/hasMatchingCredentials`. If the <Tip type="user"/> does not have the right credentials, then a request is not created. If the user does, a request is created and returned to the customer via the `url` attribute in the `/hasMatchingCredentials` response body. 
 
-The client is then expected to direct to the url, which will be to <a href="/web-wallet">Unum ID Web Wallet</a>, where the user will be required to authenticate then agree to share the data relevant data.
+The customer then directs the user to the `url`, where the user authenticates and agrees to share the relevant data.
 
-At a high level, to create a request a company inputs a list containing three pieces of information for each credential:
+At a high level, to create a request, a customer inputs a list containing three pieces of information for each credential:
 1. type of the credential
-2. acceptable <Tip type="brand">brand(s)</Tip> of the credential
-3. whether the credential is required or optional; defaults to required
+2. acceptable <Tip type="brand">brand(s)</Tip> that issued the credential
+3. whether the credential is required or optional (defaults to required)
 
-If multiple issuer brands are listed, a credential (of the correct type) from any one of them is acceptable. If none, then any issuer of the desired credential type is acceptable.
+If multiple issuer brands are listed, a credential (of the correct type) from any one of them is acceptable. If none are listed, then any issuer brand is acceptable.
 
 :::important
 The <Tip type="brand"/> of the credential can be *the same company* as the one making the request! For example, a single company issues an authentication credential to a user, who later shares a presentation containing that credential back with the company to authenticate.
 :::
 
-The full details of the request object aren't that important or helpful to know as it completely internal to Unum ID, but here's an example of a request for a FirstName and LastName credential from the same issuing brand.
+The full details of the request object aren't that important or helpful to know, as it's completely internal to Unum ID, but here's an example of a request for a FirstName and LastName credential from the same issuing brand.
 
 ```json
 {
@@ -184,15 +184,15 @@ The full details of the request object aren't that important or helpful to know 
 
 ### User
 
-> A **user** is an individual in the Unum ID network that can share credential data. Each user has at least one phone or emails associated with them. They can have multiple of either.
+> A **user** is an individual in the Unum ID network that can share verified identity data (presentations of credentials). Each user has at least one phone number or email address associated with them. They can have multiple of either.
 
 :::note
-To avoid having to define, query, and share the Unum ID User "ID", users can be simply referenced by email and/or phone, identifiers that your already have for your own user accounts.
+Users can be referenced by email and/or phone, identifiers that you already have for your own user accounts. This prevents you from needing to use Unum ID specific user IDs.  
 :::
 
-**Example:** Richard is a user in your account system and potentially of the Unum ID network. He has two email addresses and one phone with him. Credentials can be issued to or requested of him using any of these identifiers.
+**Example:** Richard is a user in your account system and potentially a user in the Unum ID network. You have two email addresses and one phone number for him. You can use any of these identifiers to issue credentials to him or check if he has matching credentials.
 
-**Components:** Referenced in API endpoints [/hasMatchingCredentials](/api-overview#check-user-credentials) and [/credentials](/api-overview#issue-credentials). User data is associated by using these user identifiers that you already keep on your users.
+**Components:** You can issue credentials using [`/credentials`](/api-overview#issue-credentials) and check for matching credentials with [`/hasMatchingCredentials`](/api-overview#check-user-credentials).
 
 ```json
 {
@@ -210,24 +210,24 @@ When possible, we avoid using these less important terms to make the docs more r
 
 ### Brand
 
-> A **brand** is a company entity that has a corresponding unique api key, name, and card image. Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.
+> A **brand** is a company entity that has a corresponding unique API key, name, and ID card image. Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.
 
 :::note
 A customer can have one to many brands. A brand can be assoicated with only one customer.
 :::
 
-**Example:** ACME Bank is an Unum ID customer. However they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.
+**Example:** ACME Bank is an Unum ID customer. However they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique API key, name, and ID card image.
 
-**Components:** Each brand has an associated parent customer. It is totally okay if your customer only has one brand. We want to have the flexibility to support multiple brands per customer.
+**Components:** Each brand has an associated parent customer. A customer can have one or more brands.
 
 ### Customer
 
-> A **customer** is a company entity that serves as a parent to brands and their corresponding ApiKeys.
+> A **customer** serves as a parent to brands and their corresponding API keys.
 
 :::note
-The self service Dashboard *coming soon* will authenticate at the Customer level in order to create and manage <Tip type="brand">brands</Tip>.
+Our self service Dashboard is coming soon. It will allow you authenticate as a customer and create and manage your <Tip type="brand">brands</Tip>.
 :::
 
-**Example:** ACME Bank is the Unum ID customer where their self service dashboard access rights are defined.
+**Example:** ACME Bank is an Unum ID customer and has two brands: ACME Lending and ACME Savings.
 
-**Components:** The admins of the customer can manage individual <Tip type="brand">brand</Tip>. settings.
+**Components:** The admins of the customer can manage individual <Tip type="brand">brand</Tip> settings.

@@ -35,7 +35,7 @@ Interfacing with the Unum ID API lets your company partcipate in the Unum ID ide
 
 Jump to:
 - [Check User Credentials](#check-user-credentials)
-- [Get Presentation Data](#get-presentation-data)
+- [Get Shared Credentials](#get-shared-credentials)
 - [Issue Credentials](#issue-credentials)
 
 ---
@@ -65,7 +65,7 @@ If you list multiple <Tip type="issuer">issuers</Tip>, the user can include a cr
 2. user's email or phone
 
 :::caution
-The same ApiKey necessary to call /hasMatchingCredentials grants you and only you access to the encrypted credential data documented in [Get Presentation Data](#get-presentation-data). Please keep this key secure.
+The same ApiKey necessary to call /hasMatchingCredentials grants you and only you access to the encrypted credential data documented in [Get Shared Credentials](#get-shared-credentials). Please keep this key secure.
 :::
 
 #### Request Body
@@ -87,7 +87,7 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 
 ---
 
-### Get Presentation Data
+### Get Shared Credentials
 > Get verified <Tip type="presentation"/> data shared by a <Tip type="subject"/>.
 
 **Method**: `GET` <br />
@@ -148,7 +148,7 @@ Data about the user, must comply with our credential [schema](/schema) definitio
 An exmaple Credentials object is below:
 
 :::info
-The Credentials object used as input is slightly different the resultant Credential object in this response body and also found in a <Tip type="presentation"/>  documented in the [Get Presentation Data](#get-presentation-data) section.
+The Credentials object used as input is slightly different the resultant Credential object in this response body and also found in a <Tip type="presentation"/>  documented in the [Get Shared Credentials](#get-shared-credentials) section.
 :::
 
 ```typescript title="Credentials"

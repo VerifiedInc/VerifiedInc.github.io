@@ -10,21 +10,16 @@ import Tip from '../src/components/Tip';
 
 *Get started with integrating Unum ID into your user onboarding flow.*
 
-This guide provides an abbreviated step-by-step guide for how to get setup as an Unum ID <Tip type="brand"/> and enable [1-click or Free Identity Verification](https://www.unumid.co/1-click) user onboarding. For full technical details, see the documentation for each component.
-
-:::note
-This guide only covers the basics via the [api](/api-overview), if you would like to perform an intergration from a mobile application please note we do provide Mobile SDKs along with corresponding [Kredita](/kredita-demo) and [Hooli](/hooli-demo-idv) reference demos. However, using the mobile SDKs is certainly not required.
-:::
+This guide provides an abbreviated step-by-step guide for how to get setup as an Unum ID <Tip type="brand"/> and enable [1-click or Free Identity Verification](https://www.unumid.co/1-click) user onboarding. For full technical details, see the [API](/api-overview) documentation for each component.
 
 ## Brand Registration
-Currently the only way to create a <Tip type="customer"/>, <Tip type="brand">brands</Tip>  and api keys is by emailing support@unumid.co. We will also handle creating a branded card image for use with our [Web Wallet](https://wallet.unumid.co/).<br/>
-*The self service dashboard is coming soon.*
+Currently the only way to create a <Tip type="customer"/>, <Tip type="brand">brands</Tip>  and api keys is by emailing support@unumid.co. We will also handle creating a branded card image for use with our [Wallet](https://wallet.unumid.co/). *The self service dashboard is coming soon.*
 
 ## User Indentifier Information
-The first step to enabling instant 1-click or free onboarding is to collect and verify the user's email address and/or phone number. All future <Tip type="user"/> references are done via the `email` and/or `phone` attributes.
+The first step to enabling instant 1-click or free onboarding is to collect the user's email address and/or phone number. All future <Tip type="user"/> references are done via the `email` and/or `phone` attributes.
 
 ## Unum ID API
-After receving a brand API key and verifying the new user's email and/or phone, you can authenticate with our [API](/api-overview) to begin requesting and/or issuing <Tip type="user"/> <Tip type="credential">credentials</Tip>.
+After receving a brand API key and colecting the user's email and/or phone, you can authenticate with our [API](/api-overview) to begin requesting and/or issuing <Tip type="user"/> <Tip type="credential">credentials</Tip>.
 
 :::important
 Pleaes develop your initial integration aganst our Sandbox API [envirnoment](api-overview#environments), `https://api.sandbox-unumid.co`.
@@ -40,10 +35,10 @@ Two outcomes are possible:
 2. The user does not have the credential(s). This is characterized by the response body contains a `match` `false` value.
 
 #### The User Has the Credential(s)
-If the user has all the required credential(s), you need to direct the user to the `url` to the Unum ID Web Wallet provided in the response body. The user will be prompted to authenticate then select which qualifying credentials they want to share with your brand. Upon agreeing to share <Tip type="credential">credentials</Tip> a `sharedCredentialsUuid` is returned to your client via a query param. **Please proceed to the [Get Shared Credentials](#get-shared-credentials) section.**
+If the user has all the required credential(s), you need to direct the user to the `url` to the Unum ID [Wallet](https://wallet.unumid.co/) provided in the response body. The user will be prompted to authenticate then select which qualifying credentials they want to share with your brand. Upon agreeing to share <Tip type="credential">credentials</Tip> a `sharedCredentialsUuid` is returned to your client via a query param. **Please proceed to the [Get Shared Credentials](#get-shared-credentials) section.**
 
 #### The User Does Not Have the Credential(s)
-If the user does not have the credential, you perform your normal signup and KYC flows to collect the necessary information. Once the verified information is obtained, you need to issue the user the relevant credential(s). **Please proceed to the [Issuing Credentials](#issuing-user-credentials) section.**
+If the user does not have the credential, you perform your normal signup and KYC flows to collect and verify the necessary information. Once the verified information is obtained, you need to issue the user the relevant credential(s). This can be done completely behind the scenes. **Please proceed to the [Issuing Credentials](#issuing-user-credentials) section.**
 
 ### Get Shared Credentials
 *For more detailed information please see the API documentation [Get Shared Credentials](/api-overview#get-shared-credentials) section.*<br/>
@@ -77,7 +72,7 @@ Upon extractig the data you know have the necessary, verified information to con
 ### Issuing User Credentials
 *For more detailed information please see the API documentation [Issue Credentails](/api-overview#issue-credentials) section.*<br/>
 
-Once you have collected the necessary information from the user, you can issue the user the relevant credential(s). This can be done by calling the `/credentials` endpoint with the user's verified email address and/or phone along with the relevant credential type(s) and the credential data. The data must match the [schema](/schema) of the credential type(s) you are issuing.
+Once you have collected and verified the user's information, you can issue credential(s). This can be done by calling the `/credentials` endpoint with the user's verified email address and/or phone along with the relevant credential type and credential data. The credential `data` must match the [schema](/schema) of the credential type you are issuing.
 
 *In doing so you qualify for KYC reimbursement from Unum ID and you stand to gain future revenue when the user shares those credential(s) with other brands.*
 
@@ -104,4 +99,4 @@ For example, if you collected the user's SSN, you can issue the user a `SsnCrede
 
 The format of `data` was from the response body of referencing the properites attribute of the JSON Schema via the Unum ID Schema Resolver, i.e. https://schema.unumid.co/jsonSchema/SsnCredential.
 
-Upon issuing the credential(s) you qualify for KYC reimbursement from Unum ID. Also, you stand to gain future revenue when the user shares those credential(s) with other brands. **Congrats!** That was easy but must importantly seemless with no additional friction for the user.
+Upon issuing the credential(s) you qualify for KYC reimbursement from Unum ID. Also, you stand to gain future revenue when the user shares those credential(s) with other brands. **Congrats!** That was easy and potentially lucrative but most importantly seemless with no additional friction for the user.

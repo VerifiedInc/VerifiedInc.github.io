@@ -7,7 +7,7 @@ module.exports = {
   /* revert to throw when possible, was unable to fix a broken link issue */
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.png',
+  favicon: 'img/favicon.ico',
   organizationName: 'UnumID', // Usually your GitHub org/user name.
   projectName: 'UnumID.github.io', // Usually your repo name.
   themeConfig: {

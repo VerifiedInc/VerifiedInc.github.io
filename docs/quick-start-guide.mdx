@@ -40,7 +40,7 @@ Two outcomes are possible:
 2. The user does not have the credential(s). This is characterized by the response body contains a `match` `false` value.
 
 #### The User Has the Credential(s)
-If the user has all the required credential(s), you need to direct the user to the `url` to the Unum ID Web Wallet provided in the response body. The user will be prompted to authenticate then select which qualifying credentials they want to share with your brand. Upon agreeing to share a <Tip type="presentation"/> is created and the `uuid` is returned to your client via callback url `presentationUuid` query param. **Please proceed to the [Get Shared Credentials](#get-shared-credentials) section.**
+If the user has all the required credential(s), you need to direct the user to the `url` to the Unum ID Web Wallet provided in the response body. The user will be prompted to authenticate then select which qualifying credentials they want to share with your brand. Upon agreeing to share <Tip type="credential">credentials</Tip> a `sharedCredentialsUuid` is returned to your client via a query param. **Please proceed to the [Get Shared Credentials](#get-shared-credentials) section.**
 
 #### The User Does Not Have the Credential(s)
 If the user does not have the credential, you perform your normal signup and KYC flows to collect the necessary information. Once the verified information is obtained, you need to issue the user the relevant credential(s). **Please proceed to the [Issuing Credentials](#issuing-user-credentials) section.**
@@ -48,13 +48,13 @@ If the user does not have the credential, you perform your normal signup and KYC
 ### Get Shared Credentials
 *For more detailed information please see the API documentation [Get Shared Credentials](/api-overview#get-shared-credentials) section.*<br/>
 
-Upon receiving the <Tip type="presentation"/> uuid from the callback url query param, you can GET the presentation via the `/presentationResult/{uuid}` endpoint. The response body contains an array of <Tip type="credential">credentials</Tip> that the user agreed to shared with your brand.
+Upon receiving the `sharedCredentialsUuid` from the callback url query param, you can GET the shared <Tip type="credential">credentials</Tip> via the `/sharedCredentials/{uuid}` endpoint. The response body contains an array of <Tip type="credential">credentials</Tip> that the user agreed to shared with your brand.
 
-An example presentation response body looks like:
+An example response body looks like:
 
-```typescript title="Example /presentationResult Response Body"
+```typescript title="Example /sharedCredentials Response Body"
 {
-    "uuid": string // the presentation's uuid
+    "uuid": string // the sharedCredentialsUuid
     "credentials": [{
         "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
         "type": "SsnCredential",

@@ -26,7 +26,7 @@ npm install
 ```
 
 #### Requirements
-Node version 16.14+, latest minimum version can be found [here](https://docusaurus.io/docs/installation#requirements). It is recommended to use NVM to install and use different Node versions. For most of our projects are still using a super old v14 so better to only bump to v16 for this project temporarily until we get most of our other projects updated.
+Node version 16.14+, latest minimum version can be found [here](https://docusaurus.io/docs/installation#requirements). We are self imposing a NPM version requirement of 8.19.2+ so the package-lock.json is not updated unnecessarily with individuals using older NPM versions. It is recommended to use NVM to install and use different Node and NPM versions. 
 
 ### Local Development
 
@@ -46,7 +46,7 @@ This command generates static content into the `build` directory and can be serv
 
 ### Deployment
 
-**Important:** Publishing to `master` will publish to [docs.unumid.co](https://docs.unumid.co/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
+**Important:** Publishing to `mastacker` will publish to [docs.unumid.co](https://docs.unumid.co/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
 
 ```console
 GIT_USER=<Your GitHub username> DEPLOYMENT_BRANCH=private USE_SSH=true yarn deploy

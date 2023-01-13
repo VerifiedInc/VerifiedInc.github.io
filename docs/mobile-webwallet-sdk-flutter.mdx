@@ -1,0 +1,217 @@
+---
+id: mobile-webwallet-sdk-flutter
+title: Mobile WebWallet SDK - Flutter
+sidebar_label: Flutter WebWallet
+slug: /mobile-webwallet-sdk-flutter
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
+
+This is a lightweight, fully native SDK that allows a host app to perform web wallet authentication functionality in a in-app browser. 
+
+**Before you begin:** You need to be registered as Unum ID customer to use this SDK.
+
+## Overview
+
+### Minimum Requirements
+- **Android 6.0 (Marshmallow) and above**
+- **iOS 15 and above**
+- **English language** (internationalization coming soon)
+
+### Required Permissions
+- **Camera:** requested when you show the QR code scanner
+- **Biometrics/Passcode:** requested when you call `initialize()`
+
+Permissions and any permission rational messages should be updated in the individual native sections of the host application.
+
+## Setup
+
+### Installation
+
+Install the flutter plugin by adding it to your pubspec.yaml file.
+
+```yaml
+dependencies:
+  webwallet:
+    git:
+      url: git@github.com:UnumID/UnumIDWebWallet-Flutter.git
+```
+
+## Usage
+
+### SDK Initialization
+
+This function initializes the Unum ID SDK, allowing the host app to use it. It must be called before any other SDK functionality can be used. In most cases, it should be called when the application loads/comes to the foreground. Once onSuccess is returned, the developer will then be able to retrieve the saved did.
+
+```dart
+import 'package:webwallet/webwallet.dart';
+
+ @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('WebWallet plugin example app'),
+        ),
+        body: Center(
+          child: TextButton(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+          ),
+          onPressed: () {
+            _webwalletPlugin.launchWebWallet(true, "userCode", "test@unumid.co", "issuerDid");
+           },
+          child: Text('Launch WebWallet')
+        ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+### SDK Handle deeplink
+
+An example of handling deeplinks
+
+```dart
+
+import 'package:webwallet/webwallet.dart';
+
+class WebWalletWidget extends StatelessWidget {
+  const WebWalletWidget({super.key});
+  @override
+  Widget build(BuildContext context) {
+    DeepLinkBloc _bloc = Provider.of<DeepLinkBloc>(context);
+    final _webwalletPlugin = Webwallet();
+    return StreamBuilder<String>(
+        stream: _bloc.state,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: Text('No deep link was used'));
+          } else {
+            return Center(
+                child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blue),
+                      ),
+                      onPressed: () {
+                         _webwalletPlugin.launchWebWallet(true, "userCode", "test@unumid.co", "issuerDid");
+                      },
+                      child: Text("${snapshot.data}"),
+                    )));
+          }
+        });
+  }
+}
+```
+
+### SDK Logging
+
+Turn on SDK Logging
+
+```dart
+import 'package:unumidflutter/unumidflutter.dart';
+
+Unumidflutter.turnOnLogging();
+```
+
+### An example of passing parameters
+
+You can easily pass parameters to launch the WebWallet from the code.
+
+```dart
+
+@override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text('WebWallet plugin example app'),
+      ),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(children: [
+                TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter user code',
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        userCode = text;
+                      });
+                    }),
+                const SizedBox(height: 10),
+                TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter user email',
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        userEmail = text;
+                      });
+                    }),
+                const SizedBox(height: 10),
+                TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter issuer did',
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        issuerDid = text;
+                      });
+                    })
+              ])),
+          TextButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+            ),
+            onPressed: () {
+              if (Platform.isAndroid) {
+                _webwalletPlugin.androidSetStateValues(
+                    "issuer", userCode, userEmail);
+                _webwalletPlugin.androidPerformVerification("appId", "appKey",
+                    "workflowId", "transactionId", "deepLinkScheme");
+              } else {
+                _webwalletPlugin.launchWebWallet(true, userCode, userEmail,
+                    issuerDid, Colors.blue.toHex(), Colors.white.toHex());
+              }
+            },
+            child: const Text('Launch WebWallet'),
+          ),
+        ],
+      )),
+    ));
+  }
+}
+
+```
+
+:::note
+The technical details of DIDs are not relevant to deploying or using Unum ID. You can think of DIDs as identifiers in the normal sense — unique, random strings of characters like UUIDs.
+:::
+
+When you [initialize](#initialize) the SDK, you can optionally include a DID.
+- **Don't include a DID for a user who's new to the SDK.** The SDK will generate a new one that you should store, associated with the user ID in your system.
+- **Do include a DID for a user who returns to the SDK.** The SDK will use this DID to access the correct stored data for that user.
+
+:::important
+DIDs are the *only* identifiers the SDK understands, so it relies entirely on the host app to pass the correct one.
+
+For example, suppose Users 1 and 2 are associated with DIDs 1 and 2, respectively. If User 1 is using the host app, but the app passes DID 2 to the SDK, the SDK will give User 1 access to to User 2's data.
+:::

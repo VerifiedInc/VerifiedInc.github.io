@@ -60,6 +60,7 @@ module.exports = {
             'mobile-sdk-ios',
             'mobile-webwallet-sdk-ios',
             'mobile-sdk-flutter',
+            'mobile-webwallet-sdk-flutter',
           ],
         },
         {
@@ -83,6 +84,8 @@ module.exports = {
         'idv-demo',
         'acme-demo',
         'hooli-demo',
+        'kredita-demo',
+        'hooli-demo-idv'
       ]
     },
   ],

@@ -43,7 +43,7 @@ const tooltips =  {
     "credential": 
         <>
         <div>
-            <b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It's issued by a company (i.e. created and sent to a user) and stored in the company's app, on that user's device.
+            <b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> is a collection of data about a person. It's issued by a company and can be requested by other network participants, gated by the user's consent.
         </div>
         <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
             <div>
@@ -64,28 +64,28 @@ const tooltips =  {
                 <b>Example:</b> Richard shares a presentation of a KYC verification credential (which ACME Bank issued to him) with Hooli FinTech.
             </div>
             <div>
-                <b>Components:</b> A user's app shares (or <i>presents</i>) presentations using the <a href="/mobile-sdk-overview">Mobile SDK</a>, and a company verifies presentations using the <a href="/server-sdk">Server SDK</a>.
+                <b>Components:</b> Upon a user agreeing to share (or <i>present</i>) a presentation using the <a href="/web-wallet">Unum ID Web Wallet</a>, the generated presentation uuid is passed back to the referring customer client and presentation object is securely stored for retrieval in the Unum ID cloud. The `uuid`` is used by the customer to [get presentation data](/api-overview#get-presentation-data) which contains the requested credential data.
             </div>
         </Collapsible>
         </>,
     "request":
         <>
         <div>
-            <b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It's sent by a company to a user, who chooses whether to share a presentation in response.
+            <b>A <a href="/terminology#request">request</a> (or <i>presentation request</i>) is a request for a <a href="/terminology#presentation">presentation</a>.</b> It's created when a company successfully checks if a <a href="/terminology#user">user</a> has matching credentials, via <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>  Only if the user has the ability to response with the requested credential data is a request created.
         </div>
         <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
             <div>
-                <b>Example:</b> Hooli FinTech sends Richard a request for (a presentation of) a KYC verification credential from ACME Bank.
+                <b>Example:</b> Hooli FinTech checks if Richard has a SSN credential issued by ACME Bank. Because he does a request is created for a presentation of a SSN credential specifically from ACME Bank. This request is to be presented to Richard via Hooli directing to the resultant `url` in the /hasMatchingCredentials response body.
             </div>
             <div>
-                <b>Components:</b> A company creates requests using the <a href="/server-sdk">Server SDK</a> and routes them to users using the <a href="/web-sdk">Web SDK</a>. A user's app responds to requests using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
+                <b>Components:</b> A company creates a user specific request by using <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>. If it is case the <a href="/terminology#user">user</a> does not have the desired credentials then a request is not created. If it is the case the user does, a request is created and is returned in the form of a `url` attribute in response to the client. 
             </div>
         </Collapsible>
         </>,
     "brand":
         <>
         <div>
-            <b>A <a href="/terminology#brand">brand</a> is a company entity that has a corresponding unique api key, name, and card image. Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.</b>
+            <b>A <a href="/terminology#brand">brand</a> is a company entity that has a corresponding unique api key, name, and card image.</b> Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.
         </div>
         <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
             <div>
@@ -99,7 +99,7 @@ const tooltips =  {
     "user":
     <>
     <div>
-        <b>A <a href="/terminology#user">user</a> is an individual in the Unum ID network.</b> Each user one or more phone or email associated with them which are the identifiers used for reference.
+        <b>A <a href="/terminology#user">user</a> is an individual in the Unum ID network.</b> Each user has at least one phone or emails associated with them. They can have multiple of either.
     </div>
     <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
         <div>

@@ -8,41 +8,49 @@ slug: /quick-start-guide
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-*Get started with integrating Unum ID into your user onboarding flow.*
+_Get started with integrating Unum ID into your user onboarding flow._
 
 This guide provides an abbreviated step-by-step guide for how to get setup as an Unum ID <Tip type="brand"/> and enable [1-Click or Free ID Verification](https://www.unumid.co/1-click). For full technical details, see the [API](/api-overview) documentation for each component.
 
 ## Brand Registration
-Currently the only way to create a <Tip type="customer"/>, <Tip type="brand">brands</Tip>  and API keys is by emailing support@unumid.co. We will also handle creating a branded card image for use with our [Wallet](https://wallet.unumid.co/). *Our self service Dashboard is coming soon.*
+
+Currently the only way to create a <Tip type="customer"/>, <Tip type="brand">brands</Tip> and API keys is by emailing support@unumid.co. We will also handle creating a branded card image for use with our [Wallet](https://wallet.unumid.co/). _Our self service Dashboard is coming soon._
 
 :::caution
 **API keys are sensitive, so please only use them in a secure backend service environment.** This means that ideally your clients will communicate with your our own backend service, which will then call the Unum ID API. Your clients should never have direct access to your Unum ID API key.
 :::
 
 ## User Indentifier Information
+
 The first step of enabling 1-Click or Free is to collect the user's email address and/or phone number. All future <Tip type="user"/> references are done via the `email` and/or `phone` attributes.
 
 ## Unum ID API
+
 After receving a brand API key and colecting the user's email and/or phone, you can authenticate with our [API](/api-overview) to begin requesting and/or issuing <Tip type="credential">credentials</Tip>.
 
 :::important
-Please develop your initial integration aganst our Sandbox API [environment](api-overview#environments): `https://api.sandbox-unumid.co`.
+Please develop your initial integration aganst our Sandbox API [environment](api-overview#environments): `https://core-api.sandbox-unumid.co`.
 :::
 
 ### Checking User Credentials
-*For more detailed information, please see the [Check User Credentails](/api-overview#check-user-credentials) section of the API documentation.*<br/>
 
-The second step of enabling 1-Click or Free is to check if the user has the necessary credentials to complete your signup flow. To do this, call the `/hasMatchingCredentials` endpoint with the user's email and/or phone along with the credential type(s) you are looking for. 
+_For more detailed information, please see the [Check User Credentails](/api-overview#check-user-credentials) section of the API documentation._<br/>
+
+The second step of enabling 1-Click or Free is to check if the user has the necessary credentials to complete your signup flow. To do this, call the `/hasMatchingCredentials` endpoint with the user's email and/or phone along with the credential type(s) you are looking for.
 
 Two outcomes are possible with their respective response bodies below:
+
 1. **The user has all the required credentials.** The response body contains a `url` attribute that you should direct the user to.
+
 ```typescript title="Example Match Response Body"
 {
     "match": true,
-    "url": "https://wallet.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb"
+    "url": "https://wallet-beta.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb"
 }
 ```
+
 2. **The user does not have all the required credentials.** The response body contains a `match` value of `false`.
+
 ```typescript title="Example Not a Match Response Body"
 {
     "match": false,
@@ -51,13 +59,18 @@ Two outcomes are possible with their respective response bodies below:
 ```
 
 #### (1) The User Has the Credentials
+
 If the user has all the required credentials, you need to direct the user to the `url` provided in the response body. (This is a link to the Unum ID [Wallet](https://wallet.unumid.co/) with parameters.) The user will be prompted to authenticate and share the credentials you've requested. When they agree to share, a `sharedCredentialsUuid` is returned to your client via a query param. **Please proceed to the [Get Shared Credentials](#get-shared-credentials) section.**
 
 #### (2) The User Does Not Have the Credentials
+
 If the user does not have the credentials, you should take the user through your existing signup flow to collect and verify the necessary data. Once the verified information is obtained, you need to issue the user credentials containing that data. This can be done completely behind the scenes, as long as you obtain user consent. **Please proceed to the [Issuing Credentials](#issuing-user-credentials) section.**
 
+<!-- Question: Are we actually doing anything to enforce user consent for credential issuance? -->
+
 ### Get Shared Credentials
-*For more detailed information, please see the [Get Shared Credentials](/api-overview#get-shared-credentials) section of the API documentation.*<br/>
+
+_For more detailed information, please see the [Get Shared Credentials](/api-overview#get-shared-credentials) section of the API documentation._<br/>
 
 When your client receives the `sharedCredentialsUuid` from the callback URL query param, you can GET the shared <Tip type="credential">credentials</Tip> via the `/sharedCredentials/{uuid}` endpoint. The response body contains an array of credentials that the user agreed to shared with your brand.
 
@@ -86,33 +99,36 @@ To facilitate extracting the credential data, we recommend leveraging the Schema
 When you extract the data, you now have the necessary information to consider the user fully verified. (You can of course perform additional verification checks as you like.)
 
 ### Issuing User Credentials
-*For more detailed information, please see the [Issue Credentails](/api-overview#issue-credentials) section of the API documentation.*<br/>
+
+_For more detailed information, please see the [Issue Credentails](/api-overview#issue-credentials) section of the API documentation._<br/>
 
 Once you have collected and verified the user's information, you can issue credentials. This can be done by calling the `/credentials` endpoint with the user's verified email address and/or phone along with the relevant credential type and credential data. The credential `data` must match the [schema](/schema) of the credential type you are issuing.
 
-*In doing so, you qualify for reimbursement from Unum ID, and you stand to gain future revenue when the user shares those credentials with other brands.*
+_In doing so, you qualify for reimbursement from Unum ID, and you stand to gain future revenue when the user shares those credentials with other brands._
 
-For example, if you collected the user's SSN, you can issue the user a `SsnCredential` by calling the `/credentials` endpoint with the user's email and/or phone along with the `SsnCredential` type and the SSN data: 
+For example, if you collected the user's SSN, you can issue the user a `SsnCredential` by calling the `/credentials` endpoint with the user's email and/or phone along with the `SsnCredential` type and the SSN data:
 
 ```json title="Example Issue Credentials Request Body"
 {
-    "email": "test@unumid.abcde",
-    "phone": "+421234567890",
-    "credentials": [
-        {
-            "type": "SsnCredential",
-            // highlight-start
-            // data format following the properties attribute from https://schema.unumid.co/jsonSchema/SsnCredential
-            "data": {
-                "ssn": "111-22-3333"
-            },
-            // highlight-end
-            "expirationDate": 1893484800
-        }
-    ]
+  "email": "test@unumid.abcde",
+  "phone": "+421234567890",
+  "credentials": [
+    {
+      "type": "SsnCredential",
+      // highlight-start
+      // data format following the properties attribute from https://schema.unumid.co/jsonSchema/SsnCredential
+      "data": {
+        "ssn": "111-22-3333"
+      },
+      // highlight-end
+      "expirationDate": 1893484800
+    }
+  ]
 }
 ```
 
 The format of `data` was from the `json.properties` attribute of the response from the [Schema](/schema) Resolver for the `SsnCredential`, i.e. https://schema.unumid.co/schema/SsnCredential.
 
 Upon issuing credentials you qualify for identity verification monetary reimbursement from Unum ID. Also, you stand to gain future revenue when the user shares those credential with other brands. **Congratulations!** You have now enabled 1-Click or Free ID Verification.
+
+<!-- Question: I get that reimbursement is a big part of "1-click or free", but do we want to emphasize it so much here? It's totally irrelevant from a technical perspective. -->

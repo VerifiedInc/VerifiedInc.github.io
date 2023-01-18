@@ -66,8 +66,6 @@ If the user has all the required credentials, you need to direct the user to the
 
 If the user does not have the credentials, you should take the user through your existing signup flow to collect and verify the necessary data. Once the verified information is obtained, you need to issue the user credentials containing that data. This can be done completely behind the scenes, as long as you obtain user consent. **Please proceed to the [Issuing Credentials](#issuing-user-credentials) section.**
 
-<!-- Question: Are we actually doing anything to enforce user consent for credential issuance? -->
-
 ### Get Shared Credentials
 
 _For more detailed information, please see the [Get Shared Credentials](/api-overview#get-shared-credentials) section of the API documentation._<br/>
@@ -130,5 +128,3 @@ For example, if you collected the user's SSN, you can issue the user a `SsnCrede
 The format of `data` was from the `json.properties` attribute of the response from the [Schema](/schema) Resolver for the `SsnCredential`, i.e. https://schema.unumid.co/schema/SsnCredential.
 
 Upon issuing credentials you qualify for identity verification monetary reimbursement from Unum ID. Also, you stand to gain future revenue when the user shares those credential with other brands. **Congratulations!** You have now enabled 1-Click or Free ID Verification.
-
-<!-- Question: I get that reimbursement is a big part of "1-click or free", but do we want to emphasize it so much here? It's totally irrelevant from a technical perspective. -->

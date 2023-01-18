@@ -15,9 +15,11 @@ Postman documentation of this API can be found [here](https://docs.api.unumid.co
 :::
 
 ## Overview
-Integrating with Unum ID can be completed with minimal effort by following this documentation. That said if further assistance is desired please do not hesitate to reach out to support@unumid.co. Once complete, you will be able to boast [1-click](https://www.unumid.co/1-click) (or free KYC) onboarding and secure additional revenue streams for any user data leveraged by other network partcipants.
+
+Integrating with Unum ID can be completed with minimal effort by following this documentation. That said, if you desire further assistance, please do not hesitate to reach out to support@unumid.co. Once complete, you will be able to boast [1-click](https://www.unumid.co/1-click) (or free KYC) onboarding and secure additional revenue streams for any user data shared with other network partcipants.
 
 ### Authentication
+
 Every request detailed below requires an Unum ID ApiKey as an Authorization Bearer token header, which is used to authenticate requests to the Unum ID cloud.
 
 :::caution
@@ -25,15 +27,18 @@ Every request detailed below requires an Unum ID ApiKey as an Authorization Bear
 :::
 
 ### Environments
-Upon the ApiKey creation you will receive one for each environment: Sandbox and Production. We encourage that all integration work be done against the Sandbox environment. 
 
-The base url for the Sandbox API is `https://api.sandbox-unumid.co`.<br/>
-The base url for the Production API is `https://api.unumid.co`.
+Upon the ApiKey creation you will receive one for each environment: Sandbox and Production. We encourage that all integration work be done against the Sandbox environment.
+
+The base url for the Sandbox API is `https://core-api.sandbox-unumid.co`.<br/>
+The base url for the Production API is `https://core-api.unumid.co`.
 
 ## Functionality
-Interfacing with the Unum ID API lets your company partcipate in the Unum ID identity data network. You can use the API methods to check if <Tip type="user">users</Tip> have credentials of interest, create <Tip type="request">requests</Tip> for and retrieve user data in the form of <Tip type="credential">credentials</Tip>. It can also be used to issue <Tip type="credential">credentials</Tip> of user data and update previously issued credential statuses, e.g. invalidate.
+
+The Unum ID API lets your company partcipate in the Unum ID identity data network. You can use the API methods to check if <Tip type="user">users</Tip> have credentials of interest, create <Tip type="request">requests</Tip> for and retrieve user data in the form of <Tip type="credential">credentials</Tip>, issue <Tip type="credential">credentials</Tip> of user data, and update previously issued credential statuses (e.g. to invalidate a credential)
 
 Jump to:
+
 - [Check User Credentials](#check-user-credentials)
 - [Get Shared Credentials](#get-shared-credentials)
 - [Issue Credentials](#issue-credentials)
@@ -41,6 +46,7 @@ Jump to:
 ---
 
 ### Check User Credentials
+
 > Check if a user has matching <Tip type="credential">credentials</Tip>. If so, a <Tip type="request"/> is created to get the <Tip type="user">user</Tip>'s consent to share the data.
 
 **Method**: `POST` <br />
@@ -60,7 +66,7 @@ A credential requests encodes which <Tip type="credential">credentials</Tip> you
 }
 ```
 
-If you list multiple <Tip type="issuer">issuers</Tip>, the user can include a credential issued by *any one* of those listed. If `issuers` is left empty the user can include a credential with matching type issued by *any* issuer.
+If you list multiple <Tip type="issuer">issuers</Tip>, the user can include a credential issued by _any one_ of those listed. If `issuers` is left empty the user can include a credential with matching type issued by _any_ issuer.
 
 2. user's email or phone
 
@@ -69,6 +75,7 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 :::
 
 #### Request Body
+
 ```typescript
 {
   credentialRequests: CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials are being asked for.
@@ -78,16 +85,18 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 ```
 
 #### Response Body:
+
 ```typescript title="HasMatchingCredentials"
 {
   "match": boolean // indicates whether the user has matching credentials
-  "url": string // Unum ID Web Wallet url to redirect user to for credential request handling. It will redirect back to your client. Only present if match is true. 
+  "url": string // Unum ID Web Wallet url to redirect user to for credential request handling. It will redirect back to your client. Only present if match is true.
 }
 ```
 
 ---
 
 ### Get Shared Credentials
+
 > Get verified <Tip type="credential"/> data shared by a <Tip type="user"/>.
 
 **Method**: `GET` <br />
@@ -105,8 +114,8 @@ You need to provide:
 Your brand's access to shared credentials is deleted after 5 minutes of the initial credential data retrieval.
 :::
 
-
 The response body consists of Credential objects with the plaintext user data.
+
 ```typescript title="Credential"
 {
     "id": string, // credential id
@@ -119,6 +128,7 @@ The response body consists of Credential objects with the plaintext user data.
 ```
 
 #### Response Body
+
 ```typescript title="SharedCredentials"
 {
   "uuid": string // the uuid from the query parameter of the redirect back to your client; identifies the collection of credentials shared by the user
@@ -133,6 +143,7 @@ To facilitate extracting the credential data we recommend leveraging the Schema 
 ---
 
 ### Issue Credentials
+
 > Issue <Tip type="credential"/>s to a <Tip type="user"/>.
 
 **Method**: `POST` <br />
@@ -156,7 +167,7 @@ An exmaple Credentials object is below:
 ```
 
 :::note
-An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it. See [Update Credentials](#update-credentials) *coming soon*.
+An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it. See [Update Credentials](#update-credentials) _coming soon_.
 :::
 
 :::info
@@ -164,6 +175,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 :::
 
 #### Request Body
+
 ```typescript
 {
   "credentials": Credentials[], // a list of one or more Credentials objects
@@ -173,6 +185,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 ```
 
 #### Response Body:
+
 ```typescript title="Credential[]"
 [{
   "id": string, // credential id
@@ -185,6 +198,6 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 }]
 ```
 
-The created and issued credentials contains an `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
+The created and issued credentials contains an `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** If you _only_ store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
 
 ---

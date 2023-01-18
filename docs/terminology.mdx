@@ -35,43 +35,44 @@ The tooltips you'll see most often refer to the terms described in this section 
 **Components:** A company issues credentials using the [/credentials](/api-overview#issue-credentials) API endpoint. The data is stored securely using a data privacy vault and is only available to the user and brands the user agrees to share with.
 
 At a high level, to issue a credential a company inputs three pieces of information:
+
 1. type of the credential
-2. identifier for the person 
+2. identifier for the person
 3. data about the person
 
 The data schema must match the corresponding credential type. Information on the data formats for each type can be found in the [Data Schema](/schema) section.
 
 ```json
-
 {
-    "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c", // the credential id
-    // highlight-start
-    "type": "EmailCredential", // the type of credential
-    // highlight-end
-    "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55", // the brand uuid of the issuer
-    "issuanceDate": "1671847264479", // date the credential was issued in milliseconds since unix epoch
-    "expirationDate": "1871839024044", // date the credential expires in milliseconds since unix epoch
-    // highlight-start
-    // the data attribute must match the SsnCredential JSON schema properties as mentioned in the Data Schema section.
-    // i.e. https://schema.unumid.co/jsonSchema/SsnCredential
-    "data": {
-        "email": "test@unumid.co"
-    }
-    // highlight-end
+  "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c", // the credential id
+  // highlight-start
+  "type": "EmailCredential", // the type of credential
+  // highlight-end
+  "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55", // the brand uuid of the issuer
+  "issuanceDate": "1671847264479", // date the credential was issued in milliseconds since unix epoch
+  "expirationDate": "1871839024044", // date the credential expires in milliseconds since unix epoch
+  // highlight-start
+  // the data attribute must match the SsnCredential JSON schema properties as mentioned in the Data Schema section.
+  // i.e. https://schema.unumid.co/jsonSchema/SsnCredential
+  "data": {
+    "email": "test@unumid.co"
+  }
+  // highlight-end
 }
 ```
 
-### Request 
+### Request
 
 > A **request** (or <i>credentials request</i>) is a request for <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a>. It's created when a customer successfully checks if a<a href="/terminology#user"> <Tip type="user"/></a> has matching credentials, via [`/hasMatchingCredentials`](/api-overview#check-user-credentials). A request is only created if the user has the type of credentials the customer needs.
 
 **Example:** Hooli FinTech checks if Richard has a SSN and LastName credential issued by ACME Lending. Because he does, a request is created for those credentials specifically from ACME Lending. Hooli presents this request to Richard by directing him to the `url` received in the `/hasMatchingCredentials` response body.
 
-**Components:** A customer checks if a user has the needed types of credentials by using `/hasMatchingCredentials`. If the <Tip type="user"/> does not have the right credentials, then a request is not created. If the user does, a request is created and returned to the customer via the `url` attribute in the `/hasMatchingCredentials` response body. 
+**Components:** A customer checks if a user has the needed types of credentials by using `/hasMatchingCredentials`. If the <Tip type="user"/> does not have the right credentials, then a request is not created. If the user does, a request is created and returned to the customer via the `url` attribute in the `/hasMatchingCredentials` response body.
 
 The customer then directs the user to the `url`, where the user authenticates and agrees to share the relevant data.
 
 At a high level, to create a request, a customer inputs a list containing three pieces of information for each credential which makes up the `credentialsRequests` atrribute.
+
 1. type of the credential
 2. acceptable <Tip type="brand">brand(s)</Tip> that issued the credential
 3. whether the credential is required or optional (defaults to required)
@@ -80,57 +81,49 @@ If multiple issuer brands are listed, a credential (of the correct type) from an
 
 Additionally, the customer must input a user identifier email address and/or phone identifier. You might notice these are the exact inputs to [`/hasMatchingCredentials`](/api-overview#check-user-credentials).
 
-:::important
-The <Tip type="brand"/> of the credential can be *the same company* as the one making the request! For example, a single company issues an authentication credential to a user, who later shares credentials containing that credential back with the company to authenticate.
-:::
-
 The full details of the request object aren't that important or helpful to know, as it's completely internal to Unum ID, but here's an example of a request for a FirstName and LastName credential from the same issuing brand.
 
 ```json
 {
-    "uuid": "7c9a2365-a2a3-4fec-b446-99b61a074fa8",
-    "id": "854b9889-013d-40a2-93b9-68b9cf8d2540",
-    "createdAt": "1673470082199",
-    "updatedAt": "1673470082200",
-    "email": "test@unumid.co",
-    "phone": null,
-    // highlight-start
-    "credentialRequests": [
-        {
-            "type": "SsnCredential",
-            "issuers": [
-                "d14ca24c-5323-4b79-9dfa-6471b014d68c"
-            ],
-            "required": true
-        },
-        {
-            "type": "LastNameCredential",
-            "issuers": [
-                "d14ca24c-5323-4b79-9dfa-6471b014d68c"
-            ],
-            "required": true
-        }
-    ],
-    // highlight-end
-    "expirationDate": null,
-    "brand": {
-        "uuid": "8005c39c-54d7-487e-bf4d-9eb5d39ed795",
-        "id": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
-        "createdAt": "1671595963109",
-        "updatedAt": "1671595963109",
-        "issuerName": "Hooli Issuer",
-        "receiverName": "Hooli Receiver",
-        "cardImageUrl": "https://unumid-dev-card-images.s3.us-west-2.amazonaws.com/ID+Card+-+Hooli.svg",
-        "customerUuid": "bba94256-5366-4bd5-8e4b-6568be7aaf54"
+  "uuid": "7c9a2365-a2a3-4fec-b446-99b61a074fa8",
+  "id": "854b9889-013d-40a2-93b9-68b9cf8d2540",
+  "createdAt": "1673470082199",
+  "updatedAt": "1673470082200",
+  "email": "test@unumid.co",
+  "phone": null,
+  // highlight-start
+  "credentialRequests": [
+    {
+      "type": "SsnCredential",
+      "issuers": ["d14ca24c-5323-4b79-9dfa-6471b014d68c"],
+      "required": true
     },
-    "user": {
-        "uuid": "77001639-9629-4bad-8d45-4cd0c2b7a7c8",
-        "id": "e31de809-ea49-4384-9d3e-6c70d5ff05c7",
-        "createdAt": "1671242870669",
-        "updatedAt": "1671242870669",
-        "phoneNumbers": ["+14043038080"],
-        "emailAddresses": ["test@unumid.co"]
+    {
+      "type": "LastNameCredential",
+      "issuers": ["d14ca24c-5323-4b79-9dfa-6471b014d68c"],
+      "required": true
     }
+  ],
+  // highlight-end
+  "expirationDate": null,
+  "brand": {
+    "uuid": "8005c39c-54d7-487e-bf4d-9eb5d39ed795",
+    "id": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+    "createdAt": "1671595963109",
+    "updatedAt": "1671595963109",
+    "issuerName": "Hooli Issuer",
+    "receiverName": "Hooli Receiver",
+    "cardImageUrl": "https://unumid-dev-card-images.s3.us-west-2.amazonaws.com/ID+Card+-+Hooli.svg",
+    "customerUuid": "bba94256-5366-4bd5-8e4b-6568be7aaf54"
+  },
+  "user": {
+    "uuid": "77001639-9629-4bad-8d45-4cd0c2b7a7c8",
+    "id": "e31de809-ea49-4384-9d3e-6c70d5ff05c7",
+    "createdAt": "1671242870669",
+    "updatedAt": "1671242870669",
+    "phoneNumbers": ["+14043038080"],
+    "emailAddresses": ["test@unumid.co"]
+  }
 }
 ```
 
@@ -148,11 +141,11 @@ Users can be referenced by email and/or phone, identifiers that you already have
 
 ```json
 {
-    "id": "e31de809-ea49-4384-9d3e-6c70d5ff05c7",
-    "createdAt": "1671242870669",
-    "updatedAt": "1671242870669",
-    "emailAddresses": ["test@unumid.co"],
-    "phoneNumbers": []
+  "id": "e31de809-ea49-4384-9d3e-6c70d5ff05c7",
+  "createdAt": "1671242870669",
+  "updatedAt": "1671242870669",
+  "emailAddresses": ["test@unumid.co"],
+  "phoneNumbers": []
 }
 ```
 

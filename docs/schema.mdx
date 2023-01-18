@@ -9,48 +9,50 @@ import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
 ## Introduction
+
 Unum ID enables securely sharing verified <a href="/terminology#credential"><Tip type="credential"/></a> data amongst network participants. While in theory this data can take any shape, a structured schema must be defined and followed for every credential type for the sake of all network participants.
 
 We opted to format our data using W3C's [Linked Data](https://www.w3.org/standards/semanticweb/data) serialized via [JSON-LD](https://www.w3.org/TR/json-ld11/). It gives us the structure to define human readable vocabulary around the data. We use [JSON Schema](https://json-schema.org/) syntax defined via [Typebox](https://github.com/sinclairzx81/typebox) for our data validation purposes via a pre-compiled [AJV](https://ajv.js.org/guide/why-ajv.html) engine. We feel this meets our goal to have a credential schema definition that is robust enough to encapsulate and define any data with the property of being easily described, displayed, and validated.
 
 :::note
-JSON-LD is serialization the syntax used in the W3C's [Verifiable Credential](https://www.w3.org/TR/vc-data-model/#json-ld) and [Decentralized Identifier](https://www.w3.org/TR/did-core/#json-ld) recommendations of which our data network is modeled after.
+JSON-LD is the serialization syntax used in the W3C's [Verifiable Credential](https://www.w3.org/TR/vc-data-model/#json-ld) and [Decentralized Identifier](https://www.w3.org/TR/did-core/#json-ld) recommendations, which our data network is modeled after.
 :::
 
-Our entire human readable JSON-LD [context](https://www.w3.org/TR/json-ld11/#the-context) semantics file can be download and viewed via, https://schema.unumid.co/context. The context file serves as a building block for the basis for the shared vocabulary that ultimately make up our credential data schemas. However more than likely as an <Tip type="issuer"/> or <Tip type="verifier"/> you want to know what is the schema for a particular credential type.
+Our entire human readable JSON-LD [context](https://www.w3.org/TR/json-ld11/#the-context) semantics file can be download and viewed via https://schema.unumid.co/context. The context file serves as a building block for the basis of the shared vocabulary that ultimately makes up our credential data schemas. However, more than likely what you want to know is the schema for a particular credential type.
 
-To view all of the Unum ID defined credential schemas one can do so via, https://schema.unumid.co/schema. If you want to know the schema for a particular credential type one can use that same  url with the desired credential type in the path, for example https://schema.unumid.co/schema/EmailCredential.
+You can view all of the Unum ID defined credential schemas via https://schema.unumid.co/schema. If you want to know the schema for a particular credential type you can use that same url with the desired credential type in the path. (For example, https://schema.unumid.co/schema/EmailCredential.)
 
 :::tip
 We have this API documented via our public [Postman collection](https://docs.api.unumid.co/) documentation under **Schema Resolver**.
 
-It is possible to view the response bodies from https://schema.unumid.co/schema in the browser but we recommend Postman which automatically formats the JSON response for human readability.
+It is possible to view the response bodies from https://schema.unumid.co/schema in the browser, but we recommend Postman, which automatically formats the JSON response for human readability.
 :::
 
 :::important
-Given use of JSON Schema and JSON-LD standards for schema definitions we hope it make <a href="/terminology#customer"><Tip type="customer"/></a> defined credentials schemas a reality very soon. However, until then, all credential types have schemas defined by Unum ID. Please let us know if you would like to define a new credential schema for your use case.
+Given use of JSON Schema and JSON-LD standards for schema definitions, we hope to make <a href="/terminology#customer"><Tip type="customer"/></a> defined credentials schemas a reality very soon. However, until then, all credential types have schemas defined by Unum ID. Please let us know if you would like to define a new credential schema for your use case.
 :::
 
 We currently are opting to only support what can be referred to as "single attribute atomic credentials". This means that we break data into its simplest form for every credential. This is to provide users a means of selective disclosure for <a href="/terminology#request"><Tip type="request"/></a>s with optional fields.
 
 ## Example
+
 Below is code level example of how to comply with the schema definitions when issuing credentials. In this example we are following the [AddressCredential](https://schema.unumid.co/schema/AddressCredential) and [FullNameCredential](https://schema.unumid.co/schema/FullNameCredential) schemas.
 
 ```typescript
 /*The credential data compliant with the Address and FullName Credentials schemas*/
 const credentialsList: Credentials = [
-    {
-      type: 'AddressCredential',
-      data: {
-        address: "1010 Main St, Anytown USA",
-      }
+  {
+    type: 'AddressCredential',
+    data: {
+      address: '1010 Main St, Anytown USA',
     },
-    {
-      type: 'FullNameCredential',
-      data: {
-        fullName: "John Red Doe"
-      }
-    }
+  },
+  {
+    type: 'FullNameCredential',
+    data: {
+      fullName: 'John Red Doe',
+    },
+  },
 ];
 ```
 

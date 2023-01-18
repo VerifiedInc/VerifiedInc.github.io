@@ -8,13 +8,16 @@ slug: /quick-start-guide
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-_Get started with integrating Unum ID into your user onboarding flow._
+**Time to read:** 5 min
+**Time to implement:** 30 min
 
-This guide provides an abbreviated step-by-step guide for how to get setup as an Unum ID <Tip type="brand"/> and enable [1-Click or Free ID Verification](https://www.unumid.co/1-click). For full technical details, see the [API](/api-overview) documentation for each component.
+_Get started with Unum ID. Issue digital ID cards to your users, accept digital ID cards for 1-click ID verification, or both — all through one API._
+
+This guide explains how to become an Unum ID <Tip type="customer"/> and create a <Tip type="brand"/> to enable [1-Click or Free ID Verification](https://www.unumid.co/1-click). For full technical details, see the [API](/api-overview) documentation for each component.
 
 ## Brand Registration
 
-Currently the only way to create a <Tip type="customer"/>, <Tip type="brand">brands</Tip> and API keys is by emailing support@unumid.co. We will also handle creating a branded card image for use with our [Wallet](https://wallet.unumid.co/). _Our self service Dashboard is coming soon._
+Currently the only way to create a <Tip type="customer"/>, <Tip type="brand">brands</Tip> and API keys is by emailing support@unumid.co. We will also handle creating a custom card image that will appear in our [Wallet](https://wallet.unumid.co/). _Our self service Dashboard is coming soon._
 
 :::caution
 **API keys are sensitive, so please only use them in a secure backend service environment.** This means that ideally your clients will communicate with your our own backend service, which will then call the Unum ID API. Your clients should never have direct access to your Unum ID API key.
@@ -26,7 +29,7 @@ The first step of enabling 1-Click or Free is to collect the user's email addres
 
 ## Unum ID API
 
-After receving a brand API key and colecting the user's email and/or phone, you can authenticate with our [API](/api-overview) to begin requesting and/or issuing <Tip type="credential">credentials</Tip>.
+After receving a brand API key and collecting the user's email and/or phone, you can authenticate with our [API](/api-overview) to begin requesting and/or issuing <Tip type="credential">credentials</Tip>.
 
 :::important
 Please develop your initial integration aganst our Sandbox API [environment](api-overview#environments): `https://core-api.sandbox-unumid.co`.
@@ -36,11 +39,11 @@ Please develop your initial integration aganst our Sandbox API [environment](api
 
 _For more detailed information, please see the [Check User Credentails](/api-overview#check-user-credentials) section of the API documentation._<br/>
 
-The second step of enabling 1-Click or Free is to check if the user has the necessary credentials to complete your signup flow. To do this, call the `/hasMatchingCredentials` endpoint with the user's email and/or phone along with the credential type(s) you are looking for.
+The second step of enabling 1-Click or Free is to check if the user has an existing digital ID card with the necessary credentials to complete your verification flow. To do this, call the `/hasMatchingCredentials` endpoint with the user's email and/or phone along with the credential type(s) you are looking for.
 
 Two outcomes are possible with their respective response bodies below:
 
-1. **The user has all the required credentials.** The response body contains a `url` attribute that you should direct the user to.
+1. **The user has all the required credentials (1-click verification is available).** The response body contains a `url` attribute that you should direct the user to.
 
 ```typescript title="Example Match Response Body"
 {
@@ -49,7 +52,7 @@ Two outcomes are possible with their respective response bodies below:
 }
 ```
 
-2. **The user does not have all the required credentials.** The response body contains a `match` value of `false`.
+2. **The user does not have all the required credentials (1-click verification is NOT available).** The response body contains a `match` value of `false`.
 
 ```typescript title="Example Not a Match Response Body"
 {
@@ -58,13 +61,17 @@ Two outcomes are possible with their respective response bodies below:
 }
 ```
 
-#### (1) The User Has the Credentials
+#### (1) The User Has the Credentials → 1-Click
 
-If the user has all the required credentials, you need to direct the user to the `url` provided in the response body. (This is a link to the Unum ID [Wallet](https://wallet.unumid.co/) with parameters.) The user will be prompted to authenticate and share the credentials you've requested. When they agree to share, a `sharedCredentialsUuid` is returned to your client via a query param. **Please proceed to the [Get Shared Credentials](#get-shared-credentials) section.**
+If the user has all the required credentials, direct the user to the `url` provided in the response body to begin the 1-click verification experience. (This is a link to the Unum ID [Wallet](https://wallet.unumid.co/) with parameters.) The user will be prompted to authenticate and share the credentials you've requested. When they agree to share, a `sharedCredentialsUuid` is returned to your client via a query param. 
 
-#### (2) The User Does Not Have the Credentials
+_Please proceed to the [Get Shared Credentials](#get-shared-credentials) section._
 
-If the user does not have the credentials, you should take the user through your existing signup flow to collect and verify the necessary data. Once the verified information is obtained, you need to issue the user credentials containing that data. This can be done completely behind the scenes, as long as you obtain user consent. **Please proceed to the [Issuing Credentials](#issuing-user-credentials) section.**
+#### (2) The User Does Not Have the Credentials → Verify, Then Issue
+
+If the user does not have the credentials, take the user through your existing verification flow to collect and verify the necessary data. Once the verified information is obtained, you need to issue the user credentials containing that data. **You must obtain user consent,** but otherwise this can be done completely behind the scenes. 
+
+_Please proceed to the [Issuing Credentials](#issuing-user-credentials) section._
 
 ### Get Shared Credentials
 
@@ -98,11 +105,17 @@ When you extract the data, you now have the necessary information to consider th
 
 ### Issuing User Credentials
 
-_For more detailed information, please see the [Issue Credentails](/api-overview#issue-credentials) section of the API documentation._<br/>
+_For more detailed information, please see the [Issue Credentials](/api-overview#issue-credentials) section of the API documentation._<br/>
 
 Once you have collected and verified the user's information, you can issue credentials. This can be done by calling the `/credentials` endpoint with the user's verified email address and/or phone along with the relevant credential type and credential data. The credential `data` must match the [schema](/schema) of the credential type you are issuing.
 
 _In doing so, you qualify for reimbursement from Unum ID, and you stand to gain future revenue when the user shares those credentials with other brands._
+
+:::warning
+**You should never issue credentials to a user without their consent.** This violates our terms and will prevent us from paying you for issuing credentials. 
+
+We provide client SDKs to make obtaining this consent easy and streamlined.
+:::
 
 For example, if you collected the user's SSN, you can issue the user a `SsnCredential` by calling the `/credentials` endpoint with the user's email and/or phone along with the `SsnCredential` type and the SSN data:
 

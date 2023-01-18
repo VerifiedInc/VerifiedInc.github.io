@@ -2,7 +2,7 @@ module.exports = {
   sidebar: [
     {
       type: 'doc',
-      id: 'quick-start-guide',
+      id: 'about-unum-id',
     },
     // {
     //   type: 'doc',
@@ -14,7 +14,7 @@ module.exports = {
       /* should collapse when we have lots of docs */
       collapsed: false,
       items: [
-        'about-unum-id',
+        'quick-start-guide',
         'terminology',
         'faq-info',
       ],

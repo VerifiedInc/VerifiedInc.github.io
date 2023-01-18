@@ -81,10 +81,6 @@ If multiple issuer brands are listed, a credential (of the correct type) from an
 
 Additionally, the customer must input a user identifier email address and/or phone identifier. You might notice these are the exact inputs to [`/hasMatchingCredentials`](/api-overview#check-user-credentials).
 
-:::important
-The <Tip type="brand"/> of the credential can be _the same company_ as the one making the request! For example, a single company issues an authentication credential to a user, who later shares credentials containing that credential back with the company to authenticate.
-:::
-
 The full details of the request object aren't that important or helpful to know, as it's completely internal to Unum ID, but here's an example of a request for a FirstName and LastName credential from the same issuing brand.
 
 ```json

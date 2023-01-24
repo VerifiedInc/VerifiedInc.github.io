@@ -89,7 +89,7 @@ const tooltips =  {
     </div>
     <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
         <div>
-            <b>Example:</b> ACME Bank is an Unum ID customer. However they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.
+            <b>Example:</b> ACME Bank is an Unum ID customer. However, they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.
         </div>
         <div>
             <b>Components:</b> Each brand has an associated umbrella customer. It is totally okay if your customer only has one brand. We want to have the flexibility to support multiple brands per customer.

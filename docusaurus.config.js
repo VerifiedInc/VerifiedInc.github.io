@@ -23,7 +23,7 @@ module.exports = {
       },
       items: [
         {
-          to: 'https://www.Unum.ID',
+          to: 'https://www.unumid.co',
           activeBasePath: '/',
           label: 'Home',
           position: 'right',

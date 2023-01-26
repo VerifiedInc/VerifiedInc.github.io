@@ -5,25 +5,25 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="generator" content="Docusaurus v2.0.1">
 <title data-rh="true">Issuer Service | Unum ID Docs</title><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.unumid.co/issuer-service"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Issuer Service | Unum ID Docs"><meta data-rh="true" name="description" content="The Issuer Service is a custodial and managed interface to facilitate handling Issuer operations."><meta data-rh="true" property="og:description" content="The Issuer Service is a custodial and managed interface to facilitate handling Issuer operations."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.unumid.co/issuer-service"><link data-rh="true" rel="alternate" href="https://docs.unumid.co/issuer-service" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.unumid.co/issuer-service" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.39b553c6.css">
-<link rel="preload" href="/assets/js/runtime~main.4f0e3c14.js" as="script">
+<link rel="preload" href="/assets/js/runtime~main.bb6123be.js" as="script">
 <link rel="preload" href="/assets/js/main.d3725e95.js" as="script">
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){var t=null;try{t=localStorage.getItem("theme")}catch(t){}return t}();t(null!==e?e:"light")}()</script><div id="__docusaurus">
-<div role="region"><a href="#" class="skipToContent_fXgn">Skip to main content</a></div><nav class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Navigation bar toggle" class="navbar__toggle clean-btn" type="button" tabindex="0"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo.png" alt="Unum ID Logo" class="themedImage_ToTc themedImage--light_HNdA"><img src="/img/logo_dark.png" alt="Unum ID Logo" class="themedImage_ToTc themedImage--dark_i4oU"></div><b class="navbar__title text--truncate">Docs</b></a></div><div class="navbar__items navbar__items--right"><a href="https://www.unumid.co" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Home</a><a href="https://github.com/UnumID" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub</a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="searchBox_ZlJk"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div class="main-wrapper mainWrapper_z2l0 docsWrapper_BCFX"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docPage__5DB"><main class="docMainContainer_gTbr docMainContainerEnhanced_Uz_u"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Issuer Service</h1></header><p>The Issuer Service is a custodial and managed interface to facilitate handling <span class="__react_component_tooltip te912ac5a-c554-4b8f-8a94-44db7b612e1a place-top type-dark allow_hover" id="d7342950-8a20-46c3-8b47-92ef1dce8950" data-id="tooltip"><style aria-hidden="true">
-  	.te912ac5a-c554-4b8f-8a94-44db7b612e1a {
+<div role="region"><a href="#" class="skipToContent_fXgn">Skip to main content</a></div><nav class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Navigation bar toggle" class="navbar__toggle clean-btn" type="button" tabindex="0"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo.png" alt="Unum ID Logo" class="themedImage_ToTc themedImage--light_HNdA"><img src="/img/logo_dark.png" alt="Unum ID Logo" class="themedImage_ToTc themedImage--dark_i4oU"></div><b class="navbar__title text--truncate">Docs</b></a></div><div class="navbar__items navbar__items--right"><a href="https://www.unumid.co" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Home</a><a href="https://github.com/UnumID" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub</a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="searchBox_ZlJk"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div class="main-wrapper mainWrapper_z2l0 docsWrapper_BCFX"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docPage__5DB"><main class="docMainContainer_gTbr docMainContainerEnhanced_Uz_u"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Issuer Service</h1></header><p>The Issuer Service is a custodial and managed interface to facilitate handling <span class="__react_component_tooltip t0e316299-ce61-475a-a423-19e6e56c4af2 place-top type-dark allow_hover" id="1c6c703c-62e4-4d5e-8fc0-64445904b60f" data-id="tooltip"><style aria-hidden="true">
+  	.t0e316299-ce61-475a-a423-19e6e56c4af2 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.te912ac5a-c554-4b8f-8a94-44db7b612e1a.place-top {
+  	.t0e316299-ce61-475a-a423-19e6e56c4af2.place-top {
         margin-top: -10px;
     }
-    .te912ac5a-c554-4b8f-8a94-44db7b612e1a.place-top::before {
+    .t0e316299-ce61-475a-a423-19e6e56c4af2.place-top::before {
         border-top: 8px solid transparent;
     }
-    .te912ac5a-c554-4b8f-8a94-44db7b612e1a.place-top::after {
+    .t0e316299-ce61-475a-a423-19e6e56c4af2.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -34,13 +34,13 @@
         border-top-width: 6px;
     }
 
-    .te912ac5a-c554-4b8f-8a94-44db7b612e1a.place-bottom {
+    .t0e316299-ce61-475a-a423-19e6e56c4af2.place-bottom {
         margin-top: 10px;
     }
-    .te912ac5a-c554-4b8f-8a94-44db7b612e1a.place-bottom::before {
+    .t0e316299-ce61-475a-a423-19e6e56c4af2.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .te912ac5a-c554-4b8f-8a94-44db7b612e1a.place-bottom::after {
+    .t0e316299-ce61-475a-a423-19e6e56c4af2.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -51,13 +51,13 @@
         border-bottom-width: 6px;
     }
 
-    .te912ac5a-c554-4b8f-8a94-44db7b612e1a.place-left {
+    .t0e316299-ce61-475a-a423-19e6e56c4af2.place-left {
         margin-left: -10px;
     }
-    .te912ac5a-c554-4b8f-8a94-44db7b612e1a.place-left::before {
+    .t0e316299-ce61-475a-a423-19e6e56c4af2.place-left::before {
         border-left: 8px solid transparent;
     }
-    .te912ac5a-c554-4b8f-8a94-44db7b612e1a.place-left::after {
+    .t0e316299-ce61-475a-a423-19e6e56c4af2.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -68,13 +68,13 @@
         border-left-width: 6px;
     }
 
-    .te912ac5a-c554-4b8f-8a94-44db7b612e1a.place-right {
+    .t0e316299-ce61-475a-a423-19e6e56c4af2.place-right {
         margin-left: 10px;
     }
-    .te912ac5a-c554-4b8f-8a94-44db7b612e1a.place-right::before {
+    .t0e316299-ce61-475a-a423-19e6e56c4af2.place-right::before {
         border-right: 8px solid transparent;
     }
-    .te912ac5a-c554-4b8f-8a94-44db7b612e1a.place-right::after {
+    .t0e316299-ce61-475a-a423-19e6e56c4af2.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -84,20 +84,20 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style></span><u data-for="d7342950-8a20-46c3-8b47-92ef1dce8950">Issuer</u> operations.</p><h2 class="anchor anchorWithStickyNavbar_LWe7" id="overview">Overview<a class="hash-link" href="#overview" title="Direct link to heading">​</a></h2><p>This is a custodial service that is implemented with a security first architecture to manage your keys and leverages the Server SDK to handle all cryptographic operations on your behalf. The result is a greatly simplified process of being a Issuer and getting instantaneous access to data shared by <span class="__react_component_tooltip t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278 place-top type-dark allow_hover" id="800cacd7-da73-409b-a344-c09e2bc9f944" data-id="tooltip"><style aria-hidden="true">
-  	.t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278 {
+  </style></span><u data-for="1c6c703c-62e4-4d5e-8fc0-64445904b60f">Issuer</u> operations.</p><h2 class="anchor anchorWithStickyNavbar_LWe7" id="overview">Overview<a class="hash-link" href="#overview" title="Direct link to heading">​</a></h2><p>This is a custodial service that is implemented with a security first architecture to manage your keys and leverages the Server SDK to handle all cryptographic operations on your behalf. The result is a greatly simplified process of being a Issuer and getting instantaneous access to data shared by <span class="__react_component_tooltip td29ae512-a8a0-465c-a56d-688b24334447 place-top type-dark allow_hover" id="f2962047-09ce-4fa6-afb8-835c9a7063b8" data-id="tooltip"><style aria-hidden="true">
+  	.td29ae512-a8a0-465c-a56d-688b24334447 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278.place-top {
+  	.td29ae512-a8a0-465c-a56d-688b24334447.place-top {
         margin-top: -10px;
     }
-    .t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278.place-top::before {
+    .td29ae512-a8a0-465c-a56d-688b24334447.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278.place-top::after {
+    .td29ae512-a8a0-465c-a56d-688b24334447.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -108,13 +108,13 @@
         border-top-width: 6px;
     }
 
-    .t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278.place-bottom {
+    .td29ae512-a8a0-465c-a56d-688b24334447.place-bottom {
         margin-top: 10px;
     }
-    .t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278.place-bottom::before {
+    .td29ae512-a8a0-465c-a56d-688b24334447.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278.place-bottom::after {
+    .td29ae512-a8a0-465c-a56d-688b24334447.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -125,13 +125,13 @@
         border-bottom-width: 6px;
     }
 
-    .t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278.place-left {
+    .td29ae512-a8a0-465c-a56d-688b24334447.place-left {
         margin-left: -10px;
     }
-    .t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278.place-left::before {
+    .td29ae512-a8a0-465c-a56d-688b24334447.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278.place-left::after {
+    .td29ae512-a8a0-465c-a56d-688b24334447.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -142,13 +142,13 @@
         border-left-width: 6px;
     }
 
-    .t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278.place-right {
+    .td29ae512-a8a0-465c-a56d-688b24334447.place-right {
         margin-left: 10px;
     }
-    .t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278.place-right::before {
+    .td29ae512-a8a0-465c-a56d-688b24334447.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t44d73a2b-ce30-424e-8ad7-b5ca3f3cc278.place-right::after {
+    .td29ae512-a8a0-465c-a56d-688b24334447.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -158,20 +158,20 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style></span><u data-for="800cacd7-da73-409b-a344-c09e2bc9f944">subjects</u>.</p><div class="theme-admonition theme-admonition-note alert alert--secondary admonition_LlT9"><div class="admonitionHeading_tbUL"><span class="admonitionIcon_kALy"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_S0QG"><p>If you would like to setup your Issuer integration in a non-custodial manner, please see the <a href="/server-sdk">Server SDK</a> documentation.</p></div></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="setup">Setup<a class="hash-link" href="#setup" title="Direct link to heading">​</a></h3><p>In order to use the Issuer Service you will need to create a Issuer in our self service <a href="https://dashboard.unumid.co/" target="_blank" rel="noopener noreferrer">dashboard</a>. <em>Please reference the <a href="/quick-start-guide#dashboard">Quick Start</a> guide for how to use the dashboard.</em></p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="authentication">Authentication<a class="hash-link" href="#authentication" title="Direct link to heading">​</a></h3><p>All requests require an Authorization header token that contains your Issuer&#x27;s <code>apiKey</code>. </p><h2 class="anchor anchorWithStickyNavbar_LWe7" id="functionality">Functionality<a class="hash-link" href="#functionality" title="Direct link to heading">​</a></h2><p>Information of the API methods to create  <span class="__react_component_tooltip tec2fb9c9-2231-4774-81ac-21ad05ebfcb2 place-top type-dark allow_hover" id="b263e367-af7c-4496-a0fa-552e39a3d522" data-id="tooltip"><style aria-hidden="true">
-  	.tec2fb9c9-2231-4774-81ac-21ad05ebfcb2 {
+  </style></span><u data-for="f2962047-09ce-4fa6-afb8-835c9a7063b8">subjects</u>.</p><div class="theme-admonition theme-admonition-note alert alert--secondary admonition_LlT9"><div class="admonitionHeading_tbUL"><span class="admonitionIcon_kALy"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_S0QG"><p>If you would like to setup your Issuer integration in a non-custodial manner, please see the <a href="/server-sdk">Server SDK</a> documentation.</p></div></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="setup">Setup<a class="hash-link" href="#setup" title="Direct link to heading">​</a></h3><p>In order to use the Issuer Service you will need to create a Issuer in our self service <a href="https://dashboard.unumid.co/" target="_blank" rel="noopener noreferrer">dashboard</a>. <em>Please reference the <a href="/quick-start-guide#dashboard">Quick Start</a> guide for how to use the dashboard.</em></p><h3 class="anchor anchorWithStickyNavbar_LWe7" id="authentication">Authentication<a class="hash-link" href="#authentication" title="Direct link to heading">​</a></h3><p>All requests require an Authorization header token that contains your Issuer&#x27;s <code>apiKey</code>. </p><h2 class="anchor anchorWithStickyNavbar_LWe7" id="functionality">Functionality<a class="hash-link" href="#functionality" title="Direct link to heading">​</a></h2><p>Information of the API methods to create  <span class="__react_component_tooltip ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949 place-top type-dark allow_hover" id="1ee2d0ff-57f4-45cd-8358-976899ef2c66" data-id="tooltip"><style aria-hidden="true">
+  	.ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.tec2fb9c9-2231-4774-81ac-21ad05ebfcb2.place-top {
+  	.ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949.place-top {
         margin-top: -10px;
     }
-    .tec2fb9c9-2231-4774-81ac-21ad05ebfcb2.place-top::before {
+    .ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949.place-top::before {
         border-top: 8px solid transparent;
     }
-    .tec2fb9c9-2231-4774-81ac-21ad05ebfcb2.place-top::after {
+    .ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -182,13 +182,13 @@
         border-top-width: 6px;
     }
 
-    .tec2fb9c9-2231-4774-81ac-21ad05ebfcb2.place-bottom {
+    .ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949.place-bottom {
         margin-top: 10px;
     }
-    .tec2fb9c9-2231-4774-81ac-21ad05ebfcb2.place-bottom::before {
+    .ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .tec2fb9c9-2231-4774-81ac-21ad05ebfcb2.place-bottom::after {
+    .ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -199,13 +199,13 @@
         border-bottom-width: 6px;
     }
 
-    .tec2fb9c9-2231-4774-81ac-21ad05ebfcb2.place-left {
+    .ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949.place-left {
         margin-left: -10px;
     }
-    .tec2fb9c9-2231-4774-81ac-21ad05ebfcb2.place-left::before {
+    .ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949.place-left::before {
         border-left: 8px solid transparent;
     }
-    .tec2fb9c9-2231-4774-81ac-21ad05ebfcb2.place-left::after {
+    .ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -216,13 +216,13 @@
         border-left-width: 6px;
     }
 
-    .tec2fb9c9-2231-4774-81ac-21ad05ebfcb2.place-right {
+    .ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949.place-right {
         margin-left: 10px;
     }
-    .tec2fb9c9-2231-4774-81ac-21ad05ebfcb2.place-right::before {
+    .ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949.place-right::before {
         border-right: 8px solid transparent;
     }
-    .tec2fb9c9-2231-4774-81ac-21ad05ebfcb2.place-right::after {
+    .ta48b860e-b2e7-4e59-ab18-0fb7dcf2c949.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -232,20 +232,20 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#request">request</a> (or <i>credentials request</i>) is a request for a <a href="/terminology#credential">credentials</a> to be shared by a <a href="/terminology#user">user</a>.</b> It&#x27;s created when a company successfully checks if a user has matching credentials, via <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>  Only if the user has the ability to response with the matching credentials is a request created.</div><div class="Collapsible"><span id="collapsible-trigger-1674764677477" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1674764677477" role="button">+ More...</span><div id="collapsible-content-1674764677477" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1674764677477"><div class="Collapsible__contentInner"><div><b>Example:</b> Hooli FinTech checks if Richard has a SSN and LastName credential issued by ACME Lending. Because he does, a request is created for those credentials specifically from ACME Lending. Hooli presents this request to Richard by directing him to the `url` received in the `/hasMatchingCredentials` response body.</div><div><b>Components:</b> A company creates a user specific request by using <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>. If it is case the <a href="/terminology#user">user</a> does not have the desired credentials then a request is not created. If it is the case the user does, a request is created and is returned in the form of a `url` attribute in response to the client.</div></div></div></div></span><u data-tip="true" data-for="b263e367-af7c-4496-a0fa-552e39a3d522">requests</u> and verify <span class="__react_component_tooltip ta0c7a112-c009-49c6-9991-a0f177767ad8 place-top type-dark allow_hover" id="73f5ef50-fbc3-4dcc-b78f-a98d2cd64024" data-id="tooltip"><style aria-hidden="true">
-  	.ta0c7a112-c009-49c6-9991-a0f177767ad8 {
+  </style><div><b>A <a href="/terminology#request">request</a> (or <i>credentials request</i>) is a request for a <a href="/terminology#credential">credentials</a> to be shared by a <a href="/terminology#user">user</a>.</b> It&#x27;s created when a company successfully checks if a user has matching credentials, via <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>  Only if the user has the ability to response with the matching credentials is a request created.</div><div class="Collapsible"><span id="collapsible-trigger-1674767490693" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1674767490693" role="button">+ More...</span><div id="collapsible-content-1674767490693" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1674767490693"><div class="Collapsible__contentInner"><div><b>Example:</b> Hooli FinTech checks if Richard has a SSN and LastName credential issued by ACME Lending. Because he does, a request is created for those credentials specifically from ACME Lending. Hooli presents this request to Richard by directing him to the `url` received in the `/hasMatchingCredentials` response body.</div><div><b>Components:</b> A company creates a user specific request by using <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>. If it is case the <a href="/terminology#user">user</a> does not have the desired credentials then a request is not created. If it is the case the user does, a request is created and is returned in the form of a `url` attribute in response to the client.</div></div></div></div></span><u data-tip="true" data-for="1ee2d0ff-57f4-45cd-8358-976899ef2c66">requests</u> and verify <span class="__react_component_tooltip tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba place-top type-dark allow_hover" id="b0f8ac02-cb65-489c-9175-26405d3db3a9" data-id="tooltip"><style aria-hidden="true">
+  	.tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.ta0c7a112-c009-49c6-9991-a0f177767ad8.place-top {
+  	.tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba.place-top {
         margin-top: -10px;
     }
-    .ta0c7a112-c009-49c6-9991-a0f177767ad8.place-top::before {
+    .tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba.place-top::before {
         border-top: 8px solid transparent;
     }
-    .ta0c7a112-c009-49c6-9991-a0f177767ad8.place-top::after {
+    .tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -256,13 +256,13 @@
         border-top-width: 6px;
     }
 
-    .ta0c7a112-c009-49c6-9991-a0f177767ad8.place-bottom {
+    .tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba.place-bottom {
         margin-top: 10px;
     }
-    .ta0c7a112-c009-49c6-9991-a0f177767ad8.place-bottom::before {
+    .tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .ta0c7a112-c009-49c6-9991-a0f177767ad8.place-bottom::after {
+    .tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -273,13 +273,13 @@
         border-bottom-width: 6px;
     }
 
-    .ta0c7a112-c009-49c6-9991-a0f177767ad8.place-left {
+    .tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba.place-left {
         margin-left: -10px;
     }
-    .ta0c7a112-c009-49c6-9991-a0f177767ad8.place-left::before {
+    .tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba.place-left::before {
         border-left: 8px solid transparent;
     }
-    .ta0c7a112-c009-49c6-9991-a0f177767ad8.place-left::after {
+    .tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -290,13 +290,13 @@
         border-left-width: 6px;
     }
 
-    .ta0c7a112-c009-49c6-9991-a0f177767ad8.place-right {
+    .tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba.place-right {
         margin-left: 10px;
     }
-    .ta0c7a112-c009-49c6-9991-a0f177767ad8.place-right::before {
+    .tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba.place-right::before {
         border-right: 8px solid transparent;
     }
-    .ta0c7a112-c009-49c6-9991-a0f177767ad8.place-right::after {
+    .tc3a7c21d-fd2b-4ab4-855b-7f6da2601dba.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -306,20 +306,20 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style></span><u data-for="73f5ef50-fbc3-4dcc-b78f-a98d2cd64024">presentations</u>.</p><p>Jump to:</p><ul><li><a href="#create-a-request">Create a Request</a></li><li><a href="#get-shared-credentials">Get Shared Credentials</a></li></ul><hr><h3 class="anchor anchorWithStickyNavbar_LWe7" id="create-a-request">Create a Request<a class="hash-link" href="#create-a-request" title="Direct link to heading">​</a></h3><blockquote><p>Create a <span class="__react_component_tooltip t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3 place-top type-dark allow_hover" id="419fed9d-25f4-4550-95d0-fe6964f794e5" data-id="tooltip"><style aria-hidden="true">
-  	.t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3 {
+  </style></span><u data-for="b0f8ac02-cb65-489c-9175-26405d3db3a9">presentations</u>.</p><p>Jump to:</p><ul><li><a href="#create-a-request">Create a Request</a></li><li><a href="#get-shared-credentials">Get Shared Credentials</a></li></ul><hr><h3 class="anchor anchorWithStickyNavbar_LWe7" id="create-a-request">Create a Request<a class="hash-link" href="#create-a-request" title="Direct link to heading">​</a></h3><blockquote><p>Create a <span class="__react_component_tooltip t6da10252-c60b-4ca5-ae1d-16095dadac53 place-top type-dark allow_hover" id="1f089a4d-21a5-4a6f-b629-75b5462ec5d0" data-id="tooltip"><style aria-hidden="true">
+  	.t6da10252-c60b-4ca5-ae1d-16095dadac53 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3.place-top {
+  	.t6da10252-c60b-4ca5-ae1d-16095dadac53.place-top {
         margin-top: -10px;
     }
-    .t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3.place-top::before {
+    .t6da10252-c60b-4ca5-ae1d-16095dadac53.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3.place-top::after {
+    .t6da10252-c60b-4ca5-ae1d-16095dadac53.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -330,13 +330,13 @@
         border-top-width: 6px;
     }
 
-    .t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3.place-bottom {
+    .t6da10252-c60b-4ca5-ae1d-16095dadac53.place-bottom {
         margin-top: 10px;
     }
-    .t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3.place-bottom::before {
+    .t6da10252-c60b-4ca5-ae1d-16095dadac53.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3.place-bottom::after {
+    .t6da10252-c60b-4ca5-ae1d-16095dadac53.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -347,13 +347,13 @@
         border-bottom-width: 6px;
     }
 
-    .t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3.place-left {
+    .t6da10252-c60b-4ca5-ae1d-16095dadac53.place-left {
         margin-left: -10px;
     }
-    .t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3.place-left::before {
+    .t6da10252-c60b-4ca5-ae1d-16095dadac53.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3.place-left::after {
+    .t6da10252-c60b-4ca5-ae1d-16095dadac53.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -364,13 +364,13 @@
         border-left-width: 6px;
     }
 
-    .t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3.place-right {
+    .t6da10252-c60b-4ca5-ae1d-16095dadac53.place-right {
         margin-left: 10px;
     }
-    .t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3.place-right::before {
+    .t6da10252-c60b-4ca5-ae1d-16095dadac53.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t4f38a1b8-c903-4d50-a0eb-fe86cbae96c3.place-right::after {
+    .t6da10252-c60b-4ca5-ae1d-16095dadac53.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -380,20 +380,20 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#request">request</a> (or <i>credentials request</i>) is a request for a <a href="/terminology#credential">credentials</a> to be shared by a <a href="/terminology#user">user</a>.</b> It&#x27;s created when a company successfully checks if a user has matching credentials, via <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>  Only if the user has the ability to response with the matching credentials is a request created.</div><div class="Collapsible"><span id="collapsible-trigger-1674764677478" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1674764677478" role="button">+ More...</span><div id="collapsible-content-1674764677478" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1674764677478"><div class="Collapsible__contentInner"><div><b>Example:</b> Hooli FinTech checks if Richard has a SSN and LastName credential issued by ACME Lending. Because he does, a request is created for those credentials specifically from ACME Lending. Hooli presents this request to Richard by directing him to the `url` received in the `/hasMatchingCredentials` response body.</div><div><b>Components:</b> A company creates a user specific request by using <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>. If it is case the <a href="/terminology#user">user</a> does not have the desired credentials then a request is not created. If it is the case the user does, a request is created and is returned in the form of a `url` attribute in response to the client.</div></div></div></div></span><u data-tip="true" data-for="419fed9d-25f4-4550-95d0-fe6964f794e5">request</u> to be displayed or sent to a <span class="__react_component_tooltip t57109509-c10a-4730-9cc7-79cc6471cfea place-top type-dark allow_hover" id="73c455a3-19a9-4e68-9ecd-0eaac2ae1a39" data-id="tooltip"><style aria-hidden="true">
-  	.t57109509-c10a-4730-9cc7-79cc6471cfea {
+  </style><div><b>A <a href="/terminology#request">request</a> (or <i>credentials request</i>) is a request for a <a href="/terminology#credential">credentials</a> to be shared by a <a href="/terminology#user">user</a>.</b> It&#x27;s created when a company successfully checks if a user has matching credentials, via <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>  Only if the user has the ability to response with the matching credentials is a request created.</div><div class="Collapsible"><span id="collapsible-trigger-1674767490693" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1674767490693" role="button">+ More...</span><div id="collapsible-content-1674767490693" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1674767490693"><div class="Collapsible__contentInner"><div><b>Example:</b> Hooli FinTech checks if Richard has a SSN and LastName credential issued by ACME Lending. Because he does, a request is created for those credentials specifically from ACME Lending. Hooli presents this request to Richard by directing him to the `url` received in the `/hasMatchingCredentials` response body.</div><div><b>Components:</b> A company creates a user specific request by using <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>. If it is case the <a href="/terminology#user">user</a> does not have the desired credentials then a request is not created. If it is the case the user does, a request is created and is returned in the form of a `url` attribute in response to the client.</div></div></div></div></span><u data-tip="true" data-for="1f089a4d-21a5-4a6f-b629-75b5462ec5d0">request</u> to be displayed or sent to a <span class="__react_component_tooltip t08c3e720-367a-440d-aa28-c915e947d79e place-top type-dark allow_hover" id="9ecd2c0c-cc1d-46e8-8dfa-06e101828757" data-id="tooltip"><style aria-hidden="true">
+  	.t08c3e720-367a-440d-aa28-c915e947d79e {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t57109509-c10a-4730-9cc7-79cc6471cfea.place-top {
+  	.t08c3e720-367a-440d-aa28-c915e947d79e.place-top {
         margin-top: -10px;
     }
-    .t57109509-c10a-4730-9cc7-79cc6471cfea.place-top::before {
+    .t08c3e720-367a-440d-aa28-c915e947d79e.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t57109509-c10a-4730-9cc7-79cc6471cfea.place-top::after {
+    .t08c3e720-367a-440d-aa28-c915e947d79e.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -404,13 +404,13 @@
         border-top-width: 6px;
     }
 
-    .t57109509-c10a-4730-9cc7-79cc6471cfea.place-bottom {
+    .t08c3e720-367a-440d-aa28-c915e947d79e.place-bottom {
         margin-top: 10px;
     }
-    .t57109509-c10a-4730-9cc7-79cc6471cfea.place-bottom::before {
+    .t08c3e720-367a-440d-aa28-c915e947d79e.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t57109509-c10a-4730-9cc7-79cc6471cfea.place-bottom::after {
+    .t08c3e720-367a-440d-aa28-c915e947d79e.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -421,13 +421,13 @@
         border-bottom-width: 6px;
     }
 
-    .t57109509-c10a-4730-9cc7-79cc6471cfea.place-left {
+    .t08c3e720-367a-440d-aa28-c915e947d79e.place-left {
         margin-left: -10px;
     }
-    .t57109509-c10a-4730-9cc7-79cc6471cfea.place-left::before {
+    .t08c3e720-367a-440d-aa28-c915e947d79e.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t57109509-c10a-4730-9cc7-79cc6471cfea.place-left::after {
+    .t08c3e720-367a-440d-aa28-c915e947d79e.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -438,13 +438,13 @@
         border-left-width: 6px;
     }
 
-    .t57109509-c10a-4730-9cc7-79cc6471cfea.place-right {
+    .t08c3e720-367a-440d-aa28-c915e947d79e.place-right {
         margin-left: 10px;
     }
-    .t57109509-c10a-4730-9cc7-79cc6471cfea.place-right::before {
+    .t08c3e720-367a-440d-aa28-c915e947d79e.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t57109509-c10a-4730-9cc7-79cc6471cfea.place-right::after {
+    .t08c3e720-367a-440d-aa28-c915e947d79e.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -454,20 +454,20 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style></span><u data-for="73c455a3-19a9-4e68-9ecd-0eaac2ae1a39"></u>.</p></blockquote><p>You need to provide:</p><ol><li>credential request(s)</li></ol><p>A (credential requests) encodes which <span class="__react_component_tooltip t4645c36c-46d6-4324-81be-4ba6e4174e47 place-top type-dark allow_hover" id="912a7242-bcf4-45d3-a632-2bde897237cb" data-id="tooltip"><style aria-hidden="true">
-  	.t4645c36c-46d6-4324-81be-4ba6e4174e47 {
+  </style></span><u data-for="9ecd2c0c-cc1d-46e8-8dfa-06e101828757"></u>.</p></blockquote><p>You need to provide:</p><ol><li>credential request(s)</li></ol><p>A (credential requests) encodes which <span class="__react_component_tooltip tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe place-top type-dark allow_hover" id="876e5590-0cc8-4d29-a524-223eede8b12c" data-id="tooltip"><style aria-hidden="true">
+  	.tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t4645c36c-46d6-4324-81be-4ba6e4174e47.place-top {
+  	.tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe.place-top {
         margin-top: -10px;
     }
-    .t4645c36c-46d6-4324-81be-4ba6e4174e47.place-top::before {
+    .tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t4645c36c-46d6-4324-81be-4ba6e4174e47.place-top::after {
+    .tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -478,13 +478,13 @@
         border-top-width: 6px;
     }
 
-    .t4645c36c-46d6-4324-81be-4ba6e4174e47.place-bottom {
+    .tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe.place-bottom {
         margin-top: 10px;
     }
-    .t4645c36c-46d6-4324-81be-4ba6e4174e47.place-bottom::before {
+    .tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t4645c36c-46d6-4324-81be-4ba6e4174e47.place-bottom::after {
+    .tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -495,13 +495,13 @@
         border-bottom-width: 6px;
     }
 
-    .t4645c36c-46d6-4324-81be-4ba6e4174e47.place-left {
+    .tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe.place-left {
         margin-left: -10px;
     }
-    .t4645c36c-46d6-4324-81be-4ba6e4174e47.place-left::before {
+    .tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t4645c36c-46d6-4324-81be-4ba6e4174e47.place-left::after {
+    .tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -512,13 +512,13 @@
         border-left-width: 6px;
     }
 
-    .t4645c36c-46d6-4324-81be-4ba6e4174e47.place-right {
+    .tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe.place-right {
         margin-left: 10px;
     }
-    .t4645c36c-46d6-4324-81be-4ba6e4174e47.place-right::before {
+    .tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t4645c36c-46d6-4324-81be-4ba6e4174e47.place-right::after {
+    .tdbbf893e-2e06-4c2d-9b2f-7d0b99b416fe.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -528,20 +528,20 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company and can be requested by other network participants, gated by the user&#x27;s consent.</div><div class="Collapsible"><span id="collapsible-trigger-1674764677478" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1674764677478" role="button">+ More...</span><div id="collapsible-content-1674764677478" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1674764677478"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Lending issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="912a7242-bcf4-45d3-a632-2bde897237cb">credentials</u> you&#x27;re asking the user to include in a presentation. It&#x27;s a list of one or more <a href="https://docs.unumid.co/types/interfaces/credentialrequest.html" target="_blank" rel="noopener noreferrer"><code>CredentialRequest</code></a> objects (defined in the <a href="https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117" target="_blank" rel="noopener noreferrer">Unum ID generic types project</a>):</p><div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockTitle_Ktv7">CredentialRequest</div><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  type</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// credential type. This must match type of previously issued credential.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  issuers</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// list of DIDs for acceptable issuers. If multiple, any one is acceptable.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  required</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">boolean</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// if credential is required (default is true)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><p>If you list multiple <span class="__react_component_tooltip tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2 place-top type-dark allow_hover" id="854f5033-20ca-4abf-956c-d8f80c922115" data-id="tooltip"><style aria-hidden="true">
-  	.tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2 {
+  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company and can be requested by other network participants, gated by the user&#x27;s consent.</div><div class="Collapsible"><span id="collapsible-trigger-1674767490694" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1674767490694" role="button">+ More...</span><div id="collapsible-content-1674767490694" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1674767490694"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Lending issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="876e5590-0cc8-4d29-a524-223eede8b12c">credentials</u> you&#x27;re asking the user to include in a presentation. It&#x27;s a list of one or more <a href="https://docs.unumid.co/types/interfaces/credentialrequest.html" target="_blank" rel="noopener noreferrer"><code>CredentialRequest</code></a> objects (defined in the <a href="https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117" target="_blank" rel="noopener noreferrer">Unum ID generic types project</a>):</p><div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockTitle_Ktv7">CredentialRequest</div><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  type</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// credential type. This must match type of previously issued credential.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  issuers</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// list of DIDs for acceptable issuers. If multiple, any one is acceptable.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  required</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">boolean</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// if credential is required (default is true)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><p>If you list multiple <span class="__react_component_tooltip t08a9c5c7-91e5-4af6-87ba-694e5ff800cb place-top type-dark allow_hover" id="c2e36aa3-d309-4656-b31f-20ab18225588" data-id="tooltip"><style aria-hidden="true">
+  	.t08a9c5c7-91e5-4af6-87ba-694e5ff800cb {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2.place-top {
+  	.t08a9c5c7-91e5-4af6-87ba-694e5ff800cb.place-top {
         margin-top: -10px;
     }
-    .tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2.place-top::before {
+    .t08a9c5c7-91e5-4af6-87ba-694e5ff800cb.place-top::before {
         border-top: 8px solid transparent;
     }
-    .tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2.place-top::after {
+    .t08a9c5c7-91e5-4af6-87ba-694e5ff800cb.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -552,13 +552,13 @@
         border-top-width: 6px;
     }
 
-    .tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2.place-bottom {
+    .t08a9c5c7-91e5-4af6-87ba-694e5ff800cb.place-bottom {
         margin-top: 10px;
     }
-    .tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2.place-bottom::before {
+    .t08a9c5c7-91e5-4af6-87ba-694e5ff800cb.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2.place-bottom::after {
+    .t08a9c5c7-91e5-4af6-87ba-694e5ff800cb.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -569,13 +569,13 @@
         border-bottom-width: 6px;
     }
 
-    .tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2.place-left {
+    .t08a9c5c7-91e5-4af6-87ba-694e5ff800cb.place-left {
         margin-left: -10px;
     }
-    .tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2.place-left::before {
+    .t08a9c5c7-91e5-4af6-87ba-694e5ff800cb.place-left::before {
         border-left: 8px solid transparent;
     }
-    .tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2.place-left::after {
+    .t08a9c5c7-91e5-4af6-87ba-694e5ff800cb.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -586,13 +586,13 @@
         border-left-width: 6px;
     }
 
-    .tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2.place-right {
+    .t08a9c5c7-91e5-4af6-87ba-694e5ff800cb.place-right {
         margin-left: 10px;
     }
-    .tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2.place-right::before {
+    .t08a9c5c7-91e5-4af6-87ba-694e5ff800cb.place-right::before {
         border-right: 8px solid transparent;
     }
-    .tdf997d74-ff6f-48ea-9ee8-936b2a1bfac2.place-right::after {
+    .t08a9c5c7-91e5-4af6-87ba-694e5ff800cb.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -602,20 +602,20 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style></span><u data-for="854f5033-20ca-4abf-956c-d8f80c922115">issuers</u>, the user can include a credential issued by <em>any one</em> of those listed.</p><p>You can optionally provide:</p><ol start="2"><li>expiration date as a Unix timestamp in seconds since the epoch.</li><li>metadata</li></ol><div class="theme-admonition theme-admonition-caution alert alert--warning admonition_LlT9"><div class="admonitionHeading_tbUL"><span class="admonitionIcon_kALy"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>caution</div><div class="admonitionContent_S0QG"><p>Your Issuer ApiKey provided via the Authorization request header grants you and only you access to the encrypted data. Please keep this key secure.</p></div></div><p>The response body consists of enriched information regarding entities referenced in the request. For example, the verifier&#x27;s encryption and signing <a href="https://docs.unumid.co/types/interfaces/publickeyinfo.html" target="_blank" rel="noopener noreferrer">PublicKeyInfo</a> is included to facilitate verifying the presentation request&#x27;s signature and submitting and encrypted presentation in response.</p><div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockTitle_Ktv7">PublicKeyInfo</div><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;id&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// key id</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;type&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;secp256r1&quot;</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">||</span><span class="token plain"> &quot;</span><span class="token constant" style="color:rgb(130, 170, 255)">RSA</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// key type</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;status&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;valid&quot;</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">||</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;invalid&quot;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// key status</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;encoding&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;pem&quot;</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">||</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;base58&quot;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// key encoding</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;publicKey&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// public key value</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;createdAt&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> Date</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// when key was created </span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;updatedAt&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> Date</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// when key status was last updated</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><h4 class="anchor anchorWithStickyNavbar_LWe7" id="request-body">Request Body<a class="hash-link" href="#request-body" title="Direct link to heading">​</a></h4><div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token string-property property">&quot;credentialRequests&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> CredentialRequest</span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token string" style="color:rgb(195, 232, 141)">&quot;expiresAt&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">number</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// (optional) when PresentationRequest will no longer be valid (Unix timestamp). Default is 10 minutes after creation.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token string" style="color:rgb(195, 232, 141)">&quot;metadata&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> object </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// (optional) any additional data to include in PresentationRequest</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><h4 class="anchor anchorWithStickyNavbar_LWe7" id="response-body-presentationrequestpostdto">Response Body: <a href="https://docs.unumid.co/types/interfaces/presentationrequestpostdto.html" target="_blank" rel="noopener noreferrer"><code>PresentationRequestPostDto</code></a><a class="hash-link" href="#response-body-presentationrequestpostdto" title="Direct link to heading">​</a></h4><div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockTitle_Ktv7">PresentationRequestPostDto</div><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;presentationRequest&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;uuid&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// identifies PresentationRequest in Unum ID database</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;createdAt&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// when PresentationRequest was created (ISO 8601 date/time)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;updatedAt&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// when PresentationRequest was last updated (ISO 8601 date/time). Should always be same as createdAt.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;expiresAt&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// when PresentationRequest will no longer be valid (ISO 8601 date/time)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;verifier&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// your verifier DID</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;credentialRequests&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> CredentialRequest</span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;proof&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> Proof</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// acryptographic proof created by signing PresentationRequest with your verifier signing private key. Can be used to verify PresentationRequest.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;metadata&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> object </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// any additional data to include in PresentationRequest</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;verifier&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token string-property property">&quot;name&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// human readable name for verifier. Displayed to users in mobile apps.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token string-property property">&quot;did&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// your verifier DID</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token string-property property">&quot;encryptionPublicKey&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> PublicKeyInfo</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// PublicKeyInfo for the RSA key</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token string-property property">&quot;signingPublicKey&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> PublicKeyInfo </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// PublicKeyInfo for the secp256r1 key</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;issuers&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token string-property property">&quot;IssuerDid:string&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// map keyed on issuer DID(s) that issued requested credential(s)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">        </span><span class="token string-property property">&quot;name&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// human readable name for issuer</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">        </span><span class="token string-property property">&quot;did&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// issuer DID</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">        </span><span class="token string-property property">&quot;cardImageUrl&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// issuer&#x27;s card image URL</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">/* You send this to a user with the Web SDK: */</span><span class="token plain"></span><br></span><span class="token-line theme-code-block-highlighted-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;deeplink&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// deep link (URL) that can be used to trigger intended mobile app to load PresentationRequest</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">/* You display this to a user with the Web SDK */</span><span class="token plain"></span><br></span><span class="token-line theme-code-block-highlighted-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;qrCode&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// QR code representation of deep link (encoded as data URL)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><hr><h3 class="anchor anchorWithStickyNavbar_LWe7" id="get-shared-credentials">Get Shared Credentials<a class="hash-link" href="#get-shared-credentials" title="Direct link to heading">​</a></h3><blockquote><p>Get verified <span class="__react_component_tooltip t7f154fd8-9cc1-42be-b915-fa015eda2c25 place-top type-dark allow_hover" id="c3171642-58f3-4d96-8f70-6b350769f9ec" data-id="tooltip"><style aria-hidden="true">
-  	.t7f154fd8-9cc1-42be-b915-fa015eda2c25 {
+  </style></span><u data-for="c2e36aa3-d309-4656-b31f-20ab18225588">issuers</u>, the user can include a credential issued by <em>any one</em> of those listed.</p><p>You can optionally provide:</p><ol start="2"><li>expiration date as a Unix timestamp in seconds since the epoch.</li><li>metadata</li></ol><div class="theme-admonition theme-admonition-caution alert alert--warning admonition_LlT9"><div class="admonitionHeading_tbUL"><span class="admonitionIcon_kALy"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>caution</div><div class="admonitionContent_S0QG"><p>Your Issuer ApiKey provided via the Authorization request header grants you and only you access to the encrypted data. Please keep this key secure.</p></div></div><p>The response body consists of enriched information regarding entities referenced in the request. For example, the verifier&#x27;s encryption and signing <a href="https://docs.unumid.co/types/interfaces/publickeyinfo.html" target="_blank" rel="noopener noreferrer">PublicKeyInfo</a> is included to facilitate verifying the presentation request&#x27;s signature and submitting and encrypted presentation in response.</p><div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockTitle_Ktv7">PublicKeyInfo</div><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;id&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// key id</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;type&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;secp256r1&quot;</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">||</span><span class="token plain"> &quot;</span><span class="token constant" style="color:rgb(130, 170, 255)">RSA</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// key type</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;status&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;valid&quot;</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">||</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;invalid&quot;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// key status</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;encoding&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;pem&quot;</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">||</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;base58&quot;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// key encoding</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;publicKey&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// public key value</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;createdAt&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> Date</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// when key was created </span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;updatedAt&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> Date</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// when key status was last updated</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><h4 class="anchor anchorWithStickyNavbar_LWe7" id="request-body">Request Body<a class="hash-link" href="#request-body" title="Direct link to heading">​</a></h4><div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token string-property property">&quot;credentialRequests&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> CredentialRequest</span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token string" style="color:rgb(195, 232, 141)">&quot;expiresAt&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">number</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// (optional) when PresentationRequest will no longer be valid (Unix timestamp). Default is 10 minutes after creation.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token string" style="color:rgb(195, 232, 141)">&quot;metadata&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> object </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// (optional) any additional data to include in PresentationRequest</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><h4 class="anchor anchorWithStickyNavbar_LWe7" id="response-body-presentationrequestpostdto">Response Body: <a href="https://docs.unumid.co/types/interfaces/presentationrequestpostdto.html" target="_blank" rel="noopener noreferrer"><code>PresentationRequestPostDto</code></a><a class="hash-link" href="#response-body-presentationrequestpostdto" title="Direct link to heading">​</a></h4><div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockTitle_Ktv7">PresentationRequestPostDto</div><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;presentationRequest&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;uuid&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// identifies PresentationRequest in Unum ID database</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;createdAt&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// when PresentationRequest was created (ISO 8601 date/time)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;updatedAt&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// when PresentationRequest was last updated (ISO 8601 date/time). Should always be same as createdAt.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;expiresAt&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// when PresentationRequest will no longer be valid (ISO 8601 date/time)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;verifier&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// your verifier DID</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;credentialRequests&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> CredentialRequest</span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;proof&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> Proof</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// acryptographic proof created by signing PresentationRequest with your verifier signing private key. Can be used to verify PresentationRequest.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;metadata&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> object </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// any additional data to include in PresentationRequest</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;verifier&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token string-property property">&quot;name&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// human readable name for verifier. Displayed to users in mobile apps.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token string-property property">&quot;did&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// your verifier DID</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token string-property property">&quot;encryptionPublicKey&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> PublicKeyInfo</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// PublicKeyInfo for the RSA key</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token string-property property">&quot;signingPublicKey&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> PublicKeyInfo </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// PublicKeyInfo for the secp256r1 key</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;issuers&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token string-property property">&quot;IssuerDid:string&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// map keyed on issuer DID(s) that issued requested credential(s)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">        </span><span class="token string-property property">&quot;name&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// human readable name for issuer</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">        </span><span class="token string-property property">&quot;did&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// issuer DID</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">        </span><span class="token string-property property">&quot;cardImageUrl&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// issuer&#x27;s card image URL</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">/* You send this to a user with the Web SDK: */</span><span class="token plain"></span><br></span><span class="token-line theme-code-block-highlighted-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;deeplink&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// deep link (URL) that can be used to trigger intended mobile app to load PresentationRequest</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">/* You display this to a user with the Web SDK */</span><span class="token plain"></span><br></span><span class="token-line theme-code-block-highlighted-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;qrCode&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// QR code representation of deep link (encoded as data URL)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><hr><h3 class="anchor anchorWithStickyNavbar_LWe7" id="get-shared-credentials">Get Shared Credentials<a class="hash-link" href="#get-shared-credentials" title="Direct link to heading">​</a></h3><blockquote><p>Get verified <span class="__react_component_tooltip t623f5b5b-1fba-4692-b6c8-26c315d29239 place-top type-dark allow_hover" id="ecb6336e-5a5a-4fd9-949f-f921baf87c37" data-id="tooltip"><style aria-hidden="true">
+  	.t623f5b5b-1fba-4692-b6c8-26c315d29239 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t7f154fd8-9cc1-42be-b915-fa015eda2c25.place-top {
+  	.t623f5b5b-1fba-4692-b6c8-26c315d29239.place-top {
         margin-top: -10px;
     }
-    .t7f154fd8-9cc1-42be-b915-fa015eda2c25.place-top::before {
+    .t623f5b5b-1fba-4692-b6c8-26c315d29239.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t7f154fd8-9cc1-42be-b915-fa015eda2c25.place-top::after {
+    .t623f5b5b-1fba-4692-b6c8-26c315d29239.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -626,13 +626,13 @@
         border-top-width: 6px;
     }
 
-    .t7f154fd8-9cc1-42be-b915-fa015eda2c25.place-bottom {
+    .t623f5b5b-1fba-4692-b6c8-26c315d29239.place-bottom {
         margin-top: 10px;
     }
-    .t7f154fd8-9cc1-42be-b915-fa015eda2c25.place-bottom::before {
+    .t623f5b5b-1fba-4692-b6c8-26c315d29239.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t7f154fd8-9cc1-42be-b915-fa015eda2c25.place-bottom::after {
+    .t623f5b5b-1fba-4692-b6c8-26c315d29239.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -643,13 +643,13 @@
         border-bottom-width: 6px;
     }
 
-    .t7f154fd8-9cc1-42be-b915-fa015eda2c25.place-left {
+    .t623f5b5b-1fba-4692-b6c8-26c315d29239.place-left {
         margin-left: -10px;
     }
-    .t7f154fd8-9cc1-42be-b915-fa015eda2c25.place-left::before {
+    .t623f5b5b-1fba-4692-b6c8-26c315d29239.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t7f154fd8-9cc1-42be-b915-fa015eda2c25.place-left::after {
+    .t623f5b5b-1fba-4692-b6c8-26c315d29239.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -660,13 +660,13 @@
         border-left-width: 6px;
     }
 
-    .t7f154fd8-9cc1-42be-b915-fa015eda2c25.place-right {
+    .t623f5b5b-1fba-4692-b6c8-26c315d29239.place-right {
         margin-left: 10px;
     }
-    .t7f154fd8-9cc1-42be-b915-fa015eda2c25.place-right::before {
+    .t623f5b5b-1fba-4692-b6c8-26c315d29239.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t7f154fd8-9cc1-42be-b915-fa015eda2c25.place-right::after {
+    .t623f5b5b-1fba-4692-b6c8-26c315d29239.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -676,20 +676,20 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style></span><u data-for="c3171642-58f3-4d96-8f70-6b350769f9ec"></u> data shared by <span class="__react_component_tooltip tf77bee53-1411-4d26-9f3a-31881f9cd8c4 place-top type-dark allow_hover" id="73f2715d-72b4-4773-bdd6-219bdeb87ef7" data-id="tooltip"><style aria-hidden="true">
-  	.tf77bee53-1411-4d26-9f3a-31881f9cd8c4 {
+  </style></span><u data-for="ecb6336e-5a5a-4fd9-949f-f921baf87c37"></u> data shared by <span class="__react_component_tooltip t4524bc0c-449e-4f66-b9da-d63f3327cf58 place-top type-dark allow_hover" id="e80d8c70-56d2-423b-8895-772c3075dcee" data-id="tooltip"><style aria-hidden="true">
+  	.t4524bc0c-449e-4f66-b9da-d63f3327cf58 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.tf77bee53-1411-4d26-9f3a-31881f9cd8c4.place-top {
+  	.t4524bc0c-449e-4f66-b9da-d63f3327cf58.place-top {
         margin-top: -10px;
     }
-    .tf77bee53-1411-4d26-9f3a-31881f9cd8c4.place-top::before {
+    .t4524bc0c-449e-4f66-b9da-d63f3327cf58.place-top::before {
         border-top: 8px solid transparent;
     }
-    .tf77bee53-1411-4d26-9f3a-31881f9cd8c4.place-top::after {
+    .t4524bc0c-449e-4f66-b9da-d63f3327cf58.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -700,13 +700,13 @@
         border-top-width: 6px;
     }
 
-    .tf77bee53-1411-4d26-9f3a-31881f9cd8c4.place-bottom {
+    .t4524bc0c-449e-4f66-b9da-d63f3327cf58.place-bottom {
         margin-top: 10px;
     }
-    .tf77bee53-1411-4d26-9f3a-31881f9cd8c4.place-bottom::before {
+    .t4524bc0c-449e-4f66-b9da-d63f3327cf58.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .tf77bee53-1411-4d26-9f3a-31881f9cd8c4.place-bottom::after {
+    .t4524bc0c-449e-4f66-b9da-d63f3327cf58.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -717,13 +717,13 @@
         border-bottom-width: 6px;
     }
 
-    .tf77bee53-1411-4d26-9f3a-31881f9cd8c4.place-left {
+    .t4524bc0c-449e-4f66-b9da-d63f3327cf58.place-left {
         margin-left: -10px;
     }
-    .tf77bee53-1411-4d26-9f3a-31881f9cd8c4.place-left::before {
+    .t4524bc0c-449e-4f66-b9da-d63f3327cf58.place-left::before {
         border-left: 8px solid transparent;
     }
-    .tf77bee53-1411-4d26-9f3a-31881f9cd8c4.place-left::after {
+    .t4524bc0c-449e-4f66-b9da-d63f3327cf58.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -734,13 +734,13 @@
         border-left-width: 6px;
     }
 
-    .tf77bee53-1411-4d26-9f3a-31881f9cd8c4.place-right {
+    .t4524bc0c-449e-4f66-b9da-d63f3327cf58.place-right {
         margin-left: 10px;
     }
-    .tf77bee53-1411-4d26-9f3a-31881f9cd8c4.place-right::before {
+    .t4524bc0c-449e-4f66-b9da-d63f3327cf58.place-right::before {
         border-right: 8px solid transparent;
     }
-    .tf77bee53-1411-4d26-9f3a-31881f9cd8c4.place-right::after {
+    .t4524bc0c-449e-4f66-b9da-d63f3327cf58.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -750,8 +750,8 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style></span><u data-for="73f2715d-72b4-4773-bdd6-219bdeb87ef7"></u>.</p></blockquote><p>When subjects respond to presentations requests the encrypted data is sent, verified and stored in the Issuer Service. This interface gives you access to the decrypted data the user shared.</p><p>You need to provide:</p><ol><li>the presentation&#x27;s <code>uuid</code> that was returned to your client via your callback handler.</li></ol><div class="theme-admonition theme-admonition-important alert alert--info admonition_LlT9"><div class="admonitionHeading_tbUL"><span class="admonitionIcon_kALy"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_S0QG"><p>Unum ID only ever stores encrypted presentation data and is deleted after 5 minutes of the corresponding Issuer doing the initial data retrieval.</p></div></div><h4 class="anchor anchorWithStickyNavbar_LWe7" id="request-body-1">Request Body<a class="hash-link" href="#request-body-1" title="Direct link to heading">​</a></h4><div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token string-property property">&quot;uuid&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// uuid of the encrypted presentation data to retrieve</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><h4 class="anchor anchorWithStickyNavbar_LWe7" id="response-body-decryptedpresentation">Response Body: <a href="https://docs.unumid.co/server-sdk-typescript/interfaces/decryptedpresentation.html" target="_blank" rel="noopener noreferrer"><code>DecryptedPresentation</code></a><a class="hash-link" href="#response-body-decryptedpresentation" title="Direct link to heading">​</a></h4><div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockTitle_Ktv7">DecryptedPresentation</div><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;isVerified&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">boolean</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// whether the presentation is valid</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;type&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&#x27;VerifiablePresentation&#x27;</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">|</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&#x27;DeclinedPresentation&#x27;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// type of presentation. DeclinedPresentation means user declined request and the submitted presentation&#x27;s VerifiableCredential attribute was undefined or an empty array.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;presentation&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> Presentation</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// decrypted Presentation object</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;message&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// (optional) included if isVerified is false. Explains why verification failed.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><p>You can decide what to do with the result of the verification. We recommend using the Server SDK&#x27;s <code>extractCredentialData</code> to facilitate getting the data from the presentation.</p><hr></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages navigation"></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#overview" class="table-of-contents__link toc-highlight">Overview</a><ul><li><a href="#setup" class="table-of-contents__link toc-highlight">Setup</a></li><li><a href="#authentication" class="table-of-contents__link toc-highlight">Authentication</a></li></ul></li><li><a href="#functionality" class="table-of-contents__link toc-highlight">Functionality</a><ul><li><a href="#create-a-request" class="table-of-contents__link toc-highlight">Create a Request</a></li><li><a href="#get-shared-credentials" class="table-of-contents__link toc-highlight">Get Shared Credentials</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Introduction</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/">About Unum ID</a></li><li class="footer__item"><a class="footer__link-item" href="/terminology">Terminology</a></li><li class="footer__item"><a class="footer__link-item" href="/architecture">Architecture</a></li><li class="footer__item"><a class="footer__link-item" href="/deployment-overview">Deployment Overview</a></li><li class="footer__item"><a class="footer__link-item" href="/quick-start-guide">Quick Start Guide</a></li><li class="footer__item"><a class="footer__link-item" href="/privacy-and-security">Privacy and Security</a></li></ul></div><div class="col footer__col"><div class="footer__title">Components</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/server-sdk">Server SDK</a></li><li class="footer__item"><a class="footer__link-item" href="/mobile-sdk-overview">Mobile SDK</a></li><li class="footer__item"><a class="footer__link-item" href="/web-sdk">Web SDK</a></li></ul></div><div class="col footer__col"><div class="footer__title">Demos</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/developer-demo">Developer Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/acme-demo">ACME Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/hooli-demo">Hooli Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/kredita-demo">Kredita Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/hooli-demo-idv">Hooli Demo IDV</a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.Unum.ID" target="_blank" rel="noopener noreferrer" class="footer__link-item">Home<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://github.com/UnumID" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2023 Unum ID, Inc.</div></div></div></footer></div>
-<script src="/assets/js/runtime~main.4f0e3c14.js"></script>
+  </style></span><u data-for="e80d8c70-56d2-423b-8895-772c3075dcee"></u>.</p></blockquote><p>When subjects respond to presentations requests the encrypted data is sent, verified and stored in the Issuer Service. This interface gives you access to the decrypted data the user shared.</p><p>You need to provide:</p><ol><li>the presentation&#x27;s <code>uuid</code> that was returned to your client via your callback handler.</li></ol><div class="theme-admonition theme-admonition-important alert alert--info admonition_LlT9"><div class="admonitionHeading_tbUL"><span class="admonitionIcon_kALy"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_S0QG"><p>Unum ID only ever stores encrypted presentation data and is deleted after 5 minutes of the corresponding Issuer doing the initial data retrieval.</p></div></div><h4 class="anchor anchorWithStickyNavbar_LWe7" id="request-body-1">Request Body<a class="hash-link" href="#request-body-1" title="Direct link to heading">​</a></h4><div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token string-property property">&quot;uuid&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// uuid of the encrypted presentation data to retrieve</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><h4 class="anchor anchorWithStickyNavbar_LWe7" id="response-body-decryptedpresentation">Response Body: <a href="https://docs.unumid.co/server-sdk-typescript/interfaces/decryptedpresentation.html" target="_blank" rel="noopener noreferrer"><code>DecryptedPresentation</code></a><a class="hash-link" href="#response-body-decryptedpresentation" title="Direct link to heading">​</a></h4><div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockTitle_Ktv7">DecryptedPresentation</div><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;isVerified&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">boolean</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// whether the presentation is valid</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;type&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&#x27;VerifiablePresentation&#x27;</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">|</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&#x27;DeclinedPresentation&#x27;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// type of presentation. DeclinedPresentation means user declined request and the submitted presentation&#x27;s VerifiableCredential attribute was undefined or an empty array.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string-property property">&quot;presentation&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> Presentation</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// decrypted Presentation object</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;message&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"> </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// (optional) included if isVerified is false. Explains why verification failed.</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><p>You can decide what to do with the result of the verification. We recommend using the Server SDK&#x27;s <code>extractCredentialData</code> to facilitate getting the data from the presentation.</p><hr></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages navigation"></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#overview" class="table-of-contents__link toc-highlight">Overview</a><ul><li><a href="#setup" class="table-of-contents__link toc-highlight">Setup</a></li><li><a href="#authentication" class="table-of-contents__link toc-highlight">Authentication</a></li></ul></li><li><a href="#functionality" class="table-of-contents__link toc-highlight">Functionality</a><ul><li><a href="#create-a-request" class="table-of-contents__link toc-highlight">Create a Request</a></li><li><a href="#get-shared-credentials" class="table-of-contents__link toc-highlight">Get Shared Credentials</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Introduction</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/">About Unum ID</a></li><li class="footer__item"><a class="footer__link-item" href="/terminology">Terminology</a></li><li class="footer__item"><a class="footer__link-item" href="/architecture">Architecture</a></li><li class="footer__item"><a class="footer__link-item" href="/deployment-overview">Deployment Overview</a></li><li class="footer__item"><a class="footer__link-item" href="/quick-start-guide">Quick Start Guide</a></li><li class="footer__item"><a class="footer__link-item" href="/privacy-and-security">Privacy and Security</a></li></ul></div><div class="col footer__col"><div class="footer__title">Components</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/server-sdk">Server SDK</a></li><li class="footer__item"><a class="footer__link-item" href="/mobile-sdk-overview">Mobile SDK</a></li><li class="footer__item"><a class="footer__link-item" href="/web-sdk">Web SDK</a></li></ul></div><div class="col footer__col"><div class="footer__title">Demos</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/developer-demo">Developer Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/acme-demo">ACME Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/hooli-demo">Hooli Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/kredita-demo">Kredita Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/hooli-demo-idv">Hooli Demo IDV</a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.Unum.ID" target="_blank" rel="noopener noreferrer" class="footer__link-item">Home<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://github.com/UnumID" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2023 Unum ID, Inc.</div></div></div></footer></div>
+<script src="/assets/js/runtime~main.bb6123be.js"></script>
 <script src="/assets/js/main.d3725e95.js"></script>
 </body>
 </html>

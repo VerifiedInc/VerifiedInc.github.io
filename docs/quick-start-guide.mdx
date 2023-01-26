@@ -121,7 +121,7 @@ You can implement any of the following:
 
   It's easiest to extract the data from each credential using the corresponding [schema](/schema). The extracted data is verified according to the issue of the credential, but you can perform additional verification steps if you like.
 
-  **_✅ You're done!_**
+  ✅ **_You're done!_**
 
 </TabItem>
 
@@ -170,7 +170,7 @@ You can implement any of the following:
 
   Format the credential data according to the `json.properties` attribute of the credential schema. In this case, the schema is for a `SsnCredential` and is hosted at [`https://schema.unumid.co/jsonSchema/SsnCredential`](https://schema.unumid.co/jsonSchema/SsnCredential).
 
-  **_✅ You're done!_**
+  ✅ **_ You're done!_**
 
 </TabItem>
 
@@ -245,7 +245,7 @@ You can implement any of the following:
 
   It's easiest to extract the data from each credential using the corresponding [schema](/schema). The extracted data is verified according to the issue of the credential, but you can perform additional verification steps if you like.
 
-  **_✅ You're done!_**
+  ✅ **_ You're done!_**
 
 </TabItem>
 <TabItem value="no-match" label="No Match">
@@ -291,40 +291,10 @@ You can implement any of the following:
 
   Format the credential data according to the `json.properties` attribute of the credential schema. In this case, the schema is for a `SsnCredential` and is hosted at [`https://schema.unumid.co/jsonSchema/SsnCredential`](https://schema.unumid.co/jsonSchema/SsnCredential).
 
-  **_✅ You're done!_**
+  ✅ **_ You're done!_**
 
 </TabItem>
 </Tabs>
-
-  2. **Direct the user to the `url`** the response body contains. They will complete 1-Click IDV from there and then be redirected to your client via your callback URL.
-
-  3. **Call `/sharedCredentials/{uuid}`** with the `sharedCredentialsUuid` the callback URL contains. The response body will contain the credentials the user agreed to share via 1-Click IDV.
-
-  ```typescript title="Example Response Body"
-  {
-      "uuid": string // the sharedCredentialsUuid
-      "credentials": [{
-          "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
-          "type": "SsnCredential",
-          "data": {
-              "ssn": "111-22-3333"
-          },
-          "issuanceDate": "1671847264479",
-          "expirationDate": "1871839024044",
-          "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
-      }],
-      // user's email from input to /hasMatchingCredentials
-      // only present if email was provided
-      "email"?: string,
-      // user's phone from input to /hasMatchingCredentials
-      // only present if email was provided 
-      "phone"?: string
-  }
-  ```
-
-  It's easiest to extract the data from each credential using the corresponding [schema](/schema). The extracted data is verified according to the issue of the credential, but you can perform additional verification steps if you like.
-
-  **_✅ You're done!_**
 
 </TabItem>
 

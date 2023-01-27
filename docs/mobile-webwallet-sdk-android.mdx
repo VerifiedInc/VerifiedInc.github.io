@@ -12,7 +12,7 @@ import Tip from '../src/components/Tip';
 
 *Docs for the iOS WebWallet SDK are [here](mobile-webwallet-sdk-ios).*
 
-This is a lightweight, fully native SDK that allows a host app to perform web wallet authentication functionality in a chrome browser. It works with both Kotlin and Java native apps.
+This is a lightweight, fully native SDK that allows a host app to perform web wallet authentication and verification of a user. It works with both Kotlin and Java native apps.
 
 :::note
 An example project using this SDK can be found [here](https://github.com/UnumID/UnumIdWebAuth-Android/). This serves as a useful technical reference.
@@ -43,40 +43,66 @@ android {
 In the app level build.gradle add the reference to the SDK
 
 ```groovy
-implementation "id.unum:webwallet-android:(insert latest version)"
+implementation "id.unum:verified-android:(insert latest version)"
 ```
 
-For the most current version, visit [here](https://github.com/UnumID/UnumIDWebWallet-android/packages/1603052)
+For the most current version, visit [here](https://github.com/UnumID/UnumIDWebWallet-android/packages/1757162)
 
-### Performing User DID Association
+### Activating a user
 
-More details on the <Tip type="DID"/> (`did`) association process can be found [here](https://docs.unumid.co/quick-start-guide#associate-users-with-dids).
-
-When a host application would like to link a user with existing <Tip type="credential">credentials</Tip>, the user <Tip type="DID"/> (`did`) association flow can be kicked off. This will require the userCode and the <Tip type="issuer">issuer</Tip> <Tip type="DID"/> (`did`) to be passed. An optional value for the user email can be passed to help prefill data. An optional value of a color hex string can also be passed to help match the color of title bar with the app theme.
+When a host application would like to activate a user with the UnumID Web Wallet Verification SDK, then the 'launchActivate' method will be called. An `IssueCredentialsRequest` object will also need to be provided to the endpoint. This will let the SDK know what credentials should be assigned to the user being activated.
 
 ``` kotlin
 /**
- * Method for launching the web wallet and performing the user DID association flow.
- * @param userCode: String The issuer created user code.
- * @param issuerDid: String The current issuer DID.
- * @param userEmail:String An optional value of the current user email to prefill the email input.
- * @param context: Context A provided context to launch the chrome activity.
- * @param toolBarColor: String An optional value to set the color of the chrome tool bar. This should be in hex form "#202020".
- */
-WebWallet.associate(userCode, issuerDid, userEmail, context, toolBarColor)
+     * Method called to launch the activate dialog flow.
+     * @param issueCredentialsRequest - credential request
+     * @param brand - The name of the client brand
+     * @param callback - callback to be called once the dialog is closed
+     */
+    fun launchActivate(
+        issueCredentialsRequest: IssueCredentialsRequest,
+        brand: String,
+        callback: UnumDialogComplete
+    )
+```
+
+### Has Matching Credentials
+
+The host application can check to see if a user has existing credentials already associated with the UnumID SDK. To do this, call the `hasMatchingCredentials` function. If there are matching credentials, the response will contain a url that can then be passed to the `launchVerify` function.
+
+```kotlin
+/**
+     * Method called to check if there are matching credentials for the given email and phone.
+     * @param brand - The name of the client brand
+     * @param showDialog - if a dialog should be shown to the user
+     * @param callback - callback results
+     * @param request - api request body
+     */
+    fun hasMatchingCredentials(
+        brand: String,
+        showDialog: Boolean,
+        callback: UnumDialogComplete,
+        request: HasMatchingCredentialsRequest,
+    )
 ```
 
 
-### Opening a web wallet web auth window
+### Verifying a user
 
-If the host app already has the full url required for loading the Unum ID wallet in the browser, the url can be passed to the WebWallet SDK to open a chrome browser window to that URL.  An optional value of a color hex string can also be passed to help match the color of title bar with the app theme.
+When the host application would like to verify a user, then the following function can be called.
 
 ``` kotlin
 /**
- * Method for launching a provided url in a chrome custom tab.
- * @param url:String The url to be launched.
- * @param context: Context A provided context to launch the chrome activity.
- * @param toolBarColor: String An optional value to set the color of the chrome tool bar. This should be in hex form "#202020".
- */
-WebWallet.launch(url, context, toolBarColor)
+     * Method called to launch the Verification View.
+     * @param url - url to be loaded
+     * @param brand - The name of the client brand
+     * @param callback - callback to be called once the dialog is closed
+     * @param showDialog - whether to show the preliminary dialog or not
+     */
+    fun launchVerify(
+        url: String,
+        brand: String,
+        callback: UnumDialogComplete,
+        showDialog: Boolean = false // default value
+    )
 ```

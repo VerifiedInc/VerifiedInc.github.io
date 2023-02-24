@@ -182,7 +182,7 @@ You can implement any of the following:
 
   **If they don't, you need to issue them credentials.** When you do, Unum ID will pay you according to your contract.
 
-  1. **Call `/hasMatchingCredentials`** with the user's email and/or phone and the credential type(s) you need.
+  1. **Call [`/hasMatchingCredentials`](/api-overview/#check-user-credentials)** with the user's email and/or phone and the credential type(s) you need.
 
   <details>
     <summary>What counts as a match?</summary>
@@ -217,9 +217,19 @@ You can implement any of the following:
 <Tabs defaultValue="no-match">
 <TabItem value="match" label="Match">
 
-  2. **Direct the user to the `url`** the response body contains. They will complete 1-Click IDV from there and then be redirected to your client via your callback URL.
+  2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Unum ID web wallet. For example the final url you need to redirect the user to is:
 
-  3. **Call `/sharedCredentials/{uuid}`** with the `sharedCredentialsUuid` the callback URL contains. The response body will contain the credentials the user agreed to share via 1-Click IDV.
+  ```text title="Example Redirect to Unum ID Wallet URL"
+  https://wallet-beta.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?redirectUrl=https://acme-bank.co/sign-up/complete
+  ```
+
+  3. **Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined in step (2). To continue the example in step (2), the final url the user will be redirected to will be something like this:
+
+  ```text title="Example Redirect Back to Acme Bank URL"
+  https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9458-057125eb417d
+  ````
+
+  3. **Call [`/sharedCredentials/{uuid}`](/api-overview/#get-shared-credentials)** with the `sharedCredentialsUuid` the callback URL contains. The response body will contain the credentials the user agreed to share via 1-Click IDV.
 
   ```typescript title="Example Response Body"
   {
@@ -260,7 +270,7 @@ You can implement any of the following:
   **You must obtain user consent before issuing credentials.** Not doing so violates our terms and will prevent us from paying you for issuing credentials. 
   :::
 
-  3. **Call `/credentials`** with the user's verified email and/or phone and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [schemas](/schema). 
+  3. **Call [`/credentials`](/api-overview#issue-credentials))** with the user's verified email and/or phone and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [schemas](/schema). 
 
   _If we don't have a schema that suits your needs, [email us](mailto:support@unumid.co) and we'll make one for you._
 

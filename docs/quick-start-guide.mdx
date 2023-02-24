@@ -31,16 +31,6 @@ test@example.com
 **[Unum ID](https://www.unumid.co)** enables 1-Click or Free ID Verification (IDV), powered by our digital ID cards. 
 
 You can implement any of the following:
-- **1-Click IDV only:** If a user has a digital ID card, they can verify with 1-Click. If they don't, you take them through your existing verification process (no change needed).
-
-  <details>
-    <summary>Demo of 1-Click Only:</summary>
-    <p>
-      This demo shows Kredita using 1-Click IDV when it's available. They collect email and phone from the user (Richard) and check if the user has matching credentials. The user does, so Kredita lets them verify with 1-Click.
-    </p>
-    <iframe src="https://marvelapp.com/prototype/9cab6ai?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
-  </details>
-
 - **Free IDV Only:** You issue a digital ID card to any of your users (new or existing), and we pay you for it.
 
   <details>
@@ -51,11 +41,70 @@ You can implement any of the following:
     <iframe src="https://marvelapp.com/prototype/18ej4ajj?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
   </details>
 
+- **1-Click IDV only:** If a user has a digital ID card, they can verify with 1-Click. If they don't, you take them through your existing verification process (no change needed).
+
+  <details>
+    <summary>Demo of 1-Click Only:</summary>
+    <p>
+      This demo shows Kredita using 1-Click IDV when it's available. They collect email and phone from the user (Richard) and check if the user has matching credentials. The user does, so Kredita lets them verify with 1-Click.
+    </p>
+    <iframe src="https://marvelapp.com/prototype/9cab6ai?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
+  </details>
+
 - **Both:** If a user has a digital ID card, they can verify with 1-Click. If they don't, you take them through your existing verification process (no change needed) — _and at the end you issue them a digital ID card, and we pay you for it_. 
 
 **What do you want to implement?**
 
 <Tabs groupId="options" defaultValue="free">
+
+<TabItem value="free" label="Free Only">
+
+  **You need to issue <Tip type="credential">credentials</Tip> to a user.** When you do, Unum ID will pay you according to your contract.
+
+  1. **Get user consent.** Ask the user if they want to activate their digital ID card (from your brand), and include Unum ID legal language:
+
+  > By activating, you agree to Unum ID's <a href="https://www.unumid.co/legal"><u>Terms of Use</u></a>.
+
+  "Terms of Use" should be underlined and hyperlinked to <a href="https://www.unumid.co/legal">`https://www.unumid.co/legal`</a>.
+
+  :::info
+  **You must obtain user consent before issuing credentials.** Not doing so violates our terms and will prevent us from paying you for issuing credentials. 
+  :::
+
+  2. **Call `/credentials`** with the user's verified email and/or phone and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [schemas](/schema). 
+
+  _If we don't have a schema that suits your needs, [email us](mailto:support@unumid.co) and we'll make one for you._
+
+  :::caution
+  **When issuing credentials, you must only use an email or phone that you've verified.** This is to ensure that only the controller of that email or phone can access the credentials you issue to them.
+  :::
+
+  For example, if you have a verified Social Security Number (SSN) for a user, you can issue them a `SsnCredential`. Just call the `/credentials` endpoint with the user's email and/or phone, the `SsnCredential` type, and the SSN data:
+
+  ```json title="Example Issue Credentials Request Body"
+  {
+    "email": "test@example.com",
+    "phone": "+11111111111",
+    "credentials": [
+      {
+        "type": "SsnCredential",
+        // based on the properties attribute of the schema
+        // highlight-start
+        "data": {
+          "ssn": "111-22-3333"
+        },
+        // highlight-end
+        "expirationDate": 1893484800
+      }
+    ]
+  }
+  ```
+
+  Format the credential data according to the `json.properties` attribute of the credential schema. In this case, the schema is for a `SsnCredential` and is hosted at [`https://schema.unumid.co/jsonSchema/SsnCredential`](https://schema.unumid.co/jsonSchema/SsnCredential).
+
+  ✅ **_ You're done!_**
+
+</TabItem>
   
 <TabItem value="1-click" label="1-Click Only">
 
@@ -122,55 +171,6 @@ You can implement any of the following:
   It's easiest to extract the data from each credential using the corresponding [schema](/schema). The extracted data is verified according to the issue of the credential, but you can perform additional verification steps if you like.
 
   ✅ **_You're done!_**
-
-</TabItem>
-
-<TabItem value="free" label="Free Only">
-
-  **You need to issue <Tip type="credential">credentials</Tip> to a user.** When you do, Unum ID will pay you according to your contract.
-
-  1. **Get user consent.** Ask the user if they want to activate their digital ID card (from your brand), and include Unum ID legal language:
-
-  > By activating, you agree to Unum ID's <a href="https://www.unumid.co/legal"><u>Terms of Use</u></a>.
-
-  "Terms of Use" should be underlined and hyperlinked to <a href="https://www.unumid.co/legal">`https://www.unumid.co/legal`</a>.
-
-  :::info
-  **You must obtain user consent before issuing credentials.** Not doing so violates our terms and will prevent us from paying you for issuing credentials. 
-  :::
-
-  2. **Call `/credentials`** with the user's verified email and/or phone and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [schemas](/schema). 
-
-  _If we don't have a schema that suits your needs, [email us](mailto:support@unumid.co) and we'll make one for you._
-
-  :::caution
-  **When issuing credentials, you must only use an email or phone that you've verified.** This is to ensure that only the controller of that email or phone can access the credentials you issue to them.
-  :::
-
-  For example, if you have a verified Social Security Number (SSN) for a user, you can issue them a `SsnCredential`. Just call the `/credentials` endpoint with the user's email and/or phone, the `SsnCredential` type, and the SSN data:
-
-  ```json title="Example Issue Credentials Request Body"
-  {
-    "email": "test@example.com",
-    "phone": "+11111111111",
-    "credentials": [
-      {
-        "type": "SsnCredential",
-        // based on the properties attribute of the schema
-        // highlight-start
-        "data": {
-          "ssn": "111-22-3333"
-        },
-        // highlight-end
-        "expirationDate": 1893484800
-      }
-    ]
-  }
-  ```
-
-  Format the credential data according to the `json.properties` attribute of the credential schema. In this case, the schema is for a `SsnCredential` and is hosted at [`https://schema.unumid.co/jsonSchema/SsnCredential`](https://schema.unumid.co/jsonSchema/SsnCredential).
-
-  ✅ **_ You're done!_**
 
 </TabItem>
 

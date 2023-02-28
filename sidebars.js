@@ -26,7 +26,7 @@ module.exports = {
       collapsed: false,
       items: [
         'quick-start-guide',
-        'issuer-guide'
+        'free-idv-guide'
       ],
     },
     {

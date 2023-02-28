@@ -14,20 +14,21 @@ module.exports = {
       /* should collapse when we have lots of docs */
       collapsed: false,
       items: [
-        'quick-start-guide',
+        // 'quick-start-guide',
         'terminology',
         'faq-info',
       ],
     },
-    // {
-    //   type: 'category',
-    //   label: 'Guides',
-    //   /* should collapse when we have lots of docs */
-    //   collapsed: false,
-    //   items: [
-    //     'quick-start-guide',
-    //   ],
-    // },
+    {
+      type: 'category',
+      label: 'Guides',
+      /* should collapse when we have lots of docs */
+      collapsed: false,
+      items: [
+        'quick-start-guide',
+        'free-idv-guide'
+      ],
+    },
     {
       type: 'category',
       label: 'Components',
@@ -81,8 +82,8 @@ module.exports = {
       collapsed: false,
       items: [
         // 'idv-demo',
-        'kredita-demo',
-        'hooli-demo-idv'
+        'hooli-demo-idv',
+        'kredita-demo'
       ]
     },
   ],

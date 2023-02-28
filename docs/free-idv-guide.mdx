@@ -1,0 +1,133 @@
+---
+id: free-idv-guide
+title: Free Identity Verification Guide
+sidebar_label: Free IDV Guide
+slug: /free-idv-guide
+---
+
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+**Time to read:** 5 min
+
+**Time to implement:** 30 min
+
+## Overview
+
+**[Unum ID](https://www.unumid.co)** enables 1-Click or Free ID Verification (IDV), powered by our digital ID cards. This particular guide only focuses on how and why to implement the Unum ID **Free IDV** solution.
+
+> This page serves as a more detailed walkthrough than what can be found in the [Quick Start Guide](/quick-start-guide) for how to implement and qualify for Free IDV with Unum ID.
+
+:::tip
+You will need an API key and an email and/or phone for each user. Below is a valid API Key for your initial usage along with suggested test email and phone values.
+
+```json title="Sandbox API Key"
+5YugDQgjPn2LG2xTAs/+c6Kfrf7Ie45PIGjJurP8vNk=
+```
+```json title="Sandbox User Email"
+test@example.com
+```
+```json title="Sandbox User Phone"
++10123456789
+```
+:::
+
+## Motivations
+
+Unum ID is willing to cover your identity verification costs in order to create a truly win-win-win scenario for you, your partners, and your users. Simply put, you issue a digital ID card to any of your users (new or existing) with verified identity data, and we pay you for it. The core motivations for such an arraignment are multifaceted: 
+
+1. **You get your identity verification costs covered** with any provider(s) of your choosing
+2. **You get a new revenue stream** when the user uses your verified data to onboard with [1-click](/1-click-idv-guide)
+3. **Your users get to enjoy 1-click onboarding** with any of your partners or other third parties that accept your verified data, which also means increased brand awareness
+4. **Unum ID gets more identity into the identity network**, which is why we are willing to subsidize your costs
+
+## UX Strategies
+There are many user experiences that can be implemented to leverage the Free IDV offering. Below are just a few recommendations with an accompanying demo of each.
+
+- Next User Sign In
+<details>
+  <summary>Demo of Next User Sign In</summary>
+  <p>
+    Richard is an existing, verified Hooli user. The next time he signs in, Hooli asks him if he wants to activate his Hooli digital ID card. When he clicks the Activate button, Hooli issues the card, and Unum ID reimburses Hooli for the cost of the identity verification performed by Hooli for Richard.
+  </p>
+  <iframe src="https://marvelapp.com/prototype/1938729e/screen/90752160?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
+</details>
+- After User Sign Up
+<details>
+  <summary>Demo of After User Sign Up</summary>
+  <p>
+    Richard has just completed Hooli account sign up which included identity verification via a third party service of Hooli's choosing. In the terms and service section Richard agrees to being issued an Hooli branded Unum ID digital ID card. Hooli issues the card with the verified identity data and Unum ID reimburses Hooli for the cost of the identity verification performed by Hooli for Richard.
+  </p>
+  <iframe src="https://marvelapp.com/prototype/9e98j88/screen/90752101?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
+</details>
+- Marketing Email
+<details>
+  <summary>Demo of Marketing Email</summary>
+  <p>
+    Richard is an existing, verified Hooli user. He receives a promotional email from Hooli which encourages him to accept a digital Unum ID card. Upon clicking the link and being directed to the app Hooli confirms with him he wants to activate his Hooli digital ID card. When he clicks the Activate button, Hooli issues the card, and Unum ID reimburses Hooli for the cost of the identity verification performed by Hooli for Richard.
+  </p>
+  <iframe src="https://marvelapp.com/prototype/193879a9/screen/90752312?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
+</details>
+- In App Offer
+<details>
+  <summary>Demo of In App Offer</summary>
+  <p>
+    Richard is an existing, verified Hooli user. Upon signing into the app he notices an in app offer which encourages him to accept a digital Unum ID card. When he clicks the Activate button, Hooli issues the card, and Unum ID reimburses Hooli for the cost of the identity verification performed by Hooli for Richard.
+  </p>
+  <iframe src="https://marvelapp.com/prototype/ebe3f96/screen/90752391?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
+</details>
+
+## Implementation
+
+The implementation goal is to **issue <Tip type="credential">credentials</Tip> to a user.** When you do, Unum ID will pay you according to your contract. The steps for completing the implementation are as follows:
+
+1. **Get user consent.** Ask the user if they want to activate their digital ID card (from your brand), and include Unum ID legal language:
+
+> By clicking the button below, you agree to Unum ID’s <a href="https://www.unumid.co/legal/terms-of-use">Terms of Use</a> and direct YOUR_COMPANY_NAME to share your personal information with Unum ID to provide its digital ID card services, in accordance with its <a href="https://www.unumid.co/legal/privacy-policy">Privacy Policy</a>.
+
+"Terms of Use" should be underlined or colored and hyperlinked to <a href="https://www.unumid.co/legal/terms-of-use">`https://www.unumid.co/legal/terms-of-use`</a>. "Privacy Policy" should be underlined or colored and hyperlinked to <a href="https://www.unumid.co/legal/privacy-policy">`https://www.unumid.co/legal/privacy-policy`</a>.
+
+:::info
+**You must obtain user consent before issuing credentials.** Not doing so violates our terms and will prevent us from paying you for issuing credentials. 
+:::
+
+2. **Call [`/credentials`](/api-overview#issue-credentials)** with the user's verified email and/or phone and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [schemas](/schema). 
+
+_If we don't have a schema that suits your needs, [email us](mailto:support@unumid.co) and we'll make one for you._
+
+:::caution
+**When issuing credentials, you must only use an email or phone that you've verified.** This is to ensure that only the controller of that email or phone can access the credentials you issue to them.
+:::
+
+For example, if you have a verified Social Security Number (SSN) for a user, you can issue them a `SsnCredential`. Just call the `/credentials` endpoint with the user's email and/or phone, the `SsnCredential` type, and the SSN data:
+
+```json title="Example Issue Credentials Request Body"
+{
+  "email": "test@example.com",
+  "phone": "+10123456789",
+  "credentials": [
+    {
+      "type": "SsnCredential",
+      // based on the properties attribute of the schema
+      // highlight-start
+      "data": {
+        "ssn": "111-22-3333"
+      },
+      // highlight-end
+      "expirationDate": 1893484800
+    }
+  ]
+}
+```
+
+Format the credential data according to the `properties` attribute of the credential schema. In this case, the schema is for a `SsnCredential` which can found found at [`https://schema.unumid.co/jsonSchema/SsnCredential`](https://schema.unumid.co/jsonSchema/SsnCredential). 
+
+More information about credential schemas can be found in the [Schema](/schema) section.
+
+✅ **_ You're done!_**
+
+### Example & Demo
+
+Please feel free to refer to the [open source](https://github.com/UnumID/Hooli-Demo-Web) Hooli [demo web app](https://hooli-web.demo.sandbox-unumid.co/login) which demonstrates an example implementation of the Free IDV offering. More information, including mobile demo applications can also be found under the [Hooli Demo](/hooli-demo-idv) section.

@@ -82,7 +82,7 @@ module.exports = {
       collapsed: false,
       items: [
         // 'idv-demo',
-        'hooli-demo-idv',
+        'hooli-demo',
         'kredita-demo'
       ]
     },

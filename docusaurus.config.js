@@ -106,7 +106,7 @@ module.exports = {
             },
             {
               label: 'Hooli Demo IDV',
-              to: '/hooli-demo-idv'
+              to: '/hooli-demo'
             }
           ],
         },

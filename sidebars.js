@@ -26,7 +26,16 @@ module.exports = {
       collapsed: false,
       items: [
         '1-click-or-free-use-case',
-        'free-idv-guide'
+        'issuance-guide'
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Use Cases',
+      /* should collapse when we have lots of docs */
+      collapsed: false,
+      items: [
+        '1-click-or-free-use-case',
       ],
     },
     {

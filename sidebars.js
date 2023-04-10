@@ -14,7 +14,7 @@ module.exports = {
       /* should collapse when we have lots of docs */
       collapsed: false,
       items: [
-        // 'quick-start-guide',
+        // '1-click-or-free-use-case',
         'terminology',
         'faq-info',
       ],
@@ -25,7 +25,7 @@ module.exports = {
       /* should collapse when we have lots of docs */
       collapsed: false,
       items: [
-        'quick-start-guide',
+        '1-click-or-free-use-case',
         'free-idv-guide'
       ],
     },

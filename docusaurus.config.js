@@ -60,7 +60,7 @@ module.exports = {
             },
             {
               label: 'Quick Start Guide',
-              to: '/quick-start-guide',
+              to: '/1-click-or-free-use-case',
             },
             {
               label: 'Privacy and Security',

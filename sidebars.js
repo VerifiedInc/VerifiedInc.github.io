@@ -14,7 +14,7 @@ module.exports = {
       /* should collapse when we have lots of docs */
       collapsed: false,
       items: [
-        // 'quick-start-guide',
+        // '1-click-or-free-use-case',
         'terminology',
         'faq-info',
       ],
@@ -25,8 +25,8 @@ module.exports = {
       /* should collapse when we have lots of docs */
       collapsed: false,
       items: [
-        'quick-start-guide',
-        'free-idv-guide'
+        'acceptance-guide',
+        'issuance-guide'
       ],
     },
     {
@@ -77,12 +77,21 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Use Cases',
+      /* should collapse when we have lots of docs */
+      collapsed: false,
+      items: [
+        '1-click-or-free-use-case',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Demos',
       /* should change when we have lots of docs */
       collapsed: false,
       items: [
         // 'idv-demo',
-        'hooli-demo-idv',
+        'hooli-demo',
         'kredita-demo'
       ]
     },

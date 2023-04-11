@@ -1,6 +1,6 @@
 ---
 id: issuance-guide
-title: Free Identity Verification Guide
+title: Issuance Guide
 sidebar_label: Issuance Guide
 slug: /issuance-guide
 ---
@@ -16,9 +16,7 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-**[Unum ID](https://www.unumid.co)** enables 1-Click or Free ID Verification (IDV), powered by our digital ID cards. This particular guide only focuses on how and why to implement the Unum ID **Free IDV** solution.
-
-> This page serves as a more detailed walkthrough than what can be found in the [Quick Start Guide](/1-click-or-free-use-case) for how to implement and qualify for Free IDV with Unum ID.
+**[Unum ID](https://www.unumid.co)** enables issuers to provider their users with best in class onboarding with partners. This particular guide only focuses on how and why to become a <Tip type="brand">brand</Tip> that issues Unum ID <Tip type="credential">credentials</Tip>.
 
 :::tip
 You will need an API key and an email and/or phone for each user. Below is a valid API Key for your initial usage along with suggested test email and phone values.
@@ -36,7 +34,7 @@ test@example.com
 
 ## Motivations
 
-Unum ID is willing to cover your identity verification costs in order to create a truly win-win-win scenario for you, your partners, and your users. Simply put, you issue a digital ID card to any of your users (new or existing) with verified identity data, and we pay you for it. The core motivations for such an arrangement are multifaceted: 
+As a brand that issues credentials, Unum ID is willing to cover your identity verification costs in order to create a truly win-win-win scenario for you, your partners, and your users. Simply put, you issue a digital ID card to any of your users (new or existing) with verified identity data, and we pay you for it. The core motivations for such an arrangement are multifaceted: 
 
 1. **You get your identity verification costs covered** with any provider(s) of your choosing
 2. **You get a new revenue stream** when the user uses your verified data to onboard with [1-Click](https://www.unumid.co/1-click)
@@ -44,7 +42,7 @@ Unum ID is willing to cover your identity verification costs in order to create 
 4. **Unum ID gets more identity into the identity network**, which is why we are willing to subsidize your costs
 
 ## UX Strategies
-There are many user experiences that can be implemented to leverage the Free IDV offering. Below are just a few recommendations with an accompanying demo of each.
+There are many user experiences that can be implemented to seamlessly issue credentials to your users. Below are just a few recommendations with an accompanying demo of each.
 
 - Next User Sign In
 <details>
@@ -81,7 +79,7 @@ There are many user experiences that can be implemented to leverage the Free IDV
 
 ## Implementation
 
-The implementation goal is to **issue <Tip type="credential">credentials</Tip> to a user.** When you do, Unum ID will pay you according to your contract. The steps for completing the implementation are as follows:
+The implementation goal is to **issue <Tip type="credential">credentials</Tip> to a <Tip type="user">user</Tip>.** When you do, Unum ID will pay you according to your contract. The steps for completing the implementation are as follows:
 
 1. **Get user consent.** Ask the user if they want to activate their digital ID card (from your brand), and include Unum ID legal language:
 

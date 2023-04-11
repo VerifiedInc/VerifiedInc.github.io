@@ -1,4 +1,4 @@
-name: deployment
+name: preview-deployment
 
 on:
   push:

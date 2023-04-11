@@ -25,7 +25,7 @@ module.exports = {
       /* should collapse when we have lots of docs */
       collapsed: false,
       items: [
-        '1-click-or-free-use-case',
+        'acceptance-guide',
         'issuance-guide'
       ],
     },

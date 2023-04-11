@@ -1,0 +1,132 @@
+---
+id: acceptance-guide
+title: Acceptance Guide
+sidebar_label: Acceptance Guide
+slug: /acceptance-guide
+---
+
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+**Time to read:** 5 min
+
+**Time to implement:** 30 - 60 min
+
+## Overview
+
+**[Unum ID](https://www.unumid.co)** enables brands to provider their users with best in class onboarding. This particular guide focuses on how and why to become a <Tip type="brand">brand</Tip> that accepts Unum ID <Tip type="credential">credentials</Tip>.
+
+> By accepting credentials your brand can unlock 1-Click on boarding. Please see the Use Case [section](/1-click-or-free-use-case) for more information.
+
+:::tip
+You will need an API key and an email and/or phone for each user. Below is a valid API Key for your initial usage along with suggested test email and phone values.
+
+```json title="Sandbox API Key"
+5YugDQgjPn2LG2xTAs/+c6Kfrf7Ie45PIGjJurP8vNk=
+```
+```json title="Sandbox User Email"
+test@example.com
+```
+```json title="Sandbox User Phone"
++10123456789
+```
+:::
+
+## Motivations
+
+As a brand that accepts credentials, you get the following benefits:
+
+1. **Potential for 1-click onboarding**
+2. 
+3. 
+4. 
+
+## UX Strategies
+The check to see if the user has credentials that you can accept can happen fully in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at an opportune time. If the response is contains `match: true` then you will redirect to the Unum ID Wallet. The demo below demonstrates an example UX.
+
+  <details>
+    <summary>Demo Accepting Credentials</summary>
+    <p>
+      This demo shows Kredita accepting credentials in order to gain 1-Click IDV capabilities when it's available. They collect email and phone from the user (Richard) and check if the user has matching credentials. The user does, so Kredita lets them verify with 1-Click.
+    </p>
+    <iframe src="https://marvelapp.com/prototype/9cab6ai?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
+  </details>
+
+## Implementation
+
+**You need to check whether the user has matching <Tip type="credential">credentials</Tip>.** If they do, 1-Click IDV is available.
+
+1. **Call [`/hasMatchingCredentials`](/api-overview/#check-user-credentials)** with the user's email and/or phone and the credential type(s) you need.
+
+  ```typescript title="Example Response Body"
+  {
+      "match": true,
+      "url": "https://wallet-beta.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb"
+  }
+  ```
+
+  <details>
+    <summary>What counts as a match?</summary>
+    <p>
+      When you call <code>/hasMatchingCredentials</code>, you include one or more credential requests. For each credential requests, you specify:
+      <ul>
+        <li>
+          the type
+        </li>
+        <li>
+          (optional) which issuers are acceptable
+        </li>
+        <li>
+          (optional) whether the credential is required
+        </li>
+      </ul>
+    </p>
+    <p>
+      There's a match if, for each credential request for a required credential, the user has a credential of the correct type from an acceptable issuer.
+    </p>
+  </details>
+    
+  The user will either have matching credentials, or they won't. If they do, continue to step (2). If they don't, you're done with Unum ID and should take the user through your existing verification flow. <i>If you would like your existing verification flow verification costs to be covered, please look into issuing credentials. More information can be found in the 1-Click or Free Use Case [section](/1-click-or-free-use-case).</i>
+
+
+2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Unum ID web wallet. For example the final url you need to redirect the user to is:
+
+  ```text title="Example Redirect to Unum ID Wallet URL"
+  https://wallet-beta.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?redirectUrl=https://acme-bank.co/sign-up/complete
+  ```
+
+3. **Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined in step (2). To continue the example in step (2), the final url the user will be redirected to will be something like this:
+
+  ```text title="Example Redirect Back to Acme Bank URL"
+  https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9458-057125eb417d
+  ````
+
+4. **Call `/sharedCredentials/{uuid}`** from your backend with the `sharedCredentialsUuid` the callback URL contains. The response body will contain the credentials the user agreed to share via 1-Click IDV.
+
+  ```typescript title="Example Response Body"
+  {
+      "uuid": string // the sharedCredentialsUuid
+      "credentials": [{
+          "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
+          "type": "SsnCredential",
+          "data": {
+              "ssn": "111-22-3333"
+          },
+          "issuanceDate": "1671847264479",
+          "expirationDate": "1871839024044",
+          "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+      }],
+      // user's email from input to /hasMatchingCredentials
+      // only present if email was provided
+      "email"?: string,
+      // user's phone from input to /hasMatchingCredentials
+      // only present if email was provided 
+      "phone"?: string
+  }
+  ```
+
+It's easiest to extract the data from each credential using the corresponding [schema](/schema). The extracted data is verified according to the issuer of the credential, but you can perform additional verification steps if you like.
+
+✅ **_You're done!_**

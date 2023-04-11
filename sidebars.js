@@ -31,15 +31,6 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Use Cases',
-      /* should collapse when we have lots of docs */
-      collapsed: false,
-      items: [
-        '1-click-or-free-use-case',
-      ],
-    },
-    {
-      type: 'category',
       label: 'Components',
       /* should collapse when we have lots of docs */
       collapsed: false,
@@ -82,6 +73,15 @@ module.exports = {
         //     'web-sdk-react'
         //   ]
         // }
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Use Cases',
+      /* should collapse when we have lots of docs */
+      collapsed: false,
+      items: [
+        '1-click-or-free-use-case',
       ],
     },
     {

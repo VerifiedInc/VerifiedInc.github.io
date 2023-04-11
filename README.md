@@ -46,7 +46,7 @@ This command generates static content into the `build` directory and can be serv
 
 ### Deployment
 
-**Important:** Publishing to `mastacker` will publish to [docs.unumid.co](https://docs.unumid.co/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
+**Important:** Publishing to `master` will publish to [docs.unumid.co](https://docs.unumid.co/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
 
 ```console
 GIT_USER=<Your GitHub username> DEPLOYMENT_BRANCH=private USE_SSH=true yarn deploy

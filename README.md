@@ -46,7 +46,7 @@ This command generates static content into the `build` directory and can be serv
 
 ### Deployment
 
-**Important:** Publishing to `mastacker` will publish to [docs.unumid.co](https://docs.unumid.co/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
+**Important:** Publishing to `master` will publish to [docs.unumid.co](https://docs.unumid.co/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
 
 ```console
 GIT_USER=<Your GitHub username> DEPLOYMENT_BRANCH=private USE_SSH=true yarn deploy
@@ -54,9 +54,20 @@ GIT_USER=<Your GitHub username> DEPLOYMENT_BRANCH=private USE_SSH=true yarn depl
 
 However, you should **not** deploy from your local machine. There is now a CI job using Github Actions which will auto deploy when a tag with a preceding `v` is pushed to any branch. By convention we have been using the `dev` branch as the source of truth. That said, `v` tags should really only be pushed to `dev` branch. This triggers a "build" version of the docs that is auto committed to the `master` branch.
 
-It is also preferred if one could create an official Github release (also makes a tag) with a preceding `v` so that the Github Slack integration sends a message to the whole team letting them know that a docs release is happening. One can do this via the Github web UI or via the CLI with the `gh` [cli tool](https://cli.github.com/manual/gh_release_create), `gh release create <tag> [<files>...]`. For example, `gh release create v1.0.0 -n "Initial documentation release v1.0.0"`, will add the tag and release on the repo's main branch, `dev`, and trigger a release which is an automatic compiled commit from the Action CI job to the `master` branch.
+It is also preferred if one could create an official Github release (also makes a tag) with a preceding `v` so that the Github Slack integration sends a message to the whole team letting them know that a docs release is happening. One can do this via the Github web UI or via the CLI with the `gh` [cli tool](https://cli.github.com/manual/gh_release_create), `gh release create <tag> [<files>...]`. For example, `gh release create v1.0.0 -n "Initial documentation release v1.0.0"`, will add the tag and release on the repo's main branch, `dev`, and trigger a release which is an automatic compiled commit from the Action CI job to the `master` branch. This GitHub actions configuration can be found in the [deploy.yaml](.github/workflows/deploy.yaml) file. 
 
 **TL;DR never commit directly to master and create Github releases with preceding `v`, i.e. `v1.3.2`, only to `dev` branch.**
+
+#### Preview Deployment
+It may be the case that you would like to get other's approval or input prior to releasing the docs publicly via the deployment method above. While pulling this project from that branch in question and running locally is still probably the best way members of the business team, for example, can not do that. To handle this case, we have setup a "preview" deployment via Github Actions which is trigger with a git tag in the format `preview-v*.*.*`. This GitHub actions configuration can be found in the [preview.yaml](.github/workflows/preview.yaml) file. 
+
+It publishes to the `preview` branch which should be consider akin to `master` and never pushed directly to. It would be recommend to push the preview tag from your feature branch. 
+
+**Please only push preview tags, no need to create full blown Github releases for these previews**.
+
+For example, if one would like feedback from the business team regarding changes on the `feat/guides` branch then push a `preview-v2.4.0` tag to that branch. This will trigger the preview deployment job which publishes to the `preview` branch. 
+
+[Netlify](https://app.netlify.com/sites/resilient-capybara-2fa074/settings/general) is being used for this deployment. Credentials via the shared devops@unumid.co email account can be found in 1Password. It deploys to the generic url, https://resilient-capybara-2fa074.netlify.app/. We very easily could deploy to a custom domain if we ever want to share "beta" docs with friendly parties.
 
 ## GitHub Pages
 

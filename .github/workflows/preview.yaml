@@ -37,7 +37,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.GH_PAGES_DEPLOY }}
       
-      - name: Release to GitHub Pages
+      - name: Deploy preview via Netlify
         env:
           USE_SSH: true
           DEPLOYMENT_BRANCH: preview

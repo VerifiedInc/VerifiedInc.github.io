@@ -52,11 +52,19 @@ In brief: As an acceptor in the Unum ID network, you will…
 The check to see if the user has credentials that you can accept can happen fully in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at an opportune time. If the response is contains `match`: `true` then you will redirect to the Unum ID Wallet. The demo below demonstrates an example UX.
 
   <details>
-    <summary>Demo Accepting Credentials</summary>
+    <summary>Demo Kredita Accepting Credentials</summary>
     <p>
-      This demo shows Kredita accepting credentials in order to gain 1-Click IDV capabilities when it's available. They collect email and phone from the user (Richard) and check if the user has matching credentials. The user does, so Kredita lets them verify with 1-Click.
+      This demo shows Kredita accepting Hooli credentials in order to gain 1-Click IDV capabilities when it's available. They collect email and phone from the user (Richard) and check if the user has matching credentials. The user does, so Kredita lets them verify with 1-Click.
     </p>
     <iframe src="https://marvelapp.com/prototype/9cab6ai?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
+  </details>
+
+  <details>
+    <summary>Demo Lendtable Accepting Credentials via Partner Dashboard</summary>
+    <p>
+      This demo shows Lendtable accepting their partner, Hooli, credentials in order to gain 1-Click IDV capabilities. In this case Hooli can issue the credential in an on-demand fashion when the user clicks the button to redeem the Lendtable offer in the Hooli dashboard. This would ensure the user has the necessary credentials, so Lendtable can verify with 1-Click.
+    </p>
+    <iframe src="https://marvelapp.com/prototype/1952a259?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
   </details>
 
 ## Implementation

@@ -36,7 +36,17 @@ test@example.com
 
 ## Motivations
 
-As a brand that accepts credentials, you get the benefit of potential for 1-Click onboarding. This drastically decreases the drop off rate during customer sign up and makes for a far better first touch experience for your new users.
+As a brand that accepts digital ID cards, you can unlock 1-Click onboarding. This drastically decreases the abandonment rate during customer sign up and makes for a far better first touch experience for your new users.
+
+Crucially, you will dramatically improve the experience for any user enabled with a digital ID card without changing the experience for any user without one. And because Unum ID sits on top of your existing onboarding process, you don’t need to change any existing security or compliance vendors or procedures.
+
+Once you join, our team will identify opportunities to promote your brand within our network for 1-click conversions. These can be in-app offers, marketing emails, or similar promotions to drive users to your brand from complementary services.
+
+In brief: As an acceptor in the Unum ID network, you will…
+- Dramatically improve onboarding conversion.
+- Delight users with a 1-click setup.
+- Join a network of companies to help you grow faster.
+
 
 ## UX Strategies
 The check to see if the user has credentials that you can accept can happen fully in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at an opportune time. If the response is contains `match`: `true` then you will redirect to the Unum ID Wallet. The demo below demonstrates an example UX.
@@ -65,7 +75,7 @@ The check to see if the user has credentials that you can accept can happen full
 <details>
   <summary>What counts as a match?</summary>
   <p>
-    When you call <code>/hasMatchingCredentials</code>, you include one or more credential requests. For each credential requests, you specify:
+    When you call <code>/hasMatchingCredentials</code>, you include one or more credential requests. For each credential request, you specify:
     <ul>
       <li>
         the type

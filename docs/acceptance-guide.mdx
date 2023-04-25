@@ -76,7 +76,7 @@ The check to see if the user has credentials that you can accept can happen full
 ```typescript title="Example Response Body"
 {
     "match": true,
-    "url": "https://wallet-beta.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb"
+    "url": "https://wallet-beta.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789"
 }
 ```
 
@@ -110,7 +110,7 @@ If you would like your existing verification flow verification costs to be cover
 2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Unum ID web wallet. For example the final url you need to redirect the user to is:
 
 ```text title="Example Redirect to Unum ID Wallet URL"
-https://wallet-beta.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?redirectUrl=https://acme-bank.co/sign-up/complete
+https://wallet-beta.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789&redirectUrl=https://acme-bank.co/sign-up/complete
 ```
 
 3. **Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined in step (2). To continue the example in step (2), the final url the user will be redirected to will be something like this:

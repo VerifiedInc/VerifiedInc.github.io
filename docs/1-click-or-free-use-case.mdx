@@ -75,10 +75,6 @@ You can implement any of the following:
 
   _If we don't have a schema that suits your needs, [email us](mailto:support@unumid.co) and we'll make one for you._
 
-  :::caution
-  **When issuing credentials, you must only use an email or phone that you've verified.** This is to ensure that only the controller of that email or phone can access the credentials you issue to them.
-  :::
-
   For example, if you have a verified Social Security Number (SSN) for a user, you can issue them a `SsnCredential`. Just call the `/credentials` endpoint with the user's email and/or phone, the `SsnCredential` type, and the SSN data:
 
   ```json title="Example Issue Credentials Request Body"
@@ -287,10 +283,6 @@ You can implement any of the following:
   3. **Call [`/credentials`](/api-overview#issue-credentials)** from your backend with the user's verified email and/or phone and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [schemas](/schema). 
 
   _If we don't have a schema that suits your needs, [email us](mailto:support@unumid.co) and we'll make one for you._
-
-  :::caution
-  **When issuing credentials, you must only use an email or phone that you've verified.** This is to ensure that only the controller of that email or phone can access the credentials you issue to them.
-  :::
 
   For example, if you have a verified Social Security Number (SSN) for a user, you can issue them a `SsnCredential` to their verified phone. Just call the `/credentials` endpoint with the user's verified email and/or phone, the `SsnCredential` type, and the SSN data:
 

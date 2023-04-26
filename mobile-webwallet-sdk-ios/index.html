@@ -4,26 +4,26 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v2.3.1">
 <title data-rh="true">Mobile WebWallet SDK - iOS | Unum ID Docs</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.unumid.co/mobile-webwallet-sdk-ios"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Mobile WebWallet SDK - iOS | Unum ID Docs"><meta data-rh="true" name="description" content="Docs for the Android WebWallet SDK are here."><meta data-rh="true" property="og:description" content="Docs for the Android WebWallet SDK are here."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.unumid.co/mobile-webwallet-sdk-ios"><link data-rh="true" rel="alternate" href="https://docs.unumid.co/mobile-webwallet-sdk-ios" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.unumid.co/mobile-webwallet-sdk-ios" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.35cc3bc4.css">
-<link rel="preload" href="/assets/js/runtime~main.3af40f19.js" as="script">
+<link rel="preload" href="/assets/js/runtime~main.d9c0cdc1.js" as="script">
 <link rel="preload" href="/assets/js/main.768387ca.js" as="script">
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){var t=null;try{t=localStorage.getItem("theme")}catch(t){}return t}();t(null!==e?e:"light")}()</script><div id="__docusaurus">
 <div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo.png" alt="Unum ID Logo" class="themedImage_ToTc themedImage--light_HNdA"><img src="/img/logo_dark.png" alt="Unum ID Logo" class="themedImage_ToTc themedImage--dark_i4oU"></div><b class="navbar__title text--truncate">Docs</b></a></div><div class="navbar__items navbar__items--right"><a href="https://www.unumid.co" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Home</a><a href="https://github.com/UnumID" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub</a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="searchBox_ZlJk"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0 docsWrapper_BCFX"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docPage__5DB"><main class="docMainContainer_gTbr docMainContainerEnhanced_Uz_u"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Mobile WebWallet SDK - iOS</h1></header><p><em>Docs for the Android WebWallet SDK are <a href="/mobile-webwallet-sdk-android">here</a>.</em></p><p>This is a lightweight, fully native SDK that allows a host app to perform web wallet authentication functionality in a in-app browser. It works with both UIKit and SwiftUI native apps.</p><p><strong>Before you begin:</strong> You need to be registered as Unum ID customer to use this SDK.</p><div class="theme-admonition theme-admonition-note alert alert--secondary admonition_LlT9"><div class="admonitionHeading_tbUL"><span class="admonitionIcon_kALy"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_S0QG"><p>An example project using this SDK can be found <a href="https://github.com/UnumID/UnumIDWebWallet-iOS" target="_blank" rel="noopener noreferrer">here</a>. This serves as a useful technical reference.</p></div></div><h2 class="anchor anchorWithStickyNavbar_LWe7" id="overview">Overview<a href="#overview" class="hash-link" aria-label="Direct link to Overview" title="Direct link to Overview">​</a></h2><h3 class="anchor anchorWithStickyNavbar_LWe7" id="minimum-requirements">Minimum Requirements<a href="#minimum-requirements" class="hash-link" aria-label="Direct link to Minimum Requirements" title="Direct link to Minimum Requirements">​</a></h3><ul><li><strong>iOS 13.0 and above</strong></li></ul><h3 class="anchor anchorWithStickyNavbar_LWe7" id="integration-instructions">Integration Instructions<a href="#integration-instructions" class="hash-link" aria-label="Direct link to Integration Instructions" title="Direct link to Integration Instructions">​</a></h3><p>Add the SDK to your project
-Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</code></p><div class="language-ruby codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-ruby codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">source &#x27;https://github.com/CocoaPods/Specs.git&#x27;</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">target &#x27;YourApp&#x27; do</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  use_frameworks!</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  pod &#x27;UnumIDWebWallet&#x27;</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">end</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><p>Then to import the framework, all you have to do is:</p><div class="language-swift codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-swift codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token keyword" style="font-style:italic">import</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UnumIDWebWallet</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="performing-user-did-association">Performing User DID Association<a href="#performing-user-did-association" class="hash-link" aria-label="Direct link to Performing User DID Association" title="Direct link to Performing User DID Association">​</a></h3><p>More details on the <span class="__react_component_tooltip te2d40a5d-93e6-4936-baf5-b3e2bbd522e5 place-top type-dark allow_hover" id="c24a8e3e-b993-4b18-95b8-9223c04d83c7" data-id="tooltip"><style aria-hidden="true">
-  	.te2d40a5d-93e6-4936-baf5-b3e2bbd522e5 {
+Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</code></p><div class="language-ruby codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-ruby codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">source &#x27;https://github.com/CocoaPods/Specs.git&#x27;</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">target &#x27;YourApp&#x27; do</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  use_frameworks!</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  pod &#x27;UnumIDWebWallet&#x27;</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">end</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><p>Then to import the framework, all you have to do is:</p><div class="language-swift codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-swift codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token keyword" style="font-style:italic">import</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UnumIDWebWallet</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="performing-user-did-association">Performing User DID Association<a href="#performing-user-did-association" class="hash-link" aria-label="Direct link to Performing User DID Association" title="Direct link to Performing User DID Association">​</a></h3><p>More details on the <span class="__react_component_tooltip t91f000d6-2578-49e6-991d-79f23be6b943 place-top type-dark allow_hover" id="7bfcabdc-cb82-409c-b07a-c3cf2b38d325" data-id="tooltip"><style aria-hidden="true">
+  	.t91f000d6-2578-49e6-991d-79f23be6b943 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.te2d40a5d-93e6-4936-baf5-b3e2bbd522e5.place-top {
+  	.t91f000d6-2578-49e6-991d-79f23be6b943.place-top {
         margin-top: -10px;
     }
-    .te2d40a5d-93e6-4936-baf5-b3e2bbd522e5.place-top::before {
+    .t91f000d6-2578-49e6-991d-79f23be6b943.place-top::before {
         border-top: 8px solid transparent;
     }
-    .te2d40a5d-93e6-4936-baf5-b3e2bbd522e5.place-top::after {
+    .t91f000d6-2578-49e6-991d-79f23be6b943.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -34,13 +34,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-top-width: 6px;
     }
 
-    .te2d40a5d-93e6-4936-baf5-b3e2bbd522e5.place-bottom {
+    .t91f000d6-2578-49e6-991d-79f23be6b943.place-bottom {
         margin-top: 10px;
     }
-    .te2d40a5d-93e6-4936-baf5-b3e2bbd522e5.place-bottom::before {
+    .t91f000d6-2578-49e6-991d-79f23be6b943.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .te2d40a5d-93e6-4936-baf5-b3e2bbd522e5.place-bottom::after {
+    .t91f000d6-2578-49e6-991d-79f23be6b943.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -51,13 +51,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-bottom-width: 6px;
     }
 
-    .te2d40a5d-93e6-4936-baf5-b3e2bbd522e5.place-left {
+    .t91f000d6-2578-49e6-991d-79f23be6b943.place-left {
         margin-left: -10px;
     }
-    .te2d40a5d-93e6-4936-baf5-b3e2bbd522e5.place-left::before {
+    .t91f000d6-2578-49e6-991d-79f23be6b943.place-left::before {
         border-left: 8px solid transparent;
     }
-    .te2d40a5d-93e6-4936-baf5-b3e2bbd522e5.place-left::after {
+    .t91f000d6-2578-49e6-991d-79f23be6b943.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -68,13 +68,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-left-width: 6px;
     }
 
-    .te2d40a5d-93e6-4936-baf5-b3e2bbd522e5.place-right {
+    .t91f000d6-2578-49e6-991d-79f23be6b943.place-right {
         margin-left: 10px;
     }
-    .te2d40a5d-93e6-4936-baf5-b3e2bbd522e5.place-right::before {
+    .t91f000d6-2578-49e6-991d-79f23be6b943.place-right::before {
         border-right: 8px solid transparent;
     }
-    .te2d40a5d-93e6-4936-baf5-b3e2bbd522e5.place-right::after {
+    .t91f000d6-2578-49e6-991d-79f23be6b943.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -84,20 +84,20 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style></span><u data-for="c24a8e3e-b993-4b18-95b8-9223c04d83c7"></u> (<code>did</code>) association process can be found <a href="https://docs.unumid.co/1-click-or-free-use-case#associate-users-with-dids" target="_blank" rel="noopener noreferrer">here</a>.</p><p>When a host application would like to link a user with existing <span class="__react_component_tooltip t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd place-top type-dark allow_hover" id="7b637fd3-ee25-447a-8422-00611a2f466f" data-id="tooltip"><style aria-hidden="true">
-  	.t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd {
+  </style></span><u data-for="7bfcabdc-cb82-409c-b07a-c3cf2b38d325"></u> (<code>did</code>) association process can be found <a href="https://docs.unumid.co/1-click-or-free-use-case#associate-users-with-dids" target="_blank" rel="noopener noreferrer">here</a>.</p><p>When a host application would like to link a user with existing <span class="__react_component_tooltip tba858b0f-bc78-43e9-8560-0af66cee46d7 place-top type-dark allow_hover" id="eadaa08b-5c13-46bb-9d1b-ff14db1156f5" data-id="tooltip"><style aria-hidden="true">
+  	.tba858b0f-bc78-43e9-8560-0af66cee46d7 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd.place-top {
+  	.tba858b0f-bc78-43e9-8560-0af66cee46d7.place-top {
         margin-top: -10px;
     }
-    .t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd.place-top::before {
+    .tba858b0f-bc78-43e9-8560-0af66cee46d7.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd.place-top::after {
+    .tba858b0f-bc78-43e9-8560-0af66cee46d7.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -108,13 +108,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-top-width: 6px;
     }
 
-    .t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd.place-bottom {
+    .tba858b0f-bc78-43e9-8560-0af66cee46d7.place-bottom {
         margin-top: 10px;
     }
-    .t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd.place-bottom::before {
+    .tba858b0f-bc78-43e9-8560-0af66cee46d7.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd.place-bottom::after {
+    .tba858b0f-bc78-43e9-8560-0af66cee46d7.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -125,13 +125,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-bottom-width: 6px;
     }
 
-    .t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd.place-left {
+    .tba858b0f-bc78-43e9-8560-0af66cee46d7.place-left {
         margin-left: -10px;
     }
-    .t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd.place-left::before {
+    .tba858b0f-bc78-43e9-8560-0af66cee46d7.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd.place-left::after {
+    .tba858b0f-bc78-43e9-8560-0af66cee46d7.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -142,13 +142,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-left-width: 6px;
     }
 
-    .t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd.place-right {
+    .tba858b0f-bc78-43e9-8560-0af66cee46d7.place-right {
         margin-left: 10px;
     }
-    .t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd.place-right::before {
+    .tba858b0f-bc78-43e9-8560-0af66cee46d7.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t12e0cfc9-a00b-4e9c-88b2-e78cc0f138fd.place-right::after {
+    .tba858b0f-bc78-43e9-8560-0af66cee46d7.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -158,20 +158,20 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company and can be requested by other network participants, gated by the user&#x27;s consent.</div><div class="Collapsible"><span id="collapsible-trigger-1681876428275" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1681876428275" role="button">+ More...</span><div id="collapsible-content-1681876428275" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1681876428275"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Lending issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="7b637fd3-ee25-447a-8422-00611a2f466f">credentials</u>, the user <span class="__react_component_tooltip t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e place-top type-dark allow_hover" id="059ac4e2-461e-4334-8679-a74ce592aa2e" data-id="tooltip"><style aria-hidden="true">
-  	.t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e {
+  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company and can be requested by other network participants, gated by the user&#x27;s consent.</div><div class="Collapsible"><span id="collapsible-trigger-1682487874577" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1682487874577" role="button">+ More...</span><div id="collapsible-content-1682487874577" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1682487874577"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Lending issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.</div></div></div></div></span><u data-tip="true" data-for="eadaa08b-5c13-46bb-9d1b-ff14db1156f5">credentials</u>, the user <span class="__react_component_tooltip t95b58097-3b00-4fba-af08-30ea7f468154 place-top type-dark allow_hover" id="2e62c7fb-91c8-40f0-8361-7ab244e6b78f" data-id="tooltip"><style aria-hidden="true">
+  	.t95b58097-3b00-4fba-af08-30ea7f468154 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e.place-top {
+  	.t95b58097-3b00-4fba-af08-30ea7f468154.place-top {
         margin-top: -10px;
     }
-    .t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e.place-top::before {
+    .t95b58097-3b00-4fba-af08-30ea7f468154.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e.place-top::after {
+    .t95b58097-3b00-4fba-af08-30ea7f468154.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -182,13 +182,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-top-width: 6px;
     }
 
-    .t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e.place-bottom {
+    .t95b58097-3b00-4fba-af08-30ea7f468154.place-bottom {
         margin-top: 10px;
     }
-    .t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e.place-bottom::before {
+    .t95b58097-3b00-4fba-af08-30ea7f468154.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e.place-bottom::after {
+    .t95b58097-3b00-4fba-af08-30ea7f468154.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -199,13 +199,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-bottom-width: 6px;
     }
 
-    .t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e.place-left {
+    .t95b58097-3b00-4fba-af08-30ea7f468154.place-left {
         margin-left: -10px;
     }
-    .t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e.place-left::before {
+    .t95b58097-3b00-4fba-af08-30ea7f468154.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e.place-left::after {
+    .t95b58097-3b00-4fba-af08-30ea7f468154.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -216,13 +216,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-left-width: 6px;
     }
 
-    .t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e.place-right {
+    .t95b58097-3b00-4fba-af08-30ea7f468154.place-right {
         margin-left: 10px;
     }
-    .t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e.place-right::before {
+    .t95b58097-3b00-4fba-af08-30ea7f468154.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t6a7b2f46-924a-47ba-9cdd-5b5ed496e60e.place-right::after {
+    .t95b58097-3b00-4fba-af08-30ea7f468154.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -232,20 +232,20 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style></span><u data-for="059ac4e2-461e-4334-8679-a74ce592aa2e"></u> (<code>did</code>) association flow can be kicked off. This will require the userCode and the <span class="__react_component_tooltip t53cfd8ab-743d-4543-beae-0fcc88106ad9 place-top type-dark allow_hover" id="b0743d3a-4cd1-4006-a170-80a0abb0c409" data-id="tooltip"><style aria-hidden="true">
-  	.t53cfd8ab-743d-4543-beae-0fcc88106ad9 {
+  </style></span><u data-for="2e62c7fb-91c8-40f0-8361-7ab244e6b78f"></u> (<code>did</code>) association flow can be kicked off. This will require the userCode and the <span class="__react_component_tooltip tf46023c7-324f-4cd0-9592-d68c65181f06 place-top type-dark allow_hover" id="901c3554-f3c5-435b-b4b9-a6832621aae3" data-id="tooltip"><style aria-hidden="true">
+  	.tf46023c7-324f-4cd0-9592-d68c65181f06 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t53cfd8ab-743d-4543-beae-0fcc88106ad9.place-top {
+  	.tf46023c7-324f-4cd0-9592-d68c65181f06.place-top {
         margin-top: -10px;
     }
-    .t53cfd8ab-743d-4543-beae-0fcc88106ad9.place-top::before {
+    .tf46023c7-324f-4cd0-9592-d68c65181f06.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t53cfd8ab-743d-4543-beae-0fcc88106ad9.place-top::after {
+    .tf46023c7-324f-4cd0-9592-d68c65181f06.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -256,13 +256,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-top-width: 6px;
     }
 
-    .t53cfd8ab-743d-4543-beae-0fcc88106ad9.place-bottom {
+    .tf46023c7-324f-4cd0-9592-d68c65181f06.place-bottom {
         margin-top: 10px;
     }
-    .t53cfd8ab-743d-4543-beae-0fcc88106ad9.place-bottom::before {
+    .tf46023c7-324f-4cd0-9592-d68c65181f06.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t53cfd8ab-743d-4543-beae-0fcc88106ad9.place-bottom::after {
+    .tf46023c7-324f-4cd0-9592-d68c65181f06.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -273,13 +273,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-bottom-width: 6px;
     }
 
-    .t53cfd8ab-743d-4543-beae-0fcc88106ad9.place-left {
+    .tf46023c7-324f-4cd0-9592-d68c65181f06.place-left {
         margin-left: -10px;
     }
-    .t53cfd8ab-743d-4543-beae-0fcc88106ad9.place-left::before {
+    .tf46023c7-324f-4cd0-9592-d68c65181f06.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t53cfd8ab-743d-4543-beae-0fcc88106ad9.place-left::after {
+    .tf46023c7-324f-4cd0-9592-d68c65181f06.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -290,13 +290,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-left-width: 6px;
     }
 
-    .t53cfd8ab-743d-4543-beae-0fcc88106ad9.place-right {
+    .tf46023c7-324f-4cd0-9592-d68c65181f06.place-right {
         margin-left: 10px;
     }
-    .t53cfd8ab-743d-4543-beae-0fcc88106ad9.place-right::before {
+    .tf46023c7-324f-4cd0-9592-d68c65181f06.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t53cfd8ab-743d-4543-beae-0fcc88106ad9.place-right::after {
+    .tf46023c7-324f-4cd0-9592-d68c65181f06.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -306,20 +306,20 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style></span><u data-for="b0743d3a-4cd1-4006-a170-80a0abb0c409">issuer</u> <span class="__react_component_tooltip t2f0a3738-88b7-4c20-bbaa-8e234249e962 place-top type-dark allow_hover" id="be04d8db-40a6-465c-9fb5-042b0a9f1a3d" data-id="tooltip"><style aria-hidden="true">
-  	.t2f0a3738-88b7-4c20-bbaa-8e234249e962 {
+  </style></span><u data-for="901c3554-f3c5-435b-b4b9-a6832621aae3">issuer</u> <span class="__react_component_tooltip ta377d5c1-c3b6-4897-b922-c40dc94cf1c9 place-top type-dark allow_hover" id="8c2ade1f-a7aa-42b1-bf65-29008986dcbb" data-id="tooltip"><style aria-hidden="true">
+  	.ta377d5c1-c3b6-4897-b922-c40dc94cf1c9 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t2f0a3738-88b7-4c20-bbaa-8e234249e962.place-top {
+  	.ta377d5c1-c3b6-4897-b922-c40dc94cf1c9.place-top {
         margin-top: -10px;
     }
-    .t2f0a3738-88b7-4c20-bbaa-8e234249e962.place-top::before {
+    .ta377d5c1-c3b6-4897-b922-c40dc94cf1c9.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t2f0a3738-88b7-4c20-bbaa-8e234249e962.place-top::after {
+    .ta377d5c1-c3b6-4897-b922-c40dc94cf1c9.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -330,13 +330,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-top-width: 6px;
     }
 
-    .t2f0a3738-88b7-4c20-bbaa-8e234249e962.place-bottom {
+    .ta377d5c1-c3b6-4897-b922-c40dc94cf1c9.place-bottom {
         margin-top: 10px;
     }
-    .t2f0a3738-88b7-4c20-bbaa-8e234249e962.place-bottom::before {
+    .ta377d5c1-c3b6-4897-b922-c40dc94cf1c9.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t2f0a3738-88b7-4c20-bbaa-8e234249e962.place-bottom::after {
+    .ta377d5c1-c3b6-4897-b922-c40dc94cf1c9.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -347,13 +347,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-bottom-width: 6px;
     }
 
-    .t2f0a3738-88b7-4c20-bbaa-8e234249e962.place-left {
+    .ta377d5c1-c3b6-4897-b922-c40dc94cf1c9.place-left {
         margin-left: -10px;
     }
-    .t2f0a3738-88b7-4c20-bbaa-8e234249e962.place-left::before {
+    .ta377d5c1-c3b6-4897-b922-c40dc94cf1c9.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t2f0a3738-88b7-4c20-bbaa-8e234249e962.place-left::after {
+    .ta377d5c1-c3b6-4897-b922-c40dc94cf1c9.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -364,13 +364,13 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-left-width: 6px;
     }
 
-    .t2f0a3738-88b7-4c20-bbaa-8e234249e962.place-right {
+    .ta377d5c1-c3b6-4897-b922-c40dc94cf1c9.place-right {
         margin-left: 10px;
     }
-    .t2f0a3738-88b7-4c20-bbaa-8e234249e962.place-right::before {
+    .ta377d5c1-c3b6-4897-b922-c40dc94cf1c9.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t2f0a3738-88b7-4c20-bbaa-8e234249e962.place-right::after {
+    .ta377d5c1-c3b6-4897-b922-c40dc94cf1c9.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -380,8 +380,8 @@ Cocoapods - Add the SDK to your <code>Podfile</code> and run <code>pod install</
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style></span><u data-for="be04d8db-40a6-465c-9fb5-042b0a9f1a3d"></u> (<code>did</code>) to be passed. An optional value for the user email can be passed to help prefill data. An optional value of a color can also be passed to help match the color of title bar with the app appearance.</p><div class="language-swift codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-swift codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">/**</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">Function for launching the web wallet and performing the user DID association flow.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="display:inline-block;color:rgb(105, 112, 152);font-style:italic"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter viewController UIViewController A provided view controller to launch the Web Wallet controller.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter parameters: Parameters Values used to setup the presentation.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter barTintColor: UIColor An optional value to set the color of the navigation bar.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter controlTintColor: UIColor An optional value to set the tint color of the controls.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter completion: (() -&gt; Void)? An option completion when the presentation is finished.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">*/</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token keyword" style="font-style:italic">public</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">static</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">func</span><span class="token plain"> </span><span class="token function-definition function" style="color:rgb(130, 170, 255)">associate</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    on viewController</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UIViewController</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    with parameters</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">Parameters</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    barTintColor</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UIColor</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token nil constant" style="color:rgb(130, 170, 255)">nil</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    controlTintColor</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UIColor</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token nil constant" style="color:rgb(130, 170, 255)">nil</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    completion</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">-&gt;</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">Void</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token nil constant" style="color:rgb(130, 170, 255)">nil</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="opening-a-web-wallet-web-auth-window">Opening a web wallet web auth window<a href="#opening-a-web-wallet-web-auth-window" class="hash-link" aria-label="Direct link to Opening a web wallet web auth window" title="Direct link to Opening a web wallet web auth window">​</a></h3><p>If the host app already has the full url required for showing the web wallet, the url can be passed to the WebWallet SDK to open the web wallet.  An optional value of a color can also be passed to help match the color of title bar with the app theme.</p><div class="language-swift codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-swift codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">/**</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">Function for launching a provided url in-app browser.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="display:inline-block;color:rgb(105, 112, 152);font-style:italic"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter url: URL The url to be launched.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter viewController: UIViewController A provided view controller to launch the Web Wallet controller.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter barTintColor: UIColor An optional value to set the color of the navigation bar.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter controlTintColor: UIColor An optional value to set the tint color of the controls.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter completion: (() -&gt; Void)? An option completion when the presentation is finished.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">*/</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token keyword" style="font-style:italic">public</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">static</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">func</span><span class="token plain"> </span><span class="token function-definition function" style="color:rgb(130, 170, 255)">launch</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    url</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token constant" style="color:rgb(130, 170, 255)">URL</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    on viewController</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UIViewController</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    barTintColor</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UIColor</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token nil constant" style="color:rgb(130, 170, 255)">nil</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    controlTintColor</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UIColor</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token nil constant" style="color:rgb(130, 170, 255)">nil</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    completion</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">-&gt;</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">Void</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token nil constant" style="color:rgb(130, 170, 255)">nil</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages navigation"></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#overview" class="table-of-contents__link toc-highlight">Overview</a><ul><li><a href="#minimum-requirements" class="table-of-contents__link toc-highlight">Minimum Requirements</a></li><li><a href="#integration-instructions" class="table-of-contents__link toc-highlight">Integration Instructions</a></li><li><a href="#performing-user-did-association" class="table-of-contents__link toc-highlight">Performing User DID Association</a></li><li><a href="#opening-a-web-wallet-web-auth-window" class="table-of-contents__link toc-highlight">Opening a web wallet web auth window</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Introduction</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/">About Unum ID</a></li><li class="footer__item"><a class="footer__link-item" href="/terminology">Terminology</a></li><li class="footer__item"><a class="footer__link-item" href="/architecture">Architecture</a></li><li class="footer__item"><a class="footer__link-item" href="/deployment-overview">Deployment Overview</a></li><li class="footer__item"><a class="footer__link-item" href="/1-click-or-free-use-case">Quick Start Guide</a></li><li class="footer__item"><a class="footer__link-item" href="/privacy-and-security">Privacy and Security</a></li></ul></div><div class="col footer__col"><div class="footer__title">Components</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/server-sdk">Server SDK</a></li><li class="footer__item"><a class="footer__link-item" href="/mobile-sdk-overview">Mobile SDK</a></li><li class="footer__item"><a class="footer__link-item" href="/web-sdk">Web SDK</a></li></ul></div><div class="col footer__col"><div class="footer__title">Demos</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/developer-demo">Developer Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/acme-demo">ACME Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/hooli-demo">Hooli Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/kredita-demo">Kredita Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/hooli-demo">Hooli Demo IDV</a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.Unum.ID" target="_blank" rel="noopener noreferrer" class="footer__link-item">Home<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://github.com/UnumID" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2023 Unum ID, Inc.</div></div></div></footer></div>
-<script src="/assets/js/runtime~main.3af40f19.js"></script>
+  </style></span><u data-for="8c2ade1f-a7aa-42b1-bf65-29008986dcbb"></u> (<code>did</code>) to be passed. An optional value for the user email can be passed to help prefill data. An optional value of a color can also be passed to help match the color of title bar with the app appearance.</p><div class="language-swift codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-swift codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">/**</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">Function for launching the web wallet and performing the user DID association flow.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="display:inline-block;color:rgb(105, 112, 152);font-style:italic"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter viewController UIViewController A provided view controller to launch the Web Wallet controller.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter parameters: Parameters Values used to setup the presentation.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter barTintColor: UIColor An optional value to set the color of the navigation bar.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter controlTintColor: UIColor An optional value to set the tint color of the controls.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter completion: (() -&gt; Void)? An option completion when the presentation is finished.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">*/</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token keyword" style="font-style:italic">public</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">static</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">func</span><span class="token plain"> </span><span class="token function-definition function" style="color:rgb(130, 170, 255)">associate</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    on viewController</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UIViewController</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    with parameters</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">Parameters</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    barTintColor</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UIColor</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token nil constant" style="color:rgb(130, 170, 255)">nil</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    controlTintColor</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UIColor</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token nil constant" style="color:rgb(130, 170, 255)">nil</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    completion</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">-&gt;</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">Void</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token nil constant" style="color:rgb(130, 170, 255)">nil</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><h3 class="anchor anchorWithStickyNavbar_LWe7" id="opening-a-web-wallet-web-auth-window">Opening a web wallet web auth window<a href="#opening-a-web-wallet-web-auth-window" class="hash-link" aria-label="Direct link to Opening a web wallet web auth window" title="Direct link to Opening a web wallet web auth window">​</a></h3><p>If the host app already has the full url required for showing the web wallet, the url can be passed to the WebWallet SDK to open the web wallet.  An optional value of a color can also be passed to help match the color of title bar with the app theme.</p><div class="language-swift codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-swift codeBlock_bY9V thin-scrollbar"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">/**</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">Function for launching a provided url in-app browser.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="display:inline-block;color:rgb(105, 112, 152);font-style:italic"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter url: URL The url to be launched.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter viewController: UIViewController A provided view controller to launch the Web Wallet controller.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter barTintColor: UIColor An optional value to set the color of the navigation bar.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter controlTintColor: UIColor An optional value to set the tint color of the controls.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">- parameter completion: (() -&gt; Void)? An option completion when the presentation is finished.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">*/</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token keyword" style="font-style:italic">public</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">static</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">func</span><span class="token plain"> </span><span class="token function-definition function" style="color:rgb(130, 170, 255)">launch</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    url</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token constant" style="color:rgb(130, 170, 255)">URL</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    on viewController</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UIViewController</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    barTintColor</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UIColor</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token nil constant" style="color:rgb(130, 170, 255)">nil</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    controlTintColor</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">UIColor</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token nil constant" style="color:rgb(130, 170, 255)">nil</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    completion</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">-&gt;</span><span class="token plain"> </span><span class="token class-name" style="color:rgb(255, 203, 107)">Void</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token operator" style="color:rgb(137, 221, 255)">?</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token nil constant" style="color:rgb(130, 170, 255)">nil</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg class="copyButtonIcon_y97N" viewBox="0 0 24 24"><path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg class="copyButtonSuccessIcon_LjdS" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages navigation"></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#overview" class="table-of-contents__link toc-highlight">Overview</a><ul><li><a href="#minimum-requirements" class="table-of-contents__link toc-highlight">Minimum Requirements</a></li><li><a href="#integration-instructions" class="table-of-contents__link toc-highlight">Integration Instructions</a></li><li><a href="#performing-user-did-association" class="table-of-contents__link toc-highlight">Performing User DID Association</a></li><li><a href="#opening-a-web-wallet-web-auth-window" class="table-of-contents__link toc-highlight">Opening a web wallet web auth window</a></li></ul></li></ul></div></div></div></div></main></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Introduction</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/">About Unum ID</a></li><li class="footer__item"><a class="footer__link-item" href="/terminology">Terminology</a></li><li class="footer__item"><a class="footer__link-item" href="/architecture">Architecture</a></li><li class="footer__item"><a class="footer__link-item" href="/deployment-overview">Deployment Overview</a></li><li class="footer__item"><a class="footer__link-item" href="/1-click-or-free-use-case">Quick Start Guide</a></li><li class="footer__item"><a class="footer__link-item" href="/privacy-and-security">Privacy and Security</a></li></ul></div><div class="col footer__col"><div class="footer__title">Components</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/server-sdk">Server SDK</a></li><li class="footer__item"><a class="footer__link-item" href="/mobile-sdk-overview">Mobile SDK</a></li><li class="footer__item"><a class="footer__link-item" href="/web-sdk">Web SDK</a></li></ul></div><div class="col footer__col"><div class="footer__title">Demos</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/developer-demo">Developer Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/acme-demo">ACME Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/hooli-demo">Hooli Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/kredita-demo">Kredita Demo</a></li><li class="footer__item"><a class="footer__link-item" href="/hooli-demo">Hooli Demo IDV</a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.Unum.ID" target="_blank" rel="noopener noreferrer" class="footer__link-item">Home<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://github.com/UnumID" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2023 Unum ID, Inc.</div></div></div></footer></div>
+<script src="/assets/js/runtime~main.d9c0cdc1.js"></script>
 <script src="/assets/js/main.768387ca.js"></script>
 </body>
 </html>

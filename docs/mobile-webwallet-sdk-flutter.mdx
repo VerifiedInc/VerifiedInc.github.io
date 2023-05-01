@@ -12,7 +12,7 @@ import Tip from '../src/components/Tip';
 
 This is a lightweight, fully native SDK that allows a host app to perform web wallet authentication functionality in a in-app browser. 
 
-**Before you begin:** You need to be registered as Unum ID customer to use this SDK.
+**Before you begin:** You need to be registered as Verified Inc customer to use this SDK.
 
 ## Overview
 
@@ -44,7 +44,7 @@ dependencies:
 
 ### SDK Initialization
 
-This function initializes the Unum ID SDK, allowing the host app to use it. It must be called before any other SDK functionality can be used. In most cases, it should be called when the application loads/comes to the foreground. Once onSuccess is returned, the developer will then be able to retrieve the saved did.
+This function initializes the Verified Inc SDK, allowing the host app to use it. It must be called before any other SDK functionality can be used. In most cases, it should be called when the application loads/comes to the foreground. Once onSuccess is returned, the developer will then be able to retrieve the saved did.
 
 ```dart
 import 'package:webwallet/webwallet.dart';
@@ -62,7 +62,7 @@ import 'package:webwallet/webwallet.dart';
             foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
           ),
           onPressed: () {
-            _webwalletPlugin.launchWebWallet(true, "userCode", "test@unumid.co", "issuerDid");
+            _webwalletPlugin.launchWebWallet(true, "userCode", "test@verified.inc", "issuerDid");
            },
           child: Text('Launch WebWallet')
         ),
@@ -102,7 +102,7 @@ class WebWalletWidget extends StatelessWidget {
                             MaterialStateProperty.all<Color>(Colors.blue),
                       ),
                       onPressed: () {
-                         _webwalletPlugin.launchWebWallet(true, "userCode", "test@unumid.co", "issuerDid");
+                         _webwalletPlugin.launchWebWallet(true, "userCode", "test@verified.inc", "issuerDid");
                       },
                       child: Text("${snapshot.data}"),
                     )));
@@ -203,7 +203,7 @@ You can easily pass parameters to launch the WebWallet from the code.
 ```
 
 :::note
-The technical details of DIDs are not relevant to deploying or using Unum ID. You can think of DIDs as identifiers in the normal sense — unique, random strings of characters like UUIDs.
+The technical details of DIDs are not relevant to deploying or using Verified Inc. You can think of DIDs as identifiers in the normal sense — unique, random strings of characters like UUIDs.
 :::
 
 When you [initialize](#initialize) the SDK, you can optionally include a DID.

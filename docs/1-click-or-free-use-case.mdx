@@ -28,7 +28,7 @@ test@example.com
 ```
 :::
 
-**[Unum ID](https://www.unumid.co)** enables 1-Click or Free ID Verification (IDV), powered by our digital ID cards. 
+**[Verified Inc](https://www.verified.inc)** enables 1-Click or Free ID Verification (IDV), powered by our digital ID cards. 
 
 You can implement any of the following:
 - **Free IDV Only:** You issue a digital ID card to any of your users (new or existing), and we pay you for it.
@@ -36,7 +36,7 @@ You can implement any of the following:
   <details>
     <summary>Demo of Free Only</summary>
     <p>
-      Richard is an existing, verified Hooli user. The next time he signs in, Hooli asks him if he wants to activate his Hooli digital ID card. When he clicks the Activate button, Hooli issues the card, and Unum ID reimburses Hooli for the cost of the identity verification performed by Hooli for Richard.
+      Richard is an existing, verified Hooli user. The next time he signs in, Hooli asks him if he wants to activate his Hooli digital ID card. When he clicks the Activate button, Hooli issues the card, and Verified Inc reimburses Hooli for the cost of the identity verification performed by Hooli for Richard.
     </p>
     <iframe src="https://marvelapp.com/prototype/1938729e/screen/90752160?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
   </details>
@@ -59,13 +59,13 @@ You can implement any of the following:
 
 <TabItem value="free" label="Free Only">
 
-  **You need to issue <Tip type="credential">credentials</Tip> to a user.** When you do, Unum ID will pay you according to your contract.
+  **You need to issue <Tip type="credential">credentials</Tip> to a user.** When you do, Verified Inc will pay you according to your contract.
 
-  1. **Get user consent.** Ask the user if they want to activate their digital ID card (from your brand), and include Unum ID legal language:
+  1. **Get user consent.** Ask the user if they want to activate their digital ID card (from your brand), and include Verified Inc legal language:
 
-  > By clicking the button below, you agree to Unum ID’s <a href="https://www.unumid.co/legal/terms-of-use">Terms of Use</a> and direct YOUR_COMPANY_NAME to share your personal information with Unum ID to provide its digital ID card services, in accordance with its <a href="https://www.unumid.co/legal/privacy-policy">Privacy Policy</a>.
+  > By clicking the button below, you agree to Verified Inc’s <a href="https://www.verified.inc/legal/terms-of-use">Terms of Use</a> and direct YOUR_COMPANY_NAME to share your personal information with Verified Inc to provide its digital ID card services, in accordance with its <a href="https://www.verified.inc/legal/privacy-policy">Privacy Policy</a>.
 
-  "Terms of Use" should be underlined or colored and hyperlinked to <a href="https://www.unumid.co/legal/terms-of-use">`https://www.unumid.co/legal/terms-of-use`</a>. "Privacy Policy" should be underlined or colored and hyperlinked to <a href="https://www.unumid.co/legal/privacy-policy">`https://www.unumid.co/legal/privacy-policy`</a>.
+  "Terms of Use" should be underlined or colored and hyperlinked to <a href="https://www.verified.inc/legal/terms-of-use">`https://www.verified.inc/legal/terms-of-use`</a>. "Privacy Policy" should be underlined or colored and hyperlinked to <a href="https://www.verified.inc/legal/privacy-policy">`https://www.verified.inc/legal/privacy-policy`</a>.
 
   :::info
   **You must obtain user consent before issuing credentials.** Not doing so violates our terms and will prevent us from paying you for issuing credentials. 
@@ -73,7 +73,7 @@ You can implement any of the following:
 
   2. **Call [`/credentials`](/api-overview#issue-credentials)** with the user's verified email and/or phone and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [schemas](/schema). 
 
-  _If we don't have a schema that suits your needs, [email us](mailto:support@unumid.co) and we'll make one for you._
+  _If we don't have a schema that suits your needs, [email us](mailto:support@verified.inc) and we'll make one for you._
 
   For example, if you have a verified Social Security Number (SSN) for a user, you can issue them a `SsnCredential`. Just call the `/credentials` endpoint with the user's email and/or phone, the `SsnCredential` type, and the SSN data:
 
@@ -140,11 +140,11 @@ You can implement any of the following:
     </p>
   </details>
     
-  The user will either have matching credentials, or they won't. If they do, continue to step (2). If they don't, you're done with Unum ID and should take the user through your existing verification flow. <i>If you would like your existing verification flow verification costs to be covered, please look into the <b>Both</b> section of this quick start, which includes both Free IDV and 1-Click IDV.</i>
+  The user will either have matching credentials, or they won't. If they do, continue to step (2). If they don't, you're done with Verified Inc and should take the user through your existing verification flow. <i>If you would like your existing verification flow verification costs to be covered, please look into the <b>Both</b> section of this quick start, which includes both Free IDV and 1-Click IDV.</i>
 
-  2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Unum ID web wallet. For example the final url you need to redirect the user to is:
+  2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Verified Inc web wallet. For example the final url you need to redirect the user to is:
 
-  ```text title="Example Redirect to Unum ID Wallet URL"
+  ```text title="Example Redirect to Verified Inc Wallet URL"
   https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?redirectUrl=https://acme-bank.co/sign-up/complete
   ```
 
@@ -190,7 +190,7 @@ You can implement any of the following:
 
   **You need to check whether the user has matching <Tip type="credential">credentials</Tip>.** If they do, 1-Click IDV is available.
 
-  **If they don't, you need to issue them credentials.** When you do, Unum ID will pay you according to your contract.
+  **If they don't, you need to issue them credentials.** When you do, Verified Inc will pay you according to your contract.
 
   1. **Call [`/hasMatchingCredentials`](/api-overview/#check-user-credentials)** with the user's email and/or phone and the credential type(s) you need.
 
@@ -227,9 +227,9 @@ You can implement any of the following:
 <Tabs defaultValue="no-match">
 <TabItem value="match" label="Match">
 
-  2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Unum ID web wallet. For example, the final url the user is redirected to is:
+  2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Verified Inc web wallet. For example, the final url the user is redirected to is:
 
-  ```text title="Example Redirect to Unum ID Wallet URL"
+  ```text title="Example Redirect to Verified Inc Wallet URL"
   https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789&redirectUrl=https://acme-bank.co/sign-up/complete
   ```
 
@@ -270,11 +270,11 @@ You can implement any of the following:
 </TabItem>
 <TabItem value="no-match" label="No Match">
 
-  1. **Get user consent.** Ask the user if they want to activate their digital ID card (from your brand), and include Unum ID legal language:
+  1. **Get user consent.** Ask the user if they want to activate their digital ID card (from your brand), and include Verified Inc legal language:
 
-  > By clicking the button below, you agree to Unum ID’s <a href="https://www.unumid.co/legal/terms-of-use">Terms of Use</a> and direct YOUR_COMPANY_NAME to share your personal information with Unum ID to provide its digital ID card services, in accordance with its <a href="https://www.unumid.co/legal/privacy-policy">Privacy Policy</a>.
+  > By clicking the button below, you agree to Verified Inc’s <a href="https://www.verified.inc/legal/terms-of-use">Terms of Use</a> and direct YOUR_COMPANY_NAME to share your personal information with Verified Inc to provide its digital ID card services, in accordance with its <a href="https://www.verified.inc/legal/privacy-policy">Privacy Policy</a>.
 
-  "Terms of Use" should be underlined or colored and hyperlinked to <a href="https://www.unumid.co/legal/terms-of-use">`https://www.unumid.co/legal/terms-of-use`</a>. "Privacy Policy" should be underlined or colored and hyperlinked to <a href="https://www.unumid.co/legal/privacy-policy">`https://www.unumid.co/legal/privacy-policy`</a>.
+  "Terms of Use" should be underlined or colored and hyperlinked to <a href="https://www.verified.inc/legal/terms-of-use">`https://www.verified.inc/legal/terms-of-use`</a>. "Privacy Policy" should be underlined or colored and hyperlinked to <a href="https://www.verified.inc/legal/privacy-policy">`https://www.verified.inc/legal/privacy-policy`</a>.
 
   :::info
   **You must obtain user consent before issuing credentials.** Not doing so violates our terms and will prevent us from paying you for issuing credentials. 
@@ -282,7 +282,7 @@ You can implement any of the following:
 
   3. **Call [`/credentials`](/api-overview#issue-credentials)** from your backend with the user's verified email and/or phone and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [schemas](/schema). 
 
-  _If we don't have a schema that suits your needs, [email us](mailto:support@unumid.co) and we'll make one for you._
+  _If we don't have a schema that suits your needs, [email us](mailto:support@verified.inc) and we'll make one for you._
 
   For example, if you have a verified Social Security Number (SSN) for a user, you can issue them a `SsnCredential` to their verified phone. Just call the `/credentials` endpoint with the user's verified email and/or phone, the `SsnCredential` type, and the SSN data:
 

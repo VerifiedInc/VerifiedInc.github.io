@@ -11,7 +11,7 @@ import Tip from '../src/components/Tip';
 **Before you begin:** You need to be registered as an Unum ID customer to create a brand API key. You can register zero to many brands, depending on your use case. For API keys to use for authentication please reach out to support@unumid.co. _Our self service dashboard is coming soon!_
 
 :::note
-Postman documentation of this API can be found [here](https://docs.api.unumid.co/).
+Postman documentation of this API can be found [here](https://api.docs.verified.inc/).
 :::
 
 ## Overview
@@ -31,7 +31,7 @@ Every request detailed below requires an Unum ID ApiKey as an Authorization Bear
 Upon the ApiKey creation you will receive one for each environment: Sandbox and Production. We encourage that all integration work be done against the Sandbox environment.
 
 The base url for the Sandbox API is `https://core-api.sandbox-unumid.co`.<br/>
-The base url for the Production API is `https://core-api.unumid.co`.
+The base url for the Production API is `https://core-api.verified.inc`.
 
 ## Functionality
 
@@ -56,7 +56,7 @@ You need to provide:
 
 1. credential request(s)
 
-A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.unumid.co/types/interfaces/credentialrequest.html) objects.
+A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects.
 
 ```typescript title="CredentialRequest"
 {

@@ -96,7 +96,7 @@ You can implement any of the following:
   }
   ```
 
-  Format the credential data according to the `properties` attribute of the credential schema. In this case, the schema is for a `SsnCredential` which can found found at [`https://schema.unumid.co/jsonSchema/SsnCredential`](https://schema.unumid.co/jsonSchema/SsnCredential). 
+  Format the credential data according to the `properties` attribute of the credential schema. In this case, the schema is for a `SsnCredential` which can found found at [`https://schema.verified.inc/jsonSchema/SsnCredential`](https://schema.verified.inc/jsonSchema/SsnCredential). 
 
   More information about credential schemas can be found in the [Schema](/schema) section.
 
@@ -115,7 +115,7 @@ You can implement any of the following:
     ```typescript title="Example Response Body"
     {
         "match": true,
-        "url": "https://wallet-beta.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb"
+        "url": "https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb"
     }
   ```
 
@@ -145,7 +145,7 @@ You can implement any of the following:
   2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Unum ID web wallet. For example the final url you need to redirect the user to is:
 
   ```text title="Example Redirect to Unum ID Wallet URL"
-  https://wallet-beta.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?redirectUrl=https://acme-bank.co/sign-up/complete
+  https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?redirectUrl=https://acme-bank.co/sign-up/complete
   ```
 
   3. **Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined in step (2). To continue the example in step (2), the final url the user will be redirected to will be something like this:
@@ -197,7 +197,7 @@ You can implement any of the following:
     ```typescript title="Example Response Body"
     {
         "match": true,
-        "url": "https://wallet-beta.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789"
+        "url": "https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789"
     }
   ```
 
@@ -230,7 +230,7 @@ You can implement any of the following:
   2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Unum ID web wallet. For example, the final url the user is redirected to is:
 
   ```text title="Example Redirect to Unum ID Wallet URL"
-  https://wallet-beta.unumid.co/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789&redirectUrl=https://acme-bank.co/sign-up/complete
+  https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789&redirectUrl=https://acme-bank.co/sign-up/complete
   ```
 
   3. **Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined in step (2). To continue the example in step (2), the final url the user will be redirected to will be something like this:
@@ -305,7 +305,7 @@ You can implement any of the following:
   }
   ```
 
-  Format the credential data according to the `properties` attribute of the credential schema. In this case, the schema is for a `SsnCredential` which can found found at [`https://schema.unumid.co/jsonSchema/SsnCredential`](https://schema.unumid.co/jsonSchema/SsnCredential). 
+  Format the credential data according to the `properties` attribute of the credential schema. In this case, the schema is for a `SsnCredential` which can found found at [`https://schema.verified.inc/jsonSchema/SsnCredential`](https://schema.verified.inc/jsonSchema/SsnCredential). 
 
   More information about credential schemas can be found in the [Schema](/schema) section.
 

@@ -13,7 +13,7 @@ This is a lightweight TypeScript SDK that lets your company act as one or more <
 **Before you begin:** Please read the [deployment overview](deployment-overview#server-sdk). You need to be registered as an Unum ID customer, and you need to register at least one issuer or verifier. (You can register zero to many of each, depending on your use case.) You'll receive issuer and verifier API keys to use with this SDK.
 
 :::note
-Auto generated SDK documentation can be found [here](https://docs.unumid.co/server-sdk-typescript/index.html). Similar documentation for object definitions can be found [here](https://docs.unumid.co/types/index.html). The auto generated documentation is more granular then this page, however less styled.
+Auto generated SDK documentation can be found [here](https://docs.verified.inc/server-sdk-typescript/index.html). Similar documentation for object definitions can be found [here](https://docs.verified.inc/types/index.html). The auto generated documentation is more granular then this page, however less styled.
 :::
 
 ## Overview
@@ -81,7 +81,7 @@ Jump to:
 
 As a customer, you can register as many issuers as you like (or none at all), depending on your use case. Note, however, that you'll need a unique issuer API key for each one.
 
-The optional [VersionInfo](https://docs.unumid.co/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how a <a href="/terminology#subject"><Tip type="subject"/></a>'s [CredentialRequests](https://docs.unumid.co/types/interfaces/subjectcredentialrequests.html) should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Unum ID [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used.
+The optional [VersionInfo](https://docs.verified.inc/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how a <a href="/terminology#subject"><Tip type="subject"/></a>'s [CredentialRequests](https://docs.verified.inc/types/interfaces/subjectcredentialrequests.html) should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Unum ID [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used.
 
 :::important
 You need to store the <Tip type="DID"/> (`did`) and values in encryption and signing key pairs (`keys`) object that this returns. You'll need these to issue credentials to users. 
@@ -98,7 +98,7 @@ The DID and public keys are nonsensitive, but **you should store the private key
 "versionInfo"?: VersionInfo[] // optional arrays of objects for how to contact specific versions of your issuer and subsequently the sever sdk. 
 ```
 
-#### Response Body: [`RegisteredIssuer`](https://docs.unumid.co/server-sdk-typescript/interfaces/registeredissuer.html)
+#### Response Body: [`RegisteredIssuer`](https://docs.verified.inc/server-sdk-typescript/interfaces/registeredissuer.html)
 ```typescript title="RegisteredIssuer"
 {
   "uuid": string, // identifies issuer in Unum ID database
@@ -181,7 +181,7 @@ The private key *never* leaves your server. The Server SDK only needs it to perf
 "issueCredentialsToSelf"?: boolean // (optional, defaults to true) whether to decline issuing credentials to self
 ```
 
-#### Response Body: [`Credential`](https://docs.unumid.co/types/interfaces/credentialpb.html) Array
+#### Response Body: [`Credential`](https://docs.verified.inc/types/interfaces/credentialpb.html) Array
 ```typescript title="Credential"
 [{
     "context": ["https://www.w3.org/2018/credentials/v1"], // for conformance with W3C Verifiable Credential spec
@@ -247,7 +247,7 @@ The private keys *never* leave your server. The Server SDK only needs it to perf
 "credentialTypes"?: string[], // (optional) list of credential types to re-encrypt (if not provided then all credentials for the subject are re-encrypted)
 ```
 
-#### Response Body: [`Credential`](https://docs.unumid.co/types/interfaces/credentialpb.html) Array
+#### Response Body: [`Credential`](https://docs.verified.inc/types/interfaces/credentialpb.html) Array
 ```typescript title="Credential"
 [{
     "context": ["https://www.w3.org/2018/credentials/v1"], // for conformance with W3C Verifiable Credential spec
@@ -341,7 +341,7 @@ interface HandleSubjectCredentialRequestsOptions {
 }
 ```
 
-#### Response Body: [`Credential`](https://docs.unumid.co/types/interfaces/credentialpb.html) Array
+#### Response Body: [`Credential`](https://docs.verified.inc/types/interfaces/credentialpb.html) Array
 ```typescript title="Credential"
 [{
     "context": ["https://www.w3.org/2018/credentials/v1"], // for conformance with W3C Verifiable Credential spec
@@ -371,7 +371,7 @@ interface HandleSubjectCredentialRequestsOptions {
 ### `updateCredentialStatuses`
 > Update a <Tip type="credential"/>'s status (i.e. make it invalid).
 
-You need to provide the credential id list, `credentialIds`, (which [`issueCredentials`](#issuecredentials) returns per <Tip type="credential">credential</Tip>) and a [CredentialStatusOptions](https://docs.unumid.co/types/modules.html#credentialstatusoptions) `status`. Currently there are only two valid statuses: "valid" and "revoked".
+You need to provide the credential id list, `credentialIds`, (which [`issueCredentials`](#issuecredentials) returns per <Tip type="credential">credential</Tip>) and a [CredentialStatusOptions](https://docs.verified.inc/types/modules.html#credentialstatusoptions) `status`. Currently there are only two valid statuses: "valid" and "revoked".
 
 :::note
 As noted in [`issueCredentials`](#issuecredentials), **we recommend storing at least the credential type along with the subject associated with it, if not each entire credential, indexed on their credential `id`.** If you *only* store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.
@@ -448,7 +448,7 @@ The main use case is for the `/userCredentialRequests` required Issuer endpoint 
 }
 ```
 
-#### Response Body: [`VerifiedStatus`](https://docs.unumid.co/server-sdk-typescript/interfaces/verifiedstatus.html)
+#### Response Body: [`VerifiedStatus`](https://docs.verified.inc/server-sdk-typescript/interfaces/verifiedstatus.html)
 ```typescript title="VerifiedStatus"
 {
   isVerified: boolean; // returns true if the signature of the DID is verified to be signed by the DID signing key
@@ -501,7 +501,7 @@ Despite this having "verify" in its name, this function serves Issuers in determ
 All parameters aside from the authToken ought to be provided verbatim via the specified OpenApi [/userCredentialRequests](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188) endpoint.
 :::
 
-#### Response Body: [`VerifiedStatus`](https://docs.unumid.co/server-sdk-typescript/interfaces/verifiedstatus.html)
+#### Response Body: [`VerifiedStatus`](https://docs.verified.inc/server-sdk-typescript/interfaces/verifiedstatus.html)
 ```typescript title="VerifiedStatus"
 {
   isVerified: boolean; // returns true if all requests are verified and validation requirements are met
@@ -530,7 +530,7 @@ Jump to:
 
 As a customer, you can register as many verifiers as you like (or none at all), depending on your use case. Note, however, that you'll need a unique verifier API key for each one.
 
-The optional [VersionInfo](https://docs.unumid.co/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how encrypted <a href="/terminology#presentation"><Tip type="presentation"/></a>s from Unum ID's SaaS, which originate from the Mobile SDK, should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Unum ID [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used. 
+The optional [VersionInfo](https://docs.verified.inc/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how encrypted <a href="/terminology#presentation"><Tip type="presentation"/></a>s from Unum ID's SaaS, which originate from the Mobile SDK, should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Unum ID [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used. 
 
 :::important
 You need to store the <Tip type="DID"/> (`did`) and values in encryption and signing key pairs (`keys`) object that this returns. You'll need these to make requests and verify presentations.
@@ -547,7 +547,7 @@ The DID and public keys are nonsensitive, but **you should store the private key
 "versionInfoList?": VersionInfo[] // optional versioning information of your application corresponding to various Unum ID Server SDK versions.
 ```
 
-#### Response Body: [`RegisteredVerifier`](https://docs.unumid.co/server-sdk-typescript/interfaces/registeredverifier.html)
+#### Response Body: [`RegisteredVerifier`](https://docs.verified.inc/server-sdk-typescript/interfaces/registeredverifier.html)
 ```typescript title="RegisteredVerifier"
 {
   "uuid": string, // identifies verifier in Unum ID database
@@ -589,7 +589,7 @@ You need to provide:
 
 The first two are returned by [`registerVerifier`](#registerverifier). The third (holder app UUID) identifies the mobile app users will share <Tip type="presentation">presentations</Tip> from. For example, Hooli FinTech might use the UUID for ACME Bank's mobile app, so the user is prompted to share a presentation from that app.
 
-The fourth (credential requests) encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.unumid.co/types/interfaces/credentialrequest.html) objects (defined in the [Unum ID generic types project](https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117)):
+The fourth (credential requests) encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects (defined in the [Unum ID generic types project](https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117)):
 
 ```typescript title="CredentialRequest"
 {
@@ -610,7 +610,7 @@ You can optionally provide:
 The private key *never* leaves your server. The Server SDK only needs it to perform cryptographic functions on your behalf.
 :::
 
-The response body consists of enriched information regarding entities referenced in the request. For example, the verifier's encryption and signing [PublicKeyInfo](https://docs.unumid.co/types/interfaces/publickeyinfo.html) is included to facilitate verifying the presentation request's signature and submitting and encrypted presentation in response.
+The response body consists of enriched information regarding entities referenced in the request. For example, the verifier's encryption and signing [PublicKeyInfo](https://docs.verified.inc/types/interfaces/publickeyinfo.html) is included to facilitate verifying the presentation request's signature and submitting and encrypted presentation in response.
 ```typescript title="PublicKeyInfo"
 {
     "id": string, // key id
@@ -634,7 +634,7 @@ The response body consists of enriched information regarding entities referenced
 "metadata"?: object // (optional) any additional data to include in PresentationRequest
 ```
 
-#### Response Body: [`PresentationRequestPostDto`](https://docs.unumid.co/types/interfaces/presentationrequestpostdto.html)
+#### Response Body: [`PresentationRequestPostDto`](https://docs.verified.inc/types/interfaces/presentationrequestpostdto.html)
 ```typescript title="PresentationRequestPostDto"
 {
   "presentationRequest": {
@@ -702,7 +702,7 @@ Unum ID *never* has access to sensitive data contained in presentations. The [Mo
 "presentationRequest"?: PresentationRequestDto // (optional) presentation request dto object to verify presentation credentials meet request requirements. This is an optional param to support the future use case of handling verifying presentations that are not in response to PresentationRequest
 ```
 
-#### Response Body: [`DecryptedPresentation`](https://docs.unumid.co/server-sdk-typescript/interfaces/decryptedpresentation.html)
+#### Response Body: [`DecryptedPresentation`](https://docs.verified.inc/server-sdk-typescript/interfaces/decryptedpresentation.html)
 ```typescript title="DecryptedPresentation"
 {
   "isVerified": boolean; // whether the presentation is valid
@@ -791,7 +791,7 @@ If unsuccessful, an exception will be thrown.
 ### `checkCredentialStatuses`
 Used to check the status of individual credentials. This done on the Verifier's behalf in [`verifyPresentation`](#verifypresentation), however exposing for extra utility.
 
-The `status` attribute of the response's [CredentialStatusInfo](https://docs.unumid.co/types/interfaces/credentialstatusinfo.html) is of type [CredentialStatusOptions](https://docs.unumid.co/types/modules.html#credentialstatusoptions). Currently the only valid status are: verified and revoked.
+The `status` attribute of the response's [CredentialStatusInfo](https://docs.verified.inc/types/interfaces/credentialstatusinfo.html) is of type [CredentialStatusOptions](https://docs.verified.inc/types/modules.html#credentialstatusoptions). Currently the only valid status are: verified and revoked.
 
 ```typescript title="CredentialStatusInfo"
 {
@@ -809,7 +809,7 @@ The `status` attribute of the response's [CredentialStatusInfo](https://docs.unu
 }
 ```
 
-#### Response Body: [`CredentialIdToStatusMap`](https://docs.unumid.co/types/interfaces/credentialidtostatusmap.html).
+#### Response Body: [`CredentialIdToStatusMap`](https://docs.verified.inc/types/interfaces/credentialidtostatusmap.html).
 ```typescript title="CredentialIdToStatusMap"
 {
   [credentialId: string]: CredentialStatusInfo;

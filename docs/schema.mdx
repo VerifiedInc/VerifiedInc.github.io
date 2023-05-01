@@ -18,14 +18,14 @@ We opted to format our data using W3C's [Linked Data](https://www.w3.org/standar
 JSON-LD is the serialization syntax used in the W3C's [Verifiable Credential](https://www.w3.org/TR/vc-data-model/#json-ld) and [Decentralized Identifier](https://www.w3.org/TR/did-core/#json-ld) recommendations, which our data network is modeled after.
 :::
 
-Our entire human readable JSON-LD [context](https://www.w3.org/TR/json-ld11/#the-context) semantics file can be download and viewed via https://schema.unumid.co/context. The context file serves as a building block for the basis of the shared vocabulary that ultimately makes up our credential data schemas. However, more than likely what you want to know is the schema for a particular credential type.
+Our entire human readable JSON-LD [context](https://www.w3.org/TR/json-ld11/#the-context) semantics file can be download and viewed via https://schema.verified.inc/context. The context file serves as a building block for the basis of the shared vocabulary that ultimately makes up our credential data schemas. However, more than likely what you want to know is the schema for a particular credential type.
 
-You can view all of the Unum ID defined credential schemas via https://schema.unumid.co/schema. If you want to know the schema for a particular credential type you can use that same url with the desired credential type in the path. (For example, https://schema.unumid.co/schema/EmailCredential.)
+You can view all of the Unum ID defined credential schemas via https://schema.verified.inc/schema. If you want to know the schema for a particular credential type you can use that same url with the desired credential type in the path. (For example, https://schema.verified.inc/schema/EmailCredential.)
 
 :::tip
-We have this API documented via our public [Postman collection](https://docs.api.unumid.co/) documentation under **Schema Resolver**.
+We have this API documented via our public [Postman collection](https://api.docs.verified.inc/) documentation under **Schema Resolver**.
 
-It is possible to view the response bodies from https://schema.unumid.co/schema in the browser, but we recommend Postman, which automatically formats the JSON response for human readability.
+It is possible to view the response bodies from https://schema.verified.inc/schema in the browser, but we recommend Postman, which automatically formats the JSON response for human readability.
 :::
 
 :::important
@@ -36,7 +36,7 @@ We currently are opting to only support what can be referred to as "single attri
 
 ## Example
 
-Below is code level example of how to comply with the schema definitions when issuing credentials. In this example we are following the [AddressCredential](https://schema.unumid.co/schema/AddressCredential) and [FullNameCredential](https://schema.unumid.co/schema/FullNameCredential) schemas.
+Below is code level example of how to comply with the schema definitions when issuing credentials. In this example we are following the [AddressCredential](https://schema.verified.inc/schema/AddressCredential) and [FullNameCredential](https://schema.verified.inc/schema/FullNameCredential) schemas.
 
 ```typescript
 /*The credential data compliant with the Address and FullName Credentials schemas*/

@@ -10,7 +10,7 @@ import Tip from '../src/components/Tip';
 
 This is a lightweight TypeScript SDK that lets your company act as one or more <Tip type="issuer">issuers</Tip> and/or <Tip  type="verifier">verifiers</Tip>.
 
-**Before you begin:** Please read the [deployment overview](deployment-overview#server-sdk). You need to be registered as an Verified Inc customer, and you need to register at least one issuer or verifier. (You can register zero to many of each, depending on your use case.) You'll receive issuer and verifier API keys to use with this SDK.
+**Before you begin:** Please read the [deployment overview](deployment-overview#server-sdk). You need to be registered as an Verified Inc. customer, and you need to register at least one issuer or verifier. (You can register zero to many of each, depending on your use case.) You'll receive issuer and verifier API keys to use with this SDK.
 
 :::note
 Auto generated SDK documentation can be found [here](https://docs.verified.inc/server-sdk-typescript/index.html). Similar documentation for object definitions can be found [here](https://docs.verified.inc/types/index.html). The auto generated documentation is more granular then this page, however less styled.
@@ -27,10 +27,10 @@ The Server SDK uses the `UnumDto` type to facilitate handling many response body
 ```
 
 ### Authentication
-Every request detailed below requires a JWT bearer `authToken` as a first parameter (aside from registration calls which require an entity scoped ApiKey). This is used to authenticate requests to the Verified Inc cloud. This auth token is updated on every subsequent function call and should be read via the `authToken` attribute and persisted accordingly for later requests. 
+Every request detailed below requires a JWT bearer `authToken` as a first parameter (aside from registration calls which require an entity scoped ApiKey). This is used to authenticate requests to the Verified Inc. cloud. This auth token is updated on every subsequent function call and should be read via the `authToken` attribute and persisted accordingly for later requests. 
 
 ### Errors
-Errors returned by the Verified Inc cloud will also be wrapped in the `UnumDto` object so that the potentially updated `authToken` can be retrieved. Validation errors, which are created prior to any calls to Verified Inc, will be of type `Error` and are thrown. Because in this case a network call is never made, there's no potential new `authToken` to pass back. For this reason, **we recommend wrapping all SDK calls in a try/catch.**
+Errors returned by the Verified Inc. cloud will also be wrapped in the `UnumDto` object so that the potentially updated `authToken` can be retrieved. Validation errors, which are created prior to any calls to Verified Inc., will be of type `Error` and are thrown. Because in this case a network call is never made, there's no potential new `authToken` to pass back. For this reason, **we recommend wrapping all SDK calls in a try/catch.**
 
 ### Distribution
 This project is open [source](https://github.com/UnumID/server-sdk-typescript) and publicly published on the official npm [registry](https://www.npmjs.com/package/@unumid/server-sdk). For example it can be pulled with: 
@@ -53,7 +53,7 @@ The following environment variables are required to be set to use the SDK proper
 - `LOG_LEVEL`
 
 #### UNUM_ENV
-One needs to provide the SDK the with an environment variable to denote its run time environment, i.e. `production`. For the Typescript SDK this done via the `UNUM_ENV` environment variable. The three relevant values are: `production`, `sandbox`, `dev`. You need to use one of these exactly in order for the SDK to communicate with Verified Inc's SaaS. The default value if nothing is supplied is `sandbox`.
+One needs to provide the SDK the with an environment variable to denote its run time environment, i.e. `production`. For the Typescript SDK this done via the `UNUM_ENV` environment variable. The three relevant values are: `production`, `sandbox`, `dev`. You need to use one of these exactly in order for the SDK to communicate with Verified Inc.'s SaaS. The default value if nothing is supplied is `sandbox`.
 
 #### UNUM_DEBUG
 The `UNUM_DEBUG` environment variable defaults to `false`. Setting to `true` enables logging of decrypted presentations at the `debug` level. Due to presentations containing potentially sensitive information it is *not* advised to use in a production environment. Note: the `LOG_LEVEL` environment variable also needs to be set to at least `debug` level in order to be visible.
@@ -81,7 +81,7 @@ Jump to:
 
 As a customer, you can register as many issuers as you like (or none at all), depending on your use case. Note, however, that you'll need a unique issuer API key for each one.
 
-The optional [VersionInfo](https://docs.verified.inc/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how a <a href="/terminology#subject"><Tip type="subject"/></a>'s [CredentialRequests](https://docs.verified.inc/types/interfaces/subjectcredentialrequests.html) should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Verified Inc [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used.
+The optional [VersionInfo](https://docs.verified.inc/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how a <a href="/terminology#subject"><Tip type="subject"/></a>'s [CredentialRequests](https://docs.verified.inc/types/interfaces/subjectcredentialrequests.html) should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Verified Inc. [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used.
 
 :::important
 You need to store the <Tip type="DID"/> (`did`) and values in encryption and signing key pairs (`keys`) object that this returns. You'll need these to issue credentials to users. 
@@ -101,11 +101,11 @@ The DID and public keys are nonsensitive, but **you should store the private key
 #### Response Body: [`RegisteredIssuer`](https://docs.verified.inc/server-sdk-typescript/interfaces/registeredissuer.html)
 ```typescript title="RegisteredIssuer"
 {
-  "uuid": string, // identifies issuer in Verified Inc database
-  "customerUuid": string, // identifies customer in Verified Inc database
+  "uuid": string, // identifies issuer in Verified Inc. database
+  "customerUuid": string, // identifies customer in Verified Inc. database
   /* To store: */
   // highlight-next-line
-  "did": string, // identifies issuer in Verified Inc ecosystem
+  "did": string, // identifies issuer in Verified Inc. ecosystem
   "name": string, // human-readable name for issuer. Displayed to users in mobile apps when verifiers request credentials. Comes from the name of the ApiKey used to register the Issuer.
   "createdAt": string, // when issuer was registered
   "updatedAt": string, // when issuer was last updated
@@ -461,11 +461,11 @@ The main use case is for the `/userCredentialRequests` required Issuer endpoint 
 ### `verifySubjectCredentialRequests`
 > Verify a <Tip type="subject"/>'s request for <Tip type="credential"/>s.
 
-You need to be able to receive these credential requests from Verified Inc and pass them to this function. To do this, you need to create a `/userCredentialRequests` endpoint that conforms to our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188). 
+You need to be able to receive these credential requests from Verified Inc. and pass them to this function. To do this, you need to create a `/userCredentialRequests` endpoint that conforms to our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/fd75b174b33ff0c5b4de87118cb11188). 
 
 Each request is cryptographically signed by the <Tip type="subject"/>'s private key. This function verifies the signatures are valid. Furthermore, it validates that all requests are from the same subject and that requested Issuer requirements are met. After which, your application code will need to evaluate wether it can issue the requested credentials. An example implementation can be found [here](https://github.com/UnumID/demo-issuer-server/blob/main/src/services/api/credentialRequest/credentialRequest.class.ts).
 
-The main use case of this to allow bootstrapping users that just installed the Verified Inc Wallet with credentials necessary to use across the network, i.e for instant sign ups with a partner. 
+The main use case of this to allow bootstrapping users that just installed the Verified Inc. Wallet with credentials necessary to use across the network, i.e for instant sign ups with a partner. 
 
 :::note
 Despite this having "verify" in its name, this function serves Issuers in determining whether a subject's request for credentials is valid. It is up to your application logic to determine whether you have the data relating to the the subject to issue the requested credentials.
@@ -530,7 +530,7 @@ Jump to:
 
 As a customer, you can register as many verifiers as you like (or none at all), depending on your use case. Note, however, that you'll need a unique verifier API key for each one.
 
-The optional [VersionInfo](https://docs.verified.inc/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how encrypted <a href="/terminology#presentation"><Tip type="presentation"/></a>s from Verified Inc's SaaS, which originate from the Mobile SDK, should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Verified Inc [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used. 
+The optional [VersionInfo](https://docs.verified.inc/types/interfaces/versioninfo.html) attribute is where request header requirements are defined in order to use your API. It is also useful for how encrypted <a href="/terminology#presentation"><Tip type="presentation"/></a>s from Verified Inc.'s SaaS, which originate from the Mobile SDK, should be routed to your application in order for the corresponding Server SDK version to preform verifications. This can be updated at later point from the Verified Inc. [dashboard](https://dashboard.sandbox-unum.id/#/login). If not supplied simply the `url` attribute will be used. 
 
 :::important
 You need to store the <Tip type="DID"/> (`did`) and values in encryption and signing key pairs (`keys`) object that this returns. You'll need these to make requests and verify presentations.
@@ -544,17 +544,17 @@ The DID and public keys are nonsensitive, but **you should store the private key
 ```typescript
 "url": string, // the base url of which UnumID's SaaS will interface with
 "apiKey": string // your verifier API key
-"versionInfoList?": VersionInfo[] // optional versioning information of your application corresponding to various Verified Inc Server SDK versions.
+"versionInfoList?": VersionInfo[] // optional versioning information of your application corresponding to various Verified Inc. Server SDK versions.
 ```
 
 #### Response Body: [`RegisteredVerifier`](https://docs.verified.inc/server-sdk-typescript/interfaces/registeredverifier.html)
 ```typescript title="RegisteredVerifier"
 {
-  "uuid": string, // identifies verifier in Verified Inc database
-  "customerUuid": string, // identifies customer in Verified Inc database
+  "uuid": string, // identifies verifier in Verified Inc. database
+  "customerUuid": string, // identifies customer in Verified Inc. database
   /* To store: */
   // highlight-next-line
-  "did": string, // identifiers verifier in Verified Inc ecosystem
+  "did": string, // identifiers verifier in Verified Inc. ecosystem
   "name": string, // human-readable name for verifier. Displayed to users in mobile apps when you make requests. Comes from the name of the ApiKey used to register the Verifier.
   "createdAt": string, // when verifier was registered (ISO 8601 date/time)
   "updatedAt": string, // when verifier was last updated (ISO 8601 date/time)
@@ -589,7 +589,7 @@ You need to provide:
 
 The first two are returned by [`registerVerifier`](#registerverifier). The third (holder app UUID) identifies the mobile app users will share <Tip type="presentation">presentations</Tip> from. For example, Hooli FinTech might use the UUID for ACME Bank's mobile app, so the user is prompted to share a presentation from that app.
 
-The fourth (credential requests) encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects (defined in the [Verified Inc generic types project](https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117)):
+The fourth (credential requests) encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects (defined in the [Verified Inc. generic types project](https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117)):
 
 ```typescript title="CredentialRequest"
 {
@@ -629,7 +629,7 @@ The response body consists of enriched information regarding entities referenced
 "verifier": string, // your verifier DID
 "credentialRequests": CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials should be included in presentation that responds to PresentationRequest.
 "signingPrivateKey": string, // your verifier signing private key
-"holderAppUuid"?: string, // (optional) identifies mobile app subjects will share presentations from. If not present then defaults the Verified Inc Wallet app, which is the recommend holder to use.
+"holderAppUuid"?: string, // (optional) identifies mobile app subjects will share presentations from. If not present then defaults the Verified Inc. Wallet app, which is the recommend holder to use.
 "expiresAt"?: string, // (optional) when PresentationRequest will no longer be valid (ISO 8601 date/time). Default is 10 minutes after creation.
 "metadata"?: object // (optional) any additional data to include in PresentationRequest
 ```
@@ -638,7 +638,7 @@ The response body consists of enriched information regarding entities referenced
 ```typescript title="PresentationRequestPostDto"
 {
   "presentationRequest": {
-    "uuid": string, // identifies PresentationRequest in Verified Inc database
+    "uuid": string, // identifies PresentationRequest in Verified Inc. database
     "createdAt": string, // when PresentationRequest was created (ISO 8601 date/time)
     "updatedAt": string, // when PresentationRequest was last updated (ISO 8601 date/time). Should always be same as createdAt.
     "expiresAt": string, // when PresentationRequest will no longer be valid (ISO 8601 date/time)
@@ -674,7 +674,7 @@ The response body consists of enriched information regarding entities referenced
 ### `verifyPresentation`
 > Verify <Tip type="presentation"/> shared by <Tip type="subject"/>.
 
-You need to be able to receive presentations from users and pass them to this function. To do this, you need to create a `/presentation` endpoint that conforms to our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/a81ffe5bd383b1ec36cb1b6bb1ccd26e). The Verified Inc cloud sends encrypted presentations to this endpoint, which should pass those presentations to the `verifyPresentation` function to be decrypted and verified.
+You need to be able to receive presentations from users and pass them to this function. To do this, you need to create a `/presentation` endpoint that conforms to our [OpenAPI specification](https://gist.github.com/UnumIDAdmin/a81ffe5bd383b1ec36cb1b6bb1ccd26e). The Verified Inc. cloud sends encrypted presentations to this endpoint, which should pass those presentations to the `verifyPresentation` function to be decrypted and verified.
 
 You need to provide:
 
@@ -686,7 +686,7 @@ You need to provide:
 The fist two are returned by [`registerVerifier`](#registerverifier).
 
 :::important
-Verified Inc *never* has access to sensitive data contained in presentations. The [Mobile SDK](mobile-sdk-overview) encrypts each presentation (with your verifier encryption public key) before sending it to us. We have no ability to decrypt the data — only you do.
+Verified Inc. *never* has access to sensitive data contained in presentations. The [Mobile SDK](mobile-sdk-overview) encrypts each presentation (with your verifier encryption public key) before sending it to us. We have no ability to decrypt the data — only you do.
 :::
 
 :::note
@@ -721,7 +721,7 @@ You can decide what to do with the result of the verification. We recommend that
 
 > Send an SMS containing a deep link to a <Tip type="subject"/>.
 
-Messages you send will (necessarily) be delivered from an Verified Inc associated phone number, but this association won't be visible to the user. You can of course use your own SMS sending service if you prefer.
+Messages you send will (necessarily) be delivered from an Verified Inc. associated phone number, but this association won't be visible to the user. You can of course use your own SMS sending service if you prefer.
 
 To request a <Tip type="presentation"/> from a user, you need to:
 

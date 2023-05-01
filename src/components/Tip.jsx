@@ -71,11 +71,11 @@ const tooltips =  {
     "user":
     <>
     <div>
-        <b>A <a href="/terminology#user">user</a> is an individual in the Verified Inc network.</b> Each user has at least one phone or emails associated with them. They can have multiple of either.
+        <b>A <a href="/terminology#user">user</a> is an individual in the Verified Inc. network.</b> Each user has at least one phone or emails associated with them. They can have multiple of either.
     </div>
     <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
         <div>
-            <b>Example:</b> Richard is a user in your account system and potentially of the Verified Inc network. He has two email addresses and one phone with him. Credentials can be issued to or requested of him using any of these identifiers.
+            <b>Example:</b> Richard is a user in your account system and potentially of the Verified Inc. network. He has two email addresses and one phone with him. Credentials can be issued to or requested of him using any of these identifiers.
         </div>
         <div>
             <b>Components:</b> Referenced in API endpoints `/hasMatchingCredentials` and `/issueCredentials`. User data is associated by using these user identifiers that you already keep on your users.
@@ -89,7 +89,7 @@ const tooltips =  {
     </div>
     <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
         <div>
-            <b>Example:</b> ACME Bank is an Verified Inc customer. However, they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.
+            <b>Example:</b> ACME Bank is an Verified Inc. customer. However, they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.
         </div>
         <div>
             <b>Components:</b> Each brand has an associated umbrella customer. It is totally okay if your customer only has one brand. We want to have the flexibility to support multiple brands per customer.
@@ -103,7 +103,7 @@ const tooltips =  {
     </div>
     <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
         <div>
-            <b>Example:</b> ACME Bank is the Verified Inc customer where their self service dashboard access rights are defined.
+            <b>Example:</b> ACME Bank is the Verified Inc. customer where their self service dashboard access rights are defined.
         </div>
         <div>
             <b>Components:</b> The admins of the customer can manage individual <a href="/terminology#brand">brand</a> settings.

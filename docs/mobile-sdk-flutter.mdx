@@ -12,7 +12,7 @@ import Tip from '../src/components/Tip';
 
 This is a cross-platform SDK that allows a host app to receive and store <Tip type="credential">credentials</Tip>, receive <Tip type="request">requests</Tip>, and share <Tip type="presentation">presentations</Tip>. It supports both Android and iOS applications built using the Flutter framework.
 
-**Before you begin:** You need to be registered as Verified Inc customer, and you need to register at least one <Tip type="holder app"/>. (You can register zero to many, depending on your use case.) You'll receive a holder app API key to use with this SDK.
+**Before you begin:** You need to be registered as Verified Inc. customer, and you need to register at least one <Tip type="holder app"/>. (You can register zero to many, depending on your use case.) You'll receive a holder app API key to use with this SDK.
 
 ## Overview
 
@@ -44,7 +44,7 @@ dependencies:
 
 ### SDK Initialization
 
-This function initializes the Verified Inc SDK, allowing the host app to use it. It must be called before any other SDK functionality can be used. In most cases, it should be called when the application loads/comes to the foreground. Once onSuccess is returned, the developer will then be able to retrieve the saved did.
+This function initializes the Verified Inc. SDK, allowing the host app to use it. It must be called before any other SDK functionality can be used. In most cases, it should be called when the application loads/comes to the foreground. Once onSuccess is returned, the developer will then be able to retrieve the saved did.
 
 ```dart
 import 'package:unumidflutter/unumidflutter.dart';
@@ -131,12 +131,12 @@ Unumidflutter.handlePresentationResponse(String response, String json);
 
 ## Handling Multiple Users
 
-Each user is identified by some user ID in your system and by a <Tip type="DID"/> in the Verified Inc ecosystem. You simply need to store an association between each user ID and DID. That way, when your host app has a particular user ID (for example once a user is logged into your existing account system), it can pass the corresponding DID to the SDK.
+Each user is identified by some user ID in your system and by a <Tip type="DID"/> in the Verified Inc. ecosystem. You simply need to store an association between each user ID and DID. That way, when your host app has a particular user ID (for example once a user is logged into your existing account system), it can pass the corresponding DID to the SDK.
 
-If you don't have existing user IDs, you *could* use the DIDs themselves as user IDs. However, we recommend using separate identifiers (internal to your company), to distinguish them from DIDs, which are global to the Verified Inc ecosystem.
+If you don't have existing user IDs, you *could* use the DIDs themselves as user IDs. However, we recommend using separate identifiers (internal to your company), to distinguish them from DIDs, which are global to the Verified Inc. ecosystem.
 
 :::note
-The technical details of DIDs are not relevant to deploying or using Verified Inc. You can think of DIDs as identifiers in the normal sense — unique, random strings of characters like UUIDs.
+The technical details of DIDs are not relevant to deploying or using Verified Inc.. You can think of DIDs as identifiers in the normal sense — unique, random strings of characters like UUIDs.
 :::
 
 When you [initialize](#initialize) the SDK, you can optionally include a DID.

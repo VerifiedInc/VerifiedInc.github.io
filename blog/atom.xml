@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://docs.verified.inc/blog</id>
-    <title>Verified Inc Docs Blog</title>
+    <title>Verified Inc. Docs Blog</title>
     <updated>2015-10-25T23:29:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://docs.verified.inc/blog" />
-    <subtitle>Verified Inc Docs Blog</subtitle>
+    <subtitle>Verified Inc. Docs Blog</subtitle>
     <icon>https://docs.verified.inc/img/favicon.png</icon>
 </feed>

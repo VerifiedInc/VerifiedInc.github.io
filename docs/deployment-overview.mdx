@@ -8,24 +8,24 @@ slug: /deployment-overview
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-This section provides a brief overview of how your company can deploy Verified Inc tech. For full technical details, see the documentation for each component:
+This section provides a brief overview of how your company can deploy Verified Inc. tech. For full technical details, see the documentation for each component:
 - [Server SDK](/server-sdk)
 - [Mobile SDK](/mobile-sdk)
 - [Web SDK](/web-sdk)
 
 ## Process 
 
-Each Verified Inc component is simple to install and use. Your development team should be able to try the platform in a matter of hours and complete an integration suitable for a pilot in a few days. We provide dedicated engineering support to make the process as easy as possible.
+Each Verified Inc. component is simple to install and use. Your development team should be able to try the platform in a matter of hours and complete an integration suitable for a pilot in a few days. We provide dedicated engineering support to make the process as easy as possible.
 
 ### Simulated Deployment
 
-For pilots, we can also provide a ​**simulated deployment,** which allows you to try Verified Inc technology with zero integration work. We host all the components for you and provide a dedicated mobile app and website with your branding. Your testers can then try the platform by simply installing the app and using the website. 
+For pilots, we can also provide a ​**simulated deployment,** which allows you to try Verified Inc. technology with zero integration work. We host all the components for you and provide a dedicated mobile app and website with your branding. Your testers can then try the platform by simply installing the app and using the website. 
 
-This is a great way to build the business case for Verified Inc before progressing to a full deployment. Please ​[contact sales​](mailto:sales@Unum.ID) for more.
+This is a great way to build the business case for Verified Inc. before progressing to a full deployment. Please ​[contact sales​](mailto:sales@Unum.ID) for more.
 
 ## Installing Components
 
-When you register as an Verified Inc customer, we send you API keys for each component.
+When you register as an Verified Inc. customer, we send you API keys for each component.
 
 ### Mobile SDK
 
@@ -35,7 +35,7 @@ When you register as an Verified Inc customer, we send you API keys for each com
 2. Publish an update to the app stores.
 3. Store the user identifier the SDK returns in your database.
 
-As noted in the [​FAQ​](#faq), you can add Verified Inc on top of your existing account system. To do so, simply initialize the Mobile SDK after a user logs into their account. You can later transition away from the account system to fully eliminate passwords.
+As noted in the [​FAQ​](#faq), you can add Verified Inc. on top of your existing account system. To do so, simply initialize the Mobile SDK after a user logs into their account. You can later transition away from the account system to fully eliminate passwords.
 
 The Mobile SDK works entirely behind the scenes, benefitting users without intruding on the UI/UX of your app. The only components exposed to the user are system alerts and a QR code scanner, which you can trigger from anywhere in the app (e.g. with a Scan button).
 
@@ -66,7 +66,7 @@ Using the Server SDK is straightforward. To issue (send) a <Tip type="credential
 Using the Web SDK is simple. Just call the Server SDK to create <Tip type="request">requests</Tip> for presentations from users. The Web SDK takes care of everything else — the user interface, fallback options, error handling, etc.
 
 ## Versioning Strategy
-The Verified Inc [Server](/server-sdk), [Mobile](/mobile-sdk-overview), and [Web](/web-sdk) SDK major versions correspond to one another. It is recommended to keep the Web and Server SDK versions aligned with one another for the best experience. For example, if using version `3.1.0` of the Server SDK it is advised to use version `3.x.x` of the Web SDK. By nature of the network, keeping Holder SDK version alignment with the Server SDK is practically impossible. However, we have a solution.
+The Verified Inc. [Server](/server-sdk), [Mobile](/mobile-sdk-overview), and [Web](/web-sdk) SDK major versions correspond to one another. It is recommended to keep the Web and Server SDK versions aligned with one another for the best experience. For example, if using version `3.1.0` of the Server SDK it is advised to use version `3.x.x` of the Web SDK. By nature of the network, keeping Holder SDK version alignment with the Server SDK is practically impossible. However, we have a solution.
 
 Each major version of the Server and Holder SDKs are _mostly_ backwards compatible with older versions of one another. If performing the role of an [Issuer](/terminology#issuer) all SDK versions will be backwards compatible. If performing the role of [Verifier](/terminology#verifier) presentation verification is often the functionality that is not backwards compatible. In order to support presentation verification from variable Holder SDKs one will need to leverage all Server SDK versions that they need to support. This is akin to normal mobile application versioning strategies of the server always supporting a version greater than or equal to the mobile version. 
 
@@ -82,10 +82,10 @@ Upon leveraging or testing a new Server SDK major version end to end we the vers
   </summary>
   <br/>
   <p>
-    <b>No.</b> Verified Inc can sit on top of your existing account system, facilitating a gradual transition away from passwords. You don’t have to eliminate them right away, or ever if you prefer.
+    <b>No.</b> Verified Inc. can sit on top of your existing account system, facilitating a gradual transition away from passwords. You don’t have to eliminate them right away, or ever if you prefer.
   </p>
   <p>
-    We recommend first using Verified Inc as a second step in the authentication process, on top of your existing account system. Then, you can gradually replace that system entirely to fully eliminate passwords and remove the weak link.
+    We recommend first using Verified Inc. as a second step in the authentication process, on top of your existing account system. Then, you can gradually replace that system entirely to fully eliminate passwords and remove the weak link.
   </p>
 </details>
 <br/>
@@ -95,7 +95,7 @@ Upon leveraging or testing a new Server SDK major version end to end we the vers
   </summary>
   <br/>
   <p>
-    <b>No, for users everything works automatically, behind the scenes.</b> When you set up Verified Inc, you add our Mobile SDK to your app and publish an update to the app store. The next time the user opens the app, they’ll have all the functionality Verified Inc provides without having to do anything. It’s just like a normal feature update.
+    <b>No, for users everything works automatically, behind the scenes.</b> When you set up Verified Inc., you add our Mobile SDK to your app and publish an update to the app store. The next time the user opens the app, they’ll have all the functionality Verified Inc. provides without having to do anything. It’s just like a normal feature update.
   </p>
 </details>
 <br/>
@@ -111,7 +111,7 @@ Upon leveraging or testing a new Server SDK major version end to end we the vers
     The default backup is to the user’s iCloud (on iOS) or Google Drive (on Android) account, so when they get a new phone everything will work like before. We also provide an easy way for you to store a backup on the user’s behalf.
   </p>
   <p>
-    Verified Inc requires that the user has a device biometric and passcode set up. Lost phones that have these enabled are extremely secure. (Even the FBI couldn’t break into an iPhone.) But for extra protection, we provide a way for the user to remotely deactivate the app on the lost phone, making it useless even if an attacker breaks through the biometric. And for ultimate protection, the user can choose to remotely erase their device.
+    Verified Inc. requires that the user has a device biometric and passcode set up. Lost phones that have these enabled are extremely secure. (Even the FBI couldn’t break into an iPhone.) But for extra protection, we provide a way for the user to remotely deactivate the app on the lost phone, making it useless even if an attacker breaks through the biometric. And for ultimate protection, the user can choose to remotely erase their device.
   </p>
 </details>
 <br/>

@@ -39,7 +39,7 @@ You need to provide:
 
 1. credential request(s)
 
-A (credential requests) encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects (defined in the [Verified Inc generic types project](https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117)):
+A (credential requests) encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects (defined in the [Verified Inc. generic types project](https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117)):
 
 ```typescript title="CredentialRequest"
 {
@@ -84,7 +84,7 @@ The response body consists of enriched information regarding entities referenced
 ```typescript title="PresentationRequestPostDto"
 {
   "presentationRequest": {
-    "uuid": string, // identifies PresentationRequest in Verified Inc database
+    "uuid": string, // identifies PresentationRequest in Verified Inc. database
     "createdAt": string, // when PresentationRequest was created (ISO 8601 date/time)
     "updatedAt": string, // when PresentationRequest was last updated (ISO 8601 date/time). Should always be same as createdAt.
     "expiresAt": string, // when PresentationRequest will no longer be valid (ISO 8601 date/time)
@@ -127,7 +127,7 @@ You need to provide:
 1. the presentation's `uuid` that was returned to your client via your callback handler.
 
 :::important
-Verified Inc only ever stores encrypted presentation data and is deleted after 5 minutes of the corresponding Issuer doing the initial data retrieval.
+Verified Inc. only ever stores encrypted presentation data and is deleted after 5 minutes of the corresponding Issuer doing the initial data retrieval.
 :::
 
 #### Request Body

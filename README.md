@@ -2,9 +2,9 @@
 
 # Docs
 
-These docs are built using [Docusaurus](https://v2.docusaurus.io/docs/) (v2), deployed on GitHub Pages to [docs.unumid.co](https://docs.unumid.co/).
+These docs are built using [Docusaurus](https://v2.docusaurus.io/docs/) (v2), deployed on GitHub Pages to [docs.verified.inc](https://docs.verified.inc/).
 
-**Important:** Publishing to `master` will publish to [docs.unumid.co](https://docs.unumid.co/)! Please don't publish any real documentation yet so we don't run into legal issues with IP protection.
+**Important:** Publishing to `master` will publish to [docs.verified.inc](https://docs.verified.inc/)! Please don't publish any real documentation yet so we don't run into legal issues with IP protection.
 
 ## Docusaurus (v2)
 
@@ -13,7 +13,7 @@ These docs are built using [Docusaurus](https://v2.docusaurus.io/docs/) (v2), de
 [Docusaurus](https://v2.docusaurus.io/docs/) is a Facebook open source project that makes creating documentation easy. The result is a React app displaying GitHub flavored Markdown. 
 
 ### Usage Guide
-A basic usage guide is currently at [docs.unumid.co/usage-guide](https://docs.unumid.co/usage-guide) showing some of the nice features like live code editors. Because it's React based, we may be able to leverage some of our existing demo content (written in React) right in the documentation itself, which would be cool. 
+A basic usage guide is currently at [docs.verified.inc/usage-guide](https://docs.verified.inc/usage-guide) showing some of the nice features like live code editors. Because it's React based, we may be able to leverage some of our existing demo content (written in React) right in the documentation itself, which would be cool. 
 
 The guide also includes examples on how to use custom React code within our `mdx` files, e.g. Tooltips.
 
@@ -46,7 +46,7 @@ This command generates static content into the `build` directory and can be serv
 
 ### Deployment
 
-**Important:** Publishing to `master` will publish to [docs.unumid.co](https://docs.unumid.co/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
+**Important:** Publishing to `master` will publish to [docs.verified.inc](https://docs.verified.inc/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
 
 ```console
 GIT_USER=<Your GitHub username> DEPLOYMENT_BRANCH=private USE_SSH=true yarn deploy

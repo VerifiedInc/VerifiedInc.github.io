@@ -2,7 +2,7 @@
 module.exports = {
   title: 'Unum ID Docs',
   tagline: 'Documentation for the Unum ID platform.',
-  url: 'https://docs.unumid.co',
+  url: 'https://docs.verified.inc',
   baseUrl: '/',
   /* revert to throw when possible, was unable to fix a broken link issue */
   onBrokenLinks: 'warn',

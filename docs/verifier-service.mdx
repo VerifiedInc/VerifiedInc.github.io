@@ -39,7 +39,7 @@ You need to provide:
 
 1. credential request(s)
 
-A (credential requests) encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.unumid.co/types/interfaces/credentialrequest.html) objects (defined in the [Unum ID generic types project](https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117)):
+A (credential requests) encodes which <Tip type="credential">credentials</Tip> you're asking the user to include in a presentation. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects (defined in the [Unum ID generic types project](https://github.com/UnumID/types/blob/00ba819e661e2856ba9909923ac6f083b9a15e85/index.d.ts#L113-L117)):
 
 ```typescript title="CredentialRequest"
 {
@@ -60,7 +60,7 @@ You can optionally provide:
 Your Verifier ApiKey provided via the Authorization request header grants you and only you access to the encrypted data. Please keep this key secure.
 :::
 
-The response body consists of enriched information regarding entities referenced in the request. For example, the verifier's encryption and signing [PublicKeyInfo](https://docs.unumid.co/types/interfaces/publickeyinfo.html) is included to facilitate verifying the presentation request's signature and submitting and encrypted presentation in response.
+The response body consists of enriched information regarding entities referenced in the request. For example, the verifier's encryption and signing [PublicKeyInfo](https://docs.verified.inc/types/interfaces/publickeyinfo.html) is included to facilitate verifying the presentation request's signature and submitting and encrypted presentation in response.
 ```typescript title="PublicKeyInfo"
 {
     "id": string, // key id
@@ -80,7 +80,7 @@ The response body consists of enriched information regarding entities referenced
 "metadata"?: object // (optional) any additional data to include in PresentationRequest
 ```
 
-#### Response Body: [`PresentationRequestPostDto`](https://docs.unumid.co/types/interfaces/presentationrequestpostdto.html)
+#### Response Body: [`PresentationRequestPostDto`](https://docs.verified.inc/types/interfaces/presentationrequestpostdto.html)
 ```typescript title="PresentationRequestPostDto"
 {
   "presentationRequest": {
@@ -135,7 +135,7 @@ Unum ID only ever stores encrypted presentation data and is deleted after 5 minu
 "uuid": string, // uuid of the encrypted presentation data to retrieve
 ```
 
-#### Response Body: [`DecryptedPresentation`](https://docs.unumid.co/server-sdk-typescript/interfaces/decryptedpresentation.html)
+#### Response Body: [`DecryptedPresentation`](https://docs.verified.inc/server-sdk-typescript/interfaces/decryptedpresentation.html)
 ```typescript title="DecryptedPresentation"
 {
   "isVerified": boolean; // whether the presentation is valid

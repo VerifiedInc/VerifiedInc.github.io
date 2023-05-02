@@ -16,7 +16,7 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 
-**[Unum ID](https://www.unumid.co)** enables brands to provider their users with best in class onboarding. This particular guide focuses on how and why to become a <Tip type="brand">brand</Tip> that accepts Unum ID <Tip type="credential">credentials</Tip>.
+**[Verified Inc.](https://www.verified.inc)** enables brands to provider their users with best in class onboarding. This particular guide focuses on how and why to become a <Tip type="brand">brand</Tip> that accepts Verified Inc. <Tip type="credential">credentials</Tip>.
 
 > By accepting credentials your brand can unlock 1-Click on boarding. Please see the Use Case [section](/1-click-or-free-use-case) for more information.
 
@@ -38,18 +38,18 @@ test@example.com
 
 As a brand that accepts digital ID cards, you can unlock 1-Click onboarding. This drastically decreases the abandonment rate during customer sign up and makes for a far better first touch experience for your new users.
 
-Crucially, you will dramatically improve the experience for any user enabled with a digital ID card without changing the experience for any user without one. And because Unum ID sits on top of your existing onboarding process, you don’t need to change any existing security or compliance vendors or procedures.
+Crucially, you will dramatically improve the experience for any user enabled with a digital ID card without changing the experience for any user without one. And because Verified Inc. sits on top of your existing onboarding process, you don’t need to change any existing security or compliance vendors or procedures.
 
 Once you join, our team will identify opportunities to promote your brand within our network for 1-click conversions. These can be in-app offers, marketing emails, or similar promotions to drive users to your brand from complementary services.
 
-In brief: As an acceptor in the Unum ID network, you will…
+In brief: As an acceptor in the Verified Inc. network, you will…
 - Dramatically improve onboarding conversion.
 - Delight users with a 1-click setup.
 - Join a network of companies to help you grow faster.
 
 
 ## UX Strategies
-The check to see if the user has credentials that you can accept can happen fully in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at an opportune time. If the response is contains `match`: `true` then you will redirect to the Unum ID Wallet. The demo below demonstrates an example UX.
+The check to see if the user has credentials that you can accept can happen fully in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at an opportune time. If the response is contains `match`: `true` then you will redirect to the Verified Inc. Wallet. The demo below demonstrates an example UX.
 
   <details>
     <summary>Demo Kredita Accepting Credentials</summary>
@@ -101,15 +101,15 @@ The check to see if the user has credentials that you can accept can happen full
   </p>
 </details>
   
-The user will either have matching credentials, or they won't. If they do, continue to step (2). If they don't, you're done with Unum ID and should take the user through your existing verification flow. 
+The user will either have matching credentials, or they won't. If they do, continue to step (2). If they don't, you're done with Verified Inc. and should take the user through your existing verification flow. 
 
 :::tip
 If you would like your existing verification flow verification costs to be covered, please look into issuing credentials. More information can be found in the 1-Click or Free Use Case [section](/1-click-or-free-use-case).
 :::
 
-2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Unum ID web wallet. For example the final url you need to redirect the user to is:
+2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Verified Inc. web wallet. For example the final url you need to redirect the user to is:
 
-```text title="Example Redirect to Unum ID Wallet URL"
+```text title="Example Redirect to Verified Inc. Wallet URL"
 https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789&redirectUrl=https://acme-bank.co/sign-up/complete
 ```
 

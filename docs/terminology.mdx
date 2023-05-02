@@ -8,7 +8,7 @@ slug: /terminology
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 
-Unum ID uses a few specialized terms and concepts. It's not necessary to understand these in full detail, but knowing a little about them will help you deploy and use Unum ID tech.
+Verified Inc. uses a few specialized terms and concepts. It's not necessary to understand these in full detail, but knowing a little about them will help you deploy and use Verified Inc. tech.
 
 :::tip
 **We've included helpful tooltips** like <Tip text="Whoa, a tooltip! 😎">this one</Tip> (hover over it) throughout the docs. These offer quick definitions, examples, and links to dive in deeper. Anytime you see an underline, hover over it to see the tooltip!
@@ -55,7 +55,7 @@ The data schema must match the corresponding credential type. Information on the
   // the data attribute must match the SsnCredential JSON schema properties as mentioned in the Data Schema section.
   // i.e. https://schema.verified.inc/jsonSchema/SsnCredential
   "data": {
-    "email": "test@unumid.co"
+    "email": "test@verified.inc"
   }
   // highlight-end
 }
@@ -81,7 +81,7 @@ If multiple issuer brands are listed, a credential (of the correct type) from an
 
 Additionally, the customer must input a user identifier email address and/or phone identifier. You might notice these are the exact inputs to [`/hasMatchingCredentials`](/api-overview#check-user-credentials).
 
-The full details of the request object aren't that important or helpful to know, as it's completely internal to Unum ID, but here's an example of a request for a FirstName and LastName credential from the same issuing brand.
+The full details of the request object aren't that important or helpful to know, as it's completely internal to Verified Inc., but here's an example of a request for a FirstName and LastName credential from the same issuing brand.
 
 ```json
 {
@@ -89,7 +89,7 @@ The full details of the request object aren't that important or helpful to know,
   "id": "854b9889-013d-40a2-93b9-68b9cf8d2540",
   "createdAt": "1673470082199",
   "updatedAt": "1673470082200",
-  "email": "test@unumid.co",
+  "email": "test@verified.inc",
   "phone": null,
   // highlight-start
   "credentialRequests": [
@@ -122,20 +122,20 @@ The full details of the request object aren't that important or helpful to know,
     "createdAt": "1671242870669",
     "updatedAt": "1671242870669",
     "phoneNumbers": ["+14043038080"],
-    "emailAddresses": ["test@unumid.co"]
+    "emailAddresses": ["test@verified.inc"]
   }
 }
 ```
 
 ### User
 
-> A **user** is an individual in the Unum ID network that can share verified identity data (via <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a>). Each user has at least one phone number or email address associated with them. They can have multiple of either.
+> A **user** is an individual in the Verified Inc. network that can share verified identity data (via <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a>). Each user has at least one phone number or email address associated with them. They can have multiple of either.
 
 :::note
-Users can be referenced by email and/or phone, identifiers that you already have for your own user accounts. This prevents you from needing to use Unum ID specific user IDs.  
+Users can be referenced by email and/or phone, identifiers that you already have for your own user accounts. This prevents you from needing to use Verified Inc. specific user IDs.  
 :::
 
-**Example:** Richard is a user in your account system and potentially a user in the Unum ID network. You have two email addresses and one phone number for him. You can use any of these identifiers to issue credentials to him or check if he has matching credentials.
+**Example:** Richard is a user in your account system and potentially a user in the Verified Inc. network. You have two email addresses and one phone number for him. You can use any of these identifiers to issue credentials to him or check if he has matching credentials.
 
 **Components:** You can issue credentials using [`/credentials`](/api-overview#issue-credentials) and check for matching credentials with [`/hasMatchingCredentials`](/api-overview#check-user-credentials).
 
@@ -144,7 +144,7 @@ Users can be referenced by email and/or phone, identifiers that you already have
   "id": "e31de809-ea49-4384-9d3e-6c70d5ff05c7",
   "createdAt": "1671242870669",
   "updatedAt": "1671242870669",
-  "emailAddresses": ["test@unumid.co"],
+  "emailAddresses": ["test@verified.inc"],
   "phoneNumbers": []
 }
 ```
@@ -157,7 +157,7 @@ Users can be referenced by email and/or phone, identifiers that you already have
 A customer can have one to many brands. A brand can be assoicated with only one customer.
 :::
 
-**Example:** ACME Bank is an Unum ID customer. However, they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique API key, name, and ID card image.
+**Example:** ACME Bank is an Verified Inc. customer. However, they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique API key, name, and ID card image.
 
 **Components:** Each brand has an associated parent customer. A customer can have one or more brands.
 
@@ -173,6 +173,6 @@ Our self service Dashboard is coming soon. It will allow you authenticate as a c
 Throughout our docs we use verbiage similar to a "customer must make an api request" or "a customer must check credentials" however we are actually referring to a "brand". This is because a brand is the entity that has a unique API key. So when we say "customer" we technically mean a customer using one of its brand API keys.
 :::
 
-**Example:** ACME Bank is an Unum ID customer and has two brands: ACME Lending and ACME Savings.
+**Example:** ACME Bank is an Verified Inc. customer and has two brands: ACME Lending and ACME Savings.
 
 **Components:** The admins of the customer can manage individual <Tip type="brand">brand</Tip> settings.

@@ -67,7 +67,7 @@ It publishes to the `preview` branch which should be consider akin to `master` a
 
 For example, if one would like feedback from the business team regarding changes on the `feat/guides` branch then push a `preview-v2.4.0` tag to that branch. This will trigger the preview deployment job which publishes to the `preview` branch. 
 
-[Netlify](https://app.netlify.com/sites/resilient-capybara-2fa074/settings/general) is being used for this deployment. Credentials via the shared devops@unumid.co email account can be found in 1Password. It deploys to the generic url, https://resilient-capybara-2fa074.netlify.app/. We very easily could deploy to a custom domain if we ever want to share "beta" docs with friendly parties.
+[Netlify](https://app.netlify.com/sites/resilient-capybara-2fa074/settings/general) is being used for this deployment. Credentials via the shared devops@verified.inc email account can be found in 1Password. It deploys to the generic url, https://resilient-capybara-2fa074.netlify.app/. We very easily could deploy to a custom domain if we ever want to share "beta" docs with friendly parties.
 
 ## GitHub Pages
 

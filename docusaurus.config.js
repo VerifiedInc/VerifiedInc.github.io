@@ -1,7 +1,7 @@
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'Unum ID Docs',
-  tagline: 'Documentation for the Unum ID platform.',
+  title: 'Verified Inc. Docs',
+  tagline: 'Documentation for the Verified Inc. platform.',
   url: 'https://docs.verified.inc',
   baseUrl: '/',
   /* revert to throw when possible, was unable to fix a broken link issue */
@@ -17,13 +17,13 @@ module.exports = {
     navbar: {
       title: 'Docs',
       logo: {
-        alt: 'Unum ID Logo',
+        alt: 'Verified Inc. Logo',
         src:  'img/logo.png',
         srcDark: 'img/logo_dark.png',
       },
       items: [
         {
-          to: 'https://www.unumid.co',
+          to: 'https://www.verified.inc',
           activeBasePath: '/',
           label: 'Home',
           position: 'right',
@@ -43,7 +43,7 @@ module.exports = {
           title: 'Introduction',
           items: [
             {
-              label: 'About Unum ID',
+              label: 'About Verified Inc.',
               to: '/',
             },
             {
@@ -124,7 +124,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Unum ID, Inc.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Verified Inc., Inc.`,
     },
   },
   presets: [

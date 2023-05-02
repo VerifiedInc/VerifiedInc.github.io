@@ -14,7 +14,7 @@ import Tip from '../src/components/Tip';
 
 This is a lightweight, fully native SDK that allows a host app to receive and store <Tip type="credential">credentials</Tip>, receive <Tip type="request">requests</Tip>, and share <Tip type="presentation">presentations</Tip>. It works with both Kotlin and Java native apps.
 
-**Before you begin:** You need to be registered as Unum ID customer, and you need to register at least one <Tip type="holder app"/>. (You can register zero to many, depending on your use case.) You'll receive a holder app API key to use with this SDK.
+**Before you begin:** You need to be registered as Verified Inc. customer, and you need to register at least one <Tip type="holder app"/>. (You can register zero to many, depending on your use case.) You'll receive a holder app API key to use with this SDK.
 
 :::note
 More detailed but less styled documentation can be found [here](http://docs.verified.inc/Holder-SDK-Android/). This serves as a useful technical reference.
@@ -93,14 +93,14 @@ The Android SDK has the ability for some aspects of its functionality to be cust
 <TabItem value="kotlin">
 
 ```kotlin
-UnumId.configure(UnumSDKConfig(useFullScreenDialog = true, returnPresentationDetails = false))
+verified.incnfigure(UnumSDKConfig(useFullScreenDialog = true, returnPresentationDetails = false))
 ```
 
 </TabItem>
 <TabItem value="java">
 
 ```java
-UnumId.configure(new UnumSDKConfig(true, false));
+verified.incnfigure(new UnumSDKConfig(true, false));
 ```
 </TabItem>
 </Tabs>
@@ -109,7 +109,7 @@ UnumId.configure(new UnumSDKConfig(true, false));
 
 You should initialize the SDK when the app starts up. This will ensure the SDK is set up properly. 
 
-You can optionally include a <Tip type="DID"/> (`did`), which identifies a user (technically called a <Tip type="subject"/>) in the Unum ID ecosystem. A returning user will already have a DID, so you should include this to ensure the SDK loads any new credentials associated with that DID as part of the initialization process. 
+You can optionally include a <Tip type="DID"/> (`did`), which identifies a user (technically called a <Tip type="subject"/>) in the Verified Inc. ecosystem. A returning user will already have a DID, so you should include this to ensure the SDK loads any new credentials associated with that DID as part of the initialization process. 
 
 You can optionally include the `UnumCallback` to be notified of the result of the initialization call.
 
@@ -189,7 +189,7 @@ The initialization process involves creating private keys for the user using the
 
 ### Deep Links
 
-In the context of Unum ID, a **deep link** is a URL that opens a specific <Tip type="holder app"/>. For example, a link that opens the ACME mobile app might look like this:
+In the context of Verified Inc., a **deep link** is a URL that opens a specific <Tip type="holder app"/>. For example, a link that opens the ACME mobile app might look like this:
 
 ```
 unumid://acme/presentationRequest/88d37012-f83b-453a-a1f1-d4a1bcf86aa3
@@ -197,7 +197,7 @@ unumid://acme/presentationRequest/88d37012-f83b-453a-a1f1-d4a1bcf86aa3
 
 The SDK uses deep links to retrieve and display a <Tip type="request"/> to a user, who decides whether to share data in response. Users will typically encounter deep links displayed in the [Web SDK](/web-sdk) (in QR code or button form) or sent over a communication channel (like push notification, SMS, or email).
 
-You need to pass Unum ID deep links to the SDK to be processed. To do so, set up an activity as shown below. This will catch a deep link like the example one shown above.
+You need to pass Verified Inc. deep links to the SDK to be processed. To do so, set up an activity as shown below. This will catch a deep link like the example one shown above.
 
 ```xml
 <activity android:name=".MainActivity">
@@ -247,9 +247,9 @@ UnumID.onPresentationResponse(responseType: PresentationResponse, json: String)
 
 ### QR Code Scanner
 
-The Unum ID [deep links](#/deep-links) described above can be displayed in QR code form. This is important for cases when a user is on a non-mobile device. For example, the ACME Bank website might request that a user share an authentication credential to log into the ACME website on desktop. ACME would do so by displaying a QR code that the user scans. This would open the ACME mobile app on the user's phone and prompt the user to share the requested data.
+The Verified Inc. [deep links](#/deep-links) described above can be displayed in QR code form. This is important for cases when a user is on a non-mobile device. For example, the ACME Bank website might request that a user share an authentication credential to log into the ACME website on desktop. ACME would do so by displaying a QR code that the user scans. This would open the ACME mobile app on the user's phone and prompt the user to share the requested data.
 
-Any QR code scanner can read an Unum ID deep link in QR code form. Some but not all devices support scanning directly from the native camera, so you should make it possible for the user to scan codes from within your app. 
+Any QR code scanner can read an Verified Inc. deep link in QR code form. Some but not all devices support scanning directly from the native camera, so you should make it possible for the user to scan codes from within your app. 
 
 If you already have a QR code scanner, you can pass QR codes directly to the SDK like so:
 
@@ -394,7 +394,7 @@ UnumLogger.loggingLevel = UnumLogger.VERBOSE
 
 ```java
 
-    // Turn the Unum ID logger on or off. This will allow
+    // Turn the Verified Inc. logger on or off. This will allow
     // you to show or hide log messages from the SDK
     UnumLogger.Companion.setEnableUnumLogging(true);
 
@@ -475,12 +475,12 @@ UnumId.INSTANCE.initialize(configuration, new UnumCallback() {
 
 ## Handling Multiple Users
 
-Each user is identified by some user ID in your system and by a <Tip type="DID"/> in the Unum ID ecosystem. You simply need to store an association between each user ID and DID. That way, when your host app has a particular user ID (for example once a user is logged into your existing account system), it can pass the corresponding DID to the SDK.
+Each user is identified by some user ID in your system and by a <Tip type="DID"/> in the Verified Inc. ecosystem. You simply need to store an association between each user ID and DID. That way, when your host app has a particular user ID (for example once a user is logged into your existing account system), it can pass the corresponding DID to the SDK.
 
-If you don't have existing user IDs, you *could* use the DIDs themselves as user IDs. However, we recommend using separate identifiers (internal to your company), to distinguish them from DIDs, which are global to the Unum ID ecosystem.
+If you don't have existing user IDs, you *could* use the DIDs themselves as user IDs. However, we recommend using separate identifiers (internal to your company), to distinguish them from DIDs, which are global to the Verified Inc. ecosystem.
 
 :::note
-The technical details of DIDs are not relevant to deploying or using Unum ID. You can think of DIDs as identifiers in the normal sense — unique, random strings of characters like UUIDs.
+The technical details of DIDs are not relevant to deploying or using Verified Inc.. You can think of DIDs as identifiers in the normal sense — unique, random strings of characters like UUIDs.
 :::
 
 When you [initialize](#initialize) the SDK, you can optionally include a DID. 

@@ -83,13 +83,13 @@ yarn add @unumid/web-sdk-react@https://github.com/UnumID/web-sdk-react.git
 By default, the SDK will create a `PresentationRequest` as soon as it is rendered. It will periodically regenerate the `PresentationRequest` (to ensure it doesn't expire) until the user shares data or declines the request, or the widget is unmounted. 
 
 :::tip
-An Unum ID <Tip type="request"/> is what a company uses to request a <Tip type="presentation"/> from a user. The request is represented in code as a `PresentationRequest` object.
+An Verified Inc. <Tip type="request"/> is what a company uses to request a <Tip type="presentation"/> from a user. The request is represented in code as a `PresentationRequest` object.
 :::
 
 You can use different combinations of props (see below) to choose how much control you want to have. For example, instead of automatically creating a `PresentationRequest` on load, you may want to trigger its creation based on a user interaction like a button click.
 
 ### Display Deep Links
-PresentationRequests are shared to an Unum ID-powered mobile app a user's device via deep links. The React Web SDK determines how it displays them based on the browser's userAgent.
+PresentationRequests are shared to an Verified Inc.-powered mobile app a user's device via deep links. The React Web SDK determines how it displays them based on the browser's userAgent.
 
 #### Defaults
 ##### QR Code
@@ -123,7 +123,7 @@ In order to use this fallback, you will need to provide the `userInfo` prop with
 
 **or**
 
-2.  upload your push notification credentials to Unum ID so we can send push notifications to your mobile app.
+2.  upload your push notification credentials to Verified Inc. so we can send push notifications to your mobile app.
 
 :::tip
 [Contact us](mailto:support@Unum.ID) for details on how to upload your push notification credentials.
@@ -169,12 +169,12 @@ The SDK exports a single `UnumIDWidget` component, which encapsulates all of its
 - string
 - _required_
 - either `sandbox` or `production`
-- Determines which Unum ID SaaS environment the React Web SDK will connect to.
+- Determines which Verified Inc. SaaS environment the React Web SDK will connect to.
 
 #### `apiKey`
 - string
 - _required_
-- Your Web SDK API key (obtained from Unum ID).
+- Your Web SDK API key (obtained from Verified Inc.).
 
 :::warning
 Web SDK API keys are environment specific (see above). Make sure you are using the correct key!
@@ -212,7 +212,7 @@ Web SDK API keys are environment specific (see above). Make sure you are using t
 - `(options: PushNotificationOptions) => Promise<SuccessResponse>`
 - _optional_
 - A function that takes a `PushNotificationOptions` object and calls your backend to send a deep link via push notification.
-- If this prop is not provided, the push notification fallback option will send the Unum ID SaaS's default push notification.
+- If this prop is not provided, the push notification fallback option will send the Verified Inc. SaaS's default push notification.
 - If provided, this function will be used _instead of_ the default push notification fallback.
 
 :::note
@@ -224,7 +224,7 @@ You will have to upload your Apple and/or Firebase push notification credentials
 - _optional_
 - A function that takes an `SmsOptions` object and calls your backend to send a deeplink via SMS.
 - You may use the `sendSMS` function from the Server SDK to send the SMS or your own SMS provider.
-- If this prop is not provided, the SMS fallback option will send the Unum ID SaaS's default SMS message.
+- If this prop is not provided, the SMS fallback option will send the Verified Inc. SaaS's default SMS message.
 - If provided, this function will be used _instead of_ the default SMS fallback.
 
 #### `sendEmail` 
@@ -232,14 +232,14 @@ You will have to upload your Apple and/or Firebase push notification credentials
 - _optional_
 - A function that takes an `EmailOptions` object and calls your backend to send a deeplink via email.
 - You may use the `sendEmail` function from the Server SDK to send the email or use your own email provider.
-- If this prop is not provided, the email fallback option will send the Unum ID SaaS's default email message.
+- If this prop is not provided, the email fallback option will send the Verified Inc. SaaS's default email message.
 - If provided, this function will be used _instead of_ the default email fallback.
 
 #### `goToLogin` 
 - `() => void`
 - _optional_
 - A function that redirects the user to your existing login page. 
-- You should provide this if you are using Unum ID as an additional authentication factor on top of your existing login. 
+- You should provide this if you are using Verified Inc. as an additional authentication factor on top of your existing login. 
 - If this prop is not provided, the login fallback option will not be available.
 
 #### `userCode`
@@ -247,7 +247,7 @@ You will have to upload your Apple and/or Firebase push notification credentials
 - _optional_
 - A code that is associated with a unique user in your system. It should be short-lived (i.e. not a primary key in your database).
 - Allows the [Holder App](/terminology#holder-app) to call back to your system and reference a specific user
-- Example uses include associating a user in your system with the [DID](/terminology#DID) identifying them in Unum ID and just-in-time credential issuance.
+- Example uses include associating a user in your system with the [DID](/terminology#DID) identifying them in Verified Inc. and just-in-time credential issuance.
 
 ## Examples
 

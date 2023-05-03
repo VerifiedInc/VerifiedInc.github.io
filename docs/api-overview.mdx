@@ -93,6 +93,8 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 }
 ```
 
+The `url` from the response ought to then be enriched with a `redirectUrl` query param that will take the next step in your target service's user onboarding webpage. _More information on this can be found in the [Acceptance Guide](/acceptance-guide)._
+
 ---
 
 ### Get Shared Credentials
@@ -100,15 +102,15 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 > Get verified <Tip type="credential"/> data shared by a <Tip type="user"/>.
 
 **Method**: `GET` <br />
-**Path**: `/sharedCredentials/{uuid}`
+**Path**: `/sharedCredentials/{sharedCredentialsUuid}`
 
-When a <Tip type="user"/> responds to a <Tip type="request"/> the verified data is sent and stored securely awaiting retrieval. Additionally, as mentioned above in [Check User Credentials](#check-user-credentials), upon the user responding to the request, the user will be redirected back to your client with a `uuid` as a query parameter.
+When a <Tip type="user"/> responds to a <Tip type="request"/> the verified data is sent and stored securely awaiting retrieval. Additionally, as mentioned above in [Check User Credentials](#check-user-credentials), upon the user responding to the request, the user will be redirected back to your client with a `sharedCredentialsUuid` as a query parameter.
 
 This endpoint allows you to retrieve the shared <Tip type="credential">credentials</Tip> data related to the <Tip type="request"/> created as a result of a successful match from the `/hasMatchingCredentials` endpoint.
 
 You need to provide:
 
-1. the `uuid` that was returned after redirecting the user to the `url` attribute from the `/hasMatchingCredentials`response
+1. the `sharedCredentialsUuid` that was returned in the query param after redirecting the user to the `redirectUrl` attribute from the `/hasMatchingCredentials`response
 
 :::info
 Your brand's access to shared credentials is deleted after 5 minutes of the initial credential data retrieval.

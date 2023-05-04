@@ -33,6 +33,20 @@ Upon the ApiKey creation you will receive one for each environment: Sandbox and 
 The base url for the Sandbox API is `https://core-api.sandbox-unumid.co`.<br/>
 The base url for the Production API is `https://core-api.verified.inc`.
 
+The wallet url for the Sandbox environment is `https://wallet.sandbox-unumid.co`.<br/>
+The wallet url for the Production environment is `https://wallet.verified.inc`.
+
+### Development
+
+While developing your integration you can use a dummy user account if you would like.
+
+```json test
+email: richard@piedpiper.net
+phone: +10123456789
+```
+
+By using these test identifiers you can authenticate to the wallet using a static OTP value of `111111`, allowing you to test the full flow of the integration more easily. We recommend using a proper test email or phone to recieve actual OTP authentication messages during the final stages of development.
+
 ## Functionality
 
 The Verified Inc. API lets your company partcipate in the Verified Inc. identity data network. You can use the API methods to check if <Tip type="user">users</Tip> have credentials of interest, create <Tip type="request">requests</Tip> for and retrieve user data in the form of <Tip type="credential">credentials</Tip>, issue <Tip type="credential">credentials</Tip> of user data, and update previously issued credential statuses (e.g. to invalidate a credential)

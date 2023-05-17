@@ -169,7 +169,6 @@ You need to provide:
 
 1. Credentials data array
 2. Either a phone and/or email attribute
-3. (Optional) Partner UUID. _More information on the partner UUID use case can be found in the [Issuance Guide](/issuance-guide#partner-issuance)._
 
 Data about the user, must comply with our credential [schema](/schema) definitions.
 
@@ -203,21 +202,16 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 
 #### Response Body:
 
-```typescript title="CredentialDto"
-{
+```typescript title="Credential[]"
+[{
+  "id": string, // credential id
+  "type": string, // credential type
   "email": string, // user's email address if provided
-  "phone": phone, // user's phone number if provided
-  "credentials": [{
-    "id": string, // credential id
-    "type": string, // credential type
-    "email": string, // user's email address if provided
-    "phone": string, // user's phone number if provided
-    "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
-    "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
-    "expirationDate?": number // when the expires as a milliseconds since epoch unix timestamp; optional
-  }],
-  "partnerUrl"?: string // link which includes the partner's redirectUrl to direct the user to after the credential is issued; only present if partnerUuid was provided
-}
+  "phone": string, // user's phone number if provided
+  "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
+  "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
+  "expirationDate?": number // when the expires as a milliseconds since epoch unix timestamp; optional
+}]
 ```
 
 The created and issued credentials contains an `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** If you _only_ store the credential `id`, it'll be very difficult to later remember what the `id` corresponds to.

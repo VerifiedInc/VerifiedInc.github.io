@@ -46,10 +46,10 @@ richard@piedpiper.net
 
 As a brand that issues credentials, Verified Inc. is willing to cover your identity verification costs in order to create a truly win-win-win scenario for you, your partners, and your users. Simply put, you issue a digital ID card to any of your users (new or existing) with verified identity data, and we pay you for it. The core motivations for such an arrangement are multifaceted: 
 
-1. **You get your identity verification costs covered** with any provider(s) of your choosing
-2. **You get a new revenue stream** when the user uses your verified data to onboard with [1-Click](https://www.verified.inc/1-click)
-3. **Your users get to enjoy 1-click onboarding** with any of your partners or other third parties that accept your verified data, which also means increased brand awareness
-4. **Verified Inc. gets more identity into the identity network**, which is why we are willing to subsidize your costs
+1. **You get your identity verification costs covered** with any provider(s) of your choosing.
+2. **You get a new revenue stream** when the user uses your verified data to onboard with [1-Click](https://www.verified.inc/1-click).
+3. **Your users get to enjoy 1-click onboarding** with any of your partners or other third parties that accept your verified data, which also means increased brand awareness through a delightful UX.
+4. **Verified Inc. gets more identity into the identity network**, which is why we are willing to subsidize your costs.
 
 ## UX Strategies
 There are many user experiences that can be implemented to seamlessly issue credentials to your users. Below are just a few recommendations with an accompanying demo of each.
@@ -135,3 +135,18 @@ More information about credential schemas can be found in the [Schema](/schema) 
 ### Example & Demo
 
 Please feel free to refer to the [open source](https://github.com/UnumID/Hooli-Demo-Web) Hooli [demo web app](https://hooli-web.demo.sandbox-verifiedinc.com/login) which demonstrates an example implementation of the Free IDV offering. More information, including mobile demo applications can also be found under the [Hooli Demo](/hooli-demo) section.
+
+### Partner Issuance
+In order to treat your users to a one-click partner onboarding experience immediately after issuing them credentials, you will need to pass your partner's static UUID. Upon doing so the issue [`/credentials`](/api-overview#issue-credentials) api response body will contain `partnerUrl` which you can then redirect your user to. This first directs the user to the Verified Inc. wallet where they can complete the partner onboarding process and are finally redirected to the partner's predefined post-signup url.
+
+:::important
+This use case of issuing credentials for a particular partner is by no means required. However, we have to capabilities to suite this use case if you would like to provide this experience for your partners.
+:::
+
+:::note
+To make this an very streamlined experience for the user we include a preauthenticated JWT in the url which will automatically log them into the Verified Inc. wallet. This JWT is valid for 5 minutes and is limited in scope to only the credentials you just issued the user. 
+
+If the user does not complete the partner onboarding process within 5 minutes they can still complete it at later point in 1-click now that they have the credentials but will required them authenticate into the Verified Inc. wallet to do so.
+:::
+
+If this is an experience you would like to provide for your partners immediately after credential issuance please let us know so we can provide you with your partner's static UUID and enable this capability for your <Tip type="brand">brand</Tip>.

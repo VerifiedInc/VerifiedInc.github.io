@@ -14,9 +14,11 @@ Verified Inc. enables securely sharing verified <a href="/terminology#credential
 
 We opted to format our data using W3C's [Linked Data](https://www.w3.org/standards/semanticweb/data) serialized via [JSON-LD](https://www.w3.org/TR/json-ld11/). It gives us the structure to define human readable vocabulary around the data. We use [JSON Schema](https://json-schema.org/) syntax defined via [Typebox](https://github.com/sinclairzx81/typebox) for our data validation purposes via a pre-compiled [AJV](https://ajv.js.org/guide/why-ajv.html) engine. We feel this meets our goal to have a credential schema definition that is robust enough to encapsulate and define any data with the property of being easily described, displayed, and validated.
 
-## Context File
+### Context File
 
 Our entire human readable JSON-LD [context](https://www.w3.org/TR/json-ld11/#the-context) semantics file can be download and viewed via https://schema.verified.inc/context. The context file serves as a building block for the basis of the shared vocabulary that ultimately makes up our credential data schemas. However, more than likely what you want to know is the schema for a particular credential type.
+
+### Schema Definitions
 
 You can view all of the Verified Inc. defined credential schemas via https://schema.verified.inc/schema. If you want to know the schema for a particular credential type you can use that same url with the desired credential type in the path. For example, https://schema.verified.inc/schema/EmailCredential, would yield the EmailCredential's schema information.
 

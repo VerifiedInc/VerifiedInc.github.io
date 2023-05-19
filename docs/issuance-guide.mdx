@@ -137,10 +137,21 @@ More information about credential schemas can be found in the [Schema](/schema) 
 Please feel free to refer to the [open source](https://github.com/UnumID/Hooli-Demo-Web) Hooli [demo web app](https://hooli-web.demo.sandbox-verifiedinc.com/login) which demonstrates an example implementation of the Free IDV offering. More information, including mobile demo applications can also be found under the [Hooli Demo](/hooli-demo) section.
 
 ### Partner Issuance
-In order to treat your users to a one-click partner onboarding experience immediately after issuing them credentials, you will need to pass your partner's static UUID. Upon doing so the issue [`/credentials`](/api-overview#issue-credentials) api response body will contain `partnerUrl` which you can then redirect your user to. This first directs the user to the Verified Inc. wallet where they can complete the partner onboarding process and are finally redirected to the partner's predefined post-signup url.
+Some issuance calls can be made with a particular partner in mind, i.e. in a promotional flow. In these cases you have already authenticated the user in your system and have just issued them credentials. 
+
+In this case, your partner's static `partnerUuid` can be provided to the issue [`/credentials`](/api-overview#issue-credentials) call. The resulting api response body will contain `partnerUrl` which you should redirect the user to. 
+This url ultimately redirects the user to a page of the partners choosing. However, the url first directs the user to the Verified Inc. wallet where they explicity consent to the data share to the partner.
+
+```json title="Example Issue Credentials Response"
+{
+    "email": "richard@pipedpiper.net",
+    "partnerUrl": "https://wallet.verifiedinc.com/request/dfb39a34-ea90-4976-a230-12005c0ddfbb?email=richard%40pipedpiper.net&redirectUrl=https%3A%2F%2Fkredita-web.demo.sandbox-unumid.co%2Fregister&jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJicmFuZFV1aWQiOiI0NDFhNmI2Yy03YjQ5LTRkNTUtYWExMC01ZWMzOWRlNjdjNjEiLCJjcmVkZW50aWFsSWRzIjpbImViNzNiYTBjLTY0MWUtNDc4Zi04ZGJkLWM4NjgzMjU2YWNmMSJdLCJ0aWVyIjoxMCwiaWF0IjoxNjg0NTE2NDU4LCJleHAiOjE2ODQ1MTcwNTgsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJzdWIiOiJjNThkYzc2MS1hNDhjLTRmYWQtOGUyMy1iYmIwMDBjYWIyNTUiLCJqdGkiOiJjYmNmYmVlZC01ZGY1LTQ5YjItOGRlNC1jMzFjYjA5MmYzNTUifQ.QSqg2kNTfnlh42qh0VYhT0Wz_ogSNMTfudNaDQyVIiQ",
+    "credentials": [{...},{...}]
+}
+```
 
 :::important
-This use case of issuing credentials for a particular partner is by no means required. However, we have to capabilities to support this use case if you would like to provide this experience for your partners.
+This use case of issuing credentials for a particular partner is by no means required. The key difference in this flow is the user can skip authenticating with the Verified Inc wallet to share their data.
 :::
 
 :::note

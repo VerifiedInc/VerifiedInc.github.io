@@ -51,51 +51,31 @@ module.exports = {
               to: '/terminology',
             },
             {
-              label: 'Architecture',
-              to: '/architecture',
-            },
-            {
-              label: 'Deployment Overview',
-              to: '/deployment-overview',
-            },
-            {
-              label: 'Quick Start Guide',
-              to: '/1-click-or-free-use-case',
-            },
-            {
-              label: 'Privacy and Security',
-              to: '/privacy-and-security',
+              label: 'FAQ',
+              to: '/faq',
             },
           ],
         },
         {
-          title: 'Components',
+          title: 'Guides',
           items: [
             {
-              label: 'Server SDK',
-              to: '/server-sdk',
+              label: 'Acceptance Guide',
+              to: '/acceptance-guide',
             },
             {
-              label: 'Mobile SDK',
-              to: '/mobile-sdk-overview',
+              label: 'Issuance Guide',
+              to: '/issuance-guide',
             },
             {
-              label: 'Web SDK',
-              to: '/web-sdk',
+              label: '1-Click or Fee IDV',
+              to: '/1-click-or-free-use-case',
             },
           ],
         },
         {
           title: 'Demos',
           items: [
-            {
-              label: 'Developer Demo',
-              to: '/developer-demo',
-            },
-            {
-              label: 'ACME Demo',
-              to: '/acme-demo',
-            },
             {
               label: 'Hooli Demo',
               to: '/hooli-demo',
@@ -104,10 +84,6 @@ module.exports = {
               label: 'Kredita Demo',
               to: '/kredita-demo'
             },
-            {
-              label: 'Hooli Demo IDV',
-              to: '/hooli-demo'
-            }
           ],
         },
         {
@@ -115,7 +91,7 @@ module.exports = {
           items: [
             {
               label: 'Home',
-              href: 'https://www.Unum.ID',
+              href: 'https://www.verified.inc',
             },
             {
               label: 'GitHub',

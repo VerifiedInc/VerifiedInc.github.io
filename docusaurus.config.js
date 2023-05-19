@@ -52,7 +52,7 @@ module.exports = {
             },
             {
               label: 'FAQ',
-              to: '/faq-info',
+              to: '/faq',
             },
           ],
         },

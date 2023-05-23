@@ -179,7 +179,7 @@ An example Credentials object is below:
 {
   "type": string, // credential type
   "data": Map<string, any> // credential data map that matches the credential type's JSON Schema definition
-  "expirationDate?": number // when the expires as a milliseconds since epoch unix timestamp; optional
+  "expirationDate?": number // when the credential expires as a milliseconds since unix epoch; optional
 }
 ```
 
@@ -214,7 +214,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
     "phone": string, // user's phone number if provided
     "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
     "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
-    "expirationDate?": number // when the expires as a milliseconds since epoch unix timestamp; optional
+    "expirationDate?": string // when the credential expires as a milliseconds since unix epoch; optional
   }],
   "partnerUrl"?: string // link which includes the partner's redirectUrl to direct the user to after the credential is issued; only present if partnerUuid was provided
 }

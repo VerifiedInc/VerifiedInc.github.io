@@ -250,7 +250,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 
 ```typescript
 {
-  "data": Map<string, any> // credential data map that matches the credential type's JSON Schema definition
+  "data": Map<string, any> // credential data map that matches the credential type's JSON schema definition
   "expirationDate?": number // when the expires as a milliseconds since epoch unix timestamp; optional
   "status": 'valid' | 'revoked' // an enum to denote wether the credential ought to be invalidated; all credentials are consider valid upon issuance. Note: this is independent of the expirationData.
 }

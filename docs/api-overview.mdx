@@ -264,7 +264,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
   "type": string, // credential type
   "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
   "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
-  "expirationDate?": number, // when the expires as a milliseconds since epoch unix timestamp; optional
+  "expirationDate?": number, // when the credential expires as a milliseconds since epoch unix timestamp; optional
   "status": 'valid' | 'revoked' // an enum to denote wether the credential ought to be invalidated; all credentials are consider valid upon issuance. Note: this is independent of the expirationData.
 }
 ```

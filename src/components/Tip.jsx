@@ -50,7 +50,7 @@ const tooltips =  {
                 <b>Example:</b> ACME Lending issues a KYC verification credential to Richard (an ACME user). This includes Richard's contact information and account numbers, as well as a level of confidence in the accuracy of the data.
             </div>
             <div>
-                <b>Components:</b> A company issues credentials using the <a href="/server-sdk">Server SDK</a>, and an app stores credentials using the <a href="/mobile-sdk-overview">Mobile SDK</a>.
+                <b>Components:</b> A company issues credentials following the steps in the <a href="/issuance-guide">Issuance Guide</a>.
             </div>
         </Collapsible>
         </>,

@@ -184,7 +184,7 @@ An example Credentials object is below:
 ```
 
 :::note
-An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it. See [Update Credentials](#patch-credentials).
+An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it. See [Patch Credentials](#patch-credentials).
 :::
 
 :::info
@@ -239,7 +239,7 @@ You can optionally provide all of the following:
 Credential data must comply with our credential [schema](/schema) definitions.
 
 :::note
-If a credential is expired but the status is 'valid' it is still an unusable credential. Likewise, if the credential as not expired but the status is 'revoked', it is still also not usable credential.
+If a credential is expired but the status is 'valid' it is an unusable credential. Likewise, if the credential as not expired but the status is 'revoked', it is also not usable credential.
 :::
 
 :::info

@@ -137,7 +137,8 @@ More information about credential schemas can be found in the [Schema](/schema) 
 Please feel free to refer to the [open source](https://github.com/UnumID/Hooli-Demo-Web) Hooli [demo web app](https://hooli-web.demo.sandbox-verifiedinc.com/login) which demonstrates an example implementation of the Free IDV offering. More information, including mobile demo applications can also be found under the [Hooli Demo](/hooli-demo) section.
 
 ### Partner Issuance
-Some issuance calls can be made with a particular partner in mind, i.e. in a promotional flow. In these cases you have already authenticated the user in your system and have just issued them credentials. 
+#### First Time Issuance
+Some issuance calls can be made with a particular partner in mind, i.e. in a promotional flow. In these cases you have already authenticated the user and would like to issue them credentials for a particular partner.
 
 In this case, your partner's static `partnerUuid` can be provided to the issue [`/credentials`](/api-overview#issue-credentials) call. The resulting api response body will contain `partnerUrl` which you should redirect the user to. 
 This url ultimately redirects the user to a page of the partners choosing. However, the url first directs the user to the Verified Inc. wallet where they explicity consent to the data share to the partner.
@@ -161,3 +162,19 @@ If the user does not complete the partner onboarding process within 5 minutes, t
 :::
 
 If this is an experience you would like to provide for your partners immediately after credential issuance, please let us know so we can provide you with your partner's static UUID and enable this capability for your <Tip type="brand">brand</Tip>.
+
+#### Already Issued Credentials
+If it is the case you have already issued credentials to a user, then [`/hasMatchingCredentials`](/api-overview#check-user-credentials) can be called with `partnerUuid`. In this case, if Verified Inc. can confirm the user has credentials to satisfy the credential request(s) in the request body, then the resulting api response body will contain a `url` which you should redirect the user to. 
+Just like the `partnerUrl`, this url ultimately redirects the user to a page of the partners choosing. However, the url first directs the user to the Verified Inc. wallet where they explicity consent to the data share to the partner.
+
+```json title="Example Check has Matching Credentials Response"
+{
+    "match": "true",
+    "url": "https://wallet.verifiedinc.com/request/dfb39a34-ea90-4976-a230-12005c0ddfbb?email=richard%40pipedpiper.net&redirectUrl=https%3A%2F%2Fkredita-web.demo.sandbox-verifiedinc.co%2Fregister&jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJicmFuZFV1aWQiOiI0NDFhNmI2Yy03YjQ5LTRkNTUtYWExMC01ZWMzOWRlNjdjNjEiLCJjcmVkZW50aWFsSWRzIjpbImViNzNiYTBjLTY0MWUtNDc4Zi04ZGJkLWM4NjgzMjU2YWNmMSJdLCJ0aWVyIjoxMCwiaWF0IjoxNjg0NTE2NDU4LCJleHAiOjE2ODQ1MTcwNTgsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJzdWIiOiJjNThkYzc2MS1hNDhjLTRmYWQtOGUyMy1iYmIwMDBjYWIyNTUiLCJqdGkiOiJjYmNmYmVlZC01ZGY1LTQ5YjItOGRlNC1jMzFjYjA5MmYzNTUifQ.QSqg2kNTfnlh42qh0VYhT0Wz_ogSNMTfudNaDQyVIiQ",
+}
+```
+
+#### Recommended Implementation
+If you would like to always call [`/hasMatchingCredentials`](/api-overview#check-user-credentials) prior to issuing [`/credentials`](/api-overview#issue-credentials), that works. However, as a brand performing issuance, we recommend you only call [`/hasMatchingCredentials`](/api-overview#check-user-credentials) if you have already confirmed internally that you have issued credentials to the user.
+
+This recommendation is to handle the case the user has elected to remove their own credential data that you have previously issued. In this manner, you can find out on an as needed basis in regard to a user revoking their own data. If this is detected you ought to [patch](api-overview#patch-credentials) all related user credentials with a `revoked` status and re-issue with updated data so the user can continue on the promotional flow. _Re-requesting consent maybe wise._

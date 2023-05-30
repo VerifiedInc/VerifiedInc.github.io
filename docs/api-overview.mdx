@@ -68,7 +68,9 @@ Jump to:
 
 You need to provide:
 
-1. credential request(s)
+1. Credential request(s)
+2. User's email or phone
+3. (Optional) Partner UUID. _More information on the partner UUID use case can be found in the [Issuance Guide](/issuance-guide#partner-issuance)._
 
 A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects.
 
@@ -95,6 +97,7 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
   credentialRequests: CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials are being asked for.
   email?: string, // user's email address; optional if phone is provided
   phone?: string, // user's phone number; optional if email is provided
+  partnerUuid?: string // partner's uuid; optional
 }
 ```
 
@@ -124,7 +127,7 @@ This endpoint allows you to retrieve the shared <Tip type="credential">credentia
 
 You need to provide:
 
-1. the `sharedCredentialsUuid` that was returned in the query param after redirecting the user to the `redirectUrl` attribute from the `/hasMatchingCredentials`response
+- the `sharedCredentialsUuid` that was returned in the query param after redirecting the user to the `redirectUrl` attribute from the `/hasMatchingCredentials`response
 
 :::info
 Your brand's access to shared credentials is deleted after 5 minutes of the initial credential data retrieval.

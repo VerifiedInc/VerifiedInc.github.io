@@ -164,8 +164,8 @@ If the user does not complete the partner onboarding process within 5 minutes, t
 If this is an experience you would like to provide for your partners immediately after credential issuance, please let us know so we can provide you with your partner's static UUID and enable this capability for your <Tip type="brand">brand</Tip>.
 
 #### Already Issued Credentials
-If it is the case you have already issued credentials to a user, then [`/hasMatchingCredentials`](/api-overview#check-user-credentials) can be called with `partnerUuid`. In this case, if Verified Inc. can confirm the user has credentials to satisfy the credential request(s) in the request body, then the resulting api response body will contain a `url` which you should redirect the user to. 
-Just like the `partnerUrl`, this url ultimately redirects the user to a page of the partners choosing. However, the url first directs the user to the Verified Inc. wallet where they explicity consent to the data share to the partner.
+If you have already issued credentials to a user, then [`/hasMatchingCredentials`](/api-overview#check-user-credentials) can be called with `partnerUuid`. In this case, if Verified Inc. can confirm the user has credentials to satisfy the credential request(s) in the request body, then the resulting API response body will contain a `url` which you should redirect the user to. 
+Just like the `partnerUrl`, this `url` ultimately redirects the user to a page of the partner's choosing. However, the `url` first directs the user to the Verified Inc. wallet, where they explicitly consent to share credential data with the partner.
 
 ```json title="Example Check has Matching Credentials Response"
 {
@@ -175,6 +175,4 @@ Just like the `partnerUrl`, this url ultimately redirects the user to a page of 
 ```
 
 #### Recommended Implementation
-If you would like to always call [`/hasMatchingCredentials`](/api-overview#check-user-credentials) prior to issuing [`/credentials`](/api-overview#issue-credentials), that works. However, as a brand performing issuance, we recommend you only call [`/hasMatchingCredentials`](/api-overview#check-user-credentials) if you have already confirmed internally that you have issued credentials to the user.
-
-This recommendation is to handle the case the user has elected to remove their own credential data that you have previously issued. In this manner, you can find out on an as needed basis in regard to a user revoking their own data. If this is detected, you ought to [patch](api-overview#patch-credentials) all related user credentials with a `revoked` status and re-issue with the latest data so the user can continue on the promotional flow. _Re-requesting consent maybe wise._
+We recommend that you first check internally whether you've issued credentials to a user. If you have, then call [`/hasMatchingCredentials`](/api-overview#check-user-credentials) to confirm with Verified Inc. that the user still has these credentials. (There are cases where the user will _not_ still have the credentials, for example if they went directly to their Verified Inc. wallet to delete them.) If the user does not still have the credentials, you can issue them new credentials, as long as you have their consent. As a precaution, you can also [patch](api-overview#patch-credentials) existing credentials with a status of `revoked` to ensure that only the new credentials you issue will be valid for use.

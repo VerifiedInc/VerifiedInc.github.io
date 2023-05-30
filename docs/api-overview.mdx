@@ -182,12 +182,12 @@ An example Credentials object is below:
 {
   "type": string, // credential type
   "data": Map<string, any>, // credential data map that matches the credential type's JSON Schema definition
-  "id"?: string, // credential id; optional. If not provided, a random uuid will be generated
+  "id"?: string, // credential id - uuid formatted; optional. If not provided, a random uuid will be generated
   "expirationDate?": number // when the credential expires as a milliseconds since unix epoch; optional
 }
 ```
 
-While not required, we recommend providing a unique `id` for each credential. This allows for idempotent credential issuance - meaning if a duplicate `id` value is seen another credential will not be created. Expect a https status code of `409` if this is the case. If you do not provide an `id`, a random uuid will be generated for you.
+While not required, we recommend providing a unique `id` following `uuid` [format](https://en.wikipedia.org/wiki/Universally_unique_identifier) for each credential. This allows for idempotent credential issuance - meaning if a duplicate `id` value is seen another credential will not be created. Expect a https status code of `409` if this is the case. If you do not provide an `id`, a random uuid will be generated for you.
 
 :::note
 An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it. See [Patch Credentials](#patch-credentials).

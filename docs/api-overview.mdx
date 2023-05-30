@@ -76,9 +76,9 @@ A credential requests encodes which <Tip type="credential">credentials</Tip> you
 
 ```typescript title="CredentialRequest"
 {
-  type: string; // the type of credential data being requested
-  issuers: string[]; // list of acceptable brandIds; if empty, all issuer brands are valid
-  required?: boolean; // if credential is required (default is true)
+  type: string, // the type of credential data being requested
+  issuers: string[], // list of acceptable brandIds; if empty, all issuer brands are valid
+  required?: boolean // if credential is required (default is true)
 }
 ```
 
@@ -105,7 +105,7 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 
 ```typescript title="HasMatchingCredentials"
 {
-  "match": boolean // indicates whether the user has matching credentials
+  "match": boolean, // indicates whether the user has matching credentials
   "url": string // Verified Inc. Web Wallet url to redirect user to for credential request handling. It will redirect back to your client. Only present if match is true.
 }
 ```
@@ -150,9 +150,9 @@ The response body consists of Credential objects with the plaintext user data.
 
 ```typescript title="SharedCredentials"
 {
-  "uuid": string // the uuid from the query parameter of the redirect back to your client; identifies the collection of credentials shared by the user
-  "credentials": Credential[] // a list of one or more Credential objects
-  "email"?: string // the user's email from the input to /hasMatchingCredentials; only present if email was provided
+  "uuid": string, // the uuid from the query parameter of the redirect back to your client; identifies the collection of credentials shared by the user
+  "credentials": Credential[], // a list of one or more Credential objects
+  "email"?: string, // the user's email from the input to /hasMatchingCredentials; only present if email was provided
   "phone"?: string // the user's phone from the input to /hasMatchingCredentials; only present if phone was provided
 }
 ```
@@ -181,10 +181,13 @@ An example Credentials object is below:
 ```typescript title="Credentials"
 {
   "type": string, // credential type
-  "data": Map<string, any> // credential data map that matches the credential type's JSON Schema definition
+  "data": Map<string, any>, // credential data map that matches the credential type's JSON Schema definition
+  "id"?: string, // credential id; optional. If not provided, a random uuid will be generated
   "expirationDate?": number // when the credential expires as a milliseconds since unix epoch; optional
 }
 ```
+
+While, not required, we recommend providing an `id` for each credential. This allows for idempotent credential issuance - meaning if a duplicate `id` value is seen another credential will not be created. If you do not provide an `id`, a random uuid will be generated for you.
 
 :::note
 An expiration date is not the only control on whether a credential is valid. You can also change the credential's status at any time, for example to revoke it. See [Patch Credentials](#patch-credentials).
@@ -200,7 +203,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 {
   "credentials": Credentials[], // a list of one or more Credentials objects
   "email"?: string, // user's email address; optional if phone is provided
-  "phone"?: string, // user's phone number; optional if email is provided
+  "phone"?: string // user's phone number; optional if email is provided
 }
 ```
 
@@ -215,7 +218,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
     "type": string, // credential type
     "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
     "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
-    "expirationDate?": string // when the credential expires as a milliseconds since unix epoch; optional
+    "expirationDate?": string, // when the credential expires as a milliseconds since unix epoch; optional
     "status": 'valid' | 'revoked' // an enum to denote whether the credential is valid (all credentials are valid when first issued) — note that this is independent of the expirationDate
   }],
   "partnerUrl"?: string // link which includes the partner's redirectUrl to direct the user to after the credential is issued; only present if partnerUuid was provided

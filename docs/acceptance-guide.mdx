@@ -165,11 +165,11 @@ It's easiest to extract the data from each credential using the corresponding [s
 ✅ **_You're done!_**
 
 ### Partner Acceptance
-In some cases a partner is issuing credentials with a specific partner in mind, i.e. in a promotional flow. In these cases, as the accepting <Tip type="brand">brand</Tip>, you only need to handle steps ([3](acceptance-guide#3-capture-query-param-value)) and ([4](/acceptance-guide#4-retrieve-shared-credentials-data)) above. 
+In some cases, the issuer may issue credentials with you, the acceptor, as a specified partner, for example in a promotional flow. In these cases, as the accepting <Tip type="brand">brand</Tip>, you only need to handle steps ([3](acceptance-guide#3-capture-query-param-value)) and ([4](/acceptance-guide#4-retrieve-shared-credentials-data)) above. 
 
-This arrangement is thanks to the issue specifying your brand `uuid` as the immediate benefactor of the credentials and effectively ensuring the user has the necessary credentials - allowing for steps ([1](/acceptance-guide#1-check-user-credentials)) to be skipped. Because the user is already interfacing with the Issuer they also handle the redirect in step ([2](/acceptance-guide#2-redirect-user-to-verified-inc-wallet)). More information can be found in the issuance guide's [partner issuance](/issuance-guide#partner-issuance) section if curious. 
+To do this, the issuer specifies your brand `uuid` as the partner when issuing credentials to the user. This effectively ensures the user will have the necessary credentials, and it allows you to skip steps ([1](/acceptance-guide#1-check-user-credentials)). Because the user starts at the issuer in this type of flow, the issuer handles the redirect in step ([2](/acceptance-guide#2-redirect-user-to-verified-inc-wallet)). For more information, see the [partner issuance](/issuance-guide#partner-issuance) section of the issuance guide.
 
 :::note
-This form of acceptance requires a relationship to be established between the issuer and the acceptor. If interested in exploring the possibilities of establishing this flow, please reach out to contact@verified.inc. However, please note this is not a requirement for acceptance.
+To enable this form of acceptance, we encode a direct relationship between the issuer and the acceptor. So, if you would like to implement this type of flow, please email us at contact@verified.inc so we can help you. However, please note this is not a requirement for acceptance.
 :::
 

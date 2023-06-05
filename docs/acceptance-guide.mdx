@@ -76,10 +76,11 @@ The check to see if the user has credentials that you can accept can happen full
   </details>
 
 ## Implementation
-
 **You need to check whether the user has matching <Tip type="credential">credentials</Tip>.** If they do, you can accept their credentials with the user consent at the click of button for the user. This is what we call 1-Click IDV.
 
-1. **Call [`/hasMatchingCredentials`](/api-overview/#check-user-credentials)** with the user's email and/or phone and the credential type(s) you need.
+#### 1. Check User Credentials
+
+**Call [`/hasMatchingCredentials`](/api-overview/#check-user-credentials)** with the user's email and/or phone and the credential type(s) you need.
 
 ```typescript title="Example Response Body"
 {
@@ -115,19 +116,27 @@ The user will either have matching credentials, or they won't. If they do, conti
 If you would like your existing verification flow verification costs to be covered, please look into issuing credentials. More information can be found in the 1-Click or Free Use Case [section](/1-click-or-free-use-case).
 :::
 
-2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Verified Inc. web wallet. For example the final url you need to redirect the user to is:
+#### 2. Redirect User to Verified Inc. Wallet
+
+**Direct the user to the `url`** the response body contains. You need to add an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Verified Inc. web wallet. 
+
+For example, if the final url you need to redirect the user to is https://acme-bank.co/sign-up/complete then ultimate url you will redirect the user to will be something like this:
 
 ```text title="Example Redirect to Verified Inc. Wallet URL"
 https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789&redirectUrl=https://acme-bank.co/sign-up/complete
 ```
 
-3. **Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined in step (2). To continue the example in step (2), the final url the user will be redirected to will be something like this:
+#### 3. Capture Query Param Value
 
-```text title="Example Redirect Back to Acme Bank URL"
+**Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined in step (2). To continue the example in step (2), the final url the user will be redirected to will be something like this:
+
+``` title="Example Redirect Back to Acme Bank URL"
 https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9458-057125eb417d
 ````
 
-4. **Call `/sharedCredentials/{sharedCredentialsUuid}`** from your backend with the `sharedCredentialsUuid` the callback URL contains. The response body will contain the credentials the user agreed to share via 1-Click IDV.
+#### 4. Retrieve Shared Credentials Data
+
+**Call [`/sharedCredentials/{sharedCredentialsUuid}`](/api-overview#get-shared-credentials)** from your backend with the `sharedCredentialsUuid` the callback URL contains. The response body will contain the credentials the user agreed to share via 1-Click IDV.
 
 ```typescript title="Example Response Body"
 {

@@ -91,7 +91,9 @@ There are many user experiences that can be implemented to seamlessly issue cred
 
 The implementation goal is to **issue <Tip type="credential">credentials</Tip> to a <Tip type="user">user</Tip>.** When you do, Verified Inc. will pay you according to your contract. The steps for completing the implementation are as follows:
 
-1. **Get user consent.** Ask the user if they want to activate their digital ID card (from your brand), and include Verified Inc. legal language:
+#### 1. Get User Consent
+
+You must **get user consent.** Ask the user if they want to activate their digital ID card (from your brand), and include Verified Inc. legal language:
 
 > By clicking the button below, you agree to Verified Inc.’s <a href="https://www.verified.inc/legal/terms-of-use">Terms of Use</a> and direct YOUR_COMPANY_NAME to share your personal information with Verified Inc. to provide its digital ID card services, in accordance with its <a href="https://www.verified.inc/legal/privacy-policy">Privacy Policy</a>.
 
@@ -101,7 +103,9 @@ The implementation goal is to **issue <Tip type="credential">credentials</Tip> t
 **You must obtain user consent before issuing credentials.** Not doing so violates our terms and will prevent us from paying you for issuing credentials. 
 :::
 
-2. **Call [`/credentials`](/api-overview#issue-credentials)** with the user's verified email and/or phone and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [schemas](/schema). 
+#### 2. Issue Credentials
+
+**Call [`/credentials`](/api-overview#issue-credentials)** with the user's verified email and/or phone and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [schemas](/schema). 
 
 _If we don't have a schema that suits your needs, [email us](mailto:support@verified.inc) and we'll make one for you._
 

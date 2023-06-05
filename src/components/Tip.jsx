@@ -71,7 +71,7 @@ const tooltips =  {
     "user":
     <>
     <div>
-        <b>A <a href="/terminology#user">user</a> is an individual in the Verified Inc. network.</b> Each user has at least one phone or emails associated with them. They can have multiple of either.
+        <b>A <a href="/terminology#user">user</a> is an individual in the Verified Inc. network.</b> Each user has at least one phone or emails, aka <a href="/terminology#user-identifier">userIdentifiers</a> associated with them. They can have multiple of either.
     </div>
     <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
         <div>
@@ -79,6 +79,20 @@ const tooltips =  {
         </div>
         <div>
             <b>Components:</b> Referenced in API endpoints `/hasMatchingCredentials` and `/issueCredentials`. User data is associated by using these user identifiers that you already keep on your users.
+        </div>
+    </Collapsible>
+    </>,
+    "userIdentifier":
+    <>
+    <div>
+        <b>A <a href="/terminology#user-identifier">userIdentifier</a> is an email or phone value</b> which is associated with a <a href="/terminology#user">user</a>.
+    </div>
+    <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
+        <div>
+            <b>Example:</b> richard@pipedpiper.net is one of Richard Hendrick's user identifiers. He also has a phone number of +10123456789, another one of his user identifiers.
+        </div>
+        <div>
+            <b>Components:</b> We have abstracted away the complexity of dealing with a third party uuid to refer to a user. Instead, you can use the user's email or phone number to refer to and issue credentials to users in our system.
         </div>
     </Collapsible>
     </>,

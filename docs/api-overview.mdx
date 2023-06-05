@@ -229,14 +229,14 @@ The created and issued credentials contains an `id` that you should store. You'l
 
 ---
 
-### Patch Credentials
+### Patch Credential
 
 > Patch a previously issued <Tip type="credential"/>.
 
 **Method**: `PATCH` <br />
 **Path**: `/credentials/{id}`
 
-You can optionally provide all of the following:
+You can optionally provide any of the following in the request body:
 
 1. (Optional) new credential data
 2. (Optional) new credential expiration date
@@ -276,5 +276,47 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 ```
 
 The resultant credential `id` remains the same, so after a 200 HTTP response code is received, nothing further needs to be updated on your end.
+
+---
+
+### Patch All User Credentials
+
+> Patch all previously issued <Tip type="credentials"/> by your brand to a user.
+
+**Method**: `GET` <br />
+**Path**: `/userCredentials/{userIdentifier}`
+
+A <Tip type="userIdentifier"/> is either a phone number or email address associated with a user.
+
+The only credential value that can by updated in this manner is `status`. A credential status must be in the request body.
+
+:::note
+This endpoint all modifies credentials issued to the user by your brand.
+:::
+
+#### Request Body
+
+```typescript
+{
+  "status": 'valid' | 'revoked' // an enum to denote whether the credential is valid (all credentials are valid when first issued) — note that this is independent of the expirationDate
+}
+```
+
+#### Response Body:
+
+```typescript title="UserCredentialsPatchDto"
+{ 
+  "credentials": {
+    "id": string, // credential id
+    "type": string, // credential type
+    "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
+    "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
+    "expirationDate?": number, // when the credential expires as a milliseconds since epoch unix timestamp; optional
+    "status": 'valid' | 'revoked' // an enum to denote whether the credential is valid (all credentials are valid when first issued) — note that this is independent of the expirationDate.
+  }[]
+}
+```
+
+The response body contains a list of all credentials that were modified on the `credentials` key.
 
 ---

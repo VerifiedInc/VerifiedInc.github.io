@@ -130,9 +130,9 @@ https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=t
 
 **Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined in step (2). To continue the example in step (2), the final url the user will be redirected to will be something like this:
 
-``` title="Example Redirect Back to Acme Bank URL"
+```text title="Example Redirect Back to Acme Bank URL"
 https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9458-057125eb417d
-````
+```
 
 #### 4. Retrieve Shared Credentials Data
 
@@ -163,3 +163,13 @@ https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9
 It's easiest to extract the data from each credential using the corresponding [schema](/schema). The extracted data is verified according to the issuer of the credential, but you can perform additional verification steps if you like.
 
 ✅ **_You're done!_**
+
+### Partner Acceptance
+In some cases a partner is issuing credentials with a specific partner in mind, i.e. in a promotional flow. In these cases, as the accepting <Tip type="brand">brand</Tip>, you only need to handle steps ([3](acceptance-guide#3-capture-query-param-value)) and ([4](/acceptance-guide#4-retrieve-shared-credentials-data)) above. 
+
+This arrangement is thanks to the issue specifying your brand `uuid` as the immediate benefactor of the credentials and effectively ensuring the user has the necessary credentials - allowing for steps ([1](/acceptance-guide#1-check-user-credentials)) to be skipped. Because the user is already interfacing with the Issuer they also handle the redirect in step ([2](/acceptance-guide#2-redirect-user-to-verified-inc-wallet)). More information can be found in the issuance guide's [partner issuance](/issuance-guide#partner-issuance) section if curious. 
+
+:::note
+This form of acceptance requires a relationship to be established between the issuer and the acceptor. If interested in exploring the possibilities of establishing this flow, please reach out to contact@verified.inc. However, please note this is not a requirement for acceptance.
+:::
+

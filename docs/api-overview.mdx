@@ -283,7 +283,7 @@ The resultant credential `id` remains the same, so after a 200 HTTP response cod
 
 > Patch all previously issued <Tip type="credentials"/> by your brand to a user.
 
-**Method**: `GET` <br />
+**Method**: `PATCH` <br />
 **Path**: `/userCredentials/{userIdentifier}`
 
 A <Tip type="userIdentifier"/> is either a phone number or email address associated with a user.
@@ -304,7 +304,7 @@ This endpoint all modifies credentials issued to the user by your brand.
 
 #### Response Body:
 
-```typescript title="UserCredentialsPatchDto"
+```typescript title="UserCredentialsDto"
 { 
   "credentials": {
     "id": string, // credential id
@@ -318,5 +318,43 @@ This endpoint all modifies credentials issued to the user by your brand.
 ```
 
 The response body contains a list of all credentials that were modified on the `credentials` key.
+
+---
+
+### Get All User Credentials
+
+> Get all previously issued <Tip type="credentials"/> by your brand to a user.
+
+**Method**: `GET` <br />
+**Path**: `/userCredentials/{userIdentifier}`
+
+A <Tip type="userIdentifier"/> is either a phone number or email address associated with a user.
+
+:::note
+This endpoint all modifies credentials issued to the user by your brand.
+:::
+
+:::caution
+It should be clear that this endpoint should not be used in place of [`/hasMatchingCredentials`](/api-overview/#check-user-credentials), which can check user credentials across many issuers but does not return the credentials' values. 
+
+This endpoint is simply a nice to have for an issuer to see all credentials they have issued to a user.
+:::
+
+#### Response Body:
+
+```typescript title="UserCredentialsDto"
+{ 
+  "credentials": {
+    "id": string, // credential id
+    "type": string, // credential type
+    "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
+    "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
+    "expirationDate?": number, // when the credential expires as a milliseconds since epoch unix timestamp; optional
+    "status": 'valid' | 'revoked' // an enum to denote whether the credential is valid (all credentials are valid when first issued) — note that this is independent of the expirationDate.
+  }[]
+}
+```
+
+The response body contains a list of all credentials on the `credentials` key.
 
 ---

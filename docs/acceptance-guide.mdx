@@ -167,9 +167,9 @@ It's easiest to extract the data from each credential using the corresponding [s
 ### Partner Acceptance
 In some cases, the issuer may issue credentials with you, the acceptor, as a specified partner, for example in a promotional flow. In these cases, as the accepting <Tip type="brand">brand</Tip>, you only need to handle steps ([3](acceptance-guide#3-capture-query-param-value)) and ([4](/acceptance-guide#4-retrieve-shared-credentials-data)) above. 
 
-To do this, the issuer specifies your brand `uuid` as the partner when issuing credentials to the user. This effectively ensures the user will have the necessary credentials, and it allows you to skip steps ([1](/acceptance-guide#1-check-user-credentials)). Because the user starts at the issuer in this type of flow, the issuer handles the redirect in step ([2](/acceptance-guide#2-redirect-user-to-verified-inc-wallet)). For more information, see the [partner issuance](/issuance-guide#partner-issuance) section of the issuance guide.
+To do this, the issuer specifies your brand `uuid` as the partner when issuing credentials to the user. This effectively ensures the user will have the necessary credentials, and it allows you to skip steps ([1](/acceptance-guide#1-check-user-credentials)). Because the user starts at the issuer in this type of flow, the issuer handles the redirect in step ([2](/acceptance-guide#2-redirect-user-to-verified-inc-wallet)). You must pre-define your desired `redirectUrl` with us. For more information, see the [partner issuance](/issuance-guide#partner-issuance) section of the issuance guide.
 
 :::note
-To enable this form of acceptance, we encode a direct relationship between the issuer and the acceptor. So, if you would like to implement this type of flow, please email us at contact@verified.inc so we can help you. However, please note this is not a requirement for acceptance.
+To enable this form of acceptance, we encode a direct relationship between the issuer and the acceptor. If you would like to implement this type of flow, please email us at contact@verified.inc so we can help you. However, please note this is not a requirement for acceptance.
 :::
 

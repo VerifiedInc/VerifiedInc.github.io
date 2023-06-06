@@ -149,6 +149,18 @@ Users can be referenced by email and/or phone, identifiers that you already have
 }
 ```
 
+### User Identifier
+
+> A **userIdentifier** is a value used to refer to an user. Due to the ubiquitous nature of `phone` and/or `email` values being associated with <a href="/terminology#user">users</a> we have adopted to this term to refer to either of these values.
+
+:::note
+A user can have many userIdentifiers of email and phones. 
+:::
+
+**Example:** richard@pipedpiper.net is one of Richard Hendrick's user identifiers. He also has a phone number of +10123456789, another one of his user identifiers.
+
+**Components:** We have abstracted away the complexity of dealing with a third party uuid to refer to a user. Instead, you can use the user's email or phone number to refer to and issue credentials to users in our system.
+
 ### Brand
 
 > A **brand** is a customer entity that has a corresponding unique API key, name, and ID card image. Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.

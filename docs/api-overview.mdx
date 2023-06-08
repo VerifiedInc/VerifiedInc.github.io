@@ -225,7 +225,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 }
 ```
 
-The created and issued credentials contains an `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** However, it is also an acceptable simply store credential `id's on a user and use the Get Credentials endpoint to retrieve the credential data.
+The created and issued credentials contains an `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** However, it is also an acceptable to store credential `id`s associated with a User and use the [Get Credential](/api-overview#get-credential) or [Get All User Credentials](/api-overview#get-all-user-credentials) endpoint to retrieve the issued credential data.
 
 ---
 

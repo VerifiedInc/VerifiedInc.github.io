@@ -221,7 +221,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
     "expirationDate?": string, // when the credential expires as a milliseconds since unix epoch; optional
     "status": 'valid' | 'revoked' // an enum to denote whether the credential is valid (all credentials are valid when first issued) — note that this is independent of the expirationDate
   }],
-  "url"?: string // url which ultimately redirects the partner's onboarding flow after getting the user's consent to share their credentials in Verified Inc. wallet. Only present if partnerUuid was provided and conditions are met.
+  "url"?: string // Only present if partnerUuid was provided and conditions are met. See the Issuance Guide for more information.
 }
 ```
 

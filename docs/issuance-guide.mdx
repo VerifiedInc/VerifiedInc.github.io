@@ -144,13 +144,13 @@ Please feel free to refer to the [open source](https://github.com/UnumID/Hooli-D
 #### First Time Issuance
 Some issuance calls can be made with a particular partner in mind, i.e. in a promotional flow. In these cases you have already authenticated the user and would like to issue them credentials for a particular partner.
 
-In this case, your partner's static `partnerUuid` can be provided to the issue [`/credentials`](/api-overview#issue-credentials) call. The resulting api response body will contain `partnerUrl` which you should redirect the user to. 
+In this case, your partner's static `partnerUuid` can be provided to the issue [`/credentials`](/api-overview#issue-credentials) call. The resulting api response body will contain a `url` field if conditions related the partner's pre-defined <Tip type="request">credential requests</Tip> are satisfied. If present, you should redirect the user there. 
 This url ultimately redirects the user to a page of the partners choosing. However, the url first directs the user to the Verified Inc. wallet where they explicity consent to the data share to the partner.
 
 ```json title="Example Issue Credentials Response"
 {
     "email": "richard@pipedpiper.net",
-    "partnerUrl": "https://wallet.verifiedinc.com/request/dfb39a34-ea90-4976-a230-12005c0ddfbb?email=richard%40pipedpiper.net&redirectUrl=https%3A%2F%2Fkredita-web.demo.sandbox-verifiedinc.co%2Fregister&jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJicmFuZFV1aWQiOiI0NDFhNmI2Yy03YjQ5LTRkNTUtYWExMC01ZWMzOWRlNjdjNjEiLCJjcmVkZW50aWFsSWRzIjpbImViNzNiYTBjLTY0MWUtNDc4Zi04ZGJkLWM4NjgzMjU2YWNmMSJdLCJ0aWVyIjoxMCwiaWF0IjoxNjg0NTE2NDU4LCJleHAiOjE2ODQ1MTcwNTgsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJzdWIiOiJjNThkYzc2MS1hNDhjLTRmYWQtOGUyMy1iYmIwMDBjYWIyNTUiLCJqdGkiOiJjYmNmYmVlZC01ZGY1LTQ5YjItOGRlNC1jMzFjYjA5MmYzNTUifQ.QSqg2kNTfnlh42qh0VYhT0Wz_ogSNMTfudNaDQyVIiQ",
+    "url": "https://wallet.verifiedinc.com/request/dfb39a34-ea90-4976-a230-12005c0ddfbb?email=richard%40pipedpiper.net&redirectUrl=https%3A%2F%2Fkredita-web.demo.sandbox-verifiedinc.co%2Fregister&jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJicmFuZFV1aWQiOiI0NDFhNmI2Yy03YjQ5LTRkNTUtYWExMC01ZWMzOWRlNjdjNjEiLCJjcmVkZW50aWFsSWRzIjpbImViNzNiYTBjLTY0MWUtNDc4Zi04ZGJkLWM4NjgzMjU2YWNmMSJdLCJ0aWVyIjoxMCwiaWF0IjoxNjg0NTE2NDU4LCJleHAiOjE2ODQ1MTcwNTgsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJzdWIiOiJjNThkYzc2MS1hNDhjLTRmYWQtOGUyMy1iYmIwMDBjYWIyNTUiLCJqdGkiOiJjYmNmYmVlZC01ZGY1LTQ5YjItOGRlNC1jMzFjYjA5MmYzNTUifQ.QSqg2kNTfnlh42qh0VYhT0Wz_ogSNMTfudNaDQyVIiQ",
     "credentials": [{...},{...}]
 }
 ```
@@ -169,7 +169,7 @@ If this is an experience you would like to provide for your partners immediately
 
 #### Already Issued Credentials
 If you have already issued credentials to a user, then [`/hasMatchingCredentials`](/api-overview#check-user-credentials) can be called with `partnerUuid`. In this case, if Verified Inc. can confirm the user has credentials to satisfy the credential request(s) in the request body, then the resulting API response body will contain a `url` which you should redirect the user to. 
-Just like the `partnerUrl`, this `url` ultimately redirects the user to a page of the partner's choosing. However, the `url` first directs the user to the Verified Inc. wallet, where they explicitly consent to share credential data with the partner.
+Just like the `url`, this `url` ultimately redirects the user to a page of the partner's choosing. However, the `url` first directs the user to the Verified Inc. wallet, where they explicitly consent to share credential data with the partner.
 
 ```json title="Example Check has Matching Credentials Response"
 {

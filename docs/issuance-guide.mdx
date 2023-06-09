@@ -144,7 +144,7 @@ Please feel free to refer to the [open source](https://github.com/UnumID/Hooli-D
 #### First Time Issuance
 Some issuance calls can be made with a particular partner in mind, i.e. in a promotional flow. In these cases you have already authenticated the user and would like to issue them credentials for a particular partner.
 
-To do this, you can provide your partner's static `partnerUuid` to the issue [`/credentials`](/api-overview#issue-credentials) call. The resulting api response body will contain a `url` field if conditions related the partner's pre-defined <Tip type="request">credential requests</Tip> are satisfied. If present, you should redirect the user there. 
+To do this, you can provide your partner's static `partnerUuid` to the issue [`/credentials`](/api-overview#issue-credentials) call. The resulting api response body will contain a `url` field if conditions related the partner's pre-defined <Tip type="request">credential requests</Tip> are satisfied. If present, you should redirect the user there.  
 This url ultimately redirects the user to a page of the partners choosing. However, the url first directs the user to the Verified Inc. wallet where they explicity consent to the data share to the partner.
 
 ```json title="Example Issue Credentials Response"

@@ -225,7 +225,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 }
 ```
 
-The created and issued credentials contains an `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** However, it is also an acceptable to store credential `id`s associated with a User and use the [Get Credential](/api-overview#get-credential) or [Get All User Credentials](/api-overview#get-all-user-credentials) endpoint to retrieve the issued credential data.
+The issued credential contains an `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** However, it is also an acceptable to store credential `id`s associated with a user and use the [Get Credential](/api-overview#get-credential) or [Get All User Credentials](/api-overview#get-all-user-credentials) endpoint to retrieve the full credential.
 
 ---
 
@@ -328,7 +328,7 @@ The response body contains a list of all credentials that were modified on the `
 **Method**: `GET` <br />
 **Path**: `/credentials/{id}`
 
-This endpoint returns the credential data is issued by your brand via the credential `id`. 
+This endpoint returns a credential (issued by your brand) via the credential `id`. 
 
 
 #### Response Body:

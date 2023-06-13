@@ -168,7 +168,7 @@ If the user does not complete the partner onboarding process within 5 minutes, t
 If this is an experience you would like to provide for your partners immediately after credential issuance, please let us know so we can provide you with your partner's static UUID and enable this capability for your <Tip type="brand">brand</Tip>.
 
 #### Already Issued Credentials
-If you have already issued credentials to a user, then [`/hasMatchingCredentials`](/api-overview#check-user-credentials) can be called with `partnerUuid`. In this case, if Verified Inc. can confirm the user has credentials to satisfy the credential request(s) in the request body, then the resulting API response body will contain a `url` which you should redirect the user to. 
+If you have already issued credentials to a user, then [`/hasMatchingCredentials`](/api-overview#check-user-credentials) can be called with `partnerUuid`. In this case, if Verified Inc. can confirm the user has credentials to satisfy the [pre-defined](/acceptance-guide#partner-acceptance) partner credential request(s), then the resulting API response body will contain a `url` which you should redirect the user to. 
 Just as in the case of the [`/credentials`](/api-overview#issue-credentials) response, this `url` ultimately redirects the user to a page of the partner's choosing. However, the `url` first directs the user to the Verified Inc. wallet, where they explicitly consent to share credential data with the partner.
 
 ```json title="Example Check has Matching Credentials Response"

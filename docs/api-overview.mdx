@@ -386,3 +386,42 @@ This endpoint is simply a nice to have for an issuer to see all credentials they
 The response body contains a list of all credentials on the `credentials` key.
 
 ---
+
+<!-- By the way, the work I finished today that added the credential request 
+validation on the partner issuance /credentials call made me realize we need 
+to way to communicate concretely what the credential requests of each partner are. 
+I’m thinking something like /credentialRequests/{partnerUuid} that returns a list of
+credential requests. 
+We can explain it to them all we want but probably best to have it in a way they can just hit an api endpoint for.
+Will be important for /hasMatchingCredentials call too once we drop the credentialRequests requirement for calls with partnerUuid.
+Yeah that's a good point. 
+I worry a bit about introducing the "presentation" jargon... it's more accurate to our 
+internal model but think it'd be better to stick with "credential" language for clarity.
+But yes probably a new endpoint they can use to retrieve this makes sense. 
+Presumably gated so that only an actual partner can retrieve it? -->
+
+### Get Partner Credential Requests
+
+> Get the partner pre-defined <Tip type="request">credential requests</Tip>.
+
+**Method**: `GET` <br />
+**Path**: `/credentialRequests/{partnerUuid}`
+
+This endpoint returns a list of credential requests that the partner has defined for their brand.
+
+#### Response Body:
+
+```typescript title="CredentialRequest"
+{
+  "credentialRequests": {
+    "type": string, // credential type
+    "issuers": string[], // list of acceptable brandIds; if empty, all issuer brands are valid
+    "required": boolean, // whether the credential is required
+  }[]
+}
+```
+
+:::note
+This endpoint is to partners use case. 
+More information about it can be found in the [Issuance Guide](/issuance-guide#already-issued-credentials)
+:::

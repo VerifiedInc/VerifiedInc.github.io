@@ -51,7 +51,8 @@ module.exports = {
       items: [
         // 'idv-demo',
         'hooli-demo',
-        'kredita-demo'
+        'hooli-partner-demo',
+        'kredita-demo',
       ]
     },
   ],

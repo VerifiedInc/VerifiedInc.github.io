@@ -84,6 +84,10 @@ module.exports = {
               label: 'Kredita Demo',
               to: '/kredita-demo'
             },
+            {
+              label: 'Hooli Partner Demo',
+              to: '/hooli-partner-demo',
+            },
           ],
         },
         {

@@ -12,11 +12,7 @@ import Tip from '../src/components/Tip';
 
 Verified Inc. enables securely sharing verified <a href="/terminology#credential"><Tip type="credential"/></a> data amongst network participants. While in theory this data can take any shape, a structured schema must be defined and followed for every credential type for the sake of all network participants.
 
-We opted to format our data using W3C's [Linked Data](https://www.w3.org/standards/semanticweb/data) serialized via [JSON-LD](https://www.w3.org/TR/json-ld11/). It gives us the structure to define human readable vocabulary around the data. We use [JSON Schema](https://json-schema.org/) syntax defined via [Typebox](https://github.com/sinclairzx81/typebox) for our data validation purposes via a pre-compiled [AJV](https://ajv.js.org/guide/why-ajv.html) engine. We feel this meets our goal to have a credential schema definition that is robust enough to encapsulate and define any data with the property of being easily described, displayed, and validated.
-
-### Context File
-
-Our entire human readable JSON-LD [context](https://www.w3.org/TR/json-ld11/#the-context) semantics file can be download and viewed via https://schema.verified.inc/context. The context file serves as a building block for the basis of the shared vocabulary that ultimately makes up our credential data schemas. However, more than likely what you want to know is the schema for a particular credential type.
+We use [JSON Schema](https://json-schema.org/) syntax for data validation purposes via a pre-compiled [AJV](https://ajv.js.org/guide/why-ajv.html) engine. We feel this meets our goal to have a credential schema definition that is robust enough to encapsulate and define any data with the property of being easily described, displayed, and validated.
 
 ### Schema Definitions
 
@@ -29,37 +25,117 @@ It is possible to view the response bodies from https://schema.verified.inc/sche
 :::
 
 :::important
-Given use of JSON Schema and JSON-LD standards for schema definitions, we hope to make <a href="/terminology#customer"><Tip type="customer"/></a> defined credentials schemas a reality very soon. However, until then, all credential types have schemas defined by Verified Inc.. Please let us know if you would like to define a new credential schema for your use case.
+Given use of JSON Schema standard for schema definitions, we hope to make <a href="/terminology#customer"><Tip type="customer"/></a> defined credentials schemas a reality very soon. However, until then, all credential types have schemas defined by Verified Inc.. Please let us know if you would like to define a new credential schema for your use case.
 :::
 
 We currently are opting to only support what can be referred to as "single attribute atomic credentials". This means that we break data into its simplest form for every credential. This is to provide users a means of selective disclosure for <a href="/terminology#request"><Tip type="request"/></a>s with optional fields.
 
+#### JSON Schema
+The `/schema` path will return enriched schema information, however likely the only relevant schema section will the the `json` key which contains the JSON schema definition.
+
+Response body from https://schema.verified.inc/jsonSchema/AddressCredential:
+```json title="Example AddressCredential Schema"
+{
+    // highlight-start
+    "json": {
+        "$id": "AddressCredential",
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+            "address": {
+                "format": "address",
+                "description": "Address in the format of: street, city, iso3166-code postal-code",
+                "examples": [
+                    "10 Downing Street, London, GB-ENG SW1A 2AA",
+                    "307 3rd Ave, Apt #4, San Austin, US-GA 18025-9876"
+                ],
+                "type": "string"
+            }
+        },
+        "required": [
+            "address"
+        ]
+    },
+    // highlight-end
+    "jsonLD": {
+        "@type": "AddressCredential",
+        "address": "schema:address",
+        "@context": "https://schema.unumid.co"
+    },
+    "attributes": {
+        "type": "AddressCredential",
+        "attributes": [
+            {
+                "key": "address",
+                "label": "Address",
+                "comment": "Physical address.",
+                "displayFormat": "Address"
+            }
+        ]
+    }
+}
+```
+
+You can instead just use the `/jsonSchema` path to only get that information, e.g. https://schema.verified.inc/jsonSchema/FirstNameCredential:
+```json title="Example FirstNameCredential JSON Schema"
+{
+    "$id": "FirstNameCredential",
+    "additionalProperties": false,
+    "type": "object",
+    "properties": {
+        "firstName": {
+            "description": "A person's first name",
+            "examples": [
+                "John",
+                "Mary Kate"
+            ],
+            "type": "string"
+        }
+    },
+    "required": [
+        "firstName"
+    ]
+}
+```
+
+:::tip
+You will notice that each attribute will have a `description` and `examples` to assist your understanding of the credential's schema. If more detailed information is required our [schema-sdk](https://github.com/UnumID/schema-sdk) is open-sourced and our [formats](https://github.com/UnumID/schema-sdk/blob/main/src/formats.ts) are free to be analyzed.
+:::
+
 ## Example
 
-Below is code level example of how to comply with the schema definitions when issuing credentials. In this example we are following the [AddressCredential](https://schema.verified.inc/schema/AddressCredential) and [FullNameCredential](https://schema.verified.inc/schema/FullNameCredential) schemas.
+After first grabbing the JSON schemas for the Address, FirstName, and LastName Credentials and understand their attribute's description and examples, we can create compliant credential bodies.
+
+Below is code level example of those credentials with valid values being constructed for credential issuance. In this example we are following the [AddressCredential](https://schema.verified.inc/jsonSchema/AddressCredential), [FirstNameCredential](https://schema.verified.inc/jsonSchema/FirstNameCredential), and [LastNameCredential](https://schema.verified.inc/jsonSchema/LastNameCredential) JSON schemas.
 
 ```typescript
-/*The credential data compliant with the Address and FullName Credentials schemas*/
+/*The credential data compliant with the Address, FirstName, and LastName Credentials schemas*/
 const credentialsList: Credentials = [
   {
     type: 'AddressCredential',
     data: {
-      address: '1010 Main St, Anytown USA',
+      address: '1010 Main St, San Francisco, US-CA 94117',
     },
   },
   {
-    type: 'FullNameCredential',
+    type: 'FirstNameCredential',
     data: {
-      fullName: 'John Red Doe',
+      fullName: 'Richard',
     },
   },
+  {
+    type: 'LastNameCredential',
+    data: {
+      fullName: 'Hendricks',
+    },
+  }
 ];
 ```
 
 ```typescript title="Example Request Body for Issuing Credentials"
 {
   "credentials": credentialsList, // a list of one or more Credentials objects
-  "email": "john@reddoe.co"
+  "email": "richard.hendricks@pipedpiper.net"
 }
 
 ```

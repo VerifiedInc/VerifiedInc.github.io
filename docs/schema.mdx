@@ -31,7 +31,7 @@ We hope to soon make it possible for you as a <a href="/terminology#customer"><T
 We currently are opting to only support what can be referred to as "single attribute atomic credentials". This means that we break data into its simplest form for every credential. This is to provide users a means of selective disclosure for <a href="/terminology#request"><Tip type="request"/></a>s with optional fields.
 
 #### JSON Schema
-The `/schema` path will return enriched schema information, however likely the only relevant schema section will the the `json` key which contains the JSON schema definition.
+The `/schema` path will return enriched schema information. Likely the relevant section for your use is the `json` key, which contains the JSON schema definition.
 
 Response body from https://schema.verified.inc/jsonSchema/AddressCredential:
 ```json title="Example AddressCredential Schema"

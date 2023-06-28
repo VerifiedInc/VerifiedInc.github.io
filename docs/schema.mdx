@@ -79,21 +79,22 @@ Response body from https://schema.verified.inc/jsonSchema/AddressCredential:
 You can instead just use the `/jsonSchema` path to only get that information, e.g. https://schema.verified.inc/jsonSchema/FirstNameCredential:
 ```json title="Example FirstNameCredential JSON Schema"
 {
-    "$id": "FirstNameCredential",
+    "$id": "AddressCredential",
     "additionalProperties": false,
     "type": "object",
     "properties": {
-        "firstName": {
-            "description": "A person's first name",
+        "address": {
+            "format": "address",
+            "description": "Address in the format of: street, city, iso3166-code postal-code",
             "examples": [
-                "John",
-                "Mary Kate"
+                "10 Downing Street, London, GB-ENG SW1A 2AA",
+                "307 3rd Ave, Apt #4, San Austin, US-GA 18025-9876"
             ],
             "type": "string"
         }
     },
     "required": [
-        "firstName"
+        "address"
     ]
 }
 ```

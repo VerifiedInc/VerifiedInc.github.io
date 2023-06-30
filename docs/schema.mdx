@@ -104,6 +104,12 @@ You can instead just use the `/jsonSchema` path to only get that information, e.
 Note that each attribute has a `description` and `examples` to help you understand the credential's schema. If you need more detailed information, look at our open source [schema-sdk](https://github.com/UnumID/schema-sdk) [formats](https://github.com/UnumID/schema-sdk/blob/main/src/formats.ts).
 :::
 
+## Schema Library
+
+Next, you can search or select for a schema JSON, see it's properties and attribute, and also copy the schema structure of choice:
+
+<Schemas/>
+
 ## Example
 
 First, we get the JSON schemas for the [`AddressCredential`](https://schema.verified.inc/jsonSchema/AddressCredential), [`FirstNameCredential`](https://schema.verified.inc/jsonSchema/FirstNameCredential), and [`LastNameCredential`](https://schema.verified.inc/jsonSchema/LastNameCredential) and review their attributes' `description`s and `examples`.
@@ -141,9 +147,3 @@ const credentialsList: Credentials = [
 }
 
 ```
-
-## Schema Library
-
-Next, you can search or select for a schema JSON, see it's properties and attribute, and also copy the schema structure of choice:
-
-<Schemas/>

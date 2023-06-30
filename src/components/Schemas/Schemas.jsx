@@ -64,6 +64,9 @@ function SchemasBody({ schemas }) {
   const inView = useInView(containerRef, { amount: 'some' });
   const [viewed, setViewed] = useState(inView);
   const data = Object.entries(schemas).map(mapSchemaDto);
+  const dataParsed = data
+    .filter(filterBySchemaName(filter))
+    .sort(sortBySchemaName);
   const containerVariants = {
     hidden: {},
     show: {
@@ -121,18 +124,20 @@ function SchemasBody({ schemas }) {
             placeholder='Search for a schema e.g Email Credential'
             onChange={(e) => setFilter(e.target.value)}
           />
+          {!dataParsed.length && (
+            <h2 className='text--center margin-top--lg margin-bottom--lg'>
+              No schema found with term {filter}
+            </h2>
+          )}
           <motion.div className={styles['container-grid']}>
             <AnimatePresence>
-              {data
-                .filter(filterBySchemaName(filter))
-                .sort(sortBySchemaName)
-                .map(([key, schema]) => (
-                  <SchemaCard
-                    key={key}
-                    schema={schema}
-                    onSchemaSelect={setSelectedSchema}
-                  />
-                ))}
+              {dataParsed.map(([key, schema]) => (
+                <SchemaCard
+                  key={key}
+                  schema={schema}
+                  onSchemaSelect={setSelectedSchema}
+                />
+              ))}
             </AnimatePresence>
           </motion.div>
         </motion.div>

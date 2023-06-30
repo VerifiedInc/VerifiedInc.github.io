@@ -61,21 +61,23 @@
   --ifm-color-danger-light: #f31e38;
   --ifm-color-danger-lighter: #f32a42;
   --ifm-color-danger-lightest: #f54d62;
-  
+
   /* FONTS */
   /* base */
   --ifm-font-family-base: 'Lato';
   --ifm-line-height-base: 1.4;
   /* code */
   --ifm-code-font-size: 95%;
+  /* modal */
+  --ifm-modal-overlay: rgba(255,255,255,0.8);
 }
 
 /* ADMONITIONS */
 .admonition-tip, .admonition-important, .admonition-warning {
-  color: white;   
+  color: white;
 }
 .admonition-tip .admonition-icon svg, .admonition-important .admonition-icon svg, .admonition-warning .admonition-icon svg {
-  fill: white;   
+  fill: white;
 }
 .admonition svg {
   margin-right: 5px;
@@ -151,4 +153,21 @@
 /* DARK MODE */
 html[data-theme='dark'] {
   --ifm-blockquote-color: #a5a5a5;
+  --ifm-modal-overlay: rgba(0,0,0,0.7);
+}
+
+.--ifm-modal-overlay {
+  background-color: var(--ifm-modal-overlay);
+}
+
+.skeleton {
+  border-radius: .5rem;
+  background-color: var(--ifm-color-gray-300);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1 }
+  50% { opacity: .40 }
+  100% { opacity: 1 }
 }

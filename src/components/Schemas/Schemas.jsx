@@ -60,6 +60,7 @@ function SchemasBody({ schemas }) {
   const [filter, setFilter] = useState('');
   const containerRef = useRef();
   const [containerHeight, setContainerHeight] = useState('auto');
+  const [containerMaxHeight, setContainerMaxHeight] = useState(0);
 
   const inView = useInView(containerRef, { amount: 'some' });
   const [viewed, setViewed] = useState(inView);
@@ -85,7 +86,6 @@ function SchemasBody({ schemas }) {
     if (viewed) return 'idle';
     return inView ? 'show' : undefined;
   }, [selectedSchema, inView, viewed]);
-  console.log(animate);
 
   useEffect(() => {
     if (viewed) return;
@@ -95,7 +95,10 @@ function SchemasBody({ schemas }) {
 
   useEffect(() => {
     const observer = new ResizeObserver((entries) => {
-      setContainerHeight(entries[0].contentRect.height);
+      const entryHeight = entries[0].contentRect.height;
+      // Set always the larger number for the height to handle expanded state.
+      setContainerMaxHeight((prev) => Math.max(prev, entryHeight));
+      setContainerHeight(entryHeight);
     });
 
     observer.observe(containerRef.current);
@@ -108,7 +111,10 @@ function SchemasBody({ schemas }) {
   return (
     <motion.div
       className={styles.container}
-      animate={{ height: containerHeight, transition: { duration: 0.2 } }}
+      animate={{
+        height: selectedSchema ? containerMaxHeight : containerHeight,
+        transition: { duration: 0.2 },
+      }}
       layout
     >
       <motion.div ref={containerRef}>

@@ -1,0 +1,7 @@
+# Ignore build artifacts
+build
+.cache
+
+# ignore dependencies
+node_modules
+package-lock.json

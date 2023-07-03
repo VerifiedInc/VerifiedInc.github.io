@@ -15,12 +15,5 @@ export function schemaResolverService() {
         mode: 'cors',
       });
     },
-    // Get schema contains all the schema data from a credential.
-    async getSchema(credential) {
-      return await fetchService(`${baseUrl}/schema/${credential}`, {
-        method: 'GET',
-        mode: 'cors',
-      });
-    },
   };
 }

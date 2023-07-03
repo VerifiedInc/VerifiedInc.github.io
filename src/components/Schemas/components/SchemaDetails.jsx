@@ -35,50 +35,7 @@ function PropertyField({ field, value }) {
   );
 }
 
-function PropertyAttribute({ attribute, isLoading }) {
-  const renderAttribute = () => {
-    if (isLoading)
-      return (
-        <div className={styles['attribute-container']}>
-          <div className={`${styles['skeleton-title']} skeleton`} />
-          <div
-            className={`${styles['skeleton-content-md']} skeleton margin-top--lg`}
-          />
-          <div
-            className={`${styles['skeleton-content-lg']} skeleton margin-top--lg`}
-          />
-          <div
-            className={`${styles['skeleton-content-xl']} skeleton margin-top--lg`}
-          />
-        </div>
-      );
-
-    if (!attribute) return null;
-
-    const keys = keysLiteral(attribute);
-
-    return (
-      <div className={`${styles['attribute-container']} card`}>
-        {Object.entries(attribute).map(([attributeKey, attributeValue]) => (
-          <p>
-            <PropertyField field={keys[attributeKey]} value={attributeValue} />
-          </p>
-        ))}
-      </div>
-    );
-  };
-
-  return (
-    <div className='margin-top--md'>
-      <h6 className={`${styles['section-title']} margin-bottom--md`}>
-        Attribute
-      </h6>
-      {renderAttribute()}
-    </div>
-  );
-}
-
-function SchemaProperty({ schema, isLoading }) {
+function SchemaProperty({ schema }) {
   const propertyEntries = Object.entries(schema.properties);
 
   const renderProperties = () => {
@@ -117,10 +74,6 @@ function SchemaProperty({ schema, isLoading }) {
                 </div>
               );
             })}
-            <PropertyAttribute
-              attribute={propertyAttribute}
-              isLoading={isLoading}
-            />
           </div>
         </div>
       );
@@ -139,16 +92,12 @@ function SchemaProperty({ schema, isLoading }) {
 
 export function SchemaDetails({ schema, onRequestClose }) {
   const [copied, setCopied] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [schemaWithAttributes, setSchemaWithAttributes] = useState(schema);
 
   const keys = keysLiteral(schema);
 
   // Copy the schema as it is for easy management of data from user perspective.
   const handleCopySchema = () => {
-    navigator.clipboard.writeText(
-      JSON.stringify(schemaWithAttributes.raw, null, 2)
-    );
+    navigator.clipboard.writeText(JSON.stringify(schema.raw, null, 2));
     setCopied(true);
   };
 
@@ -158,15 +107,6 @@ export function SchemaDetails({ schema, onRequestClose }) {
       clearTimeout(timer);
     };
   }, [copied]);
-
-  useEffect(() => {
-    schemaResolverService()
-      .getSchema(schema.id)
-      .then((res) => {
-        setSchemaWithAttributes((prev) => ({ ...prev, raw: res }));
-        setIsLoading(false);
-      });
-  }, [schema.id]);
 
   return (
     <motion.div
@@ -212,7 +152,7 @@ export function SchemaDetails({ schema, onRequestClose }) {
             />
             <PropertyField field={keys.type} value={schema.type} />
           </div>
-          <SchemaProperty schema={schemaWithAttributes} isLoading={isLoading} />
+          <SchemaProperty schema={schema} />
         </motion.div>
       </div>
     </motion.div>

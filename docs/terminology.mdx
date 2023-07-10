@@ -96,7 +96,8 @@ The full details of the request object aren't that important or helpful to know,
     {
       "type": "SsnCredential",
       "issuers": ["d14ca24c-5323-4b79-9dfa-6471b014d68c"],
-      "required": true
+      "required": true,
+      "description": "Most services that ask for SSN explain why they're asking for it, since people are nervous about providing it."
     },
     {
       "type": "LastNameCredential",
@@ -132,7 +133,7 @@ The full details of the request object aren't that important or helpful to know,
 > A **user** is an individual in the Verified Inc. network that can share verified identity data (via <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a>). Each user has at least one phone number or email address associated with them. They can have multiple of either.
 
 :::note
-Users can be referenced by email and/or phone, identifiers that you already have for your own user accounts. This prevents you from needing to use Verified Inc. specific user IDs.  
+Users can be referenced by email and/or phone, identifiers that you already have for your own user accounts. This prevents you from needing to use Verified Inc. specific user IDs.
 :::
 
 **Example:** Richard is a user in your account system and potentially a user in the Verified Inc. network. You have two email addresses and one phone number for him. You can use any of these identifiers to issue credentials to him or check if he has matching credentials.
@@ -154,7 +155,7 @@ Users can be referenced by email and/or phone, identifiers that you already have
 > A **userIdentifier** is a value used to refer to an user. Due to the ubiquitous nature of `phone` and/or `email` values being associated with <a href="/terminology#user">users</a> we have adopted to this term to refer to either of these values.
 
 :::note
-A user can have many userIdentifiers of email and phones. 
+A user can have many userIdentifiers of email and phones.
 :::
 
 **Example:** richard@pipedpiper.net is one of Richard Hendrick's user identifiers. He also has a phone number of +10123456789, another one of his user identifiers.

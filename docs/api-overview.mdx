@@ -7,6 +7,7 @@ slug: /api-overview
 
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
+import CredentialRequestCodeSnippet from './reusables/credential-request-code-snippet.mdx'
 
 **Before you begin:** You need to be registered as an Verified Inc. customer to create a brand API key. You can register zero to many brands, depending on your use case. For API keys to use for authentication please reach out to support@verified.inc. _Our self service dashboard is coming soon!_
 
@@ -74,14 +75,7 @@ You need to provide:
 
 A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects.
 
-```typescript title="CredentialRequest"
-{
-  type: string, // the type of credential data being requested
-  issuers: string[], // list of acceptable brandIds; if empty, all issuer brands are valid
-  required?: boolean, // if credential is required (default is true)
-  description?: string // a description of the credential or explanation for why it is being requested. The description will be displayed to users responding to the request
-}
-```
+<CredentialRequestCodeSnippet />
 
 If you list multiple <Tip type="issuer">issuers</Tip>, the user can include a credential issued by _any one_ of those listed. If `issuers` is left empty the user can include a credential with matching type issued by _any_ issuer.
 
@@ -405,8 +399,7 @@ This endpoint returns a list of credential requests that the partner has defined
 }
 ```
 
-Type reference for:
-- [CredentialRequest](https://docs.verified.inc/types/interfaces/credentialrequest.html)
+<CredentialRequestCodeSnippet />
 
 :::note
 This endpoint is helpful when developing the partner issuance flow. More information about partner issuance can be found in the [Issuance Guide](/issuance-guide#partner-issuance).

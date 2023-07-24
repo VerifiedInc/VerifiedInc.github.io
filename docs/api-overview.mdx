@@ -95,7 +95,8 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
   email?: string, // user's email address; optional if phone is provided
   phone?: string, // user's phone number; optional if email is provided
   credentialRequests: CredentialRequest[], // a list of one or more CredentialRequest objects. Encodes which credentials are being asked for; not used if partnerUuid is provided
-  partnerUuid?: string // partner's uuid; optional
+  partnerUuid?: string, // partner's uuid; optional
+  description?: string // the description that goes to the consent page header, when is empty the default text will be used.
 }
 ```
 

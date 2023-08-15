@@ -9,19 +9,17 @@ import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 import CredentialRequestCodeSnippet from './reusables/credential-request-code-snippet.mdx'
 
-**Before you begin:** You need to be registered as an Verified Inc. customer to create a brand API key. You can register zero to many brands, depending on your use case. For API keys to use for authentication please reach out to support@verified.inc. _Our self service dashboard is coming soon!_
+## Overview
+
+Integrating with Verified Inc. can be completed with minimal effort by following this documentation. That said, if you desire further assistance, please do not hesitate to reach out to support@verified.inc. Once complete, you will be able to boast [1-click](https://www.verified.inc/1-click) (or free) KYC onboarding and secure additional revenue streams for any user data shared with other network participants.
 
 :::note
 Postman documentation of this API can be found [here](https://api.docs.verified.inc/).
 :::
 
-## Overview
-
-Integrating with Verified Inc. can be completed with minimal effort by following this documentation. That said, if you desire further assistance, please do not hesitate to reach out to support@verified.inc. Once complete, you will be able to boast [1-click](https://www.verified.inc/1-click) (or free) KYC onboarding and secure additional revenue streams for any user data shared with other network participants.
-
 ### Authentication
 
-Every request detailed below requires an Verified Inc. ApiKey as an Authorization Bearer token header, which is used to authenticate requests to the Verified Inc. cloud.
+Every request detailed below requires an Verified Inc. ApiKey as an Authorization Bearer token header, which is used to authenticate requests to the Verified Inc. cloud. For API keys to use for authentication please reach out to support@verified.inc. _Our self service dashboard is coming soon!_
 
 :::caution
 **API keys are sensitive, so please only use them in a secure backend service environment.** This means that ideally your clients will communicate with your own backend service, which will then call the Verified Inc. API. Your clients should never have direct access to your Verified Inc. API key.

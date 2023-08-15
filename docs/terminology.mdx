@@ -38,9 +38,11 @@ At a high level, to issue a credential a company inputs three pieces of informat
 
 1. type of the credential
 2. identifier for the person
-3. data about the person
+3. data about the person or a set of credentials
 
 The data schema must match the corresponding credential type. Information on the data formats for each type can be found in the [Data Schema](/schema) section.
+
+Example credential
 
 ```json
 {
@@ -61,11 +63,51 @@ The data schema must match the corresponding credential type. Information on the
 }
 ```
 
+Example credential with a set of credentials
+
+```json
+{
+  "id": "1be7c008-3f0c-4a21-9aad-69ca1c4251d2", // the credential id
+  // highlight-start
+  "type": "FullNameCredential", // the type of credential
+  // highlight-end
+  "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55", // the brand uuid of the issuer
+  "issuanceDate": "1671847264479", // date the credential was issued in milliseconds since unix epoch
+  "expirationDate": "1871839024044", // date the credential expires in milliseconds since unix epoch
+  // highlight-start
+  // the data attribute must match the FullNameCredential JSON schema properties as mentioned in the Data Schema section.
+  // i.e. https://schema.verified.inc/jsonSchema/FullNameCredential
+  "data": [
+    {
+      "id": "2e6a7b9a-e93e-43ba-98a9-c554f4e16457", // `FirstNameCredential` credential id
+      "type": "FirstNameCredential", // the type of credential
+      "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55", // the brand uuid of the issuer
+      "issuanceDate": "1671847264479", // date the credential was issued in milliseconds since unix epoch
+      "expirationDate": "1871839024044", // date the credential expires in milliseconds since unix epoch
+      "data": {
+        "firstName": "Richard"
+      }
+    },
+    {
+      "id": "9a5817ef-e621-4277-8c48-c8ee3776b6c4", // `LastNameCredential` credential id
+      "type": "LastNameCredential", // the type of credential
+      "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55", // the brand uuid of the issuer
+      "issuanceDate": "1671847264479", // date the credential was issued in milliseconds since unix epoch
+      "expirationDate": "1871839024044", // date the credential expires in milliseconds since unix epoch
+      "data": {
+        "lastName": "Hendricks"
+      }
+    }
+  ]
+  // highlight-end
+}
+```
+
 ### Request
 
 > A **request** (or <i>credentials request</i>) is a request for <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a>. It's created when a customer successfully checks if a<a href="/terminology#user"> <Tip type="user"/></a> has matching credentials, via [`/hasMatchingCredentials`](/api-overview#check-user-credentials). A request is only created if the user has the type of credentials the customer needs.
 
-**Example:** Hooli FinTech checks if Richard has a SSN and LastName credential issued by ACME Lending. Because he does, a request is created for those credentials specifically from ACME Lending. Hooli presents this request to Richard by directing him to the `url` received in the `/hasMatchingCredentials` response body.
+**Example:** Hooli FinTech checks if Richard has a SSN and FullName credential issued by ACME Lending. Because he does, a request is created for those credentials specifically from ACME Lending. Hooli presents this request to Richard by directing him to the `url` received in the `/hasMatchingCredentials` response body.
 
 **Components:** A customer checks if a user has the needed types of credentials by using `/hasMatchingCredentials`. If the <Tip type="user"/> does not have the right credentials, then a request is not created. If the user does, a request is created and returned to the customer via the `url` attribute in the `/hasMatchingCredentials` response body.
 
@@ -76,12 +118,13 @@ At a high level, to create a request, a customer inputs a list containing three 
 1. type of the credential
 2. acceptable <Tip type="brand">brand(s)</Tip> that issued the credential
 3. whether the credential is required or optional (defaults to required)
+4. list of the sub-credentials that make up the credential (optional)
 
 If multiple issuer brands are listed, a credential (of the correct type) from any one of them is acceptable. If none are listed, then any issuer brand is acceptable.
 
 Additionally, the customer must input a user identifier email address and/or phone identifier. You might notice these are the exact inputs to [`/hasMatchingCredentials`](/api-overview#check-user-credentials).
 
-The full details of the request object aren't that important or helpful to know, as it's completely internal to Verified Inc., but here's an example of a request for a FirstName and LastName credential from the same issuing brand.
+The full details of the request object aren't that important or helpful to know, as it's completely internal to Verified Inc., but here's an example of a request for a SsnCredential and FirstName credential from the same issuing brand.
 
 ```json
 {
@@ -101,9 +144,15 @@ The full details of the request object aren't that important or helpful to know,
       "description": "We use your social security number for identity verification and tax reporting."
     },
     {
-      "type": "LastNameCredential",
+      "type": "FullNameCredential",
       "issuers": ["d14ca24c-5323-4b79-9dfa-6471b014d68c"],
-      "required": true
+      "required": true,
+      "children": [
+        {
+          "type": "FirstNameCredential",
+          "issuers": ["d14ca24c-5323-4b79-9dfa-6471b014d68c"]
+        }
+      ]
     }
   ],
   // highlight-end

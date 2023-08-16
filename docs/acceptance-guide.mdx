@@ -63,7 +63,7 @@ In brief: As an acceptor in the Verified Inc. network, you will…
 
 ## UX Strategies
 
-The check to see if the user has credentials that you can accept can happen fully in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at an opportune time. If the response is contains `match`: `true` then you will redirect to the Verified Inc. Wallet. The demo below demonstrates an example UX.
+You can check if a user has credentials in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at any time. If the response contains `match`: `true` then you should redirect the user to the `url`. The demo below demonstrates an example UX.
 
 {' '}
 

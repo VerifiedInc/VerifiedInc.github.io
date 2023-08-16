@@ -29,7 +29,9 @@ It is possible to view the response bodies from https://schema.verified.inc/sche
 We hope to soon make it possible for you as a <a href="/terminology#customer"><Tip type="customer"/></a> to define your own credential schemas. But **currently, we Verified Inc. define all credential schemas.** If you would like a new credential schema for your use case, please let us know and we will gladly define one for you.
 :::
 
-We currently are support what can be referred to as "single attribute atomic credentials". This means that we break data into its simplest form for every credential. This is to provide users a means of selective disclosure for <a href="/terminology#request"><Tip type="request"/></a>s with optional fields.
+We currently support what can be referred to as "single attribute atomic credentials" and "composite credentials". 
+
+Atomic credentials provide users a means of selective disclosure for <a href="/terminology#request"><Tip type="request"/></a>s with optional fields.
 
 Composite credentials are credentials that contain multiple "Atomic Credentials". For example, the `FullNameCredential` contains `FirstNameCredential`, `LastNameCredential` and `MiddleNameCredential`. This provides a means of grouping atomic credentials with adjacent data.
 

@@ -28,18 +28,23 @@ If you use these suggested test email and/or phone values you can authenticate t
 ```text title="Sandbox API Key"
 5YugDQgjPn2LG2xTAs/+c6Kfrf7Ie45PIGjJurP8vNk=
 ```
+
 ```text title="Sandbox URL"
 https://core-api.sandbox-verifiedinc.com
 ```
+
 ```text title="Sandbox User Email"
 richard@piedpiper.net
 ```
+
 ```text title="Sandbox User Phone"
 +10123456789
 ```
+
 ```text title="Sandbox User Wallet Authentication OTP"
 111111
 ```
+
 :::
 
 ## Motivations
@@ -51,32 +56,57 @@ Crucially, you will dramatically improve the experience for any user enabled wit
 Once you join, our team will identify opportunities to promote your brand within our network for 1-click conversions. These can be in-app offers, marketing emails, or similar promotions to drive users to your brand from complementary services.
 
 In brief: As an acceptor in the Verified Inc. network, you will…
+
 - Dramatically improve onboarding conversion.
 - Delight users with a 1-click setup.
 - Join a network of companies to help you grow faster.
 
-
 ## UX Strategies
-The check to see if the user has credentials that you can accept can happen fully in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at an opportune time. If the response is contains `match`: `true` then you will redirect to the Verified Inc. Wallet. The demo below demonstrates an example UX.
 
-  <details>
-    <summary>Demo Kredita Accepting Credentials</summary>
-    <p>
-      This demo shows Kredita accepting Hooli credentials in order to gain 1-Click IDV capabilities when it's available. They collect email and phone from the user (Richard) and check if the user has matching credentials. The user does, so Kredita lets them verify with 1-Click.
-    </p>
-    <iframe src="https://marvelapp.com/prototype/9cab6ai?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
-  </details>
+You can check if a user has credentials in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at any time. If the response contains `match`: `true` then you should redirect the user to the `url`. The demo below demonstrates an example UX.
 
-  <details>
-    <summary>Demo Lendtable Accepting Credentials via Partner Dashboard</summary>
-    <p>
-      This demo shows Lendtable accepting their partner, Hooli, credentials in order to gain 1-Click IDV capabilities. In this case Hooli can issue the credential in an on-demand fashion when the user clicks the button to redeem the Lendtable offer in the Hooli dashboard. This would ensure the user has the necessary credentials, so Lendtable can verify with 1-Click.
-    </p>
-    <iframe src="https://marvelapp.com/prototype/1952a259?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
-  </details>
+{' '}
+
+<details>
+  <summary>Demo Kredita Accepting Credentials</summary>
+  <p>
+    This demo shows Kredita accepting Hooli credentials in order to gain 1-Click
+    IDV capabilities when it's available. They collect email and phone from the
+    user (Richard) and check if the user has matching credentials. The user
+    does, so Kredita lets them verify with 1-Click.
+  </p>
+  <iframe
+    src='https://marvelapp.com/prototype/9cab6ai?emb=1&iosapp=false&frameless=false'
+    width='453'
+    height='864'
+    allowTransparency='true'
+    frameborder='0'
+  ></iframe>
+</details>
+
+{' '}
+
+<details>
+  <summary>Demo Lendtable Accepting Credentials via Partner Dashboard</summary>
+  <p>
+    This demo shows Lendtable accepting their partner, Hooli, credentials in
+    order to gain 1-Click IDV capabilities. In this case Hooli can issue the
+    credential in an on-demand fashion when the user clicks the button to redeem
+    the Lendtable offer in the Hooli dashboard. This would ensure the user has
+    the necessary credentials, so Lendtable can verify with 1-Click.
+  </p>
+  <iframe
+    src='https://marvelapp.com/prototype/1952a259?emb=1&iosapp=false&frameless=false'
+    width='453'
+    height='864'
+    allowTransparency='true'
+    frameborder='0'
+  ></iframe>
+</details>
 
 ## Implementation
-**You need to check whether the user has matching <Tip type="credential">credentials</Tip>.** If they do, you can accept their credentials with the user consent at the click of button for the user. This is what we call 1-Click IDV.
+
+**You need to check whether the user has matching <Tip type="credential">credentials</Tip>.** If they do, they can share all of those credentials with 1-click.
 
 #### 1. Check User Credentials
 
@@ -92,25 +122,22 @@ The check to see if the user has credentials that you can accept can happen full
 <details>
   <summary>What counts as a match?</summary>
   <p>
-    When you call <code>/hasMatchingCredentials</code>, you include one or more credential requests. For each credential request, you specify:
+    When you call <code>/hasMatchingCredentials</code>, you include one or more
+    credential requests. For each credential request, you specify:
     <ul>
-      <li>
-        the type
-      </li>
-      <li>
-        (optional) which issuers are acceptable
-      </li>
-      <li>
-        (optional) whether the credential is required
-      </li>
+      <li>the type</li>
+      <li>(optional) which issuers are acceptable</li>
+      <li>(optional) whether the credential is required</li>
     </ul>
   </p>
   <p>
-    There's a match if, for each credential request for a required credential, the user has a credential of the correct type from an acceptable issuer.
+    There's a match if, for each credential request for a required credential,
+    the user has a credential of the correct type from an acceptable issuer.
   </p>
 </details>
-  
-The user will either have matching credentials, or they won't. If they do, continue to step (2). If they don't, you're done with Verified Inc. and should take the user through your existing verification flow. 
+The user will either have matching credentials, or they won't. If they do, continue
+to step (2). If they don't, you're done with Verified Inc. and should take the user
+through your existing verification flow.
 
 :::tip
 If you would like your existing verification flow verification costs to be covered, please look into issuing credentials. More information can be found in the 1-Click or Free Use Case [section](/1-click-or-free-use-case).
@@ -118,7 +145,7 @@ If you would like your existing verification flow verification costs to be cover
 
 #### 2. Redirect User to Verified Inc. Wallet
 
-**Direct the user to the `url`** the response body contains. You need to add an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Verified Inc. web wallet. 
+**Direct the user to the `url`** the response body contains. You need to add an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Verified Inc. web wallet.
 
 For example, if the final url you need to redirect the user to is https://acme-bank.co/sign-up/complete then ultimate url you will redirect the user to will be something like this:
 
@@ -141,7 +168,8 @@ https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9
 ```typescript title="Example Response Body"
 {
     "uuid": string // the sharedCredentialsUuid
-    "credentials": [{
+    "credentials": [
+      {
         "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
         "type": "SsnCredential",
         "data": {
@@ -150,12 +178,42 @@ https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9
         "issuanceDate": "1671847264479",
         "expirationDate": "1871839024044",
         "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
-    }],
+      },
+      {
+        "id": "1be7c008-3f0c-4a21-9aad-69ca1c4251d2",
+        "type": "FullNameCredential",
+        "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+        "issuanceDate": "1671847264479",
+        "expirationDate": "1871839024044",
+        "data": [
+          {
+            "id": "2e6a7b9a-e93e-43ba-98a9-c554f4e16457",
+            "type": "FirstNameCredential",
+            "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+            "issuanceDate": "1671847264479",
+            "expirationDate": "1871839024044",
+            "data": {
+              "firstName": "Richard"
+            }
+          },
+          {
+            "id": "9a5817ef-e621-4277-8c48-c8ee3776b6c4",
+            "type": "LastNameCredential",
+            "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+            "issuanceDate": "1671847264479",
+            "expirationDate": "1871839024044",
+            "data": {
+              "lastName": "Hendricks"
+            }
+          }
+        ]
+      }
+    ],
     // user's email from input to /hasMatchingCredentials
     // only present if email was provided
     "email"?: string,
     // user's phone from input to /hasMatchingCredentials
-    // only present if email was provided 
+    // only present if email was provided
     "phone"?: string
 }
 ```
@@ -165,11 +223,11 @@ It's easiest to extract the data from each credential using the corresponding [s
 ✅ **_You're done!_**
 
 ### Partner Acceptance
-In some cases, the issuer may issue credentials with you, the acceptor, as a specified partner, for example in a promotional flow. In these cases, as the accepting <Tip type="brand">brand</Tip>, you only need to handle steps ([3](acceptance-guide#3-capture-query-param-value)) and ([4](/acceptance-guide#4-retrieve-shared-credentials-data)) above. 
+
+In some cases, the issuer may issue credentials with you, the acceptor, as a specified partner, for example in a promotional flow. In these cases, as the accepting <Tip type="brand">brand</Tip>, you only need to handle steps ([3](acceptance-guide#3-capture-query-param-value)) and ([4](/acceptance-guide#4-retrieve-shared-credentials-data)) above.
 
 To do this, the issuer specifies your brand `uuid` as the partner when issuing credentials to the user. This effectively ensures the user will have the necessary credentials, and it allows you to skip steps ([1](/acceptance-guide#1-check-user-credentials)). Because the user starts at the issuer in this type of flow, the issuer handles the redirect in step ([2](/acceptance-guide#2-redirect-user-to-verified-inc-wallet)). You must pre-define your desired `redirectUrl` with us. For more information, see the [partner issuance](/issuance-guide#partner-issuance) section of the issuance guide.
 
 :::note
 To enable this form of acceptance, we encode a direct relationship between the issuer and the acceptor. If you would like to implement this type of flow, please email us at contact@verified.inc so we can help you. However, please note this is not a requirement for acceptance.
 :::
-

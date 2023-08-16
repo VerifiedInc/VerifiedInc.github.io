@@ -63,7 +63,7 @@ In brief: As an acceptor in the Verified Inc. network, you will…
 
 ## UX Strategies
 
-The check to see if the user has credentials that you can accept can happen fully in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at an opportune time. If the response is contains `match`: `true` then you will redirect to the Verified Inc. Wallet. The demo below demonstrates an example UX.
+You can check if a user has credentials in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at any time. If the response contains `match`: `true` then you should redirect the user to the `url`. The demo below demonstrates an example UX.
 
 {' '}
 
@@ -106,7 +106,7 @@ The check to see if the user has credentials that you can accept can happen full
 
 ## Implementation
 
-**You need to check whether the user has matching <Tip type="credential">credentials</Tip>.** If they do, you can accept their credentials with the user consent at the click of button for the user. This is what we call 1-Click IDV.
+**You need to check whether the user has matching <Tip type="credential">credentials</Tip>.** If they do, they can share all of those credentials with 1-click.
 
 #### 1. Check User Credentials
 
@@ -137,7 +137,7 @@ The check to see if the user has credentials that you can accept can happen full
 </details>
 The user will either have matching credentials, or they won't. If they do, continue
 to step (2). If they don't, you're done with Verified Inc. and should take the user
-through your existing verification flow.{' '}
+through your existing verification flow.
 
 :::tip
 If you would like your existing verification flow verification costs to be covered, please look into issuing credentials. More information can be found in the 1-Click or Free Use Case [section](/1-click-or-free-use-case).

@@ -7,7 +7,8 @@ slug: /api-overview
 
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
-import CredentialRequestCodeSnippet from './reusables/credential-request-code-snippet.mdx'
+import CredentialRequestCodeSnippet from './reusables/credential-request-code-snippet.mdx';
+import CodeBlock from '@theme/CodeBlock';
 
 ## Overview
 
@@ -70,6 +71,7 @@ You need to provide:
 1. User's email or phone
 2. (Optional) Credential request(s). _Required if Partner UUID is not provided._
 3. (Optional) Partner UUID. _More information on the partner UUID use case can be found in the [Issuance Guide](/issuance-guide#already-issued-credentials)._
+4. (Optional) List of the sub-credentials that make up the credential. _If not provided, all sub-credentials will be returned._
 
 A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects.
 
@@ -77,13 +79,18 @@ A credential requests encodes which <Tip type="credential">credentials</Tip> you
 
 If you list multiple <Tip type="issuer">issuers</Tip>, the user can include a credential issued by _any one_ of those listed. If `issuers` is left empty the user can include a credential with matching type issued by _any_ issuer.
 
-:::note Note 1
+:::note
 The Credential <Tip type="request">requests</Tip> attribute is required if a Partner UUID is **not** provided. If Partner UUID is provided, the Credential requests attribute is not used. Instead, a pre-defined set of accepting partner's credentials requests are used.
 _More information on the partner UUID use case can be found in the [Issuance Guide](/issuance-guide#already-issued-credentials)._
 :::
 
-:::note Note 2
-If <b>mandatory</b> or <b>required</b> fields are both missing, then the credential will be treated as optional.
+:::tip
+If <b>mandatory</b> field are missing, then the credential will be treated as optional.
+:::
+
+:::note
+The Credential <Tip type="request">requests</Tip> objects can contain a `children` attribute. This attribute is used to specify the sub-credentials that make up the credential. If not provided, all sub-credentials will be returned.
+(eg: If you request a <Tip type="credential">credential</Tip> of type `AddressCredential` and you only want the `city` and `state` sub-credentials, you can specify that in the `children` attribute.)
 :::
 
 :::caution
@@ -113,7 +120,124 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 
 The `url` from the response ought to then be enriched with a `redirectUrl` query param that will take the next step in your target service's user onboarding webpage. _More information on this can be found in the [Acceptance Guide](/acceptance-guide)._
 
----
+:::info Example Credential Request
+
+For example, if you want to check if a user has credentials of type `SsnCredential`, `FullNameCredential` and `AddressCredential` issued by any issuer you would send the following request:
+
+<details>
+<summary>Request Body</summary>
+<p>
+
+```json
+{
+  "email": "richard@piedpiper.net",
+  "credentialRequests": [
+    {
+      "type": "SsnCredential",
+      "issuers": [],
+      "mandatory": "yes"
+    },
+    {
+      "type": "FullNameCredential",
+      "issuers": [],
+      "mandatory": "yes"
+    },
+    {
+      "type": "AddressCredential",
+      "issuers": [],
+      "children": [
+        {
+          "type": "CityCredential",
+          "issuers": [],
+          "mandatory": "if_available"
+        },
+        {
+          "type": "StateCredential",
+          "issuers": [],
+          "mandatory": "yes"
+        },
+        {
+          "type": "CountryCredential",
+          "issuers": [],
+          "mandatory": "yes"
+        },
+        {
+          "type": "ZipCodeCredential",
+          "issuers": []
+        }
+      ]
+    }
+  ]
+}
+```
+
+</p>
+</details>
+
+
+Let's break this down to understand what is happening here:
+
+- `SsnCredential` is a "[single attribute atomic credential](/schema#schema-definitions)" and therefore does not have any sub-credentials. Because it is marked as `mandatory`, it only matches if the user has a credential.
+
+```json title="SnnCredential"
+{
+  "type": "SsnCredential",
+  "issuers": [],
+  "mandatory": "yes"
+}
+```
+
+- `FullNameCredential` is a "[composite credential](/schema#schema-definitions)" and therefore has *2 sub-credentials*¹: `FirstNameCredential`, `LastNameCredential`. Because it is marked as `mandatory`, and it has no `children` attribute, it only matches if the user has a credential with all sub-credentials.
+
+```json title="FullNameCredential"
+{
+  "type": "FullNameCredential",
+  "issuers": [],
+  "mandatory": "yes"
+}
+```
+
+> _¹The `FullNameCredential` also has a `MiddleNameCredential`, but it's `optional`._
+
+- The `AddressCredential` credential is made up of 6 sub-credentials: `Line1Credential`, `Line2Credential`, `CityCredential`, `StateCredential`, `CountryCredential` and `ZipCodeCredential`.
+
+  But because we specified a `children` attribute, we are only asking for the `CityCredential`, `StateCredential`, `CountryCredential` and `ZipCodeCredential` sub-credentials. So `Line1Credential` and `Line2Credential` are ignored.
+
+  ```json title="AddressCredential"
+  {
+    "type": "AddressCredential",
+    "issuers": [],
+    "children": [
+      {
+        "type": "CityCredential",
+        "issuers": [],
+        "mandatory": "if_available"
+      },
+      {
+        "type": "StateCredential",
+        "issuers": [],
+        "mandatory": "yes"
+      },
+      {
+        "type": "CountryCredential",
+        "issuers": [],
+        "mandatory": "yes"
+      },
+      {
+        "type": "ZipCodeCredential",
+        "issuers": []
+      }
+    ]
+  }
+  ```
+
+The user will be asked to share the `CityCredential` if available (this means if the user has a credential of type `CityCredential` it will be mandatory, but if the user does not have a credential of type `CityCredential` the user will still be able to share the `AddressCredential` credential).
+
+  `StateCredential` and `CountryCredential` are mandatory and therefore the user must have a credential of each type to match.
+
+  `ZipCodeCredential` is optional and therefore the user may or may not have a credential of type to match.
+
+:::
 
 ### Get Shared Credentials
 
@@ -143,7 +267,7 @@ The response body consists of Credential objects with the plaintext user data.
     "issuer": string, // credential issuer brandId
     "issuanceDate": number, // when credential was created as a milliseconds since epoch unix timestamp
     "expirationDate"?: number, // when credentials expires as a milliseconds since epoch unix timestamp
-    "data": Map<string, any> // credential data map that matches the credential type's JSON Schema definition
+    "data": Map<string, any> | Credential[] // credential data map/array that matches the credential type's JSON Schema definition
 }
 ```
 
@@ -182,7 +306,7 @@ An example Credentials object is below:
 ```typescript title="Credentials"
 {
   "type": string, // credential type
-  "data": Map<string, any>, // credential data map that matches the credential type's JSON Schema definition
+  "data": Map<string, any> | Credentials[], // credential data map/array that matches the credential type's JSON Schema definition
   "id"?: string, // credential id - uuid formatted; optional. If not provided, a random uuid will be generated
   "expirationDate?": number // when the credential expires as a milliseconds since unix epoch; optional
 }
@@ -196,6 +320,41 @@ An expiration date is not the only control on whether a credential is valid. You
 
 :::info
 Credential data is stored securely via a data privacy vault that encrypts and tokenizes the data. The data is only retrieved and decrypted for the brand that the <Tip type="user"/> agrees to share with.
+:::
+
+:::info Composite Credentials
+Composite credentials are credentials that are made up of other credentials. For example, a `FullNameCredential` is made up of `FirstNameCredential`, `MiddleNameCredential`(optional), and `LastNameCredential`. When issuing a composite credential, you must provide the child credentials as well.
+
+<details>
+<summary>Example</summary>
+
+```typescript title="Composite Credential"
+{
+  "type": "FullNameCredential",
+  // based on the properties attribute of the schema
+  // highlight-start
+  // note that the data is an array of objects, not a single object
+  "data": [
+    {
+      "type": "FirstNameCredential",
+      "data": {
+        "firstName": "Richard"
+      }
+    },
+    {
+      "type": "LastNameCredential",
+      "data": {
+        "lastName": "Hendricks"
+      }
+    }
+  ]
+  // highlight-end
+}
+```
+
+</details>
+
+See [Data Schemas](/schema) for more information.
 :::
 
 #### Request Body
@@ -217,7 +376,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
   "credentials": [{
     "id": string, // credential id
     "type": string, // credential type
-    "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
+    "data": Map<string, any> | Credentials[], // credential data map/array that matches your provided data and the credential type's JSON Schema definition
     "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
     "expirationDate?": string, // when the credential expires as a milliseconds since unix epoch; optional
     "status": 'valid' | 'revoked' // an enum to denote whether the credential is valid (all credentials are valid when first issued) — note that this is independent of the expirationDate
@@ -257,7 +416,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 
 ```typescript
 {
-  "data": Map<string, any> // credential data map that matches the credential type's JSON schema definition
+  "data": Map<string, any> | Credentials[], // credential data map/array that matches the credential type's JSON schema definition
   "expirationDate?": number // when the credentials expires as a milliseconds since epoch unix timestamp; optional
   "status": 'valid' | 'revoked' // an enum to denote whether the credential is valid (all credentials are valid when first issued) — note that this is independent of the expirationDate
 }
@@ -269,7 +428,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 {
   "id": string, // credential id
   "type": string, // credential type
-  "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
+  "data": Map<string, any> | Credentials[], // credential data map/array that matches your provided data and the credential type's JSON Schema definition
   "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
   "expirationDate?": number, // when the credential expires as a milliseconds since epoch unix timestamp; optional
   "status": 'valid' | 'revoked' // an enum to denote whether the credential is valid (all credentials are valid when first issued) — note that this is independent of the expirationDate.
@@ -310,7 +469,7 @@ This endpoint all modifies credentials issued to the user by your brand.
   "credentials": {
     "id": string, // credential id
     "type": string, // credential type
-    "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
+    "data": Map<string, any> | Credentials[], // credential data map/array that matches your provided data and the credential type's JSON Schema definition
     "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
     "expirationDate?": number, // when the credential expires as a milliseconds since epoch unix timestamp; optional
     "status": 'valid' | 'revoked' // an enum to denote whether the credential is valid (all credentials are valid when first issued) — note that this is independent of the expirationDate.
@@ -331,14 +490,13 @@ The response body contains a list of all credentials that were modified on the `
 
 This endpoint returns a credential (issued by your brand) via the credential `id`.
 
-
 #### Response Body:
 
 ```typescript title="CredentialDto"
 {
   "id": string, // credential id
   "type": string, // credential type
-  "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
+  "data": Map<string, any> | Credentials[], // credential data map/array that matches your provided data and the credential type's JSON Schema definition
   "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
   "expirationDate?": number, // when the credential expires as a milliseconds since epoch unix timestamp; optional
   "status": 'valid' | 'revoked' // an enum to denote whether the credential is valid (all credentials are valid when first issued) — note that this is independent of the expirationDate.
@@ -373,7 +531,7 @@ This endpoint is simply a nice to have for an issuer to see all credentials they
   "credentials": {
     "id": string, // credential id
     "type": string, // credential type
-    "data": Map<string, any> // credential data map that matches your provided data and the credential type's JSON Schema definition
+    "data": Map<string, any> | Credentials[], // credential data map/array that matches your provided data and the credential type's JSON Schema definition
     "issuanceDate": string, // when credential was created as a milliseconds since epoch unix timestamp
     "expirationDate?": number, // when the credential expires as a milliseconds since epoch unix timestamp; optional
     "status": 'valid' | 'revoked' // an enum to denote whether the credential is valid (all credentials are valid when first issued) — note that this is independent of the expirationDate.

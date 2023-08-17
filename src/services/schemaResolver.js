@@ -6,11 +6,11 @@ function fetchService(url, options) {
 }
 
 export function schemaResolverService() {
-  const baseUrl = 'https://schema.verified.inc';
+  const baseUrl = 'http://localhost:6061';
   return {
     // Get schemas returns all credentials and it's basic data.
     async getSchemas() {
-      return await fetchService(`${baseUrl}/schema`, {
+      return await fetchService(`${baseUrl}/jsonSchema`, {
         method: 'GET',
         mode: 'cors',
       });

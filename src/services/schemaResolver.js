@@ -6,7 +6,7 @@ function fetchService(url, options) {
 }
 
 export function schemaResolverService() {
-  const baseUrl = 'https://schema.verified.inc';
+  const baseUrl = 'https://schema-resolver.verified.inc';
   return {
     // Get schemas returns all credentials and it's basic data.
     async getSchemas() {

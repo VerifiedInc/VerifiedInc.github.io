@@ -61,6 +61,10 @@
 .properties-container .property-field:not(:first-child) {
     padding-top: 2rem;
 }
+.property-span {
+    display: block;
+    font-size: 1rem
+}
 
 .skeleton-title {
     width: 100%;

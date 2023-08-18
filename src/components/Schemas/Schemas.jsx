@@ -51,6 +51,7 @@ function SchemaCard({ schema, onSchemaSelect }) {
     </motion.div>
   );
 }
+
 function SchemaCardSkeleton() {
   return <div className={styles['list-card-skeleton']} />;
 }
@@ -152,6 +153,16 @@ function SchemasBody({ schemas }) {
             <SchemaDetails
               schema={selectedSchema}
               onRequestClose={() => setSelectedSchema(null)}
+              onCredentialClick={async (credential) => {
+                setSelectedSchema(null);
+                // wait .5 seconds to select the match credential.
+                await new Promise((resolve) => setTimeout(resolve, 500));
+                // Get from schema data entries the selected credential.
+                const matchCredential = data.find(
+                  (item) => item[0] === credential
+                )[1];
+                setSelectedSchema(matchCredential);
+              }}
             />
           )}
         </AnimatePresence>
@@ -165,7 +176,7 @@ export default function Schemas(props) {
   const [schemas, setSchemas] = useState(null);
 
   // Numbers of schema is for adding the number of renders for SchemaCardSkeleton to have a good feedback for user.
-  const NUMBER_OF_SCHEMAS = 28;
+  const NUMBER_OF_SCHEMAS_SKELETON = 28;
 
   useEffect(() => {
     setIsloading(true);
@@ -181,9 +192,11 @@ export default function Schemas(props) {
     return (
       <div className={styles.container}>
         <div className={styles['container-grid']}>
-          {new Array(NUMBER_OF_SCHEMAS).fill(undefined).map((_, index) => (
-            <SchemaCardSkeleton key={index} />
-          ))}
+          {new Array(NUMBER_OF_SCHEMAS_SKELETON)
+            .fill(undefined)
+            .map((_, index) => (
+              <SchemaCardSkeleton key={index} />
+            ))}
         </div>
       </div>
     );

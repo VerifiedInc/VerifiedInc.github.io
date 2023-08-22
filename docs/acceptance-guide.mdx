@@ -254,3 +254,20 @@ https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=t
 From here you can continue to step (1) in the [Partner Acceptance](/acceptance-guide#partner-acceptance) section above having preformed the credential verification steps, ensuring that the user has the necessary credentials.
 
 ## Integration Testing
+All testing and development ought to be done against our Sandbox environment. The publicly published [Postman collection's](https://api.docs.verified.inc/) *Integration Test Suite* is very helpful facilitating testing your Acceptor integration. All instructions below are in reference to this Postman collection. *If you are more accustom to an alternative HTTP request client for development purposes, please let us know and we maybe be able to accommodate you.*
+
+To test either flavor of integration, you need to replace the `acceptorBrandApiKey` from the also published `Public API` environment variables with your brand's Sandbox API key. 
+
+### Partner Acceptance
+For Partner Acceptance, you will need to replace the `partnerBrandUuid` with your brand's Sandbox UUID and use the issue `credentials w/ partnerUuid` (then subsequently can use `hasMatchingCredentials w/ partnerUuid`) call with the request body corresponding to your credential needs. Then by following the response body's `url` you can test the flow from the User's perspective. When the credentials are agreed to share you will be redirected to the url defined in the `redirectUrl` query param (great for development) or to the `redirectUrl` you have already pre-defined and shared with us (great for post-development testing).
+
+:::important
+In the real implementation the issuer will be handling the `/credentials` call and redirecting the User to the Verified Inc. Wallet.
+:::
+
+:::note
+Some pre-configuration is necessary to test this appropriately. However, if we have already given you an ApiKey this should already be done for you. If you are unsure, please contact us
+:::
+
+### General Acceptance
+Using the issue `credentials w/o partner` request you can mimic credentials being issued to User in some earlier state. Then when your integration makes the [`/hasMatchingCredentials`](/api-overview/#check-user-credentials) request with the user's email and/or phone it ought to return there is a match for your test your integration with.

@@ -48,10 +48,10 @@ richard@piedpiper.net
 :::
 
 ### Partner Acceptance
-Partner Issuer Acceptance references the flow when you have a have a particular credential issuer partner in mind that will integrate more closely with your brand - ensuring the users will have the desired credentials for your brand's onboarding. This is generally the most popular integration type because of the parallels to traditional affiliate partnerships. However, this case is supercharges the traditional flow by allowing users to accept promotions with 1-click. For more information, please see the [Partner Acceptance](/acceptance-guide#partner-acceptance) section.
+Partner Issuer Acceptance is enabled by a partnered issuer brand that will integrate more closely with you - ensuring the users will have the desired credentials for your brand's onboarding. This is generally the most popular integration type because of the parallels to traditional affiliate partnerships. However, this case supercharges the traditional flow by allowing users to accept promotions with 1-click.
 
 ### General Acceptance
-General Issuer Acceptance, references the implementation type where users may not be coming from a particular issuing brand. This is the flexible as it does not require any pre-arranged partnerships. However, it does require you to check whether the user has the necessary credentials for your brand's onboarding. For more information, please see the [General Acceptance](/acceptance-guide#general-acceptance) section.
+General Issuer Acceptance references the integration type where users may not be coming from a particular issuing brand. This is the flexible as it does not require any pre-arranged partnerships. However, it does require you to check whether the user has the necessary credentials for your brand's onboarding.
 
 
 ## Motivations
@@ -72,7 +72,7 @@ In brief: As an acceptor in the Verified Inc. network, you will…
 
 ### Partner Acceptance
 
-[Partner Acceptance](/acceptance-guide#partner-acceptance) is the most streamlined flow thanks to the partner Issuer ensuring the User has the necessary credentials to perform your onboarding flow. Also, this form of integration allows for the User to interface with the Verified Inc. wallet in a pre-authenticated state, further streamlining the UX.
+[Partner Acceptance](/acceptance-guide#partner-acceptance) is the most streamlined flow thanks to the partner issuing brand ensuring the User has the necessary credentials to perform your onboarding flow. Also, this form of integration allows for the User to interface with the Verified Inc. wallet in a pre-authenticated state, further streamlining the UX.
 
 <details>
   <summary>Demo Brand Accepting Credentials via Partner Acceptance</summary>
@@ -94,7 +94,7 @@ In brief: As an acceptor in the Verified Inc. network, you will…
 
 ### General Acceptance
 
-For [General Acceptance](/acceptance-guide#general-acceptance), you will have to check if a user has credentials because the User will not be coming directly from a Partner. This can be done in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at any time. If the response contains `match`: `true` then you should redirect the user to the `url`. The demo below demonstrates an example UX.
+For [General Acceptance](/acceptance-guide#general-acceptance), you will have to check if a user has credentials because the User will not be coming directly from a partner. This can be done in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at any time. If the response contains `match`: `true` then you should redirect the user to the `url`. The demo below demonstrates an example UX.
 
 <details>
   <summary>Demo Kredita Accepting Credentials</summary>
@@ -121,7 +121,7 @@ In all cases, you will need to configure a web client page to receive the `share
 
 In this case, as the accepting <Tip type="brand">brand</Tip>, you only need to handle the two steps ([1](acceptance-guide#3-capture-query-param-value)) and ([2](/acceptance-guide#4-retrieve-shared-credentials-data)) below.
 
-Another critical component of this flow is that the issuer specifies your brand `uuid` as the partner when issuing credentials to the user. This effectively ensures the user will have the necessary credentials, and it allows you to skip steps ([0.a](/acceptance-guide#0a-check-user-credentials). Because the user starts at the issuer in this type of flow, the issuer handles the redirect in step ([0.b](/acceptance-guide#0b-redirect-user-to-verified-inc-wallet)). This is why you must pre-define your desired `redirectUrl` with us. For more information, see the [partner issuance](/issuance-guide#partner-issuance) section of the issuance guide.
+Another critical component of this flow is that the issuer specifies your brand `uuid` as the partner when issuing credentials to the user. This effectively ensures the user will have the necessary credentials, and it allows you to skip steps ([0.a](/acceptance-guide#0a-check-user-credentials)) and ([0.b](/acceptance-guide#0b-redirect-user-to-verified-inc-wallet)). Because the User starts in the issuing brand's UX in this type of flow, the issuer handles the redirect in step ([0.b](/acceptance-guide#0b-redirect-user-to-verified-inc-wallet)). This is why you must pre-define your desired `redirectUrl` with us. For more information, see the [partner issuance](/issuance-guide#partner-issuance) section of the issuance guide.
 
 :::note
 To enable this form of acceptance, we encode a direct relationship between the issuer and the acceptor. If you would like to implement this type of flow, please email us at contact@verified.inc so we can help you. However, please note this is not a requirement for acceptance.
@@ -259,14 +259,14 @@ All testing and development ought to be done against our Sandbox environment. Th
 To test either flavor of integration, you need to replace the `acceptorBrandApiKey` from the also published `Public API` environment variables with your brand's Sandbox API key. 
 
 ### Partner Acceptance
-For Partner Acceptance, you will need to replace the `partnerBrandUuid` with your brand's Sandbox UUID and use the issue `credentials w/ partnerUuid` (then subsequently can use `hasMatchingCredentials w/ partnerUuid`) call with the request body corresponding to your credential needs. Then by following the response body's `url` you can test the flow from the User's perspective. When the credentials are agreed to share you will be redirected to the url defined in the `redirectUrl` query param (great for development) or to the `redirectUrl` you have already pre-defined and shared with us (great for post-development testing).
+For Partner Acceptance, you will need to replace the `partnerBrandUuid` with your brand's Sandbox UUID and use the issue `credentials w/ partnerUuid` (then subsequently can use `hasMatchingCredentials w/ partnerUuid`) call with the request body corresponding to your credential needs. Then by following the response body's `url` you can test the flow from the User's perspective. When the credentials are agreed to share you will be redirected to the url defined in the `redirectUrl` query param (great for development) or to the `redirectUrl` you have already pre-defined and shared with us (necessary for integration to work when an issuer brand initiates the flow).
 
 :::important
-In the real implementation the issuer will be handling the `/credentials` call and redirecting the User to the Verified Inc. Wallet.
+In the real implementation the issuer will be handling the `/credentials` and `/hasMatchingCredentials` requests and redirecting the User to the Verified Inc. Wallet.
 :::
 
 :::note
-Some pre-configuration is necessary to test this appropriately. However, if we have already given you an ApiKey this should already be done for you. If you are unsure, please contact us
+Some pre-configuration is necessary to test this appropriately. However, if we have already given you an ApiKey this should already be done for you. If you are unsure, please contact us.
 :::
 
 ### General Acceptance

@@ -119,9 +119,9 @@ In all cases, you will need to configure a web client page to receive the `share
 
 ### Partner Acceptance
 
-In this case, as the accepting <Tip type="brand">brand</Tip>, you only need to handle the two steps ([1](acceptance-guide#3-capture-query-param-value)) and ([2](/acceptance-guide#4-retrieve-shared-credentials-data)) below.
+In this case, as the accepting <Tip type="brand">brand</Tip>, you only need to handle the two steps ([1](acceptance-guide#3-capture-query-param-value)) and ([2](/acceptance-guide#4-retrieve-shared-credentials-data)) below, thanks to issuer handling steps ([0.a](/acceptance-guide#0a-check-user-credentials)) and ([0.b](/acceptance-guide#0b-redirect-user-to-verified-inc-wallet)) for you.
 
-Another critical component of this flow is that the issuer specifies your brand `uuid` as the partner when issuing credentials to the user. This effectively ensures the user will have the necessary credentials, and it allows you to skip steps ([0.a](/acceptance-guide#0a-check-user-credentials)) and ([0.b](/acceptance-guide#0b-redirect-user-to-verified-inc-wallet)). Because the User starts in the issuing brand's UX in this type of flow, the issuer handles the redirect in step ([0.b](/acceptance-guide#0b-redirect-user-to-verified-inc-wallet)). This is why you must pre-define your desired `redirectUrl` with us. For more information, see the [partner issuance](/issuance-guide#partner-issuance) section of the issuance guide.
+Because the user starts in the issuing brand's UX in this type of flow, the issuer handles the redirect in step ([0.b](/acceptance-guide#0b-redirect-user-to-verified-inc-wallet)). This is why you must pre-define your desired `redirectUrl` with us. For more information, see the [partner issuance](/issuance-guide#partner-issuance) section of the issuance guide.
 
 :::note
 To enable this form of acceptance, we encode a direct relationship between the issuer and the acceptor. If you would like to implement this type of flow, please email us at contact@verified.inc so we can help you. However, please note this is not a requirement for acceptance.
@@ -259,7 +259,7 @@ All testing and development ought to be done against our Sandbox environment. Th
 To test either flavor of integration, you need to replace the `acceptorBrandApiKey` from the also published `Public API` environment variables with your brand's Sandbox API key. 
 
 ### Partner Acceptance
-For Partner Acceptance, you will need to replace the `partnerBrandUuid` with your brand's Sandbox UUID and use the issue `credentials w/ partnerUuid` (then subsequently can use `hasMatchingCredentials w/ partnerUuid`) call with the request body corresponding to your credential needs. Then by following the response body's `url` you can test the flow from the User's perspective. When the credentials are agreed to share you will be redirected to the url defined in the `redirectUrl` query param (great for development) or to the `redirectUrl` you have already pre-defined and shared with us (necessary for integration to work when an issuer brand initiates the flow).
+For Partner Acceptance, you will need to replace the `partnerBrandUuid` with your brand's Sandbox UUID and use the issue `credentials w/ partnerUuid` (then subsequently can use `hasMatchingCredentials w/ partnerUuid`) call with the request body corresponding to your credential needs. Then by following the response body's `url` you can test the flow from the User's perspective. When the credentials are agreed to be shared you, the testing User, will be redirected to the url defined in the `redirectUrl` query param (great for development) or to the `redirectUrl` you have already pre-defined and shared with us (necessary for integration to work when an issuer brand initiates the flow).
 
 :::important
 In the real implementation the issuer will be handling the `/credentials` and `/hasMatchingCredentials` requests and redirecting the User to the Verified Inc. Wallet.
@@ -270,4 +270,4 @@ Some pre-configuration is necessary to test this appropriately. However, if we h
 :::
 
 ### General Acceptance
-Using the issue `credentials w/o partner` request you can mimic credentials being issued to User in some earlier state. Then when your integration makes the [`/hasMatchingCredentials`](/api-overview/#check-user-credentials) request with the user's email and/or phone it ought to return there is a match for your test your integration with.
+Using the issue `credentials w/o partner` request you can mimic credentials being issued to User in some earlier state. Then when your integration makes the [`/hasMatchingCredentials`](/api-overview/#check-user-credentials) request with the user's email and/or phone it ought to return there is a match for you to test your integration with.

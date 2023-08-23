@@ -7,6 +7,8 @@ slug: /terminology
 
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
+import AtomicCredentialExample from './reusables/atomic-credential-example.mdx';
+import CompositeCredentialExample from './reusables/composite-credential-example.mdx';
 
 Verified Inc. uses a few specialized terms and concepts. It's not necessary to understand these in full detail, but knowing a little about them will help you deploy and use Verified Inc. tech.
 
@@ -24,9 +26,7 @@ The tooltips you'll see most often refer to the terms described in this section 
 - **[brand](#brand)**
 - **[customer](#customer)**
 
-## Main Terms
-
-### Credential
+## Credential
 
 > A **credential** is a collection of data about a person. It's issued by a company and can be requested by other network participants, gated by the user's consent.
 
@@ -42,68 +42,17 @@ At a high level, to issue a credential a company inputs three pieces of informat
 
 The data schema must match the corresponding credential type. Information on the data formats for each type can be found in the [Data Schema](/schema) section.
 
-Example credential
+### Atomic Credentials
+Atomic credentials are the most basic credentials. They are the building blocks of more complex, "composite credentials". For example, an `EmailCredential` is an atomic credential.
 
-```json
-{
-  "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c", // the credential id
-  // highlight-start
-  "type": "EmailCredential", // the type of credential
-  // highlight-end
-  "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55", // the brand uuid of the issuer
-  "issuanceDate": "1671847264479", // date the credential was issued in milliseconds since unix epoch
-  "expirationDate": "1871839024044", // date the credential expires in milliseconds since unix epoch
-  // highlight-start
-  // the data attribute must match the SsnCredential JSON schema properties as mentioned in the Data Schema section.
-  // i.e. https://schema.verified.inc/jsonSchema/SsnCredential
-  "data": {
-    "email": "test@verified.inc"
-  }
-  // highlight-end
-}
-```
+<AtomicCredentialExample/>
 
-Example credential with a set of credentials
+### Composite Credentials
+Composite credentials are credentials that are made up of multiple atomic credentials. For example, a `FullNameCredential` is made up of a `FirstNameCredential` and a `LastNameCredential`.
 
-```json
-{
-  "id": "1be7c008-3f0c-4a21-9aad-69ca1c4251d2", // the credential id
-  // highlight-start
-  "type": "FullNameCredential", // the type of credential
-  // highlight-end
-  "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55", // the brand uuid of the issuer
-  "issuanceDate": "1671847264479", // date the credential was issued in milliseconds since unix epoch
-  "expirationDate": "1871839024044", // date the credential expires in milliseconds since unix epoch
-  // highlight-start
-  // the data attribute must match the FullNameCredential JSON schema properties as mentioned in the Data Schema section.
-  // i.e. https://schema.verified.inc/jsonSchema/FullNameCredential
-  "data": [
-    {
-      "id": "2e6a7b9a-e93e-43ba-98a9-c554f4e16457", // `FirstNameCredential` credential id
-      "type": "FirstNameCredential", // the type of credential
-      "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55", // the brand uuid of the issuer
-      "issuanceDate": "1671847264479", // date the credential was issued in milliseconds since unix epoch
-      "expirationDate": "1871839024044", // date the credential expires in milliseconds since unix epoch
-      "data": {
-        "firstName": "Richard"
-      }
-    },
-    {
-      "id": "9a5817ef-e621-4277-8c48-c8ee3776b6c4", // `LastNameCredential` credential id
-      "type": "LastNameCredential", // the type of credential
-      "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55", // the brand uuid of the issuer
-      "issuanceDate": "1671847264479", // date the credential was issued in milliseconds since unix epoch
-      "expirationDate": "1871839024044", // date the credential expires in milliseconds since unix epoch
-      "data": {
-        "lastName": "Hendricks"
-      }
-    }
-  ]
-  // highlight-end
-}
-```
+<CompositeCredentialExample/>
 
-### Request
+## Request
 
 > A **request** (or <i>credentials request</i>) is a request for <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a>. It's created when a customer successfully checks if a<a href="/terminology#user"> <Tip type="user"/></a> has matching credentials, via [`/hasMatchingCredentials`](/api-overview#check-user-credentials). A request is only created if the user has the type of credentials the customer needs.
 
@@ -178,7 +127,7 @@ The full details of the request object aren't that important or helpful to know,
 }
 ```
 
-### User
+## User
 
 > A **user** is an individual in the Verified Inc. network that can share verified identity data (via <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a>). Each user has at least one phone number or email address associated with them. They can have multiple of either.
 
@@ -200,7 +149,7 @@ Users can be referenced by email and/or phone, identifiers that you already have
 }
 ```
 
-### User Identifier
+## User Identifier
 
 > A **userIdentifier** is a value used to refer to an user. Due to the ubiquitous nature of `phone` and/or `email` values being associated with <a href="/terminology#user">users</a> we have adopted to this term to refer to either of these values.
 
@@ -212,7 +161,7 @@ A user can have many userIdentifiers of email and phones.
 
 **Components:** We have abstracted away the complexity of dealing with a third party uuid to refer to a user. Instead, you can use the user's email or phone number to refer to and issue credentials to users in our system.
 
-### Brand
+## Brand
 
 > A **brand** is a customer entity that has a corresponding unique API key, name, and ID card image. Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.
 
@@ -224,7 +173,7 @@ A customer can have one to many brands. A brand can be assoicated with only one 
 
 **Components:** Each brand has an associated parent customer. A customer can have one or more brands.
 
-### Customer
+## Customer
 
 > A **customer** serves as a parent to brands and their corresponding API keys.
 

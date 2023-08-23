@@ -115,7 +115,19 @@ For [General Acceptance](/acceptance-guide#general-acceptance), you will have to
 
 ## Implementation
 
-In all cases, you will need to configure a web client page to receive the `sharedCredentialsUuid` query param via a redirect from the Verified Inc. Wallet. Once the query param is retrieved it should be sent to your backend where it is used to call [`/sharedCredentials/{sharedCredentialsUuid}`](/api-overview#get-shared-credentials) to get the credentials to onboard the user. 
+There are two ways to handle the acceptor integration that is independent of Partner or General Acceptance use cases: to pull the credential data via a GET to [`/sharedCredentials/{sharedCredentialsUuid}`](/api-overview#get-shared-credentials) or to receive the credential data via a POST to a webhook endpoint you must implement.
+
+In all cases, you will need to configure a web page to to have the user redirected to after agreeing to share data with your brand. The response body of the pull credential method is equivalent to the request body of the webhook method.
+
+```json title="Example Credential Data"
+
+```
+
+### Pull Credential Data
+To pull credential data you will need to configure a web client page to receive the `sharedCredentialsUuid` query param via a redirect from the Verified Inc. Wallet. Once the query param is retrieved it should be sent to your backend where it is used to call [`/sharedCredentials/{sharedCredentialsUuid}`](/api-overview#get-shared-credentials) to get the credentials to onboard the user. 
+
+### Webhook
+To receive credential data via a webhook url you need to implement a endpoint that can handle a POST HTTP request with a request body containing credential information. 
 
 ### Partner Acceptance
 

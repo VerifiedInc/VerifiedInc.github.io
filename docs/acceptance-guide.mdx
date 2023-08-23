@@ -9,7 +9,9 @@ import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import CredentialUsageExample from '../docs/reusables/credential-usage-example-snippet.mdx';
+import CredentialUsageExample from './reusables/credential-usage-example-snippet.mdx';
+import SharedCredentialsExample from './reusables/shared-credentials-body.mdx';
+import SharedCredentialsExampleDetails from './reusables/shared-credentials-body-details.mdx';
 
 **Time to read:** 5 min
 
@@ -115,19 +117,14 @@ For [General Acceptance](/acceptance-guide#general-acceptance), you will have to
 
 ## Implementation
 
-There are two ways to handle the acceptor integration that is independent of Partner or General Acceptance use cases: to pull the credential data via a GET to [`/sharedCredentials/{sharedCredentialsUuid}`](/api-overview#get-shared-credentials) or to receive the credential data via a POST to a webhook endpoint you must implement.
+There are two ways to handle the acceptor integration that is independent of [Partner](/acceptance-guide#partner-acceptance) or [General](/acceptance-guide#general-acceptance) Acceptance use cases: to [pull shared credentials](/acceptance-guide#pull-credential-data) via a GET to [`/sharedCredentials/{sharedCredentialsUuid}`](/api-overview#get-shared-credentials) or to receive the credential data via a POST to a [webhook](/acceptance-guide#webhook) endpoint you must implement.
 
-In all cases, you will need to configure a web page to to have the user redirected to after agreeing to share data with your brand. The response body of the pull credential method is equivalent to the request body of the webhook method.
+In all cases, you will need to configure a web page to have the user redirected to after agreeing to share data with your brand. The response body of the pull shared credentials method is equivalent to the request body of the webhook to receive shared credentials method.
 
-```json title="Example Credential Data"
-
-```
+<SharedCredentialsExample/>
 
 ### Pull Credential Data
-To pull credential data you will need to configure a web client page to receive the `sharedCredentialsUuid` query param via a redirect from the Verified Inc. Wallet. Once the query param is retrieved it should be sent to your backend where it is used to call [`/sharedCredentials/{sharedCredentialsUuid}`](/api-overview#get-shared-credentials) to get the credentials to onboard the user. 
-
-### Webhook
-To receive credential data via a webhook url you need to implement a endpoint that can handle a POST HTTP request with a request body containing credential information. 
+To pull credential data you will need to configure a web client page to receive the `sharedCredentialsUuid` query param via a redirect from the Verified Inc. Wallet. Once the query param is retrieved it should be sent to your backend where it is used to call [`/sharedCredentials/{sharedCredentialsUuid}`](/api-overview#get-shared-credentials) to get the credentials to onboard the user. *This guide will proceed with this method being the primary focus.*
 
 ### Partner Acceptance
 
@@ -265,10 +262,25 @@ https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=t
 
 From here you can continue to step (1) in the [Partner Acceptance](/acceptance-guide#partner-acceptance) section above having preformed the credential verification steps, ensuring that the user has the necessary credentials.
 
+### Webhook
+*Currently in beta*
+
+To receive credential data via a webhook url you need to implement an endpoint that can handle a POST HTTP request with a request body containing credential information. You will have to inform us of what is required to interface and authenticate with your webhook. The configuration options available are:
+
+- url
+- query parameters
+- headers
+- authorization
+
+The request body that the endpoint will have to handle is of fixed Shared Credentials structure. An example of this format can be found below.
+
+<SharedCredentialsExampleDetails/>
+
+
 ## Integration Testing
 All testing and development ought to be done against our Sandbox environment. The publicly published [Postman collection's](https://api.docs.verified.inc/) *Integration Test Suite* is very helpful facilitating testing your Acceptor integration. All instructions below are in reference to this Postman collection. *If you are more accustom to an alternative HTTP request client for development purposes, please let us know and we maybe be able to accommodate you.*
 
-To test either flavor of integration, you need to replace the `acceptorBrandApiKey` from the also published `Public API` environment variables with your brand's Sandbox API key. 
+To test either flavor of integration, you need to replace the `acceptorBrandApiKey` from the also published `Public API` environment variables with your brand's Sandbox API key.
 
 ### Partner Acceptance
 For Partner Acceptance, you will need to replace the `partnerBrandUuid` with your brand's Sandbox UUID and use the issue `credentials w/ partnerUuid` (then subsequently can use `hasMatchingCredentials w/ partnerUuid`) call with the request body corresponding to your credential needs. Then by following the response body's `url` you can test the flow from the User's perspective. When the credentials are agreed to be shared you, the testing User, will be redirected to the url defined in the `redirectUrl` query param (great for development) or to the `redirectUrl` you have already pre-defined and shared with us (necessary for integration to work when an issuer brand initiates the flow).

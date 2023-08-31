@@ -298,6 +298,7 @@ You need to provide:
 1. Credentials data array
 2. Either a phone and/or email attribute
 3. (Optional) Partner UUID. _More information on the partner UUID use case can be found in the [Issuance Guide](/issuance-guide#partner-issuance)._
+4. (Optional) Tracking Identifier for credential usage attribute. _More information on the tracking identifier use case can be found in the [Issuance Guide](/issuance-guide#tracking-identifier)._
 
 Data about the user, must comply with our credential [schema](/schema) definitions.
 
@@ -364,6 +365,7 @@ See [Data Schemas](/schema) for more information.
   "credentials": Credentials[], // a list of one or more Credentials objects
   "email"?: string, // user's email address; optional if phone is provided
   "phone"?: string // user's phone number; optional if email is provided
+  "trackingId"?: string // user tracking identifier
 }
 ```
 
@@ -373,6 +375,7 @@ See [Data Schemas](/schema) for more information.
 {
   "email": string, // user's email address if provided
   "phone": phone, // user's phone number if provided
+  "trackingId"?: string // user tracking identifier if provided
   "credentials": [{
     "id": string, // credential id
     "type": string, // credential type

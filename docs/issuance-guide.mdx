@@ -164,6 +164,7 @@ For example, if you have a verified Social Security Number (SSN) and a Full Name
 {
   "email": "test@example.com",
   "phone": "+10123456789",
+  "trackingId": "moc.elpmaxe@tset", // optional; your preferred tracking id used for credential usage attribution
   "credentials": [
     {
       "type": "SsnCredential",
@@ -203,6 +204,9 @@ For example, if you have a verified Social Security Number (SSN) and a Full Name
 Format the credential data according to the `properties` attribute of the credential schema. In this case, the schema is for a `SsnCredential` which can found found at [`https://schema.verified.inc/jsonSchema/SsnCredential`](https://schema.verified.inc/jsonSchema/SsnCredential) and for a `FullNameCredential` which can be found at [`https://schema.verified.inc/jsonSchema/FullNameCredential`](https://schema.verified.inc/jsonSchema/FullNameCredential).
 
 More information about credential schemas can be found in the [Schema](/schema) section.
+
+#### Tracking Identifier
+The optional `trackingId` attribute is optional in most cases, however if you are operating a promotion with the partner issuance flow it maybe helpful for tracking attribution.
 
 ✅ **_ You're done!_**
 

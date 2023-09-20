@@ -215,8 +215,6 @@ Let's break this down to understand what is happening here:
 }
 ```
 
-Check that the `mandatory` is not present, the reason is when `allowUserInput`, the credential may be created and it is optional.
-
 - The `AddressCredential` credential is made up of 6 sub-credentials: `Line1Credential`, `Line2Credential`, `CityCredential`, `StateCredential`, `CountryCredential` and `ZipCodeCredential`.
 
   But because we specified a `children` attribute, we are only asking for the `CityCredential`, `StateCredential`, `CountryCredential` and `ZipCodeCredential` sub-credentials. So `Line1Credential` and `Line2Credential` are ignored.

@@ -204,7 +204,7 @@ Let's break this down to understand what is happening here:
 ```
 
 
-- `PhoneCredential` is a "[single attribute atomic credential](/schema#schema-definitions)" and therefore does not have any sub-credentials. Because we set a `allowUserInput` attribute of `true`, the user will be given an opportunity to enter a new value if they choose."
+- `PhoneCredential` is a "[single attribute atomic credential](/schema#schema-definitions)" and therefore does not have any sub-credentials. Because we set a `allowUserInput` attribute of `true`, the user will be given an opportunity to enter a new value if they choose to. Note that this have not relation with `mandatory` field, it just accepts and validates the user input data."
 
 ```json title="PhoneCredential"
 {

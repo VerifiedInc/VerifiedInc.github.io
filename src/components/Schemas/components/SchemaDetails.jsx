@@ -73,7 +73,7 @@ function SchemaProperty({ properties, required }) {
                 <div key={fieldKey}>
                   <PropertyField
                     field={propertyKeys[fieldKey]}
-                    value={fieldValue}
+                    value={JSON.stringify(fieldValue)}
                   />
                 </div>
               );

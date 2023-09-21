@@ -73,7 +73,7 @@ If multiple issuer brands are listed, a credential (of the correct type) from an
 
 Additionally, the customer must input a user identifier email address and/or phone identifier. You might notice these are the exact inputs to [`/hasMatchingCredentials`](/api-overview#check-user-credentials).
 
-The full details of the request object aren't that important or helpful to know, as it's completely internal to Verified Inc., but here's an example of a request for a SsnCredential and FirstName credential from the same issuing brand.
+The full details of the request object aren't that important or helpful to know, as it's completely internal to Verified Inc., but here's an example of a request for a SsnCredential, PhoneCredential and FullNameCredential from the same issuing brand.
 
 ```json
 {
@@ -91,6 +91,12 @@ The full details of the request object aren't that important or helpful to know,
       "issuers": ["d14ca24c-5323-4b79-9dfa-6471b014d68c"],
       "required": true,
       "description": "We use your social security number for identity verification and tax reporting."
+    },
+    {
+      "type": "PhoneCredential",
+      "issuers": ["d14ca24c-5323-4b79-9dfa-6471b014d68c"],
+      "mandatory": "yes",
+      "allowUserInput": true
     },
     {
       "type": "FullNameCredential",

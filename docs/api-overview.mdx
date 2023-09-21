@@ -143,6 +143,12 @@ For example, if you want to check if a user has credentials of type `SsnCredenti
       "mandatory": "yes"
     },
     {
+        "type": "PhoneCredential",
+        "issuers": [],
+        "mandatory": "if_available",
+        "allowUserInput": true
+    },
+    {
       "type": "AddressCredential",
       "issuers": [],
       "children": [
@@ -197,7 +203,17 @@ Let's break this down to understand what is happening here:
 }
 ```
 
-> _¹The `FullNameCredential` also has a `MiddleNameCredential`, but it's `optional`._
+
+- `PhoneCredential` is a "[single attribute atomic credential](/schema#schema-definitions)" and therefore does not have any sub-credentials. Because we set a `allowUserInput` attribute of `true`, the user will be given an opportunity to enter a new value if they choose to. Note that this have not relation with `mandatory` field, it just accepts and validates the user input data."
+
+```json title="PhoneCredential"
+{
+    "type": "PhoneCredential",
+    "issuers": [],
+    "mandatory": "if_available",
+    "allowUserInput": true
+}
+```
 
 - The `AddressCredential` credential is made up of 6 sub-credentials: `Line1Credential`, `Line2Credential`, `CityCredential`, `StateCredential`, `CountryCredential` and `ZipCodeCredential`.
 

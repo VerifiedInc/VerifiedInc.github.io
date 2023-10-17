@@ -57,7 +57,7 @@ function SchemaProperty({ properties, required }) {
         if (typeof fieldValue === 'object' && !Array.isArray(fieldValue)) {
           return (
             <div key={fieldKey}>
-              <PropertyField field={propertyKeys[fieldKey]} value={''} />
+              <PropertyField field={fieldKey} value={''} />
               <div className='margin-left--md'>
                 {Object.entries(fieldValue).map(renderPropertyField)}
               </div>
@@ -68,7 +68,7 @@ function SchemaProperty({ properties, required }) {
         if (Array.isArray(fieldValue)) {
           return (
             <div key={fieldKey}>
-              <PropertyField field={propertyKeys[fieldKey]} value={''} />
+              <PropertyField field={fieldKey} value={''} />
               <div className='margin-left--md'>
                 {fieldValue
                   .map((value, index) => [index + 1, value])

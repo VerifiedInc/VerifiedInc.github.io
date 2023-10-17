@@ -28,7 +28,7 @@ function PropertyField({ field, value }) {
 
   return (
     <strong>
-      <span className='text--capitalize'>{prettyField(field)}:</span>
+      <span>{field}:</span>
       <span className='margin-left--sm'>{renderValue()}</span>
     </strong>
   );
@@ -53,13 +53,48 @@ function SchemaProperty({ properties, required }) {
       const propertyKeys = keysLiteral(property);
       const isRequired = (required || []).includes(key);
 
+      const renderPropertyField = ([fieldKey, fieldValue]) => {
+        if (typeof fieldValue === 'object' && !Array.isArray(fieldValue)) {
+          return (
+            <div key={fieldKey}>
+              <PropertyField field={propertyKeys[fieldKey]} value={''} />
+              <div className='margin-left--md'>
+                {Object.entries(fieldValue).map(renderPropertyField)}
+              </div>
+            </div>
+          );
+        }
+
+        if (Array.isArray(fieldValue)) {
+          return (
+            <div key={fieldKey}>
+              <PropertyField field={propertyKeys[fieldKey]} value={''} />
+              <div className='margin-left--md'>
+                {fieldValue
+                  .map((value, index) => [index + 1, value])
+                  .map(renderPropertyField)}
+              </div>
+            </div>
+          );
+        }
+
+        return (
+          <div key={fieldKey}>
+            <PropertyField
+              field={propertyKeys[fieldKey] ?? fieldKey}
+              value={JSON.stringify(fieldValue)}
+            />
+          </div>
+        );
+      };
+
       return (
         <div
           key={key}
           className={`${styles['property-field']} table-of-contents__left-border padding-left--lg`}
         >
           <h6 className={styles['property-title']}>
-            <span>{prettyField(key)}</span>
+            <span>{key}</span>
             {' - '}
             <i className='text--primary'>
               {isRequired ? 'Required' : 'Optional'}
@@ -68,16 +103,7 @@ function SchemaProperty({ properties, required }) {
           <div
             className={`${styles.properties} table-of-contents__left-border`}
           >
-            {Object.entries(property).map(([fieldKey, fieldValue]) => {
-              return (
-                <div key={fieldKey}>
-                  <PropertyField
-                    field={propertyKeys[fieldKey]}
-                    value={JSON.stringify(fieldValue)}
-                  />
-                </div>
-              );
-            })}
+            {Object.entries(property).map(renderPropertyField)}
           </div>
         </div>
       );

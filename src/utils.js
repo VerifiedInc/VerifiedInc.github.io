@@ -9,6 +9,5 @@ export const prettyField = (field) =>
     .filter((e) => e)
     .join(' ');
 
-// Return an object literal with key as values.
-export const keysLiteral = (object) =>
-  Object.keys(object).reduce((acc, key) => ({ ...acc, [key]: key }), {});
+export const matchCredentialId = (credential) =>
+  /^\w+Credential$/.test(credential);

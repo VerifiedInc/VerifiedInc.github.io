@@ -141,8 +141,10 @@ To enable this form of acceptance, we encode a direct relationship between the i
 **Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined. This url ought to look something like this:
 
 ```text title="Example Redirect Back to Acme Bank URL"
-https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9458-057125eb417d
+https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9458-057125eb417d&verified=ga4p3yav
 ```
+
+_Optional_: **Capture the `verified` query param** as well. This will facilitate attribution tracking for promotions flows as the value is uniquely defined by the partner Issuer.
 
 #### 2. Retrieve Shared Credentials Data
 

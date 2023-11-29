@@ -41,11 +41,15 @@ The wallet url for the Production environment is `https://wallet.verified.inc`.
 While developing your integration you can use a dummy user account if you would like.
 
 ```json test
-email: richard@piedpiper.net
-phone: +10123456789
+email: richard@piedpiper.net || richard.hendricks@verified.inc
+phone: +10123456789 || +550123456789
 ```
 
 By using these test identifiers you can authenticate to the wallet using a static OTP value of `111111`, allowing you to test the full flow of the integration more easily. We recommend using a proper test email or phone to recieve actual OTP authentication messages during the final stages of development.
+
+:::caution
+Credentials issued to the test user will be deleted every day at 05:00 UTC.
+:::
 
 ## Functionality
 
@@ -143,10 +147,10 @@ For example, if you want to check if a user has credentials of type `SsnCredenti
       "mandatory": "yes"
     },
     {
-        "type": "PhoneCredential",
-        "issuers": [],
-        "mandatory": "if_available",
-        "allowUserInput": true
+      "type": "PhoneCredential",
+      "issuers": [],
+      "mandatory": "if_available",
+      "allowUserInput": true
     },
     {
       "type": "AddressCredential",
@@ -180,7 +184,6 @@ For example, if you want to check if a user has credentials of type `SsnCredenti
 </p>
 </details>
 
-
 Let's break this down to understand what is happening here:
 
 - `SsnCredential` is a "[single attribute atomic credential](/schema#schema-definitions)" and therefore does not have any sub-credentials. Because it is marked as `mandatory`, it only matches if the user has a credential.
@@ -203,15 +206,14 @@ Let's break this down to understand what is happening here:
 }
 ```
 
-
 - `PhoneCredential` is a "[single attribute atomic credential](/schema#schema-definitions)" and therefore does not have any sub-credentials. Because we set a `allowUserInput` attribute of `true`, the user will be given an opportunity to enter a new value if they choose to. Note that this have not relation with `mandatory` field, it just accepts and validates the user input data."
 
 ```json title="PhoneCredential"
 {
-    "type": "PhoneCredential",
-    "issuers": [],
-    "mandatory": "if_available",
-    "allowUserInput": true
+  "type": "PhoneCredential",
+  "issuers": [],
+  "mandatory": "if_available",
+  "allowUserInput": true
 }
 ```
 
@@ -249,9 +251,9 @@ Let's break this down to understand what is happening here:
 
 The user will be asked to share the `CityCredential` if available (this means if the user has a credential of type `CityCredential` it will be mandatory, but if the user does not have a credential of type `CityCredential` the user will still be able to share the `AddressCredential` credential).
 
-  `StateCredential` and `CountryCredential` are mandatory and therefore the user must have a credential of each type to match.
+`StateCredential` and `CountryCredential` are mandatory and therefore the user must have a credential of each type to match.
 
-  `ZipCodeCredential` is optional and therefore the user may or may not have a credential of type to match.
+`ZipCodeCredential` is optional and therefore the user may or may not have a credential of type to match.
 
 :::
 

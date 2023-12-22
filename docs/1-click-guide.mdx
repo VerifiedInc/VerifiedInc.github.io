@@ -10,7 +10,6 @@ import Tip from '../src/components/Tip';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import CredentialUsageExample from './reusables/credential-usage-example-snippet.mdx';
-import SharedCredentialsExample from './reusables/shared-credentials-body.mdx';
 import SharedCredentialsAtomicExample from './reusables/shared-credentials-body-atomic.mdx';
 import SharedCredentialsAtomicDetails from './reusables/shared-credentials-body-atomic-details.mdx';
 
@@ -25,7 +24,7 @@ import SharedCredentialsAtomicDetails from './reusables/shared-credentials-body-
 > This guide is outlines a more streamlined integration of the [Acceptance](/acceptance-guide) guide.
 
 :::tip
-You will need an API key and phone for each user. Below is a valid API Key and URL for your initial usage along with suggested test email and phone values.
+You will need an API key and phone for each user. Below is a valid API Key and URL for your initial usage.
 
 ```text title="Sandbox API Key"
 yVg3LEnF08y0MDmpHcPxB+sZWFcDARmPRKdY2M906ng=
@@ -119,6 +118,8 @@ In brief: using the 1-Click the Verified Inc. network, you will gain all the ben
   <SharedCredentialsAtomicExample/>
 
   It's easiest to extract the data from each credential using the corresponding [schema](/schema). The extracted data is verified according to the issuer of the credential, but you can perform additional verification steps if you like.
+
+  <CredentialUsageExample/>
 
   ✅ **_You're done!_**
 

@@ -20,6 +20,7 @@ module.exports = {
       /* should collapse when we have lots of docs */
       collapsed: false,
       items: [
+        '1-click-guide',
         'acceptance-guide',
         'issuance-guide'
       ],
@@ -32,15 +33,6 @@ module.exports = {
       items: [
         'api-overview',
         'schema',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Use Cases',
-      /* should collapse when we have lots of docs */
-      collapsed: false,
-      items: [
-        '1-click-or-free-use-case',
       ],
     },
     {

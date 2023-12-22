@@ -60,16 +60,16 @@ module.exports = {
           title: 'Guides',
           items: [
             {
+              label: '1-Click Guide',
+              to: '/1-click-guide',
+            },
+            {
               label: 'Acceptance Guide',
               to: '/acceptance-guide',
             },
             {
               label: 'Issuance Guide',
               to: '/issuance-guide',
-            },
-            {
-              label: '1-Click or Fee IDV',
-              to: '/1-click-or-free-use-case',
             },
           ],
         },

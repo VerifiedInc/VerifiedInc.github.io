@@ -1,0 +1,146 @@
+---
+id: 1-click-guide
+title: 1-Click Signup Guide
+sidebar_label: 1-Click Guide
+slug: /1-click-guide
+---
+
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CredentialUsageExample from './reusables/credential-usage-example-snippet.mdx';
+import SharedCredentialsExample from './reusables/shared-credentials-body.mdx';
+import SharedCredentialsAtomicExample from './reusables/shared-credentials-body-atomic.mdx';
+import SharedCredentialsAtomicDetails from './reusables/shared-credentials-body-atomic-details.mdx';
+
+**Time to read:** 5 min
+
+**Time to implement:** 1-2 hours
+
+## Overview
+
+**[Verified Inc.](https://www.verified.inc)** enables brands to provide their users with best in class onboarding - now truly with 1-Click. This particular guide focuses on how and why to become a <Tip type="brand">brand</Tip> that use's Verified Inc.'s 1-Click Signup.
+
+> This guide is outlines a more streamlined integration of the [Acceptance](/acceptance-guide) guide.
+
+:::tip
+You will need an API key and an email and/or phone for each user. Below is a valid API Key and URL for your initial usage along with suggested test email and phone values.
+
+If you use these suggested test email and/or phone values you can authenticate to the wallet using those values, i.e. richard@piedpiper.net, using a static OTP of `111111`.
+
+```text title="Sandbox API Key"
+yVg3LEnF08y0MDmpHcPxB+sZWFcDARmPRKdY2M906ng=
+```
+
+```text title="Sandbox URL"
+https://core-api.sandbox-verifiedinc.com
+```
+
+```text title="Sandbox User Email"
+richard@piedpiper.net
+```
+
+```text title="Sandbox User Phone"
++10123456789
+```
+
+```text title="Sandbox User Wallet Authentication OTP"
+111111
+```
+:::
+
+## Motivations
+
+Using the 1-Click Signup flow, you will allow users to easily retrieve and verify their:
+
+- first and last name
+- phone number
+- email
+- address
+- birth date
+- social security number
+
+This data is from Identity Verification Providers (IDV), and is packaged in manner that allows users to share with 1-Click.
+
+In brief: using the 1-Click the Verified Inc. network, you will gain all the benefits of being an [Acceptor](/acceptance-guide#motivations) but with additional value…
+
+- Leverage identity data that always provided by a trusted identity verification provider.
+- Our fastest and easiest integration experience to get it up and running.
+- Impress 95% of United States adults with this truly 1-Click experience.
+
+## Implementation
+
+  1. **Call [`/1-click`](/api-overview/#1-click-onboarding)** with the user's phone. If there is a match, will be the case for 95% of US adults, you will get a URL value in the response body.
+
+  ```typescript title="Example Response Body"
+    {
+        "url": "https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb"
+    }
+  ```
+
+  <details>
+    <summary>Match for 95% of US Adults?</summary>
+    <p>
+      Yes, we have data for 95% of US adults through our service providers. When you call <code>/1-click</code> using our default credential requests value, we can rely on our IDV service providers having the necessary data. We have found that we can data on 95% of US adults. 
+      This accessible data incudes:
+      <ul>
+        <li>
+          first name
+        </li>
+        <li>
+          last name
+        </li>
+        <li>
+          email
+        </li>
+        <li>
+          phone
+        </li>
+        <li>
+          address
+        </li>
+        <li>
+          birth date
+        </li>
+        <li>
+          social security number
+        </li>
+      </ul>
+    </p>
+
+  </details>
+    
+  The user will either have matching credentials, or they won't. If they do, continue to step (2). If they don't you should take the user through your existing verification flow.
+
+  2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Verified Inc. web wallet. For example the final url you need to redirect the user to is:
+
+  ```text title="Example Redirect to Verified Inc. Wallet URL"
+  https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?redirectUrl=https://acme-bank.co/sign-up/complete
+  ```
+
+  3. **Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined in step (2). To continue the example in step (2), the final url the user will be redirected to will be something like this:
+
+  ```text title="Example Redirect Back to Acme Bank URL"
+  https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9458-057125eb417d
+  ````
+
+  4. **Call `/sharedCredentials/{uuid}`** from your backend with the `sharedCredentialsUuid` the callback URL contains. The response body will contain the credentials the user agreed to share via 1-Click IDV.
+
+  <SharedCredentialsAtomicExample/>
+
+  It's easiest to extract the data from each credential using the corresponding [schema](/schema). The extracted data is verified according to the issuer of the credential, but you can perform additional verification steps if you like.
+
+  ✅ **_You're done!_**
+
+
+## Integration Testing
+All testing and development ought to be done against our Sandbox environment. The publicly published [Postman collection's](https://api.docs.verified.inc/) *Integration Test Suite* is very helpful facilitating testing your Acceptor integration. All instructions below are in reference to this Postman collection. *If you are more accustom to an alternative HTTP request client for development purposes, please let us know and we maybe be able to accommodate you.*
+
+To test either flavor of integration, you need to replace the `acceptorBrandApiKey` from the also published `Public API` environment variables with your brand's Sandbox API key to make the calls to `/1-click` and `/sharedCredentials/{uuid}`.
+
+:::note
+Some pre-configuration is necessary to test this appropriately. However, if we have already given you an ApiKey this should already be done for you. If you are unsure, please contact us.
+:::
+
+Testing in our Sandbox environment will be returning mocked data from our IDV service providers. We can configure that data in the response to suite your needs.

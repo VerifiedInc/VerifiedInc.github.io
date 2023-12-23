@@ -87,20 +87,20 @@ The endpoint comes with a default credential requests configuration shown below 
 
 :::note
 This endpoint performs a similar role to [/hasMatchingCredentials](/api-overview#check-user-credentials) but with a few key differences:
-- can only be used with a user's phone number
-- triggers an SMS verification message to the user that Verified Inc sends
-- can creates a request for the user to share the credentials with your brand much more easily thanks to the default credential requests
+- Can only be used with a user's phone number
+- Triggers an SMS verification message to the user that Verified Inc sends
+- There is a much greater chance of success getting user data than the standard acceptance flow thanks to data pulled on demand
 :::
 
 :::caution
-The same ApiKey necessary to call /1-click grants you and only you access to the encrypted credential data documented in [Get Shared Credentials](#get-shared-credentials). Please keep this key secure.
+The same ApiKey necessary to call [/1-click](/api-overview#1-click-onboarding) grants you and only you access to the encrypted credential data documented in [Get Shared Credentials](#get-shared-credentials). Please keep this key secure.
 :::
 
 #### Request Body
 
 ```typescript title="1-Click Request"
 {
-  phone: string, // user's phone number
+  phone: string, // user's phone number in E.164 format
   credentialRequests?: CredentialRequest[], // Optional: a list of one or more CredentialRequest objects. Encodes which credentials are being asked for
   verificationOption?: 'both_link_and_code' | 'only_link' | 'only_code' // Optional: controls the SMS verification messaging. Default is 'both_link_and_code'.
   content?: {
@@ -439,7 +439,7 @@ See [Data Schemas](/schema) for more information.
 {
   "credentials": Credentials[], // a list of one or more Credentials objects
   "email"?: string, // user's email address; optional if phone is provided
-  "phone"?: string // user's phone number; optional if email is provided
+  "phone"?: string // user's phone number in E.164 format; optional if email is provided
   "trackingId"?: string // user tracking identifier
 }
 ```

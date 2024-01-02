@@ -3,7 +3,7 @@ module.exports = {
   title: 'Verified Inc. Docs',
   tagline: 'Documentation for the Verified Inc. platform.',
   url: 'https://docs.verified.inc',
-  baseUrl: '/1-click-signup',
+  baseUrl: '',
   /* revert to throw when possible, was unable to fix a broken link issue */
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
@@ -108,11 +108,7 @@ module.exports = {
     },
     mermaid: {
       options: {
-        fontFamily: 'Lato',
-        themeVariables: {
-          // TODO: This isn't working — not sure why. Other themeVariables are working
-          primaryColor: '#0dbc3d',
-        },
+        // TODO: I can't seem to get global styling to work
       },
     },
   },

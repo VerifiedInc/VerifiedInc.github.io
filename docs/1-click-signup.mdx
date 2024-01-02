@@ -2,7 +2,7 @@
 id: 1-click-signup
 title: 1-Click Signup
 sidebar_label: 1-Click Signup
-slug: /1-click-signup
+slug: /
 toc_max_heading_level: 3
 ---
 
@@ -23,7 +23,7 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 
 ---
 
-**1-Click Signup is to onboarding what 1-click checkout is to payments.** It's the fastest way for a user to sign up for your service.
+**1-Click Signup™ is to onboarding what 1-click checkout is to payments.** It's the fastest way for a user to sign up for your service.
 
 With just a phone number, we can pull verified data about a user, including:
 - Full Name
@@ -99,6 +99,21 @@ Think of 1-Click Signup as a black box, where the input is a phone number and th
     <TabItem value="black-box" label="Black Box" default>
         You send us a phone number, and we send you verified user data, with full user consent. Yes, it's really that simple!
         ```mermaid
+        %%{
+            init: {
+                'theme': 'base',
+                'themeVariables': {
+                    'primaryColor': '#e6f6e6',
+                    'primaryTextColor': '#003100',
+                    'primaryBorderColor': '#0dbc3d',
+                    'secondaryColor': '#eef9fd',
+                    'secondaryTextColor': '#193c47',
+                    'secondaryBorderColor': '#164fd6',
+                    'edgeLabelBackground': '#ffffff',
+                    'textColor': '#000000'
+                }
+            }
+        }%%
         flowchart TD
             A[ ] -->|phone number| 1-click-signup
             subgraph 1-click-signup [1-Click Signup]
@@ -113,6 +128,21 @@ Think of 1-Click Signup as a black box, where the input is a phone number and th
     <TabItem value="partial-detail" label="Partial Detail">
         Under the hood, 1-Click Signup involves an SMS, user verification, and user consent:
         ```mermaid
+        %%{
+            init: {
+                'theme': 'base',
+                'themeVariables': {
+                    'primaryColor': '#e6f6e6',
+                    'primaryTextColor': '#003100',
+                    'primaryBorderColor': '#0dbc3d',
+                    'secondaryColor': '#eef9fd',
+                    'secondaryTextColor': '#193c47',
+                    'secondaryBorderColor': '#164fd6',
+                    'edgeLabelBackground': '#ffffff',
+                    'textColor': '#000000'
+                }
+            }
+        }%%
         flowchart TD
             A[ ] -->|phone number| 1-click-signup
             subgraph 1-click-signup [1-Click Signup]
@@ -129,8 +159,23 @@ Think of 1-Click Signup as a black box, where the input is a phone number and th
     <TabItem value="full-detail" label="Full Detail">
         To get even more detailed, the verification step is slightly different depending on whether it's the user's first time using 1-Click Signup or not:
         ```mermaid
+        %%{
+            init: {
+                'theme': 'base',
+                'themeVariables': {
+                    'primaryColor': '#e6f6e6',
+                    'primaryTextColor': '#003100',
+                    'primaryBorderColor': '#0dbc3d',
+                    'secondaryColor': '#eef9fd',
+                    'secondaryTextColor': '#193c47',
+                    'secondaryBorderColor': '#164fd6',
+                    'edgeLabelBackground': '#ffffff',
+                    'textColor': '#000000'
+                }
+            }
+        }%%
         flowchart TD
-            subgraph user-verifies[User Verifies]
+            subgraph user-verifies[User verifies]
                 direction TB
                 B(User clicks link or enters code) --> C{User's first time?}
                 C -->|yes| D(User enters DOB/SSN4)
@@ -146,6 +191,21 @@ Think of 1-Click Signup as a black box, where the input is a phone number and th
         So, the fully detailed flow is:
 
         ```mermaid
+        %%{
+            init: {
+                'theme': 'base',
+                'themeVariables': {
+                    'primaryColor': '#e6f6e6',
+                    'primaryTextColor': '#003100',
+                    'primaryBorderColor': '#0dbc3d',
+                    'secondaryColor': '#eef9fd',
+                    'secondaryTextColor': '#193c47',
+                    'secondaryBorderColor': '#164fd6',
+                    'edgeLabelBackground': '#ffffff',
+                    'textColor': '#000000'
+                }
+            }
+        }%%
         flowchart TD
             A[ ] -->|phone number| 1-click-signup
             subgraph 1-click-signup[1-Click Signup]
@@ -173,6 +233,21 @@ Think of 1-Click Signup as a black box, where the input is a phone number and th
 
 Here's the full flow:
 ```mermaid
+%%{
+    init: {
+        'theme': 'base',
+        'themeVariables': {
+            'primaryColor': '#e6f6e6',
+            'primaryTextColor': '#003100',
+            'primaryBorderColor': '#0dbc3d',
+            'secondaryColor': '#eef9fd',
+            'secondaryTextColor': '#193c47',
+            'secondaryBorderColor': '#164fd6',
+            'edgeLabelBackground': '#ffffff',
+            'textColor': '#000000'
+        }
+    }
+}%%
 sequenceDiagram
     participant C as Customer
     actor U as User
@@ -190,7 +265,7 @@ sequenceDiagram
             C-->>U: (optional) Redirect user to URL
         end
         autonumber off
-        rect rgb(150,150,150,0.25)
+        rect rgb(200,200,200,0.15)
             note left of U: User verifies
             V->>+U: Send SMS
             U->>-V: Click link or enter code
@@ -202,7 +277,7 @@ sequenceDiagram
         V->>V: Pull verified user data
         V->>+U: Display data
         U->>-V: Consent to share data
-        V->>U: Redirect user to customer 
+        V->>C: Redirect user to customer 
         autonumber 3
         C->V: Receive user data
     end
@@ -211,10 +286,13 @@ sequenceDiagram
 
 ## Implement
 
-:::info[Sandbox Testing]
-To test 1-Click Signup in our sandbox environment, you can use credentials for our test brand (Hooli) and user (Richard Hendricks). _Yes, the ones from ["Silicon Valley"](https://en.wikipedia.org/wiki/Silicon_Valley_(TV_series))! 😂_
+::::tip[Sandbox Testing]
+**To test 1-Click Signup in our sandbox environment, you can use our test brand and user.** (These are Hooli and Richard Hendricks — yes, the ones from ["Silicon Valley"](https://en.wikipedia.org/wiki/Silicon_Valley_(TV_series))! 😂)
+
+**We also strongly recommend that you test using your own phone number.** This will allow you to receive SMS messages, which are necessary to test the full 1-Click Signup flow (but won't work for the test user).
+:::note[Test Brand (Hooli)]
 <details>
-    <summary><b>Test Brand API Credentials</b></summary>
+    <summary><b>API Credentials</b></summary>
 
     ```text title="Sandbox API Key"
     yVg3LEnF08y0MDmpHcPxB+sZWFcDARmPRKdY2M906ng=
@@ -223,9 +301,11 @@ To test 1-Click Signup in our sandbox environment, you can use credentials for o
     https://core-api.sandbox-verifiedinc.com
     ```
 </details>
-Ask us for an API key for your own brand by emailing us at Contact@Verified.Inc.
+To get an API key for your own brand, email us at Support@Verified.Inc.
+:::
+:::note[Test User (Richard Hendricks)]
 <details>
-    <summary><b>Test User Login Credentials</b></summary>
+    <summary><b>Login Credentials</b></summary>
 
     ```text title="Phone"
     +10123456789
@@ -237,15 +317,24 @@ Ask us for an API key for your own brand by emailing us at Contact@Verified.Inc.
     111111
     ```
 </details>
-We recommend also using your own phone number, so you can receive the SMS messages (which won't work for the test user). This is necessary to test the full 1-Click Signup flow. 
-
-Currently, only US phone numbers work with 1-Click Signup (and we're able to source verified data for 95% of these numbers).
 :::
+:::note[Your Own Phone Number]
+<details>
+    <summary><b>Format</b></summary>
+
+    Make sure to use a 10-digit string, with the `+1` country code at the beginning:
+    ```text title="Phone"
+    +10123456789
+    ```
+    Currently, only US phone numbers work with 1-Click Signup (and we're able to source verified data for 95% of these numbers).
+</details>
+Using your own phone number in sandbox, you'll receive dummy user data.
+::::
 
 To implement 1-Click Signup, there are only 3 steps (and one is optional):
-1. [Call 1-Click endpoint](#call-1-click-endpoint)
-2. (optional) [Redirect user](#redirect-user)
-3. [Receive user data](#receive-user-data)
+1. **[Call 1-Click endpoint](#call-1-click-endpoint)**
+2. (optional) **[Redirect user](#redirect-user)**
+3. **[Receive user data](#receive-user-data)**
 
 See the [sequence diagram](#sequence-diagram) above.
 
@@ -341,9 +430,13 @@ You can also use `/1-click` in more advanced ways:
     <summary><b>Fully Customize Data Request</b></summary>
 
     You can fully customize the data request, controlling things like:
-    - which issuers issued the verified data
     - whether user input is allowed
-    - whether a given credential is required or optional
+    - whether a given piece of data is required or optional
+    - which issuers issued the verified data
+
+    We are happy to help you customize this. Just email us at Support@Verified.Inc if you'd like help doing so.
+
+    Here's an example of a fully customized request:
 
     ```typescript title="POST /1-click Request Body"
     {
@@ -501,7 +594,7 @@ But you can also choose to receive an encriched response, which contains much mo
             "zip": "93021",
             "country": "United States"
         },
-        "socialSecurityNumber": "123456789",
+        "ssn": "123456789",
         "birthDate": "08-01-1989"
     }
     ```
@@ -514,62 +607,141 @@ But you can also choose to receive an encriched response, which contains much mo
             "credentials": [
                 {
                     "id": "1be7c008-3f0c-4a21-9aad-69ca1c4251d2",
-                    "type": "FullNameCredential",
-                    "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+                    "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "issuanceDate": "1671847264479",
                     "expirationDate": "1871839024044",
+                    "type": "FullNameCredential",
                     "data": [
                         {
                             "id": "2e6a7b9a-e93e-43ba-98a9-c554f4e16457",
-                            "type": "FirstNameCredential",
-                            "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
                             "issuanceDate": "1671847264479",
                             "expirationDate": "1871839024044",
+                            "type": "FirstNameCredential",
                             "data": {
-                            "firstName": "Richard"
+                                "firstName": "Richard"
                             }
                         },
                         {
                             "id": "9a5817ef-e621-4277-8c48-c8ee3776b6c4",
-                            "type": "LastNameCredential",
-                            "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
                             "issuanceDate": "1671847264479",
                             "expirationDate": "1871839024044",
+                            "type": "LastNameCredential",
                             "data": {
-                            "lastName": "Hendricks"
+                                "lastName": "Hendricks"
                             }
                         }
                     ]
                 },
                 {
                     "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
+                    "issuanceDate": "1671847264479",
+                    "expirationDate": "1871839024044",
+                    "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "type": "EmailCredential",
                     "data": {
                         "email": "richard@piedpiper.net"
-                    },
-                    "issuanceDate": "1671847264479",
-                    "expirationDate": "1871839024044",
-                    "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+                    }
                 },
                 {
-                    "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
+                    "id": "80e07f16-999b-4402-aa0f-96f650b72fec",
+                    "issuanceDate": "1671847264479",
+                    "expirationDate": "1871839024044",
+                    "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "type": "PhoneCredential",
                     "data": {
                         "phone": "+10123456789"
-                    },
+                    }
+                },
+                {
+                    "id": "5f502836-ea9b-4032-89d5-19ac1c6ca3d7",
                     "issuanceDate": "1671847264479",
                     "expirationDate": "1871839024044",
-                    "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
-                }
+                    "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                    "type": "AddressCredential",
+                    "data": [
+                        {
+                            "id": "f5a4dc93-bc06-4bb8-bd05-17b5ba912bcd",
+                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuanceDate": "1671847264479",
+                            "expirationDate": "1871839024044",
+                            "type": "Line1Credential",
+                            "data": {
+                                "line1": "Richard"
+                            }
+                        },
+                        {
+                            "id": "b58910a4-b95e-461d-a68e-387c29440c12",
+                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuanceDate": "1671847264479",
+                            "expirationDate": "1871839024044",
+                            "type": "Line2Credential",
+                            "data": {
+                                "line2": "Richard"
+                            }
+                        },
+                        {
+                            "id": "efd3820f-676a-4db1-b63e-695b66ed8ba0",
+                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuanceDate": "1671847264479",
+                            "expirationDate": "1871839024044",
+                            "type": "CityCredential",
+                            "data": {
+                                "city": "Richard"
+                            }
+                        },
+                        {
+                            "id": "b65022a2-2016-41df-88f3-252e8e3a29c5",
+                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuanceDate": "1671847264479",
+                            "expirationDate": "1871839024044",
+                            "type": "StateCredential",
+                            "data": {
+                                "state": "Richard"
+                            }
+                        },
+                        {
+                            "id": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
+                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuanceDate": "1671847264479",
+                            "expirationDate": "1871839024044",
+                            "type": "ZipCodeCredential",
+                            "data": {
+                                "zipCode": "Richard"
+                            }
+                        },
+                        {
+                            "id": "d57a7bca-2a7c-4671-86ad-5647731cad02",
+                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuanceDate": "1671847264479",
+                            "expirationDate": "1871839024044",
+                            "type": "CountryCredential",
+                            "data": {
+                                "country": "Richard"
+                            }
+                        }
+                    ]
+                },
                 {
-                    "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
+                    "id": "ec1ef0ce-eeed-46a4-94a9-29b46e64403d",
+                    "issuanceDate": "1671847264479",
+                    "expirationDate": "1871839024044",
+                    "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "type": "SsnCredential",
                     "data": {
                         "ssn": "111223333"
-                    },
+                    }
+                },
+                {
+                    "id": "ec1ef0ce-eeed-46a4-94a9-29b46e64403d",
                     "issuanceDate": "1671847264479",
                     "expirationDate": "1871839024044",
-                    "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+                    "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                    "type": "BirthDateCredential",
+                    "data": {
+                        "birthDate": "617947200"
+                    }
                 }
             ]
         }

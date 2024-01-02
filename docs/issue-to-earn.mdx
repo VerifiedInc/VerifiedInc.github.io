@@ -1,0 +1,319 @@
+---
+id: issue-to-earn
+title: Issue to Earn
+sidebar_label: Issue to Earn
+slug: /issue-to-earn
+---
+
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+**Time to read:** 5 min
+
+**Time to implement:** 30 - 60 min
+
+:::tip
+You will need an API key and an email and/or phone for each user. Below is a valid API Key for your initial usage along with suggested test email and phone values.
+
+```json title="Sandbox API Key"
+yVg3LEnF08y0MDmpHcPxB+sZWFcDARmPRKdY2M906ng=
+```
+```json title="Sandbox User Email"
+test@example.com
+```
+```json title="Sandbox User Phone"
++10123456789
+```
+:::
+
+**[Verified Inc.](https://www.verified.inc)** enables 1-Click or Free ID Verification (IDV), powered by our digital ID cards. 
+
+You can implement any of the following:
+- **Free IDV Only:** You issue a digital ID card to any of your users (new or existing), and we pay you for it.
+
+  <details>
+    <summary>Demo of Free Only</summary>
+    <p>
+      Richard is an existing, verified Hooli user. The next time he signs in, Hooli asks him if he wants to activate his Hooli digital ID card. When he clicks the Activate button, Hooli issues the card, and Verified Inc. reimburses Hooli for the cost of the identity verification performed by Hooli for Richard.
+    </p>
+    <iframe src="https://marvelapp.com/prototype/1938729e/screen/90752160?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
+  </details>
+
+- **1-Click IDV only:** If a user has a digital ID card, they can verify with 1-Click. If they don't, you take them through your existing verification process (no change needed).
+
+  <details>
+    <summary>Demo of 1-Click Only</summary>
+    <p>
+      This demo shows Kredita using 1-Click IDV when it's available. They collect email and phone from the user (Richard) and check if the user has matching credentials. The user does, so Kredita lets them verify with 1-Click.
+    </p>
+    <iframe src="https://marvelapp.com/prototype/9cab6ai?emb=1&iosapp=false&frameless=false" width="453" height="864" allowTransparency="true" frameborder="0"></iframe>
+  </details>
+
+- **Both:** If a user has a digital ID card, they can verify with 1-Click. If they don't, you take them through your existing verification process (no change needed) — _and at the end you issue them a digital ID card, and we pay you for it_. 
+
+**What do you want to implement?**
+
+<Tabs groupId="options" defaultValue="free">
+
+<TabItem value="free" label="Free Only">
+
+  **You need to issue <Tip type="credential">credentials</Tip> to a user.** When you do, Verified Inc. will pay you according to your contract.
+
+  1. **Get user consent.** Ask the user if they want to activate their digital ID card (from your brand), and include Verified Inc. legal language:
+
+  > By clicking the button below, you agree to Verified Inc.’s <a href="https://www.verified.inc/legal/terms-of-use">Terms of Use</a> and direct YOUR_COMPANY_NAME to share your personal information with Verified Inc. to provide its digital ID card services, in accordance with its <a href="https://www.verified.inc/legal/privacy-policy">Privacy Policy</a>.
+
+  "Terms of Use" should be underlined or colored and hyperlinked to <a href="https://www.verified.inc/legal/terms-of-use">`https://www.verified.inc/legal/terms-of-use`</a>. "Privacy Policy" should be underlined or colored and hyperlinked to <a href="https://www.verified.inc/legal/privacy-policy">`https://www.verified.inc/legal/privacy-policy`</a>.
+
+  :::info
+  **You must obtain user consent before issuing credentials.** Not doing so violates our terms and will prevent us from paying you for issuing credentials. 
+  :::
+
+  2. **Call [`/credentials`](/api-overview#issue-credentials)** with the user's verified email and/or phone and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [schemas](/schema). 
+
+  _If we don't have a schema that suits your needs, [email us](mailto:support@verified.inc) and we'll make one for you._
+
+  For example, if you have a verified Social Security Number (SSN) for a user, you can issue them a `SsnCredential`. Just call the `/credentials` endpoint with the user's email and/or phone, the `SsnCredential` type, and the SSN data:
+
+  ```json title="Example Issue Credentials Request Body"
+  {
+    "email": "test@example.com",
+    "phone": "+10123456789",
+    "credentials": [
+      {
+        "type": "SsnCredential",
+        // based on the properties attribute of the schema
+        // highlight-start
+        "data": {
+          "ssn": "111223333"
+        },
+        // highlight-end
+        "expirationDate": 1893484800
+      }
+    ]
+  }
+  ```
+
+  Format the credential data according to the `properties` attribute of the credential schema. In this case, the schema is for a `SsnCredential` which can found found at [`https://schema.verified.inc/jsonSchema/SsnCredential`](https://schema.verified.inc/jsonSchema/SsnCredential). 
+
+  More information about credential schemas can be found in the [Schema](/schema) section.
+
+  ✅ **_ You're done!_**
+
+  > For more detailed information on how and why to implement Free IDV, see our [Free IDV Guide](/issuance-guide).
+
+</TabItem>
+  
+<TabItem value="1-click" label="1-Click Only">
+
+  **You need to check whether the user has matching <Tip type="credential">credentials</Tip>.** If they do, 1-Click IDV is available.
+
+  1. **Call [`/hasMatchingCredentials`](/api-overview/#check-user-credentials)** with the user's email and/or phone and the credential type(s) you need.
+
+    ```typescript title="Example Response Body"
+    {
+        "match": true,
+        "url": "https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb"
+    }
+  ```
+
+  <details>
+    <summary>What counts as a match?</summary>
+    <p>
+      When you call <code>/hasMatchingCredentials</code>, you include one or more credential requests. For each credential request, you specify:
+      <ul>
+        <li>
+          the type
+        </li>
+        <li>
+          (optional) which issuers are acceptable
+        </li>
+        <li>
+          (optional) whether the credential is required
+        </li>
+      </ul>
+    </p>
+    <p>
+      There's a match if, for each credential request for a required credential, the user has a credential of the correct type from an acceptable issuer.
+    </p>
+  </details>
+    
+  The user will either have matching credentials, or they won't. If they do, continue to step (2). If they don't, you're done with Verified Inc. and should take the user through your existing verification flow. <i>If you would like your existing verification flow verification costs to be covered, please look into the <b>Both</b> section of this quick start, which includes both Free IDV and 1-Click IDV.</i>
+
+  2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Verified Inc. web wallet. For example the final url you need to redirect the user to is:
+
+  ```text title="Example Redirect to Verified Inc. Wallet URL"
+  https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?redirectUrl=https://acme-bank.co/sign-up/complete
+  ```
+
+  3. **Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined in step (2). To continue the example in step (2), the final url the user will be redirected to will be something like this:
+
+  ```text title="Example Redirect Back to Acme Bank URL"
+  https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9458-057125eb417d
+  ````
+
+  4. **Call `/sharedCredentials/{uuid}`** from your backend with the `sharedCredentialsUuid` the callback URL contains. The response body will contain the credentials the user agreed to share via 1-Click IDV.
+
+  ```typescript title="Example Response Body"
+  {
+      "uuid": string // the sharedCredentialsUuid
+      "credentials": [{
+          "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
+          "type": "SsnCredential",
+          "data": {
+              "ssn": "111223333"
+          },
+          "issuanceDate": "1671847264479",
+          "expirationDate": "1871839024044",
+          "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+      }],
+      // user's email from input to /hasMatchingCredentials
+      // only present if email was provided
+      "email"?: string,
+      // user's phone from input to /hasMatchingCredentials
+      // only present if email was provided 
+      "phone"?: string
+  }
+  ```
+
+  It's easiest to extract the data from each credential using the corresponding [schema](/schema). The extracted data is verified according to the issuer of the credential, but you can perform additional verification steps if you like.
+
+  ✅ **_You're done!_**
+
+</TabItem>
+
+<TabItem value="both" label="Both">
+
+  _This simply combines the 1-Click Only and Free Only options._
+
+  **You need to check whether the user has matching <Tip type="credential">credentials</Tip>.** If they do, 1-Click IDV is available.
+
+  **If they don't, you need to issue them credentials.** When you do, Verified Inc. will pay you according to your contract.
+
+  1. **Call [`/hasMatchingCredentials`](/api-overview/#check-user-credentials)** with the user's email and/or phone and the credential type(s) you need.
+
+    ```typescript title="Example Response Body"
+    {
+        "match": true,
+        "url": "https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789"
+    }
+  ```
+
+  <details>
+    <summary>What counts as a match?</summary>
+    <p>
+      When you call <code>/hasMatchingCredentials</code>, you include one or more credential requests. For each credential request, you specify:
+      <ul>
+        <li>
+          the type
+        </li>
+        <li>
+          (optional) which issuers are acceptable
+        </li>
+        <li>
+          (optional) whether the credential is required
+        </li>
+      </ul>
+    </p>
+    <p>
+      There's a match if, for each credential request for a required credential, the user has a credential of the correct type from an acceptable issuer.
+    </p>
+  </details>
+    
+  The user will either have matching credentials, or they won't. If they do, continue to the <b>Match</b> tab of step (2). If they don't, continue to the <b>No Match</b> tab of step (2).
+
+<Tabs defaultValue="no-match">
+<TabItem value="match" label="Match">
+
+  2. **Direct the user to the `url`** the response body contains with an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Verified Inc. web wallet. For example, the final url the user is redirected to is:
+
+  ```text title="Example Redirect to Verified Inc. Wallet URL"
+  https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789&redirectUrl=https://acme-bank.co/sign-up/complete
+  ```
+
+  3. **Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined in step (2). To continue the example in step (2), the final url the user will be redirected to will be something like this:
+
+  ```text title="Example Redirect Back to Acme Bank URL"
+  https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9458-057125eb417d
+  ````
+
+  4. **Call [`/sharedCredentials/{uuid}`](/api-overview/#get-shared-credentials)** from your backend with the `sharedCredentialsUuid` the callback URL contains. The response body will contain the credentials the user agreed to share via 1-Click IDV.
+
+  ```typescript title="Example Response Body"
+  {
+      "uuid": string // the sharedCredentialsUuid
+      "credentials": [{
+          "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
+          "type": "SsnCredential",
+          "data": {
+              "ssn": "111223333"
+          },
+          "issuanceDate": "1671847264479",
+          "expirationDate": "1871839024044",
+          "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+      }],
+      // user's email from input to /hasMatchingCredentials
+      // only present if email was provided
+      "email"?: string,
+      // user's phone from input to /hasMatchingCredentials
+      // only present if email was provided 
+      "phone"?: string
+  }
+  ```
+
+  It's easiest to extract the data from each credential using the corresponding [schema](/schema). The extracted data is verified according to the issuer of the credential, but you can perform additional verification steps if you like.
+
+  ✅ **_ You're done!_**
+
+</TabItem>
+<TabItem value="no-match" label="No Match">
+
+  1. **Get user consent.** Ask the user if they want to activate their digital ID card (from your brand), and include Verified Inc. legal language:
+
+  > By clicking the button below, you agree to Verified Inc.’s <a href="https://www.verified.inc/legal/terms-of-use">Terms of Use</a> and direct YOUR_COMPANY_NAME to share your personal information with Verified Inc. to provide its digital ID card services, in accordance with its <a href="https://www.verified.inc/legal/privacy-policy">Privacy Policy</a>.
+
+  "Terms of Use" should be underlined or colored and hyperlinked to <a href="https://www.verified.inc/legal/terms-of-use">`https://www.verified.inc/legal/terms-of-use`</a>. "Privacy Policy" should be underlined or colored and hyperlinked to <a href="https://www.verified.inc/legal/privacy-policy">`https://www.verified.inc/legal/privacy-policy`</a>.
+
+  :::info
+  **You must obtain user consent before issuing credentials.** Not doing so violates our terms and will prevent us from paying you for issuing credentials. 
+  :::
+
+  3. **Call [`/credentials`](/api-overview#issue-credentials)** from your backend with the user's verified email and/or phone and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [schemas](/schema). 
+
+  _If we don't have a schema that suits your needs, [email us](mailto:support@verified.inc) and we'll make one for you._
+
+  For example, if you have a verified Social Security Number (SSN) for a user, you can issue them a `SsnCredential` to their verified phone. Just call the `/credentials` endpoint with the user's verified email and/or phone, the `SsnCredential` type, and the SSN data:
+
+  ```json title="Example Issue Credentials Request Body"
+  {
+    "email": "test@example.com",
+    "phone": "+10123456789",
+    "credentials": [
+      {
+        "type": "SsnCredential",
+        // based on the properties attribute of the schema
+        // highlight-start
+        "data": {
+          "ssn": "111223333"
+        },
+        // highlight-end
+        "expirationDate": 1893484800
+      }
+    ]
+  }
+  ```
+
+  Format the credential data according to the `properties` attribute of the credential schema. In this case, the schema is for a `SsnCredential` which can found found at [`https://schema.verified.inc/jsonSchema/SsnCredential`](https://schema.verified.inc/jsonSchema/SsnCredential). 
+
+  More information about credential schemas can be found in the [Schema](/schema) section.
+
+  ✅ **_ You're done!_**
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+</Tabs>

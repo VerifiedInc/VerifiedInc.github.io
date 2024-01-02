@@ -8,6 +8,7 @@ slug: /api-overview
 import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 import CredentialRequestCodeSnippet from './reusables/credential-request-code-snippet.mdx';
+import DefaultCredentialRequestCodeSnippet from './reusables/1-click-default-credential-request.mdx';
 import CodeBlock from '@theme/CodeBlock';
 
 ## Overview
@@ -63,6 +64,62 @@ Jump to:
 
 ---
 
+### 1-Click
+
+> Begin a 1-Click Signup flow, so a <Tip type="user">user</Tip> can easily share their verified <Tip type="credential">credentials</Tip>.
+
+**Method**: `POST` <br />
+**Path**: `/1-click`
+
+You need to provide:
+
+1. User's  phone
+2. (Optional) Verification messaging option. _Controls the SMS verification messaging._
+3. (Optional) Content object of request page options. _To allow for minor messaging adjustments to the Web Wallet request page the user provides consent to share data from._
+4. (Optional) Credential request(s). _If you would like to update from the default credential requests._
+
+A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects.
+
+<CredentialRequestCodeSnippet />
+
+The endpoint comes with a default credential requests configuration shown below which should be suffice for most customers.
+<DefaultCredentialRequestCodeSnippet />
+
+:::note
+This endpoint performs a similar role to [/hasMatchingCredentials](/api-overview#check-user-credentials) but with a few key differences:
+- Can only be used with a user's phone number
+- Triggers an SMS verification message to the user that Verified Inc sends
+- There is a much greater chance of success getting user data than the standard acceptance flow thanks to data pulled on demand
+:::
+
+:::caution
+The same ApiKey necessary to call [/1-click](/api-overview#1-click-onboarding) grants you and only you access to the encrypted credential data documented in [Get Shared Credentials](#get-shared-credentials). Please keep this key secure.
+:::
+
+#### Request Body
+
+```typescript title="1-Click Request"
+{
+  phone: string, // user's phone number in E.164 format
+  verificationOptions?: 'only_link' | 'only_code' | 'both_link_and_code' // Optional: controls the SMS verification messaging. Default is 'only_link'.
+  content?: {
+    title?: 'Signup' | 'Verify' | 'Apply', // Optional: title of the request page. Default is 'Signup'
+    description?: string, // Optional: description displayed under the consent page header. Default is 'Make sure everything is correct:'
+  }
+  credentialRequests?: CredentialRequest[], // Optional: a list of one or more CredentialRequest objects. Encodes which credentials are being asked for
+}
+```
+
+#### Response Body
+
+```typescript title="1-Click Response"
+{
+  "url": string // Verified Inc. Web Wallet url to redirect user to for credential request handling. It will redirect back to your client. Only present if match is true.
+}
+```
+
+The `url` from the response ought to then be enriched with a `redirectUrl` query param that will take the next step in your target service's user onboarding webpage. _More information on this can be found in the [1-Click Guide](/1-click-guide)._
+
 ### Check User Credentials
 
 > Check if a user has matching <Tip type="credential">credentials</Tip>. If so, a <Tip type="request"/> is created to get the <Tip type="user">user</Tip>'s consent to share the data.
@@ -113,7 +170,7 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 }
 ```
 
-#### Response Body:
+#### Response Body
 
 ```typescript title="HasMatchingCredentials"
 {
@@ -382,12 +439,12 @@ See [Data Schemas](/schema) for more information.
 {
   "credentials": Credentials[], // a list of one or more Credentials objects
   "email"?: string, // user's email address; optional if phone is provided
-  "phone"?: string // user's phone number; optional if email is provided
+  "phone"?: string // user's phone number in E.164 format; optional if email is provided
   "trackingId"?: string // user tracking identifier
 }
 ```
 
-#### Response Body:
+#### Response Body
 
 ```typescript title="CredentialsDto"
 {
@@ -443,7 +500,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 }
 ```
 
-#### Response Body:
+#### Response Body
 
 ```typescript title="CredentialDto"
 {
@@ -483,7 +540,7 @@ This endpoint all modifies credentials issued to the user by your brand.
 }
 ```
 
-#### Response Body:
+#### Response Body
 
 ```typescript title="UserCredentialsDto"
 {
@@ -511,7 +568,7 @@ The response body contains a list of all credentials that were modified on the `
 
 This endpoint returns a credential (issued by your brand) via the credential `id`.
 
-#### Response Body:
+#### Response Body
 
 ```typescript title="CredentialDto"
 {
@@ -545,7 +602,7 @@ It should be clear that this endpoint should not be used in place of [`/hasMatch
 This endpoint is simply a nice to have for an issuer to see all credentials they have issued to a user.
 :::
 
-#### Response Body:
+#### Response Body
 
 ```typescript title="UserCredentialsDto"
 {
@@ -573,7 +630,7 @@ The response body contains a list of all credentials on the `credentials` key.
 
 This endpoint returns a list of credential requests that the partner has defined for their brand.
 
-#### Response Body:
+#### Response Body
 
 ```typescript title="CredentialRequestsResponse"
 {

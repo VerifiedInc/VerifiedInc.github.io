@@ -3,13 +3,13 @@ module.exports = {
   title: 'Verified Inc. Docs',
   tagline: 'Documentation for the Verified Inc. platform.',
   url: 'https://docs.verified.inc',
-  baseUrl: '/',
+  baseUrl: '',
   /* revert to throw when possible, was unable to fix a broken link issue */
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'UnumID', // Usually your GitHub org/user name.
-  projectName: 'UnumID.github.io', // Usually your repo name.
+  organizationName: 'VerifiedInc', // Usually your GitHub org/user name.
+  projectName: 'VerifiedInc.github.io', // Usually your repo name.
   themeConfig: {
     prism: {
       additionalLanguages: ['swift', 'kotlin', 'java', 'dart', 'groovy'],
@@ -29,7 +29,7 @@ module.exports = {
           position: 'right',
         },
         {
-          to: 'https://github.com/UnumID',
+          to: 'https://github.com/VerifiedInc',
           activeBasePath: 'github',
           label: 'GitHub',
           position: 'right',
@@ -99,12 +99,17 @@ module.exports = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/UnumID',
+              href: 'https://github.com/VerifiedInc',
             },
           ],
         },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Verified Inc., Inc.`,
+    },
+    mermaid: {
+      options: {
+        // TODO: I can't seem to get global styling to work
+      },
     },
   },
   presets: [
@@ -121,7 +126,33 @@ module.exports = {
       },
     ],
   ],
+  // This plugin isn't working with Docusaurus v3 yet
+  /*
+  plugins: [
+    [
+      'docusaurus-plugin-openapi-docs', // See https://github.com/PaloAltoNetworks/docusaurus-openapi-docs/tree/main
+      {
+        id: "api", // plugin id
+        docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
+        config: {
+          api: { // the <id> referenced when running CLI commands
+            specPath: "api/specs/api.json", // path to OpenAPI spec, URLs supported
+            outputDir: "docs/api", // output directory for generated files
+            sidebarOptions: { // optional, instructs plugin to generate sidebar.js
+              groupPathsBy: "tag", // group sidebar items by operation "tag"
+            },
+          },
+        }
+      },
+    ]
+  ],
+  */
   themes: [
     '@docusaurus/theme-live-codeblock',
+    '@docusaurus/theme-mermaid',
+    // 'docusaurus-theme-openapi-docs',
   ],
+  markdown: {
+    mermaid: true,
+  },
 };

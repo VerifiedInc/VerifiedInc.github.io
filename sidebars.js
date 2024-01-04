@@ -1,51 +1,40 @@
 module.exports = {
   sidebar: [
     {
-      type: 'doc',
-      id: 'about-unum-id',
+      type: 'category',
+      label: 'Solutions',
+      collapsed: false,
+      items: [
+        '1-click-signup',
+        'issue-to-earn',
+      ],
     },
     {
       type: 'category',
-      label: 'Introduction',
-      /* should collapse when we have lots of docs */
+      label: 'Resources',
       collapsed: false,
       items: [
         'terminology',
+        {
+          type: 'category',
+          label: 'API',
+          collapsed: false,
+          items: [
+            {
+              type: 'doc',
+              id: 'api-overview',
+            },
+            {
+              type: 'link',
+              label: 'Postman Collection',
+              href: 'https://api.docs.verified.inc/'
+            },
+          ],
+        },
+        'schema',
+        'demos',
         'faq-info',
       ],
-    },
-    {
-      type: 'category',
-      label: 'Guides',
-      /* should collapse when we have lots of docs */
-      collapsed: false,
-      items: [
-        '1-click-guide',
-        'acceptance-guide',
-        'issuance-guide'
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Components',
-      /* should collapse when we have lots of docs */
-      collapsed: false,
-      items: [
-        'api-overview',
-        'schema',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Demos',
-      /* should change when we have lots of docs */
-      collapsed: false,
-      items: [
-        // 'idv-demo',
-        'hooli-demo',
-        'hooli-partner-demo',
-        'kredita-demo',
-      ]
     },
   ],
 };

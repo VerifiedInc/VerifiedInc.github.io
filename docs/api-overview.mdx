@@ -64,15 +64,9 @@ Jump to:
 
 ---
 
-<<<<<<< HEAD
 ### 1-Click
 
 > Begin a 1-Click Signup flow, so a <Tip type="user">user</Tip> can easily share their verified <Tip type="credential">credentials</Tip>.
-=======
-### 1-Click Onboarding
-
-> Easiest way to get <Tip type="user">user</Tip>'s <Tip type="credential">credentials</Tip> with their consent to onboard to your service.
->>>>>>> dev
 
 **Method**: `POST` <br />
 **Path**: `/1-click`
@@ -80,15 +74,9 @@ Jump to:
 You need to provide:
 
 1. User's  phone
-<<<<<<< HEAD
 2. (Optional) Verification messaging option. _Controls the SMS verification messaging._
 3. (Optional) Content object of request page options. _To allow for minor messaging adjustments to the Web Wallet request page the user provides consent to share data from._
 4. (Optional) Credential request(s). _If you would like to update from the default credential requests._
-=======
-2. (Optional) Credential request(s). _If you would like to update from the default credential requests._
-3. (Optional) Verification messaging option. _Controls the SMS verification messaging._
-4. (Optional) Content object of request page options. _To allow for minor messaging adjustments to the Web Wallet request page the user provides consent to share data from._
->>>>>>> dev
 
 A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects.
 
@@ -113,21 +101,12 @@ The same ApiKey necessary to call [/1-click](/api-overview#1-click-onboarding) g
 ```typescript title="1-Click Request"
 {
   phone: string, // user's phone number in E.164 format
-<<<<<<< HEAD
   verificationOptions?: 'only_link' | 'only_code' | 'both_link_and_code' // Optional: controls the SMS verification messaging. Default is 'only_link'.
   content?: {
     title?: 'Signup' | 'Verify' | 'Apply', // Optional: title of the request page. Default is 'Signup'
     description?: string, // Optional: description displayed under the consent page header. Default is 'Make sure everything is correct:'
   }
   credentialRequests?: CredentialRequest[], // Optional: a list of one or more CredentialRequest objects. Encodes which credentials are being asked for
-=======
-  credentialRequests?: CredentialRequest[], // Optional: a list of one or more CredentialRequest objects. Encodes which credentials are being asked for
-  verificationOption?: 'both_link_and_code' | 'only_link' | 'only_code' // Optional: controls the SMS verification messaging. Default is 'both_link_and_code'.
-  content?: {
-    title?: 'Signup' | 'Verify' | 'Apply', // Optional: title of the request page. Default is 'Signup'
-    description?: string, // Optional: description displayed under the consent page header. Default is 'Please make sure everything is correct:'
-  }
->>>>>>> dev
 }
 ```
 

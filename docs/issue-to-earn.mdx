@@ -91,7 +91,7 @@ We define a digital ID card as a collection of credentials, issued by a brand to
 If we don't have a data schema that suits your needs, email us at Support@Verified.Inc) and we'll make one for you.
 :::
 
-For example, if you have a verified Social Security Number (SSN) and a full name for a user, you can issue them a `SsnCredential` and `FullNameCredential`. Just call [`POST /credentials`](/api-overview#issue-credentials) with the user's email or phone, the `SsnCredential` and `FullNameCredential` type, and the SSN and full name data:
+For example, if you have a verified Social Security Number (SSN) and a full name for a user, you can issue them credentials. Just call [`POST /credentials`](/api-overview#issue-credentials) with the user's email or phone, the `SsnCredential` and `FullNameCredential` type, and the SSN and full name data:
 
 ```typescript title="Example Issue Credentials Request Body"
 {

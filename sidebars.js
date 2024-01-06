@@ -11,29 +11,37 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Demos',
+      collapsed: false,
+      items: [
+        'demo-1-click-signup',
+        'demo-issue-to-earn',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'API',
+      collapsed: false,
+      items: [
+        {
+          type: 'doc',
+          id: 'api-reference',
+        },
+        {
+          type: 'link',
+          label: 'Postman',
+          href: 'https://api.docs.verified.inc/',
+        },
+      ],
+    },
+    {
+      type: 'category',
       label: 'Resources',
       collapsed: false,
       items: [
-        'terminology',
-        {
-          type: 'category',
-          label: 'API',
-          collapsed: false,
-          items: [
-            {
-              type: 'doc',
-              id: 'api-overview',
-            },
-            {
-              type: 'link',
-              label: 'Postman Collection',
-              href: 'https://api.docs.verified.inc/'
-            },
-          ],
-        },
+        // 'terminology',
         'schema',
-        'demos',
-        'faq-info',
+        // 'faq-info',
       ],
     },
   ],

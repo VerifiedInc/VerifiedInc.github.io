@@ -57,7 +57,7 @@ const tooltips =  {
     "request":
         <>
         <div>
-            <b>A <a href="/terminology#request">request</a> (or <i>credentials request</i>) is a request for a <a href="/terminology#credential">credentials</a> to be shared by a <a href="/terminology#user">user</a>.</b> It's created when a company successfully checks if a user has matching credentials, via <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>  Only if the user has the ability to response with the matching credentials is a request created.
+            <b>A <a href="/terminology#request">request</a> (or <i>credential request</i>) is a request for a <a href="/terminology#credential">credentials</a> to be shared by a <a href="/terminology#user">user</a>.</b> It's created when a company successfully checks if a user has matching credentials, via <a href="/api-overview#check-user-credentials">/hasMatchingCredentials.</a>  Only if the user has the ability to response with the matching credentials is a request created.
         </div>
         <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
             <div>

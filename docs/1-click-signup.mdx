@@ -10,16 +10,16 @@ import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import TestingCredentialsSnippet from './reusables/sandbox-testing-credentials.mdx';
 
-**Time to read:** 10 minutes
+- **Time to read:** 20 minutes
+- **Time to implement:** 2-4 hours
 
-**Time to implement:** 1 hour
-
-:::tip[✅ 1-Hour Guarantee]
+{/* :::tip[✅ 1-Hour Guarantee]
 We are _obsessed_ with making it as easy as possible for you to implement 1-Click Signup.
 - If it takes you more than 1 hour to implement, we'll send you a free Verified Inc. t-shirt! 
 - If it takes you less than 1 hour, we'll send you a free t-shirt _and_ mug!
-:::
+::: */}
 
 ---
 
@@ -45,14 +45,16 @@ With just a phone number, we can pull verified data about a user, including:
 
 ### User Experience
 
+> _**Try our [1-Click Signup demos](/demo-1-click-signup)** to see this user experience in action._
+
 **1-Click Signup can take less than 10 seconds for a user to complete.** It usually takes around 30-60 seconds.
 
 The user experience is simple:
-1. Enter phone number
-2. Receive SMS with verification link/code
-3. Click link or enter code
-4. (only if first time) Enter DOB/SSN4
-5. Review and consent to share data
+1. **Enter phone number**
+2. **Receive SMS with verification link/code**
+3. **Click link or enter code**
+4. (only if first time) **Enter DOB/SSN4**
+5. **Review and consent to share data**
 
 :::info[Step 4 Happens Only On First Time Use]
 - If it's the user's first time using 1-Click Signup, they'll need to enter their date of birth (DOB) or the last 4 digits of their Social Security Number (SSN4). This is for additional verification.
@@ -61,34 +63,11 @@ The user experience is simple:
 
 :::tip[Without Redirect vs. With Redirect]
 You can choose whether you redirect the user or not as part of the flow:
-- In the [simplest implementation](#simplest-implementation), the SMS contains a verification link and you don't redirect the user. 
-- Instead, you can (optionally) make the SMS contain a verification code and [redirect the user](#redirect-user) so they can enter that code. 
+- In the [simplest implementation](#simplest-implementation), you don't redirect the user and they click a verification link in the SMS. 
+- Instead, you can (optionally) [redirect the user](#redirect-user) (to a URL we provide), so they can enter a verification code from the SMS.
 
-These are only slightly different approaches and both work well. See [here](#redirect-user) for the pros and cons of each.
+Both of these approaches work well but have their [pros and cons](#pros-and-cons).
 :::
-
-Step through this user experience yourself using the interactive prototypes below. _Note that these show first time use, so Step 4 above is included._
-
-<Tabs>
-    <TabItem value="without-redirect" label="Without Redirect" default>
-        <iframe
-            src='https://marvelapp.com/prototype/10711a01?emb=1&iosapp=false&frameless=false'
-            width='453'
-            height='864'
-            allowTransparency='true'
-            frameborder='0'
-        ></iframe>
-    </TabItem>
-    <TabItem value="with-redirect" label="With Redirect" default>
-        <iframe
-            src='https://marvelapp.com/prototype/7cci0hj?emb=1&iosapp=false&frameless=false'
-            width='453'
-            height='864'
-            allowTransparency='true'
-            frameborder='0'
-        ></iframe>
-    </TabItem>
-</Tabs>
 
 
 ### Flow Diagram
@@ -110,7 +89,8 @@ Think of 1-Click Signup as a black box, where the input is a phone number and th
                     'secondaryTextColor': '#193c47',
                     'secondaryBorderColor': '#164fd6',
                     'edgeLabelBackground': '#ffffff',
-                    'textColor': '#000000'
+                    'textColor': '#000000',
+                    'fontFamily': 'Lato'
                 }
             }
         }%%
@@ -139,7 +119,8 @@ Think of 1-Click Signup as a black box, where the input is a phone number and th
                     'secondaryTextColor': '#193c47',
                     'secondaryBorderColor': '#164fd6',
                     'edgeLabelBackground': '#ffffff',
-                    'textColor': '#000000'
+                    'textColor': '#000000',
+                    'fontFamily': 'Lato'
                 }
             }
         }%%
@@ -170,7 +151,8 @@ Think of 1-Click Signup as a black box, where the input is a phone number and th
                     'secondaryTextColor': '#193c47',
                     'secondaryBorderColor': '#164fd6',
                     'edgeLabelBackground': '#ffffff',
-                    'textColor': '#000000'
+                    'textColor': '#000000',
+                    'fontFamily': 'Lato'
                 }
             }
         }%%
@@ -202,7 +184,8 @@ Think of 1-Click Signup as a black box, where the input is a phone number and th
                     'secondaryTextColor': '#193c47',
                     'secondaryBorderColor': '#164fd6',
                     'edgeLabelBackground': '#ffffff',
-                    'textColor': '#000000'
+                    'textColor': '#000000',
+                    'fontFamily': 'Lato'
                 }
             }
         }%%
@@ -229,7 +212,7 @@ Think of 1-Click Signup as a black box, where the input is a phone number and th
 </Tabs>
 
 
-### Sequence Diagram
+### Sequence Diagram {#full-sequence-diagram}
 
 Here's the full flow:
 ```mermaid
@@ -243,8 +226,14 @@ Here's the full flow:
             'secondaryColor': '#eef9fd',
             'secondaryTextColor': '#193c47',
             'secondaryBorderColor': '#164fd6',
+            'activationBkgColor': '#e6f6e6',
+            'activationBorderColor': '#0dbc3d',
+            'labelBoxBkgColor': '#eef9fd',
+            'labelBoxBorderColor': '#164fd6',
+            'labelTextColor': '#193c47',
             'edgeLabelBackground': '#ffffff',
-            'textColor': '#000000'
+            'textColor': '#000000',
+            'fontFamily': 'Lato'
         }
     }
 }%%
@@ -254,73 +243,56 @@ sequenceDiagram
     participant V as Verified Inc.
     C->>+U: Show phone number input
     U->>-C: Enter phone number
-    autonumber 1
     rect rgb(200,200,200,0.25)
-        note left of C: 1-Click Signup
-        C->>+V: Call 1-Click endpoint
-        autonumber off
+        note left of C: 1. Call 1-Click Endpoint
+        C->>+V: Call POST /1-click with phone number
         V->>-C: Return URL
-        autonumber 2
         opt
+            note left of C: 2. (optional) Redirect User
             C-->>U: (optional) Redirect user to URL
         end
-        autonumber off
-        rect rgb(200,200,200,0.15)
-            note left of U: User verifies
+        rect rgb(200,200,200,0.85)
+            note right of V: (handled by Verified Inc.)
             V->>+U: Send SMS
             U->>-V: Click link or enter code
             alt is user's first time
                 V->>+U: Show DOB/SSN4 input
                 U->>-V: Enter DOB/SSN4
             end
+            V->>V: Pull verified user data
+            V->>+U: Display data
+            U->>-V: Consent to share data
+            V->>C: Redirect user to customer 
         end
-        V->>V: Pull verified user data
-        V->>+U: Display data
-        U->>-V: Consent to share data
-        V->>C: Redirect user to customer 
-        autonumber 3
-        C->V: Receive user data
+        note left of C: 3. Receive User Data
+        alt customer using push option
+            V->>+C: Call POST /verified/credentials with user data
+            C->>-V: (success)
+        else customer using pull option
+            C->>C: Parse sharedCredentialsUuid from URL param
+            C->>+V: Call GET /sharedCredentials with sharedCredentialsUuid
+            V->>-C: Return user data
+        end
     end
 ```
 
 
 ## Implement
 
-::::tip[Sandbox Testing]
-**To test 1-Click Signup in our sandbox environment, you can use our test brand and user.** (These are Hooli and Richard Hendricks — yes, the ones from ["Silicon Valley"](https://en.wikipedia.org/wiki/Silicon_Valley_(TV_series))! 😂)
+> _**Try our [1-Click Signup demos](/demo-1-click-signup)** to see example implementations. These are open source, so feel free to use the [source code](https://github.com/VerifiedInc/Kredita-Demo-Web) as a reference._
 
+To implement 1-Click Signup, there are only 3 steps (and one is optional):
+1. **[Call 1-Click endpoint](#call-1-click-endpoint)**
+2. (optional) **[Redirect user](#redirect-user)**
+3. **[Receive user data](#receive-user-data)**
+
+See the [sequence diagram](#sequence-diagram) above.
+
+<TestingCredentialsSnippet/>
+:::tip
 **We also strongly recommend that you test using your own phone number.** This will allow you to receive SMS messages, which are necessary to test the full 1-Click Signup flow (but won't work for the test user).
-:::note[Test Brand (Hooli)]
 <details>
-    <summary><b>API Credentials</b></summary>
-
-    ```text title="Sandbox API Key"
-    yVg3LEnF08y0MDmpHcPxB+sZWFcDARmPRKdY2M906ng=
-    ```
-    ```text title="Sandbox URL"
-    https://core-api.sandbox-verifiedinc.com
-    ```
-</details>
-To get an API key for your own brand, email us at Support@Verified.Inc.
-:::
-:::note[Test User (Richard Hendricks)]
-<details>
-    <summary><b>Login Credentials</b></summary>
-
-    ```text title="Phone"
-    +10123456789
-    ```
-    ```text title="Email"
-    richard@piedpiper.net
-    ```
-    ```text title="Verification Code"
-    111111
-    ```
-</details>
-:::
-:::note[Your Own Phone Number]
-<details>
-    <summary><b>Format</b></summary>
+    <summary><b>Phone Number Format</b></summary>
 
     Make sure to use a 10-digit string, with the `+1` country code at the beginning:
     ```text title="Phone"
@@ -329,14 +301,7 @@ To get an API key for your own brand, email us at Support@Verified.Inc.
     Currently, only US phone numbers work with 1-Click Signup (and we're able to source verified data for 95% of these numbers).
 </details>
 Using your own phone number in sandbox, you'll receive dummy user data.
-::::
-
-To implement 1-Click Signup, there are only 3 steps (and one is optional):
-1. **[Call 1-Click endpoint](#call-1-click-endpoint)**
-2. (optional) **[Redirect user](#redirect-user)**
-3. **[Receive user data](#receive-user-data)**
-
-See the [sequence diagram](#sequence-diagram) above.
+:::
 
 #### Simplest Implementation
 
@@ -347,7 +312,45 @@ For the simplest implementation:
 
 ### 1. Call 1-Click Endpoint {#call-1-click-endpoint}
 
-The 1-Click endpoint is [`POST /1-click`](/api-overview#1-click).
+The 1-Click endpoint is [`POST /1-click`](/api-overview#1-click). Call it with the user's phone number to start 1-Click Signup.
+
+
+#### Sequence Diagram
+
+```mermaid
+%%{
+    init: {
+        'theme': 'base',
+        'themeVariables': {
+            'primaryColor': '#e6f6e6',
+            'primaryTextColor': '#003100',
+            'primaryBorderColor': '#0dbc3d',
+            'secondaryColor': '#eef9fd',
+            'secondaryTextColor': '#193c47',
+            'secondaryBorderColor': '#164fd6',
+            'activationBkgColor': '#e6f6e6',
+            'activationBorderColor': '#0dbc3d',
+            'labelBoxBkgColor': '#eef9fd',
+            'labelBoxBorderColor': '#164fd6',
+            'labelTextColor': '#193c47',
+            'edgeLabelBackground': '#ffffff',
+            'textColor': '#000000',
+            'fontFamily': 'Lato'
+        }
+    }
+}%%
+sequenceDiagram
+    participant C as Customer
+    actor U as User
+    participant V as Verified Inc.
+    rect rgb(200,200,200,0.25)
+        note left of C: 1. Call 1-Click Endpoint
+        C->>+V: Call POST /1-click with phone number
+        V->>-C: Return URL
+    end
+```
+
+[↑ Full Sequence Diagram](#full-sequence-diagram)
 
 
 #### Basic Request
@@ -521,23 +524,84 @@ If you are going to [redirect the user](#redirect-user) (which is optional), you
 
 Optionally, you can redirect the user to the URL contained in the 1-Click endpoint [response](#response). This is a link to our Wallet, where the user will review and consent to share their verified data.
 
-Redirecting the user is not necessary. They will end up at our Wallet either way:
+:::note[Redirecting the User Is Not Necessary]
+They will end up at our Wallet either way:
 - If you do _not_ redirect the user, they will click a verification link in the SMS that takes them to the Wallet.
 - If you _do_ redirect the user, that will take them to the Wallet, where they will enter a verification code.
 
+See below for the [pros and cons](#pros-and-cons) of these two approaches.
+:::
+
+
+#### Sequence Diagram
+
+```mermaid
+%%{
+    init: {
+        'theme': 'base',
+        'themeVariables': {
+            'primaryColor': '#e6f6e6',
+            'primaryTextColor': '#003100',
+            'primaryBorderColor': '#0dbc3d',
+            'secondaryColor': '#eef9fd',
+            'secondaryTextColor': '#193c47',
+            'secondaryBorderColor': '#164fd6',
+            'activationBkgColor': '#e6f6e6',
+            'activationBorderColor': '#0dbc3d',
+            'labelBoxBkgColor': '#eef9fd',
+            'labelBoxBorderColor': '#164fd6',
+            'labelTextColor': '#193c47',
+            'edgeLabelBackground': '#ffffff',
+            'textColor': '#000000',
+            'fontFamily': 'Lato'
+        }
+    }
+}%%
+sequenceDiagram
+    participant C as Customer
+    actor U as User
+    participant V as Verified Inc.
+    rect rgb(200,200,200,0.25)
+        opt
+            note left of C: 2. (optional) Redirect User
+            C-->>U: (optional) Redirect user to URL
+        end
+    end
+```
+
+[↑ Full Sequence Diagram](#full-sequence-diagram)
+
+
+#### Pros and Cons
+
 There are pros and cons to redirecting the user:
 
+<details>
+    <summary><b>Pros</b></summary>
+    1. **It allows the user to enter a verification code.** This can usually be done without switching to the messages app because of autofill features in mobile operating systems. (Clicking a verification link in the SMS requires switching to the messages app.)
+    2. **It allows you to keep the user in the same context.** If they start in a particular browser, by redirecting you can ensure they stay in that browser. (If they click the link, the mobile operating system may open it in a different browser.) If they start in a mobile app, you can open a webview within that app so they aren't taken away from it. (We recommend a full page webview, so it feels like part of the app.)
+</details>
+<details>
+    <summary><b>Cons</b></summary>
+    1. **It's not ideal on non-mobile devices.** That's because ultimately the user has to verify on their mobile device — it's what allows us to pull verified data from the user's wireless phone provider. So if you redirect the user on a non-mobile device, our Wallet will display a QR code to direct them to their phone, which works but is not the best experience. Therefore, we recommend that if you redirect the user at all that you first check if they're on a mobile device and only do the redirect in that case.
+    2. **It's slightly more work to implement.** The [simplest implementation](#simplest-implementation) is not redirecting the user.
+</details>
 
-#### Pros
+:::tip[You Can Define a Redirect URL as a Query Param]
+When we create an API key for your brand — email us at Support@Verified.Inc if you need one — we define a redirect URL. This is where we will redirect the user after they consent (or decline) to share data with you. It's "global" to your brand in the sense that it applies to any 1-Click Signup flow you initiate.
 
-- **It allows the user to enter a verification code.** This can usually be done without switching to the messages app because of autofill features in mobile operating systems. (Clicking a verification link in the SMS requires switching to the messages app.)
-- **It allows you to keep the user in the same context.** If they start in a particular browser, by redirecting you can ensure they stay in that browser. (If they click the link, the mobile operating system may open it in a different browser.) If they start in a mobile app, you can open a webview within that app so they aren't taken away from it. (We recommend a full page webview, so it feels like part of the app.)
+However, if you choose redirect the user to us (i.e. implement step 2), you can also define a redirect URL as a query param, attaching it to the URL contained in the 1-Click endpoint [response](#response):
 
+```text title="Redirect URL Query Param"
+?redirectUrl=https%3A%2F%2Fexample.com
+```
 
-#### Cons
+_Make sure to [encode](https://www.urlencoder.org) the URL, to avoid any browser issues._ 
 
-- **It's not ideal on non-mobile devices.** That's because ultimately the user has to verify on their mobile device — it's what allows us to pull verified data from the user's wireless phone provider. So if you redirect the user on a non-mobile device, our Wallet will display a QR code to direct them to their phone, which works but is not the best experience. Therefore, we recommend that if you redirect the user at all that you first check if they're on a mobile device and only do the redirect in that case.
-- **It's slightly more work to implement.** The [simplest implementation](#simplest-implementation) is not redirecting the user.
+This query param overrides any global redirect URL for your brand. 
+
+**If you're using our [test brand](#implement), you will need to use this query param,** as our test brand doesn't have a global redirect URL for your brand!
+:::
 
 
 ### 3. Receive User Data {#receive-user-data}
@@ -551,14 +615,97 @@ OR
 
 2. **[Pull Option](#pull-option):** You _pull_ the data from us, by hitting an endpoint we provide.
 
+:::tip[We Recommend the Push Option]
 We recommend the push option because you are guaranteed to receive the data immediately, as soon as the user consents to share it. That results in 100% conversion.
 
 With the pull option, there's a time delay between when the user consents to share and when you are able to pull the data. That's because we have to redirect the user to you first. Conversion is generally somewhat less than 100% in this case.
+:::
 
 
-#### Push Option
+#### Sequence Diagram
+
+```mermaid
+%%{
+    init: {
+        'theme': 'base',
+        'themeVariables': {
+            'primaryColor': '#e6f6e6',
+            'primaryTextColor': '#003100',
+            'primaryBorderColor': '#0dbc3d',
+            'secondaryColor': '#eef9fd',
+            'secondaryTextColor': '#193c47',
+            'secondaryBorderColor': '#164fd6',
+            'activationBkgColor': '#e6f6e6',
+            'activationBorderColor': '#0dbc3d',
+            'labelBoxBkgColor': '#eef9fd',
+            'labelBoxBorderColor': '#164fd6',
+            'labelTextColor': '#193c47',
+            'edgeLabelBackground': '#ffffff',
+            'textColor': '#000000',
+            'fontFamily': 'Lato'
+        }
+    }
+}%%
+sequenceDiagram
+    participant C as Customer
+    actor U as User
+    participant V as Verified Inc.
+    rect rgb(200,200,200,0.25)
+        note left of C: 3. Receive User Data
+        alt customer using push option
+            V->>+C: Call POST /verified/credentials with user data
+            C->>-V: (success)
+        else customer using pull option
+            C->>C: Parse sharedCredentialsUuid URL parameter value
+            C->>+V: Call GET /sharedCredentials with sharedCredentialsUuid
+            V->>-C: Return user data
+        end
+    end
+```
+
+[↑ Full Sequence Diagram](#full-sequence-diagram)
+
+
+#### Push Option (recommended) {#push-option}
 
 All you need to do is create a webhook called `POST /verified/credentials` according to our [OpenAPI spec](https://gist.github.com/VerifiedIncMachine/ef399f6b5ce6545eb4d7ec3e85d87dd2). This is where we will send verified user data when a user consents to share it.
+
+```mermaid
+%%{
+    init: {
+        'theme': 'base',
+        'themeVariables': {
+            'primaryColor': '#e6f6e6',
+            'primaryTextColor': '#003100',
+            'primaryBorderColor': '#0dbc3d',
+            'secondaryColor': '#eef9fd',
+            'secondaryTextColor': '#193c47',
+            'secondaryBorderColor': '#164fd6',
+            'activationBkgColor': '#e6f6e6',
+            'activationBorderColor': '#0dbc3d',
+            'labelBoxBkgColor': '#eef9fd',
+            'labelBoxBorderColor': '#164fd6',
+            'labelTextColor': '#193c47',
+            'edgeLabelBackground': '#ffffff',
+            'textColor': '#000000',
+            'fontFamily': 'Lato'
+        }
+    }
+}%%
+sequenceDiagram
+    participant C as Customer
+    actor U as User
+    participant V as Verified Inc.
+    rect rgb(200,200,200,0.25)
+        note left of C: 3. Receive User Data
+        alt customer using push option
+            V->>+C: Call POST /verified/credentials with user data
+            C->>-V: (success)
+        end
+    end
+```
+
+[↑ Full Sequence Diagram](#full-sequence-diagram)
 
 
 #### Pull Option
@@ -568,13 +715,54 @@ Here's how this option works:
 2. You call our [`GET /sharedCredentials`](/api-overview#get-shared-credentials) endpoint with the value of this parameter.
 
 
+#### Sequence Diagram
+
+```mermaid
+%%{
+    init: {
+        'theme': 'base',
+        'themeVariables': {
+            'primaryColor': '#e6f6e6',
+            'primaryTextColor': '#003100',
+            'primaryBorderColor': '#0dbc3d',
+            'secondaryColor': '#eef9fd',
+            'secondaryTextColor': '#193c47',
+            'secondaryBorderColor': '#164fd6',
+            'activationBkgColor': '#e6f6e6',
+            'activationBorderColor': '#0dbc3d',
+            'labelBoxBkgColor': '#eef9fd',
+            'labelBoxBorderColor': '#164fd6',
+            'labelTextColor': '#193c47',
+            'edgeLabelBackground': '#ffffff',
+            'textColor': '#000000',
+            'fontFamily': 'Lato'
+        }
+    }
+}%%
+sequenceDiagram
+    participant C as Customer
+    actor U as User
+    participant V as Verified Inc.
+    rect rgb(200,200,200,0.25)
+        note left of C: 3. Receive User Data
+        alt customer using pull option
+            C->>C: Parse sharedCredentialsUuid from URL param
+            C->>+V: Call GET /sharedCredentials with sharedCredentialsUuid
+            V->>-C: Return user data
+        end
+    end
+```
+
+[↑ Full Sequence Diagram](#full-sequence-diagram)
+
+
 #### Response
 
 The data you'll receive is the same, regardless of whether you use the push or pull option. 
 
-By default, you will receive a simplified response, so it's easy for you to take further action based on it (like creating a new account for the user). This simplified response only contains the user's verified data.
+**By default, you will receive a simplified response,** so it's easy for you to take further action based on it (like creating a new account for the user). This simplified response only contains the user's verified data.
 
-But you can also choose to receive an encriched response, which contains much more metadata.
+But you can also choose to receive an encriched response (ask us to enable this for you), which contains much more metadata.
 
 <Tabs>
   <TabItem value="simplified" label="Simplified" default>
@@ -595,7 +783,7 @@ But you can also choose to receive an encriched response, which contains much mo
             "country": "United States"
         },
         "ssn": "123456789",
-        "birthDate": "08-01-1989"
+        "birthDate": "617947200000" // Unix timestamp in ms
     }
     ```
     </TabItem>
@@ -740,7 +928,7 @@ But you can also choose to receive an encriched response, which contains much mo
                     "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "type": "BirthDateCredential",
                     "data": {
-                        "birthDate": "617947200"
+                        "birthDate": "617947200000" // Unix timestamp in ms
                     }
                 }
             ]

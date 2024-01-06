@@ -40,36 +40,15 @@ module.exports = {
       style: 'dark',
       links: [
         {
-          title: 'Introduction',
+          title: 'Solutions',
           items: [
             {
-              label: 'About Verified Inc.',
+              label: '1-Click Signup',
               to: '/',
             },
             {
-              label: 'Terminology',
-              to: '/terminology',
-            },
-            {
-              label: 'FAQ',
-              to: '/faq',
-            },
-          ],
-        },
-        {
-          title: 'Guides',
-          items: [
-            {
-              label: '1-Click Guide',
-              to: '/1-click-guide',
-            },
-            {
-              label: 'Acceptance Guide',
-              to: '/acceptance-guide',
-            },
-            {
-              label: 'Issuance Guide',
-              to: '/issuance-guide',
+              label: 'Issue to Earn',
+              to: '/issue-to-earn',
             },
           ],
         },
@@ -77,16 +56,38 @@ module.exports = {
           title: 'Demos',
           items: [
             {
-              label: 'Hooli Demo',
-              to: '/hooli-demo',
+              label: '1-Click Signup',
+              to: '/demo-1-click-signup',
+            },
+          ],
+        },
+        {
+          title: 'API',
+          items: [
+            {
+              label: 'Reference',
+              to: '/api-reference',
             },
             {
-              label: 'Kredita Demo',
-              to: '/kredita-demo'
+              label: 'Postman',
+              href: 'https://api.docs.verified.inc/',
+            },
+          ],
+        },
+        {
+          title: 'Resources',
+          items: [
+            {
+              label: 'Terminology',
+              to: '/terminology',
             },
             {
-              label: 'Hooli Partner Demo',
-              to: '/hooli-partner-demo',
+              label: 'Data Schemas',
+              to: '/data-schemas',
+            },
+            {
+              label: 'FAQ',
+              to: '/faq',
             },
           ],
         },
@@ -101,10 +102,19 @@ module.exports = {
               label: 'GitHub',
               href: 'https://github.com/VerifiedInc',
             },
+            {
+              label: 'Email Support',
+              href: 'mailto:Support@Verified.Inc',
+            },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Verified Inc., Inc.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Verified Inc.`,
+    },
+    mermaid: {
+      options: {
+        // TODO: I can't seem to get global styling to work
+      },
     },
     mermaid: {
       options: {

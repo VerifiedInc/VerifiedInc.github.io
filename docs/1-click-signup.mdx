@@ -10,6 +10,7 @@ import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
 import Tip from '../src/components/Tip';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import TestingCredentialsSnippet from './reusables/sandbox-testing-credentials.mdx';
 
 - **Time to read:** 20 minutes
 - **Time to implement:** 2-4 hours
@@ -287,34 +288,8 @@ To implement 1-Click Signup, there are only 3 steps (and one is optional):
 
 See the [sequence diagram](#sequence-diagram) above.
 
-:::tip[Sandbox Testing]
-**To test 1-Click Signup in our sandbox environment, you can use our test brand and user**:
-<details>
-    <summary><b>Test Brand API Credentials</b></summary>
-
-    ```text title="Sandbox API Key"
-    yVg3LEnF08y0MDmpHcPxB+sZWFcDARmPRKdY2M906ng=
-    ```
-    ```text title="Sandbox URL"
-    https://core-api.sandbox-verifiedinc.com
-    ```
-</details>
-To get an API key for your own brand, email us at Support@Verified.Inc.
-<details>
-    <summary><b>Test User Login Credentials</b></summary>
-
-    ```text title="Phone"
-    +10123456789
-    ```
-    ```text title="Email"
-    richard@piedpiper.net
-    ```
-    ```text title="Verification Code"
-    111111
-    ```
-</details>
-These are Hooli and Richard Hendricks — yes, the ones from [_Silicon Valley_](https://en.wikipedia.org/wiki/Silicon_Valley_(TV_series))! 😂
-
+<TestingCredentialsSnippet/>
+:::tip
 **We also strongly recommend that you test using your own phone number.** This will allow you to receive SMS messages, which are necessary to test the full 1-Click Signup flow (but won't work for the test user).
 <details>
     <summary><b>Phone Number Format</b></summary>

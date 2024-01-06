@@ -116,6 +116,11 @@ module.exports = {
         // TODO: I can't seem to get global styling to work
       },
     },
+    mermaid: {
+      options: {
+        // TODO: I can't seem to get global styling to work
+      },
+    },
   },
   presets: [
     [

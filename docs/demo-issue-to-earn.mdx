@@ -1,0 +1,103 @@
+---
+id: demo-issue-to-earn
+title: Issue to Earn Demos
+sidebar_label: Issue to Earn
+slug: /demo-issue-to-earn
+---
+
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
+
+The demos below show [Issue to Earn](/issue-to-earn) in action:
+- The [**static demos**](#static-demos) are interactive prototypes that allow you to click through the screens. They are the easiest way to see the UX.
+- The [**live demos**](#live-demos) are fully deployed implementations that allow you to try Issue to Earn for real.
+
+
+## Static
+
+<Tabs queryString="type">
+    <TabItem value="next-user-sign-in" label="Next User Sign In" default>
+        Richard is an existing, verified Hooli user. The next time he signs in, Hooli asks him if he wants to activate his Hooli digital ID card. When he clicks the Activate button, Hooli issues the card.
+        <iframe
+            src='https://marvelapp.com/prototype/1938729e/screen/90752160?emb=1&iosapp=false&frameless=false'
+            width='453'
+            height='864'
+            allowTransparency='true'
+            frameborder='0'
+        ></iframe>
+    </TabItem>
+    <TabItem value="after-user-sign-up" label="After User Sign Up">
+        Richard is a new Hooli user who has just completed verification (through Hooli or a third-party service Hooli uses). In the terms section Richard, agrees to his Hooli digital ID card. After he completes signup, Hooli issues the card.
+        <iframe
+            src='https://marvelapp.com/prototype/9e98j88/screen/90752101?emb=1&iosapp=false&frameless=false'
+            width='453'
+            height='864'
+            allowTransparency='true'
+            frameborder='0'
+        ></iframe>
+    </TabItem>
+    <TabItem value="marketing-email" label="Marketing Email">
+        Richard is an existing, verified Hooli user. He receives a marketing email from Hooli, which includes a prompt to activate his Hooli digital ID card. When he clicks the Activate button and confirms in the Hooli app, Hooli issues the card.
+        <iframe
+            src='https://marvelapp.com/prototype/193879a9/screen/90752312?emb=1&iosapp=false&frameless=false'
+            width='453'
+            height='864'
+            allowTransparency='true'
+            frameborder='0'
+        ></iframe>
+    </TabItem>
+    <TabItem value="in-app-offer" label="In App Offer">
+        Richard is an existing, verified Hooli user. In the Hooli app, he sees an offer to activate his Hooli digital ID card. When he clicks the Activate button and confirms, Hooli issues the card.
+        <iframe
+            src='https://marvelapp.com/prototype/ebe3f96/screen/90752391?emb=1&iosapp=false&frameless=false'
+            width='453'
+            height='864'
+            allowTransparency='true'
+            frameborder='0'
+        ></iframe>
+    </TabItem>
+</Tabs>
+
+
+## Live
+
+
+### Sandbox
+
+<Tabs>
+    <TabItem value="standard-issuance" label="Standard Issuance" default>
+        This flow applies if you implement standard issuance (not partner issuance).
+        <iframe
+            src='https://hooli-web.demo.sandbox-verifiedinc.com/login'
+            width='453'
+            height='864'
+        ></iframe>
+        <div>
+            <a href='https://hooli-web.demo.sandbox-verifiedinc.com/login' target='_blank'>Open Demo in New Tab ↗</a>
+        </div>
+        <div>
+            <a href='https://github.com/VerifiedInc/Hooli-Demo-Web' target='_blank'>View Source Code on GitHub ↗</a>
+        </div>
+    </TabItem>
+    <TabItem value="partner-issuance" label="Partner Issuance">
+        This flow applies if you implement partner issuance.
+        
+        _Coming soon._
+        {/* <iframe
+            src='https://hooli-partner-web.demo.sandbox-verifiedinc.com/login'
+            width='453'
+            height='864'
+        ></iframe>
+        <div>
+            <a href='https://hooli-web.demo.sandbox-verifiedinc.com/login' target='_blank'>Open Demo in New Tab ↗</a>
+        </div> */}
+    </TabItem>
+</Tabs>
+
+
+### Production
+
+_We don't provide production demos for Issue to Earn (like [we do for 1-Click Signup](/demo-1-click-signup#production)) because all ID cards in production must contain real, verified data — not dummy data!_

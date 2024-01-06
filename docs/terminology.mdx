@@ -10,7 +10,7 @@ import Tip from '../src/components/Tip';
 import AtomicCredentialExample from './reusables/atomic-credential-example.mdx';
 import CompositeCredentialExample from './reusables/composite-credential-example.mdx';
 
-Verified Inc. uses a few specialized terms and concepts. It's not necessary to understand these in full detail, but knowing a little about them will help you deploy and use Verified Inc. tech.
+We use a few specialized terms and concepts. It's not necessary to understand these in full detail, but knowing a little about them will help you deploy and use our tech.
 
 :::tip
 **We've included helpful tooltips** like <Tip text="Whoa, a tooltip! 😎">this one</Tip> (hover over it) throughout the docs. These offer quick definitions, examples, and links to dive in deeper. Anytime you see an underline, hover over it to see the tooltip!
@@ -18,39 +18,52 @@ Verified Inc. uses a few specialized terms and concepts. It's not necessary to u
 The tooltips you'll see most often refer to the terms described in this section (for example: <Tip type="credential"/>).
 :::
 
-**The [main terms](#main-terms) to know are:**
 
-- **[credential](#credential)**
-- **[request](#request)**
-- **[user](#user)**
-- **[brand](#brand)**
-- **[customer](#customer)**
+## ID Card
+
+> A digital **ID card** is a collection of <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a> issued by a <a href="#brand"><Tip type="brand"/></a> to a <a href="#user"><Tip type="user"/></a>.
+
 
 ## Credential
 
-> A **credential** is a collection of data about a person. It's issued by a company and can be requested by other network participants, gated by the user's consent.
+> A **credential** is a collection of data about a <a href="#user"><Tip type="user"/></a>. It's issued by a <a href="#brand"><Tip type="brand"/></a> and can be <a href="#request"><Tip type="request">requested</Tip></a> by other <a href="#customer"><Tip type="customer">customers</Tip></a>, with the <a href="#user"><Tip type="user">user's</Tip></a> consent.
 
-**Example:** ACME Lending issues a KYC verification credential to Richard (an ACME user). This includes Richard's contact information and account numbers, as well as a level of confidence in the accuracy of the data.
+**Example:** Hooli and Kredita are <a href="#brand"><Tip type="brand">brands</Tip></a>, and Richard is a <a href="#user"><Tip type="user"/></a>.
+- Hooli verifies Richard's address and issues a credential of type [`AddressCredential`](/schema#schema-library) to him (as part of [Issue to Earn](/issue-to-earn)).
+- Kredita <a href="#request"><Tip type="request">requests</Tip></a> an address credential from Richard (as part of [1-Click Signup](/1-click-signup)).
+- Richard consents to share his address credential with Kredita.
 
-**Components:** A company issues credentials using the [/credentials](/api-overview#issue-credentials) API endpoint. The data is stored securely using a data privacy vault and is only available to the user and brands the user agrees to share with.
+**API:** 
+- A <a href="#brand"><Tip type="brand"/></a> issues credentials to a <a href="#user"><Tip type="user"/></a> via [`POST /credentials`](/api-reference#issue-credentials).
+- A <a href="#brand"><Tip type="brand"/></a> <a href="#request"><Tip type="request">requests</Tip></a> credentials from a <a href="#user"><Tip type="user"/></a> via [`POST /1-click`](/api-reference#1-click).
 
-At a high level, to issue a credential a company inputs three pieces of information:
+:::warning[Credential Data is Stored Securely]
+The data is stored securely using a data privacy vault and is only available to the user and brands the user agrees to share with.
+:::
 
-1. type of the credential
-2. identifier for the person
-3. data about the person
+At a high level, a credential contains three pieces of information:
+1. type
+2. user identifier
+3. user data
 
-The data schema must match the corresponding credential type. Information on the data formats for each type can be found in the [Data Schema](/schema) section.
+The data must match the [data schema](/schema) for the credential type.
 
-### Atomic Credentials
-Atomic credentials are the most basic credentials. They are the building blocks of more complex, "composite credentials". For example, an `EmailCredential` is an atomic credential.
+
+### Atomic
+
+Atomic credentials contain single data points. For example, an [`EmailCredential`](/schema#schema-library) is an atomic credential that contains an email address.
+
+Some atomic credentials can be contained within [composite](#composite) credentials. For example, [`FirstNameCredential`](/schema#schema-library) is an atomic credential that can be contained within the composite [`FullNameCredential`](/schema#schema-library).
 
 <AtomicCredentialExample/>
 
-### Composite Credentials
-Composite credentials are credentials that are made up of multiple atomic credentials. For example, a `FullNameCredential` is made up of a `FirstNameCredential` and a `LastNameCredential`.
+
+### Composite
+
+Composite credentials are composed of multiple atomic credentials. For example, a [`FullNameCredential`](/schema#schema-library) can be composed of a [`FirstNameCredential`](/schema#schema-library) and a [`LastNameCredential`](/schema#schema-library). It can also include a [`MiddleNameCredential`](/schema#schema-library).
 
 <CompositeCredentialExample/>
+
 
 ## Request
 

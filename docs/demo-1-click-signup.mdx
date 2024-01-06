@@ -1,0 +1,147 @@
+---
+id: demo-1-click-signup
+title: 1-Click Signup Demos
+sidebar_label: 1-Click Signup
+slug: /demo-1-click-signup
+---
+
+import TooltipWithDefaults from '../src/components/TooltipWithDefaults';
+import Tip from '../src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
+
+The demos below show [1-Click Signup](/1-click-signup) in action:
+- The [**static demos**](#static-demos) are interactive prototypes that allow you to click through the screens. They are the easiest way to see the UX.
+- The [**live demos**](#live-demos) are fully deployed implementations that allow you to try 1-Click Signup for real.
+
+
+## Static
+
+<Tabs>
+    <TabItem value="without-redirect" label="Without Redirect" default>
+        This flow applies if you do _not_ implement [step 2](/#redirect-user) (which is optional).
+        <iframe
+            src='https://marvelapp.com/prototype/10711a01?emb=1&iosapp=false&frameless=false'
+            width='453'
+            height='864'
+            allowTransparency='true'
+            frameborder='0'
+        ></iframe>
+    </TabItem>
+    <TabItem value="with-redirect" label="With Redirect">
+        This flow applies if you _do_ implement [step 2](/#redirect-user) (which is optional).
+        <iframe
+            src='https://marvelapp.com/prototype/7cci0hj?emb=1&iosapp=false&frameless=false'
+            width='453'
+            height='864'
+            allowTransparency='true'
+            frameborder='0'
+        ></iframe>
+    </TabItem>
+</Tabs>
+
+
+## Live
+
+
+### Sandbox
+
+:::tip[Sandbox Testing]
+**We recommend that you test using your own phone number.** This will allow you to receive SMS messages, which are necessary to test the full 1-Click Signup flow (but won't work for the test user).
+<details>
+    <summary><b>Supported Phone Numbers</b></summary>
+
+    Currently, only US phone numbers work with 1-Click Signup (and we're able to source verified data for 95% of these numbers).
+</details>
+Using your own phone number in sandbox, you'll receive dummy user data.
+:::
+
+<Tabs>
+    <TabItem value="without-redirect" label="Without Redirect" default>
+        This flow applies if you do _not_ implement [step 2](/#redirect-user) (which is optional).
+        <iframe
+            src='https://kredita-1click-web.demo.sandbox-verifiedinc.com'
+            width='453'
+            height='864'
+        ></iframe>
+        <div>
+            <a href='https://kredita-1click-web.demo.sandbox-verifiedinc.com' target='_blank'>Open Demo in New Tab ↗</a>
+        </div>
+        <div>
+            <a href='https://github.com/VerifiedInc/Kredita-Demo-Web' target='_blank'>View Source Code on GitHub ↗</a>
+        </div>
+    </TabItem>
+    <TabItem value="with-redirect" label="With Redirect">
+        <Admonition type="note" title="Sandbox Testing">
+            Since the flow _with_ redirect only requires entering a verification code, for this flow you can use our test user's phone number (for which there is a dummy verification code) instead of your own phone number:
+            <details>
+                <summary><b>Test User Login Credentials</b></summary>
+
+                ```text title="Phone"
+                +10123456789
+                ```
+                ```text title="Email"
+                richard@piedpiper.net
+                ```
+                ```text title="Verification Code"
+                111111
+                ```
+            </details>
+        </Admonition>
+        This flow applies if you _do_ implement [step 2](/#redirect-user) (which is optional).
+
+        _Coming soon._
+        {/* <iframe
+            src=''
+            width='453'
+            height='864'
+        ></iframe>
+        <div>
+            <a href='' target='_blank'>Open Demo in New Tab ↗</a>
+        </div> */}
+    </TabItem>
+</Tabs>
+
+
+### Production
+
+:::tip[Production Usage]
+**In production, you need to use own phone number.** The verified data we return will be your data!
+<details>
+    <summary><b>Supported Phone Numbers</b></summary>
+
+    Currently, only US phone numbers work with 1-Click Signup (and we're able to source verified data for 95% of these numbers).
+</details>
+If your phone number doesn't work with 1-Click Signup in production (and your phone number is a US number), that means it's in the 5% of US numbers we can't source verified data for. However, you can still manually input data to complete the flow.
+:::
+
+<Tabs>
+    <TabItem value="without-redirect" label="Without Redirect" default>
+        This flow applies if you do _not_ implement [step 2](/#redirect-user) (which is optional).
+        <iframe
+            src='https://kredita-1click-web.demo.verified.inc'
+            width='453'
+            height='864'
+        ></iframe>
+        <div>
+            <a href='https://kredita-1click-web.demo.verified.inc' target='_blank'>Open Demo in New Tab ↗</a>
+        </div>
+        <div>
+            <a href='https://github.com/VerifiedInc/Kredita-Demo-Web' target='_blank'>View Source Code on GitHub ↗</a>
+        </div>
+    </TabItem>
+    <TabItem value="with-redirect" label="With Redirect">
+        This flow applies if you _do_ implement [step 2](/#redirect-user) (which is optional).
+
+        _Coming soon._
+        {/* <iframe
+            src=''
+            width='453'
+            height='864'
+        ></iframe>
+        <div>
+            <a href='' target='_blank'>Open Demo in New Tab ↗</a>
+        </div> */}
+    </TabItem>
+</Tabs>

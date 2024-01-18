@@ -11,6 +11,7 @@ import Tip from '../src/components/Tip';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import TestingCredentialsSnippet from './reusables/sandbox-testing-credentials.mdx';
+import Admonition from '@theme/Admonition';
 
 - **Time to read:** 20 minutes
 - **Time to implement:** 2-4 hours
@@ -47,7 +48,7 @@ With just a phone number, we can pull verified data about a user, including:
 
 > _**Try our [1-Click Signup demos](/demo-1-click-signup)** to see this user experience in action._
 
-**1-Click Signup can take less than 10 seconds for a user to complete.** It usually takes around 30-60 seconds.
+**1-Click Signup can take less than 10 seconds for a user to complete.** It usually takes around 20-30 seconds.
 
 The user experience is simple:
 1. **Enter phone number**
@@ -281,6 +282,8 @@ sequenceDiagram
 
 > _**Try our [1-Click Signup demos](/demo-1-click-signup)** to see example implementations. These are open source, so feel free to use the [source code](https://github.com/VerifiedInc/Kredita-Demo-Web) as a reference._
 
+### 3 Steps to Implement
+
 To implement 1-Click Signup, there are only 3 steps (and one is optional):
 1. **[Call 1-Click endpoint](#call-1-click-endpoint)**
 2. (optional) **[Redirect user](#redirect-user)**
@@ -371,7 +374,7 @@ You can also use `/1-click` in more advanced ways:
 <details>
     <summary><b>Optimize for Redirect</b></summary>
 
-    If you're going to [redirect the user](#redirect-user) (which is optional), you should add 
+    If you're going to [redirect the user](#redirect-user) to us (which is optional), you should add 
     `"verificationOptions": "only_code"` to the request body:
 
     ```typescript title="POST /1-click Request Body"
@@ -404,6 +407,23 @@ You can also use `/1-click` in more advanced ways:
 </details>
 
 <details>
+    <summary><b>Define a Redirect URL</b></summary>
+
+    When we create an API key for your brand — email us at Support@Verified.Inc if you need one — we define a default redirect URL. This is where we will redirect the user after they consent (or decline) to share data with you. It's "global" to your brand in the sense that it applies to any 1-Click Signup flow you initiate.
+
+    However, you can also define a redirect URL "on the fly" that applies only to the specific 1-Click Signup flow you just initiated. To do this, just include the optional `redirectUrl` attribute:
+
+    ```typescript title="POST /1-click Request Body"
+    {
+        "phone": "+10123456789",
+        "redirectUrl": "https://example.com"
+    }
+    ```
+
+    This overrides the default redirect URL for your brand. 
+</details>
+
+<details>
     <summary><b>Change Data Types Requested</b></summary>
 
     If you only need a subset of the verified user data we can return, you can limit the data types requested like this:
@@ -426,7 +446,15 @@ You can also use `/1-click` in more advanced ways:
     - `PhoneCredential`
     - `AddressCredential`
     - `BirthDateCredential`
-    - `SssnCredential`
+    - `SsnCredential`
+
+    You can also request additional data types — `EmployerNameCredential`, `AnnualIncomeCredential`, and many more. See the full list of available types in our [schema library](/schema#schema-library)
+
+    <Admonition type="warning">
+    **We aren't always able to source data for types beyond the defaults listed above.** If we aren't able to, we allow the user to input data in a simple form interface.
+    
+    We're soon adding more data sources, so we'll be able to expand the default types over time.
+    </Admonition>
 </details>
 
 <details>
@@ -587,22 +615,6 @@ There are pros and cons to redirecting the user:
     2. **It's slightly more work to implement.** The [simplest implementation](#simplest-implementation) is not redirecting the user.
 </details>
 
-:::tip[You Can Define a Redirect URL as a Query Param]
-When we create an API key for your brand — email us at Support@Verified.Inc if you need one — we define a redirect URL. This is where we will redirect the user after they consent (or decline) to share data with you. It's "global" to your brand in the sense that it applies to any 1-Click Signup flow you initiate.
-
-However, if you choose redirect the user to us (i.e. implement step 2), you can also define a redirect URL as a query param, attaching it to the URL contained in the 1-Click endpoint [response](#response):
-
-```text title="Redirect URL Query Param"
-?redirectUrl=https%3A%2F%2Fexample.com
-```
-
-_Make sure to [encode](https://www.urlencoder.org) the URL, to avoid any browser issues._ 
-
-This query param overrides any global redirect URL for your brand. 
-
-**If you're using our [test brand](#implement), you will need to use this query param,** as our test brand doesn't have a global redirect URL for your brand!
-:::
-
 
 ### 3. Receive User Data {#receive-user-data}
 
@@ -758,11 +770,17 @@ sequenceDiagram
 
 #### Response
 
-The data you'll receive is the same, regardless of whether you use the push or pull option. 
+The user data you'll receive is the same, regardless of whether you use the push or pull option. 
 
-**By default, you will receive a simplified response,** so it's easy for you to take further action based on it (like creating a new account for the user). This simplified response only contains the user's verified data.
+**By default, you will receive a simplified response,** so it's easy for you to take further action based on it (like creating a new account for the user). This simplified response only contains user data. But you can also choose to receive an encriched response — just ask us to enable it for you — which contains much more metadata. 
 
-But you can also choose to receive an encriched response (ask us to enable this for you), which contains much more metadata.
+:::tip
+One particularly valuable piece of metadata is **`verificationMethod`**, which describes how the credential (piece of user data) was verified. It can take the following values:
+- `"phone_carrier"`: verified via phone carrier records
+- `"otp"`: verified via an OTP (one time passcode)
+- `"self_attested"`: attested by the user themselves (not verified)
+- `null`
+:::
 
 <Tabs>
   <TabItem value="simplified" label="Simplified" default>
@@ -770,17 +788,17 @@ But you can also choose to receive an encriched response (ask us to enable this 
     {
         "fullName": {
             "firstName": "Richard", 
-            "lastName": "Hendricks",
+            "lastName": "Hendricks"
         },
         "email": "richard@piedpiper.net",
         "phone": "+10123456789",
-        "address": 
+        "address": {
             "line1": "5320 Newell Rd",
             "line2": "",
             "city": "Palo Alto",
-            "state": "California",
-            "zip": "93021",
-            "country": "United States"
+            "state": "CA",
+            "zip": "94303",
+            "country": "US"
         },
         "ssn": "123456789",
         "birthDate": "617947200000" // Unix timestamp in ms
@@ -795,27 +813,33 @@ But you can also choose to receive an encriched response (ask us to enable this 
             "credentials": [
                 {
                     "id": "1be7c008-3f0c-4a21-9aad-69ca1c4251d2",
-                    "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                    "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "issuanceDate": "1671847264479",
                     "expirationDate": "1871839024044",
                     "type": "FullNameCredential",
+                    "status": "valid",
+                    "verificationMethod": "phone_carrier",
                     "data": [
                         {
                             "id": "2e6a7b9a-e93e-43ba-98a9-c554f4e16457",
-                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                             "issuanceDate": "1671847264479",
                             "expirationDate": "1871839024044",
                             "type": "FirstNameCredential",
+                            "status": "valid",
+                            "verificationMethod": "phone_carrier",
                             "data": {
                                 "firstName": "Richard"
                             }
                         },
                         {
                             "id": "9a5817ef-e621-4277-8c48-c8ee3776b6c4",
-                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                             "issuanceDate": "1671847264479",
                             "expirationDate": "1871839024044",
                             "type": "LastNameCredential",
+                            "status": "valid",
+                            "verificationMethod": "phone_carrier",
                             "data": {
                                 "lastName": "Hendricks"
                             }
@@ -824,109 +848,131 @@ But you can also choose to receive an encriched response (ask us to enable this 
                 },
                 {
                     "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
+                    "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "issuanceDate": "1671847264479",
                     "expirationDate": "1871839024044",
-                    "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "type": "EmailCredential",
+                    "status": "valid",
+                    "verificationMethod": "phone_carrier",
                     "data": {
                         "email": "richard@piedpiper.net"
                     }
                 },
                 {
                     "id": "80e07f16-999b-4402-aa0f-96f650b72fec",
+                    "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "issuanceDate": "1671847264479",
                     "expirationDate": "1871839024044",
-                    "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "type": "PhoneCredential",
+                    "status": "valid",
+                    "verificationMethod": "phone_carrier",
                     "data": {
                         "phone": "+10123456789"
                     }
                 },
                 {
                     "id": "5f502836-ea9b-4032-89d5-19ac1c6ca3d7",
+                    "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "issuanceDate": "1671847264479",
                     "expirationDate": "1871839024044",
-                    "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "type": "AddressCredential",
+                    "status": "valid",
+                    "verificationMethod": "phone_carrier",
                     "data": [
                         {
                             "id": "f5a4dc93-bc06-4bb8-bd05-17b5ba912bcd",
-                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                             "issuanceDate": "1671847264479",
                             "expirationDate": "1871839024044",
                             "type": "Line1Credential",
+                            "status": "valid",
+                            "verificationMethod": "phone_carrier",
                             "data": {
-                                "line1": "Richard"
+                                "line1": "5320 Newell Rd"
                             }
                         },
                         {
                             "id": "b58910a4-b95e-461d-a68e-387c29440c12",
-                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                             "issuanceDate": "1671847264479",
                             "expirationDate": "1871839024044",
                             "type": "Line2Credential",
+                            "status": "valid",
+                            "verificationMethod": "phone_carrier",
                             "data": {
-                                "line2": "Richard"
+                                "line2": ""
                             }
                         },
                         {
                             "id": "efd3820f-676a-4db1-b63e-695b66ed8ba0",
-                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                             "issuanceDate": "1671847264479",
                             "expirationDate": "1871839024044",
                             "type": "CityCredential",
+                            "status": "valid",
+                            "verificationMethod": "phone_carrier",
                             "data": {
-                                "city": "Richard"
+                                "city": "Palo Alto"
                             }
                         },
                         {
                             "id": "b65022a2-2016-41df-88f3-252e8e3a29c5",
-                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                             "issuanceDate": "1671847264479",
                             "expirationDate": "1871839024044",
                             "type": "StateCredential",
+                            "status": "valid",
+                            "verificationMethod": "phone_carrier",
                             "data": {
-                                "state": "Richard"
+                                "state": "CA"
                             }
                         },
                         {
                             "id": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
-                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                             "issuanceDate": "1671847264479",
                             "expirationDate": "1871839024044",
                             "type": "ZipCodeCredential",
+                            "status": "valid",
+                            "verificationMethod": "phone_carrier",
                             "data": {
-                                "zipCode": "Richard"
+                                "zipCode": "94303"
                             }
                         },
                         {
                             "id": "d57a7bca-2a7c-4671-86ad-5647731cad02",
-                            "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                             "issuanceDate": "1671847264479",
                             "expirationDate": "1871839024044",
                             "type": "CountryCredential",
+                            "status": "valid",
+                            "verificationMethod": "phone_carrier",
                             "data": {
-                                "country": "Richard"
+                                "country": "US"
                             }
                         }
                     ]
                 },
                 {
                     "id": "ec1ef0ce-eeed-46a4-94a9-29b46e64403d",
+                    "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "issuanceDate": "1671847264479",
                     "expirationDate": "1871839024044",
-                    "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "type": "SsnCredential",
+                    "status": "valid",
+                    "verificationMethod": "phone_carrier",
                     "data": {
                         "ssn": "111223333"
                     }
                 },
                 {
                     "id": "ec1ef0ce-eeed-46a4-94a9-29b46e64403d",
+                    "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "issuanceDate": "1671847264479",
                     "expirationDate": "1871839024044",
-                    "issuer": "c3be0124-8f03-4983-baef-3302e0be88f4",
                     "type": "BirthDateCredential",
+                    "status": "valid",
+                    "verificationMethod": "phone_carrier",
                     "data": {
                         "birthDate": "617947200000" // Unix timestamp in ms
                     }

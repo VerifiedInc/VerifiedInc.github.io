@@ -11,9 +11,9 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 
-The demos below show [1-Click Signup](/1-click-signup) in action:
-- The [**static demos**](#static-demos) are interactive prototypes that allow you to click through the screens. They are the easiest way to see the UX.
-- The [**live demos**](#live-demos) are fully deployed implementations that allow you to try 1-Click Signup for real.
+The demos below show [1-Click Signup](/) in action:
+- The [**static demos**](#static) are interactive prototypes that allow you to click through the screens. They are the easiest way to see the UX.
+- The [**live demos**](#live) are fully deployed implementations that allow you to try 1-Click Signup for real.
 
 
 ## Static
@@ -60,17 +60,19 @@ Using your own phone number in sandbox, you'll receive dummy user data.
 <Tabs>
     <TabItem value="without-redirect" label="Without Redirect" default>
         This flow applies if you do _not_ implement [step 2](/#redirect-user) (which is optional).
-        <iframe
-            src='https://kredita-1click-web.demo.sandbox-verifiedinc.com'
-            width='453'
-            height='864'
-        ></iframe>
         <div>
             <a href='https://kredita-1click-web.demo.sandbox-verifiedinc.com' target='_blank'>Open Demo in New Tab ↗</a>
         </div>
         <div>
             <a href='https://github.com/VerifiedInc/Kredita-Demo-Web' target='_blank'>View Source Code on GitHub ↗</a>
         </div>
+        <br/>
+        <iframe
+            src='https://kredita-1click-web.demo.sandbox-verifiedinc.com'
+            width='453'
+            height='864'
+            style={{border:1+'px solid'}} 
+        ></iframe>
     </TabItem>
     <TabItem value="with-redirect" label="With Redirect">
         <Admonition type="note" title="Sandbox Testing">
@@ -90,16 +92,19 @@ Using your own phone number in sandbox, you'll receive dummy user data.
             </details>
         </Admonition>
         This flow applies if you _do_ implement [step 2](/#redirect-user) (which is optional).
-
-        _Coming soon._
-        {/* <iframe
-            src=''
+        <div>
+            <a href='https://kredita-1click-web.demo.sandbox-verifiedinc.com?redirect=true' target='_blank'>Open Demo in New Tab ↗</a>
+        </div>
+        <div>
+            <a href='https://github.com/VerifiedInc/Kredita-Demo-Web' target='_blank'>View Source Code on GitHub ↗</a>
+        </div>
+        <br/>
+        <iframe
+            src='https://kredita-1click-web.demo.sandbox-verifiedinc.com?redirect=true'
             width='453'
             height='864'
+            style={{border:1+'px solid'}} 
         ></iframe>
-        <div>
-            <a href='' target='_blank'>Open Demo in New Tab ↗</a>
-        </div> */}
     </TabItem>
 </Tabs>
 
@@ -119,29 +124,34 @@ If your phone number doesn't work with 1-Click Signup in production (and your ph
 <Tabs>
     <TabItem value="without-redirect" label="Without Redirect" default>
         This flow applies if you do _not_ implement [step 2](/#redirect-user) (which is optional).
-        <iframe
-            src='https://kredita-1click-web.demo.verified.inc'
-            width='453'
-            height='864'
-        ></iframe>
         <div>
             <a href='https://kredita-1click-web.demo.verified.inc' target='_blank'>Open Demo in New Tab ↗</a>
         </div>
         <div>
             <a href='https://github.com/VerifiedInc/Kredita-Demo-Web' target='_blank'>View Source Code on GitHub ↗</a>
         </div>
+        <br/>
+        <iframe
+            src='https://kredita-1click-web.demo.verified.inc'
+            width='453'
+            height='864'
+            style={{border:1+'px solid'}} 
+        ></iframe>
     </TabItem>
     <TabItem value="with-redirect" label="With Redirect">
         This flow applies if you _do_ implement [step 2](/#redirect-user) (which is optional).
-
-        _Coming soon._
-        {/* <iframe
-            src=''
+        <div>
+            <a href='https://kredita-1click-web.demo.verified.inc?redirect=true' target='_blank'>Open Demo in New Tab ↗</a>
+        </div>
+        <div>
+            <a href='https://github.com/VerifiedInc/Kredita-Demo-Web' target='_blank'>View Source Code on GitHub ↗</a>
+        </div>
+        <br/>
+        <iframe
+            src='https://kredita-1click-web.demo.verified.inc?redirect=true'
             width='453'
             height='864'
+            style={{border:1+'px solid'}} 
         ></iframe>
-        <div>
-            <a href='' target='_blank'>Open Demo in New Tab ↗</a>
-        </div> */}
     </TabItem>
 </Tabs>

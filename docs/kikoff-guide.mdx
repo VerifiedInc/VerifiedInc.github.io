@@ -47,7 +47,7 @@ We've also set the default data types you'll request from users to match what yo
 
     Note that:
     - The order of these types is the order the user will see the data fields when they're asked to signup. We matched the order of Kikoff's existing signup flow.
-    - We ommitted phone, since you'll already have collected that. **We will pass back to you whether the user verified their phone — even if they opt out of sharing additional data — so you don't have to ask them to re-verify it.**
+    - We omitted phone, since you'll already have collected that. **We will pass back to you whether the user verified their phone — even if they opt out of sharing additional data — so you don't have to ask them to re-verify it.**
     - We set the `description`s to match what you have in your existing signup flow.
     - We set most of these to `"mandatory": "yes"`, which makes a field display as required to users. The only exceptions are `MiddleNameCredential` and `Line2Credential` (within `AddressCredential`), which are set to `"mandatory": "no"`, which makes a field display as optional.
     - We set all of these to `"allowUserInput": "true"`, which allows users to edit the data we source for them. This is helpful in case the data is outdated or (in rare cases) incorrect, but you can also disable it.
@@ -605,7 +605,7 @@ sequenceDiagram
 
 [↑ Full Sequence Diagram](#sequence-diagram)
 
-The 1-Click endpoint is [`POST /1-click`](/api-overview#1-click). Call it to begin 1-Click Signup.
+The 1-Click endpoint is [`POST /1-click`](/api-reference#1-click). Call it to begin 1-Click Signup.
 
 #### Request
 

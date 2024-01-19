@@ -72,7 +72,7 @@ You need to provide:
 3. (Optional) Verification messaging option. _Controls the SMS verification messaging._
 4. (Optional) Content object of request page options. _To allow for minor messaging adjustments to the Web Wallet request page the user provides consent to share data from._
 5. (Optional) Credential request(s). _If you would like to update from the default credential requests._
-6. (Optional) Redirect URL. _If you would like to redirect the user to a different URL than the one provided in the ApiKey._
+6. (Optional) Redirect URL. _If you would like to redirect the user to a different URL than the one provided in your settings._
 
 A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects.
 
@@ -106,7 +106,7 @@ The same ApiKey necessary to call [/1-click](/api-overview#1-click-onboarding) g
     description?: string, // Optional: description displayed under the consent page header. Default is 'Make sure everything is correct:'
   }
   credentialRequests?: CredentialRequest[], // Optional: a list of one or more CredentialRequest objects. Encodes which credentials are being asked for
-  redirectUrl?: string // Optional: redirect url to redirect user to after the user has completed the 1-click flow. Default is the redirect url provided in the ApiKey.
+  redirectUrl?: string // Optional: redirect url to redirect user to after the user has completed the 1-click flow. Default is the redirect url provided in your settings.
 }
 ```
 

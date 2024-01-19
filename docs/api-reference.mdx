@@ -67,24 +67,28 @@ The Verified Inc. API lets your company participate in the Verified Inc. identit
 
 You need to provide:
 
-1. User's  phone
-2. (Optional) Verification messaging option. _Controls the SMS verification messaging._
-3. (Optional) Content object of request page options. _To allow for minor messaging adjustments to the Web Wallet request page the user provides consent to share data from._
-4. (Optional) Credential request(s). _If you would like to update from the default credential requests._
+1. User's phone
+2. (Optional) User's email.
+3. (Optional) Verification messaging option. _Controls the SMS verification messaging._
+4. (Optional) Content object of request page options. _To allow for minor messaging adjustments to the Web Wallet request page the user provides consent to share data from._
+5. (Optional) Credential request(s). _If you would like to update from the default credential requests._
+6. (Optional) Redirect URL. _If you would like to redirect the user to a different URL than the one provided in the ApiKey._
 
 A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/types/interfaces/credentialrequest.html) objects.
 
 <CredentialRequestCodeSnippet />
 
 The endpoint comes with a default credential requests configuration shown below which should be suffice for most customers.
+
 <DefaultCredentialRequestCodeSnippet />
 
 :::note
 This endpoint performs a similar role to [/hasMatchingCredentials](/api-overview#check-user-credentials) but with a few key differences:
+
 - Can only be used with a user's phone number
 - Triggers an SMS verification message to the user that Verified Inc sends
 - There is a much greater chance of success getting user data than the standard acceptance flow thanks to data pulled on demand
-:::
+  :::
 
 :::caution
 The same ApiKey necessary to call [/1-click](/api-overview#1-click-onboarding) grants you and only you access to the encrypted credential data documented in [Get Shared Credentials](#get-shared-credentials). Please keep this key secure.
@@ -95,12 +99,14 @@ The same ApiKey necessary to call [/1-click](/api-overview#1-click-onboarding) g
 ```typescript title="1-Click Request"
 {
   phone: string, // user's phone number in E.164 format
+  email?: string, // user's email address; optional
   verificationOptions?: 'only_link' | 'only_code' | 'both_link_and_code' // Optional: controls the SMS verification messaging. Default is 'only_link'.
   content?: {
     title?: 'Signup' | 'Verify' | 'Apply', // Optional: title of the request page. Default is 'Signup'
     description?: string, // Optional: description displayed under the consent page header. Default is 'Make sure everything is correct:'
   }
   credentialRequests?: CredentialRequest[], // Optional: a list of one or more CredentialRequest objects. Encodes which credentials are being asked for
+  redirectUrl?: string // Optional: redirect url to redirect user to after the user has completed the 1-click flow. Default is the redirect url provided in the ApiKey.
 }
 ```
 

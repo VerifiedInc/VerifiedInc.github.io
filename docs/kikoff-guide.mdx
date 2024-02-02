@@ -647,7 +647,7 @@ If 1-Click Signup is _not_ possible, the response body will be empty or contain 
 
 As noted above, there is also a pull option, which involves you hitting our endpoint. But conversion tends to be a bit less than 100% for the pull option, so we think the push option is better for Kikoff. See [How to Receive User Data](#how-to-receive-user-data) for more information.
 
-All you need to do is create a webhook called `POST /verified/credentials` according to our [OpenAPI spec](https://gist.github.com/VerifiedIncMachine/ef399f6b5ce6545eb4d7ec3e85d87dd2). This is where we will send verified user data when a user consents to share it.
+All you need to do is create a webhook called `POST /verified/credentials` according to our [OpenAPI spec](https://gist.github.com/VerifiedIncMachine/d4e814dd149e47a18f104e97fda4ebc7). This is where we will send verified user data when a user consents to share it.
 
 ```mermaid
 %%{
@@ -686,7 +686,85 @@ sequenceDiagram
 
 [↑ Full Sequence Diagram](#sequence-diagram)
 
-**By default, you will receive a simplified set of user data,** so it's easy for you to take further action based on it (like creating a new account for the user). This simplified set only contains user data. But you can also choose to receive an encriched set — just ask us to enable it for you — which contains much more metadata. 
+#### Data the User Shared
+
+Here is more details about the data the user shared, which we will send to you:
+
+
+<details>
+    <summary>Definitions</summary>
+    - An **identifier** is a phone number or email address the user uses to verify for 1-Click Signup. (For Kikoff, it's a phone number.)
+        - `identifierType` is the type of identifier (`phone` or `email`).
+    - A **credential** is a piece of data the user shares (e.g. birth date or SSN).
+        - A **credential type** is a string indicating the type of a credential (e.g. `SsnCredential` or `FirstNameCredential`). It's formatted in `PascalCase` and always includes the word `Credential` at the end.
+        - `shortenedCredentialType` is the shortened credential type in `camelCase`. The shortened credential type is just the type without the word `Credential` (e.g. `birthDate` or `ssn`). For subcredentials of a composite credential, it includes the shortened credential type of its parent credential(s) (e.g. `fullName.firstName`). 
+            <details>
+            <summary>Accepted Values</summary>
+
+            Currently, accepted values for `shortenedCredentialType` are:
+                - `email`
+                - `fullName.firstName`
+                - `fullName.middleName`
+                - `fullName.lastName`
+                - `birthDate`
+                - `address.line1`
+                - `address.line2`
+                - `address.city`
+                - `address.state`
+                - `address.zipCode`
+                - `address.country`
+                - `ssn`
+            </details>
+    - **Data** in this context means identity information about a user (e.g. their name, contact information, etc.)
+    - **Metadata** in this context means any additional data that's _not_ identity information about a user (e.g. the verification method for their identity information).
+        - `metadataType` is the type of metadata. 
+            <details>
+            <summary>Accepted Values</summary>
+
+            Currently, possible values for `metadataType` are:
+                - `id`: unique identifier for a credential
+                    - UUID
+                    - Applies only to credentials
+                - `verificationMethod`: how an identifier or credential was verified
+                    - enum: `"phone_carrier"`, `"otp"`, `"self_attested"`, or `null` 
+                    - Applies to both identifiers and credentials
+                - `status`: status of a credential
+                    - enum: `"valid"` or `"revoked"`
+                    - Applies only to credentials
+                - `issuerUuid`: brand that issued a credential
+                    - UUID
+                    - Applies only to credentials
+                - `issuanceDate`: date a credential was issued
+                    - Unix timestamp
+                    - Applies only to credentials
+                - `expirationDate`: date a credential expires
+                    - Unix timestamp
+                    - Applies only to credentials
+            </details>
+</details>
+
+```typescript title="POST /verified/credentials Request Body"
+{
+    "identifiers": {
+        [identifierType: string]: string
+    },
+    "credentials": {
+        [shortenedCredentialType: string]: string
+    },
+    "metadata": {
+        "identifiers": {
+            [identifierType: string]: {
+                [metadataType: string]: string
+            }
+        },
+        "credentials": {
+            [shortenedCredentialType: string]: {
+                [metadataType: string]: string
+            }
+        }
+    }
+}
+```
 
 :::tip
 One particularly valuable piece of metadata is **`verificationMethod`**, which describes how the credential (piece of user data) was verified. It can take the following values:
@@ -696,412 +774,149 @@ One particularly valuable piece of metadata is **`verificationMethod`**, which d
 - `null`
 :::
 
-:::important[We're Soon Updating Our Data Format]
+:::tip[User Data Format]
+We support a few different formats for user data, for example the default format for the `dateBirth` credential is a unixTimestamp, but you can also request it different formats (e.g. `MM/DD/YYYY` or `YYYY-MM-DD`), or for the `state` credential, you can request it as a 2-letter abbreviation (e.g. `CA`) or as the full state name (e.g. `California`).
 
-We're soon going to make an update to the format of the data we send you. This will make it much easier for you to consume!
-
-This updated format will replace the simplified and enriched options you see below, maintaining the ease of use of the simplified option while also including helpful metadata.
 
 <details>
-    <summary>Upcoming Data Format</summary>
+    <summary>Accepted Formats</summary>
 
-    **How to use:**
-    - To read data:
-        - **For an identifier, use `identifiers.{identifierType}`**.
-            - Example: `identifiers.phone` = `"+10123456789"`
-        - **For a credential, use `credentials.{shortenedCredentialType}`**.
-            - Examples: 
-                - `credentials.ssn` = `"123456789"`
-                - `credentials.fullName.firstName` = `"Richard"`
-    - To read metadata:
-        - **For an identifier, use `metadata.identifiers.{metadataType}.{identifierType}`**
-            - Example: `metadata.identifiers.verificationMethod.phone` = `"phone_carrier"`
-        - **For a credential, use `metadata.credentials.{metadataType}.{shortenedCredentialType}`**.
-            - Examples:
-                - `metadata.credentials.verificationMethod.ssn` = `"phone_carrier"`
-                - `metadata.credentials.verificationMethod.fullName.firstName` = `"phone_carrier"`
-
-    <details>
-        <summary>Definitions</summary>
-
-        - An **identifier** is a phone number or email address the user uses to verify for 1-Click Signup. (For Kikoff, it's a phone number.)
-            - `identifierType` is the type of identifier (`phone` or `email`).
-        - A **credential** is a piece of data the user shares (e.g. birth date or SSN).
-            - A **credential type** is a string indicating the type of a credential (e.g. `SsnCredential` or `FirstNameCredential`). It's formatted in `PascalCase` and always includes the word `Credential` at the end.
-            - `shortenedCredentialType` is the shortened credential type in `camelCase`. The shortened credential type is just the type without the word `Credential` (e.g. `birthDate` or `ssn`). For subcredentials of a composite credential, it includes the shortened credential type of its parent credential(s) (e.g. `fullName.firstName`). 
-                <details>
-                <summary>Accepted Values</summary>
-
-                Currently, accepted values for `shortenedCredentialType` are:
-                    - `email`
-                    - `fullName.firstName`
-                    - `fullName.middleName`
-                    - `fullName.lastName`
-                    - `birthDate`
-                    - `address.line1`
-                    - `address.line2`
-                    - `address.city`
-                    - `address.state`
-                    - `address.zipCode`
-                    - `address.country`
-                    - `ssn`
-                </details>
-        - **Data** in this context means identity information about a user (e.g. their name, contact information, etc.)
-        - **Metadata** in this context means any additional data that's _not_ identity information about a user (e.g. the verification method for their identity information).
-            - `metadataType` is the type of metadata. 
-                <details>
-                <summary>Accepted Values</summary>
-
-                Currently, possible values for `metadataType` are:
-                    - `id`: unique identifier for a credential
-                        - UUID
-                        - Applies only to credentials
-                    - `verificationMethod`: how an identifier or credential was verified
-                        - enum: `"phone_carrier"`, `"otp"`, `"self_attested"`, or `null` 
-                        - Applies to both identifiers and credentials
-                    - `status`: status of a credential
-                        - enum: `"valid"` or `"revoked"`
-                        - Applies only to credentials
-                    - `issuerUuid`: brand that issued a credential
-                        - UUID
-                        - Applies only to credentials
-                    - `issuanceDate`: date a credential was issued
-                        - Unix timestamp
-                        - Applies only to credentials
-                    - `expirationDate`: date a credential expires
-                        - Unix timestamp
-                        - Applies only to credentials
-                </details>
-    </details>
-
-    ```typescript title="Data the User Shared"
-    {
-        "identifiers": {
-            "phone": "+101234567890"
-        },
-        "credentials": {
-            "email": "richard@piedpiper.net",
-            "fullName": {
-                "firstName": "Richard",
-                "lastName": "Hendricks"
-            },
-            "birthDate": "08/01/1989",
-            "address": {
-                "line1": "5320 Newell Rd",
-                "city": "Palo Alto",
-                "state": "CA",
-                "zip": "94303",
-                "country": "US"
-            },
-            "ssn": "123456789"
-        },
-        "metadata": {
-            "identifiers": {
-                "verificationMethod": {
-                    "phone": "phone_carrier"
-                }
-            },
-            "credentials": {
-                "id": {
-                    "email": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
-                    "fullName": {
-                        "firstName": "2e6a7b9a-e93e-43ba-98a9-c554f4e16457",
-                        "lastName": "9a5817ef-e621-4277-8c48-c8ee3776b6c4"
-                    },
-                    "birthDate": "ec1ef0ce-eeed-46a4-94a9-29b46e64403d",
-                    "address": {
-                        "line1": "f5a4dc93-bc06-4bb8-bd05-17b5ba912bcd",
-                        "city": "efd3820f-676a-4db1-b63e-695b66ed8ba0",
-                        "state": "b65022a2-2016-41df-88f3-252e8e3a29c5",
-                        "zip": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
-                        "country": "d57a7bca-2a7c-4671-86ad-5647731cad02"
-                    },
-                    "ssn": "ec1ef0ce-eeed-46a4-94a9-29b46e64403d"
-                },
-                "verificationMethod": {
-                    "email": "phone_carrier",
-                    "fullName": {
-                        "firstName": "phone_carrier",
-                        "lastName": "phone_carrier"
-                    },
-                    "birthDate": "phone_carrier",
-                    "address": {
-                        "line1": "phone_carrier",
-                        "city": "phone_carrier",
-                        "state": "phone_carrierA",
-                        "zip": "phone_carrier",
-                        "country": "phone_carrier"
-                    },
-                    "ssn": "phone_carrier"
-                },
-                "status": {
-                    "email": "valid",
-                    "fullName": {
-                        "firstName": "valid",
-                        "lastName": "valid"
-                    },
-                    "birthDate": "valid",
-                    "address": {
-                        "line1": "valid",
-                        "city": "valid",
-                        "state": "valid",
-                        "zip": "valid",
-                        "country": "valid"
-                    },
-                    "ssn": "valid"
-                },
-                "issuerUuid": {
-                    "email": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                    "fullName": {
-                        "firstName": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                        "lastName": "c3be0124-8f03-4983-baef-3302e0be88f4"
-                    },
-                    "birthDate": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                    "address": {
-                        "line1": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                        "city": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                        "state": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                        "zip": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                        "country": "c3be0124-8f03-4983-baef-3302e0be88f4"
-                    },
-                    "ssn": "c3be0124-8f03-4983-baef-3302e0be88f4"
-                },
-                "issuanceDate": {
-                    "email": "1671847264479",
-                    "fullName": {
-                        "firstName": "1671847264479",
-                        "lastName": "1671847264479"
-                    },
-                    "birthDate": "1671847264479",
-                    "address": {
-                        "line1": "1671847264479",
-                        "city": "1671847264479",
-                        "state": "1671847264479",
-                        "zip": "1671847264479",
-                        "country": "1671847264479"
-                    },
-                    "ssn": "1671847264479"
-                },
-                "expirationDate": {
-                    "email": "1871839024044",
-                    "fullName": {
-                        "firstName": "1871839024044",
-                        "lastName": "1871839024044"
-                    },
-                    "birthDate": "1871839024044",
-                    "address": {
-                        "line1": "1871839024044",
-                        "city": "1871839024044",
-                        "state": "1871839024044",
-                        "zip": "1871839024044",
-                        "country": "1871839024044"
-                    },
-                    "ssn": "1871839024044"
-                }
-            }
-        }
-    }
-    ```
+    Currently, accepted formats for user data are:
+    - `dateBirth`: unixTimestamp, or any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+    - `state`: 2-letter abbreviation, full state name
+    - `country`: 2-letter abbreviation, full country name
+    - `address`: instead getting a object with all keys, you can get a string with any combination, (e.g. `line1, city, state-country`)
+    - `fullName`: instead getting a object with all keys, you can get a string with any combination, (e.g. `firstName, lastName`)
 </details>
 :::
 
-<Tabs>
-  <TabItem value="simplified" label="Simplified" default>
-    ```typescript title="Data the User Shared"
-    {
+Here is an example of the user data we send to you:
+
+```typescript title="Data the User Shared"
+{
+    "identifiers": {
+        "phone": "+101234567890"
+    },
+    "credentials": {
+        "email": "richard@piedpiper.net",
         "fullName": {
-            "firstName": "Richard", 
+            "firstName": "Richard",
             "lastName": "Hendricks"
         },
-        "email": "richard@piedpiper.net",
-        "phone": "+10123456789",
+        "birthDate": "08/01/1989",
         "address": {
             "line1": "5320 Newell Rd",
-            "line2": "",
             "city": "Palo Alto",
             "state": "CA",
             "zip": "94303",
             "country": "US"
         },
-        "ssn": "123456789",
-        "birthDate": "617947200000" // Unix timestamp in ms
-    }
-    ```
-    </TabItem>
-    <TabItem value="enriched" label="Enriched">
-        ```typescript title="Data the User Shared"
-        {
-            "uuid": "1788d86d-5753-42e5-896e-44266cbfad8c", // the sharedCredentialsUuid
-            "phone": "+10123456789",
-            "credentials": [
-                {
-                    "id": "1be7c008-3f0c-4a21-9aad-69ca1c4251d2",
-                    "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                    "issuanceDate": "1671847264479",
-                    "expirationDate": "1871839024044",
-                    "type": "FullNameCredential",
-                    "status": "valid",
-                    "verificationMethod": "phone_carrier",
-                    "data": [
-                        {
-                            "id": "2e6a7b9a-e93e-43ba-98a9-c554f4e16457",
-                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                            "issuanceDate": "1671847264479",
-                            "expirationDate": "1871839024044",
-                            "type": "FirstNameCredential",
-                            "status": "valid",
-                            "verificationMethod": "phone_carrier",
-                            "data": {
-                                "firstName": "Richard"
-                            }
-                        },
-                        {
-                            "id": "9a5817ef-e621-4277-8c48-c8ee3776b6c4",
-                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                            "issuanceDate": "1671847264479",
-                            "expirationDate": "1871839024044",
-                            "type": "LastNameCredential",
-                            "status": "valid",
-                            "verificationMethod": "phone_carrier",
-                            "data": {
-                                "lastName": "Hendricks"
-                            }
-                        }
-                    ]
+        "ssn": "123456789"
+    },
+    "metadata": {
+        "identifiers": {
+            "verificationMethod": {
+                "phone": "phone_carrier"
+            }
+        },
+        "credentials": {
+            "id": {
+                "email": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
+                "fullName": {
+                    "firstName": "2e6a7b9a-e93e-43ba-98a9-c554f4e16457",
+                    "lastName": "9a5817ef-e621-4277-8c48-c8ee3776b6c4"
                 },
-                {
-                    "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
-                    "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                    "issuanceDate": "1671847264479",
-                    "expirationDate": "1871839024044",
-                    "type": "EmailCredential",
-                    "status": "valid",
-                    "verificationMethod": "phone_carrier",
-                    "data": {
-                        "email": "richard@piedpiper.net"
-                    }
+                "birthDate": "ec1ef0ce-eeed-46a4-94a9-29b46e64403d",
+                "address": {
+                    "line1": "f5a4dc93-bc06-4bb8-bd05-17b5ba912bcd",
+                    "city": "efd3820f-676a-4db1-b63e-695b66ed8ba0",
+                    "state": "b65022a2-2016-41df-88f3-252e8e3a29c5",
+                    "zip": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
+                    "country": "d57a7bca-2a7c-4671-86ad-5647731cad02"
                 },
-                {
-                    "id": "80e07f16-999b-4402-aa0f-96f650b72fec",
-                    "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                    "issuanceDate": "1671847264479",
-                    "expirationDate": "1871839024044",
-                    "type": "PhoneCredential",
-                    "status": "valid",
-                    "verificationMethod": "phone_carrier",
-                    "data": {
-                        "phone": "+10123456789"
-                    }
+                "ssn": "ec1ef0ce-eeed-46a4-94a9-29b46e64403d"
+            },
+            "verificationMethod": {
+                "email": "phone_carrier",
+                "fullName": {
+                    "firstName": "phone_carrier",
+                    "lastName": "phone_carrier"
                 },
-                {
-                    "id": "5f502836-ea9b-4032-89d5-19ac1c6ca3d7",
-                    "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                    "issuanceDate": "1671847264479",
-                    "expirationDate": "1871839024044",
-                    "type": "AddressCredential",
-                    "status": "valid",
-                    "verificationMethod": "phone_carrier",
-                    "data": [
-                        {
-                            "id": "f5a4dc93-bc06-4bb8-bd05-17b5ba912bcd",
-                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                            "issuanceDate": "1671847264479",
-                            "expirationDate": "1871839024044",
-                            "type": "Line1Credential",
-                            "status": "valid",
-                            "verificationMethod": "phone_carrier",
-                            "data": {
-                                "line1": "5320 Newell Rd"
-                            }
-                        },
-                        {
-                            "id": "b58910a4-b95e-461d-a68e-387c29440c12",
-                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                            "issuanceDate": "1671847264479",
-                            "expirationDate": "1871839024044",
-                            "type": "Line2Credential",
-                            "status": "valid",
-                            "verificationMethod": "phone_carrier",
-                            "data": {
-                                "line2": ""
-                            }
-                        },
-                        {
-                            "id": "efd3820f-676a-4db1-b63e-695b66ed8ba0",
-                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                            "issuanceDate": "1671847264479",
-                            "expirationDate": "1871839024044",
-                            "type": "CityCredential",
-                            "status": "valid",
-                            "verificationMethod": "phone_carrier",
-                            "data": {
-                                "city": "Palo Alto"
-                            }
-                        },
-                        {
-                            "id": "b65022a2-2016-41df-88f3-252e8e3a29c5",
-                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                            "issuanceDate": "1671847264479",
-                            "expirationDate": "1871839024044",
-                            "type": "StateCredential",
-                            "status": "valid",
-                            "verificationMethod": "phone_carrier",
-                            "data": {
-                                "state": "CA"
-                            }
-                        },
-                        {
-                            "id": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
-                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                            "issuanceDate": "1671847264479",
-                            "expirationDate": "1871839024044",
-                            "type": "ZipCodeCredential",
-                            "status": "valid",
-                            "verificationMethod": "phone_carrier",
-                            "data": {
-                                "zipCode": "94303"
-                            }
-                        },
-                        {
-                            "id": "d57a7bca-2a7c-4671-86ad-5647731cad02",
-                            "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                            "issuanceDate": "1671847264479",
-                            "expirationDate": "1871839024044",
-                            "type": "CountryCredential",
-                            "status": "valid",
-                            "verificationMethod": "phone_carrier",
-                            "data": {
-                                "country": "US"
-                            }
-                        }
-                    ]
+                "birthDate": "phone_carrier",
+                "address": {
+                    "line1": "phone_carrier",
+                    "city": "phone_carrier",
+                    "state": "phone_carrierA",
+                    "zip": "phone_carrier",
+                    "country": "phone_carrier"
                 },
-                {
-                    "id": "ec1ef0ce-eeed-46a4-94a9-29b46e64403d",
-                    "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                    "issuanceDate": "1671847264479",
-                    "expirationDate": "1871839024044",
-                    "type": "SsnCredential",
-                    "status": "valid",
-                    "verificationMethod": "phone_carrier",
-                    "data": {
-                        "ssn": "111223333"
-                    }
+                "ssn": "phone_carrier"
+            },
+            "status": {
+                "email": "valid",
+                "fullName": {
+                    "firstName": "valid",
+                    "lastName": "valid"
                 },
-                {
-                    "id": "ec1ef0ce-eeed-46a4-94a9-29b46e64403d",
-                    "issuerUuid": "c3be0124-8f03-4983-baef-3302e0be88f4",
-                    "issuanceDate": "1671847264479",
-                    "expirationDate": "1871839024044",
-                    "type": "BirthDateCredential",
-                    "status": "valid",
-                    "verificationMethod": "phone_carrier",
-                    "data": {
-                        "birthDate": "617947200000" // Unix timestamp in ms
-                    }
-                }
-            ]
+                "birthDate": "valid",
+                "address": {
+                    "line1": "valid",
+                    "city": "valid",
+                    "state": "valid",
+                    "zip": "valid",
+                    "country": "valid"
+                },
+                "ssn": "valid"
+            },
+            "issuerUuid": {
+                "email": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                "fullName": {
+                    "firstName": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                    "lastName": "c3be0124-8f03-4983-baef-3302e0be88f4"
+                },
+                "birthDate": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                "address": {
+                    "line1": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                    "city": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                    "state": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                    "zip": "c3be0124-8f03-4983-baef-3302e0be88f4",
+                    "country": "c3be0124-8f03-4983-baef-3302e0be88f4"
+                },
+                "ssn": "c3be0124-8f03-4983-baef-3302e0be88f4"
+            },
+            "issuanceDate": {
+                "email": "1671847264479",
+                "fullName": {
+                    "firstName": "1671847264479",
+                    "lastName": "1671847264479"
+                },
+                "birthDate": "1671847264479",
+                "address": {
+                    "line1": "1671847264479",
+                    "city": "1671847264479",
+                    "state": "1671847264479",
+                    "zip": "1671847264479",
+                    "country": "1671847264479"
+                },
+                "ssn": "1671847264479"
+            },
+            "expirationDate": {
+                "email": "1871839024044",
+                "fullName": {
+                    "firstName": "1871839024044",
+                    "lastName": "1871839024044"
+                },
+                "birthDate": "1871839024044",
+                "address": {
+                    "line1": "1871839024044",
+                    "city": "1871839024044",
+                    "state": "1871839024044",
+                    "zip": "1871839024044",
+                    "country": "1871839024044"
+                },
+                "ssn": "1871839024044"
+            }
         }
-        ```
-    </TabItem>
-</Tabs>
+    }
+}
+```

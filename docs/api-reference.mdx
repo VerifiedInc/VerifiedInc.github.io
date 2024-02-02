@@ -126,6 +126,133 @@ The same API key necessary to call [/1-click](/api-overview#1-click-onboarding) 
 
 The `url` from the response ought to then be enriched with a `redirectUrl` query param that will take the next step in your target service's user onboarding webpage. _More information on this can be found in the [1-Click Guide](/1-click-guide)._
 
+
+### Get 1-Click Credentials
+
+> Get the <Tip type="credential">credentials</Tip> of a user who has completed a 1-Click Signup flow.
+
+**Method**: `GET` <br />
+**Path**: `/1-click/{uuid}`
+
+When a <Tip type="user"/> completes a 1-Click Signup flow, the <Tip type="credential">credentials</Tip> are sent and stored securely awaiting retrieval. Additionally, as mentioned above in [1-Click](#1-click), upon the user completing the flow, the user will be redirected back to your client with a `1ClickUuid` as a query parameter.
+
+This endpoint allows you to retrieve the <Tip type="credential">credentials</Tip> related to the <Tip type="request"/> created as a result of a successful 1-Click Signup flow.
+
+You need to provide:
+
+- the `1ClickUuid` that was returned in the query param after redirecting the user to the `redirectUrl` attribute from the `/1-click` response
+
+:::info
+Your brand's access to 1-Click credentials is deleted after 5 minutes of the initial credential data retrieval.
+:::
+
+:::info
+If in the 1-Click Response, the `credentials` attribute is not present, then means the user opted out of sharing their credentials.
+But you can still use the `1ClickUuid` to check if the user verified their phone number or email address.
+:::
+
+<details>
+    <summary>Definitions</summary>
+    - An **identifier** is a phone number or email address the user uses to verify for 1-Click Signup. (For Kikoff, it's a phone number.)
+        - `identifierType` is the type of identifier (`phone` or `email`).
+    - A **credential** is a piece of data the user shares (e.g. birth date or SSN).
+        - A **credential type** is a string indicating the type of a credential (e.g. `SsnCredential` or `FirstNameCredential`). It's formatted in `PascalCase` and always includes the word `Credential` at the end.
+        - `shortenedCredentialType` is the shortened credential type in `camelCase`. The shortened credential type is just the type without the word `Credential` (e.g. `birthDate` or `ssn`). For subcredentials of a composite credential, it includes the shortened credential type of its parent credential(s) (e.g. `fullName.firstName`). 
+            <details>
+            <summary>Accepted Values</summary>
+
+            Currently, accepted values for `shortenedCredentialType` are:
+                - `email`
+                - `fullName.firstName`
+                - `fullName.middleName`
+                - `fullName.lastName`
+                - `birthDate`
+                - `address.line1`
+                - `address.line2`
+                - `address.city`
+                - `address.state`
+                - `address.zipCode`
+                - `address.country`
+                - `ssn`
+            </details>
+    - **Data** in this context means identity information about a user (e.g. their name, contact information, etc.)
+    - **Metadata** in this context means any additional data that's _not_ identity information about a user (e.g. the verification method for their identity information).
+        - `metadataType` is the type of metadata. 
+            <details>
+            <summary>Accepted Values</summary>
+
+            Currently, possible values for `metadataType` are:
+                - `id`: unique identifier for a credential
+                    - UUID
+                    - Applies only to credentials
+                - `verificationMethod`: how an identifier or credential was verified
+                    - enum: `"phone_carrier"`, `"otp"`, `"self_attested"`, or `null` 
+                    - Applies to both identifiers and credentials
+                - `status`: status of a credential
+                    - enum: `"valid"` or `"revoked"`
+                    - Applies only to credentials
+                - `issuerUuid`: brand that issued a credential
+                    - UUID
+                    - Applies only to credentials
+                - `issuanceDate`: date a credential was issued
+                    - Unix timestamp
+                    - Applies only to credentials
+                - `expirationDate`: date a credential expires
+                    - Unix timestamp
+                    - Applies only to credentials
+            </details>
+</details>
+
+
+The response body is:
+  
+  ```typescript title="1-Click Response"
+{
+    "identifiers": {
+        [identifierType: string]: string
+    },
+    "credentials": {
+        [shortenedCredentialType: string]: string
+    },
+    "metadata": {
+        "identifiers": {
+            [identifierType: string]: {
+                [metadataType: string]: string
+            }
+        },
+        "credentials": {
+            [shortenedCredentialType: string]: {
+                [metadataType: string]: string
+            }
+        }
+    }
+}
+```
+
+:::tip
+One particularly valuable piece of metadata is **`verificationMethod`**, which describes how the credential (piece of user data) was verified. It can take the following values:
+- `"phone_carrier"`: verified via phone carrier records
+- `"otp"`: verified via an OTP (one time passcode)
+- `"self_attested"`: attested by the user themselves (not verified)
+- `null`
+:::
+
+
+:::tip[User Data Format]
+We support a few different formats for user data, for example the default format for the `dateBirth` credential is a unixTimestamp, but you can also request it different formats (e.g. `MM/DD/YYYY` or `YYYY-MM-DD`), or for the `state` credential, you can request it as a 2-letter abbreviation (e.g. `CA`) or as the full state name (e.g. `California`).
+
+<details>
+    <summary>Accepted Formats</summary>
+
+    Currently, accepted formats for user data are:
+    - `dateBirth`: unixTimestamp, or any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+    - `state`: 2-letter abbreviation, full state name
+    - `country`: 2-letter abbreviation, full country name
+    - `address`: instead getting a object with all keys, you can get a string with any combination, (e.g. `line1, city, state-country`)
+    - `fullName`: instead getting a object with all keys, you can get a string with any combination, (e.g. `firstName, lastName`)
+</details>
+:::
+
 ### Check User Credentials
 
 > Check if a user has matching <Tip type="credential">credentials</Tip>. If so, a <Tip type="request"/> is created to get the <Tip type="user">user</Tip>'s consent to share the data.
@@ -319,6 +446,7 @@ The user will be asked to share the `CityCredential` if available (this means if
 `ZipCodeCredential` is optional and therefore the user may or may not have a credential of type to match.
 
 :::
+
 
 ### Get Shared Credentials
 

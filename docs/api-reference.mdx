@@ -79,6 +79,8 @@ You need to provide:
 4. (Optional) Content object of request page options. _To allow for minor messaging adjustments to the Wallet request page from which the user provides consent to share data._
 5. (Optional) Credential request(s). _If you would like to update from the default credential requests._
 6. (Optional) Redirect URL. _If you would like to redirect the user to a different URL than the one provided in your settings._
+7. (Optional) isHosted. _If you would like to do the [non-hosted](/#non-hosted-1-click-signup) integration ._
+8. (Optional) birthDate. _Only required if you are using the [non-hosted](/#non-hosted-1-click-signup) integration._
 
 A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/core-types/interfaces/CredentialRequestDto.html) objects.
 
@@ -112,7 +114,9 @@ The same API key necessary to call [/1-click](/api-overview#1-click-onboarding) 
     description?: string, // Optional: description displayed under the consent page header. Default is 'Make sure everything is correct:'
   }
   credentialRequests?: CredentialRequest[], // Optional: a list of one or more CredentialRequest objects. Encodes which credentials are being asked for
-  redirectUrl?: string // Optional: redirect url to redirect user to after the user has completed the 1-click flow. Default is the redirect url provided in your settings.
+  redirectUrl?: string, // Optional: redirect url to redirect user to after the user has completed the 1-click flow. Default is the redirect url provided in your settings.
+  isHosted?: boolean, // Optional: if you would like to do the non-hosted integration. Default is true.
+  birthDate?: string // Optional: user's birth date in YYYY-MM-DD format. Required if you are using the non-hosted integration.
 }
 ```
 
@@ -121,6 +125,7 @@ The same API key necessary to call [/1-click](/api-overview#1-click-onboarding) 
 ```typescript title="1-Click Response"
 {
   "url": string // Verified Inc. Web Wallet url to redirect user to for credential request handling. It will redirect back to your client. Only present if match is true.
+  "match": boolean // indicates whether we can provide the user with a 1-Click Signup flow
 }
 ```
 

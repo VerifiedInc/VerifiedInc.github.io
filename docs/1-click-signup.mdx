@@ -961,29 +961,28 @@ One particularly valuable piece of metadata is **`verificationMethod`**, which d
     }
 }
 ```
-
 ## Non-Hosted 1-Click Signup
 
 Status: *Beta*
 
-The 1-Click Signup experience mentioned above outlines our "hosted" 1-Click Signup flow, where the user interacts with our Wallet. We also offer a non-hosted or "headless" 1-Click Signup flow. This allows for a more white-label integration where the user will never have to leave your sign up flow. You will recieve the data as soon the user clicks the link in the SMS or enters the OTP code via your UI.
+The 1-Click Signup experience mentioned above outlines our "hosted" 1-Click Signup flow, where the user interacts with our Wallet. We also offer a non-hosted or "headless" 1-Click Signup flow, which allows for a more white-label integration where the user will never have to leave your signup flow. You will receive the data as soon the user clicks the verification link in the SMS or enters the verification code via your UI (and a headless redirect is initiated to us, more on that below).
 
-With this method there is some additional integration work required, mainly you will have build your own UI for the user to interact with. However, often this is just augmenting you existing sign up forms. While the rest is very similar to the hosted flow, there are a few differences:
+This method requires additional work; mainly, you will have to build a UI for the user to interact with. However, often, this is just augmenting your existing signup forms. While the rest is very similar to the hosted flow, there are a few differences:
 
-1. **Call `/1-click`, with two additional request attributes: `isHosted` and `birthDate`.** 
+1. **Call `/1-click` with two additional request attributes: `isHosted` and `birthDate.`** 
 
     ```json title="POST /1-click Request Body (Non-Hosted Additional Attributes)"
     isHosted: false,
     birthDate: "YYYY-MM-DD",
     ```
 
-    The `birthDate` value will have to come from user input that you will have to collect.
+    The `birthDate` value often must come from signup forms. We recommend collecting this alongside their phone number.
 
-2. **Regardless of your method of receiving the data ([push](#push-option) or [pull](#pull-option)) the data provided ought to be prefilled in our existing sign up forms.** This is to allow the user to possibly edit any fields that may have been incorrect or to add any additional information that may be required. This is because in this flow the user never has the UX of interacting with the Verified Inc Wallet to verify their data. Also, the response body may contain multiple credentials of the same type (e.g. multiple addresses) and you will need to handle this in your UI. The simpliest solution is to just provide the most recently issued credential field and have them edit it if necessary.
+2. **Regardless of your method of receiving the data ([push](#push-option) or [pull](#pull-option)), the data provided ought to be prefilled in your existing signup forms.** This is to allow the user to edit any fields that may have been incorrect or add any additional information that may be required. It is necessary to allow the user to edit the data for correctness. Also, the response body may contain multiple credentials of the same type (e.g., addresses), and you will need to handle this in your UI. The simplest solution is to provide the most recently issued credential field and have them edit it if necessary.
 
-3. **If using `verificationOptions` that contain a code you will need to build the input for the user to submit the otp code that is sent to them via SMS.** Verified Inc. is still handling the sending of the SMS on your behalf. This only needs to be handled in the case you are using `verificationOptions` set to `only_code` or `both_link_and_code`.
+3. **If using `verificationOptions` containing a code, you will need to build the input for the user to submit the OTP code sent to them via SMS.** Verified Inc. is still sending the SMS on your behalf. This only needs to be handled if you are using `verificationOptions` set to `only_code` or `both_link_and_code`.
 
-    Upon collecting the verification code from the user you will then need to redirect the user to the `/1-click` response body's `url` with the user provided verification code as a query parameter. Below is an example response body when `1-click` is called with the additional non-hosted and verification options containing a code attributes:
+    Upon collecting the verification code from the user, you must redirect the user to the `/1-click` response body's `url` with the user-provided verification code as a query parameter. Below is an example response body when `1-click` is called with the additional non-hosted and verification options containing code attributes:
 
     ```typescript title="Example URL Response Body"
     {

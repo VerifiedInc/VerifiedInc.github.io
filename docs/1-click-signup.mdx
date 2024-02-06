@@ -999,7 +999,7 @@ This method requires additional work; mainly, you will have to build a UI for th
 
     This redirect will ultimately land the user back on your defined `redirectUrl` with no user interaction appearing as if only a page refresh has occurred.
 
+4. **If using `verificationOptions` `only_link` then the `/1-click` response body will not contain a `url` even if `match` is `true.** This is because there is no need to redirect the user. Thanks to the verification link sent via SMS already containing the code, there is no need for a redirect. Upon clicking the link, we will redirect the user to your defined `redirectUrl` upon phone verification and credential creation happening in a headless manner.
+
 
 If interested in this mode of integration please let us know and we will enable it for your API key. Please note, that we will have to validate your integration in Sandbox prior to sharing Production access to this feature. 
-
-4. **If using `verificationOptions` `only_link` then the `/1-click` response body will not contain a `url` even if `match` is `true.** This is because there is no need to redirect the user. Thanks to the verification link sent via SMS already containing the code, there is no need for a redirect. Upon clicking the link, we will redirect the user to your defined `redirectUrl` upon phone verification and credential creation happening in a headless manner.

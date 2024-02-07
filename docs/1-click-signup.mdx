@@ -540,13 +540,16 @@ If 1-Click Signup is possible for the phone number included in the request body,
 ```typescript title="POST /1-click Response Body"
 {
     "url": "https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb",
-    "match": true
+    "match": true,
+    "smsBody": "Click this link to verify for Hooli: https://wallet.verified.inc/mt/3070e04e-dfdd-4600-954a-6ddaf651c65c" // only necessary to use in production, where you send the SMS
 }
 ```
 
+If you are going to [redirect the user](#redirect-user) (which is optional), you should redirect them to the returned `url`. If you aren't going to redirect them, you can ignore this URL.
+
 If 1-Click Signup is _not_ possible, the response body `match` value will be `false` or contain an error.
 
-If you are going to [redirect the user](#redirect-user) (which is optional), you should redirect them to this URL. If you aren't going to redirect them, you can ignore this URL.
+You can ignore `smsBody` in sandbox, where we handle sending SMS for you to make it simpler to start integrating. But when you're ready to [go live](#go-live), where you will send the SMS, you should trigger and SMS to the user that contains `smsBody`.
 
 
 ### 2. (optional) Redirect User {#redirect-user}
@@ -961,6 +964,30 @@ One particularly valuable piece of metadata is **`verificationMethod`**, which d
     }
 }
 ```
+
+
+### Go Live!
+
+Before you launch 1-Click Signup live in production, you'll need to do 2 things:
+1. **Add legal language to ensure compliance:** This is not necessary for your own internal testing, but it's important to include when you make 1-Click Signup available to end users in production, to ensure that users give informed consent. The legal language is:
+
+> By using 1-Click Signup, you agree to create a Verified Inc. account and accept Verified Inc.'s [Terms of Use](https://www.verified.inc/legal#terms-of-use).
+
+"Terms of Use" should be underlined or colored and hyperlinked to <a href="https://www.verified.inc/legal#terms-of-use">`https://www.verified.inc/legal#terms-of-use`</a>. This language should be included below the phone number input you use to start the 1-Click Signup flow.
+
+2. **Send SMS:** When you're ready to go live, we'll enable `POST /1-click` to return one additional attribute, `smsBody`, which contains the content of the SMS the user should receive. It's not necessary for you to send SMS in sandbox — we handle it for you to make it easier to get started — but you should do so in production. This is to avoid user confusion (so all SMS you send come from the same number) and ensure compliance with recent regulations about informed consent for SMS.
+
+
+#### Production Ready Checklist
+
+To ensure you're production ready for 1-Click Signup, follow this simple checklist:
+1. You've tested the 1-Click Signup flow end-to-end and it's working.
+2. You've included the legal language above.
+3. You're set up to send SMS to users.
+
+Once you've checked off these items, you're ready to go live!
+
+
 ## Non-Hosted Flow
 
 Status: *Beta*

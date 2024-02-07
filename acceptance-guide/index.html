@@ -4,27 +4,27 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.0.1">
 <title data-rh="true">Acceptance Guide | Verified Inc. Docs</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.verified.inc/acceptance-guide"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Acceptance Guide | Verified Inc. Docs"><meta data-rh="true" name="description" content="Time to read: 5 min"><meta data-rh="true" property="og:description" content="Time to read: 5 min"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.verified.inc/acceptance-guide"><link data-rh="true" rel="alternate" href="https://docs.verified.inc/acceptance-guide" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.verified.inc/acceptance-guide" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.4c4f300c.css">
-<script src="/assets/js/runtime~main.90257110.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.8122ad38.js" defer="defer"></script>
 <script src="/assets/js/main.cd48c7ca.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo.png" alt="Verified Inc. Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo_dark.png" alt="Verified Inc. Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Docs</b></a></div><div class="navbar__items navbar__items--right"><a href="https://www.verified.inc" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Home</a><a href="https://github.com/VerifiedInc" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub</a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><main class="docMainContainer_TBSr docMainContainerEnhanced_lQrH"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Acceptance Guide</h1></header><p><strong>Time to read:</strong> 5 min</p>
 <p><strong>Time to implement:</strong> 2-4 hours</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="overview">Overview<a href="#overview" class="hash-link" aria-label="Direct link to Overview" title="Direct link to Overview">​</a></h2>
-<p><strong><a href="https://www.verified.inc" target="_blank" rel="noopener noreferrer">Verified Inc.</a></strong> enables brands to provide their users with best in class onboarding. This particular guide focuses on how and why to become a <span class="__react_component_tooltip t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05 place-top type-dark allow_hover" id="9526f4d5-8675-4249-b93a-a4ffba635d85" data-id="tooltip"><style aria-hidden="true">
-  	.t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05 {
+<p><strong><a href="https://www.verified.inc" target="_blank" rel="noopener noreferrer">Verified Inc.</a></strong> enables brands to provide their users with best in class onboarding. This particular guide focuses on how and why to become a <span class="__react_component_tooltip t647aa1f4-faab-48e6-879e-e770f761fd2b place-top type-dark allow_hover" id="1a40815a-cf31-45da-a072-390b1bafc60b" data-id="tooltip"><style aria-hidden="true">
+  	.t647aa1f4-faab-48e6-879e-e770f761fd2b {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05.place-top {
+  	.t647aa1f4-faab-48e6-879e-e770f761fd2b.place-top {
         margin-top: -10px;
     }
-    .t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05.place-top::before {
+    .t647aa1f4-faab-48e6-879e-e770f761fd2b.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05.place-top::after {
+    .t647aa1f4-faab-48e6-879e-e770f761fd2b.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -35,13 +35,13 @@
         border-top-width: 6px;
     }
 
-    .t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05.place-bottom {
+    .t647aa1f4-faab-48e6-879e-e770f761fd2b.place-bottom {
         margin-top: 10px;
     }
-    .t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05.place-bottom::before {
+    .t647aa1f4-faab-48e6-879e-e770f761fd2b.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05.place-bottom::after {
+    .t647aa1f4-faab-48e6-879e-e770f761fd2b.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -52,13 +52,13 @@
         border-bottom-width: 6px;
     }
 
-    .t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05.place-left {
+    .t647aa1f4-faab-48e6-879e-e770f761fd2b.place-left {
         margin-left: -10px;
     }
-    .t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05.place-left::before {
+    .t647aa1f4-faab-48e6-879e-e770f761fd2b.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05.place-left::after {
+    .t647aa1f4-faab-48e6-879e-e770f761fd2b.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -69,13 +69,13 @@
         border-left-width: 6px;
     }
 
-    .t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05.place-right {
+    .t647aa1f4-faab-48e6-879e-e770f761fd2b.place-right {
         margin-left: 10px;
     }
-    .t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05.place-right::before {
+    .t647aa1f4-faab-48e6-879e-e770f761fd2b.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t7e9a29e2-ac77-4a5b-a3c1-27b06b0a4e05.place-right::after {
+    .t647aa1f4-faab-48e6-879e-e770f761fd2b.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -85,20 +85,20 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#brand">brand</a> is a company entity that has a corresponding unique api key, name, and card image.</b> Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.</div><div class="Collapsible"><span id="collapsible-trigger-1706927611565" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1706927611565" role="button">+ More...</span><div id="collapsible-content-1706927611565" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1706927611565"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Bank is an Verified Inc. customer. However, they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.</div><div><b>Components:</b> Each brand has an associated umbrella customer. It is totally okay if your customer only has one brand. We want to have the flexibility to support multiple brands per customer.</div></div></div></div></span><u data-tip="true" data-for="9526f4d5-8675-4249-b93a-a4ffba635d85">brand</u> that accepts Verified Inc. <span class="__react_component_tooltip t088252fd-309f-40e1-a70c-f03a3134a7ec place-top type-dark allow_hover" id="f24f409f-419b-4721-b41d-9f5652b8c137" data-id="tooltip"><style aria-hidden="true">
-  	.t088252fd-309f-40e1-a70c-f03a3134a7ec {
+  </style><div><b>A <a href="/terminology#brand">brand</a> is a company entity that has a corresponding unique api key, name, and card image.</b> Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.</div><div class="Collapsible"><span id="collapsible-trigger-1707329254153" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1707329254153" role="button">+ More...</span><div id="collapsible-content-1707329254153" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1707329254153"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Bank is an Verified Inc. customer. However, they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.</div><div><b>Components:</b> Each brand has an associated umbrella customer. It is totally okay if your customer only has one brand. We want to have the flexibility to support multiple brands per customer.</div></div></div></div></span><u data-tip="true" data-for="1a40815a-cf31-45da-a072-390b1bafc60b">brand</u> that accepts Verified Inc. <span class="__react_component_tooltip ta153c772-fe7a-4b2e-b78e-4f5a7780357a place-top type-dark allow_hover" id="9001633d-e7d6-4b55-9c0e-f3c10d1aa21b" data-id="tooltip"><style aria-hidden="true">
+  	.ta153c772-fe7a-4b2e-b78e-4f5a7780357a {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t088252fd-309f-40e1-a70c-f03a3134a7ec.place-top {
+  	.ta153c772-fe7a-4b2e-b78e-4f5a7780357a.place-top {
         margin-top: -10px;
     }
-    .t088252fd-309f-40e1-a70c-f03a3134a7ec.place-top::before {
+    .ta153c772-fe7a-4b2e-b78e-4f5a7780357a.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t088252fd-309f-40e1-a70c-f03a3134a7ec.place-top::after {
+    .ta153c772-fe7a-4b2e-b78e-4f5a7780357a.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -109,13 +109,13 @@
         border-top-width: 6px;
     }
 
-    .t088252fd-309f-40e1-a70c-f03a3134a7ec.place-bottom {
+    .ta153c772-fe7a-4b2e-b78e-4f5a7780357a.place-bottom {
         margin-top: 10px;
     }
-    .t088252fd-309f-40e1-a70c-f03a3134a7ec.place-bottom::before {
+    .ta153c772-fe7a-4b2e-b78e-4f5a7780357a.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t088252fd-309f-40e1-a70c-f03a3134a7ec.place-bottom::after {
+    .ta153c772-fe7a-4b2e-b78e-4f5a7780357a.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -126,13 +126,13 @@
         border-bottom-width: 6px;
     }
 
-    .t088252fd-309f-40e1-a70c-f03a3134a7ec.place-left {
+    .ta153c772-fe7a-4b2e-b78e-4f5a7780357a.place-left {
         margin-left: -10px;
     }
-    .t088252fd-309f-40e1-a70c-f03a3134a7ec.place-left::before {
+    .ta153c772-fe7a-4b2e-b78e-4f5a7780357a.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t088252fd-309f-40e1-a70c-f03a3134a7ec.place-left::after {
+    .ta153c772-fe7a-4b2e-b78e-4f5a7780357a.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -143,13 +143,13 @@
         border-left-width: 6px;
     }
 
-    .t088252fd-309f-40e1-a70c-f03a3134a7ec.place-right {
+    .ta153c772-fe7a-4b2e-b78e-4f5a7780357a.place-right {
         margin-left: 10px;
     }
-    .t088252fd-309f-40e1-a70c-f03a3134a7ec.place-right::before {
+    .ta153c772-fe7a-4b2e-b78e-4f5a7780357a.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t088252fd-309f-40e1-a70c-f03a3134a7ec.place-right::after {
+    .ta153c772-fe7a-4b2e-b78e-4f5a7780357a.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -159,7 +159,7 @@
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company and can be requested by other network participants, gated by the user&#x27;s consent.</div><div class="Collapsible"><span id="collapsible-trigger-1706927611566" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1706927611566" role="button">+ More...</span><div id="collapsible-content-1706927611566" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1706927611566"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Lending issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials following the steps in the <a href="/issuance-guide">Issuance Guide</a>.</div></div></div></div></span><u data-tip="true" data-for="f24f409f-419b-4721-b41d-9f5652b8c137">credentials</u>.</p>
+  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company and can be requested by other network participants, gated by the user&#x27;s consent.</div><div class="Collapsible"><span id="collapsible-trigger-1707329254153" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1707329254153" role="button">+ More...</span><div id="collapsible-content-1707329254153" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1707329254153"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Lending issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials following the steps in the <a href="/issuance-guide">Issuance Guide</a>.</div></div></div></div></span><u data-tip="true" data-for="9001633d-e7d6-4b55-9c0e-f3c10d1aa21b">credentials</u>.</p>
 <blockquote>
 <p>This guide is a more detailed version of what can be found in the <a href="/1-click-guide">1-Click</a> Guide.</p>
 </blockquote>
@@ -199,20 +199,20 @@ does, so Kredita lets them verify with 1-Click.</p><p></p><iframe src="https://m
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="pull-credential-data">Pull Credential Data<a href="#pull-credential-data" class="hash-link" aria-label="Direct link to Pull Credential Data" title="Direct link to Pull Credential Data">​</a></h3>
 <p>To pull credential data you will need to configure a web client page to receive the <code>sharedCredentialsUuid</code> query param via a redirect from the Verified Inc. Wallet. Once the query param is retrieved it should be sent to your backend where it is used to call <a href="/api-overview#get-shared-credentials"><code>/sharedCredentials/{sharedCredentialsUuid}</code></a> to get the credentials to onboard the user. <em>This guide will proceed with this method being the primary focus.</em></p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="partner-acceptance-2">Partner Acceptance<a href="#partner-acceptance-2" class="hash-link" aria-label="Direct link to Partner Acceptance" title="Direct link to Partner Acceptance">​</a></h3>
-<p>In this case, as the accepting <span class="__react_component_tooltip t36919658-ba56-4aeb-808c-b884beda495f place-top type-dark allow_hover" id="dacbd198-04f6-4495-abe3-fd6fd23c2b94" data-id="tooltip"><style aria-hidden="true">
-  	.t36919658-ba56-4aeb-808c-b884beda495f {
+<p>In this case, as the accepting <span class="__react_component_tooltip t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f place-top type-dark allow_hover" id="8b150e75-593d-446e-8951-a7fd73610334" data-id="tooltip"><style aria-hidden="true">
+  	.t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t36919658-ba56-4aeb-808c-b884beda495f.place-top {
+  	.t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f.place-top {
         margin-top: -10px;
     }
-    .t36919658-ba56-4aeb-808c-b884beda495f.place-top::before {
+    .t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t36919658-ba56-4aeb-808c-b884beda495f.place-top::after {
+    .t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -223,13 +223,13 @@ does, so Kredita lets them verify with 1-Click.</p><p></p><iframe src="https://m
         border-top-width: 6px;
     }
 
-    .t36919658-ba56-4aeb-808c-b884beda495f.place-bottom {
+    .t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f.place-bottom {
         margin-top: 10px;
     }
-    .t36919658-ba56-4aeb-808c-b884beda495f.place-bottom::before {
+    .t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t36919658-ba56-4aeb-808c-b884beda495f.place-bottom::after {
+    .t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -240,13 +240,13 @@ does, so Kredita lets them verify with 1-Click.</p><p></p><iframe src="https://m
         border-bottom-width: 6px;
     }
 
-    .t36919658-ba56-4aeb-808c-b884beda495f.place-left {
+    .t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f.place-left {
         margin-left: -10px;
     }
-    .t36919658-ba56-4aeb-808c-b884beda495f.place-left::before {
+    .t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t36919658-ba56-4aeb-808c-b884beda495f.place-left::after {
+    .t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -257,13 +257,13 @@ does, so Kredita lets them verify with 1-Click.</p><p></p><iframe src="https://m
         border-left-width: 6px;
     }
 
-    .t36919658-ba56-4aeb-808c-b884beda495f.place-right {
+    .t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f.place-right {
         margin-left: 10px;
     }
-    .t36919658-ba56-4aeb-808c-b884beda495f.place-right::before {
+    .t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t36919658-ba56-4aeb-808c-b884beda495f.place-right::after {
+    .t1eea2b14-8a8a-49ca-95b7-f9fe76f5da2f.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -273,7 +273,7 @@ does, so Kredita lets them verify with 1-Click.</p><p></p><iframe src="https://m
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#brand">brand</a> is a company entity that has a corresponding unique api key, name, and card image.</b> Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.</div><div class="Collapsible"><span id="collapsible-trigger-1706927611571" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1706927611571" role="button">+ More...</span><div id="collapsible-content-1706927611571" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1706927611571"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Bank is an Verified Inc. customer. However, they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.</div><div><b>Components:</b> Each brand has an associated umbrella customer. It is totally okay if your customer only has one brand. We want to have the flexibility to support multiple brands per customer.</div></div></div></div></span><u data-tip="true" data-for="dacbd198-04f6-4495-abe3-fd6fd23c2b94">brand</u>, you only need to handle the two steps (<a href="/acceptance-guide#3-capture-query-param-value">1</a>) and (<a href="/acceptance-guide#4-retrieve-shared-credentials-data">2</a>) below, thanks to issuer handling steps (<a href="/acceptance-guide#0a-check-user-credentials">0.a</a>) and (<a href="/acceptance-guide#0b-redirect-user-to-verified-inc-wallet">0.b</a>) for you.</p>
+  </style><div><b>A <a href="/terminology#brand">brand</a> is a company entity that has a corresponding unique api key, name, and card image.</b> Brands can issue, request and receive <a href="/terminology#credential">credentials</a> to and from <a href="/terminology#user">users</a>.</div><div class="Collapsible"><span id="collapsible-trigger-1707329254156" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1707329254156" role="button">+ More...</span><div id="collapsible-content-1707329254156" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1707329254156"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Bank is an Verified Inc. customer. However, they have two separate brands: ACME Lending and ACME Savings. Each brand has a unique api key, name, and card image.</div><div><b>Components:</b> Each brand has an associated umbrella customer. It is totally okay if your customer only has one brand. We want to have the flexibility to support multiple brands per customer.</div></div></div></div></span><u data-tip="true" data-for="8b150e75-593d-446e-8951-a7fd73610334">brand</u>, you only need to handle the two steps (<a href="/acceptance-guide#3-capture-query-param-value">1</a>) and (<a href="/acceptance-guide#4-retrieve-shared-credentials-data">2</a>) below, thanks to issuer handling steps (<a href="/acceptance-guide#0a-check-user-credentials">0.a</a>) and (<a href="/acceptance-guide#0b-redirect-user-to-verified-inc-wallet">0.b</a>) for you.</p>
 <p>Because the user starts in the issuing brand&#x27;s UX in this type of flow, the issuer handles the redirect in step (<a href="/acceptance-guide#0b-redirect-user-to-verified-inc-wallet">0.b</a>). This is why you must pre-define your desired <code>redirectUrl</code> with us. For more information, see the <a href="/issuance-guide#partner-issuance">partner issuance</a> section of the issuance guide.</p>
 <div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>To enable this form of acceptance, we encode a direct relationship between the issuer and the acceptor. If you would like to implement this type of flow, please email us at <a href="mailto:contact@verified.inc" target="_blank" rel="noopener noreferrer">contact@verified.inc</a> so we can help you. However, please note this is not a requirement for acceptance.</p></div></div>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-capture-query-param-value">1. Capture Query Param Value<a href="#1-capture-query-param-value" class="hash-link" aria-label="Direct link to 1. Capture Query Param Value" title="Direct link to 1. Capture Query Param Value">​</a></h4>
@@ -287,20 +287,20 @@ does, so Kredita lets them verify with 1-Click.</p><p></p><iframe src="https://m
 <details class="details_lb9f alert alert--info details_b_Ee" data-collapsed="true"><summary>Example Application Code Credential Handling</summary><div><div class="collapsibleContent_i85q"><p></p><div class="language-tsx codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-tsx codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token keyword" style="font-style:italic">import</span><span class="token plain"> </span><span class="token imports">_</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">from</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&#x27;lodash&#x27;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">/**</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"> * Finds value in an object that matches a property name.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"> * @param object</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"> * @param propertyName</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"> */</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token keyword" style="font-style:italic">export</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">function</span><span class="token plain"> </span><span class="token generic-function function" style="color:rgb(130, 170, 255)">findByPropertyName</span><span class="token generic-function generic class-name operator" style="color:rgb(137, 221, 255)">&lt;</span><span class="token generic-function generic class-name" style="color:rgb(255, 203, 107)">Type</span><span class="token generic-function generic class-name operator" style="color:rgb(137, 221, 255)">&gt;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  object</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token maybe-class-name">Record</span><span class="token operator" style="color:rgb(137, 221, 255)">&lt;</span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">any</span><span class="token operator" style="color:rgb(137, 221, 255)">&gt;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  propertyName</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token builtin" style="color:rgb(130, 170, 255)">string</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token maybe-class-name">Type</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">|</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">undefined</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token keyword" style="font-style:italic">if</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain">_</span><span class="token punctuation" style="color:rgb(199, 146, 234)">.</span><span class="token method function property-access" style="color:rgb(130, 170, 255)">has</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain">object</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> propertyName</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// a hit, return the value</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token keyword" style="font-style:italic">return</span><span class="token plain"> object</span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token plain">propertyName</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token keyword" style="font-style:italic">for</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token keyword" style="font-style:italic">const</span><span class="token plain"> key </span><span class="token keyword" style="font-style:italic">in</span><span class="token plain"> object</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token keyword" style="font-style:italic">if</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain">_</span><span class="token punctuation" style="color:rgb(199, 146, 234)">.</span><span class="token method function property-access" style="color:rgb(130, 170, 255)">isArray</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain">object</span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token plain">key</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// if the value is an array, iterate over it and recursively call this function</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token keyword" style="font-style:italic">for</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token keyword" style="font-style:italic">const</span><span class="token plain"> item </span><span class="token keyword" style="font-style:italic">of</span><span class="token plain"> object</span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token plain">key</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">        </span><span class="token keyword" style="font-style:italic">const</span><span class="token plain"> result </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token function" style="color:rgb(130, 170, 255)">findByPropertyName</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain">item</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> propertyName</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">        </span><span class="token keyword" style="font-style:italic">if</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain">result </span><span class="token operator" style="color:rgb(137, 221, 255)">!==</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">undefined</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">          </span><span class="token keyword" style="font-style:italic">return</span><span class="token plain"> result </span><span class="token keyword" style="font-style:italic">as</span><span class="token plain"> </span><span class="token maybe-class-name">Type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">        </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token keyword" style="font-style:italic">if</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain">_</span><span class="token punctuation" style="color:rgb(199, 146, 234)">.</span><span class="token method function property-access" style="color:rgb(130, 170, 255)">isPlainObject</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain">object</span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token plain">key</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// just look for the value in the object</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token keyword" style="font-style:italic">const</span><span class="token plain"> result </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token function" style="color:rgb(130, 170, 255)">findByPropertyName</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain">object</span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token plain">key</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> propertyName</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token keyword" style="font-style:italic">if</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token plain">result </span><span class="token operator" style="color:rgb(137, 221, 255)">!==</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">undefined</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">        </span><span class="token keyword" style="font-style:italic">return</span><span class="token plain"> result </span><span class="token keyword" style="font-style:italic">as</span><span class="token plain"> </span><span class="token maybe-class-name">Type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">// no hit, return undefined</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token keyword" style="font-style:italic">return</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">undefined</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div><p></p></div></div></details>
 <p>✅ <strong><em>You&#x27;re done!</em></strong></p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="general-acceptance-2">General Acceptance<a href="#general-acceptance-2" class="hash-link" aria-label="Direct link to General Acceptance" title="Direct link to General Acceptance">​</a></h3>
-<p>Because the issuer is not issuing credentials with your brand in mind, <strong>you need to check whether the user has matching <span class="__react_component_tooltip t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef place-top type-dark allow_hover" id="0ec4da63-104b-42df-bc15-18e1ceed6b3e" data-id="tooltip"><style aria-hidden="true">
-  	.t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef {
+<p>Because the issuer is not issuing credentials with your brand in mind, <strong>you need to check whether the user has matching <span class="__react_component_tooltip t60a513b5-ec99-4690-8033-8cb1518d8567 place-top type-dark allow_hover" id="20f7d1bd-233d-489f-bb80-34a62d9bba8d" data-id="tooltip"><style aria-hidden="true">
+  	.t60a513b5-ec99-4690-8033-8cb1518d8567 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef.place-top {
+  	.t60a513b5-ec99-4690-8033-8cb1518d8567.place-top {
         margin-top: -10px;
     }
-    .t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef.place-top::before {
+    .t60a513b5-ec99-4690-8033-8cb1518d8567.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef.place-top::after {
+    .t60a513b5-ec99-4690-8033-8cb1518d8567.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -311,13 +311,13 @@ does, so Kredita lets them verify with 1-Click.</p><p></p><iframe src="https://m
         border-top-width: 6px;
     }
 
-    .t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef.place-bottom {
+    .t60a513b5-ec99-4690-8033-8cb1518d8567.place-bottom {
         margin-top: 10px;
     }
-    .t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef.place-bottom::before {
+    .t60a513b5-ec99-4690-8033-8cb1518d8567.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef.place-bottom::after {
+    .t60a513b5-ec99-4690-8033-8cb1518d8567.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -328,13 +328,13 @@ does, so Kredita lets them verify with 1-Click.</p><p></p><iframe src="https://m
         border-bottom-width: 6px;
     }
 
-    .t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef.place-left {
+    .t60a513b5-ec99-4690-8033-8cb1518d8567.place-left {
         margin-left: -10px;
     }
-    .t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef.place-left::before {
+    .t60a513b5-ec99-4690-8033-8cb1518d8567.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef.place-left::after {
+    .t60a513b5-ec99-4690-8033-8cb1518d8567.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -345,13 +345,13 @@ does, so Kredita lets them verify with 1-Click.</p><p></p><iframe src="https://m
         border-left-width: 6px;
     }
 
-    .t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef.place-right {
+    .t60a513b5-ec99-4690-8033-8cb1518d8567.place-right {
         margin-left: 10px;
     }
-    .t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef.place-right::before {
+    .t60a513b5-ec99-4690-8033-8cb1518d8567.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t8ef3e9ee-ffac-45e3-9ad9-0aa1f2aa64ef.place-right::after {
+    .t60a513b5-ec99-4690-8033-8cb1518d8567.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -361,7 +361,7 @@ does, so Kredita lets them verify with 1-Click.</p><p></p><iframe src="https://m
         border-right-style: solid;
         border-right-width: 6px;
     }
-  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company and can be requested by other network participants, gated by the user&#x27;s consent.</div><div class="Collapsible"><span id="collapsible-trigger-1706927611585" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1706927611585" role="button">+ More...</span><div id="collapsible-content-1706927611585" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1706927611585"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Lending issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials following the steps in the <a href="/issuance-guide">Issuance Guide</a>.</div></div></div></div></span><u data-tip="true" data-for="0ec4da63-104b-42df-bc15-18e1ceed6b3e">credentials</u>.</strong> If they do, they can share all of those credentials with 1-click. <strong>You will also need to direct the user to the Verified Inc. Wallet.</strong></p>
+  </style><div><b>A <a href="/terminology#credential">credential</a> is a collection of data about a person.</b> It&#x27;s issued by a company and can be requested by other network participants, gated by the user&#x27;s consent.</div><div class="Collapsible"><span id="collapsible-trigger-1707329254170" class="Collapsible__trigger is-closed" aria-expanded="false" aria-disabled="false" aria-controls="collapsible-content-1707329254170" role="button">+ More...</span><div id="collapsible-content-1707329254170" class="Collapsible__contentOuter" style="height:0;-webkit-transition:height 400ms linear;-ms-transition:height 400ms linear;transition:height 400ms linear;overflow:hidden" role="region" aria-labelledby="collapsible-trigger-1707329254170"><div class="Collapsible__contentInner"><div><b>Example:</b> ACME Lending issues a KYC verification credential to Richard (an ACME user). This includes Richard&#x27;s contact information and account numbers, as well as a level of confidence in the accuracy of the data.</div><div><b>Components:</b> A company issues credentials following the steps in the <a href="/issuance-guide">Issuance Guide</a>.</div></div></div></div></span><u data-tip="true" data-for="20f7d1bd-233d-489f-bb80-34a62d9bba8d">credentials</u>.</strong> If they do, they can share all of those credentials with 1-click. <strong>You will also need to direct the user to the Verified Inc. Wallet.</strong></p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="0a-check-user-credentials">0.a Check User Credentials<a href="#0a-check-user-credentials" class="hash-link" aria-label="Direct link to 0.a Check User Credentials" title="Direct link to 0.a Check User Credentials">​</a></h4>
 <p><strong>Call <a href="/api-overview/#check-user-credentials"><code>/hasMatchingCredentials</code></a></strong> with the user&#x27;s email and/or phone and the credential type(s) you need.</p>
 <div class="language-typescript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockTitle_Ktv7">Example Response Body</div><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-typescript codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;match&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token boolean" style="color:rgb(255, 88, 116)">true</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token string-property property">&quot;url&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&amp;phone=%2B10123456789&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>

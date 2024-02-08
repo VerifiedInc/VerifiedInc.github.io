@@ -634,7 +634,10 @@ If 1-Click Signup is possible for the phone number included in the request body,
 
 ```typescript title="POST /1-click Response Body"
 {
-    "url": "https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb"
+    "url": "https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb",
+    "match": true,
+    "smsBody": "Click this link to verify for Kikoff: https://wallet.verified.inc/mt/3070e04e-dfdd-4600-954a-6ddaf651c65c" // only necessary to use in production, where you send the SMS
+
 }
 ```
 

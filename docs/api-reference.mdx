@@ -126,6 +126,7 @@ The same API key necessary to call [/1-click](/api-overview#1-click-onboarding) 
 {
   "url": string // Verified Inc. Web Wallet url to redirect user to for credential request handling. It will redirect back to your client. Only present if match is true.
   "match": boolean // indicates whether we can provide the user with a 1-Click Signup flow
+  "smsBody": string // the SMS body that we recommend sending to the user; You will only have to handle sending the SMS in Production.
 }
 ```
 

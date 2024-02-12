@@ -475,54 +475,110 @@ Just [text "CREDIT" to +1 (505) 591-0362](sms:+15055910362&body=CREDIT). Click t
 
 Here's how this works, using our recommended implementation for Kikoff:
 
-```mermaid
-%%{
-    init: {
-        'theme': 'base',
-        'themeVariables': {
-            'primaryColor': '#e6f6e6',
-            'primaryTextColor': '#003100',
-            'primaryBorderColor': '#0dbc3d',
-            'secondaryColor': '#eef9fd',
-            'secondaryTextColor': '#193c47',
-            'secondaryBorderColor': '#164fd6',
-            'activationBkgColor': '#e6f6e6',
-            'activationBorderColor': '#0dbc3d',
-            'labelBoxBkgColor': '#eef9fd',
-            'labelBoxBorderColor': '#164fd6',
-            'labelTextColor': '#193c47',
-            'edgeLabelBackground': '#ffffff',
-            'textColor': '#000000',
-            'fontFamily': 'Lato'
-        }
-    }
-}%%
-sequenceDiagram
-    participant C as Kikoff
-    actor U as User
-    participant V as Verified Inc.
-    C->>+U: Show phone number input
-    U->>-C: Enter phone number
-    rect rgb(200,200,200,0.25)
-        note left of C: 1. Call 1-Click Endpoint
-        C->>+V: Call POST /1-click
-        V->>-C: Return URL (ignore because not redirecting user)
-        rect rgb(200,200,200,0.85)
-            note right of V: (handled by Verified Inc.)
-            V->>+U: Send SMS
-            U->>-V: Click link to verify
-            V->>V: Pull verified user data
-            V->>+U: Display data
-            U->>-V: Click 1-Click button
-            V->>C: Redirect user back to Kikoff 
-        end
-        note left of C: 3. Receive User Data
-        alt Kikoff using push option
-            V->>+C: Call POST /verified/credentials with user data
-            C->>-V: (success)
-        end
-    end
-```
+<Tabs>
+    <TabItem value="development-diagram" label="Development" default>
+        To assist getting up and running during development in our Sandbox environment, we handle sending the SMS for you by default. However, part of our [go live](/#go-live) process is to switch this over to you sending the SMS as shown in the Production sequence diagram.
+
+        ```mermaid
+        %%{
+            init: {
+                'theme': 'base',
+                'themeVariables': {
+                    'primaryColor': '#e6f6e6',
+                    'primaryTextColor': '#003100',
+                    'primaryBorderColor': '#0dbc3d',
+                    'secondaryColor': '#eef9fd',
+                    'secondaryTextColor': '#193c47',
+                    'secondaryBorderColor': '#164fd6',
+                    'activationBkgColor': '#e6f6e6',
+                    'activationBorderColor': '#0dbc3d',
+                    'labelBoxBkgColor': '#eef9fd',
+                    'labelBoxBorderColor': '#164fd6',
+                    'labelTextColor': '#193c47',
+                    'edgeLabelBackground': '#ffffff',
+                    'textColor': '#000000',
+                    'fontFamily': 'Lato'
+                }
+            }
+        }%%
+        sequenceDiagram
+            participant C as Kikoff
+            actor U as User
+            participant V as Verified Inc.
+            C->>+U: Show phone number input
+            U->>-C: Enter phone number
+            rect rgb(200,200,200,0.25)
+                note left of C: 1. Call 1-Click Endpoint
+                C->>+V: Call POST /1-click
+                V->>-C: Return URL (ignore because not redirecting user)
+                rect rgb(200,200,200,0.85)
+                    note right of V: (handled by Verified Inc.)
+                    V->>+U: Send SMS
+                    U->>-V: Click link to verify
+                    V->>V: Pull verified user data
+                    V->>+U: Display data
+                    U->>-V: Click 1-Click button
+                    V->>C: Redirect user back to Kikoff 
+                end
+                note left of C: 3. Receive User Data
+                alt Kikoff using push option
+                    V->>+C: Call POST /verified/credentials with user data
+                    C->>-V: (success)
+                end
+            end
+        ```
+    </TabItem>
+    <TabItem value="production-diagram" label="Production" default>
+        ```mermaid
+        %%{
+            init: {
+                'theme': 'base',
+                'themeVariables': {
+                    'primaryColor': '#e6f6e6',
+                    'primaryTextColor': '#003100',
+                    'primaryBorderColor': '#0dbc3d',
+                    'secondaryColor': '#eef9fd',
+                    'secondaryTextColor': '#193c47',
+                    'secondaryBorderColor': '#164fd6',
+                    'activationBkgColor': '#e6f6e6',
+                    'activationBorderColor': '#0dbc3d',
+                    'labelBoxBkgColor': '#eef9fd',
+                    'labelBoxBorderColor': '#164fd6',
+                    'labelTextColor': '#193c47',
+                    'edgeLabelBackground': '#ffffff',
+                    'textColor': '#000000',
+                    'fontFamily': 'Lato'
+                }
+            }
+        }%%
+        sequenceDiagram
+            participant C as Kikoff
+            actor U as User
+            participant V as Verified Inc.
+            C->>+U: Show phone number input
+            U->>-C: Enter phone number
+            rect rgb(200,200,200,0.25)
+                note left of C: 1. Call 1-Click Endpoint
+                C->>+V: Call POST /1-click
+                V->>-C: Return URL (ignore because not redirecting user)
+                rect rgb(200,200,200,0.85)
+                    note right of V: (handled by Verified Inc.)
+                    V->>+U: Send SMS
+                    U->>-V: Click link to verify
+                    V->>V: Pull verified user data
+                    V->>+U: Display data
+                    U->>-V: Click 1-Click button
+                    V->>C: Redirect user back to Kikoff 
+                end
+                note left of C: 3. Receive User Data
+                alt Kikoff using push option
+                    V->>+C: Call POST /verified/credentials with user data
+                    C->>-V: (success)
+                end
+            end
+        ```
+    </TabItem>
+</Tabs>
 
 
 ## Recommended Implementation

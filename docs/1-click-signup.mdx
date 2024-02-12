@@ -216,67 +216,135 @@ Think of 1-Click Signup as a black box, where the input is a phone number and th
 ### Sequence Diagram {#full-sequence-diagram}
 
 Here's the full flow:
-```mermaid
-%%{
-    init: {
-        'theme': 'base',
-        'themeVariables': {
-            'primaryColor': '#e6f6e6',
-            'primaryTextColor': '#003100',
-            'primaryBorderColor': '#0dbc3d',
-            'secondaryColor': '#eef9fd',
-            'secondaryTextColor': '#193c47',
-            'secondaryBorderColor': '#164fd6',
-            'activationBkgColor': '#e6f6e6',
-            'activationBorderColor': '#0dbc3d',
-            'labelBoxBkgColor': '#eef9fd',
-            'labelBoxBorderColor': '#164fd6',
-            'labelTextColor': '#193c47',
-            'edgeLabelBackground': '#ffffff',
-            'textColor': '#000000',
-            'fontFamily': 'Lato'
-        }
-    }
-}%%
-sequenceDiagram
-    participant C as Customer
-    actor U as User
-    participant V as Verified Inc.
-    C->>+U: Show phone number input
-    U->>-C: Enter phone number
-    rect rgb(200,200,200,0.25)
-        note left of C: 1. Call 1-Click Endpoint
-        C->>+V: Call POST /1-click with phone number
-        V->>-C: Return URL
-        opt
-            note left of C: 2. (optional) Redirect User
-            C-->>U: (optional) Redirect user to URL
-        end
-        rect rgb(200,200,200,0.85)
-            note right of V: (handled by Verified Inc.)
-            V->>+U: Send SMS
-            U->>-V: Click link or enter code
-            alt is user's first time
-                V->>+U: Show DOB/SSN4 input
-                U->>-V: Enter DOB/SSN4
-            end
-            V->>V: Pull verified user data
-            V->>+U: Display data
-            U->>-V: Consent to share data
-            V->>C: Redirect user to customer 
-        end
-        note left of C: 3. Receive User Data
-        alt customer using push option
-            V->>+C: Call POST /verified/credentials with user data
-            C->>-V: (success)
-        else customer using pull option
-            C->>C: Parse sharedCredentialsUuid from URL param
-            C->>+V: Call GET /sharedCredentials with sharedCredentialsUuid
-            V->>-C: Return user data
-        end
-    end
-```
 
+<Tabs>
+    <TabItem value="development-diagram" label="Development" default>
+        To assist getting up and running during development in our Sandbox environment, we handle sending the SMS for you by default. However, part of our [go live](#go-live) process is to switch this over to you sending the SMS as shown in the Production sequence diagram.
+
+        ```mermaid
+        %%{
+            init: {
+                'theme': 'base',
+                'themeVariables': {
+                    'primaryColor': '#e6f6e6',
+                    'primaryTextColor': '#003100',
+                    'primaryBorderColor': '#0dbc3d',
+                    'secondaryColor': '#eef9fd',
+                    'secondaryTextColor': '#193c47',
+                    'secondaryBorderColor': '#164fd6',
+                    'activationBkgColor': '#e6f6e6',
+                    'activationBorderColor': '#0dbc3d',
+                    'labelBoxBkgColor': '#eef9fd',
+                    'labelBoxBorderColor': '#164fd6',
+                    'labelTextColor': '#193c47',
+                    'edgeLabelBackground': '#ffffff',
+                    'textColor': '#000000',
+                    'fontFamily': 'Lato'
+                }
+            }
+        }%%
+        sequenceDiagram
+            participant C as Customer
+            actor U as User
+            participant V as Verified Inc.
+            C->>+U: Show phone number input
+            U->>-C: Enter phone number
+            rect rgb(200,200,200,0.25)
+                note left of C: 1. Call 1-Click Endpoint
+                C->>+V: Call POST /1-click with phone number
+                V->>-C: Return URL
+                opt
+                    note left of C: 2. (optional) Redirect User
+                    C-->>U: (optional) Redirect user to URL
+                end
+                rect rgb(200,200,200,0.85)
+                    note right of V: (handled by Verified Inc.)
+                    V->>+U: Send SMS
+                    U->>-V: Click link or enter code
+                    alt is user's first time
+                        V->>+U: Show DOB/SSN4 input
+                        U->>-V: Enter DOB/SSN4
+                    end
+                    V->>V: Pull verified user data
+                    V->>+U: Display data
+                    U->>-V: Consent to share data
+                    V->>C: Redirect user to customer
+                end
+                note left of C: 3. Receive User Data
+                alt customer using push option
+                    V->>+C: Call POST /verified/credentials with user data
+                    C->>-V: (success)
+                else customer using pull option
+                    C->>C: Parse sharedCredentialsUuid from URL param
+                    C->>+V: Call GET /sharedCredentials with sharedCredentialsUuid
+                    V->>-C: Return user data
+                end
+            end
+        ```
+    </TabItem>
+    <TabItem value="production-diagram" label="Production" default>
+        ```mermaid
+        %%{
+            init: {
+                'theme': 'base',
+                'themeVariables': {
+                    'primaryColor': '#e6f6e6',
+                    'primaryTextColor': '#003100',
+                    'primaryBorderColor': '#0dbc3d',
+                    'secondaryColor': '#eef9fd',
+                    'secondaryTextColor': '#193c47',
+                    'secondaryBorderColor': '#164fd6',
+                    'activationBkgColor': '#e6f6e6',
+                    'activationBorderColor': '#0dbc3d',
+                    'labelBoxBkgColor': '#eef9fd',
+                    'labelBoxBorderColor': '#164fd6',
+                    'labelTextColor': '#193c47',
+                    'edgeLabelBackground': '#ffffff',
+                    'textColor': '#000000',
+                    'fontFamily': 'Lato'
+                }
+            }
+        }%%
+        sequenceDiagram
+            participant C as Customer
+            actor U as User
+            participant V as Verified Inc.
+            C->>+U: Show phone number input
+            U->>-C: Enter phone number
+            rect rgb(200,200,200,0.25)
+                note left of C: 1. Call 1-Click Endpoint
+                C->>+V: Call POST /1-click with phone number
+                V->>-C: Return URL and SMS body
+                C->>+U: Send SMS
+                opt
+                    note left of C: 2. (optional) Redirect User
+                    C-->>U: (optional) Redirect user to URL
+                end
+                rect rgb(200,200,200,0.85)
+                    note right of V: (handled by Verified Inc.)
+                    U->>-V: Click link or enter code
+                    alt is user's first time
+                        V->>+U: Show DOB/SSN4 input
+                        U->>-V: Enter DOB/SSN4
+                    end
+                    V->>V: Pull verified user data
+                    V->>+U: Display data
+                    U->>-V: Consent to share data
+                    V->>C: Redirect user to customer
+                end
+                note left of C: 3. Receive User Data
+                alt customer using push option
+                    V->>+C: Call POST /verified/credentials with user data
+                    C->>-V: (success)
+                else customer using pull option
+                    C->>C: Parse sharedCredentialsUuid from URL param
+                    C->>+V: Call GET /sharedCredentials with sharedCredentialsUuid
+                    V->>-C: Return user data
+                end
+            end
+        ```
+    </TabItem>
+</Tabs>
 
 ## Implement
 
@@ -384,7 +452,7 @@ You can also use `/1-click` in more advanced ways:
     }
     ```
 
-    This makes the SMS we send the user contain a verification code rather than a link, which can cause confusion.
+    This makes the SMS body contain a verification code rather than a link, which can cause confusion.
 
     You can also use `"verificationOptions": "both_link_and_code"` to make the SMS contain both a verification link and code. This gives the user the option of using either one.
 </details>

@@ -59,7 +59,7 @@ It is also preferred if one could create an official Github release (also makes 
 **TL;DR never commit directly to master and create Github releases with preceding `v`, i.e. `v1.3.2`, only to `dev` branch.**
 
 #### Preview Deployment
-It may be the case that you would like to get other's approval or input prior to releasing the docs publicly via the deployment method above. While pulling this project from that branch in question and running locally is still probably the best way members of the business team, for example, can not do that. To handle this case, we have setup a "preview" deployment via Github Actions which is trigger with a git tag in the format `preview-v*.*.*`. This GitHub actions configuration can be found in the [preview.yaml](.github/workflows/preview.yaml) file. 
+It may be the case that you would like to get other's approval or input prior to releasing the docs publicly via the deployment method above. While pulling this project from that branch in question and running locally is still probably the best way members of the business team, for example, can not do that. To handle this case, we have setup a "preview" deployment via Github Actions which is **triggered with a git tag in the format `preview-v*.*.*`**. This GitHub actions configuration can be found in the [preview.yaml](.github/workflows/preview.yaml) file.
 
 It publishes to the `preview` branch which should be consider akin to `master` and never pushed directly to. It would be recommend to push the preview tag from your feature branch. 
 

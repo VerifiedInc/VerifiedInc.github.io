@@ -12,47 +12,49 @@ import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 
 The demos below show [1-Click Signup](/) in action:
+
 - The [**static demos**](#static) are interactive prototypes that allow you to click through the screens. They are the easiest way to see the UX.
 - The [**live demos**](#live) are fully deployed implementations that allow you to try 1-Click Signup for real.
 
-
 ## Static
 
-<Tabs groupId="redirect">
-    <TabItem value="without" label="Without Redirect" default>
-        This flow applies if you do _not_ implement [step 2](/#redirect-user) (which is optional).
-        <iframe
-            src='https://marvelapp.com/prototype/10711a01?emb=1&iosapp=false&frameless=false'
-            width='453'
-            height='864'
-            allowTransparency='true'
-            frameborder='0'
-        ></iframe>
-    </TabItem>
-    <TabItem value="with" label="With Redirect">
-        This flow applies if you _do_ implement [step 2](/#redirect-user) (which is optional).
-        <iframe
-            src='https://marvelapp.com/prototype/7cci0hj?emb=1&iosapp=false&frameless=false'
-            width='453'
-            height='864'
-            allowTransparency='true'
-            frameborder='0'
-        ></iframe>
-    </TabItem>
+<Tabs groupId='redirect'>
+  <TabItem value='without' label='Without Redirect' default>
+    This flow applies if you do _not_ implement [step 2](/#redirect-user) (which
+    is optional).
+    <iframe
+      src='https://marvelapp.com/prototype/10711a01?emb=1&iosapp=false&frameless=false'
+      width='453'
+      height='864'
+      allowTransparency='true'
+      frameborder='0'
+    ></iframe>
+  </TabItem>
+  <TabItem value='with' label='With Redirect'>
+    This flow applies if you _do_ implement [step 2](/#redirect-user) (which is
+    optional).
+    <iframe
+      src='https://marvelapp.com/prototype/7cci0hj?emb=1&iosapp=false&frameless=false'
+      width='453'
+      height='864'
+      allowTransparency='true'
+      frameborder='0'
+    ></iframe>
+  </TabItem>
 </Tabs>
 
-
 ## Live
-
 
 ### Sandbox
 
 :::tip[Sandbox Testing]
 **We recommend that you test using your own phone number.** This will allow you to receive SMS messages, which are necessary to test the full 1-Click Signup flow (but won't work for the test user).
+
 <details>
     <summary><b>Supported Phone Numbers</b></summary>
 
     Currently, only US phone numbers work with 1-Click Signup (and we're able to source verified data for 95% of these numbers).
+
 </details>
 Using your own phone number in sandbox, you'll receive dummy user data.
 :::
@@ -64,17 +66,17 @@ Using your own phone number in sandbox, you'll receive dummy user data.
         </p>
         <p>
             Try the demo in the iframe below, or open it by scanning the QR code or clicking the link below:
-            <img style={{maxWidth:10+'rem'}} src="/img/demo-1-click-signup-without-redirect-sandbox.svg"/>
+            <img style={{maxWidth:10+'rem'}} src="/img/demo-1-click-signup-without-redirect-sandbox.png"/>
         </p>
         <div>
-            <a href='https://kredita-1click-web.demo.sandbox-verifiedinc.com' target='_blank'>Open Demo in New Tab ↗</a>
+            <a href='https://1click.demo.sandbox-verifiedinc.com' target='_blank'>Open Demo in New Tab ↗</a>
         </div>
         <div>
             <a href='https://github.com/VerifiedInc/Kredita-Demo-Web' target='_blank'>View Source Code on GitHub ↗</a>
         </div>
         <br/>
         <iframe
-            src='https://kredita-1click-web.demo.sandbox-verifiedinc.com'
+            src='https://1click.demo.sandbox-verifiedinc.com'
             width='453'
             height='864'
             style={{border:1+'px solid'}} 
@@ -99,65 +101,88 @@ Using your own phone number in sandbox, you'll receive dummy user data.
             </details>
         </Admonition>
         Since this demo involves a redirect, we can't display it an iframe for security reasons, so please open it by scanning the QR code or clicking the link below:
-        <img style={{maxWidth:10+'rem'}} src="/img/demo-1-click-signup-with-redirect-sandbox.svg"/>
+        <img style={{maxWidth:10+'rem'}} src="/img/demo-1-click-signup-with-redirect-sandbox.png"/>
         <div>
-            <a href='https://kredita-1click-web.demo.sandbox-verifiedinc.com?redirect=true' target='_blank'>Open Demo in New Tab ↗</a>
+            <a href='https://1click.demo.sandbox-verifiedinc.com?verificationOptions=only_code' target='_blank'>Open Demo in New Tab ↗</a>
         </div>
         <div>
             <a href='https://github.com/VerifiedInc/Kredita-Demo-Web' target='_blank'>View Source Code on GitHub ↗</a>
         </div>
     </TabItem>
-</Tabs>
 
+</Tabs>
 
 ### Production
 
 :::warning[Production Usage]
 **In production, you need to use own phone number.** The verified data we return will be your data!
+
 <details>
     <summary><b>Supported Phone Numbers</b></summary>
 
     Currently, only US phone numbers work with 1-Click Signup (and we're able to source verified data for 95% of these numbers).
+
 </details>
 If your phone number doesn't work with 1-Click Signup in production (and your phone number is a US number), that means it's in the 5% of US numbers we can't source verified data for. However, you can still manually input data to complete the flow.
 :::
 
-<Tabs groupId="redirect">
-    <TabItem value="without" label="Without Redirect" default>
-        <p>
-            This flow applies if you do _not_ implement [step 2](/#redirect-user) (which is optional).
-        </p>
-        <p>
-            Try the demo in the iframe below, or open it by scanning the QR code or clicking the link below:
-            <img style={{maxWidth:10+'rem'}} src="/img/demo-1-click-signup-without-redirect-production.svg"/>
-        </p>
-        <div>
-            <a href='https://kredita-1click-web.demo.verified.inc' target='_blank'>Open Demo in New Tab ↗</a>
-        </div>
-        <div>
-            <a href='https://github.com/VerifiedInc/Kredita-Demo-Web' target='_blank'>View Source Code on GitHub ↗</a>
-        </div>
-        <br/>
-        <iframe
-            src='https://kredita-1click-web.demo.verified.inc'
-            width='453'
-            height='864'
-            style={{border:1+'px solid'}} 
-        ></iframe>
-    </TabItem>
-    <TabItem value="with" label="With Redirect">
-        <p>   
-            This flow applies if you _do_ implement [step 2](/#redirect-user) (which is optional).
-        </p>
-        <p>
-            Since this demo involves a redirect, we can't display it an iframe, so please open it by scanning the QR code or clicking the link below:
-        </p>
-        <img style={{maxWidth:10+'rem'}} src="/img/demo-1-click-signup-with-redirect-production.svg"/>
-        <div>
-            <a href='https://kredita-1click-web.demo.verified.inc?redirect=true' target='_blank'>Open Demo in New Tab ↗</a>
-        </div>
-        <div>
-            <a href='https://github.com/VerifiedInc/Kredita-Demo-Web' target='_blank'>View Source Code on GitHub ↗</a>
-        </div>
-    </TabItem>
+<Tabs groupId='redirect'>
+  <TabItem value='without' label='Without Redirect' default>
+    <p>
+      This flow applies if you do _not_ implement [step 2](/#redirect-user)
+      (which is optional).
+    </p>
+    <p>
+      Try the demo in the iframe below, or open it by scanning the QR code or
+      clicking the link below:
+      <img
+        style={{ maxWidth: 10 + 'rem' }}
+        src='/img/demo-1-click-signup-without-redirect-production.png'
+      />
+    </p>
+    <div>
+      <a href='https://1click.demo.verified.inc' target='_blank'>
+        Open Demo in New Tab ↗
+      </a>
+    </div>
+    <div>
+      <a href='https://github.com/VerifiedInc/Kredita-Demo-Web' target='_blank'>
+        View Source Code on GitHub ↗
+      </a>
+    </div>
+    <br />
+    <iframe
+      src='https://1click.demo.verified.inc'
+      width='453'
+      height='864'
+      style={{ border: 1 + 'px solid' }}
+    ></iframe>
+  </TabItem>
+  <TabItem value='with' label='With Redirect'>
+    <p>
+      This flow applies if you _do_ implement [step 2](/#redirect-user) (which
+      is optional).
+    </p>
+    <p>
+      Since this demo involves a redirect, we can't display it an iframe, so
+      please open it by scanning the QR code or clicking the link below:
+    </p>
+    <img
+      style={{ maxWidth: 10 + 'rem' }}
+      src='/img/demo-1-click-signup-with-redirect-production.png'
+    />
+    <div>
+      <a
+        href='https://1click.demo.verified.inc?verificationOptions=only_code'
+        target='_blank'
+      >
+        Open Demo in New Tab ↗
+      </a>
+    </div>
+    <div>
+      <a href='https://github.com/VerifiedInc/Kredita-Demo-Web' target='_blank'>
+        View Source Code on GitHub ↗
+      </a>
+    </div>
+  </TabItem>
 </Tabs>

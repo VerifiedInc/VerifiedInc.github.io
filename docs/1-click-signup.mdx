@@ -1036,24 +1036,94 @@ One particularly valuable piece of metadata is **`verificationMethod`**, which d
 
 ### Go Live!
 
-Before you launch 1-Click Signup live in production, you'll need to do 2 things:
-1. **Add legal language to ensure compliance:** This is not necessary for your own internal testing, but it's important to include when you make 1-Click Signup available to end users in production, to ensure that users give informed consent. The legal language is:
+Before you launch 1-Click Signup live in production, you'll need to do 2 things that are not necessary in sandbox:
+1. **Add legal language to ensure compliance:** SMS regulations require that users give informed consent, so you must include the following language just above or below the phone number input you use to start the 1-Click Signup flow. (It can be included alongside other legal language you already use.)
 
-    > By using 1-Click Signup, you agree to create a Verified Inc. account and accept Verified Inc.'s [Terms of Use](https://www.verified.inc/legal#terms-of-use).
+    > By `{taking this action}`, you agree to receive a text to create a Verified Inc. account for 1-Click Signup at `{your brand name}` and other supported sites.
 
-    "Terms of Use" should be underlined or colored and hyperlinked to <a href="https://www.verified.inc/legal#terms-of-use">`https://www.verified.inc/legal#terms-of-use`</a>. This language should be included below the phone number input you use to start the 1-Click Signup flow.
+    <details>
+        <summary>Replace `{taking this action}` and `{your brand name}`</summary>
+
+        <p>
+            <ol>
+                <li>
+                    **Replace `{taking this action}` with the action the user takes to trigger the 1-Click Signup flow.** For example:
+                        <ul> 
+                            <li>
+                                If your implementation automatically calls `POST /1-click` when the user enters a valid phone number, replace `{taking this action}` with "entering your phone number".
+                            </li>
+                            <li>
+                                If your implementation calls `POST /1-click` when the user clicks a Next button after entering their phone number, replace `{taking this action}` with "clicking Next".
+                            </li>
+                            <li>
+                                If there are multiple possible triggers, replace `{taking this action}` with "continuing" so it's general enough to cover all cases.
+                            </li>
+                        </ul>
+                </li>
+                <li>
+                    **Replace `{your brand name}` with your brand name.**
+                </li>
+            </ol>
+        </p>
+
+        <p>
+            Here's a full example, with these replacements:
+            > By entering your phone number, you agree to receive a text to create a Verified Inc. account for 1-Click Signup at Hooli and other supported sites.
+        </p>
+    </details>
+
+    <details>
+        <summary>Optionally include a "powered by" graphic</summary>
+
+        **We encourage (but don't require) you to include a graphic that says "1-Click Signup powered by Verified Inc."** This helps the user understand they're about to go through a 1-Click Signup flow — and motivates them to do so, since a 1-click experience is always best!
+
+        The graphic should be placed just below the phone number input you use to start the 1-Click Signup flow.
+        
+        We provide several variants of the graphic, in both SVG and PNG format. Choose the one you prefer and that best fits the background color of your application.
+
+        **Green**
+            <img src="/img/1-click-signup-powered-by-verified-inc/png/green.png" width="300"/>
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/svg/green.svg" title="Green (SVG)">Download SVG</a> | 
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/png/green.png" title="Green (PNG)">Download PNG</a>
+
+            **Black**
+            <img src="/img/1-click-signup-powered-by-verified-inc/png/black.png" width="300"/>
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/svg/black.svg" title="Black (SVG)">Download SVG</a> | 
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/png/black.png" title="Black (PNG)">Download PNG</a>
+
+            **Gray**
+            <img src="/img/1-click-signup-powered-by-verified-inc/png/gray.png" width="300"/>
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/svg/gray.svg" title="Gray (SVG)">Download SVG</a> | 
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/png/gray.png" title="Gray (PNG)">Download PNG</a>
+
+            **White**
+            <img src="/img/1-click-signup-powered-by-verified-inc/png/white.png" width="300"/>
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/svg/white.svg" title="White (SVG)">Download SVG</a> | 
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/png/white.png" title="White (PNG)">Download PNG</a>
+    </details>
+
+    Here's an example:
+
+    ![](/img/powered-by-and-legal-language.png)
+    *Hooli displays the required legal language and includes the gray variant of the "powered by" graphic.*
 
 2. **Send SMS:** When you're ready to go live, we'll enable `POST /1-click` to return one additional attribute, `smsBody`, which contains the content of the SMS the user should receive. It's not necessary for you to send SMS in sandbox — we handle it for you to make it easier to get started — but you should do so in production. This is to avoid user confusion (so all SMS you send come from the same number) and ensure compliance with recent regulations about informed consent for SMS.
 
 
 #### Production Ready Checklist
 
-To ensure you're production ready for 1-Click Signup, follow this simple checklist:
-1. You've tested the 1-Click Signup flow end-to-end and it's working.
-2. You've included the legal language above.
-3. You're set up to send SMS to users.
+<input type="checkbox" id="legal"/>
+<label for="legal">**You've included the required legal language.**</label>
+<br/>
+<input type="checkbox" id="sms"/>
+<label for="sms">**You're set up to send SMS to users.**</label>
+<br/>
+<input type="checkbox" id="testing"/>
+<label for="testing">**You've tested the 1-Click Signup flow end-to-end.**</label>
+<br/>
+<br/>
 
-Once you've checked off these items, you're ready to go live!
+Once we've confirmed that you've checked off these items, you're ready to go live!
 
 
 ## Non-Hosted Variant

@@ -80,7 +80,7 @@ You need to provide:
 5. (Optional) Credential request(s). _If you would like to update from the default credential requests._
 6. (Optional) Redirect URL. _If you would like to redirect the user to a different URL than the one provided in your settings._
 7. (Optional) isHosted. _If you would like to do the [non-hosted](/#non-hosted-flow) integration ._
-8. (Optional) birthDate. _Only required if you are using the [non-hosted](/#non-hosted-flow) integration._
+8. (Optional) User's birthDate. _Only required if you are using the [non-hosted](/#non-hosted-flow) integration._
 
 A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/core-types/interfaces/CredentialRequestDto.html) objects.
 
@@ -96,7 +96,7 @@ This endpoint performs a similar role to [/hasMatchingCredentials](#check-user-c
 - Can only be used with a user's phone number
 - Triggers an SMS verification message to the user that Verified Inc. sends
 - Much greater chance of success getting user data than the standard acceptance flow because data is pulled on demand
-  :::
+:::
 
 :::caution
 The same API key necessary to call [/1-click](/api-overview#1-click-onboarding) grants you, and only, you access to the encrypted credential data documented in [Get Shared Credentials](#get-shared-credentials). Please keep this key secure.
@@ -131,6 +131,74 @@ The same API key necessary to call [/1-click](/api-overview#1-click-onboarding) 
 ```
 
 The `url` from the response ought to then be enriched with a `redirectUrl` query param that will take the next step in your target service's user onboarding webpage. _More information on this can be found in the [1-Click Guide](/1-click-guide)._
+
+### Trusted 1-Click
+
+> The "trusted" 1-click sign-up flow is very similar to the standard 1-click sign-up flow, but allows for the user to skip the phone OTP step with us. The "trusted" nomenclature comes from Verified Inc. having to perform additional integration checks prior to enabling this feature for your brand.
+
+**Method**: `POST` <br />
+**Path**: `/1-click/trusted`
+
+You need to provide:
+
+1. User's phone
+4. User's birthDate. 
+2. (Optional) User's email.
+3. (Optional) Credential request(s). _If you would like to update from the default credential requests._
+
+A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/core-types/interfaces/CredentialRequestDto.html) objects.
+
+<CredentialRequestCodeSnippet />
+
+The endpoint comes with a default credential requests configuration shown below which should be suffice for most customers.
+
+<DefaultCredentialRequestCodeSnippet />
+
+:::note
+This endpoint performs a similar role to [/1-click](#1-click) but with a few key differences:
+
+- **You must handle user's phone verification within the same session of calling this endpoint**
+- The user's <Tip type="credential">credentials</Tip> are returned synchronously in the response body
+:::
+
+#### Request Body
+
+```typescript title="1-Click Request"
+{
+  phone: string, // user's phone number in E.164 format
+  birthDate: string // user's birth date in YYYY-MM-DD format. Required if you are using the non-hosted integration.
+  email?: string, // Optional; user's email address;
+  credentialRequests?: CredentialRequest[], // Optional: a list of one or more CredentialRequest objects. Encodes which credentials are being asked for
+}
+```
+
+#### Response Body
+
+```typescript title="1-Click Response"
+{
+  "uuid": string // the 1-click uuid that can be used to update the user's credentials if they edit them post retrieval in your sign up form
+  "identifiers": {
+        [identifierType: string]: string
+    },
+    "credentials": {
+        [shortenedCredentialType: string]: string
+    },
+    "metadata": {
+        "identifiers": {
+            [identifierType: string]: {
+                [metadataType: string]: string
+            }
+        },
+        "credentials": {
+            [shortenedCredentialType: string]: {
+                [metadataType: string]: string
+            }
+        }
+    }
+}
+```
+
+The `1-click/trusted` response is identical to the [Get `1-Click` Credentials](#get-1-click-credentials) response, but with the addition of the `uuid` attribute. This `uuid` can be used to update the user's credentials if they edit them post-retrieval in your sign-up form. You are inventive in calling the update endpoint for the benefit of [issue to earn](/issue-to-earn).
 
 
 ### Get 1-Click Credentials

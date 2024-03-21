@@ -39,15 +39,16 @@ function SchemaCard({ schema, onSchemaSelect }) {
   return (
     <motion.div
       key={schema.id}
-      className={styles['list-card']}
+      className={`${styles['list-card']} ${schema.comingSoon ? styles['coming-soon']: ''}`}
       variants={animationVariants}
       whileHover={{ backgroundColor: 'var(--ifm-color-primary)' }}
-      onClick={() => onSchemaSelect(schema)}
+      onClick={() => !schema.comingSoon && onSchemaSelect(schema)}
       layout
     >
       <motion.h3 layoutId={schema.id} className={styles['list-card-title']}>
         {schema.name}
       </motion.h3>
+      {schema.comingSoon && <motion.span layoutId={schema.id + "span"} className={styles['coming-soon']}>Coming soon!</motion.span>}
     </motion.div>
   );
 }

@@ -19,12 +19,22 @@ position: relative;
 .list-card,
 .list-card-skeleton {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: var(--ifm-button-padding-horizontal) var(--ifm-button-padding-vertical);
     margin: .5rem;
     border: 1px solid var(--ifm-color-emphasis-300);
     border-radius: 0.5rem;
     cursor: pointer;
+}
+
+.list-card.coming-soon {
+    pointer-events: none;
+}
+
+.list-card.coming-soon span {
+    color: #0dbc3d;
 }
 
 .list-card-title {

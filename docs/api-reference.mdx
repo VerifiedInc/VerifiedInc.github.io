@@ -58,9 +58,9 @@ Credentials issued to the test user will be deleted every day at 05:00 UTC.
 :::
 
 
-## Functionality
+## Core Functionality
 
-Our API allows your brand to participate in the Verified Network through solutions like [1-Click Signup](/) and [Issue to Earn](/issue-to-earn). You can use the API to check if <Tip type="user">users</Tip> have credentials of interest, create <Tip type="request">requests</Tip> for and retrieve user data in the form of <Tip type="credential">credentials</Tip>, issue <Tip type="credential">credentials</Tip> of user data, and update previously issued credential statuses (e.g. to invalidate a credential).
+The core functionality of our API allows your brand to participate in the Verified Network through our [1-Click Signup](/). For more advanced use cases like [Issue to Earn](/issue-to-earn) please refer to our [advanced](#advanced-functionality) API section.
 
 ---
 
@@ -326,6 +326,14 @@ We support a few different formats for user data, for example the default format
     - `fullName`: instead getting a object with all keys, you can get a string with any combination, (e.g. `firstName, lastName`)
 </details>
 :::
+
+---
+
+## Advanced Functionality
+
+The [1-Click Signup](/) functionality that is covered in the [core](#core-functionality) API section are higher level abstractions for these advanced endpoints. Thus, it is unlikely you will need to use these for most flows. However, for completeness please refer to this section for the advance use cases documentation which covers endpoints mostly related to pure [Issue to Earn](/issue-to-earn) integrations.
+
+---
 
 ### Check User Credentials
 

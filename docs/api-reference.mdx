@@ -102,7 +102,7 @@ This endpoint performs a similar role to [/hasMatchingCredentials](#check-user-c
 The same API key necessary to call [/1-click](/api-overview#1-click-onboarding) grants you, and only, you access to the encrypted credential data documented in [Get Shared Credentials](#get-shared-credentials). Please keep this key secure.
 :::
 
-#### Request Body
+#### Request Body {#1-click-request-body}
 
 ```typescript title="1-Click Request"
 {
@@ -120,7 +120,7 @@ The same API key necessary to call [/1-click](/api-overview#1-click-onboarding) 
 }
 ```
 
-#### Response Body
+#### Response Body {#1-click-response-body}
 
 ```typescript title="1-Click Response"
 {
@@ -161,7 +161,7 @@ This endpoint performs a similar role to [/1-click](#1-click) but with a few key
 - The user's <Tip type="credential">credentials</Tip> are returned synchronously in the response body
 :::
 
-#### Request Body
+#### Request Body {#trusted-1-click-request-body}
 
 ```typescript title="1-Click Request"
 {
@@ -172,7 +172,7 @@ This endpoint performs a similar role to [/1-click](#1-click) but with a few key
 }
 ```
 
-#### Response Body
+#### Response Body {#trusted-1-click-response-body}
 
 ```typescript title="1-Click Response"
 {
@@ -278,7 +278,7 @@ But you can still use the `1ClickUuid` to check if the user verified their phone
 </details>
 
 
-The response body is:
+#### Response Body {#get-1-click-response-body}
   
   ```typescript title="1-Click Response"
 {
@@ -365,7 +365,7 @@ The Credential <Tip type="request">requests</Tip> objects can contain a `childre
 The same ApiKey necessary to call /hasMatchingCredentials grants you and only you access to the encrypted credential data documented in [Get Shared Credentials](#get-shared-credentials). Please keep this key secure.
 :::
 
-#### Request Body
+#### Request Body {#check-user-credentials-request-body}
 
 ```typescript
 {
@@ -377,7 +377,7 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 }
 ```
 
-#### Response Body
+#### Response Body {#check-user-credentials-response-body}
 
 ```typescript title="HasMatchingCredentials"
 {
@@ -522,7 +522,7 @@ The user will be asked to share the `CityCredential` if available (this means if
 :::
 
 
-### Get Shared Credentials
+### Get Shared Credentials {#get-shared-credentials-request-body}
 
 > Get verified <Tip type="credential"/> data shared by a <Tip type="user"/>.
 
@@ -554,7 +554,7 @@ The response body consists of Credential objects with the plaintext user data.
 }
 ```
 
-#### Response Body
+#### Response Body {#get-shared-credentials-response-body}
 
 ```typescript title="SharedCredentials"
 {
@@ -641,7 +641,7 @@ Composite credentials are credentials that are made up of other credentials. For
 See [Data Schemas](/schema) for more information.
 :::
 
-#### Request Body
+#### Request Body {#issue-credentials-request-body}
 
 ```typescript
 {
@@ -652,7 +652,7 @@ See [Data Schemas](/schema) for more information.
 }
 ```
 
-#### Response Body
+#### Response Body {#issue-credentials-response-body}
 
 ```typescript title="CredentialsDto"
 {
@@ -698,7 +698,7 @@ If a credential is expired but the status is 'valid' it is an unusable credentia
 Credential data is stored securely via a data privacy vault that encrypts and tokenizes the data. The data is only retrieved and decrypted for the brand that the <Tip type="user"/> agrees to share with.
 :::
 
-#### Request Body
+#### Request Body {#patch-credentials-request-body}
 
 ```typescript
 {
@@ -708,7 +708,7 @@ Credential data is stored securely via a data privacy vault that encrypts and to
 }
 ```
 
-#### Response Body
+#### Response Body {#patch-credentials-response-body}
 
 ```typescript title="CredentialDto"
 {
@@ -740,7 +740,7 @@ The only credential value that can by updated in this manner is `status`. A cred
 This endpoint all modifies credentials issued to the user by your brand.
 :::
 
-#### Request Body
+#### Request Body {#patch-all-user-credentials-request-body}
 
 ```typescript
 {
@@ -748,7 +748,7 @@ This endpoint all modifies credentials issued to the user by your brand.
 }
 ```
 
-#### Response Body
+#### Response Body {#patch-all-user-credentials-response-body}
 
 ```typescript title="UserCredentialsDto"
 {
@@ -776,7 +776,7 @@ The response body contains a list of all credentials that were modified on the `
 
 This endpoint returns a credential (issued by your brand) via the credential `id`.
 
-#### Response Body
+#### Response Body {#get-credential-response-body}
 
 ```typescript title="CredentialDto"
 {
@@ -810,7 +810,7 @@ It should be clear that this endpoint should not be used in place of [`/hasMatch
 This endpoint is simply a nice to have for an issuer to see all credentials they have issued to a user.
 :::
 
-#### Response Body
+#### Response Body {#get-all-user-credentials-response-body}
 
 ```typescript title="UserCredentialsDto"
 {
@@ -838,7 +838,7 @@ The response body contains a list of all credentials on the `credentials` key.
 
 This endpoint returns a list of credential requests that the partner has defined for their brand.
 
-#### Response Body
+#### Response Body {#get-partner-credential-requests-response-body}
 
 ```typescript title="CredentialRequestsResponse"
 {

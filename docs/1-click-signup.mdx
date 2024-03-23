@@ -11,6 +11,7 @@ import Tip from '../src/components/Tip';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import TestingCredentialsSnippet from './reusables/sandbox-testing-credentials.mdx';
+import OneClickCredentialsResponseBodyDetails from './reusables/1-click-credentials-response-body-details.mdx'
 import Admonition from '@theme/Admonition';
 
 - **Time to read:** 20 minutes
@@ -1152,7 +1153,8 @@ This method requires additional work; mainly, you will have to build a UI for th
     ```typescript title="Example URL Response Body"
     {
         "url": "https://wallet.verified.inc/authentication/verify/generic?phone=%2B101234566789&phoneCarrier=true&requestId=242189ee-c120-4f62-af85-a0a19423ffc0&issuePhoneCarrierCredentials=false&isHosted=false",
-        "match": true
+        "match": true,
+        "uuid": "242189ee-c120-4f62-af85-a0a19423ffc0"
     }
     ```
 
@@ -1166,10 +1168,7 @@ This method requires additional work; mainly, you will have to build a UI for th
 
 4. **If using `verificationOptions` `only_link` then the `/1-click` response body will not contain a `url` even if `match` is `true`.** This is because there is no need to redirect the user. Thanks to the verification link sent via SMS already containing the code, there is no need for a redirect. Upon clicking the link, we will redirect the user to your defined `redirectUrl` upon phone verification and credential creation happening in a headless manner.
 
-
-If interested in this mode of integration please let us know and we will enable it for your API key. Please note, that we will have to validate your integration in Sandbox prior to sharing Production access to this feature. 
-
-### Diagram
+### Diagram {#non-hosted-variant-diagram}
 
 ```mermaid
 %%{
@@ -1235,50 +1234,27 @@ sequenceDiagram
 
 *Please note that same as in the hosted flow, Verified Inc. will still sending the SMS on your behalf in Sandbox, however the same [go live](/#go-live) checklist applies and you will need handle the SMS in Production.*
 
+
+
 ## Trusted Variant
 
 Status: *Beta*
 
-The 1-Click Signup experience mentioned above outlines our "hosted" 1-Click Signup flow, where the user interacts with our Wallet. We also offer a non-hosted or "headless" 1-Click Signup flow, which allows for a more white-label integration where the user will never have to leave your signup flow. You will receive the data as soon the user clicks the verification link in the SMS or enters the verification code via your UI (and a headless redirect is initiated to us, more on that below).
+The [`/1-click/trusted`](/api-reference#trusted-1-click) flow is in many ways similar to the [non-hosted](/#non-hosted-variant) flow documented above, however does not require your brand to use the OTP provided by the `/1-click` non-hosted response body. This variant is most appropriate for organizations that already use a phone authentication solution. As the name implies, it requires additional verification by Verified Inc. during the integration's development to ensure that phone possession is checked, often via a SMS one-time-passcode, during the current user session prior to calling this endpoint.
 
-This method requires additional work; mainly, you will have to build a UI for the user to interact with. However, often, this is just augmenting your existing signup forms. While the rest is very similar to the hosted flow, there are a few differences:
+The notable differences between the trusted and non-hosted variants are:
 
-1. **Call `/1-click` with two additional request attributes: `isHosted` and `birthDate.`** 
+1. **The endpoint is `/1-click/trusted` not `/1-click`.** This endpoint's request body resembles `/1-click`'s but the response body does not.
 
-    ```json title="POST /1-click Request Body (Non-Hosted Additional Attributes)"
-    isHosted: false,
-    birthDate: "YYYY-MM-DD",
-    ```
+    <OneClickCredentialsResponseBodyDetails />
 
-    The `birthDate` value often must come from signup forms. We recommend collecting this alongside their phone number.
+2. **1-click credential data is return synchronously from this endpoint.**
 
-2. **Regardless of your method of receiving the data ([push](#push-option) or [pull](#pull-option)), the data provided ought to be prefilled in your existing signup forms.** This is to allow the user to edit any fields that may have been incorrect or add any additional information that may be required. It is necessary to allow the user to edit the data for correctness. Also, the response body may contain multiple credentials of the same type (e.g., addresses), and you will need to handle this in your UI. The simplest solution is to provide the most recently issued credential field and have them edit it if necessary.
-
-3. **If using `verificationOptions` containing a code, you will need to build the input for the user to submit the OTP code sent to them via SMS.** This only needs to be handled if you are using `verificationOptions` set to `only_code` or `both_link_and_code`.
-
-    Upon collecting the verification code from the user, you must redirect the user to the `/1-click` response body's `url` with the user-provided verification code as a query parameter. Below is an example response body:
-
-    ```typescript title="Example URL Response Body"
-    {
-        "url": "https://wallet.verified.inc/authentication/verify/generic?phone=%2B101234566789&phoneCarrier=true&requestId=242189ee-c120-4f62-af85-a0a19423ffc0&issuePhoneCarrierCredentials=false&isHosted=false",
-        "match": true
-    }
-    ```
-
-    The resultant URL that you need to redirect to would look like this:
-
-    ```typescript title="Redirect URL Post User Inputted OTP Code"
-    https://wallet.verified.inc/authentication/verify/generic?code=123456&phone=%2B10123456789&phoneCarrier=true&requestId=242189ee-c120-4f62-af85-a0a19423ffc0&issuePhoneCarrierCredentials=false&isHosted=false
-    ```
-
-    This redirect will ultimately land the user back on your defined `redirectUrl` with no user interaction appearing as if only a page refresh has occurred.
-
-4. **If using `verificationOptions` `only_link` then the `/1-click` response body will not contain a `url` even if `match` is `true`.** This is because there is no need to redirect the user. Thanks to the verification link sent via SMS already containing the code, there is no need for a redirect. Upon clicking the link, we will redirect the user to your defined `redirectUrl` upon phone verification and credential creation happening in a headless manner.
-
+    In the alternative `/1-click` flows the need for the OTP to be provided makes for the user's data to be passed back asynchronously via methods documented in the [receive user data](/#receive-user-data) section above.
 
 If interested in this mode of integration please let us know and we will enable it for your API key. Please note, that we will have to validate your integration in Sandbox prior to sharing Production access to this feature. 
 
-### Diagram
+### Diagram {#trusted-variant-diagram}
 
 ```mermaid
 %%{

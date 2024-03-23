@@ -1200,7 +1200,7 @@ sequenceDiagram
     U->>-C: Enter phone number & DOB
     rect rgb(200,200,200,0.25)
         note left of C: 1. Call 1-Click Endpoint
-        C->>+V: Call POST /1-click with phone number, isHosted false, and DOB
+        C->>+V: Call POST /1-click with phone number, isHosted false, DOB, and (optional) email
         V->>-C: Return URL (only needed in optional Code Handling)
         rect rgb(200,200,200,0.85)
             note right of V: (handled by Verified Inc.)
@@ -1228,6 +1228,15 @@ sequenceDiagram
             C->>C: Parse sharedCredentialsUuid from URL param
             C->>+V: Call GET /sharedCredentials with sharedCredentialsUuid
             V->>-C: Return user data
+        end
+        opt
+            note left of C: 4. (optional) Call Update 1-Click Credentials
+            U-->>+C: Updates or enriches provided credential data
+            C-->>V: Call /1-click/{uuid}/credentials with the user's updated data
+            loop Asynchronously every time the user uses the updated credential values
+                U-->>V: Uses the updated credential values
+                V-->>C: Earn revenue share
+            end
         end
     end
 ```
@@ -1286,36 +1295,17 @@ sequenceDiagram
     U->>-C: Enter phone number & DOB
     rect rgb(200,200,200,0.25)
         note left of C: 1. Call 1-Click Endpoint
-        C->>+V: Call POST /1-click with phone number, isHosted false, and DOB
-        V->>-C: Return URL (only needed in optional Code Handling)
-        rect rgb(200,200,200,0.85)
-            note right of V: (handled by Verified Inc.)
-            V->>+U: Send SMS
-            U->>-V: Click link
-            V->>V: Pull verified user data
-            V->>C: Redirect user to customer 
-        end
+        C->>+V: Call POST /1-click/trusted with phone number, DOB, and (optional) email
+        note left of C: 2. Receive User Data
+        V->>+C: Return 1-click credentials object with user data
         opt
-            note left of C: 2. (optional) Code Handling
-            C-->>U: Show OTP code input
-            U-->>C: Enter OTP code
-            C-->>U: Redirect to URL with code query param
-            rect rgb(200,200,200,0.85)
-            note right of V: (handled by Verified Inc.)
-            V->>V: Pull verified user data
-            V->>C: Redirect user to customer 
+            note left of C: 3. (optional) Call Update 1-Click Credentials
+            U-->>+C: Updates or enriches provided credential data
+            C-->>V: Call /1-click/{uuid}/credentials with the user's updated data
+            loop Asynchronously every time the user uses the updated credential values
+                U-->>V: Uses the updated credential values
+                V-->>C: Earn revenue share
             end
-        end
-        note left of C: 3. Receive User Data
-        alt customer using push option
-            V->>+C: Call POST /verified/credentials with user data
-            C->>-V: (success)
-        else customer using pull option
-            C->>C: Parse sharedCredentialsUuid from URL param
-            C->>+V: Call GET /sharedCredentials with sharedCredentialsUuid
-            V->>-C: Return user data
         end
     end
 ```
-
-*Please note that same as in the hosted flow, Verified Inc. will still sending the SMS on your behalf in Sandbox, however the same [go live](/#go-live) checklist applies and you will need handle the SMS in Production.*

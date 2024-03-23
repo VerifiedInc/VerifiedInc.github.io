@@ -1234,3 +1234,112 @@ sequenceDiagram
 ```
 
 *Please note that same as in the hosted flow, Verified Inc. will still sending the SMS on your behalf in Sandbox, however the same [go live](/#go-live) checklist applies and you will need handle the SMS in Production.*
+
+## Trusted Variant
+
+Status: *Beta*
+
+The 1-Click Signup experience mentioned above outlines our "hosted" 1-Click Signup flow, where the user interacts with our Wallet. We also offer a non-hosted or "headless" 1-Click Signup flow, which allows for a more white-label integration where the user will never have to leave your signup flow. You will receive the data as soon the user clicks the verification link in the SMS or enters the verification code via your UI (and a headless redirect is initiated to us, more on that below).
+
+This method requires additional work; mainly, you will have to build a UI for the user to interact with. However, often, this is just augmenting your existing signup forms. While the rest is very similar to the hosted flow, there are a few differences:
+
+1. **Call `/1-click` with two additional request attributes: `isHosted` and `birthDate.`** 
+
+    ```json title="POST /1-click Request Body (Non-Hosted Additional Attributes)"
+    isHosted: false,
+    birthDate: "YYYY-MM-DD",
+    ```
+
+    The `birthDate` value often must come from signup forms. We recommend collecting this alongside their phone number.
+
+2. **Regardless of your method of receiving the data ([push](#push-option) or [pull](#pull-option)), the data provided ought to be prefilled in your existing signup forms.** This is to allow the user to edit any fields that may have been incorrect or add any additional information that may be required. It is necessary to allow the user to edit the data for correctness. Also, the response body may contain multiple credentials of the same type (e.g., addresses), and you will need to handle this in your UI. The simplest solution is to provide the most recently issued credential field and have them edit it if necessary.
+
+3. **If using `verificationOptions` containing a code, you will need to build the input for the user to submit the OTP code sent to them via SMS.** This only needs to be handled if you are using `verificationOptions` set to `only_code` or `both_link_and_code`.
+
+    Upon collecting the verification code from the user, you must redirect the user to the `/1-click` response body's `url` with the user-provided verification code as a query parameter. Below is an example response body:
+
+    ```typescript title="Example URL Response Body"
+    {
+        "url": "https://wallet.verified.inc/authentication/verify/generic?phone=%2B101234566789&phoneCarrier=true&requestId=242189ee-c120-4f62-af85-a0a19423ffc0&issuePhoneCarrierCredentials=false&isHosted=false",
+        "match": true
+    }
+    ```
+
+    The resultant URL that you need to redirect to would look like this:
+
+    ```typescript title="Redirect URL Post User Inputted OTP Code"
+    https://wallet.verified.inc/authentication/verify/generic?code=123456&phone=%2B10123456789&phoneCarrier=true&requestId=242189ee-c120-4f62-af85-a0a19423ffc0&issuePhoneCarrierCredentials=false&isHosted=false
+    ```
+
+    This redirect will ultimately land the user back on your defined `redirectUrl` with no user interaction appearing as if only a page refresh has occurred.
+
+4. **If using `verificationOptions` `only_link` then the `/1-click` response body will not contain a `url` even if `match` is `true`.** This is because there is no need to redirect the user. Thanks to the verification link sent via SMS already containing the code, there is no need for a redirect. Upon clicking the link, we will redirect the user to your defined `redirectUrl` upon phone verification and credential creation happening in a headless manner.
+
+
+If interested in this mode of integration please let us know and we will enable it for your API key. Please note, that we will have to validate your integration in Sandbox prior to sharing Production access to this feature. 
+
+### Diagram
+
+```mermaid
+%%{
+    init: {
+        'theme': 'base',
+        'themeVariables': {
+            'primaryColor': '#e6f6e6',
+            'primaryTextColor': '#003100',
+            'primaryBorderColor': '#0dbc3d',
+            'secondaryColor': '#eef9fd',
+            'secondaryTextColor': '#193c47',
+            'secondaryBorderColor': '#164fd6',
+            'activationBkgColor': '#e6f6e6',
+            'activationBorderColor': '#0dbc3d',
+            'labelBoxBkgColor': '#eef9fd',
+            'labelBoxBorderColor': '#164fd6',
+            'labelTextColor': '#193c47',
+            'edgeLabelBackground': '#ffffff',
+            'textColor': '#000000',
+            'fontFamily': 'Lato'
+        }
+    }
+}%%
+sequenceDiagram
+    participant C as Customer
+    actor U as User
+    participant V as Verified Inc.
+    C->>+U: Show phone number & DOB input
+    U->>-C: Enter phone number & DOB
+    rect rgb(200,200,200,0.25)
+        note left of C: 1. Call 1-Click Endpoint
+        C->>+V: Call POST /1-click with phone number, isHosted false, and DOB
+        V->>-C: Return URL (only needed in optional Code Handling)
+        rect rgb(200,200,200,0.85)
+            note right of V: (handled by Verified Inc.)
+            V->>+U: Send SMS
+            U->>-V: Click link
+            V->>V: Pull verified user data
+            V->>C: Redirect user to customer 
+        end
+        opt
+            note left of C: 2. (optional) Code Handling
+            C-->>U: Show OTP code input
+            U-->>C: Enter OTP code
+            C-->>U: Redirect to URL with code query param
+            rect rgb(200,200,200,0.85)
+            note right of V: (handled by Verified Inc.)
+            V->>V: Pull verified user data
+            V->>C: Redirect user to customer 
+            end
+        end
+        note left of C: 3. Receive User Data
+        alt customer using push option
+            V->>+C: Call POST /verified/credentials with user data
+            C->>-V: (success)
+        else customer using pull option
+            C->>C: Parse sharedCredentialsUuid from URL param
+            C->>+V: Call GET /sharedCredentials with sharedCredentialsUuid
+            V->>-C: Return user data
+        end
+    end
+```
+
+*Please note that same as in the hosted flow, Verified Inc. will still sending the SMS on your behalf in Sandbox, however the same [go live](/#go-live) checklist applies and you will need handle the SMS in Production.*

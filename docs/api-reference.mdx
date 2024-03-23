@@ -11,6 +11,8 @@ import CredentialRequestCodeSnippet from './reusables/credential-request-code-sn
 import DefaultCredentialRequestCodeSnippet from './reusables/1-click-default-credential-request.mdx';
 import CodeBlock from '@theme/CodeBlock';
 import TestingCredentialsSnippet from './reusables/sandbox-testing-credentials.mdx';
+import SimplifiedCredentialsExampleDetails from './reusables/simplified-credentials-body-details.mdx'
+import SimplifiedCredentialsExample from './reusables/simplified-credentials-body.mdx'
 
 :::note
 See also our [Postman docs](https://api.docs.verified.inc/).
@@ -142,9 +144,9 @@ The `url` from the response ought to then be enriched with a `redirectUrl` query
 You need to provide:
 
 1. User's phone
-4. User's birthDate. 
-2. (Optional) User's email.
-3. (Optional) Credential request(s). _If you would like to update from the default credential requests._
+2. User's birthDate. 
+3. (Optional) User's email.
+4. (Optional) Credential request(s). _If you would like to update from the default credential requests._
 
 A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](https://docs.verified.inc/core-types/interfaces/CredentialRequestDto.html) objects.
 
@@ -163,7 +165,7 @@ This endpoint performs a similar role to [/1-click](#1-click) but with a few key
 
 #### Request Body {#trusted-1-click-request-body}
 
-```typescript title="1-Click Request"
+```typescript title="Trusted 1-Click Request"
 {
   phone: string, // user's phone number in E.164 format
   birthDate: string // user's birth date in YYYY-MM-DD format. Required if you are using the non-hosted integration.
@@ -174,32 +176,31 @@ This endpoint performs a similar role to [/1-click](#1-click) but with a few key
 
 #### Response Body {#trusted-1-click-response-body}
 
-```typescript title="1-Click Response"
+```typescript title="Trusted 1-Click Response"
 {
   "uuid": string // the 1-click uuid that can be used to update the user's credentials if they edit them post retrieval in your sign up form
   "identifiers": {
-        [identifierType: string]: string
-    },
-    "credentials": {
-        [shortenedCredentialType: string]: string
-    },
-    "metadata": {
-        "identifiers": {
-            [identifierType: string]: {
-                [metadataType: string]: string
-            }
-        },
-        "credentials": {
-            [shortenedCredentialType: string]: {
-                [metadataType: string]: string
-            }
-        }
-    }
+      [identifierType: string]: string
+  },
+  "credentials": {
+      [shortenedCredentialType: string]: string
+  },
+  "metadata": {
+      "identifiers": {
+          [identifierType: string]: {
+              [metadataType: string]: string
+          }
+      },
+      "credentials": {
+          [shortenedCredentialType: string]: {
+              [metadataType: string]: string
+          }
+      }
+  }
 }
 ```
 
 The `1-click/trusted` response is identical to the [Get `1-Click` Credentials](#get-1-click-credentials) response, but with the addition of the `uuid` attribute. This `uuid` can be used to update the user's credentials if they edit them post-retrieval in your sign-up form. You are inventive in calling the update endpoint for the benefit of [issue to earn](/issue-to-earn).
-
 
 ### Get 1-Click Credentials
 
@@ -326,6 +327,55 @@ We support a few different formats for user data, for example the default format
     - `fullName`: instead getting a object with all keys, you can get a string with any combination, (e.g. `firstName, lastName`)
 </details>
 :::
+
+### Update 1-Click Credentials
+
+> This is an optional endpoint only relevant for the 1-click [non-hosted](/#non-hosted-variant) and [trusted](/#trusted-variants) variants. Thanks to the user data being sent directly to your application without interaction with Verified Inc's Web Wallet - part of the hosted solution - the user never has a chance to update any pre-populated data provided. This means this chance to edit and enrich only happens in a UI/UX that you have to manage and implement.
+
+**Method**: `POST` <br />
+**Path**: `/1-click/{uuid}/credentials`
+
+You need to provide:
+
+1. **The 1-click uuid**
+2. **The credential values in same format they were provided.** See example below.
+
+<SimplifiedCredentialsExample />
+
+:::important
+If this endpoint is optional why integrate it?
+
+Your brand is incentive to call this endpoint asynchronously after the user has made edits to the data provided to you by the 1-click flows so that you qualify for the [Issue to Earn](/issue-to-earn) revenue streams.
+:::
+
+#### Request Body {#update-1-click-credentials-request-body}
+
+```typescript title="Update 1-Click Credentials Request Body"
+{
+  "uuid": string // the 1-click uuid from the POST /1-click/trusted response
+  "credentials": {
+      [shortenedCredentialType: string]: string
+  }
+}
+```
+
+The response body will be credentials resembling their [credential schemas](/schema#example). Please see the [Postman](https://api.docs.verified.inc/#159ad031-30da-4e2b-afbb-c2abf15bd194) docs for examples of this response body.
+
+#### Response Body {#update-1-click-credentials-response-body}
+
+```typescript title="1-Click Response"
+[
+  {
+    type: string, // credential type
+    verificationMethod: string // verification method
+    data: CredentialsList | {
+      [credentialKey: string]: string // credential data
+    },
+  }
+]
+```
+
+The response body is currently in a more verbose format than the GET /sharedCredentials or the POST 1-click/trusted and POST /1-click non-hosted response. However, in practice the response body is concecential for you. As long as a 201 HTTP status code is received, your brand will have right to revenue the next time the user leverages those updates credential values.
 
 ---
 

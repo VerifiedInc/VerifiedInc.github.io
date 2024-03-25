@@ -1241,7 +1241,7 @@ sequenceDiagram
     end
 ```
 
-*Please note that same as in the hosted flow, Verified Inc. will still sending the SMS on your behalf in Sandbox, however the same [go live](/#go-live) checklist applies and you will need handle the SMS in Production.*
+*Please note that, just as in the hosted flow, Verified Inc. will send the SMS on your behalf in sandbox, but you will need send the SMS in production (the same [go live](/#go-live) checklist applies).*
 
 
 
@@ -1249,7 +1249,7 @@ sequenceDiagram
 
 Status: *Beta*
 
-The [`/1-click/trusted`](/api-reference#trusted-1-click) flow is in many ways similar to the [non-hosted](/#non-hosted-variant) flow documented above, however does not require your brand to use the OTP provided by the `/1-click` non-hosted response body. This variant is most appropriate for organizations that already use a phone authentication solution. As the name implies, it requires additional verification by Verified Inc. during the integration's development to ensure that phone possession is checked, often via a SMS one-time-passcode, during the current user session prior to calling this endpoint.
+The [`/1-click/trusted`](/api-reference#trusted-1-click) flow is in many ways similar to the [non-hosted](/#non-hosted-variant) flow documented above, but it does not require your brand to use the OTP provided by the `/1-click` non-hosted response body. This variant is most appropriate for organizations that already use a phone authentication solution. As the name implies, it requires additional verification by Verified Inc. during the integration's development to ensure that phone possession is checked, often via a SMS one-time passcode, during the current user session prior to calling this endpoint.
 
 The notable differences between the trusted and non-hosted variants are:
 
@@ -1257,11 +1257,11 @@ The notable differences between the trusted and non-hosted variants are:
 
     <OneClickCredentialsResponseBodyDetails />
 
-2. **1-click credential data is return synchronously from this endpoint.**
+2. **1-click credential data is return synchronously by this endpoint.**
 
-    In the alternative `/1-click` flows the need for the OTP to be provided makes for the user's data to be passed back asynchronously via methods documented in the [receive user data](/#receive-user-data) section above.
+    In the alternative `/1-click` flow, you need to send the OTP back to use once you've received it from the user, and we pass back the user's data asynchronously via methods documented in the [receive user data](/#receive-user-data) section above.
 
-If interested in this mode of integration please let us know and we will enable it for your API key. Please note, that we will have to validate your integration in Sandbox prior to sharing Production access to this feature. 
+If you're interested in this type of integration, please let us know and we will enable it for your API key. Please note that we will have to validate your integration in sandbox prior to sharing production access to this feature.
 
 ### Diagram {#trusted-variant-diagram}
 

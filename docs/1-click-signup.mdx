@@ -11,6 +11,7 @@ import Tip from '../src/components/Tip';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import TestingCredentialsSnippet from './reusables/sandbox-testing-credentials.mdx';
+import OneClickCredentialsResponseBodyDetails from './reusables/1-click-credentials-response-body-details.mdx'
 import Admonition from '@theme/Admonition';
 
 - **Time to read:** 20 minutes
@@ -1152,7 +1153,8 @@ This method requires additional work; mainly, you will have to build a UI for th
     ```typescript title="Example URL Response Body"
     {
         "url": "https://wallet.verified.inc/authentication/verify/generic?phone=%2B101234566789&phoneCarrier=true&requestId=242189ee-c120-4f62-af85-a0a19423ffc0&issuePhoneCarrierCredentials=false&isHosted=false",
-        "match": true
+        "match": true,
+        "uuid": "242189ee-c120-4f62-af85-a0a19423ffc0"
     }
     ```
 
@@ -1166,10 +1168,7 @@ This method requires additional work; mainly, you will have to build a UI for th
 
 4. **If using `verificationOptions` `only_link` then the `/1-click` response body will not contain a `url` even if `match` is `true`.** This is because there is no need to redirect the user. Thanks to the verification link sent via SMS already containing the code, there is no need for a redirect. Upon clicking the link, we will redirect the user to your defined `redirectUrl` upon phone verification and credential creation happening in a headless manner.
 
-
-If interested in this mode of integration please let us know and we will enable it for your API key. Please note, that we will have to validate your integration in Sandbox prior to sharing Production access to this feature. 
-
-### Diagram
+### Diagram {#non-hosted-variant-diagram}
 
 ```mermaid
 %%{
@@ -1201,7 +1200,7 @@ sequenceDiagram
     U->>-C: Enter phone number & DOB
     rect rgb(200,200,200,0.25)
         note left of C: 1. Call 1-Click Endpoint
-        C->>+V: Call POST /1-click with phone number, isHosted false, and DOB
+        C->>+V: Call POST /1-click with phone number, isHosted false, DOB, and (optional) email
         V->>-C: Return URL (only needed in optional Code Handling)
         rect rgb(200,200,200,0.85)
             note right of V: (handled by Verified Inc.)
@@ -1230,7 +1229,83 @@ sequenceDiagram
             C->>+V: Call GET /sharedCredentials with sharedCredentialsUuid
             V->>-C: Return user data
         end
+        opt
+            note left of C: 4. (optional) Call Update 1-Click Credentials
+            U-->>+C: Updates or enriches provided credential data
+            C-->>V: Call /1-click/{uuid}/credentials with the user's updated data
+            loop Asynchronously every time the user uses the updated credential values
+                U-->>V: Uses the updated credential values
+                V-->>C: Earn revenue share
+            end
+        end
     end
 ```
 
 *Please note that same as in the hosted flow, Verified Inc. will still sending the SMS on your behalf in Sandbox, however the same [go live](/#go-live) checklist applies and you will need handle the SMS in Production.*
+
+
+
+## Trusted Variant
+
+Status: *Beta*
+
+The [`/1-click/trusted`](/api-reference#trusted-1-click) flow is in many ways similar to the [non-hosted](/#non-hosted-variant) flow documented above, however does not require your brand to use the OTP provided by the `/1-click` non-hosted response body. This variant is most appropriate for organizations that already use a phone authentication solution. As the name implies, it requires additional verification by Verified Inc. during the integration's development to ensure that phone possession is checked, often via a SMS one-time-passcode, during the current user session prior to calling this endpoint.
+
+The notable differences between the trusted and non-hosted variants are:
+
+1. **The endpoint is `/1-click/trusted` not `/1-click`.** This endpoint's request body resembles `/1-click`'s but the response body does not.
+
+    <OneClickCredentialsResponseBodyDetails />
+
+2. **1-click credential data is return synchronously from this endpoint.**
+
+    In the alternative `/1-click` flows the need for the OTP to be provided makes for the user's data to be passed back asynchronously via methods documented in the [receive user data](/#receive-user-data) section above.
+
+If interested in this mode of integration please let us know and we will enable it for your API key. Please note, that we will have to validate your integration in Sandbox prior to sharing Production access to this feature. 
+
+### Diagram {#trusted-variant-diagram}
+
+```mermaid
+%%{
+    init: {
+        'theme': 'base',
+        'themeVariables': {
+            'primaryColor': '#e6f6e6',
+            'primaryTextColor': '#003100',
+            'primaryBorderColor': '#0dbc3d',
+            'secondaryColor': '#eef9fd',
+            'secondaryTextColor': '#193c47',
+            'secondaryBorderColor': '#164fd6',
+            'activationBkgColor': '#e6f6e6',
+            'activationBorderColor': '#0dbc3d',
+            'labelBoxBkgColor': '#eef9fd',
+            'labelBoxBorderColor': '#164fd6',
+            'labelTextColor': '#193c47',
+            'edgeLabelBackground': '#ffffff',
+            'textColor': '#000000',
+            'fontFamily': 'Lato'
+        }
+    }
+}%%
+sequenceDiagram
+    participant C as Customer
+    actor U as User
+    participant V as Verified Inc.
+    C->>+U: Show phone number & DOB input
+    U->>-C: Enter phone number & DOB
+    rect rgb(200,200,200,0.25)
+        note left of C: 1. Call 1-Click Endpoint
+        C->>+V: Call POST /1-click/trusted with phone number, DOB, and (optional) email
+        note left of C: 2. Receive User Data
+        V->>+C: Return 1-click credentials object with user data
+        opt
+            note left of C: 3. (optional) Call Update 1-Click Credentials
+            U-->>+C: Updates or enriches provided credential data
+            C-->>V: Call /1-click/{uuid}/credentials with the user's updated data
+            loop Asynchronously every time the user uses the updated credential values
+                U-->>V: Uses the updated credential values
+                V-->>C: Earn revenue share
+            end
+        end
+    end
+```

@@ -1230,10 +1230,11 @@ sequenceDiagram
             V->>-C: Return user data
         end
         opt
-            note left of C: 4. (optional) Call Update 1-Click Credentials
+            note left of C: 4. (optional) Update 1-Click Credentials
+            C-->>+U: Display data to user for verification
             U-->>+C: Updates or enriches provided credential data
             C-->>V: Call /1-click/{uuid}/credentials with the user's updated data
-            loop Asynchronously every time the user uses the updated credential values
+            loop Asynchronously every time the user uses the updated credentials
                 U-->>V: Uses the updated credential values
                 V-->>C: Earn revenue share
             end
@@ -1299,10 +1300,11 @@ sequenceDiagram
         note left of C: 2. Receive User Data
         V->>+C: Return 1-click credentials object with user data
         opt
-            note left of C: 3. (optional) Call Update 1-Click Credentials
+            note left of C: 3. (optional) Update 1-Click Credentials
+            C-->>+U: Display data to user for verification
             U-->>+C: Updates or enriches provided credential data
             C-->>V: Call /1-click/{uuid}/credentials with the user's updated data
-            loop Asynchronously every time the user uses the updated credential values
+            loop Asynchronously every time the user uses the updated credentials
                 U-->>V: Uses the updated credential values
                 V-->>C: Earn revenue share
             end

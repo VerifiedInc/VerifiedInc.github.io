@@ -62,7 +62,7 @@ Credentials issued to the test user will be deleted every day at 05:00 UTC.
 
 ## Core Functionality
 
-The core functionality of our API allows your brand to participate in the Verified Network through our [1-Click Signup](/). For more advanced use cases like [Issue to Earn](/issue-to-earn) please refer to our [advanced](#advanced-functionality) API section.
+The core functionality of our API allows your brand to participate in the Verified Network through [1-Click Signup](/). For more advanced use cases like [Issue to Earn](/issue-to-earn), please refer to our [advanced](#advanced-functionality) API section.
 
 ---
 
@@ -79,7 +79,7 @@ You need to provide:
 2. (Optional) User's email.
 3. (Optional) Verification option(s). _Controls the SMS verification messaging._
 4. (Optional) Content object of request page options. _To allow for minor messaging adjustments to the Wallet request page from which the user provides consent to share data._
-5. (Optional) Credential request(s). _If you would like to update from the default credential requests._
+5. (Optional) Credential request(s). (_if you would like to deviate from the default credential requests_).
 6. (Optional) Redirect URL. _If you would like to redirect the user to a different URL than the one provided in your settings._
 7. (Optional) isHosted. _If you would like to do the [non-hosted](/#non-hosted-flow) integration ._
 8. (Optional) User's birthDate. _Only required if you are using the [non-hosted](/#non-hosted-flow) integration._
@@ -144,7 +144,7 @@ The `url` from the response ought to then be enriched with a `redirectUrl` query
 You need to provide:
 
 1. User's phone
-2. User's birthDate. 
+2. User's birth date. 
 3. (Optional) User's email.
 4. (Optional) Credential request(s). _If you would like to update from the default credential requests._
 
@@ -342,12 +342,12 @@ You need to provide:
 
 <SimplifiedCredentialsExample />
 
-This is an optional endpoint only relevant for the 1-click [non-hosted](/#non-hosted-variant) and [trusted](/#trusted-variants) variants. As the user data is sent directly to your application without interaction with Verified Inc's Web Wallet—part of the hosted solution—the user never gets a chance to update any pre-populated data provided. This editing and enrichment can only occur within a UI/UX that you manage and implement. This endpoint can be used to pass that information back to Verified Inc.
+This is an optional endpoint only relevant for the 1-click [non-hosted](/#non-hosted-variant) and [trusted](/#trusted-variants) variants. Because we send the user's data directly to your application, without the user using our web Wallet (which is part of the hosted variant), the user never gets a chance to update any of the data that's autofilled for them. If you allow them to editing and/or enrich their data on your side,  within a UI/UX that you manage and implement, you can use this endpoint to pass that information back to us (and earn revenue share as a result).
 
 :::important
-If this endpoint is optional why integrate it?
+If this endpoint is optional, why use it?
 
-Your brand is incentive to call this endpoint asynchronously after the user has made edits to the data provided to you by the 1-click flows so that you qualify for the [Issue to Earn](/issue-to-earn) revenue streams.
+If you to call this endpoint after the user has made edits to their data on your side, you will earn a share of the revenue generated when the user uses that data elsewhere.revenue streams.
 :::
 
 #### Request Body {#update-1-click-credentials-request-body}
@@ -361,7 +361,7 @@ Your brand is incentive to call this endpoint asynchronously after the user has 
 }
 ```
 
-The response body will be credentials resembling their [credential schemas](/schema#example). Please see the [Postman](https://api.docs.verified.inc/#159ad031-30da-4e2b-afbb-c2abf15bd194) docs for examples of this response body.
+The response body will contain credentials conforming to [credential schemas](/schema#example). Please see the [Postman](https://api.docs.verified.inc/#159ad031-30da-4e2b-afbb-c2abf15bd194) docs for examples of this response body.
 
 #### Response Body {#update-1-click-credentials-response-body}
 
@@ -377,13 +377,13 @@ The response body will be credentials resembling their [credential schemas](/sch
 ]
 ```
 
-The response body is currently in a more verbose format than that of the GET /sharedCredentials or the POST /1-click (both trusted and non-hosted) responses. However, in practice, the details of the response body are non-consequential for you as long as a 201 HTTP status code is received. Upon receipt, your brand will have the right to a revenue share the next time the user leverages those updated credential values.
+The response body is currently in a more verbose format than that of the response for GET `/sharedCredentials` or POST `/1-click` (both trusted and non-hosted). However, in practice, the details of the response body are non-consequential for you as long as a 201 HTTP status code is received.
 
 ---
 
 ## Advanced Functionality
 
-The [1-Click Signup](/) functionality that is covered in the [core](#core-functionality) API section are higher level abstractions for these advanced endpoints. Thus, it is unlikely you will need to use these for most flows. However, for completeness please refer to this section for the advance use cases documentation which covers endpoints mostly related to pure [Issue to Earn](/issue-to-earn) integrations.
+The [1-Click Signup](/) functionality that is covered in the [core](#core-functionality) API section are higher level abstractions for these advanced endpoints. Thus, it is unlikely you will need to use these for most flows. However, for completeness please refer to this section for the advanced use cases documentation which covers endpoints mostly related to pure [Issue to Earn](/issue-to-earn) integrations.
 
 ---
 

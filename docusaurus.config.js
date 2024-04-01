@@ -1,3 +1,7 @@
+const fs = require('fs')
+const path = require('path')
+const hiddenFiles = fs.readdirSync(path.join(__dirname, 'docs/hidden')).map(file => file.replace('.mdx', ''))
+
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'Verified Inc. Docs',
@@ -165,4 +169,7 @@ module.exports = {
   markdown: {
     mermaid: true,
   },
+  plugins: [[require.resolve('docusaurus-lunr-search'), {
+    excludeRoutes: hiddenFiles
+  }]],
 };

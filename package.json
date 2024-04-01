@@ -1,5 +1,5 @@
 {
-  "name": "verified-inc",
+  "name": "verified-inc-docs",
   "version": "1.0.0",
   "private": true,
   "engines": {
@@ -24,6 +24,7 @@
     "@docusaurus/theme-mermaid": "^3.0.1",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^1.1.1",
+    "docusaurus-lunr-search": "^3.3.2",
     "docusaurus-plugin-openapi-docs": "^3.0.0-beta.3",
     "docusaurus-theme-openapi-docs": "^3.0.0-beta.3",
     "framer-motion": "^6.5.1",

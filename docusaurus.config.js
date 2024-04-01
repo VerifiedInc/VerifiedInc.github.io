@@ -1,3 +1,7 @@
+const fs = require('fs')
+const path = require('path')
+const hiddenFiles = fs.readdirSync(path.join(__dirname, 'docs/hidden')).map(file => file.replace('.mdx', ''))
+
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'Verified Inc. Docs',
@@ -121,32 +125,6 @@ module.exports = {
         // TODO: I can't seem to get global styling to work
       },
     },
-    algolia: {
-      // The application ID provided by Algolia
-      appId: '3M3H0VK08J',
-  
-      // Public API key: it is safe to commit it
-      apiKey: '879471b54bf5338abcf7989a9af15271',
-  
-      indexName: 'default',
-  
-      // Optional:It ensures that search results are relevant to the current language and version.
-      contextualSearch: true,
-  
-      // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
-      replaceSearchResultPathname: {
-        from: '/docs/', // or as RegExp: /\/docs\//
-        to: '/',
-      },
-  
-      // Optional: Algolia search parameters
-      searchParameters: {},
-  
-      // Optional: path for search page that enabled by default (`false` to disable it)
-      searchPagePath: false,
-  
-      //... other Algolia params
-    },
   },
   presets: [
     [
@@ -191,4 +169,7 @@ module.exports = {
   markdown: {
     mermaid: true,
   },
+  plugins: [[require.resolve('docusaurus-lunr-search'), {
+    excludeRoutes: hiddenFiles
+  }]],
 };

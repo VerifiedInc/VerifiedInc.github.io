@@ -170,6 +170,8 @@ module.exports = {
     mermaid: true,
   },
   plugins: [[require.resolve('docusaurus-lunr-search'), {
-    excludeRoutes: hiddenFiles
+    // options, ref: https://github.com/praveenn77/docusaurus-lunr-search#options-available
+    excludeRoutes: hiddenFiles,
+    indexBaseUrl: true
   }]],
 };

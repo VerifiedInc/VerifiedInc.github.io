@@ -59,6 +59,11 @@ It is also preferred if one could create an official Github release (also makes 
 **TL;DR never commit directly to master and create Github releases with preceding `v`, i.e. `v1.3.2`, only to `dev` branch.**
 
 #### Preview Deployment
+
+All pull requests create a preview deployment automatically thanks to use Vercel for deployment.
+
+##### Tag
+
 It may be the case that you would like to get other's approval or input prior to releasing the docs publicly via the deployment method above. While pulling this project from that branch in question and running locally is still probably the best way members of the business team, for example, can not do that. To handle this case, we have setup a "preview" deployment via Github Actions which is trigger with a git tag in the format `preview-v*.*.*`. This GitHub actions configuration can be found in the [preview.yaml](.github/workflows/preview.yaml) file. 
 
 It publishes to the `preview` branch which should be consider akin to `master` and never pushed directly to. It would be recommend to push the preview tag from your feature branch. 
@@ -69,7 +74,13 @@ For example, if one would like feedback from the business team regarding changes
 
 [Netlify](https://app.netlify.com/sites/resilient-capybara-2fa074/deploys) is being used for this deployment. Credentials via the shared devops@verified.inc email account can be found in 1Password. It deploys to the generic url, https://resilient-capybara-2fa074.netlify.app/. We very easily could deploy to a custom domain if we ever want to share "beta" docs with friendly parties.
 
-## GitHub Pages
+### Search
+
+For Docusaurus [search](https://docusaurus.io/docs/search) functionality we are using a local indexing solution called [lunr](https://github.com/praveenn77/docusaurus-lunr-search#options-available).
+
+## GitHub Pages [Deprecated]
+
+*No longer used for deployed. Now Vercel is the chosen deployment platform*
 
 Every GitHub user and organization gets a free [GitHub Pages](https://pages.github.com/) page. Docusaurus offers this as a simple deployment and hosting option. The setup (which feels a little arbitrary!) is:
 

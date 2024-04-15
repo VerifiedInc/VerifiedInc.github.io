@@ -46,6 +46,12 @@ This command generates static content into the `build` directory and can be serv
 
 ### Deployment
 
+#### Vercel Method
+
+Vercel does not use [trunk-based](https://circleci.com/blog/trunk-vs-feature-based-dev/) development workflow by default, instead defaulting to a feature-based strategy. While we could set it up to [trigger deployments based on tags](https://vercel.com/guides/can-you-deploy-based-on-tags-releases-on-vercel), it would require additional work to get the preview deployments working. So this reason, we are opting to move to feature-based developemnt / deployment strategy which unique in our org, just to this repo. To release to Production, one needs to merge `dev` branch into `main`. Ideally, still creating a tag on `dev` so we can continue to reference by version. 
+
+#### Deprecated Github Pages Method
+
 **Important:** Publishing to `master` will publish to [docs.verified.inc](https://docs.verified.inc/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
 
 ```console

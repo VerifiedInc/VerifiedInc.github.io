@@ -1129,8 +1129,6 @@ Once we've confirmed that you've checked off these items, you're ready to go liv
 
 ## Non-Hosted Variant
 
-Status: *Beta*
-
 The 1-Click Signup experience mentioned above outlines our "hosted" 1-Click Signup flow, where the user interacts with our Wallet. We also offer a non-hosted or "headless" 1-Click Signup flow, which allows for a more white-label integration where the user will never have to leave your signup flow. You will receive the data as soon the user clicks the verification link in the SMS or enters the verification code via your UI (and a headless redirect is initiated to us, more on that below).
 
 This method requires additional work; mainly, you will have to build a UI for the user to interact with. However, often, this is just augmenting your existing signup forms. While the rest is very similar to the hosted flow, there are a few differences:
@@ -1247,8 +1245,6 @@ sequenceDiagram
 
 
 ## Trusted Variant
-
-Status: *Beta*
 
 The [`/1-click/trusted`](/api-reference#trusted-1-click) flow is in many ways similar to the [non-hosted](/#non-hosted-variant) flow documented above, but it does not require your brand to use the OTP provided by the `/1-click` non-hosted response body. This variant is most appropriate for organizations that already use a phone authentication solution. As the name implies, it requires additional verification by Verified Inc. during the integration's development to ensure that phone possession is checked, often via a SMS one-time passcode, during the current user session prior to calling this endpoint.
 

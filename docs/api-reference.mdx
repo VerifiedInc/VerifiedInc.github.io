@@ -110,7 +110,7 @@ The same API key necessary to call [/1-click](/api-overview#1-click-onboarding) 
 {
   phone: string, // user's phone number in E.164 format
   email?: string, // user's email address; optional
-  verificationOptions?: 'only_link' | 'only_code' | 'both_link_and_code' // Optional: controls the SMS verification messaging. Default is 'only_link'.
+  verificationOptions?: 'only_link' | 'only_code' | 'both_link_and_code' // Optional: controls the SMS verification messaging. Default is 'only_code'.
   content?: {
     title?: 'Signup' | 'Verify' | 'Apply', // Optional: title of the request page. Default is 'Signup'
     description?: string, // Optional: description displayed under the consent page header. Default is 'Make sure everything is correct:'

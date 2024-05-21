@@ -1150,7 +1150,7 @@ This method requires additional work; mainly, you will have to build a UI for th
 
     ```typescript title="Example URL Response Body"
     {
-        "url": "https://wallet.verified.inc/authentication/verify/generic?phone=%2B101234566789&phoneCarrier=true&requestId=242189ee-c120-4f62-af85-a0a19423ffc0&issuePhoneCarrierCredentials=false&isHosted=false",
+        "url": "https://wallet.verified.inc/signin/verify/generic?phone=%2B101234566789&phoneCarrier=true&requestId=242189ee-c120-4f62-af85-a0a19423ffc0&issuePhoneCarrierCredentials=false&isHosted=false",
         "match": true,
         "uuid": "242189ee-c120-4f62-af85-a0a19423ffc0"
     }
@@ -1159,7 +1159,7 @@ This method requires additional work; mainly, you will have to build a UI for th
     The resultant URL that you need to redirect to would look like this:
 
     ```typescript title="Redirect URL Post User Inputted OTP Code"
-    https://wallet.verified.inc/authentication/verify/generic?code=123456&phone=%2B10123456789&phoneCarrier=true&requestId=242189ee-c120-4f62-af85-a0a19423ffc0&issuePhoneCarrierCredentials=false&isHosted=false
+    https://wallet.verified.inc/signin/verify/generic?code=123456&phone=%2B10123456789&phoneCarrier=true&requestId=242189ee-c120-4f62-af85-a0a19423ffc0&issuePhoneCarrierCredentials=false&isHosted=false
     ```
 
     This redirect will ultimately land the user back on your defined `redirectUrl` with no user interaction appearing as if only a page refresh has occurred.

@@ -30,7 +30,7 @@ The tooltips you'll see most often refer to the terms described in this section 
 
 **Example:** Hooli and Kredita are <a href="#brand"><Tip type="brand">brands</Tip></a>, and Richard is a <a href="#user"><Tip type="user"/></a>.
 - Hooli verifies Richard's address and issues a credential of type [`AddressCredential`](/schema#schema-library) to him (as part of [Issue to Earn](/issue-to-earn)).
-- Kredita <a href="#request"><Tip type="request">requests</Tip></a> an address credential from Richard (as part of [1-Click Signup](/1-click-signup)).
+- Kredita <a href="#request"><Tip type="request">requests</Tip></a> an address credential from Richard (as part of [1-Click Signup](/)).
 - Richard consents to share his address credential with Kredita.
 
 **API:** 
@@ -67,7 +67,7 @@ Composite credentials are composed of multiple atomic credentials. For example, 
 
 ## Request
 
-> A **request** (or <i>credentials request</i>) is a request for <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a>. It's created when a customer successfully checks if a<a href="/terminology#user"> <Tip type="user"/></a> has matching credentials, via [`/hasMatchingCredentials`](/api-overview#check-user-credentials). A request is only created if the user has the type of credentials the customer needs.
+> A **request** (or <i>credentials request</i>) is a request for <a href="/terminology#credential"><Tip type="credential">credentials</Tip></a>. It's created when a customer successfully checks if a<a href="/terminology#user"> <Tip type="user"/></a> has matching credentials, via [`/hasMatchingCredentials`](/api-reference#check-user-credentials). A request is only created if the user has the type of credentials the customer needs.
 
 **Example:** Hooli FinTech checks if Richard has a SSN and FullName credential issued by ACME Lending. Because he does, a request is created for those credentials specifically from ACME Lending. Hooli presents this request to Richard by directing him to the `url` received in the `/hasMatchingCredentials` response body.
 
@@ -84,7 +84,7 @@ At a high level, to create a request, a customer inputs a list containing three 
 
 If multiple issuer brands are listed, a credential (of the correct type) from any one of them is acceptable. If none are listed, then any issuer brand is acceptable.
 
-Additionally, the customer must input a user identifier email address and/or phone identifier. You might notice these are the exact inputs to [`/hasMatchingCredentials`](/api-overview#check-user-credentials).
+Additionally, the customer must input a user identifier email address and/or phone identifier. You might notice these are the exact inputs to [`/hasMatchingCredentials`](/api-reference#check-user-credentials).
 
 The full details of the request object aren't that important or helpful to know, as it's completely internal to Verified Inc., but here's an example of a request for a SsnCredential, PhoneCredential and FullNameCredential from the same issuing brand.
 
@@ -156,7 +156,7 @@ Users can be referenced by email and/or phone, identifiers that you already have
 
 **Example:** Richard is a user in your account system and potentially a user in the Verified Inc. network. You have two email addresses and one phone number for him. You can use any of these identifiers to issue credentials to him or check if he has matching credentials.
 
-**Components:** You can issue credentials using [`/credentials`](/api-overview#issue-credentials) and check for matching credentials with [`/hasMatchingCredentials`](/api-overview#check-user-credentials).
+**Components:** You can issue credentials using [`/credentials`](/api-reference#issue-credentials) and check for matching credentials with [`/hasMatchingCredentials`](/api-reference#check-user-credentials).
 
 ```json
 {

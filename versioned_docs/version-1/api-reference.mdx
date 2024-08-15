@@ -101,7 +101,7 @@ This endpoint performs a similar role to [/hasMatchingCredentials](#check-user-c
 :::
 
 :::caution
-The same API key necessary to call [/1-click](/api-overview#1-click-onboarding) grants you, and only, you access to the encrypted credential data documented in [Get Shared Credentials](#get-shared-credentials). Please keep this key secure.
+The same API key necessary to call [/1-click](/api-reference#1-click-onboarding) grants you, and only, you access to the encrypted credential data documented in [Get Shared Credentials](#get-shared-credentials). Please keep this key secure.
 :::
 
 #### Request Body {#1-click-request-body}
@@ -132,7 +132,7 @@ The same API key necessary to call [/1-click](/api-overview#1-click-onboarding) 
 }
 ```
 
-The `url` from the response ought to then be enriched with a `redirectUrl` query param that will take the next step in your target service's user onboarding webpage. _More information on this can be found in the [1-Click Guide](/1-click-guide)._
+The `url` from the response ought to then be enriched with a `redirectUrl` query param that will take the next step in your target service's user onboarding webpage. _More information on this can be found in [1-Click Signup](/)._
 
 ### Trusted 1-Click
 
@@ -398,7 +398,7 @@ You need to provide:
 
 1. User's email or phone
 2. (Optional) Credential request(s). _Required if Partner UUID is not provided._
-3. (Optional) Partner UUID. _More information on the partner UUID use case can be found in the [Issuance Guide](/issuance-guide#already-issued-credentials)._
+3. (Optional) Partner UUID.
 4. (Optional) List of the sub-credentials that make up the credential. _If not provided, all sub-credentials will be returned._
 
 A credential requests encodes which <Tip type="credential">credentials</Tip> you're asking the user to share with your <Tip type="brand"/>. It's a list of one or more [`CredentialRequest`](/reusables/credential-request-code-snippet) objects.
@@ -409,7 +409,6 @@ If you list multiple <Tip type="issuer">issuers</Tip>, the user can include a cr
 
 :::note
 The Credential <Tip type="request">requests</Tip> attribute is required if a Partner UUID is **not** provided. If Partner UUID is provided, the Credential requests attribute is not used. Instead, a pre-defined set of accepting partner's credentials requests are used.
-_More information on the partner UUID use case can be found in the [Issuance Guide](/issuance-guide#already-issued-credentials)._
 :::
 
 :::tip
@@ -446,7 +445,7 @@ The same ApiKey necessary to call /hasMatchingCredentials grants you and only yo
 }
 ```
 
-The `url` from the response ought to then be enriched with a `redirectUrl` query param that will take the next step in your target service's user onboarding webpage. _More information on this can be found in the [Acceptance Guide](/acceptance-guide)._
+The `url` from the response ought to then be enriched with a `redirectUrl` query param that will take the next step in your target service's user onboarding webpage.
 
 :::info Example Credential Request
 
@@ -640,8 +639,8 @@ You need to provide:
 
 1. Credentials data array
 2. Either a phone and/or email attribute
-3. (Optional) Partner UUID. _More information on the partner UUID use case can be found in the [Issuance Guide](/issuance-guide#partner-issuance)._
-4. (Optional) Tracking Identifier for credential usage attribute. _More information on the tracking identifier use case can be found in the [Issuance Guide](/issuance-guide#tracking-identifier)._
+3. (Optional) Partner UUID.
+4. (Optional) Tracking Identifier for credential usage attribute.
 
 Data about the user, must comply with our credential [schema](/schema) definitions.
 
@@ -731,7 +730,7 @@ See [Data Schemas](/schema) for more information.
 }
 ```
 
-The issued credential contains an `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** However, it is also an acceptable to store credential `id`s associated with a user and use the [Get Credential](/api-overview#get-credential) or [Get All User Credentials](/api-overview#get-all-user-credentials) endpoint to retrieve the full credential.
+The issued credential contains an `id` that you should store. You'll need this, for example, if you ever want to revoke the credential. **We recommend storing the entire credential, indexed on the credential `id`.** However, it is also an acceptable to store credential `id`s associated with a user and use the [Get Credential](/api-reference#get-credential) or [Get All User Credentials](/api-reference#get-all-user-credentials) endpoint to retrieve the full credential.
 
 ---
 
@@ -865,7 +864,7 @@ This endpoint all modifies credentials issued to the user by your brand.
 :::
 
 :::caution
-It should be clear that this endpoint should not be used in place of [`/hasMatchingCredentials`](/api-overview/#check-user-credentials), which can check user credentials across many issuers but does not return the credentials' values.
+It should be clear that this endpoint should not be used in place of [`/hasMatchingCredentials`](/api-reference/#check-user-credentials), which can check user credentials across many issuers but does not return the credentials' values.
 
 This endpoint is simply a nice to have for an issuer to see all credentials they have issued to a user.
 :::
@@ -909,7 +908,7 @@ This endpoint returns a list of credential requests that the partner has defined
 <CredentialRequestCodeSnippet />
 
 :::note
-This endpoint is helpful when developing the partner issuance flow. More information about partner issuance can be found in the [Issuance Guide](/issuance-guide#partner-issuance).
+This endpoint is helpful when developing the partner issuance flow.
 :::
 
 ---

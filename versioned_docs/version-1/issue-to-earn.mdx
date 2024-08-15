@@ -84,13 +84,13 @@ We define a digital ID card as a collection of credentials, issued by a brand to
 **To "issue an ID card" is just to issue credentials to a user for the first time.** (To "update an ID card" is just to issue subsequent credentials to that user.)
 :::
 
-**Call [`POST /credentials`](/api-overview#issue-credentials)** with a user identifier (a verified email or phone for the user) and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [data schemas](/schema).
+**Call [`POST /credentials`](/api-reference#issue-credentials)** with a user identifier (a verified email or phone for the user) and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [data schemas](/schema).
 
 :::note[Ask Us for New Schemas If Needed]
 If we don't have a data schema that suits your needs, email us at Support@Verified.Inc) and we'll make one for you.
 :::
 
-For example, if you have a verified Social Security Number (SSN) and a full name for a user, you can issue them credentials. Just call [`POST /credentials`](/api-overview#issue-credentials) with the user's email or phone, the `SsnCredential` and `FullNameCredential` type, and the SSN and full name data:
+For example, if you have a verified Social Security Number (SSN) and a full name for a user, you can issue them credentials. Just call [`POST /credentials`](/api-reference#issue-credentials) with the user's email or phone, the `SsnCredential` and `FullNameCredential` type, and the SSN and full name data:
 
 ```typescript title="Example Issue Credentials Request Body"
 {
@@ -139,7 +139,7 @@ The credential data must be formatted according to the `properties` attribute of
 
 The [Implement](#implement) section above describes how to implement _standard issuance_ of ID cards. With standard issuance, you issue an ID card to a user, and that's it. There are no further steps.
 
-**But you can also implement _partner issuance_ to enable affiliate offers for partner brands.** With partner issuance, you issue an ID card to a user, and then you redirect them to a [1-Click Signup](/1-click-signup) flow for the partner brand. That way, the user can immediately use their ID card to sign up for the partner, and you immediately earn revenue!
+**But you can also implement _partner issuance_ to enable affiliate offers for partner brands.** With partner issuance, you issue an ID card to a user, and then you redirect them to a [1-Click Signup](/) flow for the partner brand. That way, the user can immediately use their ID card to sign up for the partner, and you immediately earn revenue!
 
 **This allows you to present users with affiliate offers that convert with 1-click,** meaning far higher conversion for partners and far more revenue for you.
 
@@ -154,10 +154,10 @@ _If you'd like to enable partner issuance for your brand, email us at Support@Ve
 
 Some issuance calls can be made with a particular partner in mind, i.e. in a promotional flow. In these cases you have already authenticated the user and would like to issue them credentials for a particular partner.
 
-To do this, you can provide your partner's static `partnerUuid` to the issue [`/credentials`](/api-overview#issue-credentials) call. The resulting api response body will contain a `url` field if conditions related the partner's pre-defined <Tip type="request">credential requests</Tip> are satisfied. If present, you should redirect the user there.
+To do this, you can provide your partner's static `partnerUuid` to the issue [`/credentials`](/api-reference#issue-credentials) call. The resulting api response body will contain a `url` field if conditions related the partner's pre-defined <Tip type="request">credential requests</Tip> are satisfied. If present, you should redirect the user there.
 
 :::tip
-You can check the partner's pre-defined <Tip type="request">credential requests</Tip> by calling [`/credentialsRequests/{partnerUuid}`](/api-overview/#get-partner-credential-requests).
+You can check the partner's pre-defined <Tip type="request">credential requests</Tip> by calling [`/credentialsRequests/{partnerUuid}`](/api-reference/#get-partner-credential-requests).
 :::
 
 This url ultimately redirects the user to a page of the partners choosing. However, the url first directs the user to the Verified Inc. wallet where they explicity consent to the data share to the partner.
@@ -184,8 +184,8 @@ If this is an experience you would like to provide for your partners immediately
 
 #### Already Issued Credentials
 
-If you have already issued credentials to a user, then [`/hasMatchingCredentials`](/api-overview#check-user-credentials) can be called with `partnerUuid`. In this case, if Verified Inc. can confirm the user has credentials to satisfy the [pre-defined](/acceptance-guide#partner-acceptance) partner credential request(s), then the resulting API response body will contain a `url` which you should redirect the user to.
-Just as in the case of the [`/credentials`](/api-overview#issue-credentials) response, this `url` ultimately redirects the user to a page of the partner's choosing. However, the `url` first directs the user to the Verified Inc. wallet, where they explicitly consent to share credential data with the partner.
+If you have already issued credentials to a user, then [`/hasMatchingCredentials`](/api-reference#check-user-credentials) can be called with `partnerUuid`. In this case, if Verified Inc. can confirm the user has credentials to satisfy the [pre-defined](/acceptance-guide#partner-acceptance) partner credential request(s), then the resulting API response body will contain a `url` which you should redirect the user to.
+Just as in the case of the [`/credentials`](/api-reference#issue-credentials) response, this `url` ultimately redirects the user to a page of the partner's choosing. However, the `url` first directs the user to the Verified Inc. wallet, where they explicitly consent to share credential data with the partner.
 
 ```json title="Example Check has Matching Credentials Response"
 {
@@ -196,4 +196,4 @@ Just as in the case of the [`/credentials`](/api-overview#issue-credentials) res
 
 #### Recommended Implementation
 
-We recommend that you first check internally whether you've issued credentials to a user. If you have, then call [`/hasMatchingCredentials`](/api-overview#check-user-credentials) to confirm with Verified Inc. that the user still has these credentials. (There are cases where the user will _not_ still have the credentials, for example if they went directly to their Verified Inc. wallet to delete them.) If the user does not still have the credentials, you can issue them new credentials, as long as you have their consent. As a precaution, you can also [patch](api-overview#patch-credentials) existing credentials with a status of `revoked` to ensure that only the new credentials you issue will be valid for use. */}
+We recommend that you first check internally whether you've issued credentials to a user. If you have, then call [`/hasMatchingCredentials`](/api-reference#check-user-credentials) to confirm with Verified Inc. that the user still has these credentials. (There are cases where the user will _not_ still have the credentials, for example if they went directly to their Verified Inc. wallet to delete them.) If the user does not still have the credentials, you can issue them new credentials, as long as you have their consent. As a precaution, you can also [patch](api-overview#patch-credentials) existing credentials with a status of `revoked` to ensure that only the new credentials you issue will be valid for use. */}

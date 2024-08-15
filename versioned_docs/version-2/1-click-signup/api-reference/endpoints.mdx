@@ -1,0 +1,307 @@
+---
+id: endpoints
+title: Endpoints
+sidebar_label: Endpoints
+sidebar_position: 7
+description: How to use Verified API endpoints
+slug: /endpoints
+toc_max_heading_level: 4
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import BrandsAdmonition from '@site/versioned_docs/version-2/reusables/brands-admonition.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2/reusables/integration-type-admonition.mdx';
+import DomainsAdmonition from '@site/versioned_docs/version-2/reusables/domains-admonition.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2/reusables/development-work-admonition.mdx';
+import FullDefinitionAdmonition from '@site/versioned_docs/version-2/reusables/full-definition-admonition.mdx';
+import Post1ClickRequestBodyTableShared from '@site/versioned_docs/version-2/reusables/post-1-click-request-body-table-shared.mdx';
+import Post1ClickRequestBodyTableHosted from '@site/versioned_docs/version-2/reusables/post-1-click-request-body-table-hosted.mdx'
+import Post1ClickResponseBodyTableUuid from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-uuid.mdx';
+import Post1ClickResponseBodyTableUrl from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-url.mdx';
+import Post1ClickResponseBodyTableCode from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-code.mdx';
+import Post1ClickResponseBodyTableIdentity from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-identity.mdx';
+import UseUserInputAdmonition from '@site/versioned_docs/version-2/reusables/use-user-input-admonition.mdx'
+import CredentialRequestTableShared from '@site/versioned_docs/version-2/reusables/credential-request-table-shared.mdx'
+import CredentialRequestTableHosted from '@site/versioned_docs/version-2/reusables/credential-request-table-hosted.mdx'
+
+{/* :::note
+See also our [Postman docs](https://api.docs.verified.inc/).
+::: */}
+
+
+## `POST /1-click`
+
+> Begin a 1-Click Signup flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click`</td>
+  </tr>
+</table>
+
+
+### Request {#post-1-click-request}
+
+<details>
+    <summary>Full Definition</summary>
+    <FullDefinitionAdmonition/>
+    ```typescript title="POST /1-click Request Body"
+    {
+        phone: string,
+        email?: string,
+        birthDate?: string,
+        credentialRequests?: CredentialRequest[],
+        content?: {
+            title?: "Signup" | "Login" | "Verify" | "Apply",
+            description?: string
+        }
+        redirectUrl?: string
+    }
+    ```
+    <table>
+        <Post1ClickRequestBodyTableShared/>
+        <Post1ClickRequestBodyTableHosted/>
+    </table>
+</details>
+
+<Tabs groupId="integrationType" queryString="integrationType">
+<TabItem value="hosted" label="Hosted" default>
+    <IntegrationTypeAdmonition option="Hosted"/>
+    ```typescript title="POST /1-click Request Body (Hosted Integration Type)"
+    {
+        phone: string,
+        email?: string,
+        birthDate?: string,
+        credentialRequests?: CredentialRequest[],
+        content?: {
+            title?: "Signup" | "Login" | "Verify" | "Apply",
+            description?: string
+        }
+        redirectUrl?: string
+    }
+    ```
+    <table>
+        <Post1ClickRequestBodyTableShared/>
+        <Post1ClickRequestBodyTableHosted/>
+    </table>
+</TabItem>
+<TabItem value="semi-hosted" label="Semi-Hosted">
+    <IntegrationTypeAdmonition option="Semi-Hosted"/>
+    ```typescript title="POST /1-click Request Body (Semi-Hosted Integration Type)"
+    {
+        phone: string,
+        email?: string,
+        birthDate?: string,
+        credentialRequests?: CredentialRequest[]
+    }
+    ```
+    <table>
+        <Post1ClickRequestBodyTableShared/>
+    </table>
+</TabItem>
+<TabItem value="non-hosted" label="Non-Hosted">
+    <IntegrationTypeAdmonition option="Non-Hosted"/>
+    ```typescript title="POST /1-click Request Body (Non-Hosted Integration Type)"
+    {
+        phone: string,
+        email?: string,
+        birthDate?: string,
+        credentialRequests?: CredentialRequest[]
+    }
+    ```
+    <table>
+        <Post1ClickRequestBodyTableShared/>
+    </table>
+</TabItem>
+</Tabs>
+
+
+### Response {#post-1-click-response}
+
+<details>
+    <summary>Full Definition</summary>
+    <FullDefinitionAdmonition/>
+    ```typescript title="POST /1-click Response Body"
+    {
+        uuid: string,
+        url?: string,
+        code?: string,
+        identity?: 1ClickEntity
+    }
+    ```
+    <table>
+        <Post1ClickResponseBodyTableUuid/>
+        <Post1ClickResponseBodyTableUrl/>
+        <Post1ClickResponseBodyTableCode/>
+        <Post1ClickResponseBodyTableIdentity/>
+    </table>
+</details>
+
+<Tabs groupId="integrationType" queryString="integrationType">
+<TabItem value="hosted" label="Hosted" default>
+    <IntegrationTypeAdmonition option="Hosted"/>
+    ```typescript title="POST /1-click Response Body (Hosted Integration Type)"
+    {
+        uuid: string,
+        url: string,
+        code: string
+    }
+    ```
+    <table>
+        <Post1ClickResponseBodyTableUuid/>
+        <Post1ClickResponseBodyTableUrl/>
+        <Post1ClickResponseBodyTableCode/>
+    </table>
+</TabItem>
+<TabItem value="semi-hosted" label="Semi-Hosted" default>
+    <IntegrationTypeAdmonition option="Semi-Hosted"/>
+    ```typescript title="POST /1-click Response Body (Semi-Hosted Integration Type)"
+    {
+        uuid: string,
+        code: string
+    }
+    ```
+    <table>
+        <Post1ClickResponseBodyTableUuid/>
+        <Post1ClickResponseBodyTableCode/>
+    </table>
+</TabItem>
+<TabItem value="non-hosted" label="Non-Hosted" default>
+    <IntegrationTypeAdmonition option="Non-Hosted"/>
+    ```typescript title="POST /1-click Response Body (Non-Hosted Integration Type)"
+    {
+        uuid: string,
+        identity: 1ClickEntity
+    }
+    ```
+    <table>
+        <Post1ClickResponseBodyTableUuid/>
+        <Post1ClickResponseBodyTableIdentity/>
+    </table>
+</TabItem>
+</Tabs>
+
+---
+
+
+## `GET /1-click`
+
+> Get data for a user who has completed a 1-Click Signup flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`GET`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/{uuid}?{userInput}`</td>
+  </tr>
+</table>
+
+### Request {#get-1-click-request}
+
+<Tabs groupId="integrationType" queryString="integrationType">
+<TabItem value="hosted" label="Hosted" default>
+    <IntegrationTypeAdmonition option="Hosted"/>
+    Call:
+    ```json title="GET /1-click Request (Hosted Integration Type)"
+    GET /1-click/{identityUuid}
+    ```
+    - For the `{uuid}` endpoint path parameter, use the value of the `identityUuid` URL parameter from the redirect URL.
+    - _The `{userInput}` endpoint URL parameter isn't relevant here._
+</TabItem>
+<TabItem value="semi-hosted" label="Semi-Hosted" default>
+    <IntegrationTypeAdmonition option="Semi-Hosted"/>
+    Call:
+    ```json title="GET /1-click Request (Semi-Hosted Integration Type)"
+    GET /1-click/{uuid}?{userInput}
+    ```
+    - For the `{uuid}` endpoint path parameter, use the value of the `uuid` returned from `POST /1-click`.
+    - For the `{userInput}` endpoint URL parameter, use the value the user inputted when you prompted them to enter their verification code.
+    <UseUserInputAdmonition/>
+</TabItem>
+<TabItem value="non-hosted" label="Non-Hosted" default>
+    <IntegrationTypeAdmonition option="Non-Hosted"/>
+    There's no need to call `GET /1-click` if your brand's integration type is Non-Hosted, because the response body of `POST /1-click` contains the same [`1ClickEntity`](./types#1clickentity).
+
+    However, if you'd like to retrieve the same data again, you can call:
+    ```json title="GET /1-click Request (Non-Hosted Integration Type)"
+    GET /1-click/{uuid}
+    ```
+    - For the `{uuid}` endpoint path parameter, use the value of the `uuid` returned from `POST /1-click`.
+    - _The `{userInput}` endpoint URL parameter isn't relevant here._
+</TabItem>
+</Tabs>
+
+
+### Response {#get-1-click-response}
+
+```typescript title="GET /1-click Response (All Integration Types)"
+{
+    ...1ClickEntity
+}
+```
+
+See [`1ClickEntity`](./types#1clickentity).
+
+{/* ## Update 1-Click Credentials
+
+> This endpoint is to be used for updating the 1-click credentials passed to your brand in the 1-click non-hosted and 1-click trusted flows.
+
+**Method**: `POST` <br />
+**Path**: `/1-click/{uuid}/credentials`
+
+You need to provide:
+
+1. **The 1-click uuid**
+2. **The credential values in same format they were provided.** See example below.
+
+<SimplifiedCredentialsExample />
+
+This is an optional endpoint only relevant for the 1-click [non-hosted](/#non-hosted-variant) and [trusted](/#trusted-variants) variants. Because we send the user's data directly to your application, without the user using our web Wallet (which is part of the hosted variant), the user never gets a chance to update any of the data that's autofilled for them. If you allow them to editing and/or enrich their data on your side,  within a UI/UX that you manage and implement, you can use this endpoint to pass that information back to us (and earn revenue share as a result).
+
+:::important
+If this endpoint is optional, why use it?
+
+If you to call this endpoint after the user has made edits to their data on your side, you will earn a share of the revenue generated when the user uses that data elsewhere.revenue streams.
+:::
+
+#### Request Body {#update-1-click-credentials-request-body}
+
+```typescript title="Update 1-Click Credentials Request Body"
+{
+  "uuid": string // the 1-click uuid from the POST /1-click/trusted response
+  "credentials": {
+      [shortenedCredentialType: string]: string
+  }
+}
+```
+
+The response body will contain credentials conforming to [credential schemas](/schema#example). Please see the [Postman](https://api.docs.verified.inc/#159ad031-30da-4e2b-afbb-c2abf15bd194) docs for examples of this response body.
+
+#### Response Body {#update-1-click-credentials-response-body}
+
+```typescript title="1-Click Response"
+[
+  {
+    type: string, // credential type
+    verificationMethod: string // verification method
+    data: CredentialsList | {
+      [credentialKey: string]: string // credential data
+    },
+  }
+]
+```
+
+The response body is currently in a more verbose format than that of the response for GET `/sharedCredentials` or POST `/1-click` (both trusted and non-hosted). However, in practice, the details of the response body are non-consequential for you as long as a 201 HTTP status code is received. */}

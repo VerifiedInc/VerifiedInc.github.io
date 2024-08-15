@@ -2,47 +2,61 @@ module.exports = {
   sidebar: [
     {
       type: 'category',
-      label: 'Solutions',
-      collapsed: false,
-      items: [
-        '1-click-signup',
-        'issue-to-earn',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Demos',
-      collapsed: false,
-      items: [
-        'demo-1-click-signup',
-        'demo-issue-to-earn',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'API',
+      label: '1-Click Signup',
       collapsed: false,
       items: [
         {
           type: 'doc',
-          id: 'api-reference',
+          id: 'quick-start-guide',
         },
         {
-          type: 'link',
-          label: 'Postman',
-          href: 'https://api.docs.verified.inc/',
+          type: 'doc',
+          id: 'integration-guide',
         },
-      ],
+      ]
     },
     {
       type: 'category',
-      label: 'Resources',
+      label: '1-Click Signup',
+      link: {
+        type: 'generated-index',
+        title: 'Test Folder',
+        slug: '/testfolder',
+      },
       collapsed: false,
       items: [
-        // 'terminology',
-        'schema',
-        // 'faq-info',
-      ],
+        {
+          type: 'doc',
+          id: '1-click-signup-copy',
+        },
+      ]
+    },
+    {
+      type: 'category',
+      label: 'API Reference',
+      collapsed: false,
+      items: [
+        {
+          type: 'doc',
+          id: 'authentication',
+        },
+        {
+          type: 'doc',
+          id: 'environments',
+        },
+        {
+          type: 'doc',
+          id: 'endpoints',
+        },
+        {
+          type: 'doc',
+          id: 'types',
+        },
+      ]
+    },
+    {
+      type: 'doc',
+      id: 'credential-schemas',
     },
   ],
 };

@@ -1,0 +1,447 @@
+---
+id: integration-guide
+title: Integration Guide
+sidebar_position: 3
+sidebar_label: Integration Guide
+description: Full details on how to integrate 1-Click Signup
+slug: /integration-guide
+toc_max_heading_level: 2
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
+import SendSmsToUser from '@site/versioned_docs/version-2/reusables/send-sms-to-user.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2/reusables/integration-type-admonition.mdx';
+import SetupLoginToDashboard from '@site/versioned_docs/version-2/reusables/setup-login-to-dashboard.mdx';
+import PromptUserToConfirmTheirData from '@site/versioned_docs/version-2/reusables/prompt-user-to-confirm-their-data.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2/reusables/development-work-admonition.mdx'
+import UseUserInputAdmonition from '@site/versioned_docs/version-2/reusables/use-user-input-admonition.mdx'
+import UseYourOwnPhoneNumberAdmonition from '@site/versioned_docs/version-2/reusables/use-your-own-phone-number-admonition.mdx'
+import IncludeAPoweredByGraphic from '@site/versioned_docs/version-2/reusables/include-a-powered-by-graphic.mdx'
+import IncludeVerifiedLegalLanguage from '@site/versioned_docs/version-2/reusables/include-verified-legal-language.mdx'
+
+{/* 1-Click Signup is the fastest way to onboard new users.
+
+Integrating 1-Click Signup is extremely easy.
+
+:::tip ✅ 1-Hour Guarantee
+We are _obsessed_ with making it as easy as possible for you to implement 1-Click Signup.
+- If it takes you more than 1 hour to implement, we'll send you a free Verified t-shirt! 
+- If it takes you less than 1 hour, we'll send you a free t-shirt _and_ mug!
+::: */}
+
+This Integration Guide will help you fully integrate 1-Click Signup into your application.
+
+<table>
+    <tr>
+        <th>Time to Integrate</th>
+        <td>1 hour</td>
+    </tr>
+    <tr>
+        <th>Time to Test and Deploy</th>
+        <td>1 day</td>
+    </tr>
+    <tr>
+        <th>Steps Required</th>
+        <td>Make API call(s), send SMS</td>
+    </tr>
+</table>
+
+
+## Setup
+
+
+### 1. Log into the Dashboard.
+
+<SetupLoginToDashboard/>
+
+---
+
+
+### 2. Determine your integration type.
+
+On the Brand Details page in the Dashboard, you can configure settings for your brand. 
+
+The most important brand setting is **integration type,** which affects how you implement 1-Click Signup.
+
+:::tip
+You can always start with one integration type and change it later.
+:::
+
+There are three options for integration type:
+
+| Integration Type | User Interface | Phone Verification | Description | Best If... |
+|:---------------- |:------------ |:--------------------------- |:----------- | :------- |
+| **Hosted** | Hosted by Verified | Hosted by Verified | Use Verified's UI and Verified's verification code | You want the quickest implementation |
+| **Semi-Hosted** | Hosted by You | Hosted by Verified | Use your own UI but Verified's verification code | You _don't_ already verify users' phone numbers |
+| **Non-Hosted** | Hosted by You | Hosted by You | Use your own UI and your own verification code | You _do_ already verify users' phone numbers |
+
+Determining which option is best for you is simple. Just answer these questions:
+
+#### a. Do you want to use Verified's UI or your own? 
+
+_Using Verified's UI is the easiest option, but using your own UI is more white label. You can always start with Verified's UI — for example to quickly try out 1-Click Signup — and then switch to your own UI later._
+    - Verified's UI → Select **Hosted** and go to [Integration](?integrationType=hosted#integration)
+    - Your own UI → Continue to question 2...
+
+#### b. Do you want to use Verified's phone verification or your own? 
+
+_If you don't already verify users' phone numbers, it's easiest to use Verified's phone verification. But if you already verify users' phone numbers and want to use your existing solution for that, you can use your own phone verification._
+    - Verified's phone verification → Select **Semi-Hosted** and go to [Integration](?integrationType=semi-hosted#integration)
+    - Your own phone verification → Select **Non-Hosted** and go to [Integration](?integrationType=non-hosted#integration)
+
+
+## Integration
+
+<DevelopmentWorkAdmonition/>
+
+<Tabs groupId="integrationType" queryString="integrationType">
+<TabItem value="hosted" label="Hosted" default>
+    <IntegrationTypeAdmonition option="Hosted"/>
+
+
+    ### 1. Prompt user for phone number.
+
+    To start 1-Click Signup for a user (using the Hosted integration type), you'll need their phone number.  
+
+    We recommend using a form with a phone number input that automatically submits when the user enters 10 digits. _See our [Demo](https://1-click.demo.verified.inc) for an example of this._
+
+    <Admonition type="info" title="Supported Phone Numbers">
+        **Currently, we only support US mobile phone numbers.** You'll need to pass these to our API in [E.164 format](https://www.twilio.com/docs/glossary/what-e164). This is the `+1` country code with a 10-digit subscriber code appended to it, for example `+10123456789`.
+        
+        **We're able to source verified data for about 95% of these phone numbers.** If we can't source data, you can take the user through your normal signup flow.
+    </Admonition>
+
+    You'll also need to:
+    <ol type="a">
+        <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic)</li>
+        <li>[**Include Verified legal language**](#b-include-verified-legal-language)</li>
+    </ol>
+
+    Here's a full example:
+
+    ![](/img/phone-number-input.png)
+    *Hooli uses a phone number input, and they include a gray variant of the "powered by" graphic and Verified legal language.*
+
+
+    #### a. Include a "powered by Verified" graphic.
+
+    <IncludeAPoweredByGraphic/>
+
+
+    #### b. Include Verified legal language.
+
+    <IncludeVerifiedLegalLanguage agreeToAction="receive an SMS to create a Verified account"/>
+
+    ---
+    
+
+    ### 2. Call `POST /1-click`.
+
+    Call [`POST /1-click`](./endpoints?integrationType=hosted#post-1-click) with the user's phone number. 
+    
+    The [response body](./endpoints?integrationType=hosted#post-1-click-response) will contain `url` and `code`, which you'll use in the following steps.
+
+    <UseYourOwnPhoneNumberAdmonition/>
+
+    ---
+
+
+    ### 3. Send SMS to user.
+
+    <SendSmsToUser/>
+
+    ---
+
+
+    ### 4. Redirect user.
+
+    Redirect the user to `url` from the response body of `POST /1-click`. (If the user is in your mobile app, open a webview to `url`.)
+    
+    This `url` is a link to our web app, where we'll prompt the user to:
+    <ol type="a">
+        <li>Enter their verification code</li>
+        <li>(if necessary) Enter their birth date</li>
+        <li>Confirm their data and agree to share it with your brand</li>
+    </ol>
+
+    When the user has completed this, we'll redirect them back to you.
+
+    ---
+
+
+    ### 5. Parse `identityUuid` from URL.
+
+    When we redirect the user back to you, we'll include on the redirect URL an `identityUuid` URL parameter, whose value is a UUID. 
+    
+    For example, if your redirect URL is `https://hooli.com/verified`, we will send the user to:
+    ```json title="Redirect URL with identityUuid Parameter"
+    https://hooli.com/verified?identityUuid=47e34f9c-a18b-4e67-a202-3f5389d06c08
+    ```
+
+    <Admonition type="info" title="What Redirect URL Will We Use?">
+        We'll redirect the user to the **default redirect URL** set for your brand in the [Dashboard](https://dashboard.verified.inc), unless you overrode that default by including `redirectUrl` in the request body of `POST /1-click`.
+    </Admonition>
+
+    Parse the value of the `identityUuid` URL parameter from the redirect URL. You'll use this UUID in the next step. (If the user is in your mobile app, you can now close the webview you opened in the previous step.)
+
+    ---
+
+
+    ### 6. Call `GET /1-click`.
+
+    Call [`GET /1-click/{identityUuid}`](./endpoints?integrationType=hosted#get-1-click) with the value of the `identityUuid` URL parameter. 
+    
+    The [response body](./endpoints?integrationType=hosted#get-1-click-response) will be a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), which contains the user's data and metadata about it. You can use this data however you like to create a new account for the user!
+
+</TabItem>
+<TabItem value="semi-hosted" label="Semi-Hosted">
+    <IntegrationTypeAdmonition option="Semi-Hosted"/>
+
+
+    ### 1. Prompt user for phone number and birth date.
+
+    To start 1-Click Signup for a user (using the Semi-Hosted integration type), you'll need their phone number and birth date. (We require a birth date to ensure we retrieve data for only the correct user.)
+
+    We recommend using a form with:
+    - For the phone number, a phone number input that automatically continues when the user enters 10 digits.
+    - For the birth date, a numeric input (formatted as `MM/DD/YYYY` or similar) that automatically continues when the user enters 8 digits.
+
+    We recommend automatically submitting the form when both inputs have valid values. _See our [Demo](https://1-click.demo.verified.inc) for an example of this._
+
+    <Admonition type="info" title="Supported Phone Numbers">
+        **Currently, we only support US mobile phone numbers.** You'll need to pass these to our API in [E.164 format](https://www.twilio.com/docs/glossary/what-e164). This is the `+1` country code with a 10-digit subscriber code appended to it, for example `+10123456789`.
+        
+        **We're able to source verified data for about 95% of these phone numbers.** If we can't source data, you can take the user through your normal signup flow.
+    </Admonition>
+
+    <Admonition type="info" title="Birth Date Format">
+        You'll need to pass the birth date to our API (in the [request body of `POST /1-click`](./endpoints#post-1-click-request)) in `YYYY-MM-DD` format, but you should collect it from the user in whatever form you think results in the best user experience for your use case.
+    </Admonition>
+
+    You'll also need to:
+    <ol type="a">
+        <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic-1)</li>
+        <li>[**Include Verified legal language**](#b-include-verified-legal-language-1)</li>
+    </ol>
+
+    Here's a full example:
+
+    ![](/img/phone-number-and-birth-date-inputs.png)
+    *Hooli uses phone number and birth date inputs, and they include a gray variant of the "powered by" graphic and Verified legal language.*
+
+
+    #### a. Include a "powered by Verified" graphic.
+
+    <IncludeAPoweredByGraphic/>
+
+
+    #### b. Include Verified legal language.
+
+    <IncludeVerifiedLegalLanguage agreeToAction="create a Verified account"/>
+
+    ---
+    
+
+    ### 2. Call `POST /1-click`.
+
+    Call [`POST /1-click`](./endpoints?integrationType=semi-hosted#post-1-click) with the user's phone number and birth date.
+    
+    The [response body](./endpoints?integrationType=semi-hosted#post-1-click-response) will contain `uuid` and `code`, which you'll use in the following steps.
+
+    <UseYourOwnPhoneNumberAdmonition/>
+
+    ---
+
+
+    ### 3. Send SMS to user.
+
+    <SendSmsToUser/>
+
+    ---
+
+
+    ### 4. Prompt user for verification code.
+
+    We recommend using a form with a numeric input that automatically submits when the user enters 6 digits (because `code` has 6 digits).
+
+    Let's call what the user inputs `userInput`. You'll use this in the next step.
+
+    ---
+
+
+    ### 5. Call `GET /1-click`.
+
+    Call [`GET /1-click/{uuid}?{userInput}`](./endpoints?integrationType=semi-hosted#get-1-click) with `uuid` from the response body of `POST /1-click` and `userInput`.
+
+    <UseUserInputAdmonition/>
+    
+    The [response body](./endpoints?integrationType=semi-hosted#get-1-click-response) will be a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), which contains the user's data and metadata about it. You can use this data however you like to create a new account for the user!
+
+    ---
+
+
+    ### 6. Prompt user to confirm their data.
+
+    <PromptUserToConfirmTheirData/>
+
+</TabItem>
+<TabItem value="non-hosted" label="Non-Hosted">
+    <IntegrationTypeAdmonition option="Non-Hosted"/>
+
+    To start 1-Click Signup for a user (using the Non-Hosted integration type), you'll need their phone number and birth date, and you'll need to verify their phone number using your own solution.
+
+    <Admonition type="important">
+        The Non-Hosted integration type requires you to use your own phone verification code. If you'd like to use ours, switch to the [Semi-Hosted](?integrationType=semi-hosted#integration) or [Hosted](?integrationType=hosted#integration) integration type.
+    </Admonition>
+
+
+    ### 1. Prompt user for phone number and verify it.
+
+    You can do this however you like, as long as you verify the user's phone number with a one-time verification code at least 6 digits long.
+
+
+    ### 2. Prompt user for birth date.
+
+    We require a birth date to ensure we retrieve data for only the correct user.
+
+    We recommend using a form with a numeric input (formatted as `MM/DD/YYYY` or similar) that automatically submits when the user enters 8 digits.
+
+    <Admonition type="info" title="Birth Date Format">
+        You'll need to pass the birth date to our API (in the [request body of `POST /1-click`](./endpoints#post-1-click-request)) in `YYYY-MM-DD` format, but you should collect it from the user in whatever form you think results in the best user experience for your use case.
+    </Admonition>
+
+    You'll also need to:
+    <ol type="a">
+        <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic-2)</li>
+        <li>[**Include Verified legal language**](#b-include-verified-legal-language-2)</li>
+    </ol>
+
+    Here's a full example:
+
+    ![](/img/birth-date-input.png)
+    *Hooli uses a birth date input, and they include a gray variant of the "powered by" graphic and Verified legal language.*
+
+
+    #### a. Include a "powered by Verified" graphic.
+
+    <IncludeAPoweredByGraphic/>
+
+
+    #### b. Include Verified legal language.
+
+    <IncludeVerifiedLegalLanguage agreeToAction="create a Verified account"/>
+
+    ---
+
+
+    ### 3. Call `POST /1-click`.
+
+    Call [`POST /1-click`](./endpoints?integrationType=non-hosted#post-1-click) with the user's phone number and birth date.
+
+    The [response body](./endpoints?integrationType=non-hosted#post-1-click-response) will contain a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. You can use this data however you like to create a new account for the user!
+
+    <Admonition type="tip">
+        **For any phone number, in our [Sandbox](./environments#sandbox) environment, we'll return [mock data](./environments#mock-data).** You're welcome to use your own phone number(s) and/or our [test user](./environments#test-user)'s phone numbers. 
+    </Admonition>
+
+    ---
+
+
+    ### 4. Prompt user to confirm their data.
+
+    <PromptUserToConfirmTheirData/>
+
+</TabItem>
+</Tabs>
+
+
+## Go Live!
+
+When you're ready to go live, we will review your integration to see that:
+
+<input type="checkbox" id="legal"/>
+<label for="legal">**You've included a "powered by Verified" graphic and the Verified legal language.**</label>
+<br/>
+<input type="checkbox" id="sms"/>
+<label for="sms">**You're properly verifying users' phone numbers.**</label>
+<br/>
+<input type="checkbox" id="testing"/>
+<label for="testing">**Your 1-Click Signup flow is working end-to-end in Sandbox.**</label>
+<br/>
+<input type="checkbox" id="synced"/>
+<label for="synced">**Your Sandbox brand settings (configured in the [Dashboard](https://dashboard.verified.inc)) are synced to Production.**</label>
+<br/>
+<br/>
+
+Once we've confirmed these items, we'll approve your integration for [Production](./environments#production), which will enable you to create Production API keys in the [Dashboard](https://dashboard.verified.inc).
+
+Just swap your Sandbox API key for a Production API key, and you'll be live with 1-Click Signup!
+
+
+{/* ## User Experience
+
+From the user's perspective, they:
+1. Verify their phone number
+2. See their verified data autofilled
+3. Click to confirm
+
+<Tabs groupId="integrationType" queryString="integrationType">
+<TabItem value="hosted" label="Hosted" default>
+    <Admonition type="note">
+        <b>Hosted</b> is one option for Integration Type, a brand setting you can configure in your [Dashboard](https://dashboard.verified.inc).
+    </Admonition>
+</TabItem>
+<TabItem value="semi-hosted" label="Semi-Hosted">
+    
+</TabItem>
+<TabItem value="non-hosted" label="Non-Hosted">
+    
+</TabItem>
+</Tabs>
+
+1. Call `POST /1-click` with user's phone number. We'll return `url` and `code`.
+2. Send SMS to user with `code` and redirect user to `url`.
+4. User agrees to share data in Wallet
+5. We redirect user to brand with identityUuid
+6. One of:
+    1. (if brand using push option) We send data to brand’s webhook
+    2. (if brand using pull option) Brand calls GET /1-click with identityUuid, and we return identity
+
+
+## How to Implement
+
+To enable 1-Click Signup, you'll need to:
+- Verify the user's phone number (by sending an SMS)
+- Make an API call to get verified data
+- Display the data to the user for confirmation
+
+It's extremely easy!
+
+
+### Setup
+
+1. Log into the Verified [Dashboard](https://dashboard.verified.inc) and create a brand. 
+2. Adjust the brand settings as needed:
+    - Hosted vs. Non-Hosted
+    - Trusted vs. Non-Trusted
+    - Push vs. Pull
+3. Copy your sandbox API key
+
+
+### Implement
+
+
+### Setup
+
+1. Log into the Verified Dashboard
+2. Set company name
+3. Save brand settings
+
+
+### Call Verified API
+
+### Go Live! */}

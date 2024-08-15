@@ -1,0 +1,87 @@
+---
+id: quick-start-guide
+title: Quick Start Guide
+sidebar_position: 2
+sidebar_label: Quick Start Guide
+description: Quickly try 1-Click Signup at a technical level
+slug: /quick-start-guide
+toc_max_heading_level: 3
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
+import SetupLoginToDashboard from '@site/versioned_docs/version-2/reusables/setup-login-to-dashboard.mdx';
+import UseYourOwnPhoneNumberAdmonition from '@site/versioned_docs/version-2/reusables/use-your-own-phone-number-admonition.mdx'
+import OneClickEntityExample from '@site/versioned_docs/version-2/reusables/1-click-entity-example.mdx'
+
+
+This Quick Start Guide is the fastest way to try 1-Click Signup at a technical level.
+
+<table>
+    <tr>
+        <th>Time to Complete</th>
+        <td>5 minutes</td>
+    </tr>
+    <tr>
+        <th>Skills Required</th>
+        <td>Ability to make API calls</td>
+    </tr>
+</table>
+
+
+## Setup
+
+
+### 1. Log into the Dashboard.
+
+<SetupLoginToDashboard/>
+
+**For this Quick Start Guide, just leave the default brand settings in place.** Notice that the default setting for **integration type** is Hosted. This means you'll use a user interface and phone verification that we host (see [Determine your integration type](./integration-guide#2-determine-your-integration-type) for more information). This is the quickest way to get started.
+
+
+## 1-Click Signup
+
+
+### 2. Call `POST /1-click`.
+
+Call [`POST /1-click`](./endpoints?integrationType=hosted#post-1-click) with your own phone number (or one of our [test user](./environments#test-user)'s phone numbers). Use the Sandbox API key for the brand you just created in the [Dashboard](https://dashboard.verified.inc).
+    
+The [response body](./endpoints?integrationType=hosted#post-1-click-response) will contain `url` and `code`, which you'll use in the following steps.
+
+In a full integration, you'd send an SMS containing `code` to the user (you!) to verify the phone number. But for this Quick Start Guide, we'll skip the SMS step. Just pretend you sent the SMS.
+
+
+### 3. Complete user experience.
+
+Because for this Quick Start Guide we're using a Hosted integration type, the 1-Click Signup user interface will be hosted by Verified (at `url`).
+
+
+#### a. Navigate to `url`.
+
+Open `url` in any web browser, on any device. This will take you to our hosted user interface. 
+
+
+#### b. Enter `code`.
+
+When we prompt you for a verification code, enter `code`.
+
+
+#### c. Click the 1-Click Signup button.
+
+We'll display your (mock) verified data and ask you to confirm you want to share it with the brand. Do so by clicking the 1-Click Signup button.
+
+Then, we'll redirect you to the default redirect URL defined in your brand settings in the [Dashboard](https://dashboard.verified.inc). (Unless you changed what we autofilled, this will be the same as your email domain.) We'll append an `identityUuid` URL parameter, which you'll use in the next step.
+
+
+### 4. Call `GET /1-click`.
+
+Call [`GET /1-click/{identityUuid}`](./endpoints?integrationType=hosted#get-1-click) with the value of the `identityUuid` URL paramter on the redirect URL we navigate you to. 
+
+:::tip
+If you can't find the `identityUuid` parameter (for example if your website automatically strips URL parameters), you can instead use `uuid` from the response body of `POST /1-click`, which has the same value.
+:::
+
+The [response body](./endpoints?integrationType=hosted#get-1-click-response) will be a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), which contains the user's data and metadata about it. You can use this data however you like to create a new account for the user!

@@ -1,16 +1,17 @@
 const fs = require('fs')
 const path = require('path')
-const hiddenFiles = fs.readdirSync(path.join(__dirname, 'docs/hidden')).map(file => file.replace('.mdx', ''))
+// Commenting out for now because removing hidden directory
+// const hiddenFiles = fs.readdirSync(path.join(__dirname, 'docs/hidden')).map(file => file.replace('.mdx', ''))
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'Verified Inc. Docs',
-  tagline: 'Documentation for the Verified Inc. platform.',
+  title: 'Verified Docs',
+  tagline: 'Documentation for the Verified platform',
   url: 'https://docs.verified.inc',
   baseUrl: '',
-  /* revert to throw when possible, was unable to fix a broken link issue */
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  /* change to 'warn' if unable to fix broken link issue */
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'VerifiedInc', // Usually your GitHub org/user name.
   projectName: 'VerifiedInc.github.io', // Usually your repo name.
@@ -21,20 +22,32 @@ module.exports = {
     navbar: {
       title: 'Docs',
       logo: {
-        alt: 'Verified Inc. Logo',
-        src:  'img/logo.png',
+        alt: 'Verified Logo',
+        src: 'img/logo.png',
         srcDark: 'img/logo_dark.png',
       },
       items: [
         {
+          type: 'docsVersionDropdown',
+          position: 'left',
+        },
+        {
+          to: 'https://dashboard.verified.inc',
+          label: 'Dashboard',
+          position: 'left',
+        },
+        {
+          to: 'https://1-click.demo.verified.inc',
+          label: 'Demo',
+          position: 'left',
+        },
+        {
           to: 'https://www.verified.inc',
-          activeBasePath: '/',
-          label: 'Home',
+          label: 'Website',
           position: 'right',
         },
         {
           to: 'https://github.com/VerifiedInc',
-          activeBasePath: 'github',
           label: 'GitHub',
           position: 'right',
         },
@@ -44,54 +57,53 @@ module.exports = {
       style: 'dark',
       links: [
         {
-          title: 'Solutions',
+          title: '1-Click Signup',
           items: [
             {
-              label: '1-Click Signup',
-              to: '/',
+              label: 'Overview',
+              to: '/v2/overview',
             },
             {
-              label: 'Issue to Earn',
-              to: '/issue-to-earn',
+              label: 'Quick Start Guide',
+              to: '/v2/quick-start-guide',
+            },
+            {
+              label: 'Integration Guide',
+              to: '/v2/integration-guide',
             },
           ],
         },
         {
-          title: 'Demos',
+          title: 'API Reference',
           items: [
             {
-              label: '1-Click Signup',
-              to: '/demo-1-click-signup',
+                label: 'Authentication',
+                to: '/v2/authentication',
+            },
+            {
+              label: 'Environments',
+              to: '/v2/environments',
+            },
+            {
+              label: 'Endpoints',
+              to: '/v2/endpoints',
+            },
+            {
+              label: 'Types',
+              to: '/v2/types',
             },
           ],
         },
         {
-          title: 'API',
+          title: 'Tools',
           items: [
             {
-              label: 'Reference',
-              to: '/api-reference',
+              label: 'Dashboard',
+              to: 'https://dashboard.verified.inc',
             },
             {
-              label: 'Postman',
-              href: 'https://api.docs.verified.inc/',
-            },
-          ],
-        },
-        {
-          title: 'Resources',
-          items: [
-            {
-              label: 'Terminology',
-              to: '/terminology',
-            },
-            {
-              label: 'Data Schemas',
-              to: '/data-schemas',
-            },
-            {
-              label: 'FAQ',
-              to: '/faq',
+              label: 'Demo',
+              to: 'https://1-click.demo.verified.inc',
             },
           ],
         },
@@ -99,21 +111,21 @@ module.exports = {
           title: 'More',
           items: [
             {
-              label: 'Home',
-              href: 'https://www.verified.inc',
+              label: 'Website',
+              to: 'https://www.verified.inc',
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/VerifiedInc',
+              to: 'https://github.com/VerifiedInc',
             },
             {
-              label: 'Email Support',
-              href: 'mailto:Support@Verified.Inc',
+              label: 'Support',
+              to: 'mailto:Support@Verified.inc',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Verified Inc.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Verified`,
     },
     mermaid: {
       options: {
@@ -132,7 +144,23 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          sidebarCollapsible: false,
           routeBasePath: '/',
+          includeCurrentVersion: false,
+          lastVersion: '1',
+          breadcrumbs: true,
+          versions: {
+            '1': {
+              label: 'v1',
+              badge: false,
+              path: '/'
+            },
+            '2': {
+              label: 'v2',
+              badge: false,
+              path: '/v2'
+            },
+          },
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -161,6 +189,12 @@ module.exports = {
     ]
   ],
   */
+  scripts: [
+    {
+      src: '/scripts/brandSettings.js',
+      defer: true,
+    }
+  ],
   themes: [
     '@docusaurus/theme-live-codeblock',
     '@docusaurus/theme-mermaid',
@@ -171,7 +205,8 @@ module.exports = {
   },
   plugins: [[require.resolve('docusaurus-lunr-search'), {
     // options, ref: https://github.com/praveenn77/docusaurus-lunr-search#options-available
-    excludeRoutes: hiddenFiles,
+    // Commenting out for now because removing hidden directory
+    // excludeRoutes: hiddenFiles,
     indexBaseUrl: true
   }]],
 };

@@ -1,0 +1,108 @@
+---
+id: environments
+title: Environments
+sidebar_position: 6
+sidebar_label: Environments
+description: How to use Verified API environments
+slug: /environments
+toc_max_heading_level: 4
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import BrandsAdmonition from '@site/versioned_docs/version-2/reusables/brands-admonition.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2/reusables/integration-type-admonition.mdx';
+import DomainsAdmonition from '@site/versioned_docs/version-2/reusables/domains-admonition.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2/reusables/development-work-admonition.mdx';
+import FullDefinitionAdmonition from '@site/versioned_docs/version-2/reusables/full-definition-admonition.mdx';
+import Post1ClickRequestBodyTableShared from '@site/versioned_docs/version-2/reusables/post-1-click-request-body-table-shared.mdx';
+import Post1ClickRequestBodyTableHosted from '@site/versioned_docs/version-2/reusables/post-1-click-request-body-table-hosted.mdx'
+import Post1ClickResponseBodyTableUuid from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-uuid.mdx';
+import Post1ClickResponseBodyTableUrl from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-url.mdx';
+import Post1ClickResponseBodyTableCode from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-code.mdx';
+import Post1ClickResponseBodyTableIdentity from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-identity.mdx';
+import UseUserInputAdmonition from '@site/versioned_docs/version-2/reusables/use-user-input-admonition.mdx'
+import CredentialRequestTableShared from '@site/versioned_docs/version-2/reusables/credential-request-table-shared.mdx'
+import CredentialRequestTableHosted from '@site/versioned_docs/version-2/reusables/credential-request-table-hosted.mdx'
+
+{/* :::note
+See also our [Postman docs](https://api.docs.verified.inc/).
+::: */}
+
+
+We expose two environments: [**Sandbox**](#sandbox) and [**Production**](#production). 
+
+<DevelopmentWorkAdmonition/>
+
+
+## Sandbox
+
+<table>
+    <tr>
+        <th>Domain</th>
+        <td><code>sandbox-verifiedinc<b>.com</b></code></td>
+    </tr>
+    <tr>
+        <th>Base URL</th>
+        <td><code><span>https://</span>core-api.sandbox-verifiedinc<b>.com</b>/v2</code></td>
+    </tr>
+</table>
+
+<DomainsAdmonition/>
+
+
+### Mock Data
+
+In Sandbox, we return mock user data regardless of what phone (or email) [identifier](./types#identifiers) you use. We recommend using your own phone number, so you can succesfully send SMS during the development process.
+
+If you'd like us to return custom mock data for your phone number(s), please email us at Support@Verified.inc — we're happy to enable that for you.
+
+
+### Test User
+
+In addition to using your own phone number to receive [mock data](#mock-data), you can use our test user Richard Hendricks, who has the following phone and email [identifiers](./types#identifiers) and static verification code:
+
+<table>
+    <tr>
+        <th>Phones</th>
+        <td>`+10123456789`</td>
+        <td>`+550123456789`</td>
+    </tr>
+    <tr>
+        <th>Emails</th>
+        <td>`richard@piedpiper.net`</td>
+        <td>`richard.hendricks@verified.inc`</td>
+    </tr>
+    <tr>
+        <th>Verification Code</th>
+        <td>`111111`</td>
+    </tr>
+</table>
+
+:::tip Yes, You Read That Right
+This is Richard Hendricks from the show _Silicon Valley_! 😂
+:::
+
+:::warning Don't Send Messages to These Identifiers
+These are not valid phone numbers or email addresses, so sending messages to them won't work. To simulate SMS verification, for example, use the static verification code above.
+:::
+
+
+## Production
+
+<table>
+    <tr>
+        <th>Domain</th>
+        <td><code>verified<b>.inc</b></code></td>
+    </tr>
+    <tr>
+        <th>Base URL</th>
+        <td><code><span>https://</span>core-api.verified<b>.inc</b>/v2</code></td>
+    </tr>
+</table>
+
+<DomainsAdmonition/>

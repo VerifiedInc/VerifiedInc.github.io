@@ -1,0 +1,295 @@
+---
+id: acceptance-guide
+title: Acceptance Guide
+sidebar_label: Acceptance Guide
+slug: /acceptance-guide
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CredentialUsageExample from '../reusables/credential-usage-example-snippet.mdx';
+import SharedCredentialsExample from '../reusables/shared-credentials-body.mdx';
+import SharedCredentialsExampleDetails from '../reusables/shared-credentials-body-details.mdx';
+
+**Time to read:** 5 min
+
+**Time to implement:** 2-4 hours
+
+## Overview
+
+**[Verified Inc.](https://www.verified.inc)** enables brands to provide their users with best in class onboarding. This particular guide focuses on how and why to become a <Tip type="brand">brand</Tip> that accepts Verified Inc. <Tip type="credential">credentials</Tip>.
+
+> This guide is a more detailed version of what can be found in the [1-Click](/1-click-guide) Guide.
+
+:::tip
+You will need an API key and an email and/or phone for each user. Below is a valid API Key and URL for your initial usage along with suggested test email and phone values.
+
+If you use these suggested test email and/or phone values you can authenticate to the wallet using those values, i.e. richard@piedpiper.net, using a static OTP of `111111`.
+
+```text title="Sandbox API Key"
+yVg3LEnF08y0MDmpHcPxB+sZWFcDARmPRKdY2M906ng=
+```
+
+```text title="Sandbox URL"
+https://core-api.sandbox-verifiedinc.com
+```
+
+```text title="Sandbox User Email"
+richard@piedpiper.net
+```
+
+```text title="Sandbox User Phone"
++10123456789
+```
+
+```text title="Sandbox User Wallet Authentication OTP"
+111111
+```
+:::
+
+### Partner Acceptance
+In Partner Issuer Acceptance, you integrate closely with a partnered issuer brand. This ensures that users will have the credentials you need for your brand's onboarding. This is the most popular integration type because of the parallels to traditional affiliate partnerships. However, this case supercharges the traditional flow by allowing users to accept promotions with 1-click.
+
+### General Acceptance
+In General Issuer Acceptance, users may come from issuing brands that you do not work with directly. This is more flexible as it does not require any pre-arranged partnerships, and allows you to draw from a larger pool of issuers. However, it does require you to check whether the user has the necessary credentials for your brand's onboarding.
+
+
+## Motivations
+
+As a brand that accepts digital ID cards, you can unlock 1-Click onboarding. This drastically decreases the abandonment rate during customer sign up and makes for a far better first touch experience for your new users.
+
+Crucially, you will dramatically improve the experience for any user enabled with a digital ID card without changing the experience for any user without one. And because Verified Inc. sits on top of your existing onboarding process, you don’t need to change any existing security or compliance vendors or procedures.
+
+Once you join, our team will identify opportunities to promote your brand within our network for 1-click conversions. These can be in-app offers, marketing emails, or similar promotions to drive users to your brand from complementary services.
+
+In brief: As an acceptor in the Verified Inc. network, you will…
+
+- Dramatically improve onboarding conversion.
+- Delight users with a 1-click setup.
+- Join a network of companies to help you grow faster (super charge your affiliate programs).
+
+## UX Strategies
+
+### Partner Acceptance
+
+[Partner Acceptance](/acceptance-guide#partner-acceptance) is the most streamlined flow thanks to the partner issuing brand ensuring the user has the necessary credentials to perform your onboarding flow. This form of integration also pre-authenticates the user to the Verified Inc. Wallet, removing another step in the experience.
+
+<details>
+  <summary>Demo Brand Accepting Credentials via Partner Acceptance</summary>
+  <p>
+    This demo shows Lendtable accepting their partner, Hooli, credentials in
+    order to gain 1-Click IDV capabilities. In this case Hooli can issue the
+    credential in an on-demand fashion when the user clicks the button to redeem
+    the Lendtable offer in the Hooli dashboard. This would ensure the user has
+    the necessary credentials, so Lendtable can verify with 1-Click.
+  </p>
+  <iframe
+    src='https://marvelapp.com/prototype/1952a259?emb=1&iosapp=false&frameless=false'
+    width='453'
+    height='864'
+    allowTransparency='true'
+    frameborder='0'
+  ></iframe>
+</details>
+
+### General Acceptance
+
+For [General Acceptance](/acceptance-guide#general-acceptance), you will have to check if a user has credentials because the User will not be coming directly from a partner. This can be done in the background by calling [/hasMatchingCredentials](/api-overview#check-user-credentials) at any time. If the response contains `match`: `true` then you should redirect the user to the `url`. The demo below demonstrates an example UX.
+
+<details>
+  <summary>Demo Kredita Accepting Credentials</summary>
+  <p>
+    This demo shows Kredita accepting Hooli credentials in order to gain 1-Click
+    IDV capabilities when it's available. They collect email and phone from the
+    user (Richard) and check if the user has matching credentials. The user
+    does, so Kredita lets them verify with 1-Click.
+  </p>
+  <iframe
+    src='https://marvelapp.com/prototype/9cab6ai?emb=1&iosapp=false&frameless=false'
+    width='453'
+    height='864'
+    allowTransparency='true'
+    frameborder='0'
+  ></iframe>
+</details>
+
+## Implementation
+
+There are two ways to handle the acceptor integration that is independent of [Partner](/acceptance-guide#partner-acceptance) or [General](/acceptance-guide#general-acceptance) Acceptance use cases: to [pull shared credentials](/acceptance-guide#pull-credential-data) via a GET to [`/sharedCredentials/{sharedCredentialsUuid}`](/api-overview#get-shared-credentials) or to receive the credential data via a POST to a [webhook](/acceptance-guide#webhook) endpoint you must implement.
+
+In all cases, you will need to configure a web page to have the user redirected to after agreeing to share data with your brand. The response body of the pull shared credentials method is equivalent to the request body of the webhook to receive shared credentials method.
+
+<SharedCredentialsExample/>
+
+### Pull Credential Data
+To pull credential data you will need to configure a web client page to receive the `sharedCredentialsUuid` query param via a redirect from the Verified Inc. Wallet. Once the query param is retrieved it should be sent to your backend where it is used to call [`/sharedCredentials/{sharedCredentialsUuid}`](/api-overview#get-shared-credentials) to get the credentials to onboard the user. *This guide will proceed with this method being the primary focus.*
+
+### Partner Acceptance
+
+In this case, as the accepting <Tip type="brand">brand</Tip>, you only need to handle the two steps ([1](acceptance-guide#3-capture-query-param-value)) and ([2](/acceptance-guide#4-retrieve-shared-credentials-data)) below, thanks to issuer handling steps ([0.a](/acceptance-guide#0a-check-user-credentials)) and ([0.b](/acceptance-guide#0b-redirect-user-to-verified-inc-wallet)) for you.
+
+Because the user starts in the issuing brand's UX in this type of flow, the issuer handles the redirect in step ([0.b](/acceptance-guide#0b-redirect-user-to-verified-inc-wallet)). This is why you must pre-define your desired `redirectUrl` with us. For more information, see the [partner issuance](/issuance-guide#partner-issuance) section of the issuance guide.
+
+:::note
+To enable this form of acceptance, we encode a direct relationship between the issuer and the acceptor. If you would like to implement this type of flow, please email us at contact@verified.inc so we can help you. However, please note this is not a requirement for acceptance.
+:::
+
+#### 1. Capture Query Param Value
+
+**Capture the `sharedCredentialsUuid` query param** from the `redirectUrl` page you defined. This url ought to look something like this:
+
+```text title="Example Redirect Back to Acme Bank URL"
+https://acme-bank.co/sign-up/complete?sharedCredentialsUuid=37ce0fff-af32-457e-9458-057125eb417d&verified=ga4p3yav
+```
+
+_Optional_: **Capture the `verified` query param** as well. This will facilitate attribution tracking for promotions flows as the value is uniquely defined by the partner Issuer.
+
+#### 2. Retrieve Shared Credentials Data
+
+**Call [`/sharedCredentials/{sharedCredentialsUuid}`](/api-overview#get-shared-credentials)** from your backend with the `sharedCredentialsUuid` the callback URL contains. The response body will contain the credentials the user agreed to share via 1-Click IDV.
+
+```typescript title="Example Response Body"
+{
+    "uuid": string // the sharedCredentialsUuid
+    "credentials": [
+      {
+        "id": "8a1d4e35-413d-496b-b499-8810b55cfb5c",
+        "type": "SsnCredential",
+        "data": {
+            "ssn": "111223333"
+        },
+        "issuanceDate": "1671847264479",
+        "expirationDate": "1871839024044",
+        "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+      },
+      {
+        "id": "1be7c008-3f0c-4a21-9aad-69ca1c4251d2",
+        "type": "FullNameCredential",
+        "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+        "issuanceDate": "1671847264479",
+        "expirationDate": "1871839024044",
+        "data": [
+          {
+            "id": "2e6a7b9a-e93e-43ba-98a9-c554f4e16457",
+            "type": "FirstNameCredential",
+            "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+            "issuanceDate": "1671847264479",
+            "expirationDate": "1871839024044",
+            "data": {
+              "firstName": "Richard"
+            }
+          },
+          {
+            "id": "9a5817ef-e621-4277-8c48-c8ee3776b6c4",
+            "type": "LastNameCredential",
+            "issuer": "32ef9562-312d-4a8b-8f3e-ccb8df500b55",
+            "issuanceDate": "1671847264479",
+            "expirationDate": "1871839024044",
+            "data": {
+              "lastName": "Hendricks"
+            }
+          }
+        ]
+      }
+    ],
+    // user's email from input to /hasMatchingCredentials
+    // only present if email was provided
+    "email"?: string,
+    // user's phone from input to /hasMatchingCredentials
+    // only present if email was provided
+    "phone"?: string
+}
+```
+
+It's easiest to extract the data from each credential using the corresponding [schema](/schema). The extracted data is verified according to the issuer of the credential, but you can perform additional verification steps if you like.
+
+<CredentialUsageExample/>
+
+✅ **_You're done!_**
+
+### General Acceptance
+
+Because the issuer is not issuing credentials with your brand in mind, **you need to check whether the user has matching <Tip type="credential">credentials</Tip>.** If they do, they can share all of those credentials with 1-click. **You will also need to direct the user to the Verified Inc. Wallet.**
+
+#### 0.a Check User Credentials
+
+**Call [`/hasMatchingCredentials`](/api-overview/#check-user-credentials)** with the user's email and/or phone and the credential type(s) you need.
+
+```typescript title="Example Response Body"
+{
+    "match": true,
+    "url": "https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789"
+}
+```
+
+<details>
+  <summary>What counts as a match?</summary>
+  <p>
+    When you call <code>/hasMatchingCredentials</code>, you include one or more
+    credential requests. For each credential request, you specify:
+    <ul>
+      <li>
+        the type
+      </li>
+      <li>
+        (optional) which issuers are acceptable
+      </li>
+      <li>
+        (optional) whether the credential is mandatory
+      </li>
+    </ul>
+  </p>
+  <p>
+    There's a match if, for each credential request for a mandatory credential, the user has a credential of the correct type from an acceptable issuer.
+  </p>
+</details>
+
+The user will either have matching credentials, or they won't. If they do, continue to step (2). If they don't, you're done with Verified Inc. and should take the user through your existing verification flow.
+
+#### 0.b Redirect User to Verified Inc. Wallet
+
+**Direct the user to the `url`** the response body contains. You need to add an additional `redirectUrl` query param that you define which will serve as the ultimate landing page after the user completes 1-Click IDV from the Verified Inc. web wallet.
+
+For example, if the final url you need to redirect the user to is https://acme-bank.co/sign-up/complete then ultimate url you will redirect the user to will be something like this:
+
+```text title="Example Redirect to Verified Inc. Wallet URL"
+https://wallet.verified.inc/request/9f2053fc-cc4c-41cb-8d14-7d3ccf6167eb?email=test%40example.com&phone=%2B10123456789&redirectUrl=https://acme-bank.co/sign-up/complete
+```
+
+From here you can continue to step (1) in the [Partner Acceptance](/acceptance-guide#partner-acceptance) section above having preformed the credential verification steps, ensuring that the user has the necessary credentials.
+
+### Webhook
+*Currently in beta*
+
+To receive credential data via a webhook url you need to implement an endpoint that can handle a POST HTTP request with a request body containing credential information. You will have to inform us of what is required to interface and authenticate with your webhook. The configuration options available are:
+
+- url
+- query parameters
+- headers
+- authorization
+
+The request body that the endpoint will have to handle is of fixed Shared Credentials structure. An example of this format can be found below.
+
+<SharedCredentialsExampleDetails/>
+
+
+## Integration Testing
+All testing and development ought to be done against our Sandbox environment. The publicly published [Postman collection's](https://api.docs.verified.inc/) *Integration Test Suite* is very helpful facilitating testing your Acceptor integration. All instructions below are in reference to this Postman collection. *If you are more accustom to an alternative HTTP request client for development purposes, please let us know and we maybe be able to accommodate you.*
+
+To test either flavor of integration, you need to replace the `acceptorBrandApiKey` from the also published `Public API` environment variables with your brand's Sandbox API key.
+
+### Partner Acceptance
+For Partner Acceptance, you will need to replace the `partnerBrandUuid` with your brand's Sandbox UUID and use the issue `credentials w/ partnerUuid` (then subsequently can use `hasMatchingCredentials w/ partnerUuid`) call with the request body corresponding to your credential needs. Then by following the response body's `url` you can test the flow from the User's perspective. When the credentials are agreed to be shared you, the testing User, will be redirected to the url defined in the `redirectUrl` query param (great for development) or to the `redirectUrl` you have already pre-defined and shared with us (necessary for integration to work when an issuer brand initiates the flow).
+
+:::important
+In the real implementation the issuer will be handling the `/credentials` and `/hasMatchingCredentials` requests and redirecting the User to the Verified Inc. Wallet.
+:::
+
+:::note
+Some pre-configuration is necessary to test this appropriately. However, if we have already given you an ApiKey this should already be done for you. If you are unsure, please contact us.
+:::
+
+### General Acceptance
+Using the issue `credentials w/o partner` request you can mimic credentials being issued to User in some earlier state. Then when your integration makes the [`/hasMatchingCredentials`](/api-overview/#check-user-credentials) request with the user's email and/or phone it ought to return there is a match for you to test your integration with.

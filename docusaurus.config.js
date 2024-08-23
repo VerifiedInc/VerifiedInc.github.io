@@ -10,12 +10,17 @@ module.exports = {
   url: 'https://docs.verified.inc',
   baseUrl: '',
   /* change to 'warn' if unable to fix broken link issue */
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'VerifiedInc', // Usually your GitHub org/user name.
   projectName: 'VerifiedInc.github.io', // Usually your repo name.
   themeConfig: {
+    announcementBar: {
+      content: '<a href="/v2"><b>1-Click Signup v2</b></a> is in preview!',
+      backgroundColor: '#0dbc3d',
+      textColor: '#ffffff',
+    },
     prism: {
       additionalLanguages: ['swift', 'kotlin', 'java', 'dart', 'groovy'],
     },

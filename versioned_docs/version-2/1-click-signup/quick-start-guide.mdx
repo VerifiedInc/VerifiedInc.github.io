@@ -39,7 +39,9 @@ This Quick Start Guide is the fastest way to try 1-Click Signup at a technical l
 
 <SetupLoginToDashboard/>
 
-**For this Quick Start Guide, just leave the default brand settings in place.** Notice that the default setting for **integration type** is Hosted. This means you'll use a user interface and phone verification that we host (see [Determine your integration type](./integration-guide#2-determine-your-integration-type) for more information). This is the quickest way to get started.
+**For this Quick Start Guide, just leave the default brand settings in place.** Notice that the default setting for **integration type** is Hosted. This means you'll use a user interface and phone verification that Verified hosts. This is the quickest way to get started.
+
+For full technical details on how to integrate 1-Click Signup, see [Integration Guide](./integration-guide). For more information on integration types, see [Determine your integration type](./integration-guide#2-determine-your-integration-type).
 
 
 ## 1-Click Signup
@@ -51,7 +53,7 @@ Call [`POST /1-click`](./endpoints?integrationType=hosted#post-1-click) with you
     
 The [response body](./endpoints?integrationType=hosted#post-1-click-response) will contain `url` and `code`, which you'll use in the following steps.
 
-In a full integration, you'd send an SMS containing `code` to the user (you!) to verify the phone number. But for this Quick Start Guide, we'll skip the SMS step. Just pretend you sent the SMS.
+In a full integration, you'd send an SMS containing `code` to the user to verify the phone number. But for this Quick Start Guide, we'll skip the SMS step. Just pretend you sent the SMS.
 
 
 ### 3. Complete user experience.

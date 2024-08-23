@@ -170,20 +170,20 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 ```typescript title="1ClickEntity Type"
 {
     "identifiers": {
-        [identifierType: string]: string
+        [identifierKey: string]: string
     },
     "credentials": {
-        [shortenedCredentialType: string]: string
+        [credentialKey: string]: string
     },
     "metadata": {
         "identifiers": {
-            [identifierType: string]: {
-                [metadataType: string]: string
+            [identifierKey: string]: {
+                [metadataKey: string]: string
             }
         },
         "credentials": {
-            [shortenedCredentialType: string]: {
-                [metadataType: string]: string
+            [credentialKey: string]: {
+                [metadataKey: string]: string
             }
         }
     }
@@ -202,16 +202,16 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         <td>`identifiers`</td>
         <td>`Object`</td>
         <td>See above</td>
-        <td>User [identifiers](#identifiers), keyed on `identifierType`</td>
+        <td>User [identifiers](./data/#identifiers), keyed on `identifierKey`</td>
         <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
     </tr>
     <tr>
-        <td>`identifierType`</td>
+        <td>`identifierKey`</td>
         <td>
             <details>
                 <summary>`enum`</summary>
 
-                Possible values (see [identifiers](#identifiers) for details):
+                Possible values (see [identifiers](./data/#identifiers) for details):
                     - `phone`
                     - `email`
             </details>
@@ -224,16 +224,16 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         <td>`credentials`</td>
         <td>`Object`</td>
         <td>See above</td>
-        <td>User [credentials](#credentials), keyed on `shortenedCredentialType`</td>
+        <td>User [credentials](./data/#credentials), keyed on `credentialKey`</td>
         <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
     </tr>
     <tr>
-        <td>`shortenedCredentialType`</td>
+        <td>`credentialKey`</td>
         <td>
             <details>
                 <summary>`enum`</summary>
 
-                Possible values (see [credentials](#credential) for details):
+                Possible values (see [credentials](./data/#credential) for details):
                     - `phone`
                     - `email`
                     - `fullName.firstName`
@@ -259,11 +259,11 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         <td>`metadata`</td>
         <td>`Object`</td>
         <td>See above</td>
-        <td>[Metadata](#metadata), keyed on `metadataType`</td>
+        <td>[Metadata](./data/#metadata), keyed on `metadataKey`</td>
         <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
     </tr>
     <tr>
-        <td>`metadataType`</td>
+        <td>`metadataKey`</td>
         <td>
             <details>
                 <summary>`enum`</summary>
@@ -281,268 +281,6 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         <td>`"verificationMethod"`</td>
     </tr>
 </table>
-
-
-### Identifiers
-
-> An **identifier** is a phone number or email address the user uses to verify for 1-Click Signup.
-
-<table>
-    <tr>
-        <th>`identifierType`</th>
-        <th>Type</th>
-        <th>Format</th>
-        <th>Description</th>
-        <th>Example</th>
-    </tr>
-    <tr>
-        <td>`phone`</td>
-        <td>`string`</td>
-        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
-        <td>Phone number a user uses to verify to 1-Click Signup</td>
-        <td>`"+10123456789"`</td>
-    </tr>
-    <tr>
-        <td>`email`</td>
-        <td>`string`</td>
-        <td>email</td>
-        <td>Email address a user uses to verify to 1-Click Signup</td>
-        <td>`"richard@piedpiper.net"`</td>
-    </tr>
-</table>
-
-
-### Credentials
-
-> A **credential** is a piece of identity data about a user.
-
-:::info[Credential Formats]
-**We support multiple formats for some credential types (see below).** If you'd like to use formats different than the defaults, please reach out to us at Support@Verified.inc and we'll enable them for you.
-:::
-
-<table>
-    <tr>
-        <th>`shortenedCredentialType`</th>
-        <th>Type</th>
-        <th>Format(s)</th>
-        <th>Description</th>
-        <th>Example</th>
-    </tr>
-    <tr>
-        <td>`phone`</td>
-        <td>`string`</td>
-        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
-        <td>Phone number</td>
-        <td>`"+10123456789"`</td>
-    </tr>
-    <tr>
-        <td>`email`</td>
-        <td>`string`</td>
-        <td>email</td>
-        <td>Email address</td>
-        <td>`"richard@piedpiper.net"`</td>
-    </tr>
-    <tr>
-        <td>`fullName`</td>
-        <td>
-            - **Default:** `Object`
-            - `string`
-        </td>
-        <td>
-            - **Default:** See above
-            - Any combination of child `shortenedCredentialType`s under `fullName`, `,` (comma), and `-` (dash)
-        </td>
-        <td>Full name</td>
-        <td>
-            - See [`1ClickEntity` example](#example-1clickentity)
-            - `"Hendricks, Richard"`
-        </td>
-    </tr>
-    <tr>
-        <td>`fullName.firstName`</td>
-        <td>`string`</td>
-        <td>`Title Case`</td>
-        <td>First name</td>
-        <td>`"Richard"`</td>
-    </tr>
-    <tr>
-        <td>`fullName.middleName`</td>
-        <td>`string`</td>
-        <td>`Title Case`</td>
-        <td>Middle name</td>
-        <td>`"Baudelaire"`</td>
-    </tr>
-    <tr>
-        <td>`fullName.lastName`</td>
-        <td>`string`</td>
-        <td>`Title Case`</td>
-        <td>Last name</td>
-        <td>`"Henricks"`</td>
-    </tr>
-    <tr>
-        <td>`address`</td>
-        <td>
-            - **Default:** `Object`
-            - `string`
-        </td>
-        <td>
-            - **Default:** See above
-            - Any combination of child `shortenedCredentialType`s under `address`, `,` (comma), and `-` (dash)
-        </td>
-        <td>Address</td>
-        <td>
-            - See [`1ClickEntity` example](#example-1clickentity)
-            - `"Palo Alto, US-CA"`
-        </td>
-    </tr>
-    <tr>
-        <td>`address.line1`</td>
-        <td>`string`</td>
-        <td>`Title Case`</td>
-        <td>Line 1 of address</td>
-        <td>`"5320 Newell Rd"`</td>
-    </tr>
-    <tr>
-        <td>`address.line2`</td>
-        <td>`string`</td>
-        <td>`Title Case`</td>
-        <td>Line 2 of address</td>
-        <td>`""`</td>
-    </tr>
-    <tr>
-        <td>`address.city`</td>
-        <td>`string`</td>
-        <td>`Title Case`</td>
-        <td>City of address</td>
-        <td>`"Palo Alto"`</td>
-    </tr>
-    <tr>
-        <td>`address.state`</td>
-        <td>`string`</td>
-        <td>
-            - **Default:** 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
-            - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
-        </td>
-        <td>State of address</td>
-        <td>
-            - `"CA"`
-            - `"California"`
-        </td>
-    </tr>
-    <tr>
-        <td>`address.zipCode`</td>
-        <td>`string`</td>
-        <td>[ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9) or [ZIP+4](https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4) (9 digits, 0-9, with a hypen after the first 5)</td>
-        <td>ZIP code of address</td>
-        <td>`"94303"` or `"94303-3058"`</td>
-    </tr>
-    <tr>
-        <td>`address.country`</td>
-        <td>`string`</td>
-        <td>
-            - **Default:** 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
-            - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
-        </td>
-        <td>Country of address</td>
-        <td>`"US"`</td>
-    </tr>
-    <tr>
-        <td>`birthDate`</td>
-        <td>`string`</td>
-        <td>
-            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
-            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
-        </td>
-        <td>Birth date</td>
-        <td>
-            - `"617947200000"`
-            - `"08/01/1989"`
-        </td>
-    </tr>
-    <tr>
-        <td>`ssn`</td>
-        <td>`string`</td>
-        <td>9 digits (0-9)</td>
-        <td>Social Security Number</td>
-        <td>`"123-45-6789"`</td>
-    </tr>
-</table>
-
-
-### Metadata
-
-> A piece of **metadata** is additional data that's not a user's identity data (their identifiers or credentials) — though it's often _about_ that identity data.
-
-<table>
-    <tr>
-        <th>`metadataType`</th>
-        <th>Type</th>
-        <th>Format</th>
-        <th>Description</th>
-        <th>Example</th>
-    </tr>
-    <tr>
-        <td>`id`</td>
-        <td>`string`</td>
-        <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
-        <td>Unique identifier for a credential (applies only to credentials, not identifiers)</td>
-        <td>`"174b9aaf-3219-4499-b54c-0eb6acc5dbf2"`</td>
-    </tr>
-    <tr>
-        <td>`verificationMethod`</td>
-        <td>
-            <details>
-                <summary>`enum`</summary>
-
-                Possible values:
-                    - `"phone_carrier"`
-                    - `"credit_bureau"`
-                    - `"otp"`
-                    - `"self_attested"`
-                    - `null`
-            </details>
-        </td>
-        <td>`snake_case`</td>
-        <td>How an identifier or credential was verified</td>
-        <td>`"phone_carrier"`</td>
-    </tr>
-    <tr>
-        <td>`status`</td>
-        <td>
-            <details>
-                <summary>`enum`</summary>
-
-                Possible values:
-                    - `"valid"`
-                    - `"revoked"`
-                    - `"otp"`
-                    - `"self_attested"`
-                    - `null`
-            </details>
-        </td>
-        <td>`snake_case`</td>
-        <td>The status of a credential</td>
-        <td>`"valid"`</td>
-    </tr>
-    <tr>
-        <td>`expirationDate`</td>
-        <td>`string`</td>
-        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds) or `null`</td>
-        <td>The date a credential expires</td>
-        <td>`"1671847264479"`</td>
-    </tr>
-</table>
-
-:::tip
-**The most commonly used type of metadata is `verificationMethod`, which describes how a credential was verified:**
-- `"phone_carrier"`: verified via phone carrier records
-- `"credit_bureau"`: verified via credit bureau records
-- `"otp"`: verified via an OTP (one time passcode)
-- `"self_attested"`: attested by the user themselves (not verified)
-- `null`
-
-You can build custom logic to handle credentials based on their `verificationMethod`, for example requiring additional verification if an important credential is `"self_attested"`.
-:::
 
 
 ### Example {#example-1clickentity}

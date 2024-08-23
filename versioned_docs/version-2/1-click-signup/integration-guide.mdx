@@ -22,6 +22,9 @@ import UseUserInputAdmonition from '@site/versioned_docs/version-2/reusables/use
 import UseYourOwnPhoneNumberAdmonition from '@site/versioned_docs/version-2/reusables/use-your-own-phone-number-admonition.mdx'
 import IncludeAPoweredByGraphic from '@site/versioned_docs/version-2/reusables/include-a-powered-by-graphic.mdx'
 import IncludeVerifiedLegalLanguage from '@site/versioned_docs/version-2/reusables/include-verified-legal-language.mdx'
+import SupportedPhoneNumbersAdmonition from '@site/versioned_docs/version-2/reusables/supported-phone-numbers-admonition.mdx'
+import BirthDateFormatAdmonition from '@site/versioned_docs/version-2/reusables/birth-date-format-admonition.mdx'
+import Chip from '@mui/material/Chip';
 
 {/* 1-Click Signup is the fastest way to onboard new users.
 
@@ -65,7 +68,7 @@ This Integration Guide will help you fully integrate 1-Click Signup into your ap
 
 On the Brand Details page in the Dashboard, you can configure settings for your brand. 
 
-The most important brand setting is **integration type,** which affects how you implement 1-Click Signup.
+The most important brand setting is **integration type,** which affects how you implement 1-Click Signup. 
 
 :::tip
 You can always start with one integration type and change it later.
@@ -77,7 +80,11 @@ There are three options for integration type:
 |:---------------- |:------------ |:--------------------------- |:----------- | :------- |
 | **Hosted** | Hosted by Verified | Hosted by Verified | Use Verified's UI and Verified's verification code | You want the quickest implementation |
 | **Semi-Hosted** | Hosted by You | Hosted by Verified | Use your own UI but Verified's verification code | You _don't_ already verify users' phone numbers |
-| **Non-Hosted** | Hosted by You | Hosted by You | Use your own UI and your own verification code | You _do_ already verify users' phone numbers |
+| **Non-Hosted** <Chip label="Recommended" variant="outlined" size="small" color="primary"/> | Hosted by You | Hosted by You | Use your own UI and your own verification code | You _do_ already verify users' phone numbers |
+
+:::tip We Recommend Non-Hosted
+**Non-Hosted** is the most common integration type and the one we recommend. It allows you to make 1 API call and receive user data directly in the response body. It's the simplest way to integrate 1-Click Signup, as long as you already verify user's phone numbers. If you don't already do this, Semi-Hosted or Hosted may be a better option. 
+:::
 
 Determining which option is best for you is simple. Just answer these questions:
 
@@ -107,15 +114,11 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
 
     To start 1-Click Signup for a user (using the Hosted integration type), you'll need their phone number.  
 
-    We recommend using a form with a phone number input that automatically submits when the user enters 10 digits. _See our [Demo](https://1-click.demo.verified.inc) for an example of this._
+    We recommend using a form with a phone number input that automatically submits when the user enters 10 digits. _See our [Demo](https://1-click.demo.verified.inc?integrationType=hosted) for an example of this._
 
-    <Admonition type="info" title="Supported Phone Numbers">
-        **Currently, we only support US mobile phone numbers.** You'll need to pass these to our API in [E.164 format](https://www.twilio.com/docs/glossary/what-e164). This is the `+1` country code with a 10-digit subscriber code appended to it, for example `+10123456789`.
-        
-        **We're able to source verified data for about 95% of these phone numbers.** If we can't source data, you can take the user through your normal signup flow.
-    </Admonition>
+    <SupportedPhoneNumbersAdmonition/>
 
-    You'll also need to:
+    **You'll also need to:**
     <ol type="a">
         <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic)</li>
         <li>[**Include Verified legal language**](#b-include-verified-legal-language)</li>
@@ -210,19 +213,13 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
     - For the phone number, a phone number input that automatically continues when the user enters 10 digits.
     - For the birth date, a numeric input (formatted as `MM/DD/YYYY` or similar) that automatically continues when the user enters 8 digits.
 
-    We recommend automatically submitting the form when both inputs have valid values. _See our [Demo](https://1-click.demo.verified.inc) for an example of this._
+    We recommend automatically submitting the form when both inputs have valid values. _See our [Demo](https://1-click.demo.verified.inc?integrationType=semi-hosted) for an example of this._
 
-    <Admonition type="info" title="Supported Phone Numbers">
-        **Currently, we only support US mobile phone numbers.** You'll need to pass these to our API in [E.164 format](https://www.twilio.com/docs/glossary/what-e164). This is the `+1` country code with a 10-digit subscriber code appended to it, for example `+10123456789`.
-        
-        **We're able to source verified data for about 95% of these phone numbers.** If we can't source data, you can take the user through your normal signup flow.
-    </Admonition>
+    <SupportedPhoneNumbersAdmonition/>
 
-    <Admonition type="info" title="Birth Date Format">
-        You'll need to pass the birth date to our API (in the [request body of `POST /1-click`](./endpoints#post-1-click-request)) in `YYYY-MM-DD` format, but you should collect it from the user in whatever form you think results in the best user experience for your use case.
-    </Admonition>
+    <BirthDateFormatAdmonition/>
 
-    You'll also need to:
+    **You'll also need to:**
     <ol type="a">
         <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic-1)</li>
         <li>[**Include Verified legal language**](#b-include-verified-legal-language-1)</li>
@@ -295,7 +292,7 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
     To start 1-Click Signup for a user (using the Non-Hosted integration type), you'll need their phone number and birth date, and you'll need to verify their phone number using your own solution.
 
     <Admonition type="important">
-        The Non-Hosted integration type requires you to use your own phone verification code. If you'd like to use ours, switch to the [Semi-Hosted](?integrationType=semi-hosted#integration) or [Hosted](?integrationType=hosted#integration) integration type.
+        **The Non-Hosted integration type requires you to verify phone numbers with your own solution.** If you'd like to use ours, switch to the [Semi-Hosted](?integrationType=semi-hosted#integration) or [Hosted](?integrationType=hosted#integration) integration type.
     </Admonition>
 
 
@@ -303,18 +300,18 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
 
     You can do this however you like, as long as you verify the user's phone number with a one-time verification code at least 6 digits long.
 
+    <SupportedPhoneNumbersAdmonition/>
+
 
     ### 2. Prompt user for birth date.
 
     We require a birth date to ensure we retrieve data for only the correct user.
 
-    We recommend using a form with a numeric input (formatted as `MM/DD/YYYY` or similar) that automatically submits when the user enters 8 digits.
+    We recommend using a form with a numeric input (formatted as `MM/DD/YYYY` or similar) that automatically submits when the user enters 8 digits. _See our [Demo](https://1-click.demo.verified.inc?integrationType=non-hosted) for an example of this._
 
-    <Admonition type="info" title="Birth Date Format">
-        You'll need to pass the birth date to our API (in the [request body of `POST /1-click`](./endpoints#post-1-click-request)) in `YYYY-MM-DD` format, but you should collect it from the user in whatever form you think results in the best user experience for your use case.
-    </Admonition>
+    <BirthDateFormatAdmonition/>
 
-    You'll also need to:
+    **You'll also need to:**
     <ol type="a">
         <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic-2)</li>
         <li>[**Include Verified legal language**](#b-include-verified-legal-language-2)</li>
@@ -342,10 +339,14 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
 
     Call [`POST /1-click`](./endpoints?integrationType=non-hosted#post-1-click) with the user's phone number and birth date.
 
+    <Admonition type="danger" title="Recency Requirement">
+        **You must call `POST /1-click` within 30 minutes of verifying the user's phone number ([step 1](?integrationType=non-hosted#1-prompt-user-for-phone-number-and-verify-it)).** This is an important anti-fraud measure.
+    </Admonition>
+
     The [response body](./endpoints?integrationType=non-hosted#post-1-click-response) will contain a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. You can use this data however you like to create a new account for the user!
 
     <Admonition type="tip">
-        **For any phone number, in our [Sandbox](./environments#sandbox) environment, we'll return [mock data](./environments#mock-data).** You're welcome to use your own phone number(s) and/or our [test user](./environments#test-user)'s phone numbers. 
+        **For any phone number, in our [Sandbox](./environments#sandbox) environment, we'll return [mock data](./environments#mock-data).** You're welcome to use your own phone number(s) and/or our [test user](./environments#test-user)'s phone number. 
     </Admonition>
 
     ---

@@ -32,6 +32,10 @@ module.exports = {
       ]
     },
     {
+      type: 'doc',
+      id: 'data',
+    },
+    {
       type: 'category',
       label: 'API Reference',
       collapsed: false,
@@ -53,10 +57,6 @@ module.exports = {
           id: 'types',
         },
       ]
-    },
-    {
-      type: 'doc',
-      id: 'credential-schemas',
     },
   ],
 };

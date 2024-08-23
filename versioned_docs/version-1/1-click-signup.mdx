@@ -19,7 +19,7 @@ import Admonition from '@theme/Admonition';
 
 {/* :::tip[✅ 1-Hour Guarantee]
 We are _obsessed_ with making it as easy as possible for you to implement 1-Click Signup.
-- If it takes you more than 1 hour to implement, we'll send you a free Verified Inc. t-shirt! 
+- If it takes you more than 1 hour to implement, we'll send you a free Verified t-shirt! 
 - If it takes you less than 1 hour, we'll send you a free t-shirt _and_ mug!
 ::: */}
 
@@ -247,7 +247,7 @@ Here's the full flow:
         sequenceDiagram
             participant C as Customer
             actor U as User
-            participant V as Verified Inc.
+            participant V as Verified
             C->>+U: Show phone number input
             U->>-C: Enter phone number
             rect rgb(200,200,200,0.25)
@@ -259,7 +259,7 @@ Here's the full flow:
                     C-->>U: (optional) Redirect user to URL
                 end
                 rect rgb(200,200,200,0.85)
-                    note right of V: (handled by Verified Inc.)
+                    note right of V: (handled by Verified)
                     V->>+U: Send SMS
                     U->>-V: Click link or enter code
                     alt is user's first time
@@ -309,7 +309,7 @@ Here's the full flow:
         sequenceDiagram
             participant C as Customer
             actor U as User
-            participant V as Verified Inc.
+            participant V as Verified
             C->>+U: Show phone number input
             U->>-C: Enter phone number
             rect rgb(200,200,200,0.25)
@@ -322,7 +322,7 @@ Here's the full flow:
                     C-->>U: (optional) Redirect user to URL
                 end
                 rect rgb(200,200,200,0.85)
-                    note right of V: (handled by Verified Inc.)
+                    note right of V: (handled by Verified)
                     U->>-V: Click link or enter code
                     alt is user's first time
                         V->>+U: Show DOB/SSN4 input
@@ -414,7 +414,7 @@ The 1-Click endpoint is [`POST /1-click`](/api-reference#1-click). Call it with 
 sequenceDiagram
     participant C as Customer
     actor U as User
-    participant V as Verified Inc.
+    participant V as Verified
     rect rgb(200,200,200,0.25)
         note left of C: 1. Call 1-Click Endpoint
         C->>+V: Call POST /1-click with phone number
@@ -661,7 +661,7 @@ See below for the [pros and cons](#pros-and-cons) of these two approaches.
 sequenceDiagram
     participant C as Customer
     actor U as User
-    participant V as Verified Inc.
+    participant V as Verified
     rect rgb(200,200,200,0.25)
         opt
             note left of C: 2. (optional) Redirect User
@@ -734,7 +734,7 @@ With the pull option, there's a time delay between when the user consents to sha
 sequenceDiagram
     participant C as Customer
     actor U as User
-    participant V as Verified Inc.
+    participant V as Verified
     rect rgb(200,200,200,0.25)
         note left of C: 3. Receive User Data
         alt customer using push option
@@ -780,7 +780,7 @@ All you need to do is create a webhook called `POST /verified/credentials` accor
 sequenceDiagram
     participant C as Customer
     actor U as User
-    participant V as Verified Inc.
+    participant V as Verified
     rect rgb(200,200,200,0.25)
         note left of C: 3. Receive User Data
         alt customer using push option
@@ -827,7 +827,7 @@ Here's how this option works:
 sequenceDiagram
     participant C as Customer
     actor U as User
-    participant V as Verified Inc.
+    participant V as Verified
     rect rgb(200,200,200,0.25)
         note left of C: 3. Receive User Data
         alt customer using pull option
@@ -1037,75 +1037,58 @@ One particularly valuable piece of metadata is **`verificationMethod`**, which d
 
 ### Go Live!
 
+
+Regulations require that users give informed consent, so you must our legal language where you start the 1-Click Signup flow. It can be included alongside or as part of other legal language you already use, but it must be displayed to the user and not just included in terms you link out to.
+
+Use this language:
+
+> By `{taking this action}`, you agree to {props.agreeToAction} for 1-Click Signup at `{Brand Name}` and other supported sites, and you agree to Verified's [Terms of Use](https://verified.inc/legal#terms-of-use).
+
+
 Before you launch 1-Click Signup live in production, you'll need to do 2 things that are not necessary in sandbox:
 1. **Add legal language to ensure compliance:** SMS regulations require that users give informed consent, so you must include the following language just above or below the phone number input you use to start the 1-Click Signup flow. (It can be included alongside other legal language you already use.)
 
-    > By `{taking this action}`, you agree to receive a text to create a Verified Inc. account for 1-Click Signup at `{your brand name}` and other supported sites.
+    > By `{taking this action}`, you agree to receive an SMS to create a Verified account for 1-Click Signup at `{Brand Name}` and other supported sites, and you agree to Verified's [Terms of Use](https://verified.inc/legal#terms-of-use).
 
-    <details>
-        <summary>Replace `{taking this action}` and `{your brand name}`</summary>
-
-        <p>
-            <ol>
-                <li>
-                    **Replace `{taking this action}` with the action the user takes to trigger the 1-Click Signup flow.** For example:
-                        <ul> 
-                            <li>
-                                If your implementation automatically calls `POST /1-click` when the user enters a valid phone number, replace `{taking this action}` with "entering your phone number".
-                            </li>
-                            <li>
-                                If your implementation calls `POST /1-click` when the user clicks a Next button after entering their phone number, replace `{taking this action}` with "clicking Next".
-                            </li>
-                            <li>
-                                If there are multiple possible triggers, replace `{taking this action}` with "continuing" so it's general enough to cover all cases.
-                            </li>
-                        </ul>
-                </li>
-                <li>
-                    **Replace `{your brand name}` with your brand name.**
-                </li>
-            </ol>
-        </p>
-
-        <p>
-            Here's a full example, with these replacements:
-            > By entering your phone number, you agree to receive a text to create a Verified Inc. account for 1-Click Signup at Hooli and other supported sites.
-        </p>
-    </details>
+    - **Replace `{taking this action}` with the action the user will take to start 1-Click Signup.** For example:
+        - If you use a form with a phone number input that autosubmits, we recommend using "entering your phone number".
+        - If you use a Continue button, we recommend using "clicking Continue".
+    - **Replace `{Brand Name}` with your brand name.**
+    - **Link "Terms of Use" to https://verified.inc/legal#terms-of-use and make it a different color than the rest of the text, underlined, or both** (so the user knows it's a link).
 
     <details>
         <summary>Optionally include a "powered by" graphic</summary>
 
-        **We encourage (but don't require) you to include a graphic that says "1-Click Signup powered by Verified Inc."** This helps the user understand they're about to go through a 1-Click Signup flow — and motivates them to do so, since a 1-click experience is always best!
+        **We encourage you to include a graphic that says "1-Click Signup powered by Verified."** This helps the user understand they're about to go through a 1-Click Signup flow — and motivates them to do so, since a 1-click experience is always best!
 
         The graphic should be placed just below the phone number input you use to start the 1-Click Signup flow.
         
         We provide several variants of the graphic, in both SVG and PNG format. Choose the one you prefer and that best fits the background color of your application.
 
         **Green**
-            <img src="/img/1-click-signup-powered-by-verified-inc/png/green.png" width="300"/>
-            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/svg/green.svg" title="Green (SVG)">Download SVG</a> | 
-            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/png/green.png" title="Green (PNG)">Download PNG</a>
+            <img src="/img/1-click-signup-powered-by-verified/png/green.png" width="300"/>
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified/svg/green.svg" title="Green (SVG)">Download SVG</a> | 
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified/png/green.png" title="Green (PNG)">Download PNG</a>
 
             **Black**
-            <img src="/img/1-click-signup-powered-by-verified-inc/png/black.png" width="300"/>
-            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/svg/black.svg" title="Black (SVG)">Download SVG</a> | 
-            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/png/black.png" title="Black (PNG)">Download PNG</a>
+            <img src="/img/1-click-signup-powered-by-verified/png/black.png" width="300"/>
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified/svg/black.svg" title="Black (SVG)">Download SVG</a> | 
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified/png/black.png" title="Black (PNG)">Download PNG</a>
 
             **Gray**
-            <img src="/img/1-click-signup-powered-by-verified-inc/png/gray.png" width="300"/>
-            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/svg/gray.svg" title="Gray (SVG)">Download SVG</a> | 
-            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/png/gray.png" title="Gray (PNG)">Download PNG</a>
+            <img src="/img/1-click-signup-powered-by-verified/png/gray.png" width="300"/>
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified/svg/gray.svg" title="Gray (SVG)">Download SVG</a> | 
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified/png/gray.png" title="Gray (PNG)">Download PNG</a>
 
             **White**
-            <img src="/img/1-click-signup-powered-by-verified-inc/png/white.png" width="300"/>
-            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/svg/white.svg" title="White (SVG)">Download SVG</a> | 
-            <a download="green.svg" href="/img/1-click-signup-powered-by-verified-inc/png/white.png" title="White (PNG)">Download PNG</a>
+            <img src="/img/1-click-signup-powered-by-verified/png/white.png" width="300"/>
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified/svg/white.svg" title="White (SVG)">Download SVG</a> | 
+            <a download="green.svg" href="/img/1-click-signup-powered-by-verified/png/white.png" title="White (PNG)">Download PNG</a>
     </details>
 
     Here's an example:
 
-    ![](/img/powered-by-and-legal-language.png)
+    ![](/img/phone-number-input.png)
     *Hooli displays the required legal language and includes the gray variant of the "powered by" graphic.*
 
 2. **Send SMS:** When you're ready to go live, we'll enable `POST /1-click` to return one additional attribute, `smsBody`, which contains the content of the SMS the user should receive. It's not necessary for you to send SMS in sandbox — we handle it for you to make it easier to get started — but you should do so in production. This is to avoid user confusion (so all SMS you send come from the same number) and ensure compliance with recent regulations about informed consent for SMS.
@@ -1193,7 +1176,7 @@ This method requires additional work; mainly, you will have to build a UI for th
 sequenceDiagram
     participant C as Customer
     actor U as User
-    participant V as Verified Inc.
+    participant V as Verified
     C->>+U: Show phone number & DOB input
     U->>-C: Enter phone number & DOB
     rect rgb(200,200,200,0.25)
@@ -1201,7 +1184,7 @@ sequenceDiagram
         C->>+V: Call POST /1-click with phone number, isHosted false, DOB, and (optional) email
         V->>-C: Return URL (only needed in optional Code Handling)
         rect rgb(200,200,200,0.85)
-            note right of V: (handled by Verified Inc.)
+            note right of V: (handled by Verified)
             V->>+U: Send SMS
             U->>-V: Click link
             V->>V: Pull verified user data
@@ -1213,7 +1196,7 @@ sequenceDiagram
             U-->>C: Enter OTP code
             C-->>U: Redirect to URL with code query param
             rect rgb(200,200,200,0.85)
-            note right of V: (handled by Verified Inc.)
+            note right of V: (handled by Verified)
             V->>V: Pull verified user data
             V->>C: Redirect user to customer 
             end
@@ -1240,13 +1223,13 @@ sequenceDiagram
     end
 ```
 
-*Please note that, just as in the hosted flow, Verified Inc. will send the SMS on your behalf in sandbox, but you will need send the SMS in production (the same [go live](/#go-live) checklist applies).*
+*Please note that, just as in the hosted flow, Verified will send the SMS on your behalf in sandbox, but you will need send the SMS in production (the same [go live](/#go-live) checklist applies).*
 
 
 
 ## Trusted Variant
 
-The [`/1-click/trusted`](/api-reference#trusted-1-click) flow is in many ways similar to the [non-hosted](/#non-hosted-variant) flow documented above, but it does not require your brand to use the OTP provided by the `/1-click` non-hosted response body. This variant is most appropriate for organizations that already use a phone authentication solution. As the name implies, it requires additional verification by Verified Inc. during the integration's development to ensure that phone possession is checked, often via a SMS one-time passcode, during the current user session prior to calling this endpoint.
+The [`/1-click/trusted`](/api-reference#trusted-1-click) flow is in many ways similar to the [non-hosted](/#non-hosted-variant) flow documented above, but it does not require your brand to use the OTP provided by the `/1-click` non-hosted response body. This variant is most appropriate for organizations that already use a phone authentication solution. As the name implies, it requires additional verification by Verified during the integration's development to ensure that phone possession is checked, often via a SMS one-time passcode, during the current user session prior to calling this endpoint.
 
 The notable differences between the trusted and non-hosted variants are:
 
@@ -1287,7 +1270,7 @@ If you're interested in this type of integration, please let us know and we will
 sequenceDiagram
     participant C as Customer
     actor U as User
-    participant V as Verified Inc.
+    participant V as Verified
     C->>+U: Show phone number & DOB input
     U->>-C: Enter phone number & DOB
     rect rgb(200,200,200,0.25)

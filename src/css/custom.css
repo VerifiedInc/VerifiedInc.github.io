@@ -260,7 +260,28 @@ input:checked + .slider:before {
 th {
   text-align: left;
 }
+/* Bold first table column */
+td:first-child {
+  font-weight: bold;
+  white-space: nowrap;
+}
 
 .hidden {
   display: none !important;
+}
+
+.MuiChip-root {
+  font-family: var(--ifm-font-family-base) !important;
+  font-weight: 700 !important;
+}
+
+.MuiChip-colorPrimary {
+  color: var(--ifm-color-primary) !important;
+  border-color: var(--ifm-color-primary) !important;
+}
+
+.MuiCardContent-root {
+  font-family: var(--ifm-font-family-base) !important;
+  font-weight: 700 !important;
+  text-align: center !important;
 }

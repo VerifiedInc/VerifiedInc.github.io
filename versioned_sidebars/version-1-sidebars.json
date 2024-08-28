@@ -1,0 +1,46 @@
+{
+  "sidebar": [
+    {
+      "type": "category",
+      "label": "Solutions",
+      "collapsed": false,
+      "items": [
+        "1-click-signup",
+        "issue-to-earn"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Demos",
+      "collapsed": false,
+      "items": [
+        "demo-1-click-signup",
+        "demo-issue-to-earn"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "API",
+      "collapsed": false,
+      "items": [
+        {
+          "type": "doc",
+          "id": "api-reference"
+        },
+        {
+          "type": "link",
+          "label": "Postman",
+          "href": "https://api.docs.verified.inc/"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Resources",
+      "collapsed": false,
+      "items": [
+        "schema"
+      ]
+    }
+  ]
+}

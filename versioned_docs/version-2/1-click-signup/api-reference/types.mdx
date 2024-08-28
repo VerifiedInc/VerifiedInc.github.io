@@ -1,0 +1,288 @@
+---
+id: types
+title: Types
+sidebar_label: Types
+sidebar_position: 8
+description: Types used in the Verified API
+slug: /types
+toc_max_heading_level: 4
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import BrandsAdmonition from '@site/versioned_docs/version-2/reusables/brands-admonition.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2/reusables/integration-type-admonition.mdx';
+import DomainsAdmonition from '@site/versioned_docs/version-2/reusables/domains-admonition.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2/reusables/development-work-admonition.mdx';
+import FullDefinitionAdmonition from '@site/versioned_docs/version-2/reusables/full-definition-admonition.mdx';
+import Post1ClickRequestBodyTableShared from '@site/versioned_docs/version-2/reusables/post-1-click-request-body-table-shared.mdx';
+import Post1ClickRequestBodyTableHosted from '@site/versioned_docs/version-2/reusables/post-1-click-request-body-table-hosted.mdx'
+import Post1ClickResponseBodyTableUuid from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-uuid.mdx';
+import Post1ClickResponseBodyTableUrl from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-url.mdx';
+import Post1ClickResponseBodyTableCode from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-code.mdx';
+import Post1ClickResponseBodyTableIdentity from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-identity.mdx';
+import UseUserInputAdmonition from '@site/versioned_docs/version-2/reusables/use-user-input-admonition.mdx'
+import CredentialRequestTableShared from '@site/versioned_docs/version-2/reusables/credential-request-table-shared.mdx'
+import CredentialRequestTableHosted from '@site/versioned_docs/version-2/reusables/credential-request-table-hosted.mdx'
+import OneClickEntityExample from '@site/versioned_docs/version-2/reusables/1-click-entity-example.mdx'
+
+{/* :::note
+See also our [Postman docs](https://api.docs.verified.inc/).
+::: */}
+
+
+## `CredentialRequest`
+
+<details>
+    <summary>Full Definition</summary>
+    <FullDefinitionAdmonition/>
+    ```typescript title="CredentialRequest Type"
+    {
+        type: string,
+        mandatory?: "yes" | "no" | "if_available",
+        children?: CredentialRequest[],
+        description?: string,
+        allowUserInput?: boolean
+    }
+    ```
+    <table>
+        <CredentialRequestTableShared/>
+        <CredentialRequestTableHosted/>
+    </table>
+</details>
+
+<Tabs groupId="integrationType" queryString="integrationType">
+<TabItem value="hosted" label="Hosted" default>
+    <IntegrationTypeAdmonition option="Hosted"/>
+    ```typescript title="CredentialRequest Type (Hosted Integration Type)"
+    {
+        type: string,
+        mandatory?: "yes" | "no" | "if_available",
+        children?: CredentialRequest[],
+        description?: string,
+        allowUserInput?: boolean
+    }
+    ```
+    <table>
+        <CredentialRequestTableShared/>
+        <CredentialRequestTableHosted/>
+    </table>
+</TabItem>
+<TabItem value="semi-hosted" label="Semi-Hosted" default>
+    <IntegrationTypeAdmonition option="Semi-Hosted"/>
+    ```typescript title="CredentialRequest Type (Semi-Hosted Integration Type)"
+    {
+        type: string,
+        mandatory?: "yes" | "no" | "if_available",
+        children?: CredentialRequest[],
+    }
+    ```
+    <table>
+        <CredentialRequestTableShared/>
+    </table>
+</TabItem>
+<TabItem value="non-hosted" label="Non-Hosted" default>
+    <IntegrationTypeAdmonition option="Non-Hosted"/>
+    ```typescript title="CredentialRequest Type (Non-Hosted Integration Type)"
+    {
+        type: string,
+        mandatory?: "yes" | "no" | "if_available",
+        children?: CredentialRequest[],
+    }
+    ```
+    <table>
+        <CredentialRequestTableShared/>
+    </table>
+</TabItem>
+</Tabs>
+
+
+### Example {#example-credentialrequest}
+
+<Tabs groupId="integrationType" queryString="integrationType">
+<TabItem value="hosted" label="Hosted" default>
+    <IntegrationTypeAdmonition option="Hosted"/>
+    ```typescript title="CredentialRequest Example (Hosted Integration Type)"
+    {
+        "type": "FullNameCredential",
+        "children": [
+            {
+                "type": "FirstNameCredential",
+                "mandatory": "no",
+                "allowUserInput": true
+            },
+            {
+                "type": "LastNameCredential",
+                "mandatory": "if_available",
+                "allowUserInput": false
+            }
+        ]
+    }
+    ```
+</TabItem>
+<TabItem value="semi-hosted" label="Semi-Hosted" default>
+    <IntegrationTypeAdmonition option="Semi-Hosted"/>
+    ```typescript title="CredentialRequest Example (Semi-Hosted Integration Type)
+    {
+        "type": "FullNameCredential",
+        "children": [
+            {
+                "type": "FirstNameCredential",
+                "mandatory": "no",
+            },
+            {
+                "type": "LastNameCredential",
+                "mandatory": "if_available",
+            }
+        ]
+    }
+    ```
+</TabItem>
+<TabItem value="non-hosted" label="Non-Hosted" default>
+    <IntegrationTypeAdmonition option="Non-Hosted"/>
+    ```typescript title="CredentialRequest Example (Non-Hosted Integration Type)
+    {
+        "type": "FullNameCredential",
+        "children": [
+            {
+                "type": "FirstNameCredential",
+                "mandatory": "no",
+            },
+            {
+                "type": "LastNameCredential",
+                "mandatory": "if_available",
+            }
+        ]
+    }
+    ```
+</TabItem>
+</Tabs>
+
+---
+
+
+## `1ClickEntity`
+
+```typescript title="1ClickEntity Type"
+{
+    "identifiers": {
+        [identifierKey: string]: string
+    },
+    "credentials": {
+        [credentialKey: string]: string
+    },
+    "metadata": {
+        "identifiers": {
+            [identifierKey: string]: {
+                [metadataKey: string]: string
+            }
+        },
+        "credentials": {
+            [credentialKey: string]: {
+                [metadataKey: string]: string
+            }
+        }
+    }
+}
+```
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`identifiers`</td>
+        <td>`Object`</td>
+        <td>See above</td>
+        <td>User [identifiers](./data/#identifiers), keyed on `identifierKey`</td>
+        <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
+    </tr>
+    <tr>
+        <td>`identifierKey`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values (see [identifiers](./data/#identifiers) for details):
+                    - `phone`
+                    - `email`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>The type of identifier</td>
+        <td>`"phone"`</td>
+    </tr>
+    <tr>
+        <td>`credentials`</td>
+        <td>`Object`</td>
+        <td>See above</td>
+        <td>User [credentials](./data/#credentials), keyed on `credentialKey`</td>
+        <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
+    </tr>
+    <tr>
+        <td>`credentialKey`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values (see [credentials](./data/#credential) for details):
+                    - `phone`
+                    - `email`
+                    - `fullName.firstName`
+                    - `fullName.middleName`
+                    - `fullName.lastName`
+                    - `address.line1`
+                    - `address.line2`
+                    - `address.city`
+                    - `address.state`
+                    - `address.zipCode`
+                    - `address.country`
+                    - `birthDate`
+                    - `ssn`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>
+            The type of user data a credential has
+        </td>
+        <td>`"firstName"`</td>
+    </tr>
+    <tr>
+        <td>`metadata`</td>
+        <td>`Object`</td>
+        <td>See above</td>
+        <td>[Metadata](./data/#metadata), keyed on `metadataKey`</td>
+        <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
+    </tr>
+    <tr>
+        <td>`metadataKey`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `id`
+                    - `verificationMethod`
+                    - `status`
+                    - `issuanceDate`
+                    - `expirationDate`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Any additional data that's not a user's identity data (identifiers or credentials)</td>
+        <td>`"verificationMethod"`</td>
+    </tr>
+</table>
+
+
+### Example {#example-1clickentity}
+
+<OneClickEntityExample/>

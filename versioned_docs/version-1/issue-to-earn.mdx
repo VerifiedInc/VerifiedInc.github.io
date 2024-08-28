@@ -1,0 +1,199 @@
+---
+id: issue-to-earn
+title: Issue to Earn
+sidebar_label: Issue to Earn
+slug: /issue-to-earn
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TestingCredentialsSnippet from './reusables/sandbox-testing-credentials.mdx';
+
+- **Time to read:** 10 minutes
+- **Time to implement:** 1-3 hours
+
+---
+
+If your company verifies user identities, **you can issue digital ID cards to those users and earn passive revenue when they're used.**
+
+Doing so requires only two things:
+1. [**Get user consent**](#1-get-user-consent)
+2. [**Issue credentials to user**](#2-issue-credentials-to-user) (1 API call)
+
+<TestingCredentialsSnippet/>
+
+
+## How It Works
+
+
+### User Experience
+
+> _**Try our [Issue to Earn demos](/demo-issue-to-earn)** to see this user experience in action._
+
+A user only needs to click 1 button to receive a digital ID card. (When they do, you make 1 API call behind the scenes.) **It all takes less than 1 second!**
+
+Specifically, the user experience is:
+1. **See prompt to activate ID card** (e.g. a button)
+2. **Give consent** (e.g. click button)
+3. **Receive email showing new ID card**
+
+The prompt is often a button, as in our [Next User Sign In](/demo-issue-to-earn?type=next-user-sign-in#static), [Marketing Email](/demo-issue-to-earn?type=marketing-email#static), and [In App Offer](/demo-issue-to-earn?type=in-app-offer#static) demos. But it can also take other forms — like a checkbox, as in our [After User Sign Up](/demo-issue-to-earn?type=after-user-sign-up#static) demo.
+
+:::note
+This ID card is a purely _digital_ one, and it has your brand on it. When you're ready for an API key for your brand, we will create an ID card design for you (or use one you send us).
+:::
+
+## Implement
+
+> _**Try our [Issue to Earn demos](/demo-issue-to-earn)** to see example implementations. These are open source, so feel free to use the [source code](https://github.com/VerifiedInc/Hooli-Demo-Web) as a reference._
+
+You can issue an ID card to a user in many ways. All of them involve the same two steps:
+1. [**Get user consent**](#get-user-consent)
+2. [**Issue credentials to user**](#issue-credentials-to-user) (1 API call)
+
+
+### 1. Get User Consent
+
+:::warning[You Must Get User Consent]
+You **must** get a user's consent before issuing them an ID card. Not doing so violates our terms and will prevent us from paying you when the card is used.
+:::
+
+Prompt the user to activate their digital ID card (from your brand). You can use a button prompt, as in our [Next User Sign In](/demo-issue-to-earn?type=next-user-sign-in#static), [Marketing Email](/demo-issue-to-earn?type=marketing-email#static), and [In App Offer](/demo-issue-to-earn?type=in-app-offer#static) demos. Or you can use another type of prompt — like a checkbox, as in our [After User Sign Up](/demo-issue-to-earn?type=after-user-sign-up#static) demo.
+
+Include this legal language:
+
+> By `TAKING_THIS_ACTION`, I direct `YOUR_BRAND_NAME` to use Verified Inc. to create a digital ID card with my personal information, and I agree to Verified Inc.’s <a href="https://www.verified.inc/legal#terms-of-use">Terms of Use</a> and acknowledge its <a href="https://www.verified.inc/legal#privacy-policy">Privacy Policy</a>.
+
+1. Replace `TAKING_THIS_ACTION` with language appropriate to the nature of your prompt. For example, if your prompt is an Activate button, you could replace `TAKING_THIS_ACTION` with:
+    > clicking "Activate"
+2. Replace `YOUR_BRAND_NAME` with, well, your brand name!
+3. Make "Terms of Use" and "Privacy Policy" underlined or colored and hyperlinked to <a href="https://www.verified.inc/legal#terms-of-use">`https://www.verified.inc/legal#terms-of-use`</a> and <a href="https://www.verified.inc/legal#privacy-policy">`https://www.verified.inc/legal#privacy-policy`</a> (respectively).
+
+Here's full example:
+
+> By clicking "Activate", I direct Hooli to use Verified Inc. to create a digital ID card with my personal information, and I agree to Verified Inc.’s <a href="https://www.verified.inc/legal#terms-of-use">Terms of Use</a> and acknowledge its <a href="https://www.verified.inc/legal#privacy-policy">Privacy Policy</a>.
+
+
+### 2. Issue Credentials to User
+
+:::info[An "ID Card" is a Collection of Credentials]
+We define a digital ID card as a collection of credentials, issued by a brand to a user. We defined a credential as a piece of data about a user — like their phone number, address, or government ID.
+
+**To "issue an ID card" is just to issue credentials to a user for the first time.** (To "update an ID card" is just to issue subsequent credentials to that user.)
+:::
+
+**Call [`POST /credentials`](/api-reference#issue-credentials)** with a user identifier (a verified email or phone for the user) and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [data schemas](/schema).
+
+:::note[Ask Us for New Schemas If Needed]
+If we don't have a data schema that suits your needs, email us at Support@Verified.Inc) and we'll make one for you.
+:::
+
+For example, if you have a verified Social Security Number (SSN) and a full name for a user, you can issue them credentials. Just call [`POST /credentials`](/api-reference#issue-credentials) with the user's email or phone, the `SsnCredential` and `FullNameCredential` type, and the SSN and full name data:
+
+```typescript title="Example Issue Credentials Request Body"
+{
+  "email": "test@example.com",
+  "credentials": [
+    {
+      "type": "SsnCredential",
+      // based on the properties attribute of the schema
+      // highlight-start
+      // single object, not an array of objects, since Ssn is an atomic credential
+      "data": {
+        "ssn": "111223333"
+      },
+      // highlight-end
+      "expirationDate": 1893484800000
+    },
+    {
+      "type": "FullNameCredential",
+      // based on the properties attribute of the schema
+      // highlight-start
+      // an array of objects, not a single object, since FullName is a composite credential
+      "data": [
+        {
+          "type": "FirstNameCredential",
+          "data": {
+            "firstName": "Richard"
+          }
+        },
+        {
+          "type": "LastNameCredential",
+          "data": {
+            "lastName": "Hendricks"
+          }
+        }
+      ]
+      // highlight-end
+    }
+  ]
+}
+```
+
+The credential data must be formatted according to the `properties` attribute of the credential type's schema definition. Please see our [data schema library](/schema#schema-library) for more information.
+
+
+## (optional) Enable Affiliate Offers
+
+The [Implement](#implement) section above describes how to implement _standard issuance_ of ID cards. With standard issuance, you issue an ID card to a user, and that's it. There are no further steps.
+
+**But you can also implement _partner issuance_ to enable affiliate offers for partner brands.** With partner issuance, you issue an ID card to a user, and then you redirect them to a [1-Click Signup](/) flow for the partner brand. That way, the user can immediately use their ID card to sign up for the partner, and you immediately earn revenue!
+
+**This allows you to present users with affiliate offers that convert with 1-click,** meaning far higher conversion for partners and far more revenue for you.
+
+Brands in our network that have implemented partner issuance have seen on average **7.9x higher conversion rates** compared with normal affiliate offers.
+
+_If you'd like to enable partner issuance for your brand, email us at Support@Verified.Inc._
+
+
+{/* ### Partner Issuance
+
+#### First Time Issuance
+
+Some issuance calls can be made with a particular partner in mind, i.e. in a promotional flow. In these cases you have already authenticated the user and would like to issue them credentials for a particular partner.
+
+To do this, you can provide your partner's static `partnerUuid` to the issue [`/credentials`](/api-reference#issue-credentials) call. The resulting api response body will contain a `url` field if conditions related the partner's pre-defined <Tip type="request">credential requests</Tip> are satisfied. If present, you should redirect the user there.
+
+:::tip
+You can check the partner's pre-defined <Tip type="request">credential requests</Tip> by calling [`/credentialsRequests/{partnerUuid}`](/api-reference/#get-partner-credential-requests).
+:::
+
+This url ultimately redirects the user to a page of the partners choosing. However, the url first directs the user to the Verified Inc. wallet where they explicity consent to the data share to the partner.
+
+```json title="Example Issue Credentials Response"
+{
+    "email": "richard@pipedpiper.net",
+    "url": "https://wallet.verifiedinc.com/request/dfb39a34-ea90-4976-a230-12005c0ddfbb?email=richard%40pipedpiper.net&redirectUrl=https%3A%2F%2Fkredita-web.demo.sandbox-verifiedinc.co%2Fregister&jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJicmFuZFV1aWQiOiI0NDFhNmI2Yy03YjQ5LTRkNTUtYWExMC01ZWMzOWRlNjdjNjEiLCJjcmVkZW50aWFsSWRzIjpbImViNzNiYTBjLTY0MWUtNDc4Zi04ZGJkLWM4NjgzMjU2YWNmMSJdLCJ0aWVyIjoxMCwiaWF0IjoxNjg0NTE2NDU4LCJleHAiOjE2ODQ1MTcwNTgsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJzdWIiOiJjNThkYzc2MS1hNDhjLTRmYWQtOGUyMy1iYmIwMDBjYWIyNTUiLCJqdGkiOiJjYmNmYmVlZC01ZGY1LTQ5YjItOGRlNC1jMzFjYjA5MmYzNTUifQ.QSqg2kNTfnlh42qh0VYhT0Wz_ogSNMTfudNaDQyVIiQ",
+    "credentials": [{...},{...}]
+}
+```
+
+:::important
+This use case of issuing credentials for a particular partner is by no means required. The key difference in this flow is the user can skip authenticating with the Verified Inc wallet to share their data.
+:::
+
+:::note
+To make this a very streamlined experience for the user, we include a pre-authenticated JWT in the url which will automatically log them into the Verified Inc. wallet. This JWT is valid for 5 minutes and is limited in scope to only the credentials you just issued the user.
+
+If the user does not complete the partner onboarding process within 5 minutes, they can still complete it at a later point now that they have the credentials, but we will require them to authenticate into the Verified Inc. wallet to do so.
+:::
+
+If this is an experience you would like to provide for your partners immediately after credential issuance, please let us know so we can provide you with your partner's static UUID and enable this capability for your <Tip type="brand">brand</Tip>.
+
+#### Already Issued Credentials
+
+If you have already issued credentials to a user, then [`/hasMatchingCredentials`](/api-reference#check-user-credentials) can be called with `partnerUuid`. In this case, if Verified Inc. can confirm the user has credentials to satisfy the [pre-defined](/acceptance-guide#partner-acceptance) partner credential request(s), then the resulting API response body will contain a `url` which you should redirect the user to.
+Just as in the case of the [`/credentials`](/api-reference#issue-credentials) response, this `url` ultimately redirects the user to a page of the partner's choosing. However, the `url` first directs the user to the Verified Inc. wallet, where they explicitly consent to share credential data with the partner.
+
+```json title="Example Check has Matching Credentials Response"
+{
+  "match": "true",
+  "url": "https://wallet.verifiedinc.com/request/dfb39a34-ea90-4976-a230-12005c0ddfbb?email=richard%40pipedpiper.net&redirectUrl=https%3A%2F%2Fkredita-web.demo.sandbox-verifiedinc.co%2Fregister&jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJicmFuZFV1aWQiOiI0NDFhNmI2Yy03YjQ5LTRkNTUtYWExMC01ZWMzOWRlNjdjNjEiLCJjcmVkZW50aWFsSWRzIjpbImViNzNiYTBjLTY0MWUtNDc4Zi04ZGJkLWM4NjgzMjU2YWNmMSJdLCJ0aWVyIjoxMCwiaWF0IjoxNjg0NTE2NDU4LCJleHAiOjE2ODQ1MTcwNTgsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJzdWIiOiJjNThkYzc2MS1hNDhjLTRmYWQtOGUyMy1iYmIwMDBjYWIyNTUiLCJqdGkiOiJjYmNmYmVlZC01ZGY1LTQ5YjItOGRlNC1jMzFjYjA5MmYzNTUifQ.QSqg2kNTfnlh42qh0VYhT0Wz_ogSNMTfudNaDQyVIiQ"
+}
+```
+
+#### Recommended Implementation
+
+We recommend that you first check internally whether you've issued credentials to a user. If you have, then call [`/hasMatchingCredentials`](/api-reference#check-user-credentials) to confirm with Verified Inc. that the user still has these credentials. (There are cases where the user will _not_ still have the credentials, for example if they went directly to their Verified Inc. wallet to delete them.) If the user does not still have the credentials, you can issue them new credentials, as long as you have their consent. As a precaution, you can also [patch](api-overview#patch-credentials) existing credentials with a status of `revoked` to ensure that only the new credentials you issue will be valid for use. */}

@@ -1,0 +1,139 @@
+---
+id: schema
+title: Data Schemas
+sidebar_label: Data Schemas
+slug: /schema
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Schemas from '@site/src/components/Schemas/Schemas';
+
+## Introduction
+
+Verified Inc. enables securely sharing verified <a href="/terminology#credential"><Tip type="credential"/></a> data amongst network participants. While in theory this data can take any shape, a structured schema must be defined and followed for every credential type for the sake of all network participants.
+
+We use [JSON Schema](https://json-schema.org/) syntax for data validation purposes via a pre-compiled [AJV](https://ajv.js.org/guide/why-ajv.html) engine. This ensures our credential schemas are robust enough to encapsulate any data while still being easily described, displayed, and validated.
+
+## Schema Definitions
+
+You can view all of the Verified Inc. defined credential schemas via https://schema-resolver.verified.inc/jsonSchema. If you want to know the schema for a particular credential type you can use that same url with the desired credential type in the path. For example, https://schema-resolver.verified.inc/jsonSchema/EmailCredential, would yield the EmailCredential's schema information.
+
+:::tip
+We have this API documented via our public [Postman collection](https://api.docs.verified.inc/) documentation under **Schema Resolver**.
+
+It is possible to view the response bodies from https://schema-resolver.verified.inc/jsonSchema in the browser, but we recommend Postman, which automatically formats the JSON response for human readability.
+:::
+
+:::important
+We hope to soon make it possible for you as a <a href="/terminology#customer"><Tip type="customer"/></a> to define your own credential schemas. But **currently, we Verified Inc. define all credential schemas.** If you would like a new credential schema for your use case, please let us know and we will gladly define one for you.
+:::
+
+We currently support what can be referred to as "single attribute atomic credentials" and "composite credentials". 
+
+Atomic credentials provide users a means of selective disclosure for <a href="/terminology#request"><Tip type="request"/></a>s with optional fields.
+
+Composite credentials are credentials that contain multiple "Atomic Credentials". For example, the `FullNameCredential` contains `FirstNameCredential`, `LastNameCredential` and `MiddleNameCredential`. This provides a means of grouping atomic credentials with related data.
+
+#### JSON Schema
+
+The `/jsonSchema` path will return the JSON schema definition, e.g. https://schema-resolver.verified.inc/jsonSchema/FirstNameCredential:
+
+```json title="Example FirstNameCredential JSON Schema"
+{
+  "$id": "FirstNameCredential",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "description": "A person's first name",
+      "examples": ["John", "Mary Kate"],
+      "title": "First Name",
+      "displayFormat": "String",
+      "type": "string"
+    }
+  },
+  "required": ["firstName"]
+}
+```
+
+For composite credential schemas, the object will contain a `allOf` property, which is an array of the atomic credential schemas:
+
+```json title="Example FullNameCredential JSON Schema"
+{
+  "$id": "FullNameCredential",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "FirstNameCredential"
+    },
+    {
+      "$ref": "LastNameCredential"
+    },
+    {
+      "$ref": "MiddleNameCredential"
+    }
+  ]
+}
+```
+
+:::tip
+Note that each attribute has a `description` and `examples` to help you understand the credential's schema. If you need more detailed information, look at our open source [schema-sdk](https://github.com/VerifiedInc/schema-sdk) [formats](https://github.com/VerifiedInc/schema-sdk/blob/main/src/formats.ts).
+:::
+
+:::tip
+The `$ref` property is a JSON Pointer, which is a string containing a URI fragment identifier. In this case, it is a reference to another schema. This is how we define composite credential schemas.
+:::
+
+:::note
+It's important to note that each of these credentials inside `FullNameCredential` are single attribute atomic credentials, so you are able to request individually.
+But if you need create or request a `CityCredential` and a `StateCredential` you will need to use `AddressCredential` so data doesn't get mismatched.
+:::
+
+## Schema Library
+
+Search for or select a schema, see its properties and attributes, and copy the schema JSON:
+
+<Schemas />
+
+## Example
+
+First, we get the JSON schemas for the [`SsnCredential`](https://schema-resolver.verified.inc/jsonSchema/SsnCredential), [`FullNameCredential`](https://schema-resolver.verified.inc/jsonSchema/FullNameCredential), which contains [`FirstNameCredential`](https://schema-resolver.verified.inc/jsonSchema/FirstNameCredential) and [`LastNameCredential`](https://schema-resolver.verified.inc/jsonSchema/LastNameCredential) and review their attributes' `description`s and `examples`.
+
+Next, we construct valid credential bodies, according to the schemas:
+
+```typescript
+/*The credential data compliant with the Ssn, FullName (FirstName and LastName) Credentials schemas*/
+const credentialsList: Credentials = [
+  {
+    type: 'SsnCredential',
+    data: {
+      ssn: '333224444',
+    },
+  },
+  {
+    type: 'FullNameCredential',
+    data: [
+      {
+        type: 'FirstNameCredential',
+        data: {
+          firstName: 'John',
+        },
+      },
+      {
+        type: 'LastNameCredential',
+        data: {
+          lastName: 'Doe',
+        },
+      },
+    ],
+  },
+];
+```
+
+```typescript title="Example Request Body for Issuing Credentials"
+{
+  "credentials": credentialsList, // a list of one or more Credentials objects
+  "email": "richard.hendricks@pipedpiper.net"
+}
+
+```

@@ -1,0 +1,45 @@
+<tr>
+    <th>Property</th>
+    <th>Required?</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Default</th>
+    <th>Description</th>
+    <th>Example</th>
+</tr>
+<tr>
+    <td>`phone`</td>
+    <td>required</td>
+    <td>`string`</td>
+    <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
+    <td>none</td>
+    <td>User's phone number (in [E.164](https://www.twilio.com/docs/glossary/what-e164) format)</td>
+    <td>`"+10123456789"`</td>
+</tr>
+<tr>
+    <td>`email`</td>
+    <td>optional</td>
+    <td>`string`</td>
+    <td>email</td>
+    <td>none</td>
+    <td>User's email address</td>
+    <td>`"richard@piedpiper.net"`</td>
+</tr>
+<tr>
+    <td>`birthDate`</td>
+    <td>optional</td>
+    <td>`string`</td>
+    <td>`YYYY-MM-DD`</td>
+    <td>none</td>
+    <td>User's birth date</td>
+    <td>`"1989-08-01"`</td>
+</tr>
+<tr>
+    <td>`credentialRequests`</td>
+    <td>optional</td>
+    <td>`CredentialRequest[]`</td>
+    <td>See [`CredentialRequest`](/v2/types#credentialrequest)</td>
+    <td>See [Default Credential Requests](#default-credential-requests)</td>
+    <td>List of [`CredentialRequest`](/v2/types#credentialrequest) objects (which encode which credentials you're asking for)</td>
+    <td>See [`CredentialRequest` example](/v2/types#example-credentialrequest)</td>
+</tr>

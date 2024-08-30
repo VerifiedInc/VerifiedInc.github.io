@@ -17,12 +17,12 @@ We use [JSON Schema](https://json-schema.org/) syntax for data validation purpos
 
 ## Schema Definitions
 
-You can view all of the Verified Inc. defined credential schemas via https://schema.verified.inc/schema. If you want to know the schema for a particular credential type you can use that same url with the desired credential type in the path. For example, https://schema.verified.inc/schema/EmailCredential, would yield the EmailCredential's schema information.
+You can view all of the Verified Inc. defined credential schemas via https://schema-resolver.verified.inc/jsonSchema. If you want to know the schema for a particular credential type you can use that same url with the desired credential type in the path. For example, https://schema-resolver.verified.inc/jsonSchema/EmailCredential, would yield the EmailCredential's schema information.
 
 :::tip
 We have this API documented via our public [Postman collection](https://api.docs.verified.inc/) documentation under **Schema Resolver**.
 
-It is possible to view the response bodies from https://schema.verified.inc/schema in the browser, but we recommend Postman, which automatically formats the JSON response for human readability.
+It is possible to view the response bodies from https://schema-resolver.verified.inc/jsonSchema in the browser, but we recommend Postman, which automatically formats the JSON response for human readability.
 :::
 
 :::important
@@ -37,7 +37,7 @@ Composite credentials are credentials that contain multiple "Atomic Credentials"
 
 #### JSON Schema
 
-The `/jsonSchema` path will return the JSON schema definition, e.g. https://schema.verified.inc/jsonSchema/FirstNameCredential:
+The `/jsonSchema` path will return the JSON schema definition, e.g. https://schema-resolver.verified.inc/jsonSchema/FirstNameCredential:
 
 ```json title="Example FirstNameCredential JSON Schema"
 {
@@ -97,7 +97,7 @@ Search for or select a schema, see its properties and attributes, and copy the s
 
 ## Example
 
-First, we get the JSON schemas for the [`SsnCredential`](https://schema.verified.inc/jsonSchema/SsnCredential), [`FullNameCredential`](https://schema.verified.inc/jsonSchema/FullNameCredential), which contains [`FirstNameCredential`](https://schema.verified.inc/jsonSchema/FirstNameCredential) and [`LastNameCredential`](https://schema.verified.inc/jsonSchema/LastNameCredential) and review their attributes' `description`s and `examples`.
+First, we get the JSON schemas for the [`SsnCredential`](https://schema-resolver.verified.inc/jsonSchema/SsnCredential), [`FullNameCredential`](https://schema-resolver.verified.inc/jsonSchema/FullNameCredential), which contains [`FirstNameCredential`](https://schema-resolver.verified.inc/jsonSchema/FirstNameCredential) and [`LastNameCredential`](https://schema-resolver.verified.inc/jsonSchema/LastNameCredential) and review their attributes' `description`s and `examples`.
 
 Next, we construct valid credential bodies, according to the schemas:
 

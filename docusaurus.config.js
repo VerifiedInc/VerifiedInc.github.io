@@ -76,6 +76,10 @@ module.exports = {
               label: 'Integration Guide',
               to: '/v2/integration-guide',
             },
+            {
+              label: 'Migration Guide (v1 to v2)',
+              to: '/v2/migration-guide',
+            },
           ],
         },
         {

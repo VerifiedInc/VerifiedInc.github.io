@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkverified_inc_docs=self.webpackChunkverified_inc_docs||[]).push([[3211],{2393:e=>{e.exports=JSON.parse('{"title":"API Reference","slug":"/api-reference","permalink":"/v2/api-reference","navigation":{"previous":{"title":"Integration Guide","permalink":"/v2/integration-guide"},"next":{"title":"Authentication","permalink":"/v2/authentication"}}}')}}]);

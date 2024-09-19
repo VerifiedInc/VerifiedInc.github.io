@@ -188,32 +188,33 @@ module.exports = {
       }
     ],
     [
-      '@docusaurus/plugin-client-redirects',
-      {
-        // Explicitly handling page redirects for v1 because the more sophisticated approach below isn't working
-        redirects: [
-          // /X -> /v1/X
-          {
-            to: '/v1/issue-to-earn',
-            from: '/issue-to-earn',
-          },
-          {
-            to: '/v1/demo-1-click-signup',
-            from: '/demo-1-click-signup',
-          },
-          {
-            to: '/v1/demo-issue-to-earn',
-            from: '/demo-issue-to-earn',
-          },
-          {
-            to: '/v1/api-reference',
-            from: '/api-reference',
-          },
-          {
-            to: '/v1/schema',
-            from: '/schema',
-          },
-        ],
+      // Can't get the explicity redirects working either!
+      // '@docusaurus/plugin-client-redirects',
+      // {
+      //   // Explicitly handling page redirects for v1 because the more sophisticated approach below isn't working
+      //   redirects: [
+      //     // /X -> /v1/X
+      //     {
+      //       to: '/v1/issue-to-earn',
+      //       from: '/issue-to-earn',
+      //     },
+      //     {
+      //       to: '/v1/demo-1-click-signup',
+      //       from: '/demo-1-click-signup',
+      //     },
+      //     {
+      //       to: '/v1/demo-issue-to-earn',
+      //       from: '/demo-issue-to-earn',
+      //     },
+      //     {
+      //       to: '/v1/api-reference',
+      //       from: '/api-reference',
+      //     },
+      //     {
+      //       to: '/v1/schema',
+      //       from: '/schema',
+      //     },
+      //   ],
         // This isn't working — not sure why
         // createRedirects(existingPath) {
         //   if (existingPath.includes('/v2')) {
@@ -224,7 +225,7 @@ module.exports = {
         //   }
         //   return undefined; // Return a falsy value: no redirect created
         // },
-      },
+      // },
     ],
     // This plugin isn't working with Docusaurus v3 yet
     // [

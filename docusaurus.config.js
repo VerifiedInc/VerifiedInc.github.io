@@ -17,7 +17,7 @@ module.exports = {
   projectName: 'VerifiedInc.github.io', // Usually your repo name.
   themeConfig: {
     announcementBar: {
-      content: '<a href="/v2"><b>1-Click Signup v2</b></a> is in preview!',
+      content: '<b>1-Click Signup v2 is live!</b> It\'s over <i>3x faster</i> than v1',
       backgroundColor: '#0dbc3d',
       textColor: '#ffffff',
     },
@@ -66,19 +66,19 @@ module.exports = {
           items: [
             {
               label: 'Overview',
-              to: '/v2/overview',
+              to: '/overview',
             },
             {
               label: 'Quick Start Guide',
-              to: '/v2/quick-start-guide',
+              to: '/quick-start-guide',
             },
             {
               label: 'Integration Guide',
-              to: '/v2/integration-guide',
+              to: '/integration-guide',
             },
             {
               label: 'Migration Guide (v1 to v2)',
-              to: '/v2/migration-guide',
+              to: '/migration-guide',
             },
           ],
         },
@@ -87,19 +87,19 @@ module.exports = {
           items: [
             {
                 label: 'Authentication',
-                to: '/v2/authentication',
+                to: '/authentication',
             },
             {
               label: 'Environments',
-              to: '/v2/environments',
+              to: '/environments',
             },
             {
               label: 'Endpoints',
-              to: '/v2/endpoints',
+              to: '/endpoints',
             },
             {
               label: 'Types',
-              to: '/v2/types',
+              to: '/types',
             },
           ],
         },
@@ -156,18 +156,18 @@ module.exports = {
           sidebarCollapsible: false,
           routeBasePath: '/',
           includeCurrentVersion: false,
-          lastVersion: '1',
+          lastVersion: '2',
           breadcrumbs: true,
           versions: {
             '1': {
               label: 'v1',
               badge: false,
-              path: '/'
+              path: '/v1'
             },
             '2': {
               label: 'v2',
               badge: false,
-              path: '/v2'
+              path: '/'
             },
           },
         },
@@ -177,27 +177,73 @@ module.exports = {
       },
     ],
   ],
-  // This plugin isn't working with Docusaurus v3 yet
-  /*
   plugins: [
     [
-      'docusaurus-plugin-openapi-docs', // See https://github.com/PaloAltoNetworks/docusaurus-openapi-docs/tree/main
+      require.resolve('docusaurus-lunr-search'), 
       {
-        id: "api", // plugin id
-        docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
-        config: {
-          api: { // the <id> referenced when running CLI commands
-            specPath: "api/specs/api.json", // path to OpenAPI spec, URLs supported
-            outputDir: "docs/api", // output directory for generated files
-            sidebarOptions: { // optional, instructs plugin to generate sidebar.js
-              groupPathsBy: "tag", // group sidebar items by operation "tag"
-            },
+        // options, ref: https://github.com/praveenn77/docusaurus-lunr-search#options-available
+        // Commenting out for now because removing hidden directory
+        // excludeRoutes: hiddenFiles,
+        indexBaseUrl: true
+      }
+    ],
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        // Explicitly handling page redirects for v1 because the more sophisticated approach below isn't working
+        redirects: [
+          // /X -> /v1/X
+          {
+            to: '/v1/issue-to-earn',
+            from: '/issue-to-earn',
           },
-        }
+          {
+            to: '/v1/demo-1-click-signup',
+            from: '/demo-1-click-signup',
+          },
+          {
+            to: '/v1/demo-issue-to-earn',
+            from: '/demo-issue-to-earn',
+          },
+          {
+            to: '/v1/api-reference',
+            from: '/api-reference',
+          },
+          {
+            to: '/v1/schema',
+            from: '/schema',
+          },
+        ],
+        // This isn't working — not sure why
+        // createRedirects(existingPath) {
+        //   if (existingPath.includes('/v2')) {
+        //     // Redirect from /v2/X to /X (see https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-client-redirects#CreateRedirectsFn)
+        //     return [
+        //       existingPath.replace('/v2', '/'),
+        //     ];
+        //   }
+        //   return undefined; // Return a falsy value: no redirect created
+        // },
       },
-    ]
+    ],
+    // This plugin isn't working with Docusaurus v3 yet
+    // [
+    //   'docusaurus-plugin-openapi-docs', // See https://github.com/PaloAltoNetworks/docusaurus-openapi-docs/tree/main
+    //   {
+    //     id: "api", // plugin id
+    //     docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
+    //     config: {
+    //       api: { // the <id> referenced when running CLI commands
+    //         specPath: "api/specs/api.json", // path to OpenAPI spec, URLs supported
+    //         outputDir: "docs/api", // output directory for generated files
+    //         sidebarOptions: { // optional, instructs plugin to generate sidebar.js
+    //           groupPathsBy: "tag", // group sidebar items by operation "tag"
+    //         },
+    //       },
+    //     }
+    //   },
+    // ]
   ],
-  */
   scripts: [
     {
       src: '/scripts/brandSettings.js',
@@ -212,10 +258,4 @@ module.exports = {
   markdown: {
     mermaid: true,
   },
-  plugins: [[require.resolve('docusaurus-lunr-search'), {
-    // options, ref: https://github.com/praveenn77/docusaurus-lunr-search#options-available
-    // Commenting out for now because removing hidden directory
-    // excludeRoutes: hiddenFiles,
-    indexBaseUrl: true
-  }]],
 };

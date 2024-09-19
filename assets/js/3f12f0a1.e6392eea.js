@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkverified_inc_docs=self.webpackChunkverified_inc_docs||[]).push([[439],{8173:e=>{e.exports=JSON.parse('{"title":"1-Click Signup","slug":"/","permalink":"/","navigation":{"next":{"title":"Overview","permalink":"/overview"}}}')}}]);

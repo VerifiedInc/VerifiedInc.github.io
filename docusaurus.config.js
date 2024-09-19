@@ -187,7 +187,7 @@ module.exports = {
         indexBaseUrl: true
       }
     ],
-    [
+    // [
       // Can't get the explicity redirects working either!
       // '@docusaurus/plugin-client-redirects',
       // {
@@ -226,7 +226,7 @@ module.exports = {
         //   return undefined; // Return a falsy value: no redirect created
         // },
       // },
-    ],
+    // ],
     // This plugin isn't working with Docusaurus v3 yet
     // [
     //   'docusaurus-plugin-openapi-docs', // See https://github.com/PaloAltoNetworks/docusaurus-openapi-docs/tree/main

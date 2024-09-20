@@ -25,6 +25,8 @@ import IncludeVerifiedLegalLanguage from '@site/versioned_docs/version-2/reusabl
 import SupportedPhoneNumbersAdmonition from '@site/versioned_docs/version-2/reusables/supported-phone-numbers-admonition.mdx'
 import BirthDateFormatAdmonition from '@site/versioned_docs/version-2/reusables/birth-date-format-admonition.mdx'
 import Chip from '@mui/material/Chip';
+import RecencyRequirementAdmonition from '@site/versioned_docs/version-2/reusables/recency-requirement-admonition.mdx'
+import WhenStepIsNecessaryAdmonition from '@site/versioned_docs/version-2/reusables/when-step-is-necessary-admonition.mdx'
 
 {/* 1-Click Signup is the fastest way to onboard new users.
 
@@ -92,7 +94,7 @@ Determining which option is best for you is simple. Just answer these questions:
 
 _Using Verified's UI is the easiest option, but using your own UI is more white label. You can always start with Verified's UI — for example to quickly try out 1-Click Signup — and then switch to your own UI later._
     - Verified's UI → Select **Hosted** and go to [Integration](?integrationType=hosted#integration)
-    - Your own UI → Continue to question 2...
+    - Your own UI → Continue to question b...
 
 #### b. Do you want to use Verified's phone verification or your own? 
 
@@ -205,30 +207,24 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
     <IntegrationTypeAdmonition option="Semi-Hosted"/>
 
 
-    ### 1. Prompt user for phone number and birth date.
+    ### 1. Prompt user for phone number.
 
-    To start 1-Click Signup for a user (using the Semi-Hosted integration type), you'll need their phone number and birth date. (We require a birth date to ensure we retrieve data for only the correct user.)
+    To start 1-Click Signup for a user (using the Semi-Hosted integration type), you'll need their phone number.  
 
-    We recommend using a form with:
-    - For the phone number, a phone number input that automatically continues when the user enters 10 digits.
-    - For the birth date, a numeric input (formatted as `MM/DD/YYYY` or similar) that automatically continues when the user enters 8 digits.
-
-    We recommend automatically submitting the form when both inputs have valid values. _See our [Demo](https://1-click.demo.verified.inc?integrationType=semi-hosted) for an example of this._
+    We recommend using a form with a phone number input that automatically submits when the user enters 10 digits. _See our [Demo](https://1-click.demo.verified.inc?integrationType=semi-hosted) for an example of this._
 
     <SupportedPhoneNumbersAdmonition/>
 
-    <BirthDateFormatAdmonition/>
-
     **You'll also need to:**
     <ol type="a">
-        <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic-1)</li>
-        <li>[**Include Verified legal language**](#b-include-verified-legal-language-1)</li>
+        <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic)</li>
+        <li>[**Include Verified legal language**](#b-include-verified-legal-language)</li>
     </ol>
 
     Here's a full example:
 
-    ![](/img/phone-number-and-birth-date-inputs.png)
-    *Hooli uses phone number and birth date inputs, and they include a gray variant of the "powered by" graphic and Verified legal language.*
+    ![](/img/phone-number-input.png)
+    *Hooli uses a phone number input, and they include a gray variant of the "powered by" graphic and Verified legal language.*
 
 
     #### a. Include "powered by Verified" graphic.
@@ -238,7 +234,7 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
 
     #### b. Include Verified legal language.
 
-    <IncludeVerifiedLegalLanguage agreeToAction="create a Verified account"/>
+    <IncludeVerifiedLegalLanguage agreeToAction="receive an SMS to create a Verified account"/>
 
     ---
     
@@ -272,16 +268,42 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
 
     ### 5. Call `GET /1-click`.
 
-    Call [`GET /1-click/{uuid}?{userInput}`](./endpoints?integrationType=semi-hosted#get-1-click) with `uuid` from the response body of `POST /1-click` and `userInput`.
+    Call [`GET /1-click/{uuid}?{userInput}`](./endpoints?integrationType=semi-hosted#get-1-click) with `uuid` from the [response body of `POST /1-click`](./endpoints?integrationType=semi-hosted#post-1-click-response) and `userInput`.
 
     <UseUserInputAdmonition/>
-    
-    The [response body](./endpoints?integrationType=semi-hosted#get-1-click-response) will be a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), which contains the user's data and metadata about it. You can use this data however you like to create a new account for the user!
+
+    One of two things will happen:
+    - **Success:** If we can source data based on just the phone number, the [response body](./endpoints?integrationType=semi-hosted#post-1-click-response) will contain a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 8](#8-prompt-user-to-confirm-their-data).
+    - **Error:** Otherwise, the response body will contain an error indicating that we need additional information (the user's birth date) to source data. In this case, continue to [step 6](#6-if-necessary-prompt-user-for-birth-date).
 
     ---
 
 
-    ### 6. Prompt user to confirm their data.
+    ### 6. (if necessary) Prompt user for birth date.
+
+    <WhenStepIsNecessaryAdmonition stepName="step 5" stepLink="#5-call-get-1-click"/>
+
+    We recommend using a form with a numeric input (formatted as `MM/DD/YYYY` or similar) that automatically submits when the user enters 8 digits. _See our [Demo](https://1-click.demo.verified.inc?integrationType=semi-hosted) for an example of this._
+
+    <BirthDateFormatAdmonition/>
+
+    ---
+
+
+    ### 7. (if necessary) Call `PATCH /1-click`.
+
+    <WhenStepIsNecessaryAdmonition stepName="step 5" stepLink="#5-call-get-1-click"/>
+
+    Call [`PATCH /1-click/{uuid}`](./endpoints?integrationType=semi-hosted#patch-1-click) with `uuid` from the [response body of `POST /1-click`](./endpoints?integrationType=semi-hosted#post-1-click-response).
+
+    The [response body](./endpoints?integrationType=semi-hosted#patch-1-click-response) will be a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), which contains the user's data and metadata about it.
+
+    <RecencyRequirementAdmonition/>
+
+    ---
+
+
+    ### 8. Prompt user to confirm their data.
 
     <PromptUserToConfirmTheirData/>
 
@@ -289,38 +311,30 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
 <TabItem value="non-hosted" label="Non-Hosted">
     <IntegrationTypeAdmonition option="Non-Hosted"/>
 
-    To start 1-Click Signup for a user (using the Non-Hosted integration type), you'll need their phone number and birth date, and you'll need to verify their phone number using your own solution.
+    To start 1-Click Signup for a user (using the Non-Hosted integration type), you'll need their phone number, and you'll need to verify it using your own solution.
 
     <Admonition type="important">
         **The Non-Hosted integration type requires you to verify phone numbers with your own solution.** If you'd like to use ours, switch to the [Semi-Hosted](?integrationType=semi-hosted#integration) or [Hosted](?integrationType=hosted#integration) integration type.
     </Admonition>
 
-
     ### 1. Prompt user for phone number and verify it.
 
     You can do this however you like, as long as you verify the user's phone number with a one-time verification code at least 6 digits long.
 
+    We recommend using a form with a phone number input that automatically submits when the user enters 10 digits. _See our [Demo](https://1-click.demo.verified.inc?integrationType=non-hosted) for an example of this._
+
     <SupportedPhoneNumbersAdmonition/>
-
-
-    ### 2. Prompt user for birth date.
-
-    We require a birth date to ensure we retrieve data for only the correct user.
-
-    We recommend using a form with a numeric input (formatted as `MM/DD/YYYY` or similar) that automatically submits when the user enters 8 digits. _See our [Demo](https://1-click.demo.verified.inc?integrationType=non-hosted) for an example of this._
-
-    <BirthDateFormatAdmonition/>
 
     **You'll also need to:**
     <ol type="a">
-        <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic-2)</li>
-        <li>[**Include Verified legal language**](#b-include-verified-legal-language-2)</li>
+        <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic)</li>
+        <li>[**Include Verified legal language**](#b-include-verified-legal-language)</li>
     </ol>
 
     Here's a full example:
 
-    ![](/img/birth-date-input.png)
-    *Hooli uses a birth date input, and they include a gray variant of the "powered by" graphic and Verified legal language.*
+    ![](/img/phone-number-input.png)
+    *Hooli uses a phone number input, and they include a gray variant of the "powered by" graphic and Verified legal language.*
 
 
     #### a. Include "powered by Verified" graphic.
@@ -335,7 +349,37 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
     ---
 
 
-    ### 3. Call `POST /1-click`.
+    ### 2. Call `POST /1-click` with phone number.
+
+    Call [`POST /1-click`](./endpoints?integrationType=non-hosted#post-1-click) with the user's phone number.
+
+    <Admonition type="danger" title="Recency Requirement">
+        **You must call `POST /1-click` within 30 minutes of verifying the user's phone number ([step 1](?integrationType=non-hosted#1-prompt-user-for-phone-number-and-verify-it)).** This is an important anti-fraud measure.
+    </Admonition>
+
+    One of two things will happen:
+    - **Success:** If we can source data based on just the phone number, the [response body](./endpoints?integrationType=non-hosted#post-1-click-response) will contain a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 5](#5-prompt-user-to-confirm-their-data).
+    - **Error:** Otherwise, the response body will contain an error indicating that we need additional information (the user's birth date) to source data. In this case, continue to [step 3](#3-if-necessary-prompt-user-for-birth-date).
+
+    <Admonition type="tip">
+        **For any phone number, in our [Sandbox](./environments#sandbox) environment, we'll return [mock data](./environments#mock-data).** You're welcome to use your own phone number(s) and/or our [test user](./environments#test-user)'s phone number. 
+    </Admonition>
+
+
+    ### 3. (if necessary) Prompt user for birth date.
+
+    <WhenStepIsNecessaryAdmonition stepName="step 2" stepLink="#2-call-post-1-click-with-phone-number"/>
+
+    If [step 2](#2-call-post-1-click-with-phone-number) doesn't succeed, that means we need more information (the user's birth date) to ensure we retrieve data for only the correct user.
+
+    We recommend using a form with a numeric input (formatted as `MM/DD/YYYY` or similar) that automatically submits when the user enters 8 digits. _See our [Demo](https://1-click.demo.verified.inc?integrationType=non-hosted) for an example of this._
+
+    <BirthDateFormatAdmonition/>
+
+
+    ### 4. (if necessary) Call `POST /1-click` with phone number and birth date.
+
+    <WhenStepIsNecessaryAdmonition stepName="step 2" stepLink="#2-call-post-1-click-with-phone-number"/>
 
     Call [`POST /1-click`](./endpoints?integrationType=non-hosted#post-1-click) with the user's phone number and birth date.
 
@@ -345,14 +389,10 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
 
     The [response body](./endpoints?integrationType=non-hosted#post-1-click-response) will contain a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. You can use this data however you like to create a new account for the user!
 
-    <Admonition type="tip">
-        **For any phone number, in our [Sandbox](./environments#sandbox) environment, we'll return [mock data](./environments#mock-data).** You're welcome to use your own phone number(s) and/or our [test user](./environments#test-user)'s phone number. 
-    </Admonition>
-
     ---
 
 
-    ### 4. Prompt user to confirm their data.
+    ### 5. Prompt user to confirm their data.
 
     <PromptUserToConfirmTheirData/>
 

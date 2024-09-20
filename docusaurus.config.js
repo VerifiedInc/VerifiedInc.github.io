@@ -98,6 +98,10 @@ module.exports = {
               to: '/endpoints',
             },
             {
+              label: 'Errors',
+              to: '/error',
+            },
+            {
               label: 'Types',
               to: '/types',
             },

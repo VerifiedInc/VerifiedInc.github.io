@@ -1,0 +1,81 @@
+import ErrorExampleOce011 from '@site/versioned_docs/version-2/reusables/error-example-oce011.mdx'
+
+```typescript title="Error Type"
+{
+    "name": string,
+    "message": string,
+    "code": number,
+    "className": string,
+    "data": {
+        "errorCode": string
+    }
+}
+```
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`name`</td>
+        <td>`string`</td>
+        <td>`PascalCase`</td>
+        <td>Name of the error</td>
+        <td>`"BadRequest"`</td>
+    </tr>
+    <tr>
+        <td>`message`</td>
+        <td>`string`</td>
+        <td>`Sentence case`</td>
+        <td>Message for developer that explains the error</td>
+        <td>`"Additional information is required to source data for user: birthDate"`</td>
+    </tr>
+    <tr>
+        <td>`code`</td>
+        <td>`number`</td>
+        <td>3 digits (0-9)</td>
+        <td>[HTTP response status code](https://httpwg.org/specs/rfc9110.html#overview.of.status.codes)</td>
+        <td>`400`</td>
+    </tr>
+    <tr>
+        <td>`className`</td>
+        <td>`string`</td>
+        <td>`kebab-case`</td>
+        <td>Class of error</td>
+        <td>`bad-request`</td>
+    </tr>
+    <tr>
+        <td>`data.errorCode`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values (see [Error Codes](./errors#error-codes) for details):
+                    - `"ERR001"`
+                    - `"OCE001"`
+                    - `"OCE002"`
+                    - `"OCE003"`
+                    - `"OCE004"`
+                    - `"OCE005"`
+                    - `"OCE006"`
+                    - `"OCE007"`
+                    - `"OCE008"`
+                    - `"OCE009"`
+                    - `"OCE0010"`
+                    - `"OCE0011"`
+                    - `"OCE0012"`
+                    - `"OCE0013"`
+                    - `"OCE0014"`
+                    - `"OCE0015"`
+            </details>
+        </td>
+        <td>3 letters and 3 digits (0-9)</td>
+        <td>[Verified error code](./errors#error-codes)</td>
+        <td>Verified specific error code (see [Error Codes](./errors#error-codes))</td>
+        <td>`"OCE011"`</td>
+    </tr>
+</table>

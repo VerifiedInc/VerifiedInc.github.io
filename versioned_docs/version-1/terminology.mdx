@@ -29,7 +29,7 @@ The tooltips you'll see most often refer to the terms described in this section 
 > A **credential** is a collection of data about a <a href="#user"><Tip type="user"/></a>. It's issued by a <a href="#brand"><Tip type="brand"/></a> and can be <a href="#request"><Tip type="request">requested</Tip></a> by other <a href="#customer"><Tip type="customer">customers</Tip></a>, with the <a href="#user"><Tip type="user">user's</Tip></a> consent.
 
 **Example:** Hooli and Kredita are <a href="#brand"><Tip type="brand">brands</Tip></a>, and Richard is a <a href="#user"><Tip type="user"/></a>.
-- Hooli verifies Richard's address and issues a credential of type [`AddressCredential`](/schema#schema-library) to him (as part of [Issue to Earn](/issue-to-earn)).
+- Hooli verifies Richard's address and issues a credential of type [`AddressCredential`](/v1/schema#schema-library) to him (as part of [Issue to Earn](/v1/issue-to-earn)).
 - Kredita <a href="#request"><Tip type="request">requests</Tip></a> an address credential from Richard (as part of [1-Click Signup](/)).
 - Richard consents to share his address credential with Kredita.
 
@@ -46,21 +46,21 @@ At a high level, a credential contains three pieces of information:
 2. user identifier
 3. user data
 
-The data must match the [data schema](/schema) for the credential type.
+The data must match the [data schema](/v1/schema) for the credential type.
 
 
 ### Atomic
 
-Atomic credentials contain single data points. For example, an [`EmailCredential`](/schema#schema-library) is an atomic credential that contains an email address.
+Atomic credentials contain single data points. For example, an [`EmailCredential`](/v1/schema#schema-library) is an atomic credential that contains an email address.
 
-Some atomic credentials can be contained within [composite](#composite) credentials. For example, [`FirstNameCredential`](/schema#schema-library) is an atomic credential that can be contained within the composite [`FullNameCredential`](/schema#schema-library).
+Some atomic credentials can be contained within [composite](#composite) credentials. For example, [`FirstNameCredential`](/v1/schema#schema-library) is an atomic credential that can be contained within the composite [`FullNameCredential`](/v1/schema#schema-library).
 
 <AtomicCredentialExample/>
 
 
 ### Composite
 
-Composite credentials are composed of multiple atomic credentials. For example, a [`FullNameCredential`](/schema#schema-library) can be composed of a [`FirstNameCredential`](/schema#schema-library) and a [`LastNameCredential`](/schema#schema-library). It can also include a [`MiddleNameCredential`](/schema#schema-library).
+Composite credentials are composed of multiple atomic credentials. For example, a [`FullNameCredential`](/v1/schema#schema-library) can be composed of a [`FirstNameCredential`](/v1/schema#schema-library) and a [`LastNameCredential`](/v1/schema#schema-library). It can also include a [`MiddleNameCredential`](/v1/schema#schema-library).
 
 <CompositeCredentialExample/>
 

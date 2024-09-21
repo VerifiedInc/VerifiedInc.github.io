@@ -1,0 +1,239 @@
+---
+id: errors
+title: Errors
+sidebar_label: Errors
+sidebar_position: 8
+description: Verified API errors
+slug: /errors
+toc_max_heading_level: 3
+---
+
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ErrorType from '@site/versioned_docs/version-2/reusables/error-type.mdx'
+import ErrorExampleOce011 from '@site/versioned_docs/version-2/reusables/error-example-oce011.mdx'
+
+
+To handle errors returned by Verified API endpoints, we recommend that you primarily use the respons body's `data.errorCode`, which is a Verified specific error code. See [Error Codes](#error-codes) below for descriptions of what each code means.
+
+
+## `Error` Type
+
+_This definition is also in [`Error`](./types#error) in [Types](./types)._
+
+<ErrorType/>
+
+
+### Example {#example-error}
+
+<ErrorExampleOce011/>
+
+---
+
+## Error Codes
+
+An `errorCode` is a Verified specific error code consisting of 3 letters and 3 numbers. Codes that begin with `ERR` are generic, and those that begin with `OCE` are specific to 1-Click Signup (`OCE` refers to a One Click Error).
+
+
+### `ERR001`
+
+> Generic error
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"Generic error code"`</td>
+    </tr>
+</table>
+
+
+### `OCE001`
+
+> General error for 1-Click Signup
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"1-click error code"`</td>
+    </tr>
+</table>
+
+
+### `OCE002`
+
+> Unsupported phone number for 1-Click Signup
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"Unsupported phone number to use 1-Click"`</td>
+    </tr>
+</table>
+
+
+### `OCE003`
+
+> Either `phone` or `email` is required for 1-Click Signup
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"Either "phone" or "email" is required"`</td>
+    </tr>
+</table>
+
+
+### `OCE004`
+
+> User not found for 1-Click Signup
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"User not found"`</td>
+    </tr>
+</table>
+
+
+### `OCE005`
+
+> User credentials or credential requests are missing for 1-Click Signup
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"User Credentials or Credential Requests are missing"`</td>
+    </tr>
+</table>
+
+
+### `OCE006`
+
+> User identifier is missing for 1-Click Signup
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"User identifier is missing"`</td>
+    </tr>
+</table>
+
+
+### `OCE007`
+
+> Mandatory credentials are missing for 1-Click Signup
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"Unable to use 1-click due to missing mandatory credentials"`</td>
+    </tr>
+</table>
+
+This generally happens  when the credential requests have mandatory credentials that data cannot be sourced for and for which user input is not allowed.
+
+
+### `OCE008`
+
+> Invalid or expired verification code for 1-Click Signup
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"Invalid or expired verification code"`</td>
+    </tr>
+</table>
+
+This only applies to a Semi-Hosted integration type.
+
+
+### `OCE009`
+
+> Verification code is required for 1-Click Signup
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"Verification code is required"`</td>
+    </tr>
+</table>
+
+This only applies to a Semi-Hosted integration type.
+
+
+### `OCE010`
+
+> Missing required fields to autofill credentials for 1-Click Signup
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"Missing required fields to autofill credentials"`</td>
+    </tr>
+</table>
+
+
+### `OCE011`
+
+> Additional information is required to source data for user: `{inputs}`
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"Additional information is required to source data for user: {inputs}"`</td>
+    </tr>
+</table>
+
+The `{inputs}` included in `message` is a comma separated list of required additional information. Generally, it's a single item: `birthDate`.
+
+
+### `OCE012`
+
+> Birth date mismatch
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"BirthDate mismatch."`</td>
+    </tr>
+</table>
+
+
+### `OCE013`
+
+> 
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"No credentials found"`</td>
+    </tr>
+</table>
+
+
+### `OCE014`
+
+>
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"1-Click Request Expired"`</td>
+    </tr>
+</table>
+
+This only applies to a Semi-Hosted integration type.
+
+
+### `OCE015`
+
+>
+
+<table>
+    <tr>
+        <th>`messsage`</th>
+        <td>`"1-Click Not Found"`</td>
+    </tr>
+</table>

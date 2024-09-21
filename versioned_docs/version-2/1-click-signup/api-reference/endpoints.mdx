@@ -5,7 +5,7 @@ sidebar_label: Endpoints
 sidebar_position: 7
 description: How to use Verified API endpoints
 slug: /endpoints
-toc_max_heading_level: 4
+toc_max_heading_level: 3
 ---
 
 import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
@@ -30,6 +30,7 @@ import CredentialRequestTableShared from '@site/versioned_docs/version-2/reusabl
 import CredentialRequestTableHosted from '@site/versioned_docs/version-2/reusables/credential-request-table-hosted.mdx'
 import DefaultCredentialRequestsHosted from '@site/versioned_docs/version-2/reusables/default-credential-requests-hosted.mdx'
 import DefaultCredentialRequestsNotHosted from '@site/versioned_docs/version-2/reusables/default-credential-requests-not-hosted.mdx'
+import RecencyRequirementAdmonition from '@site/versioned_docs/version-2/reusables/recency-requirement-admonition.mdx'
 
 {/* :::note
 See also our [Postman docs](https://api.docs.verified.inc/).
@@ -226,6 +227,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
   </tr>
 </table>
 
+
 ### Request {#get-1-click-request}
 
 <Tabs groupId="integrationType" queryString="integrationType">
@@ -244,7 +246,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
     ```json title="GET /1-click Request (Semi-Hosted Integration Type)"
     GET /1-click/{uuid}?{userInput}
     ```
-    - For the `{uuid}` endpoint path parameter, use the value of the `uuid` returned from `POST /1-click`.
+    - For the `{uuid}` endpoint path parameter, use the value of `uuid` from the [response body of `POST /1-click`](#post-1-click-response).
     - For the `{userInput}` endpoint URL parameter, use the value the user inputted when you prompted them to enter their verification code.
     <UseUserInputAdmonition/>
 </TabItem>
@@ -256,7 +258,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
     ```json title="GET /1-click Request (Non-Hosted Integration Type)"
     GET /1-click/{uuid}
     ```
-    - For the `{uuid}` endpoint path parameter, use the value of the `uuid` returned from `POST /1-click`.
+    - For the `{uuid}` endpoint path parameter, use the value of `uuid` from the [response body of `POST /1-click`](#post-1-click-response).
     - _The `{userInput}` endpoint URL parameter isn't relevant here._
 </TabItem>
 </Tabs>
@@ -271,6 +273,92 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 ```
 
 See [`1ClickEntity`](./types#1clickentity).
+
+---
+
+
+## `PATCH /1-click`
+
+> Pass additional information about a user to complete a 1-Click Signup flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`PATCH`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/{uuid}`</td>
+  </tr>
+</table>
+
+
+### Request {#patch-1-click-request}
+
+<Tabs groupId="integrationType" queryString="integrationType">
+<TabItem value="hosted" label="Hosted" default>
+    <IntegrationTypeAdmonition option="Hosted"/>
+    There's no need to call `PATCH /1-click` if your brand's integration type is Hosted, because our web app handles collecting additional information (birth date) from the user if it's required — see [here](././integration-guide?integrationType=hosted#4-redirect-user).
+
+    For a Hosted integration, you should only use [`POST /1-click`](#post-1-click) and [`GET /1-click`](#get-1-click).
+</TabItem>
+<TabItem value="semi-hosted" label="Semi-Hosted">
+    <IntegrationTypeAdmonition option="Semi-Hosted"/>
+    Call:
+    ```json title="PATCH /1-click Request (Semi-Hosted Integration Type)"
+    PATCH /1-click/{uuid}
+    ```
+    - For the `{uuid}` endpoint path parameter, use the value of `uuid` from the [response body of `POST /1-click`](#post-1-click-response).
+
+    Use this request body:
+    ```typescript title="PATCH /1-click Request Body (Semi-Hosted Integration Type)"
+    {
+        birthDate: string
+    }
+    ```
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Required?</th>
+            <th>Type</th>
+            <th>Format</th>
+            <th>Default</th>
+            <th>Description</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td>`birthDate`</td>
+            <td>optional</td>
+            <td>`string`</td>
+            <td>`YYYY-MM-DD`</td>
+            <td>none</td>
+            <td>User's birth date</td>
+            <td>`"1989-08-01"`</td>
+        </tr>
+    </table>
+    <RecencyRequirementAdmonition/>
+</TabItem>
+<TabItem value="non-hosted" label="Non-Hosted">
+    <IntegrationTypeAdmonition option="Non-Hosted"/>
+    There's no need to call `PATCH /1-click` if your brand's integration type is Non-Hosted, because the [request body of `POST /1-click`](#post-1-click-request) accepts a `birthDate` input, and [its response body](#post-1-click-response) contains the same [`1ClickEntity`](./types#1clickentity) that would be returned by `PATCH /1-click`.
+
+    For a Non-Hosted integration, you should only use [`POST /1-click`](#post-1-click).
+</TabItem>
+</Tabs>
+
+
+### Response {#patch-1-click-response}
+
+```typescript title="PATCH /1-click Response (All Integration Types)"
+{
+    ...1ClickEntity
+}
+```
+
+See [`1ClickEntity`](./types#1clickentity).
+
+
+
 
 {/* ## Update 1-Click Credentials
 

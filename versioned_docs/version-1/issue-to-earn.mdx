@@ -30,7 +30,7 @@ Doing so requires only two things:
 
 ### User Experience
 
-> _**Try our [Issue to Earn demos](/demo-issue-to-earn)** to see this user experience in action._
+> _**Try our [Issue to Earn demos](/v1/demo-issue-to-earn)** to see this user experience in action._
 
 A user only needs to click 1 button to receive a digital ID card. (When they do, you make 1 API call behind the scenes.) **It all takes less than 1 second!**
 
@@ -39,7 +39,7 @@ Specifically, the user experience is:
 2. **Give consent** (e.g. click button)
 3. **Receive email showing new ID card**
 
-The prompt is often a button, as in our [Next User Sign In](/demo-issue-to-earn?type=next-user-sign-in#static), [Marketing Email](/demo-issue-to-earn?type=marketing-email#static), and [In App Offer](/demo-issue-to-earn?type=in-app-offer#static) demos. But it can also take other forms — like a checkbox, as in our [After User Sign Up](/demo-issue-to-earn?type=after-user-sign-up#static) demo.
+The prompt is often a button, as in our [Next User Sign In](/v1/demo-issue-to-earn?type=next-user-sign-in#static), [Marketing Email](/v1/demo-issue-to-earn?type=marketing-email#static), and [In App Offer](/v1/demo-issue-to-earn?type=in-app-offer#static) demos. But it can also take other forms — like a checkbox, as in our [After User Sign Up](/v1/demo-issue-to-earn?type=after-user-sign-up#static) demo.
 
 :::note
 This ID card is a purely _digital_ one, and it has your brand on it. When you're ready for an API key for your brand, we will create an ID card design for you (or use one you send us).
@@ -47,7 +47,7 @@ This ID card is a purely _digital_ one, and it has your brand on it. When you're
 
 ## Implement
 
-> _**Try our [Issue to Earn demos](/demo-issue-to-earn)** to see example implementations. These are open source, so feel free to use the [source code](https://github.com/VerifiedInc/Hooli-Demo-Web) as a reference._
+> _**Try our [Issue to Earn demos](/v1/demo-issue-to-earn)** to see example implementations. These are open source, so feel free to use the [source code](https://github.com/VerifiedInc/Hooli-Demo-Web) as a reference._
 
 You can issue an ID card to a user in many ways. All of them involve the same two steps:
 1. [**Get user consent**](#get-user-consent)
@@ -60,7 +60,7 @@ You can issue an ID card to a user in many ways. All of them involve the same tw
 You **must** get a user's consent before issuing them an ID card. Not doing so violates our terms and will prevent us from paying you when the card is used.
 :::
 
-Prompt the user to activate their digital ID card (from your brand). You can use a button prompt, as in our [Next User Sign In](/demo-issue-to-earn?type=next-user-sign-in#static), [Marketing Email](/demo-issue-to-earn?type=marketing-email#static), and [In App Offer](/demo-issue-to-earn?type=in-app-offer#static) demos. Or you can use another type of prompt — like a checkbox, as in our [After User Sign Up](/demo-issue-to-earn?type=after-user-sign-up#static) demo.
+Prompt the user to activate their digital ID card (from your brand). You can use a button prompt, as in our [Next User Sign In](/v1/demo-issue-to-earn?type=next-user-sign-in#static), [Marketing Email](/v1/demo-issue-to-earn?type=marketing-email#static), and [In App Offer](/v1/demo-issue-to-earn?type=in-app-offer#static) demos. Or you can use another type of prompt — like a checkbox, as in our [After User Sign Up](/v1/demo-issue-to-earn?type=after-user-sign-up#static) demo.
 
 Include this legal language:
 
@@ -84,7 +84,7 @@ We define a digital ID card as a collection of credentials, issued by a brand to
 **To "issue an ID card" is just to issue credentials to a user for the first time.** (To "update an ID card" is just to issue subsequent credentials to that user.)
 :::
 
-**Call [`POST /credentials`](/api-reference#issue-credentials)** with a user identifier (a verified email or phone for the user) and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [data schemas](/schema).
+**Call [`POST /credentials`](/api-reference#issue-credentials)** with a user identifier (a verified email or phone for the user) and one or more credentials. For each credential, include a `type` and `data` in accordance with one of our [data schemas](/v1/schema).
 
 :::note[Ask Us for New Schemas If Needed]
 If we don't have a data schema that suits your needs, email us at Support@Verified.Inc) and we'll make one for you.
@@ -132,7 +132,7 @@ For example, if you have a verified Social Security Number (SSN) and a full name
 }
 ```
 
-The credential data must be formatted according to the `properties` attribute of the credential type's schema definition. Please see our [data schema library](/schema#schema-library) for more information.
+The credential data must be formatted according to the `properties` attribute of the credential type's schema definition. Please see our [data schema library](/v1/schema#schema-library) for more information.
 
 
 ## (optional) Enable Affiliate Offers

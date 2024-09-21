@@ -27,6 +27,8 @@ import BirthDateFormatAdmonition from '@site/versioned_docs/version-2/reusables/
 import Chip from '@mui/material/Chip';
 import RecencyRequirementAdmonition from '@site/versioned_docs/version-2/reusables/recency-requirement-admonition.mdx'
 import WhenStepIsNecessaryAdmonition from '@site/versioned_docs/version-2/reusables/when-step-is-necessary-admonition.mdx'
+import IncludeBirthDateIfPossibleAdmonition from '@site/versioned_docs/version-2/reusables/include-birth-date-if-possible-admonition.mdx'
+import ErrorExampleOce011 from '@site/versioned_docs/version-2/reusables/error-example-oce011.mdx'
 
 {/* 1-Click Signup is the fastest way to onboard new users.
 
@@ -147,10 +149,10 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
     ### 2. Call `POST /1-click`.
 
     Call [`POST /1-click`](./endpoints?integrationType=hosted#post-1-click) with the user's phone number. 
-    
-    The [response body](./endpoints?integrationType=hosted#post-1-click-response) will contain `url` and `code`, which you'll use in the following steps.
 
     <UseYourOwnPhoneNumberAdmonition/>
+    
+    The [response body](./endpoints?integrationType=hosted#post-1-click-response) will contain `url` and `code`, which you'll use in the following steps.
 
     ---
 
@@ -241,11 +243,13 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
 
     ### 2. Call `POST /1-click`.
 
-    Call [`POST /1-click`](./endpoints?integrationType=semi-hosted#post-1-click) with the user's phone number and birth date.
-    
-    The [response body](./endpoints?integrationType=semi-hosted#post-1-click-response) will contain `uuid` and `code`, which you'll use in the following steps.
+    Call [`POST /1-click`](./endpoints?integrationType=semi-hosted#post-1-click) with the user's phone number.
 
     <UseYourOwnPhoneNumberAdmonition/>
+
+    <IncludeBirthDateIfPossibleAdmonition/>
+    
+    The [response body](./endpoints?integrationType=semi-hosted#post-1-click-response) will contain `uuid` and `code`, which you'll use in the following steps.
 
     ---
 
@@ -272,9 +276,10 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
 
     <UseUserInputAdmonition/>
 
-    One of two things will happen:
+    One of two things should happen:
     - **Success:** If we can source data based on just the phone number, the [response body](./endpoints?integrationType=semi-hosted#post-1-click-response) will contain a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 8](#8-prompt-user-to-confirm-their-data).
-    - **Error:** Otherwise, the response body will contain an error indicating that we need additional information (the user's birth date) to source data. In this case, continue to [step 6](#6-if-necessary-prompt-user-for-birth-date).
+    - **Error:** Otherwise, the response body will contain an [error](./errors) indicating that we need additional information (the user's birth date) to source data. In this case, continue to [step 6](#6-if-necessary-prompt-user-for-birth-date). The error will have error code [`OCE011`](./errors#oce011) and look like this:
+    <ErrorExampleOce011/>
 
     ---
 
@@ -357,13 +362,16 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
         **You must call `POST /1-click` within 30 minutes of verifying the user's phone number ([step 1](?integrationType=non-hosted#1-prompt-user-for-phone-number-and-verify-it)).** This is an important anti-fraud measure.
     </Admonition>
 
-    One of two things will happen:
-    - **Success:** If we can source data based on just the phone number, the [response body](./endpoints?integrationType=non-hosted#post-1-click-response) will contain a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 5](#5-prompt-user-to-confirm-their-data).
-    - **Error:** Otherwise, the response body will contain an error indicating that we need additional information (the user's birth date) to source data. In this case, continue to [step 3](#3-if-necessary-prompt-user-for-birth-date).
-
     <Admonition type="tip">
         **For any phone number, in our [Sandbox](./environments#sandbox) environment, we'll return [mock data](./environments#mock-data).** You're welcome to use your own phone number(s) and/or our [test user](./environments#test-user)'s phone number. 
     </Admonition>
+
+    <IncludeBirthDateIfPossibleAdmonition/>
+
+    One of two things will happen:
+    - **Success:** If we can source data based on just the phone number, the [response body](./endpoints?integrationType=non-hosted#post-1-click-response) will contain a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 5](#5-prompt-user-to-confirm-their-data).
+    - **Error:** Otherwise, the response body will contain an error indicating that we need additional information (the user's birth date) to source data. In this case, continue to [step 3](#3-if-necessary-prompt-user-for-birth-date). The error will have error code [`OCE011`](./errors#oce011) and look like this:
+    <ErrorExampleOce011/>
 
 
     ### 3. (if necessary) Prompt user for birth date.

@@ -99,7 +99,7 @@ module.exports = {
             },
             {
               label: 'Errors',
-              to: '/error',
+              to: '/errors',
             },
             {
               label: 'Types',

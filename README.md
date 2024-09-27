@@ -36,6 +36,12 @@ npm run start
 
 This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
 
+#### Branching Scheme
+
+This repo is unique in that the `dev` branch is consider the primary branch. Thanks to the previous Github pages method of publishing we needed a branch for CI to push the build files to and then be deployed from. Now that we are using Vercel we no longer need said CI job that we manage. Please refer to the [Deployment](#deployment) section for more info.
+
+However, because of this characteristic, one should be creating their feature branch off of `dev` for local development. The PR will be open against `dev` and should be merged to `dev`.
+
 ### Build
 
 ```console
@@ -67,18 +73,6 @@ It is also preferred if one could create an official Github release (also makes 
 #### Preview Deployment
 
 All pull requests create a preview deployment automatically thanks to use Vercel for deployment.
-
-##### Tag
-
-It may be the case that you would like to get other's approval or input prior to releasing the docs publicly via the deployment method above. While pulling this project from that branch in question and running locally is still probably the best way members of the business team, for example, can not do that. To handle this case, we have setup a "preview" deployment via Github Actions which is trigger with a git tag in the format `preview-v*.*.*`. This GitHub actions configuration can be found in the [preview.yaml](.github/workflows/preview.yaml) file. 
-
-It publishes to the `preview` branch which should be consider akin to `master` and never pushed directly to. It would be recommend to push the preview tag from your feature branch. 
-
-**Please only push preview tags, no need to create full blown Github releases for these previews**.
-
-For example, if one would like feedback from the business team regarding changes on the `feat/guides` branch then push a `preview-v2.4.0` tag to that branch. This will trigger the preview deployment job which publishes to the `preview` branch. 
-
-[Netlify](https://app.netlify.com/sites/resilient-capybara-2fa074/deploys) is being used for this deployment. Credentials via the shared devops@verified.inc email account can be found in 1Password. It deploys to the generic url, https://resilient-capybara-2fa074.netlify.app/. We very easily could deploy to a custom domain if we ever want to share "beta" docs with friendly parties.
 
 ### Search
 

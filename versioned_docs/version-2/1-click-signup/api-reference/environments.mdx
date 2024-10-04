@@ -57,14 +57,17 @@ We expose two environments: [**Sandbox**](#sandbox) and [**Production**](#produc
 
 ### Mock Data
 
-In Sandbox, we return mock user data regardless of what phone (or email) [identifier](./types#identifiers) you use. We recommend using your own phone number, so you can succesfully send SMS during the development process.
+In Sandbox, we return mock user data regardless of what phone (or email) [identifier](./types#identifiers) you use. 
+- **We recommend that you use own phone number,** so you can succesfully send and receive SMS during the development process. You'll see in the [Integration Guide](./integration-guide) that sending SMS is a necessary part of integration.
+- **You can also use our [test user](#test-user)'s phone number.** This test user has a static verification code, which can sometimes make testing easier.
+- **You should use a value of `"1989-08-01"` for birth date in either case.** We don't require a birth date in Sandbox (we always return mock user data based on just a phone number), but if you want to use a birth date for testing in Sandbox, you'll need to use that specific value to pass validation.
 
 If you'd like us to return custom mock data for your phone number(s), please email us at Support@Verified.inc — we're happy to enable that for you.
 
 
 ### Test User
 
-In addition to using your own phone number to receive [mock data](#mock-data), you can use our test user Richard Hendricks, who has the following phone and email [identifiers](./types#identifiers) and static verification code:
+In addition to using your own phone number to receive [mock data](#mock-data), you can use our test user Richard Hendricks, who has the following phone and email [identifiers](./types#identifiers), static verification code, and birth date:
 
 <table>
     <tr>
@@ -78,6 +81,10 @@ In addition to using your own phone number to receive [mock data](#mock-data), y
     <tr>
         <th>Verification Code</th>
         <td>`111111`</td>
+    </tr>
+    <tr>
+        <th>Birth Date</th>
+        <td>`1989-08-01`</td>
     </tr>
 </table>
 

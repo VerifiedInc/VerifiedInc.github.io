@@ -29,6 +29,7 @@ import RecencyRequirementAdmonition from '@site/versioned_docs/version-2/reusabl
 import WhenStepIsNecessaryAdmonition from '@site/versioned_docs/version-2/reusables/when-step-is-necessary-admonition.mdx'
 import IncludeBirthDateIfPossibleAdmonition from '@site/versioned_docs/version-2/reusables/include-birth-date-if-possible-admonition.mdx'
 import ErrorExampleOce011 from '@site/versioned_docs/version-2/reusables/error-example-oce011.mdx'
+import SandboxBirthDateAdmonition from '@site/versioned_docs/version-2/reusables/sandbox-birth-date-admonition.mdx'
 
 {/* 1-Click Signup is the fastest way to onboard new users.
 
@@ -303,6 +304,7 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
 
     The [response body](./endpoints?integrationType=semi-hosted#patch-1-click-response) will be a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), which contains the user's data and metadata about it.
 
+    <SandboxBirthDateAdmonition/>
     <RecencyRequirementAdmonition/>
 
     ---
@@ -391,6 +393,7 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
 
     Call [`POST /1-click`](./endpoints?integrationType=non-hosted#post-1-click) with the user's phone number and birth date.
 
+    <SandboxBirthDateAdmonition/>
     <Admonition type="danger" title="Recency Requirement">
         **You must call `POST /1-click` within 30 minutes of verifying the user's phone number ([step 1](?integrationType=non-hosted#1-prompt-user-for-phone-number-and-verify-it)).** This is an important anti-fraud measure.
     </Admonition>

@@ -106,6 +106,29 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
     - Your own phone verification → Select **Non-Hosted** and go to [Integration](?integrationType=non-hosted#integration)
 
 
+---
+
+
+### 3. Configure default credential requests.
+
+:::note Definitions
+- A [**credential**](/data#credentials) is a piece of identity data about a user (like a first name or address).
+- A **credential request** is how you ask Verified for a particular credential. It encodes what type of data you're asking for, whether it's required or optional, whether multiple values should be returned, etc. See the [`CredentialRequest`](/types#credentialrequest) type for full details.
+:::
+
+Another important brand setting is **default credential requests**, which determines what user data Verified will try to source for you. 
+
+When you create a new brand, the Dashboard starts you off with standard default credential requests to provide you with a helpful starting point. Edit these to reflect the user data you'd like Verified to source.
+
+:::tip
+The default credential requests are called default because they apply if you don't include the optional `credentialRequests` attribute in the request body of `POST /1-click` (which you call in step 2 of [Integration](#integration) below).
+
+If you _do_ include `credentialRequests` in the request body of `POST /1-click`, they will override the default credential requests defined in the Dashboard. We don't recommend doing this unless your use case requires you to dynamically change credential requests on a per API call basis. _Note that if you include `credentialRequests`, it must be an array of [`CredentialRequest`](/types#credentialrequest) objects._
+:::
+
+---
+
+
 ## Integration
 
 <DevelopmentWorkAdmonition/>
@@ -302,7 +325,9 @@ _If you don't already verify users' phone numbers, it's easiest to use Verified'
 
     Call [`PATCH /1-click/{uuid}`](./endpoints?integrationType=semi-hosted#patch-1-click) with `uuid` from the [response body of `POST /1-click`](./endpoints?integrationType=semi-hosted#post-1-click-response).
 
-    The [response body](./endpoints?integrationType=semi-hosted#patch-1-click-response) will be a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), which contains the user's data and metadata about it.
+    One of two things should happen:
+    - **Success:** If we can source data based on the phone number and birth date, the [response body](./endpoints?integrationType=semi-hosted#patch-1-click-response) will be a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), which contains the user's data and metadata about it. In this case, continue to [step 8](#8-prompt-user-to-confirm-their-data).
+    - **Error:** Otherwise, the response body will contain an [error](./errors) indicating that the birth date didn't match. In this case, return to [step 6](#6-if-necessary-prompt-user-for-birth-date) (prompt the user for birth date again, and then call `PATCH /1-click` again). The error will have error code [`OCE012`](./errors#oce012).
 
     <SandboxBirthDateAdmonition/>
     <RecencyRequirementAdmonition/>

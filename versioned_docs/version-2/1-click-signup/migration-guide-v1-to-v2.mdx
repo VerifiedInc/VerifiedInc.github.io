@@ -229,7 +229,7 @@ Migrating from v1 to v2 is simple and easy. How to do so depends on which varian
     #### c. Update `GET /1-click`.
 
     **Request:**
-    - **Add `userInput` as a parameter** to call [`GET /1-click/{uuid}?{userInput}`](./endpoints?integrationType=semi-hosted#get-1-click).
+    - **Add `userInput` as a parameter** to call [`GET /1-click/{uuid}?code={userInput}`](./endpoints?integrationType=semi-hosted#get-1-click).
         - In v1, you append what the user inputs for the verification code (let's call it `userInput`) to `url` and then redirect the user to the resulting link, which verifies the user's input and then redirects them back to you.
         - In v2, you instead include `userInput` as a parameter on the `GET /1-click` API call. There's no need for a redirect.
 

@@ -211,7 +211,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
   </tr>
   <tr>
     <th>Path</th>
-    <td>`/1-click/{uuid}?{userInput}`</td>
+    <td>`/1-click/{uuid}?code={userInput}`</td>
   </tr>
 </table>
 
@@ -232,7 +232,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
     <IntegrationTypeAdmonition option="Semi-Hosted"/>
     Call:
     ```json title="GET /1-click Request (Semi-Hosted Integration Type)"
-    GET /1-click/{uuid}?{userInput}
+    GET /1-click/{uuid}?code={userInput}
     ```
     - For the `{uuid}` endpoint path parameter, use the value of `uuid` from the [response body of `POST /1-click`](#post-1-click-response).
     - For the `{userInput}` endpoint URL parameter, use the value the user inputted when you prompted them to enter their verification code.

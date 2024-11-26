@@ -285,3 +285,8 @@ td:first-child {
   font-weight: 700 !important;
   text-align: center !important;
 }
+
+/* The global <pre> element has a var() background set, which doesn't display well with the Swagger UI .version component. Resetting the background color. */
+.swagger-ui .version {
+  background-color: unset;
+}

@@ -1,0 +1,25 @@
+---
+id: swagger
+title: Swagger
+sidebar_label: Swagger 
+sidebar_position: 11
+description: Try 1-Click Signup with our Swagger API Docs
+slug: /swagger
+toc_max_heading_level: 3
+---
+
+import React, { useState } from 'react';
+import SwaggerUI from 'swagger-ui-react';
+import 'swagger-ui-react/swagger-ui.css';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2/reusables/development-work-admonition.mdx'
+
+# 1-Click Swagger API Docs
+
+Try 1-Click Signup with our Swagger API Docs. You’re currently exploring the sandbox environment, designed for testing and experimentation before moving to production.
+
+Start by clicking the **Swagger Authorize** button and entering your Brand's **[API Key](#authentication)** to get started.
+Each endpoint includes detailed payload examples, various response types and errors, and an option to test them out directly.
+
+<DevelopmentWorkAdmonition />
+
+<SwaggerUI url='https://core-api.sandbox-verifiedinc.com/v2/docs.json' />

@@ -11,10 +11,17 @@ toc_max_heading_level: 3
 import React from 'react';
 import SwaggerUI from 'swagger-ui-react';
 import 'swagger-ui-react/swagger-ui.css';
-import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2/reusables/development-work-admonition.mdx'
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2/reusables/development-work-admonition.mdx';
 
 export const SwaggerPage = () => {
-    return <SwaggerUI url='https://core-api.sandbox-verifiedinc.com/v2/docs.json' />
+    return (
+        <BrowserOnly>
+            {() => {
+                return (<SwaggerUI url='https://core-api.sandbox-verifiedinc.com/v2/docs.json' />);
+            }}
+        </BrowserOnly>
+    );
 }
 
 # 1-Click Swagger API Docs

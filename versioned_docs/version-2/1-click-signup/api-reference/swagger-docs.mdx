@@ -9,16 +9,25 @@ toc_max_heading_level: 3
 ---
 
 import React from 'react';
-import SwaggerUI from 'swagger-ui-react';
-import 'swagger-ui-react/swagger-ui.css';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2/reusables/development-work-admonition.mdx';
+import "swagger-ui-react/swagger-ui.css"
 
 export const SwaggerPage = () => {
     return (
         <BrowserOnly>
             {() => {
-                return (<SwaggerUI url='https://core-api.sandbox-verifiedinc.com/v2/docs.json' />);
+                // Necessary to make sure we're importing it client-side only. Otherwise it throws an error upon vercel build.
+                const SwaggerUI = React.lazy(() =>
+                    import('swagger-ui-react').then((module) => {
+                        return { default: module.default }; // Ensure we are dynamically importing the default export
+                    })
+                );
+                return (
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                        <SwaggerUI url='https://core-api.sandbox-verifiedinc.com/v2/docs.json'  />
+                    </React.Suspense>
+                );
             }}
         </BrowserOnly>
     );

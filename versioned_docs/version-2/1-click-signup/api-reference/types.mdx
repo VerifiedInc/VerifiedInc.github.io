@@ -562,7 +562,10 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
             ```
         </details>
         <Admonition type="warning" title="Arrays May Be Single Valued">
-            **An array of credential values may only include one value.** If `multi` is set to `true` in a credential request, we'll return multiple values _if_ we can source them. But if we can only source a single value, we'll still return it in an array, to ensure the data type is predictable.
+            **An array of credential values may only include one value.** If `multi` is set to `true` in a credential request, we'll return multiple values _if_ we can source them (up to a maximum of 3). But if we can only source a single value, we'll still return it in an array, to ensure the data type is predictable.
+        </Admonition>
+        <Admonition type="info" title="Multi Does Not Apply to Child Credential Requests">
+            **The `multi` option does not work on `children` credential requests.** It only applies to the parent credential request.
         </Admonition>
     - If the credential request has `multi` set to `false`, the data keyed on `credentialKey` will be a single credential value. 
         <details>

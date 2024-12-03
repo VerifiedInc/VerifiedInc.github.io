@@ -877,8 +877,8 @@ import Chip from '@mui/material/Chip';
                     - `"phone_carrier"`
                     - `"credit_bureau"`
                     - `"otp"`
-                    - `"self_attested"`
                     - `"customer_otp"`
+                    - `"self_attested"`
                     - `null`
             </details>
         </td>
@@ -941,8 +941,8 @@ import Chip from '@mui/material/Chip';
 - `"phone_carrier"`: verified via phone carrier records
 - `"credit_bureau"`: verified via credit bureau records
 - `"otp"`: verified via an OTP (one time passcode)
-- `"self_attested"`: attested by the user themselves (not verified)
 - `"customer_otp"`: verified via an OTP (one time passcode) by a Verified customer, not directly by Verified
+- `"self_attested"`: attested by the user themselves (not verified)
 - `null`
 
 You can build custom logic to handle credentials based on their `verificationMethod`, for example requiring additional verification if an important credential is `"self_attested"`.

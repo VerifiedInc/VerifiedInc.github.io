@@ -240,7 +240,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         [credentialKey: string]: 
             string     // Single string value when `multi` is false and `children` isn't included in the credential requests
             | [string] // Array of string values when `multi` is true and `children` isn't included in the credential requests
-            | Object   // Single credential value of type `Object` when `children` is present and `multi` is false
+            | Object   // Single object value when `multi` is false and `children` is included in the credential requests
             | [Object] // Array of credential values of type `Object` when `multi` is true and `children` is present
     },
     "metadata": {

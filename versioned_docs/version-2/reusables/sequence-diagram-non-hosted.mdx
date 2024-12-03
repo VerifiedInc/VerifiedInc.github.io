@@ -1,0 +1,50 @@
+Here is the **Sequence Diagram** for the **Non-Hosted** integration type:
+
+```mermaid
+%%{
+    init: {
+    'theme': 'base',
+    'themeVariables': {
+        'primaryColor': '#e6f6e6',
+        'primaryTextColor': '#003100',
+        'primaryBorderColor': '#0dbc3d',
+        'secondaryColor': '#eef9fd',
+        'secondaryTextColor': '#193c47',
+        'secondaryBorderColor': '#164fd6',
+        'activationBkgColor': '#e6f6e6',
+        'activationBorderColor': '#0dbc3d',
+        'labelBoxBkgColor': '#eef9fd',
+        'labelBoxBorderColor': '#164fd6',
+        'labelTextColor': '#193c47',
+        'edgeLabelBackground': '#ffffff',
+        'textColor': '#000000',
+        'fontFamily': 'Lato'
+    }
+}
+}%%
+sequenceDiagram
+    participant C as Customer
+    actor U as User
+    participant V as Verified
+
+    Note left of C: 1. Verify Phone Number
+    C ->>+ U: Show phone number input
+    U ->>- C: Enter phone number
+    C ->> C: Generate Verification Code
+    C ->> U: Send SMS
+    C ->>+ U: Show code input
+    U ->>- C: Enter code
+    rect rgb(200,200,200,0.25)
+        Note left of C: 2. Call 1-Click Endpoint
+        C ->>+ V: Call POST /1-click with phone number
+        alt Additional information required
+            V -->>- C: Additional information error
+            C ->>+ U: Show DOB input
+            U ->>- C: Enter DOB
+            C ->>+ V: Call POST /1-click with phone number and DOB
+        end
+        V ->> V: Pull verified user data
+        Note left of C: 3. Receive User Data
+        V -->>- C: Return user data 
+    end
+```

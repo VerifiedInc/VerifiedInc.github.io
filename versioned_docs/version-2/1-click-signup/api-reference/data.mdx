@@ -942,7 +942,7 @@ import Chip from '@mui/material/Chip';
 - `"credit_bureau"`: verified via credit bureau records
 - `"otp"`: verified via an OTP (one time passcode)
 - `"self_attested"`: attested by the user themselves (not verified)
-- `"customer_otp"`: for the phone identifier based on the customer-provided input phone number
+- `"customer_otp"`: verified via an OTP (one time passcode) by a Verified customer, not directly by Verified
 - `null`
 
 You can build custom logic to handle credentials based on their `verificationMethod`, for example requiring additional verification if an important credential is `"self_attested"`.

@@ -15,6 +15,7 @@ import TabItem from '@theme/TabItem';
 import Admonition from '@theme/Admonition';
 import SetupLoginToDashboard from '@site/versioned_docs/version-2/reusables/setup-login-to-dashboard.mdx';
 import UseYourOwnPhoneNumberAdmonition from '@site/versioned_docs/version-2/reusables/use-your-own-phone-number-admonition.mdx'
+import AuthenticationAdmonition from '@site/versioned_docs/version-2/reusables/authentication-admonition.mdx'
 import OneClickEntityExample from '@site/versioned_docs/version-2/reusables/1-click-entity-example.mdx'
 
 
@@ -50,6 +51,8 @@ For full technical details on how to integrate 1-Click Signup, see [Integration 
 ### 2. Call `POST /1-click`.
 
 Call [`POST /1-click`](./endpoints?integrationType=hosted#post-1-click) with your own phone number (or one of our [test user](./environments#test-user)'s phone numbers). Use the Sandbox API key for the brand you just created in the [Dashboard](https://dashboard.verified.inc).
+
+<AuthenticationAdmonition />
     
 The [response body](./endpoints?integrationType=hosted#post-1-click-response) will contain `url` and `code`, which you'll use in the following steps.
 

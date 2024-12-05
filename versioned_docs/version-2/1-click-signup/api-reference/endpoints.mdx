@@ -32,13 +32,19 @@ import DefaultCredentialRequestsHosted from '@site/versioned_docs/version-2/reus
 import DefaultCredentialRequestsNotHosted from '@site/versioned_docs/version-2/reusables/default-credential-requests-not-hosted.mdx'
 import RecencyRequirementAdmonition from '@site/versioned_docs/version-2/reusables/recency-requirement-admonition.mdx'
 import SandboxBirthDateAdmonition from '@site/versioned_docs/version-2/reusables/sandbox-birth-date-admonition.mdx'
+import EndpointHeader from '@site/versioned_docs/version-2/reusables/EndpointHeader.jsx'
 
 {/* :::note
 See also our [Postman docs](https://api.docs.verified.inc/).
 ::: */}
 
+<EndpointHeader 
+    swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/post_1_click" 
+    postmanUrl="https://documenter.getpostman.com/view/37980054/2sAYBbd8gf#e108f3ae-cf07-44e2-9924-dfca976ef533"
+>
+    ## `POST /1-click`
+</EndpointHeader>
 
-## `POST /1-click`
 
 > Begin a 1-Click Signup flow
 
@@ -54,7 +60,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 </table>
 
 
-### Request {#post-1-click-request}
+### Request {#post-1-click-request} 
 
 <details>
     <summary>Full Definition</summary>
@@ -200,7 +206,13 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 ---
 
 
-## `GET /1-click`
+
+<EndpointHeader 
+    swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/get_1_click__id_" 
+    postmanUrl="https://documenter.getpostman.com/view/37980054/2sAYBbd8gf#c300967f-3422-4eb0-90ef-2a3eb4095450"
+>
+    ## `GET /1-click`
+</EndpointHeader>
 
 > Get data for a user who has completed a 1-Click Signup flow
 
@@ -264,8 +276,13 @@ See [`1ClickEntity`](./types#1clickentity).
 
 ---
 
+<EndpointHeader 
+    swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/patch_1_click__id_" 
+    postmanUrl="https://documenter.getpostman.com/view/37980054/2sAYBbd8gf#175fcf84-ca40-4551-9d54-5d8be3d0e646"
+>
+    ## `PATCH /1-click`
+</EndpointHeader>
 
-## `PATCH /1-click`
 
 > Pass additional information about a user to complete a 1-Click Signup flow
 

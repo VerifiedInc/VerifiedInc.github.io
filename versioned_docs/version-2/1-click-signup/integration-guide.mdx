@@ -28,6 +28,9 @@ import WhenStepIsNecessaryAdmonition from '@site/versioned_docs/version-2/reusab
 import IncludeBirthDateIfPossibleAdmonition from '@site/versioned_docs/version-2/reusables/include-birth-date-if-possible-admonition.mdx'
 import ErrorExampleOce011 from '@site/versioned_docs/version-2/reusables/error-example-oce011.mdx'
 import SandboxBirthDateAdmonition from '@site/versioned_docs/version-2/reusables/sandbox-birth-date-admonition.mdx'
+import SequenceDiagramHosted from '@site/versioned_docs/version-2/reusables/sequence-diagram-hosted.mdx';
+import SequenceDiagramSemiHosted from '@site/versioned_docs/version-2/reusables/sequence-diagram-semi-hosted.mdx';
+import SequenceDiagramNonHosted from '@site/versioned_docs/version-2/reusables/sequence-diagram-non-hosted.mdx';
 import IncludeGraphicAndLegalLanguage from '@site/versioned_docs/version-2/reusables/include-graphic-and-legal-language.mdx'
 import LocalTestingAdmonition from '@site/versioned_docs/version-2/reusables/local-testing-admonition.mdx'
 
@@ -134,10 +137,11 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
 <DevelopmentWorkAdmonition/>
 
-<Tabs groupId="integrationType" queryString="integrationType">
+<Tabs groupId="integrationType" queryString="integrationType" lazy>
 <TabItem value="hosted" label="Hosted" default>
     <IntegrationTypeAdmonition option="Hosted"/>
 
+    <SequenceDiagramHosted />
 
     ### 1. Prompt user for phone number.
 
@@ -214,6 +218,7 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 <TabItem value="semi-hosted" label="Semi-Hosted">
     <IntegrationTypeAdmonition option="Semi-Hosted"/>
 
+    <SequenceDiagramSemiHosted />
 
     ### 1. Prompt user for phone number.
 
@@ -303,6 +308,8 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 </TabItem>
 <TabItem value="non-hosted" label="Non-Hosted">
     <IntegrationTypeAdmonition option="Non-Hosted"/>
+
+    <SequenceDiagramNonHosted />
 
     To start 1-Click Signup for a user (using the Non-Hosted integration type), you'll need their phone number, and you'll need to verify it using your own solution.
 

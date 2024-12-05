@@ -20,9 +20,7 @@ import PromptUserToConfirmTheirData from '@site/versioned_docs/version-2/reusabl
 import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2/reusables/development-work-admonition.mdx'
 import UseUserInputAdmonition from '@site/versioned_docs/version-2/reusables/use-user-input-admonition.mdx'
 import UseYourOwnPhoneNumberAdmonition from '@site/versioned_docs/version-2/reusables/use-your-own-phone-number-admonition.mdx'
-import IncludePoweredByGraphic from '@site/versioned_docs/version-2/reusables/include-powered-by-graphic.mdx'
-import IncludeVerifiedLegalLanguage from '@site/versioned_docs/version-2/reusables/include-verified-legal-language.mdx'
-import SupportedPhoneNumbersAdmonition from '@site/versioned_docs/version-2/reusables/supported-phone-numbers-admonition.mdx'
+
 import BirthDateFormatAdmonition from '@site/versioned_docs/version-2/reusables/birth-date-format-admonition.mdx'
 import Chip from '@mui/material/Chip';
 import RecencyRequirementAdmonition from '@site/versioned_docs/version-2/reusables/recency-requirement-admonition.mdx'
@@ -33,6 +31,7 @@ import SandboxBirthDateAdmonition from '@site/versioned_docs/version-2/reusables
 import SequenceDiagramHosted from '@site/versioned_docs/version-2/reusables/sequence-diagram-hosted.mdx';
 import SequenceDiagramSemiHosted from '@site/versioned_docs/version-2/reusables/sequence-diagram-semi-hosted.mdx';
 import SequenceDiagramNonHosted from '@site/versioned_docs/version-2/reusables/sequence-diagram-non-hosted.mdx';
+import IncludeGraphicAndLegalLanguage from '@site/versioned_docs/version-2/reusables/include-graphic-and-legal-language.mdx'
 import LocalTestingAdmonition from '@site/versioned_docs/version-2/reusables/local-testing-admonition.mdx'
 
 
@@ -150,28 +149,7 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     We recommend using a form with a phone number input that automatically submits when the user enters 10 digits. _See our [Demo](https://1-click.demo.verified.inc?integrationType=hosted) for an example of this._
 
-    <SupportedPhoneNumbersAdmonition/>
-
-    **You'll also need to:**
-    <ol type="a">
-        <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic)</li>
-        <li>[**Include Verified legal language**](#b-include-verified-legal-language)</li>
-    </ol>
-
-    Here's a full example:
-
-    ![](/img/phone-number-input.png)
-    *Hooli uses a phone number input, and they include a gray variant of the "powered by" graphic and Verified legal language.*
-
-
-    #### a. Include "powered by Verified" graphic.
-
-    <IncludePoweredByGraphic/>
-
-
-    #### b. Include Verified legal language.
-
-    <IncludeVerifiedLegalLanguage agreeToAction="receive an SMS to create a Verified account"/>
+    <IncludeGraphicAndLegalLanguage integrationType="hosted" />
 
     ---
     
@@ -248,28 +226,7 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     We recommend using a form with a phone number input that automatically submits when the user enters 10 digits. _See our [Demo](https://1-click.demo.verified.inc?integrationType=semi-hosted) for an example of this._
 
-    <SupportedPhoneNumbersAdmonition/>
-
-    **You'll also need to:**
-    <ol type="a">
-        <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic)</li>
-        <li>[**Include Verified legal language**](#b-include-verified-legal-language)</li>
-    </ol>
-
-    Here's a full example:
-
-    ![](/img/phone-number-input.png)
-    *Hooli uses a phone number input, and they include a gray variant of the "powered by" graphic and Verified legal language.*
-
-
-    #### a. Include "powered by Verified" graphic.
-
-    <IncludePoweredByGraphic/>
-
-
-    #### b. Include Verified legal language.
-
-    <IncludeVerifiedLegalLanguage agreeToAction="receive an SMS to create a Verified account"/>
+    <IncludeGraphicAndLegalLanguage integrationType="semi-hosted" />
 
     ---
     
@@ -366,28 +323,7 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     We recommend using a form with a phone number input that automatically submits when the user enters 10 digits. _See our [Demo](https://1-click.demo.verified.inc?integrationType=non-hosted) for an example of this._
 
-    <SupportedPhoneNumbersAdmonition/>
-
-    **You'll also need to:**
-    <ol type="a">
-        <li>[**Include a "powered by Verified" graphic**](#a-include-a-powered-by-verified-graphic)</li>
-        <li>[**Include Verified legal language**](#b-include-verified-legal-language)</li>
-    </ol>
-
-    Here's a full example:
-
-    ![](/img/phone-number-input.png)
-    *Hooli uses a phone number input, and they include a gray variant of the "powered by" graphic and Verified legal language.*
-
-
-    #### a. Include "powered by Verified" graphic.
-
-    <IncludePoweredByGraphic/>
-
-
-    #### b. Include Verified legal language.
-
-    <IncludeVerifiedLegalLanguage agreeToAction="receive an SMS to create a Verified account"/>
+    <IncludeGraphicAndLegalLanguage integrationType="non-hosted" />
 
     ---
 

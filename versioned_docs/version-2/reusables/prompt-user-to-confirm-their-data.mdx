@@ -29,7 +29,7 @@ You can enable or disable each input depending on whether you want the user to b
 <Admonition type="danger" title="Mask Social Security Numbers">
     **We require you to mask Social Security Numbers because they're particularly sensitive:**
     - Mask the first 5 digits (server side) so your client application only handles a masked SSN.
-    - If you allow the user to edit the SSN, ensure validation prevents them from only modifying the last 4 digits of the masked input.
+    - If you allow the user to edit the SSN, clear the entire value when they start editing (so they don't just edit the last 4 digits).
 </Admonition>
 
 #### b. Include information about where the data comes from

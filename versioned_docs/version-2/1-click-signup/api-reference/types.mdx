@@ -237,7 +237,11 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         [identifierKey: string]: string
     },
     "credentials": {
-        [credentialKey: string]: string | [string] | Object | [Object]
+        [credentialKey: string]: 
+            string     // Single string value when `multi` is false and `children` isn't included in the credential requests
+            | [string] // Array of string values when `multi` is true and `children` isn't included in the credential requests
+            | Object   // Single object value when `multi` is false and `children` is included in the credential requests
+            | [Object] // Array of object values when `multi` is true and `children` is included in the credential requests
     },
     "metadata": {
         "identifiers": {
@@ -247,6 +251,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         },
         "credentials": {
             [credentialKey: string]: {
+                // Follows the same structure as `credentials` and maintains the same order for array items when `multi` is set to `true`
                 [metadataKey: string]: string | [string] | Object | [Object]
             }
         }

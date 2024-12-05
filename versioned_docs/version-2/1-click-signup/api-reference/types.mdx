@@ -668,6 +668,102 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
 ---
 
 
+## `RiskSignals`
+
+Risk signals are optional metadata fields that we can enable for extra cost. To enable them, please ask your Verified support representative or email us at Support@Verified.inc.
+
+```typescript title="RiskSignals Type"
+{
+    "overall": {
+        "score": integer, // 0-1000
+        "level": "low" | "medium-low" | "medium",
+        "recommendation": "allow" | "flag",
+        "reasonCodes": [string]
+    },
+    "phone": {
+        "carrier": {
+            "id": integer,
+            "name": string
+        }
+        "reasonCodes": [string]
+    },
+    "email": {
+        "reasonCodes": [string]
+    },
+    "ipAddress": {
+        "reasonCodes": [string]
+    }
+}
+```
+
+When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntity`](#1clickentity):
+
+```typescript title="1ClickEntity"
+{
+    ...
+    "metadata": {
+        "identifiers": {
+            "riskSignals": RiskSignals,
+            ...
+        },
+        ...
+    }
+}
+```
+
+
+### Example {#example-risksignals}
+
+```typescript title="RiskSignals Example"
+{
+    ...
+    "metadata": {
+        "identifiers": {
+            ...
+            "riskSignals": {
+                "overall": {
+                    "score": 0,
+                    "level": "low",
+                    "recommendation": "allow",
+                    "reasonCodes": [
+                        "OCR10021"
+                    ]
+                },
+                "phone": {
+                    "carrier": {
+                        "id": number, // omit until enabled by Telesign support
+                        "name": "Example Carrier"
+                    }
+                    "reasonCodes": [
+                        "OCR20004",
+                        "OCR20005",
+                        "OCR20007",
+                        "OCR20101"
+                    ]
+                },
+                "email": {
+                    "reasonCodes": [
+                        "OCR60001",
+                        "OCR60002"
+                    ]
+                },
+                "ipAddress": {
+                    "reasonCodes": [
+                        "OCR50001",
+                        "OCR50002"
+                    ]
+                }
+            }
+        },
+        ...
+    }
+}
+```
+
+
+---
+
+
 ## `Error`
 
 <ErrorType/>

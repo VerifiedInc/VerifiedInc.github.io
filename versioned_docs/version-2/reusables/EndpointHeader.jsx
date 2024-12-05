@@ -1,5 +1,5 @@
-import PostmanButton from '@site/src/components/buttons/PostmanButton.jsx';
-import SwaggerButton from '@site/src/components/buttons/SwaggerButton.jsx';
+import PostmanButton from '../../../src/components/buttons/PostmanButton.jsx';
+import SwaggerButton from '../../../src/components/buttons/SwaggerButton.jsx';
 import PropTypes from 'prop-types';
 
 

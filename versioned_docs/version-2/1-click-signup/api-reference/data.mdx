@@ -5,7 +5,7 @@ sidebar_label: Data
 sidebar_position: 10
 description: Data returned by the Verified API
 slug: /data
-toc_max_heading_level: 4
+toc_max_heading_level: 5
 ---
 
 import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
@@ -860,17 +860,6 @@ import Chip from '@mui/material/Chip';
         <th>Example</th>
     </tr>
     <tr>
-        <td>ID</td>
-        <td>`id`</td>
-        <td>`string`</td>
-        <td>
-            - Credentials
-        </td>
-        <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
-        <td>Unique identifier for a credential</td>
-        <td>`"174b9aaf-3219-4499-b54c-0eb6acc5dbf2"`</td>
-    </tr>
-    <tr>
         <td>Verification Method</td>
         <td>`verificationMethod`</td>
         <td>
@@ -893,6 +882,28 @@ import Chip from '@mui/material/Chip';
         <td>`snake_case`</td>
         <td>How an identifier or credential was verified</td>
         <td>`"phone_carrier"`</td>
+    </tr>
+    <tr>
+        <td>Risk Signals</td>
+        <td>`riskSignals`</td>
+        <td>`Object`</td>
+        <td>
+            - Identifiers
+        </td>
+        <td>Object with keys specified below in [Risk Signals](#risk-signals)</td>
+        <td>Risk signals associated with the identifiers provided</td>
+        <td>See [`RiskSignals` example](./types#example-risksignals)</td>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td>`id`</td>
+        <td>`string`</td>
+        <td>
+            - Credentials
+        </td>
+        <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+        <td>Unique identifier for a credential</td>
+        <td>`"174b9aaf-3219-4499-b54c-0eb6acc5dbf2"`</td>
     </tr>
     <tr>
         <td>Status</td>
@@ -928,7 +939,7 @@ import Chip from '@mui/material/Chip';
         <td>`"1671847264479"`</td>
     </tr>
     <tr>
-        <td>Fraud Signals <Chip label="Contact Us" variant="outlined" size="small" color="primary"/></td>
+        <td>Fraud Signals <Chip label="Legacy" variant="outlined" size="small" color="error"/></td>
         <td>`fraudSignals`</td>
         <td>`string`</td>
         <td>
@@ -953,326 +964,221 @@ You can build custom logic to handle credentials based on their `verificationMet
 :::
 
 
-### Fraud Signals
+### Risk Signals
+
+By default, Verified returns either the Overall Risk Score, Risk Level, and Risk Recommendation, or (if the risk is too high) a [`OCE017` error](./errors#oce017). Other risk signals are optional add ons. To enable them, please ask your Verified support representative or email us at Support@Verified.inc.
+
+See also the [`RiskSignals` type](./types#risksignals).
 
 <table>
     <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Key
-        </th>
-        <th>
-            Type
-        </th>
-        <th>
-            Applies To
-        </th>
-        <th>
-            Description
-        </th>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
     </tr>
     <tr>
+        <td>Overall</td>
+        <td>`overall`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all overall risk signals listed below</td>
+        <td>Overall risk signals, considering all identifiers provided</td>
         <td>
-            Reason Codes
-        </td>
-        <td>
-            `reasonCodes`
-        </td>
-        <td>
-            `string[]`
-        </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            Indicators providing additional context about the transaction: see [Reason Codes](#reason-codes)
+            See [`RiskSignals` example](./types#example-risksignals)
         </td>
     </tr>
     <tr>
-        <td>
-            Status Index
-        </td>
-        <td>
-            `statusIndex`
-        </td>
-        <td>
-            `string`
-        </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            - Bitmapped value that represents networkStatus, accountType, accountRole, and customerType
-            - **Default:** `"11"`
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Baselined?
-        </td>
-        <td>
-            `isBaselined`
-        </td>
-        <td>
-            `boolean`
-        </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            - Indicator to communicate whether we have ever transacted with the input phone number before the current transaction
-            - **Default:** `true`
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Phone Risk?
-        </td>
-        <td>
-            `phoneRisk`
-        </td>
-        <td>
-            `boolean`
-        </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            - Whether phone number was found on a website that allows shared and anonymous access to temporary phone numbers
-            - **Default:** `true`
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Trust Score
-        </td>
-        <td>
-            `trustScore`
-        </td>
+        <td>↳ Score</td>
+        <td>`overall.score`</td>
         <td>
             `integer`
         </td>
         <td>
-            - Phone identifiers
+            Number from 0 (low risk) to 600 (medium risk)
         </td>
+        <td>Overall risk score, considering all identifiers provided. (If the score is over 600, Verified blocks the user and returns a [`OCE017` error](./errors#oce017).)</td>
         <td>
-            - Integer value, ranging from 0 to 1000, denoting the real-time trustworthiness of a phone number (1000 indicates perfect trust, while 0 indicates a complete lack of trust)
-            - **Default:** `892`
+            `463`
         </td>
     </tr>
     <tr>
-        <td>
-            Carrier Status
-        </td>
-        <td>
-            `carrierStatus`
-        </td>
+        <td>↳ Level</td>
+        <td>`overall.level`</td>
         <td>
             <details>
                 <summary>`enum`</summary>
 
                 Possible values:
-                    - `"Unknown"`
-                    - `"Active"`
-                    - `"Suspended"`
-                    - `"Disconnected"`
+                    - `"low"`
+                    - `"medium-low"`
+                    - `"medium"`
             </details>
         </td>
         <td>
-            - Phone identifiers
+            `kebab-case`
         </td>
+        <td>Overall risk level, considering all identifiers provided. (This is a bucketing of the risk score, where `0`-`200` is `"low"`, `201`-`400` is `"medium-low"`, and `401`-`600` is `"medium"`.)</td>
         <td>
-            - Current phone number network status associated with the carriers
-            - **Default:** `"Unknown"`
+            `"medium"`
         </td>
     </tr>
     <tr>
+        <td>↳ Recommendation</td>
+        <td>`overall.recommendation`</td>
         <td>
-            Phone Number Velocity
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"allow"`
+                    - `"flag"`
+            </details>
         </td>
         <td>
-            `phoneNumberVelocity`
+            `kebab-case`
         </td>
+        <td>Overall risk recommendation, considering all identifiers provided. (This is a bucketing of the risk level, where `"low"` and `"medium-low"` are `"allow"` and `"medium"` is `"flag"`.)</td>
         <td>
-            `integer`
-        </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            Number of times the subscriber has changed their phone number
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Port Velocity
-        </td>
-        <td>
-            `portVelocity`
-        </td>
-        <td>
-            `integer`
-        </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            - Number of times the subscriber has changed their carrier within the last 90 days
-            - **Default:** `1`
+            `"flag"`
         </td>
     </tr>
     <tr>
+        <td>↳ Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`overall.reasonCodes`</td>
         <td>
-            SIM Velocity
+            <details>
+                <summary>`enum[]`</summary>
+
+                Possible values: see [Overall](#overall) reason codes
+            </details>
         </td>
         <td>
-            `simVelocity`
+            `"OCR"` (for One Click Reason) followed by 5 digits (0-9)
         </td>
+        <td>Overall reason codes for risk score/level/recommendation, considering all identifiers provided</td>
         <td>
-            `integer`
-        </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            Number of times the mobile subscriber has changed their SIM within the last 90 days
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Device Velocity
-        </td>
-        <td>
-            `deviceVelocity`
-        </td>
-        <td>
-            `integer`
-        </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            Number of times the mobile subscriber has changed their device within the last 90 days
+            `"OCR10021"`
         </td>
     </tr>
     <tr>
+        <td>Phone <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`phone`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all phone identifier risk signals listed below</td>
+        <td>Phone identifier risk signals</td>
         <td>
-            Payfone Tenure
-        </td>
-        <td>
-            `payfoneTenure`
-        </td>
-        <td>
-            `Object`
-        </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            - Amount of time we've been able to track the subscriber (defined with `minimumDate` and `maximumDate`)
-            - **Default `minimumDate`:** `2021-11-21T23:59:59.000Z`
+            See [`RiskSignals` example](./types#example-risksignals)
         </td>
     </tr>
     <tr>
+        <td>↳ Carrier <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`phone.carrier`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all carrier details listed below</td>
+        <td>Carrier information</td>
         <td>
-            Carrier Tenure
-        </td>
-        <td>
-            `carrierTenure`
-        </td>
-        <td>
-            `Object`
-        </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            - Amount of time we’ve been able to track the carrier associated with the subscriber (defined with `minimumDate` and `maximumDate`)
-            - **Default `minimumDate`:** `2021-11-21T23:59:59.000Z`
-            - **Default `maximumDate`:** `2022-10-22T00:00:00.000Z`
+            `"flag"`
         </td>
     </tr>
     <tr>
+        <td>↳ ↳ ID <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`phone.carrier.id`</td>
+        <td>`integer`</td>
+        <td>Any number of digits (0-9)</td>
+        <td>Carrier ID number</td>
+        <td>`309`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Name <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`phone.carrier.name`</td>
+        <td>`string`</td>
+        <td>`"Title Case"`</td>
+        <td>Carrier name</td>
+        <td>`"AT&T Wireless"`</td>
+    </tr>
+    <tr>
+        <td>↳ Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`phone.reasonCodes`</td>
         <td>
-            Phone Number Tenure
+            <details>
+                <summary>`enum[]`</summary>
+
+                Possible values: see [Phone](#phone) reason codes
+            </details>
         </td>
         <td>
-            `phoneNumberTenure`
+            `"OCR"` (for One Click Reason) followed by 5 digits (0-9)
         </td>
+        <td>Phone identifier reason codes for risk score/level/recommendation</td>
         <td>
-            `Object`
-        </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            - Amount of time we’ve been able to track the phone number associated with the subscriber (defined with `minimumDate` and `maximumDate`)
-            - **Default `minimumDate`:** `2021-11-21T23:59:59.000Z`
+            `"OCR20004"`
         </td>
     </tr>
     <tr>
+        <td>Email <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`email`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all email identifier risk signals listed below</td>
+        <td>Email identifier risk signals</td>
         <td>
-            SIM Tenure
-        </td>
-        <td>
-            `simTenure`
-        </td>
-        <td>
-            `Object`
-        </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            - Amount of time we’ve been able to track the SIM association with the subscriber (defined with `minimumDate` and `maximumDate`)
-            - **Default `minimumDate`:** `2021-11-21T23:59:59.000Z`
-            - **Default `maximumDate`:** `2022-10-22T00:00:00.000Z`
+            See [`RiskSignals` example](./types#example-risksignals)
         </td>
     </tr>
     <tr>
+        <td>↳ Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`email.reasonCodes`</td>
         <td>
-            Device Tenure
+            <details>
+                <summary>`enum[]`</summary>
+
+                Possible values: see [Email](#email) reason codes
+            </details>
         </td>
         <td>
-            `deviceTenure`
+            `"OCR"` (for One Click Reason) followed by 5 digits (0-9)
         </td>
+        <td>Email identifier reason codes for risk score/level/recommendation</td>
         <td>
-            `Object`
+            `"OCR60001"`
         </td>
+    </tr>
+    {/* Commenting out until we support IP address identifiers */}
+    {/* <tr>
+        <td>IP Address <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`ipAddress`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all IP address identifier risk signals listed below</td>
+        <td>IP address identifier risk signals</td>
         <td>
-            - Phone identifiers
-        </td>
-        <td>
-            - Amount of time we’ve been able to track the device association with the subscriber (defined with `minimumDate` and `maximumDate`)
-            - **Default `minimumDate`:** `2021-11-21T23:59:59.000Z`
-            - **Default `maximumDate`:** `2022-10-22T00:00:00.000Z`
+            See [`RiskSignals` example](./types#example-risksignals)
         </td>
     </tr>
     <tr>
+        <td>↳ Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`ipAddress.reasonCodes`</td>
         <td>
-            Ported Date
+            <details>
+                <summary>`enum[]`</summary>
+                Possible values: see [IP Address](#ip-address) reason codes
+            </details>
         </td>
         <td>
-            `portedDate`
+            `"OCR"` (for One Click Reason) followed by 5 digits (0-9)
         </td>
+        <td>IP address identifier reason codes for risk score/level/recommendation</td>
         <td>
-            `Object`
+            `"OCR50001"`
         </td>
-        <td>
-            - Phone identifiers
-        </td>
-        <td>
-            - Date associated with a port of the phone number (defined with `minimumDate` and `maximumDate`)
-            - **Default `minimumDate`:** `2021-11-21T23:59:59.000Z`
-            - **Default `maximumDate`:** `2022-10-22T00:00:00.000Z`
-        </td>
-    </tr>
+    </tr> */}
 </table>
 
 
-#### Reason Codes
+#### Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/>
+
+
+##### Overall <Chip label="Add On" variant="outlined" size="small" color="primary"/>
 
 <table>
     <tr>
@@ -1280,423 +1186,1578 @@ You can build custom logic to handle credentials based on their `verificationMet
             Code
         </th>
         <th>
-            Reason
+            Description
+        </th>
+        <th>
+            Details
+        </th>
+        <th>
+            Risk Indicator
+        </th>
+        <th>
+            Trust Indicator
+        </th>
+    </tr>
+    <tr>
+        <td>
+            `OCR10010`
+        </td>
+        <td>
+            low activity
+        </td>
+        <td>
+            Not enough activity or attributes to classify the transaction as either risky or trustworthy.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR10020`
+        </td>
+        <td>
+            low regular activity
+        </td>
+        <td>
+            Trustworthy category, based on past behavior.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR10021`
+        </td>
+        <td>
+            regular activity
+        </td>
+        <td>
+            Most trustworthy category, based on past behavior.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR10030`
+        </td>
+        <td>
+            low-risk irregular activity
+        </td>
+        <td>
+            Risky category, based on past behavior.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR10031`
+        </td>
+        <td>
+            medium-risk irregular activity
+        </td>
+        <td>
+            High-risk category, based on past behavior.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR10032`
+        </td>
+        <td>
+            high-risk irregular activity
+        </td>
+        <td>
+            Highest-risk category, based on past behavior.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR10040`
+        </td>
+        <td>
+            irregular number type
+        </td>
+        <td>
+            This number has risky static attributes (like VOIP phone type or being on a blocklist).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+
+
+##### Phone <Chip label="Add On" variant="outlined" size="small" color="primary"/>
+
+<table>
+    <tr>
+        <th>
+            Code
         </th>
         <th>
             Description
         </th>
+        <th>
+            Details
+        </th>
+        <th>
+            Risk Indicator
+        </th>
+        <th>
+            Trust Indicator
+        </th>
     </tr>
     <tr>
         <td>
-            BL
+            `OCR20001`
         </td>
         <td>
-            Business Line
+            no long-term activity
         </td>
         <td>
-            Phone number is associated with a business line
-        </td>
-    </tr>
-    <tr>
-        <td>
-            CF
+            Much less than expected activity, or none at all, for this number over the past 90 days. Cannot classify.
         </td>
         <td>
-            Correctional Facility
         </td>
         <td>
-            Address matches the address of a US correctional facility
-        </td>
-    </tr>
-    <tr>
-        <td>
-            CU
-        </td>
-        <td>
-            Carrier Unsuccessful
-        </td>
-        <td>
-            Carrier call was unsuccessful
         </td>
     </tr>
     <tr>
         <td>
-            D1
+            `OCR20002`
         </td>
         <td>
-            Web-Scraped Number
+            high long-term activity
         </td>
         <td>
-            Phone number was found to be a web-scraped number showing as "active"
-        </td>
-    </tr>
-    <tr>
-        <td>
-            D2
+            More than expected activity for this number over the past 90 days.
         </td>
         <td>
-            Recently Deactivated
+            ✔
         </td>
         <td>
-            Phone number was recently deactivated
         </td>
     </tr>
     <tr>
         <td>
-            DR
+            `OCR20003`
         </td>
         <td>
-            Possible More Recent Device
+            high short-term activity
         </td>
         <td>
-            Device date returned was not obtained in real-time; there could be a more recent device change
-        </td>
-    </tr>
-    <tr>
-        <td>
-            DS
+            More than expected activity for this number over the last 24 hours.
         </td>
         <td>
-            T-Mobile Marked as "Do Not Sell"
+            ✔
         </td>
         <td>
-            (T-Mobile customers only) Mobile number has been identified as "Do Not Sell" by the carrier, and live data was not used for the Trust Score
         </td>
     </tr>
     <tr>
         <td>
-            DV
+            `OCR20004`
         </td>
         <td>
-            Device Change Velocity
+            moderate long-term activity
         </td>
         <td>
-            High device change velocity associated with the phone
-        </td>
-    </tr>
-    <tr>
-        <td>
-            FF
+            Expected activity for this number over the past 90 days.
         </td>
         <td>
-            Call Forwarding Off
         </td>
         <td>
-            - Call forwarding was not enabled on the consumer’s phone
-            - **Note:** This reason code is not enabled by default: email us at Support@Verified.inc to enable it
+            ✔
         </td>
     </tr>
     <tr>
         <td>
-            FO
+            `OCR20005`
         </td>
         <td>
-            Call Forwarding On
+            moderate short-term activity
         </td>
         <td>
-            - Call forwarding was enabled on the consumer’s phone
-            - **Note:** This reason code is not enabled by default: email us at Support@Verified.inc to enable it
-        </td>
-    </tr>
-    <tr>
-        <td>
-            HV
+            Expected activity for this number over the last 24 hours.
         </td>
         <td>
-            High Velocity Changes
         </td>
         <td>
-            High velocity of change events associated with the phone
+            ✔
         </td>
     </tr>
     <tr>
         <td>
-            LP
+            `OCR20006`
         </td>
         <td>
-            Recent IED, IMSI or MSISDN Change
+            sparse long-term activity
         </td>
         <td>
-            IED, IMEI, or MSISDN change more recently than 90 days ago
-        </td>
-    </tr>
-    <tr>
-        <td>
-            LS
+            Sparse, regular volume of verification traffic on this number over the past 90 days.
         </td>
         <td>
-            Recent IED or IMSI Change
         </td>
         <td>
-            IED or IMEI change more recently than 90 days ago
+            ✔
         </td>
     </tr>
     <tr>
         <td>
-            LT
+            `OCR20007`
         </td>
         <td>
-            Recent IED Change
+            continuous long-term activity
         </td>
         <td>
-            IED change more recently than 90 days ago
-        </td>
-    </tr>
-    <tr>
-        <td>
-            MM
+            Continuous, regular volume of verification traffic on this number over the past 90 days.
         </td>
         <td>
-            Mismatch of Input Name
         </td>
         <td>
-            Returned identity has a different name than the input name
+            ✔
         </td>
     </tr>
     <tr>
         <td>
-            ND
+            `OCR20008`
         </td>
         <td>
-            Network Status Unknown
+            very high long-term activity
         </td>
         <td>
-            Network status information was not available
-        </td>
-    </tr>
-    <tr>
-        <td>
-            NM
+            Very high volume of verification traffic on this number over the past 90 days.
         </td>
         <td>
-            Not Mobile
+            ✔
         </td>
         <td>
-            Line type was not mobile
         </td>
     </tr>
     <tr>
         <td>
-            NP
+            `OCR20009`
         </td>
         <td>
-            Not Personal
+            very high short-term activity
         </td>
         <td>
-            Line was classified as non-personal
-        </td>
-    </tr>
-    <tr>
-        <td>
-            OD
+            Very high volume of verification traffic on this number over the past 24 hours.
         </td>
         <td>
-            Ownership Before Disconnected
+            ✔
         </td>
         <td>
-            Ownership of the phone number was found before a disconnect date
         </td>
     </tr>
     <tr>
         <td>
-            OL
+            `OCR20010`
         </td>
         <td>
-            Long Ownership
+            no activity
         </td>
         <td>
-            - Long ownership tenure (greater than 90 days)
-            - **Note:** Ownership tenure is how long the identity has been associated with a phone number, based on when the ownership was first seen (see also reason codes OS, OV, and OU)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            OO
+            Very low volume of verification traffic, or none at all, was ever observed on this number.
         </td>
         <td>
-            Older Ownership
         </td>
         <td>
-            Connection of the ownership or association to this phone number was greater than 5 years, but no known newer ownership or association was found, so the ownership is “older” (see also reason code NO)
         </td>
     </tr>
     <tr>
         <td>
-            OU
+            `OCR20011`
         </td>
         <td>
-            Unknown Ownership
+            low long-term activity
         </td>
         <td>
-            - Ownership tenure was unknown, meaning the date attributes associated with the phone number were unavailable
-            - **Note:** Ownership tenure is how long the identity has been associated with a phone number, based on when the ownership was first seen (see also reason codes OL, OS, and OV)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            OV
+            Low volume of verification traffic on this phone number over the past 90 days.
         </td>
         <td>
-            Very Short Ownership
         </td>
         <td>
-            - Very short ownership tenure (less than 7 days)
-            - **Note:** Ownership tenure is how long the identity has been associated with a phone number, based on when the ownership was first seen (see also reason codes OL, OS, and OU)
         </td>
     </tr>
     <tr>
         <td>
-            PN
+            `OCR20012`
         </td>
         <td>
-            Not Active
+            low short-term activity
         </td>
         <td>
-            Phone number was not active
-        </td>
-    </tr>
-    <tr>
-        <td>
-            PT
+            Low volume of verification traffic on this phone number over the past 24 hours. Very low volume of verification traffic, or none at all over the past 90 days.
         </td>
         <td>
-            Ported Number
         </td>
         <td>
-            - Phone number was in a ported state
-            - **Note:** Any number not on its original home carrier will have a PT reason code (this is NOT indicative of a recent carrier port)
         </td>
     </tr>
     <tr>
         <td>
-            RL
+            `OCR20013`
         </td>
         <td>
-            High-Risk Line Type
+            low activity
         </td>
         <td>
-            Phone number was associated with a high-risk line type (Non-Fixed VoIP or Prepaid)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            RN
+            Less than expected activity for this number.
         </td>
         <td>
-            Low-Risk: Mobile on OSR
         </td>
         <td>
-            Phone number was at a lower risk for fraud due to being listed as a mobile line on the Override Services Registry (OSR)
         </td>
     </tr>
     <tr>
         <td>
-            RR
+            `OCR20101`
         </td>
         <td>
-            High-Risk: Non-Mobile on OSR
+            no range activity
         </td>
         <td>
-            Phone number was at a higher risk for fraud due to being listed as a non-mobile line on the Override Services Registry (OSR)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            S1
+            Very little activity, or none at all, for a risky range that this number belongs to over the past 90 days. Also returned if the number does not belong to a risky range.
         </td>
         <td>
-            Synthetic 1 – Multiple SSNs
         </td>
         <td>
-            Identity matched has multiple unique SSNs (can indicate a higher risk of the identity being synthetic)
+            ✔
         </td>
     </tr>
     <tr>
         <td>
-            S2
+            `OCR20102`
         </td>
         <td>
-            Synthetic 2 – Multiple DOBs
+            low range activity
         </td>
         <td>
-            Identity matched has multiple DOB records (can indicate a higher risk of the identity being synthetic)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            S3
+            Some activity for a risky range that this number belongs to over the past 90 days.
         </td>
         <td>
-            Synthetic 3 – Similar Names
+            ✔
         </td>
         <td>
-            Identity matched has a high number of relatives with the same/similar name (can indicate a higher risk of the identity being synthetic)
         </td>
     </tr>
     <tr>
         <td>
-            S4
+            `OCR20103`
         </td>
         <td>
-            Synthetic 4 – SSN Issued Before DOB
+            moderate short-term range activity
         </td>
         <td>
-            Identity matched has an SSN issued before either the submitted DOB or — if no DOB was submitted — the identity’s DOB (can indicate a higher risk of the identity being synthetic)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            SA
+            Significant activity for a risky range that this number belongs to over the last 24 hours.
         </td>
         <td>
-            Sub-Account Line
+            ✔
         </td>
         <td>
-            Phone number is classified as a sub-account line
         </td>
     </tr>
     <tr>
         <td>
-            SR
+            `OCR20104`
         </td>
         <td>
-            Possible More Recent SIM
+            moderate long-term range activity
         </td>
         <td>
-            SIM date returned was not obtained in real-time; there could be a more recent SIM change
-        </td>
-    </tr>
-    <tr>
-        <td>
-            UC
+            Significant activity for a risky range that this number belongs to over the past 90 days.
         </td>
         <td>
-            Insufficient Data
+            ✔
         </td>
         <td>
-            Indicates there was insufficient data to calculate the trust score
         </td>
     </tr>
     <tr>
         <td>
-            UV
+            `OCR20105`
         </td>
         <td>
-            Unverified Address
+            high short-term range activity
         </td>
         <td>
-            Indicates the address could not be verified
+            Very significant activity for a risky range that this number belongs to over the last 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
         </td>
     </tr>
     <tr>
         <td>
-            VA
+            `OCR20106`
         </td>
         <td>
-            Vacant Address
+            high long-term range activity
         </td>
         <td>
-            Address was vacant (unoccupied in the past 90 days)
+            Very significant activity for a risky range that this number belongs to over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20107`
+        </td>
+        <td>
+            very high long-term range activity
+        </td>
+        <td>
+            Extremely significant activity for a risky range that this number belongs to over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20108`
+        </td>
+        <td>
+            very high short-term range activity
+        </td>
+        <td>
+            Extremely significant activity for a risky range that this number belongs to over the last 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21001`
+        </td>
+        <td>
+            moderate activity on risky services
+        </td>
+        <td>
+            Significant activity on this number to or from risky services over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21002`
+        </td>
+        <td>
+            high activity on risky services
+        </td>
+        <td>
+            Very significant activity on this number to or from risky services over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21004`
+        </td>
+        <td>
+            long-term activity on risky services
+        </td>
+        <td>
+            Verification traffic on risky services on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21005`
+        </td>
+        <td>
+            short-term activity on risky services
+        </td>
+        <td>
+            Verification traffic on risky services on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21006`
+        </td>
+        <td>
+            high long-term activity on risky services
+        </td>
+        <td>
+            High volume of verification traffic on risky services on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21007`
+        </td>
+        <td>
+            high short-term activity on risky services
+        </td>
+        <td>
+            High volume of verification traffic on risky services on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21008`
+        </td>
+        <td>
+            long-term range activity on risky services
+        </td>
+        <td>
+            Verification traffic on risky services on the range this number belongs to over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21009`
+        </td>
+        <td>
+            short-term range activity on risky services
+        </td>
+        <td>
+            Verification traffic on risky services on the range this number belongs to over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21010`
+        </td>
+        <td>
+            high long-term range activity on risky services
+        </td>
+        <td>
+            High volume of verification traffic on risky services on the range this number belongs to over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21011`
+        </td>
+        <td>
+            high short-term range activity on risky services
+        </td>
+        <td>
+            High volume of verification traffic on risky services on the range this number belongs to over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21012`
+        </td>
+        <td>
+            very high short-term activity on risky services
+        </td>
+        <td>
+            Very high volume of verification traffic on risky services on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21013`
+        </td>
+        <td>
+            very high long-term activity on risky services
+        </td>
+        <td>
+            Very high volume of verification traffic on risky services on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21014`
+        </td>
+        <td>
+            very high short-term range activity on risky services
+        </td>
+        <td>
+            Very high volume of verification traffic on risky services on the range this number belongs to over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21015`
+        </td>
+        <td>
+            very high long-term range activity on risky services
+        </td>
+        <td>
+            Very high volume of verification traffic on risky services on the range this number belongs to over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21003`
+        </td>
+        <td>
+            machine-like activity
+        </td>
+        <td>
+            Behavior pattern that suggests this number is being used by a bot. Although we expect a submitted number engaged in A2P traffic to communicate with automated systems, we don’t expect the user of that number to be an automated system.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21016`
+        </td>
+        <td>
+            machine-like range activity
+        </td>
+        <td>
+            Extremely high volume of verification traffic in a very short period (less than 1 hour) on the range this number belongs to.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22001`
+        </td>
+        <td>
+            seen in the last 1 day
+        </td>
+        <td>
+            This number was seen in verification traffic in the last 1 day.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22007`
+        </td>
+        <td>
+            seen in the last 7 days
+        </td>
+        <td>
+            This number was seen in verification traffic in the last 7 days.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22015`
+        </td>
+        <td>
+            seen in the last 15 days
+        </td>
+        <td>
+            This number was seen in verification traffic in the last 15 days.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22101`
+        </td>
+        <td>
+            seen in the last 1 month
+        </td>
+        <td>
+            This number was seen in verification traffic in the last 1 month.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22102`
+        </td>
+        <td>
+            seen in the last 2 months
+        </td>
+        <td>
+            This number was seen in verification traffic in the last 2 months.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22103`
+        </td>
+        <td>
+            seen in the last 3 months
+        </td>
+        <td>
+            This number was seen in verification traffic in the last 3 months.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22203`
+        </td>
+        <td>
+            seen more than 3 months ago
+        </td>
+        <td>
+            This number was not seen in verification traffic in the last 3 months.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR30201`
+        </td>
+        <td>
+            no P2P data analyzed
+        </td>
+        <td>
+            P2P data was not analyzed. Cannot classify.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40001`
+        </td>
+        <td>
+            premium number
+        </td>
+        <td>
+            This is a premium number.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40002`
+        </td>
+        <td>
+            VOIP number
+        </td>
+        <td>
+            This is a VOIP number.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40003`
+        </td>
+        <td>
+            toll-free number
+        </td>
+        <td>
+            This is a toll-free number.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40004`
+        </td>
+        <td>
+            invalid number
+        </td>
+        <td>
+            This is an invalid number.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40005`
+        </td>
+        <td>
+            payphone number
+        </td>
+        <td>
+            This number is associated with a payphone.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40006`
+        </td>
+        <td>
+            voicemail number
+        </td>
+        <td>
+            This is a voicemail number.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40007`
+        </td>
+        <td>
+            pager number
+        </td>
+        <td>
+            This number is associated with a pager.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40008`
+        </td>
+        <td>
+            high-risk phone type
+        </td>
+        <td>
+            This number has another phone type that is risky, and that is not covered by any of the other number_type reason codes.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40009`
+        </td>
+        <td>
+            high-risk carrier
+        </td>
+        <td>
+            This number is associated with a very risky carrier.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40010`
+        </td>
+        <td>
+            medium-risk carrier
+        </td>
+        <td>
+            This number is associated with a risky carrier.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40011`
+        </td>
+        <td>
+            high-risk prefix
+        </td>
+        <td>
+            This number has a risky prefix.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40012`
+        </td>
+        <td>
+            phone too long
+        </td>
+        <td>
+            This number is invalid because it is too long, even after the application of cleansing rules.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40013`
+        </td>
+        <td>
+            blacklisted number
+        </td>
+        <td>
+            This number has been flagged as a source of fraud.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40014`
+        </td>
+        <td>
+            high-risk country
+        </td>
+        <td>
+            The country code of this number is for a risky country, one that originates a disproportionate share of fraud attacks.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40015`
+        </td>
+        <td>
+            technical number
+        </td>
+        <td>
+            This number is used for special technical purposes by telecom companies, such as for roaming.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40016`
+        </td>
+        <td>
+            number used by application
+        </td>
+        <td>
+            Reserved for use by customers with our applications (for example to send verification messages), but it appears that it is being used for a different purpose.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40017`
+        </td>
+        <td>
+            number whitelisted by customer
+        </td>
+        <td>
+            You have flagged this number as safe.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40018`
+        </td>
+        <td>
+            phone too short
+        </td>
+        <td>
+            This number is too short to be a valid phone number.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
         </td>
     </tr>
 </table>
+
+
+##### Email <Chip label="Add On" variant="outlined" size="small" color="primary"/>
+
+<table>
+    <tr>
+        <th>
+            Code
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Details
+        </th>
+        <th>
+            Risk Indicator
+        </th>
+        <th>
+            Trust Indicator
+        </th>
+    </tr>
+    <tr>
+        <td>
+            `OCR60001`
+        </td>
+        <td>
+	        moderate short-term activity
+        </td>
+        <td>
+	        Expected level of activity for this email address over the last 24-hours.
+        </td>
+        <td>
+        </td>
+        <td>
+	        ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR60002`
+        </td>
+        <td>
+            moderate long-term activity
+        </td>
+        <td>
+            Expected level of activity for this email address over the past 90 days.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR60003`
+        </td>
+        <td>
+            moderate short-term activity on risky services
+        </td>
+        <td>
+            Significant activity for this email address to or from risky services over the last 24 hours (see risky services above for definition of that term).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR60004`
+        </td>
+        <td>
+            moderate long-term activity on risky services
+        </td>
+        <td>
+            Significant activity on this email address to or from risky services over the last 90 days (see risky services above for definition of that term).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR60005`
+        </td>
+        <td>
+            high short-term activity
+        </td>
+        <td>
+            More than expected activity for this email address over the last 24-hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR60006`
+        </td>
+        <td>
+            high long-term activity
+        </td>
+        <td>
+            More than expected activity for this email address over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+
+
+{/* Commenting out until we support IP address identifiers */}
+
+{/* ##### IP Address <Chip label="Add On" variant="outlined" size="small" color="primary"/>
+
+<table>
+    <tr>
+        <th>
+            Code
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Details
+        </th>
+        <th>
+            Risk Indicator
+        </th>
+        <th>
+            Trust Indicator
+        </th>
+    </tr>
+    <tr>
+        <td>
+            `OCR50001`
+        </td>
+        <td>
+            moderate short-term activity
+        </td>
+        <td>
+            Expected level of activity for this IP address over the last 24 hours.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50002`
+        </td>
+        <td>
+            moderate long-term activity
+        </td>
+        <td>
+            Expected level of activity for this IP address over the past 90 days.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50003`
+        </td>
+        <td>
+            moderate short-term activity on risky services
+        </td>
+        <td>
+            Significant activity for this IP address to or from risky services over the last 24 hours (see risky services above for definition of that term).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50004`
+        </td>
+        <td>
+            moderate long-term activity on risky services
+        </td>
+        <td>
+            Significant activity on this IP address to or from risky services over the last 90 days (see risky services above for definition of that term).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50005`
+        </td>
+        <td>
+            high short-term activity
+        </td>
+        <td>
+            More than expected activity for this IP address over the last 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50006`
+        </td>
+        <td>
+            high long-term activity
+        </td>
+        <td>
+            More than expected activity for this IP address over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50007`
+        </td>
+        <td>
+            high short-term activity on risky services
+        </td>
+        <td>
+            Very significant activity for this IP address to or from risky services over the last 24 hours (see risky services above for definition of that term).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50008`
+        </td>
+        <td>
+            high long-term activity on risky services
+        </td>
+        <td>
+            Very significant activity on this IP address to or from risky services over the last 90 days (see risky services above for definition of that term).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50009`
+        </td>
+        <td>
+            very high short-term activity
+        </td>
+        <td>
+            Very frequent changes of IP address attributes in verification traffic on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50010`
+        </td>
+        <td>
+            very high long-term activity
+        </td>
+        <td>
+            Very frequent changes of IP address attributes in verification traffic on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50011`
+        </td>
+        <td>
+            short-term activity on risky services
+        </td>
+        <td>
+            Changes of IP address attributes in verification traffic on risky services on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50012`
+        </td>
+        <td>
+            long-term activity on risky services
+        </td>
+        <td>
+            Changes of IP address attributes in verification traffic on risky services on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50013`
+        </td>
+        <td>
+            very high short-term activity on risky services
+        </td>
+        <td>
+            Very frequent changes of IP address attributes in verification traffic on risky services on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50014`
+        </td>
+        <td>
+            very high long-term activity on risky services
+        </td>
+        <td>
+            Very frequent changes of IP address attributes in verification traffic on risky services on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50015`
+        </td>
+        <td>
+            anonymous proxy
+        </td>
+        <td>
+            This IP address is associated with anonymous proxies, which can help conceal the true origins of online traffic.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50016`
+        </td>
+        <td>
+            VPN
+        </td>
+        <td>
+            This IP address is associated with virtual private networks (VPNs), which can help conceal the true origins of online traffic.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50017`
+        </td>
+        <td>
+            hosting provider
+        </td>
+        <td>
+            This IP address is associated with web hosting servers, which have a pattern of activity different than genuine end users.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50018`
+        </td>
+        <td>
+            TOR exit node
+        </td>
+        <td>
+            This IP address is associated with Tor anonymous browsers, which can help conceal the true origins of online traffic.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+</table> */}

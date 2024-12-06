@@ -668,6 +668,97 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
 ---
 
 
+## `RiskSignals`
+
+Risk signals are optional metadata fields that we can enable for extra cost. To enable them, please ask your Verified support representative or email us at Support@Verified.inc.
+
+{/* Should add ipAddress when we enable support for it */}
+
+```typescript title="RiskSignals Type"
+{
+    "overall": {
+        "score": integer, // always enabled
+        "level": "low" | "medium-low" | "medium", // always enabled
+        "recommendation": "allow" | "flag", // always enabled
+        "reasonCodes": [string] // add on (ask Verified support to enable)
+    },
+    "phone": { // add on (ask Verified support to enable)
+        "carrier": {
+            "id": integer,
+            "name": string
+        }
+        "reasonCodes": [string]
+    },
+    "email": { // add on (ask Verified support to enable)
+        "reasonCodes": [string]
+    }
+}
+```
+
+When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntity`](#1clickentity):
+
+```typescript title="1ClickEntity"
+{
+    ...
+    "metadata": {
+        "identifiers": {
+            "riskSignals": RiskSignals,
+            ...
+        },
+        ...
+    }
+}
+```
+
+
+### Example {#example-risksignals}
+
+{/* Should add ipAddress when we enable support for it */}
+
+```typescript title="RiskSignals Example"
+{
+    ...
+    "metadata": {
+        "identifiers": {
+            ...
+            "riskSignals": {
+                "overall": {
+                    "score": 0, // always enabled
+                    "level": "low", // always enabled
+                    "recommendation": "allow", // always enabled
+                    "reasonCodes": [ // add on (ask Verified support to enable)
+                        "OCR10021"
+                    ]
+                },
+                "phone": { // add on (ask Verified support to enable)
+                    "carrier": {
+                        "id": 0,
+                        "name": "Example Carrier"
+                    }
+                    "reasonCodes": [
+                        "OCR20004",
+                        "OCR20005",
+                        "OCR20007",
+                        "OCR20101"
+                    ]
+                },
+                "email": { // add on (ask Verified support to enable)
+                    "reasonCodes": [
+                        "OCR60001",
+                        "OCR60002"
+                    ]
+                }
+            }
+        },
+        ...
+    }
+}
+```
+
+
+---
+
+
 ## `Error`
 
 <ErrorType/>

@@ -672,25 +672,24 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
 
 Risk signals are optional metadata fields that we can enable for extra cost. To enable them, please ask your Verified support representative or email us at Support@Verified.inc.
 
+{/* Should add ipAddress when we enable support for it */}
+
 ```typescript title="RiskSignals Type"
 {
     "overall": {
-        "score": integer, // 0-1000
-        "level": "low" | "medium-low" | "medium",
-        "recommendation": "allow" | "flag",
-        "reasonCodes": [string]
+        "score": integer, // always enabled
+        "level": "low" | "medium-low" | "medium", // always enabled
+        "recommendation": "allow" | "flag", // always enabled
+        "reasonCodes": [string] // add on (ask Verified support to enable)
     },
-    "phone": {
+    "phone": { // add on (ask Verified support to enable)
         "carrier": {
             "id": integer,
             "name": string
         }
         "reasonCodes": [string]
     },
-    "email": {
-        "reasonCodes": [string]
-    },
-    "ipAddress": {
+    "email": { // add on (ask Verified support to enable)
         "reasonCodes": [string]
     }
 }
@@ -714,6 +713,8 @@ When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntit
 
 ### Example {#example-risksignals}
 
+{/* Should add ipAddress when we enable support for it */}
+
 ```typescript title="RiskSignals Example"
 {
     ...
@@ -722,16 +723,16 @@ When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntit
             ...
             "riskSignals": {
                 "overall": {
-                    "score": 0,
-                    "level": "low",
-                    "recommendation": "allow",
-                    "reasonCodes": [
+                    "score": 0, // always enabled
+                    "level": "low", // always enabled
+                    "recommendation": "allow", // always enabled
+                    "reasonCodes": [ // add on (ask Verified support to enable)
                         "OCR10021"
                     ]
                 },
-                "phone": {
+                "phone": { // add on (ask Verified support to enable)
                     "carrier": {
-                        "id": number, // omit until enabled by Telesign support
+                        "id": 0,
                         "name": "Example Carrier"
                     }
                     "reasonCodes": [
@@ -741,16 +742,10 @@ When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntit
                         "OCR20101"
                     ]
                 },
-                "email": {
+                "email": { // add on (ask Verified support to enable)
                     "reasonCodes": [
                         "OCR60001",
                         "OCR60002"
-                    ]
-                },
-                "ipAddress": {
-                    "reasonCodes": [
-                        "OCR50001",
-                        "OCR50002"
                     ]
                 }
             }

@@ -239,7 +239,11 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         [identifierKey: string]: string
     },
     "credentials": {
-        [credentialKey: string]: string | [string] | Object | [Object]
+        [credentialKey: string]: 
+            string     // Single string value when `multi` is false and `children` isn't included in the credential requests
+            | [string] // Array of string values when `multi` is true and `children` isn't included in the credential requests
+            | Object   // Single object value when `multi` is false and `children` is included in the credential requests
+            | [Object] // Array of object values when `multi` is true and `children` is included in the credential requests
     },
     "metadata": {
         "identifiers": {
@@ -249,6 +253,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         },
         "credentials": {
             [credentialKey: string]: {
+                // Follows the same structure as `credentials` and maintains the same order for array items when `multi` is set to `true`
                 [metadataKey: string]: string | [string] | Object | [Object]
             }
         }
@@ -391,7 +396,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                         "line1": "5320 Newell Rd",
                         "city": "Palo Alto",
                         "state": "CA",
-                        "zip": "94303",
+                        "zipCode": "94303",
                         "country": "US"
                     }
                 },
@@ -403,7 +408,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                                 "line1": "f5a4dc93-bc06-4bb8-bd05-17b5ba912bcd",
                                 "city": "efd3820f-676a-4db1-b63e-695b66ed8ba0",
                                 "state": "b65022a2-2016-41df-88f3-252e8e3a29c5",
-                                "zip": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
+                                "zipCode": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
                                 "country": "d57a7bca-2a7c-4671-86ad-5647731cad02"
                             },
                         },
@@ -495,7 +500,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                             "line1": "5320 Newell Rd",
                             "city": "Palo Alto",
                             "state": "CA",
-                            "zip": "94303",
+                            "zipCode": "94303",
                             "country": "US"
                         },
                         {
@@ -503,7 +508,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                             "line2": "Apt 301",
                             "city": "San Francisco",
                             "state": "CA",
-                            "zip": "94112",
+                            "zipCode": "94112",
                             "country": "US"
                         },
                         ...
@@ -518,7 +523,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                                     "line1": "f5a4dc93-bc06-4bb8-bd05-17b5ba912bcd",
                                     "city": "efd3820f-676a-4db1-b63e-695b66ed8ba0",
                                     "state": "b65022a2-2016-41df-88f3-252e8e3a29c5",
-                                    "zip": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
+                                    "zipCode": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
                                     "country": "d57a7bca-2a7c-4671-86ad-5647731cad02"
                                 },
                                 {
@@ -526,7 +531,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                                     "line2": "5311e2c8-67a1-4fe4-8ddb-88dc8a900915",
                                     "city": "c315d4ed-34c6-41a9-b7ca-c17cb4bac927",
                                     "state": "e3774b5f-0996-4dc7-a9b3-8ad24c9a286c",
-                                    "zip": "abc2e42c-2864-4bf6-b262-05cb51416957",
+                                    "zipCode": "abc2e42c-2864-4bf6-b262-05cb51416957",
                                     "country": "fca7d486-c99b-436e-9a92-95e221e4ba5d"
                                 },
                                 ...
@@ -564,7 +569,10 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
             ```
         </details>
         <Admonition type="warning" title="Arrays May Be Single Valued">
-            **An array of credential values may only include one value.** If `multi` is set to `true` in a credential request, we'll return multiple values _if_ we can source them. But if we can only source a single value, we'll still return it in an array, to ensure the data type is predictable.
+            **An array of credential values may only include one value.** If `multi` is set to `true` in a credential request, we'll return multiple values _if_ we can source them (**up to a maximum of 3**). But if we can only source a single value, we'll still return it in an array, to ensure the data type is predictable.
+        </Admonition>
+        <Admonition type="info" title="Multi Does Not Apply to Child Credential Requests">
+            **The `multi` option does not work on `children` credential requests.** It only applies to the parent credential request.
         </Admonition>
     - If the credential request has `multi` set to `false`, the data keyed on `credentialKey` will be a single credential value. 
         <details>
@@ -614,7 +622,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                         "line1": "5320 Newell Rd",
                         "city": "Palo Alto",
                         "state": "CA",
-                        "zip": "94303",
+                        "zipCode": "94303",
                         "country": "US"
                     }
                 },
@@ -626,7 +634,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                                 "line1": "f5a4dc93-bc06-4bb8-bd05-17b5ba912bcd",
                                 "city": "efd3820f-676a-4db1-b63e-695b66ed8ba0",
                                 "state": "b65022a2-2016-41df-88f3-252e8e3a29c5",
-                                "zip": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
+                                "zipCode": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
                                 "country": "d57a7bca-2a7c-4671-86ad-5647731cad02"
                             }
                         },
@@ -658,6 +666,97 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
 ### Example {#example-1clickentity}
 
 <OneClickEntityExample/>
+
+---
+
+
+## `RiskSignals`
+
+Risk signals are optional metadata fields that we can enable for extra cost. To enable them, please ask your Verified support representative or email us at Support@Verified.inc.
+
+{/* Should add ipAddress when we enable support for it */}
+
+```typescript title="RiskSignals Type"
+{
+    "overall": {
+        "score": integer, // always enabled
+        "level": "low" | "medium-low" | "medium", // always enabled
+        "recommendation": "allow" | "flag", // always enabled
+        "reasonCodes": [string] // add on (ask Verified support to enable)
+    },
+    "phone": { // add on (ask Verified support to enable)
+        "carrier": {
+            "id": integer,
+            "name": string
+        }
+        "reasonCodes": [string]
+    },
+    "email": { // add on (ask Verified support to enable)
+        "reasonCodes": [string]
+    }
+}
+```
+
+When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntity`](#1clickentity):
+
+```typescript title="1ClickEntity"
+{
+    ...
+    "metadata": {
+        "identifiers": {
+            "riskSignals": RiskSignals,
+            ...
+        },
+        ...
+    }
+}
+```
+
+
+### Example {#example-risksignals}
+
+{/* Should add ipAddress when we enable support for it */}
+
+```typescript title="RiskSignals Example"
+{
+    ...
+    "metadata": {
+        "identifiers": {
+            ...
+            "riskSignals": {
+                "overall": {
+                    "score": 0, // always enabled
+                    "level": "low", // always enabled
+                    "recommendation": "allow", // always enabled
+                    "reasonCodes": [ // add on (ask Verified support to enable)
+                        "OCR10021"
+                    ]
+                },
+                "phone": { // add on (ask Verified support to enable)
+                    "carrier": {
+                        "id": 0,
+                        "name": "Example Carrier"
+                    }
+                    "reasonCodes": [
+                        "OCR20004",
+                        "OCR20005",
+                        "OCR20007",
+                        "OCR20101"
+                    ]
+                },
+                "email": { // add on (ask Verified support to enable)
+                    "reasonCodes": [
+                        "OCR60001",
+                        "OCR60002"
+                    ]
+                }
+            }
+        },
+        ...
+    }
+}
+```
+
 
 ---
 

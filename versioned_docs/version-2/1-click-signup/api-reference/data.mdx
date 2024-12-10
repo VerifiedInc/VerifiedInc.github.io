@@ -36,6 +36,8 @@ import Chip from '@mui/material/Chip';
 
 > An **identifier** is a phone number or email address the user uses to verify for 1-Click Signup.
 
+**Identifiers are _inputs_:** you pass them to us in API request bodies.
+
 <table>
     <tr>
         <th>Name</th>
@@ -61,23 +63,37 @@ import Chip from '@mui/material/Chip';
         <td>Email address a user uses to verify to 1-Click Signup</td>
         <td>`"richard@piedpiper.net"`</td>
     </tr>
+    {/* <tr>
+        <td>IP Address</td>
+        <td>`ipAddress`</td>
+        <td>`string`</td>
+        <td>IPv6</td>
+        <td>IP address for the user as they do 1-Click Signup</td>
+        <td>`"richard@piedpiper.net"`</td>
+    </tr> */}
 </table>
+
+:::note
+**A phone number is required to source verified data** ([credentials](#credentials) and [metadata](#metadata)) for a user. An email can't currently be used for this purpose on its own, but including it helps source better and more data — especially [risk signals](#risk-signals) metadata.
+:::
 
 
 ## Credentials
 
 > A **credential** is a piece of identity data about a user.
 
+**Credentials** are _outputs_:** we return them to you in API response bodies.
+
 :::info[Credential Formats]
 **We support multiple formats for some credential types (see below).** If you'd like to use formats different than the defaults, please reach out to us at Support@Verified.inc and we'll enable them for you.
 :::
 
-:::warning[Email Credential Handling]
-**Email credentials can be less reliable compared to other types of data.** Verifying them is challenging because many people use multiple email addresses, making it difficult to associate one email with a single individual. If email accuracy is critical, we recommend directly asking users for their email during your workflow to ensure reliability.
-:::
-
 
 ### KYC (Know Your Customer)
+
+:::note Coverage
+We can source verified KYC type data for **~95% of US adults.** Coverage for your user base may vary.
+:::
 
 <table>
     <tr>
@@ -95,14 +111,6 @@ import Chip from '@mui/material/Chip';
         <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
         <td>Phone number</td>
         <td>`"+10123456789"`</td>
-    </tr>
-    <tr>
-        <td>Email</td>
-        <td>`email`</td>
-        <td>`string`</td>
-        <td>email</td>
-        <td>Email address</td>
-        <td>`"richard@piedpiper.net"`</td>
     </tr>
     <tr>
         <td>Full Name</td>
@@ -241,10 +249,22 @@ import Chip from '@mui/material/Chip';
         <td>Social Security Number</td>
         <td>`"123-45-6789"`</td>
     </tr>
+    <tr>
+        <td>Email <Chip label="Not Recommended" variant="outlined" size="small" color="error"/></td>
+        <td>`email`</td>
+        <td>`string`</td>
+        <td>email</td>
+        <td>Email address</td>
+        <td>`"richard@piedpiper.net"`</td>
+    </tr>
 </table>
 
+:::warning[Email Reliability]
+**Email credentials can be less reliable compared to other types of data.** Verifying them is challenging because many people use multiple email addresses, making it difficult to associate one email with a single individual. If email accuracy is critical, we recommend directly asking users for their email during your workflow to ensure reliability.
+:::
 
-### Financials <Chip label="Contact Us" variant="outlined" size="small" color="primary"/> {#financials}
+
+### Credit Card <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#financials}
 
 <table>
     <tr>
@@ -254,46 +274,6 @@ import Chip from '@mui/material/Chip';
         <th>Format(s)</th>
         <th>Description</th>
         <th>Example</th>
-    </tr>
-    <tr>
-        <td>Bank Account</td>
-        <td>`bankAccount`</td>
-        <td>`Object`</td>
-        <td>Object with keys for all child credentials listed below</td>
-        <td>Bank account information</td>
-        <td>`"+10123456789"`</td>
-    </tr>
-    <tr>
-        <td>↳ Account Type</td>
-        <td>`bankAccount.accountType`</td>
-        <td>
-            <details>
-                <summary>`enum`</summary>
-
-                Possible values:
-                    - `"savings"`
-                    - `"checking"`
-            </details>
-        </td>
-        <td>`snake_case`</td>
-        <td>Bank account type</td>
-        <td>`"savings"`</td>
-    </tr>
-    <tr>
-        <td>↳ Account Number</td>
-        <td>`bankAccount.accountNumber`</td>
-        <td>`string`</td>
-        <td>Any number of (usually 10-12) digits (0-9)</td>
-        <td>Bank account number</td>
-        <td>`"012345678901"`</td>
-    </tr>
-    <tr>
-        <td>↳ Routing Number</td>
-        <td>`bankAccount.routingNumber`</td>
-        <td>`string`</td>
-        <td>9 digits (0-9)</td>
-        <td>Bank routing number</td>
-        <td>`"123456789"`</td>
     </tr>
     <tr>
         <td>Credit Card</td>
@@ -428,7 +408,7 @@ import Chip from '@mui/material/Chip';
 </table>
 
 
-### Employment <Chip label="Contact Us" variant="outlined" size="small" color="primary"/> {#employment}
+### Employment <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#employment}
 
 <table>
     <tr>
@@ -480,7 +460,7 @@ import Chip from '@mui/material/Chip';
 </table>
 
 
-### Vehicles <Chip label="Contact Us" variant="outlined" size="small" color="primary"/> {#vehicles}
+### Vehicles <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#vehicles}
 
 <table>
     <tr>
@@ -579,7 +559,7 @@ import Chip from '@mui/material/Chip';
 </table>
 
 
-### Properties <Chip label="Contact Us" variant="outlined" size="small" color="primary"/> {#properties}
+### Properties <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#properties}
 
 <table>
     <tr>
@@ -691,7 +671,7 @@ import Chip from '@mui/material/Chip';
 </table>
 
 
-### Government IDs <Chip label="Contact Us" variant="outlined" size="small" color="primary"/> {#government-ids}
+### Government IDs <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#government-ids}
 
 <table>
     <tr>
@@ -754,7 +734,7 @@ import Chip from '@mui/material/Chip';
 </table>
 
 
-### Demographics <Chip label="Contact Us" variant="outlined" size="small" color="primary"/> {#demographics}
+### Demographics <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#demographics}
 
 <table>
     <tr>
@@ -848,6 +828,8 @@ import Chip from '@mui/material/Chip';
 ## Metadata
 
 > A piece of **metadata** is additional data that's not a user's identity data (their identifiers or credentials) — though it's often _about_ that identity data.
+
+**Metadata are _outputs_:** we return them to you in API response bodies.
 
 <table>
     <tr>

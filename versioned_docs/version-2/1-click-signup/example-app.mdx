@@ -10,6 +10,73 @@ toc_max_heading_level: 2
 
 **GitHub Repository:** [https://github.com/VerifiedInc/one-click-signup-example-app](https://github.com/VerifiedInc/one-click-signup-example-app)
 
+import React, { useState } from 'react';
+import Markdown from 'react-markdown'
+import { Typography, IconButton } from "@mui/material";
+import { ExpandMore, ExpandLess } from "@mui/icons-material";
+
+export const CollapsableHeader = ({ children, isActive }) => {
+    return (
+      <div style={{display: 'inline-block'}}>
+      {children} {isActive ? <ExpandLess /> : <ExpandMore />}
+      </div>
+    );
+};
+
+export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
+   const isActive = activeId === id;
+   const header = React.Children.toArray(children).find(
+      (child) => child.type === CollapsableHeader
+   );
+
+  const body = React.Children.toArray(children).filter(
+    (child) => child.type !== CollapsableHeader
+  );
+
+  return (
+    <div style={{ marginBottom: "10px", border: "1px solid #ccc", padding: "10px" }}>
+      <div onClick={() => {setActiveId(id)}} style={{ cursor: "pointer", fontWeight: "bold" }}>
+        {React.cloneElement(header, { isActive })}
+        
+      </div>
+      {isActive && <div style={{ marginTop: "10px" }}>{body}</div>}
+    </div>
+  );
+};
+
+export const CollapsableGroup = ({ children }) => {
+    // state control for the open CollapsableSection
+    const [activeId, setActiveId] = useState(null);
+    
+   return(
+      <>
+      {React.Children.map(children, (child, index) => {
+         return React.cloneElement(child, { activeId, setActiveId, id: index });
+      })}
+      </>
+   )
+};
+
+<CollapsableGroup>
+    <CollapsableSection>
+         <CollapsableHeader>
+## Title 1 {#my-explicit-id}
+         </CollapsableHeader>
+         some body content that will be collapsable
+    </CollapsableSection>
+    <CollapsableSection>
+         <CollapsableHeader>
+## Title 2
+         </CollapsableHeader>
+         some body content that will be collapsable
+    </CollapsableSection>
+</CollapsableGroup>
+
+<h2 id="section-1">Section 1</h2>
+
+      <h3 id="section-1-subsection-1">Subsection 1.1</h3>
+
+
 ## About
 
 This app shows Verified [1-Click Signup](https://docs.verified.inc/) for a fictional brand called Slooow, whose logo is a sloth! 🦥

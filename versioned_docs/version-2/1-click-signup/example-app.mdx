@@ -7,6 +7,7 @@ description: 1-Click Signup Example App
 slug: /example-app
 toc_max_heading_level: 2
 ---
+import { CollapsableGroup, CollapsableSection, CollapsableHeader } from '@site/src/components/Collapsable';
 
 **GitHub Repository:** [https://github.com/VerifiedInc/one-click-signup-example-app](https://github.com/VerifiedInc/one-click-signup-example-app)
 
@@ -18,15 +19,28 @@ It shows four different flows (listed under [Usage](#usage)). The first is a man
 
 For more information about 1-Click Signup, see the [Verified Docs](https://docs.verified.inc/) and in particular the [Integration Guide](https://docs.verified.inc/integration-guide).
 
+<CollapsableGroup>
+<CollapsableSection>
+<CollapsableHeader>
 ### Purpose
+</CollapsableHeader>
 
 By running this app and reviewing the code for each flow, you'll better understand how to integrate 1-Click Signup into your own application.
 
+</CollapsableSection>
+
+<CollapsableSection>
+<CollapsableHeader>
 ### Structure
+</CollapsableHeader>
 
 This app uses [Next.js](https://nextjs.org/). If you’re new to Next.js, start by exploring the `src/pages/signup` directory. Here, you’ll find pages for the different flows, each designed to guide you through the process.
 
 See the Next.js [Pages and Layouts](https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts) docs for more details on the routing system.
+
+</CollapsableSection>
+</CollapsableGroup>
+
 
 ## Setup
 
@@ -53,13 +67,22 @@ See the Next.js [Pages and Layouts](https://nextjs.org/docs/pages/building-your-
 
 You can switch between the different flows using the menu in the upper right corner.
 
+<CollapsableGroup>
+<CollapsableSection>
+<CollapsableHeader>
 ### Manual Signup ([/signup/manual](http://localhost:3061/signup/manual))
+</CollapsableHeader>
 
 This is a manual signup flow, without a 1-Click Signup integration. The user must manually enter all information. _That's why it's slooow!_ ☹️
 
 This flow mimics what a company typically has before they integrate 1-Click Signup.
 
+</CollapsableSection>
+
+<CollapsableSection>
+<CollapsableHeader>
 ### 1-Click Signup
+</CollapsableHeader>
 
 These are 1-Click Signup flows, using different [integration types](https://docs.verified.inc/integration-guide#2-determine-integration-type). The user can sign up in less than 10 seconds, with a single click! _That's why it's Slooow, but not slooow!_ 😁
 
@@ -120,3 +143,6 @@ After the app has collected a user's phone number, it calls the Verified API to 
 Once the user completes 1-Click Signup on the Verified hosted page, that page redirects them to a URL defined by your brand's **default redirect URL** setting in the [Dashboard](https://dashboard.verified.inc). Using `http://localhost:3061` won’t work due to security restrictions, so you should use a tunneling service like [ngrok](https://ngrok.com/) or [Localtunnel](https://theboroer.github.io/localtunnel-www/) to create a secure, publicly accessible URL.
 
 For example, with Localtunnel, you can install it globally (`npm install -g localtunnel`) and run it (`lt --port 3061`), and it will generate a URL. Set this URL as the default redirect URL for your brand in the Dashboard, and save your brand's settings.
+
+</CollapsableSection>
+</CollapsableGroup>

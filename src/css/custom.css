@@ -70,28 +70,36 @@
   /* code */
   --ifm-code-font-size: 90%;
   /* modal */
-  --ifm-modal-overlay: rgba(255,255,255,0.8);
+  --ifm-modal-overlay: rgba(255, 255, 255, 0.8);
 
   /* sidebar width (default is 300px) */
   --doc-sidebar-width: 175px !important;
 }
 
 /* ADMONITIONS */
-.admonition-tip, .admonition-important, .admonition-warning {
+.admonition-tip,
+.admonition-important,
+.admonition-warning {
   color: white;
 }
-.admonition-tip .admonition-icon svg, .admonition-important .admonition-icon svg, .admonition-warning .admonition-icon svg {
+
+.admonition-tip .admonition-icon svg,
+.admonition-important .admonition-icon svg,
+.admonition-warning .admonition-icon svg {
   fill: white;
 }
+
 .admonition svg {
   margin-right: 5px;
 }
+
 /* override link unstyling within admonitions */
 .alert a {
   color: var(--ifm-link-color);
   text-decoration: var(--ifm-link-decoration);
   transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
 }
+
 .alert a:hover {
   color: var(--ifm-link-hover-color);
   text-decoration: var(--ifm-link-hover-decoration);
@@ -102,6 +110,7 @@
 .navbar__items--right .react-toggle {
   margin-left: var(--ifm-navbar-item-padding-horizontal);
 }
+
 /* match logo size and alignment */
 .navbar__title {
   font-size: calc(var(--ifm-font-size-base) * 1.7);
@@ -118,6 +127,7 @@
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
 }
+
 /* turn on line wrap within code blocks */
 /* .prism-code > div {
   white-space : pre-wrap;
@@ -137,19 +147,24 @@
   font-size: calc(var(--ifm-font-size-base) * 0.85) !important;
   margin-top: 0 !important;
 }
+
 /* add spacing between divs */
 .tooltip div:not(:last-child) {
-  padding-bottom: 10px;;
+  padding-bottom: 10px;
+  ;
 }
+
 .tooltip * {
   margin-bottom: 0;
 }
+
 /* accordion trigger */
 .Collapsible__trigger {
   font-style: italic;
   float: right;
   margin-left: 10px;
 }
+
 .Collapsible__trigger:hover {
   cursor: pointer;
 }
@@ -157,7 +172,7 @@
 /* DARK MODE */
 html[data-theme='dark'] {
   --ifm-blockquote-color: #a5a5a5;
-  --ifm-modal-overlay: rgba(0,0,0,0.7);
+  --ifm-modal-overlay: rgba(0, 0, 0, 0.7);
 }
 
 .--ifm-modal-overlay {
@@ -171,9 +186,17 @@ html[data-theme='dark'] {
 }
 
 @keyframes pulse {
-  0% { opacity: 1 }
-  50% { opacity: .40 }
-  100% { opacity: 1 }
+  0% {
+    opacity: 1
+  }
+
+  50% {
+    opacity: .40
+  }
+
+  100% {
+    opacity: 1
+  }
 }
 
 /* The switch - the box around the slider */
@@ -216,15 +239,15 @@ html[data-theme='dark'] {
   transition: .4s;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: #2196F3;
 }
 
-input:focus + .slider {
+input:focus+.slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
@@ -240,19 +263,23 @@ input:checked + .slider:before {
 }
 
 /* For some reason, Docusaurus seems to downsize all headers within tabs, so e.g. ### shows up as if it's #### size. */
-[role=tabpanel] > h2 {
+[role=tabpanel]>h2 {
   font-size: var(--ifm-h3-font-size);
 }
-[role=tabpanel] > h3 {
+
+[role=tabpanel]>h3 {
   font-size: var(--ifm-h2-font-size);
 }
-[role=tabpanel] > h4 {
+
+[role=tabpanel]>h4 {
   font-size: var(--ifm-h3-font-size);
 }
-[role=tabpanel] > h5 {
+
+[role=tabpanel]>h5 {
   font-size: var(--ifm-h4-font-size);
 }
-[role=tabpanel] > h6 {
+
+[role=tabpanel]>h6 {
   font-size: var(--ifm-h5-font-size);
 }
 
@@ -260,6 +287,7 @@ input:checked + .slider:before {
 th {
   text-align: left;
 }
+
 /* Bold first table column */
 td:first-child {
   font-weight: bold;
@@ -270,7 +298,8 @@ td:first-child {
   display: none !important;
 }
 
-.MuiChip-root, .MuiButton-root {
+.MuiChip-root,
+.MuiButton-root {
   font-family: var(--ifm-font-family-base) !important;
   font-weight: 700 !important;
 }
@@ -284,4 +313,29 @@ td:first-child {
   font-family: var(--ifm-font-family-base) !important;
   font-weight: 700 !important;
   text-align: center !important;
+}
+
+/** Custom CSS for Collapsable Component */
+
+/* Needed to remove the headers margins to vertically align the collapsable arrow icon */
+.collapsable-header h2,
+.collapsable-header h3,
+.collapsable-header h4,
+.collapsable-header h5,
+.collapsable-header h6 {
+  margin-bottom: 0;
+}
+
+.collapsable-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  /* Space between the icon and the text */
+
+  /* Calculate the margin bottom based on Docussaurus margin for headers */
+  padding-bottom: var(--ifm-heading-margin-bottom);
+}
+
+.collapsable-header svg {
+  display: inline-block;
 }

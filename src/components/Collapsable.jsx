@@ -1,0 +1,106 @@
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { Box, Collapse } from "@mui/material";
+
+/**
+ * This is used to create collapsable sections. It allows one section per group to be open at a time.
+ * 
+ * CollapsableGroup is a wrapper component that contains CollapsableSection components.
+ * CollapsableSection is a component that contains CollapsableHeader and the content.
+ * CollapsableHeader is a component that contains the title of the section.
+ * 
+ * Example usage:
+     <CollapsableGroup>
+        <CollapsableSection>
+            <CollapsableHeader>
+                ### Title 1 
+            </CollapsableHeader>
+            
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec pur
+
+            :::caution
+            this is a example of a caution block
+            :::
+    
+        </CollapsableSection>
+        <CollapsableSection>
+        [...]
+        </CollapsableSection>
+    </CollapsableGroup>
+ */
+
+
+export const CollapsableHeader = ({ children, isActive }) => (
+    <div className='collapsable-header'>
+        {isActive ? <ExpandLess /> : <ExpandMore />}
+        {children}
+    </div>
+);
+
+export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
+    const isActive = activeId === id;
+    const header = React.Children.toArray(children).find(
+        (child) => child.type === CollapsableHeader
+    );
+
+    const body = React.Children.toArray(children).filter(
+        (child) => child.type !== CollapsableHeader
+    );
+
+
+    const handleClick = (e) => {
+        // Do not toggle if the click is on a hash link
+        if (e.target.classList.contains('hash-link')) {
+            return;
+        }
+
+        // Toggle the active state
+        setActiveId(isActive ? null : id);
+    };
+
+    return (
+        <>
+            <Box onClick={handleClick} style={{ cursor: "pointer", fontWeight: "bold" }}>
+                {React.cloneElement(header, { isActive })}
+            </Box>
+            <Collapse in={isActive} >{body}</Collapse>
+        </>
+    );
+};
+
+export const CollapsableGroup = ({ children }) => {
+    // state control for the open CollapsableSection
+    const [activeId, setActiveId] = useState(null);
+
+    return (
+        <>
+            {React.Children.map(children, (child, index) => {
+                if (child.type !== CollapsableSection) {
+                    return child;
+                }
+
+                // Pass the activeId and setActiveId to the CollapsableSection
+                return React.cloneElement(child, { activeId, setActiveId, id: index });
+            })}
+        </>
+    )
+};
+
+CollapsableHeader.propTypes = {
+    children: PropTypes.node.isRequired,
+    isActive: PropTypes.bool.isRequired,
+};
+
+CollapsableSection.propTypes = {
+    activeId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    setActiveId: PropTypes.func.isRequired,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    children: PropTypes.node.isRequired,
+};
+
+CollapsableGroup.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+

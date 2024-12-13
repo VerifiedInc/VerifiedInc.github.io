@@ -55,7 +55,7 @@ export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
         if (e.target.classList.contains('hash-link')) {
             return;
         }
-
+        console.log(id, isActive)
         // Toggle the active state
         setActiveId(isActive ? null : id);
     };
@@ -72,11 +72,29 @@ export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
 
 export const CollapsableGroup = ({ children }) => {
     // state control for the open CollapsableSection
-    const [activeId, setActiveId] = useState(null);
+    const [activeId, setActiveId] = useState(-1);
+
+    // get the first CollapsableSection and set it as active
+    React.useEffect(() => {
+        let firstSectionIndex = -1;
+
+        React.Children.forEach(children, (child, index) => {
+            if (child.type !== CollapsableSection || firstSectionIndex !== -1) {
+                return;
+            }
+
+            firstSectionIndex = index;
+        });
+
+        if (firstSectionIndex !== -1) {
+            setActiveId(firstSectionIndex);
+        }
+    }, [children]);
 
     return (
         <>
-            {React.Children.map(children, (child, index) => {
+            {/* Only renders if active Id was already defined to avoid transition at the beginning */}
+            {activeId !== -1 && React.Children.map(children, (child, index) => {
                 if (child.type !== CollapsableSection) {
                     return child;
                 }
@@ -90,13 +108,10 @@ export const CollapsableGroup = ({ children }) => {
 
 CollapsableHeader.propTypes = {
     children: PropTypes.node.isRequired,
-    isActive: PropTypes.bool.isRequired,
 };
 
 CollapsableSection.propTypes = {
     activeId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    setActiveId: PropTypes.func.isRequired,
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     children: PropTypes.node.isRequired,
 };
 

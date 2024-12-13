@@ -33,6 +33,7 @@ import SequenceDiagramSemiHosted from '@site/versioned_docs/version-2/reusables/
 import SequenceDiagramNonHosted from '@site/versioned_docs/version-2/reusables/sequence-diagram-non-hosted.mdx';
 import IncludeGraphicAndLegalLanguage from '@site/versioned_docs/version-2/reusables/include-graphic-and-legal-language.mdx'
 import LocalTestingAdmonition from '@site/versioned_docs/version-2/reusables/local-testing-admonition.mdx'
+import ApiKeysAdmonition from '@site/versioned_docs/version-2/reusables/api-keys-admonition.mdx'
 
 
 {/* 1-Click Signup is the fastest way to onboard new users.
@@ -174,6 +175,8 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
     Call [`POST /1-click`](./endpoints?integrationType=hosted#post-1-click) with the user's phone number. 
 
     <UseYourOwnPhoneNumberAdmonition/>
+
+    <ApiKeysAdmonition/>
     
     The [response body](./endpoints?integrationType=hosted#post-1-click-response) will contain `url` and `code`, which you'll use in the following steps.
 
@@ -253,6 +256,8 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
     <UseYourOwnPhoneNumberAdmonition/>
 
     <IncludeBirthDateIfPossibleAdmonition/>
+
+    <ApiKeysAdmonition/>
     
     The [response body](./endpoints?integrationType=semi-hosted#post-1-click-response) will contain `uuid` and `code`, which you'll use in the following steps.
 
@@ -356,6 +361,8 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
     </Admonition>
 
     <IncludeBirthDateIfPossibleAdmonition/>
+
+    <ApiKeysAdmonition/>
 
     One of two things will happen:
     - **Success:** If we can source data based on just the phone number, the [response body](./endpoints?integrationType=non-hosted#post-1-click-response) will contain a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 5](#5-prompt-user-to-confirm-their-data).

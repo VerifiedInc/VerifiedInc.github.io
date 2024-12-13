@@ -253,7 +253,11 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         "credentials": {
             [credentialKey: string]: {
                 // Follows the same structure as `credentials` and maintains the same order for array items when `multi` is set to `true`
-                [metadataKey: string]: string | [string] | Object | [Object]
+                [metadataKey: string]: 
+                string     // Single string value when `multi` is false and `children` isn't included in the credential requests
+                | [string] // Array of string values when `multi` is true and `children` isn't included in the credential requests
+                | Object   // Single object value when `multi` is false and `children` is included in the credential requests
+                | [Object] // Array of object values when `multi` is true and `children` is included in the credential requests
             }
         }
     }
@@ -671,7 +675,11 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
 
 ## `RiskSignals`
 
+:::info
 Risk signals are optional metadata fields that we can enable for extra cost. To enable them, please ask your Verified support representative or email us at Support@Verified.inc.
+:::
+
+See [Risk Signals](./data#risk-signals) on the Data page for details about each attribute.
 
 {/* Should add ipAddress when we enable support for it */}
 
@@ -679,8 +687,8 @@ Risk signals are optional metadata fields that we can enable for extra cost. To 
 {
     "overall": {
         "score": integer, // always enabled
-        "level": "low" | "medium-low" | "medium", // always enabled
-        "recommendation": "allow" | "flag", // always enabled
+        "level": "low" | "medium-low" | "medium" | "medium-high" | "high", // always enabled
+        "recommendation": "allow" | "flag" | "block", // always enabled
         "reasonCodes": [string] // add on (ask Verified support to enable)
     },
     "phone": { // add on (ask Verified support to enable)

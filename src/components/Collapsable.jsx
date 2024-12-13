@@ -55,7 +55,7 @@ export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
         if (e.target.classList.contains('hash-link')) {
             return;
         }
-        console.log(id, isActive)
+
         // Toggle the active state
         setActiveId(isActive ? null : id);
     };

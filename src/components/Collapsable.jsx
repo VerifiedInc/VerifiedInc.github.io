@@ -29,6 +29,9 @@ import { Box, Collapse } from "@mui/material";
         [...]
         </CollapsableSection>
     </CollapsableGroup>
+    <CollapsableGroup firstSectionExpanded={false}>
+        [...]
+    </CollapsableGroup>
  */
 
 
@@ -70,12 +73,25 @@ export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
     );
 };
 
-export const CollapsableGroup = ({ children }) => {
+/**
+ * 
+ * @param {firstSectionExpanded} firstSectionExpanded
+ * Is optional and is used to define if the first section should be expanded by default. 
+ * If not defined, the first section will be expanded by default. 
+ */
+export const CollapsableGroup = ({ children, firstSectionExpanded = true }) => {
     // state control for the open CollapsableSection
     const [activeId, setActiveId] = useState(-1);
 
+    // Should render only if the activeId is not -1 but only when firstSectionExpanded is true
+    const shouldRender = activeId !== -1 || !firstSectionExpanded;
+
     // get the first CollapsableSection and set it as active
     React.useEffect(() => {
+        // 
+        if (!firstSectionExpanded) {
+            return;
+        }
         let firstSectionIndex = -1;
 
         React.Children.forEach(children, (child, index) => {
@@ -94,7 +110,7 @@ export const CollapsableGroup = ({ children }) => {
     return (
         <>
             {/* Only renders if active Id was already defined to avoid transition at the beginning */}
-            {activeId !== -1 && React.Children.map(children, (child, index) => {
+            {shouldRender && React.Children.map(children, (child, index) => {
                 if (child.type !== CollapsableSection) {
                     return child;
                 }
@@ -117,5 +133,6 @@ CollapsableSection.propTypes = {
 
 CollapsableGroup.propTypes = {
     children: PropTypes.node.isRequired,
+    firstSectionExpanded: PropTypes.bool,
 };
 

@@ -70,7 +70,7 @@ export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
                     {React.cloneElement(header, { isActive: isActive })}
                 </Box>
                 {/* Collapse from MUI has smooth transictions, but it brings issues with scrolling large collapsed contents */}
-                {/* <Collapse in={isActive} >{body}</Collapse> */}
+                {/* <Collapse in={isActive} addEndListener={(() => done(isActive, id))}>{body}</Collapse> */}
                 {isActive && body}
             </div >
         </>
@@ -93,16 +93,13 @@ export const CollapsableGroup = ({ children, firstSectionExpanded = true }) => {
         return `${componentId}-${index}`;
     }
 
-    const scrollToSection = (id, behavior = 'instant') => {
+    const scrollToSection = (id, behavior = 'instant', offset = -80) => {
         const element = document.querySelector(`#collapsable-section-${CSS.escape(id)}`);
-        const offset = -80;
-        const closest = element.closest('.collapsable-section');
 
-        if (closest) {
-            const y = element.getBoundingClientRect().top + window.scrollY + offset;
+        // Top position of the element with the offset, since the menu obscures the top of the section
+        const y = element.getBoundingClientRect().top + window.scrollY + offset;
 
-            window.scrollTo({ top: y, behavior: behavior });
-        }
+        window.scrollTo({ top: y, behavior: behavior });
     }
 
     const handleChangeActive = (id) => {
@@ -112,10 +109,10 @@ export const CollapsableGroup = ({ children, firstSectionExpanded = true }) => {
         }
 
         setActiveId(id);
-        // Timeout to make sure the element is already rendered before scrolling
+        // Timeout to make sure the element is rendered before scrolling
         setTimeout(() => {
             scrollToSection(id);
-        }, 1);
+        }, 0);
     }
 
     // Expands the first section by default when firstSectionExpanded is true

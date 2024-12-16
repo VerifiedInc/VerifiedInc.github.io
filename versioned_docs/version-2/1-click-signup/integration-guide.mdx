@@ -33,6 +33,7 @@ import SequenceDiagramSemiHosted from '@site/versioned_docs/version-2/reusables/
 import SequenceDiagramNonHosted from '@site/versioned_docs/version-2/reusables/sequence-diagram-non-hosted.mdx';
 import IncludeGraphicAndLegalLanguage from '@site/versioned_docs/version-2/reusables/include-graphic-and-legal-language.mdx'
 import LocalTestingAdmonition from '@site/versioned_docs/version-2/reusables/local-testing-admonition.mdx'
+import { CollapsableGroup, CollapsableSection, CollapsableHeader } from '@site/src/components/Collapsable';
 import ApiKeysAdmonition from '@site/versioned_docs/version-2/reusables/api-keys-admonition.mdx'
 
 
@@ -66,15 +67,24 @@ This Integration Guide will help you fully integrate 1-Click Signup into your ap
 
 ## Setup
 
-
+<CollapsableGroup>
+<CollapsableSection>
+<CollapsableHeader>
 ### 1. Access [Dashboard](https://dashboard.verified.inc).
+</CollapsableHeader>
 
 <SetupLoginToDashboard/>
 
 ---
 
+</CollapsableSection>
+
+<CollapsableSection>
+<CollapsableHeader>
 
 ### 2. Configure brand settings.
+
+</CollapsableHeader>
 
 On the Brand Details page in the Dashboard, you can configure settings for your brand. 
 
@@ -148,6 +158,8 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
 ---
 
+</CollapsableSection>
+</CollapsableGroup>
 
 ## Integration
 
@@ -159,7 +171,11 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     <SequenceDiagramHosted />
 
+    <CollapsableGroup>
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 1. Prompt user for phone number.
+    </CollapsableHeader>
 
     To start 1-Click Signup for a user (using the Hosted integration type), you'll need their phone number.  
 
@@ -169,8 +185,12 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     ---
     
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 2. Call `POST /1-click`.
+    </CollapsableHeader>
 
     Call [`POST /1-click`](./endpoints?integrationType=hosted#post-1-click) with the user's phone number. 
 
@@ -182,15 +202,23 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     ---
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 3. Send SMS to user.
-
+    </CollapsableHeader>
+    
     <SendSmsToUser/>
 
     ---
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 4. Redirect user.
+    </CollapsableHeader>
 
     Redirect the user to `url` from the response body of `POST /1-click`. (If the user is in your mobile app, open a webview to `url`.)
     
@@ -205,8 +233,12 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     ---
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 5. Parse `identityUuid` from URL.
+    </CollapsableHeader>
 
     When we redirect the user back to you, we'll include on the redirect URL an `identityUuid` URL parameter, whose value is a UUID. 
     
@@ -224,21 +256,30 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
     Parse the value of the `identityUuid` URL parameter from the redirect URL. You'll use this UUID in the next step. (If the user is in your mobile app, you can now close the webview you opened in the previous step.)
 
     ---
+    </CollapsableSection>
 
-
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 6. Call `GET /1-click`.
+    </CollapsableHeader>
 
     Call [`GET /1-click/{identityUuid}`](./endpoints?integrationType=hosted#get-1-click) with the value of the `identityUuid` URL parameter. 
     
     The [response body](./endpoints?integrationType=hosted#get-1-click-response) will be a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), which contains the user's data and metadata about it. You can use this data however you like to create a new account for the user!
-
+    
+    </CollapsableSection>
+    </CollapsableGroup>
 </TabItem>
 <TabItem value="semi-hosted" label="Semi-Hosted">
     <IntegrationTypeAdmonition option="Semi-Hosted"/>
 
     <SequenceDiagramSemiHosted />
 
+    <CollapsableGroup>
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 1. Prompt user for phone number.
+    </CollapsableHeader>
 
     To start 1-Click Signup for a user (using the Semi-Hosted integration type), you'll need their phone number.  
 
@@ -248,8 +289,12 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     ---
     
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 2. Call `POST /1-click`.
+    </CollapsableHeader>
 
     Call [`POST /1-click`](./endpoints?integrationType=semi-hosted#post-1-click) with the user's phone number.
 
@@ -263,15 +308,23 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     ---
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 3. Send SMS to user.
+    </CollapsableHeader>
 
     <SendSmsToUser/>
 
     ---
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 4. Prompt user for verification code.
+    </CollapsableHeader>
 
     We recommend using a form with a numeric input that automatically submits when the user enters 6 digits (because `code` has 6 digits).
 
@@ -279,8 +332,12 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     ---
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 5. Call `GET /1-click`.
+    </CollapsableHeader>
 
     Call [`GET /1-click/{uuid}?code={userInput}`](./endpoints?integrationType=semi-hosted#get-1-click) with `uuid` from the [response body of `POST /1-click`](./endpoints?integrationType=semi-hosted#post-1-click-response) and `userInput`.
 
@@ -293,8 +350,12 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     ---
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 6. (if necessary) Prompt user for birth date.
+    </CollapsableHeader>
 
     <WhenStepIsNecessaryAdmonition stepName="step 5" stepLink="#5-call-get-1-click"/>
 
@@ -304,8 +365,12 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     ---
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 7. (if necessary) Call `PATCH /1-click`.
+    </CollapsableHeader>
 
     <WhenStepIsNecessaryAdmonition stepName="step 5" stepLink="#5-call-get-1-click"/>
 
@@ -320,11 +385,16 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     ---
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 8. Prompt user to confirm their data.
-
+    </CollapsableHeader>
     <PromptUserToConfirmTheirData/>
 
+    </CollapsableSection>
+    </CollapsableGroup>
 </TabItem>
 <TabItem value="non-hosted" label="Non-Hosted">
     <IntegrationTypeAdmonition option="Non-Hosted"/>
@@ -337,7 +407,11 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
         **The Non-Hosted integration type requires you to verify phone numbers with your own solution.** If you'd like to use ours, switch to the [Semi-Hosted](?integrationType=semi-hosted#integration) or [Hosted](?integrationType=hosted#integration) integration type.
     </Admonition>
 
+    <CollapsableGroup>
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 1. Prompt user for phone number and verify it.
+    </CollapsableHeader>
 
     You can do this however you like, as long as you verify the user's phone number with a one-time verification code at least 6 digits long.
 
@@ -347,8 +421,12 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     ---
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 2. Call `POST /1-click` with phone number.
+    </CollapsableHeader>
 
     Call [`POST /1-click`](./endpoints?integrationType=non-hosted#post-1-click) with the user's phone number.
 
@@ -369,8 +447,12 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
     - **Error:** Otherwise, the response body will contain an error indicating that we need additional information (the user's birth date) to source data. In this case, continue to [step 3](#3-if-necessary-prompt-user-for-birth-date). The error will have error code [`OCE011`](./errors#oce011) and look like this:
     <ErrorExampleOce011/>
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 3. (if necessary) Prompt user for birth date.
+    </CollapsableHeader>
 
     <WhenStepIsNecessaryAdmonition stepName="step 2" stepLink="#2-call-post-1-click-with-phone-number"/>
 
@@ -380,8 +462,12 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     <BirthDateFormatAdmonition/>
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 4. (if necessary) Call `POST /1-click` with phone number and birth date.
+    </CollapsableHeader>
 
     <WhenStepIsNecessaryAdmonition stepName="step 2" stepLink="#2-call-post-1-click-with-phone-number"/>
 
@@ -396,11 +482,17 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     ---
 
+    </CollapsableSection>
 
+    <CollapsableSection>
+    <CollapsableHeader>
     ### 5. Prompt user to confirm their data.
+    </CollapsableHeader>
 
     <PromptUserToConfirmTheirData/>
 
+    </CollapsableSection>
+    </CollapsableGroup>
 </TabItem>
 </Tabs>
 

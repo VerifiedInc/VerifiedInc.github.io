@@ -17,6 +17,7 @@ import SetupLoginToDashboard from '@site/versioned_docs/version-2/reusables/setu
 import UseYourOwnPhoneNumberAdmonition from '@site/versioned_docs/version-2/reusables/use-your-own-phone-number-admonition.mdx'
 import AuthenticationAdmonition from '@site/versioned_docs/version-2/reusables/authentication-admonition.mdx'
 import OneClickEntityExample from '@site/versioned_docs/version-2/reusables/1-click-entity-example.mdx'
+import { CollapsableGroup, CollapsableSection, CollapsableHeader } from '@site/src/components/Collapsable';
 
 
 This Quick Start Guide is the fastest way to try 1-Click Signup at a technical level.
@@ -35,8 +36,11 @@ This Quick Start Guide is the fastest way to try 1-Click Signup at a technical l
 
 ## Setup
 
-
+<CollapsableGroup>
+<CollapsableSection>
+<CollapsableHeader>
 ### 1. Access [Dashboard](https://dashboard.verified.inc).
+</CollapsableHeader>
 
 <SetupLoginToDashboard/>
 
@@ -44,11 +48,14 @@ This Quick Start Guide is the fastest way to try 1-Click Signup at a technical l
 
 For full technical details on how to integrate 1-Click Signup, see [Integration Guide](./integration-guide). For more information on integration types, see [Determine integration type](./integration-guide#2-determine-integration-type).
 
+</CollapsableSection>
 
 ## 1-Click Signup
 
-
+<CollapsableSection>
+<CollapsableHeader>
 ### 2. Call `POST /1-click`.
+</CollapsableHeader>
 
 Call [`POST /1-click`](./endpoints?integrationType=hosted#post-1-click) with your own phone number (or one of our [test user](./environments#test-user)'s phone numbers). Use the Sandbox API key for the brand you just created in the [Dashboard](https://dashboard.verified.inc).
 
@@ -58,8 +65,12 @@ The [response body](./endpoints?integrationType=hosted#post-1-click-response) wi
 
 In a full integration, you'd send an SMS containing `code` to the user to verify the phone number. But for this Quick Start Guide, we'll skip the SMS step. Just pretend you sent the SMS.
 
+</CollapsableSection>
 
+<CollapsableSection>
+<CollapsableHeader>
 ### 3. Complete user experience.
+</CollapsableHeader>
 
 Because for this Quick Start Guide we're using a Hosted integration type, the 1-Click Signup user interface will be hosted by Verified (at `url`).
 
@@ -80,8 +91,12 @@ We'll display your (mock) verified data and ask you to confirm you want to share
 
 Then, we'll redirect you to the default redirect URL defined in your brand settings in the [Dashboard](https://dashboard.verified.inc). (Unless you changed what we autofilled, this will be the same as your email domain.) We'll append an `identityUuid` URL parameter, which you'll use in the next step.
 
+</CollapsableSection>
 
+<CollapsableSection>
+<CollapsableHeader>
 ### 4. Call `GET /1-click`.
+</CollapsableHeader>
 
 Call [`GET /1-click/{identityUuid}`](./endpoints?integrationType=hosted#get-1-click) with the value of the `identityUuid` URL paramter on the redirect URL we navigate you to. 
 
@@ -90,3 +105,6 @@ If you can't find the `identityUuid` parameter (for example if your website auto
 :::
 
 The [response body](./endpoints?integrationType=hosted#get-1-click-response) will be a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), which contains the user's data and metadata about it. You can use this data however you like to create a new account for the user!
+
+</CollapsableSection>
+</CollapsableGroup>

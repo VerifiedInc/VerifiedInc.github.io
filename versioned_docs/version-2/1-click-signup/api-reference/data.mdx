@@ -30,6 +30,7 @@ import CredentialRequestTableShared from '@site/versioned_docs/version-2/reusabl
 import CredentialRequestTableHosted from '@site/versioned_docs/version-2/reusables/credential-request-table-hosted.mdx'
 import OneClickEntityExample from '@site/versioned_docs/version-2/reusables/1-click-entity-example.mdx'
 import Chip from '@mui/material/Chip';
+import { CollapsableGroup, CollapsableSection, CollapsableHeader } from '@site/src/components/Collapsable';
 
 
 ## Identifiers
@@ -88,8 +89,11 @@ import Chip from '@mui/material/Chip';
 **We support multiple formats for some credential types (see below).** If you'd like to use formats different than the defaults, please reach out to us at Support@Verified.inc and we'll enable them for you.
 :::
 
-
+<CollapsableGroup>
+<CollapsableSection>
+<CollapsableHeader>
 ### KYC (Know Your Customer)
+</CollapsableHeader>
 
 :::note Coverage
 We can source verified KYC type data for **~95% of US adults.** Coverage for your user base may vary.
@@ -263,8 +267,12 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
 **Email credentials can be less reliable compared to other types of data.** Verifying them is challenging because many people use multiple email addresses, making it difficult to associate one email with a single individual. If email accuracy is critical, we recommend directly asking users for their email during your workflow to ensure reliability.
 :::
 
+</CollapsableSection>
 
+<CollapsableSection>
+<CollapsableHeader>
 ### Credit Card <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#financials}
+</CollapsableHeader>
 
 <table>
     <tr>
@@ -407,8 +415,12 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
     </tr>
 </table>
 
+</CollapsableSection>
 
+<CollapsableSection>
+<CollapsableHeader>
 ### Employment <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#employment}
+</CollapsableHeader>
 
 <table>
     <tr>
@@ -459,8 +471,12 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
     </tr>
 </table>
 
+</CollapsableSection>
 
+<CollapsableSection>
+<CollapsableHeader>
 ### Vehicles <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#vehicles}
+</CollapsableHeader>
 
 <table>
     <tr>
@@ -558,8 +574,12 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
     </tr>
 </table>
 
+</CollapsableSection>
 
+<CollapsableSection>
+<CollapsableHeader>
 ### Properties <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#properties}
+</CollapsableHeader>
 
 <table>
     <tr>
@@ -670,8 +690,12 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
     </tr>
 </table>
 
+</CollapsableSection>
 
+<CollapsableSection>
+<CollapsableHeader>
 ### Government IDs <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#government-ids}
+</CollapsableHeader>
 
 <table>
     <tr>
@@ -733,8 +757,12 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
     </tr>
 </table>
 
+</CollapsableSection>
 
+<CollapsableSection>
+<CollapsableHeader>
 ### Demographics <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#demographics}
+</CollapsableHeader>
 
 <table>
     <tr>
@@ -945,8 +973,12 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
 You can build custom logic to handle credentials based on their `verificationMethod`, for example requiring additional verification if an important credential is `"self_attested"`.
 :::
 
+</CollapsableSection>
 
+<CollapsableSection>
+<CollapsableHeader>
 ### Risk Signals
+</CollapsableHeader>
 
 By default, Verified returns either the Overall Risk Score, Risk Level, and Risk Recommendation, or (if the risk is too high) a [`OCE017` error](./errors#oce017). Other risk signals are optional add ons. To enable them, please ask your Verified support representative or email us at Support@Verified.inc.
 
@@ -1155,7 +1187,6 @@ See also the [`RiskSignals` type](./types#risksignals).
         </td>
     </tr> */}
 </table>
-
 
 #### Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/>
 
@@ -2431,6 +2462,8 @@ See also the [`RiskSignals` type](./types#risksignals).
     </tr>
 </table>
 
+</CollapsableSection>
+</CollapsableGroup>
 
 {/* Commenting out until we support IP address identifiers */}
 

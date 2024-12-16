@@ -2,7 +2,7 @@ import React from "react";
 import ScrollToHash from '@site/src/components/ScrollToHash';
 
 
-function Layout(props) {
+function Root(props) {
   const { children } = props;
 
   return (
@@ -13,4 +13,4 @@ function Layout(props) {
   );
 }
 
-export default Layout;
+export default Root;

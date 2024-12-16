@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useId, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { Box, Collapse } from "@mui/material";
+import { Box } from "@mui/material";
+import AnchorOffset from '@site/src/components/AnchorOffset.jsx'
+
 
 /**
  * This is used to create collapsable sections. It allows one section per group to be open at a time.
@@ -43,7 +45,7 @@ export const CollapsableHeader = ({ children, isActive }) => (
 );
 
 export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
-    const isActive = activeId === id;
+    const isActive = id === activeId;
     const header = React.Children.toArray(children).find(
         (child) => child.type === CollapsableHeader
     );
@@ -54,21 +56,23 @@ export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
 
 
     const handleClick = (e) => {
-        // Do not toggle if the click is on a hash link
         if (e.target.classList.contains('hash-link')) {
             return;
         }
-
-        // Toggle the active state
-        setActiveId(isActive ? null : id);
+        setActiveId(isActive ? undefined : id);
     };
 
     return (
         <>
-            <Box onClick={handleClick} style={{ cursor: "pointer", fontWeight: "bold" }}>
-                {React.cloneElement(header, { isActive })}
-            </Box>
-            <Collapse in={isActive} >{body}</Collapse>
+            <AnchorOffset id={`section-anchor-${id}`} className="section-anchor" offset="-80px" />
+            <div id={`collapsable-section-${id}`} className="collapsable-section">
+                <Box onClick={handleClick} style={{ cursor: "pointer", fontWeight: "bold" }}>
+                    {React.cloneElement(header, { isActive: isActive })}
+                </Box>
+                {/* Collapse from MUI has smooth transictions, but it brings issues with scrolling large collapsed contents */}
+                {/* <Collapse in={isActive} >{body}</Collapse> */}
+                {isActive && body}
+            </div >
         </>
     );
 };
@@ -81,31 +85,62 @@ export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
  */
 export const CollapsableGroup = ({ children, firstSectionExpanded = true }) => {
     // state control for the open CollapsableSection
-    const [activeId, setActiveId] = useState(-1);
+    const [activeId, setActiveId] = useState(undefined);
+    const componentId = useId();
+    const loadedDefaultExpanded = useRef(false);
 
-    // Should render only if the activeId is not -1 but only when firstSectionExpanded is true
-    const shouldRender = activeId !== -1 || !firstSectionExpanded;
+    const getCurrentIdBasedOnIndex = (index) => {
+        return `${componentId}-${index}`;
+    }
 
-    // get the first CollapsableSection and set it as active
-    React.useEffect(() => {
-        // 
+    const scrollToSection = (id, behavior = 'instant') => {
+        const element = document.querySelector(`#collapsable-section-${CSS.escape(id)}`);
+        const offset = -80;
+        const closest = element.closest('.collapsable-section');
+
+        if (closest) {
+            const y = element.getBoundingClientRect().top + window.scrollY + offset;
+
+            window.scrollTo({ top: y, behavior: behavior });
+        }
+    }
+
+    const handleChangeActive = (id) => {
+        if (!id) {
+            setActiveId(undefined);
+            return;
+        }
+
+        setActiveId(id);
+        // Timeout to make sure the element is already rendered before scrolling
+        setTimeout(() => {
+            scrollToSection(id);
+        }, 1);
+    }
+
+    // Expands the first section by default when firstSectionExpanded is true
+    useEffect(() => {
         if (!firstSectionExpanded) {
             return;
         }
-        let firstSectionIndex = -1;
+        let firstSectionIndex = null;
 
         React.Children.forEach(children, (child, index) => {
-            if (child.type !== CollapsableSection || firstSectionIndex !== -1) {
+            if (child.type !== CollapsableSection || firstSectionIndex !== null) {
                 return;
             }
 
             firstSectionIndex = index;
+            loadedDefaultExpanded.current = true;
+            setActiveId(getCurrentIdBasedOnIndex(firstSectionIndex));
+
         });
 
-        if (firstSectionIndex !== -1) {
-            setActiveId(firstSectionIndex);
-        }
     }, [children]);
+
+    // Should render if firstSectionExpanded is false or the default expanded section was already loaded
+    // This is to avoid any transition animation when the first section is expanded by default
+    const shouldRender = !firstSectionExpanded || loadedDefaultExpanded.current;
 
     return (
         <>
@@ -116,7 +151,12 @@ export const CollapsableGroup = ({ children, firstSectionExpanded = true }) => {
                 }
 
                 // Pass the activeId and setActiveId to the CollapsableSection
-                return React.cloneElement(child, { activeId, setActiveId, id: index });
+                const cloneElement = React.cloneElement(child, { activeId, setActiveId: handleChangeActive, id: getCurrentIdBasedOnIndex(index), componentId });
+                return (
+                    <div key={index + componentId}>
+                        {cloneElement}
+                    </div>
+                );
             })}
         </>
     )

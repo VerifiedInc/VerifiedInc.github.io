@@ -344,3 +344,9 @@ td:first-child {
 .collapsable-header svg {
   display: inline-block;
 }
+
+/* Remove bottom margin of the message from ErrorDisplay component */
+.error-table p {
+  margin: 0;
+
+}

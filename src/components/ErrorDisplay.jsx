@@ -1,7 +1,7 @@
 import Markdown from 'react-markdown';
 import PropTypes from 'prop-types';
 
-export const ErrorDisplay = ({ message, description, children: code }) => {
+const ErrorDisplay = ({ message, description, children: code }) => {
     const markdownDescription = description ? `> ${description}` : null;
     const markdownMessage = `\`"${message}"\``;
 
@@ -27,3 +27,5 @@ ErrorDisplay.propTypes = {
     description: PropTypes.string,
     children: PropTypes.node
 };
+
+export default ErrorDisplay;

@@ -15,7 +15,7 @@ import TabItem from '@theme/TabItem';
 import ErrorType from '@site/versioned_docs/version-2/reusables/error-type.mdx'
 import ErrorExampleOce011 from '@site/versioned_docs/version-2/reusables/error-example-oce011.mdx'
 import SandboxBirthDateAdmonition from '@site/versioned_docs/version-2/reusables/sandbox-birth-date-admonition.mdx'
-
+import { ErrorDisplay } from '@site/src/components/ErrorDisplay';
 
 To handle errors returned by Verified API endpoints, we recommend that you primarily use the respons body's `data.errorCode`, which is a Verified specific error code. See [Error Codes](#error-codes) below for descriptions of what each code means.
 
@@ -37,232 +37,78 @@ _This definition is also in [`Error`](./types#error) in [Types](./types)._
 
 An `errorCode` is a Verified specific error code consisting of 3 letters and 3 numbers. Codes that begin with `ERR` are generic, and those that begin with `OCE` are specific to 1-Click Signup (`OCE` refers to a One Click Error).
 
+<ErrorDisplay message="Generic error code" description="Generic error">
+#### `ERR001`
+</ErrorDisplay>
 
-### `ERR001`
+<ErrorDisplay message="Unsupported phone number to use 1-Click" description="Unsupported phone number for 1-Click Signup">
+#### `OCE002`
+</ErrorDisplay>
 
-> Generic error
+<ErrorDisplay message="Either 'phone' or 'email' is required" description="Either `phone` or `email` is required for 1-Click Signup">
+#### `OCE003`
+</ErrorDisplay>
 
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"Generic error code"`</td>
-    </tr>
-</table>
+<ErrorDisplay message="User not found" description="User not found for 1-Click Signup">
+#### `OCE004`
+</ErrorDisplay>
 
+<ErrorDisplay message="User Credentials or Credential Requests are missing" description="User credentials or credential requests are missing for 1-Click Signup">
+#### `OCE005`
+</ErrorDisplay>
 
-### `OCE001`
+<ErrorDisplay message="User identifier is missing" description="User identifier is missing for 1-Click Signup">
+#### `OCE006`
+</ErrorDisplay>
 
-> General error for 1-Click Signup
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"1-click error code"`</td>
-    </tr>
-</table>
-
-
-### `OCE002`
-
-> Unsupported phone number for 1-Click Signup
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"Unsupported phone number to use 1-Click"`</td>
-    </tr>
-</table>
-
-
-### `OCE003`
-
-> Either `phone` or `email` is required for 1-Click Signup
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"Either "phone" or "email" is required"`</td>
-    </tr>
-</table>
-
-
-### `OCE004`
-
-> User not found for 1-Click Signup
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"User not found"`</td>
-    </tr>
-</table>
-
-
-### `OCE005`
-
-> User credentials or credential requests are missing for 1-Click Signup
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"User Credentials or Credential Requests are missing"`</td>
-    </tr>
-</table>
-
-
-### `OCE006`
-
-> User identifier is missing for 1-Click Signup
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"User identifier is missing"`</td>
-    </tr>
-</table>
-
-
-### `OCE007`
-
-> Mandatory credentials are missing for 1-Click Signup
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"Unable to use 1-click due to missing mandatory credentials"`</td>
-    </tr>
-</table>
-
+<ErrorDisplay message="Unable to use 1-click due to missing mandatory credentials" description="Mandatory credentials are missing for 1-Click Signup">
+#### `OCE007`
+</ErrorDisplay>
 This generally happens  when the credential requests have mandatory credentials that data cannot be sourced for and for which user input is not allowed.
 
-
-### `OCE008`
-
-> Invalid or expired verification code for 1-Click Signup
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"Invalid or expired verification code"`</td>
-    </tr>
-</table>
-
+<ErrorDisplay message="Invalid or expired verification code" description="Invalid or expired verification code for 1-Click Signup">
+#### `OCE008`
+</ErrorDisplay>
 This only applies to a Semi-Hosted integration type.
 
 
-### `OCE009`
-
-> Verification code is required for 1-Click Signup
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"Verification code is required"`</td>
-    </tr>
-</table>
-
+<ErrorDisplay message="Verification code is required" description="Verification code is required for 1-Click Signup">
+#### `OCE009`
+</ErrorDisplay>
 This only applies to a Semi-Hosted integration type.
 
+<ErrorDisplay message="Missing required fields to autofill credentials" description="Missing required fields to autofill credentials for 1-Click Signup">
+#### `OCE010`
+</ErrorDisplay>
 
-### `OCE010`
-
-> Missing required fields to autofill credentials for 1-Click Signup
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"Missing required fields to autofill credentials"`</td>
-    </tr>
-</table>
-
-
-### `OCE011`
-
-> Additional information is required to source data for user: `{inputs}`
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"Additional information is required to source data for user: {inputs}"`</td>
-    </tr>
-</table>
-
+<ErrorDisplay message="Additional information is required to source data for user: {inputs}" description="Additional information is required to source data for user: `{inputs}`">
+#### `OCE011`
+</ErrorDisplay>
 The `{inputs}` included in `message` is a comma separated list of required additional information. Generally, it's a single item: `birthDate`.
-
 <SandboxBirthDateAdmonition/>
 
-
-### `OCE012`
-
-> Birth date mismatch
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"BirthDate mismatch."`</td>
-    </tr>
-</table>
-
+<ErrorDisplay message="BirthDate mismatch." description="Birth date mismatch">
+#### `OCE012`
+</ErrorDisplay>
 <SandboxBirthDateAdmonition/>
 
+<ErrorDisplay message="No credentials found" description="No credentials found">
+#### `OCE013`
+</ErrorDisplay>
 
-### `OCE013`
-
-> No credentials found
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"No credentials found"`</td>
-    </tr>
-</table>
-
-
-### `OCE014`
-
-> 1-Click Signup request expired
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"1-Click Request Expired"`</td>
-    </tr>
-</table>
-
+<ErrorDisplay message="1-Click Request Expired" description="1-Click Signup request expired">
+#### `OCE014`
+</ErrorDisplay>
 This only applies to a Semi-Hosted integration type.
 
+<ErrorDisplay message="1-Click Not Found" description="1-Click Signup request not found">
+#### `OCE015`
+</ErrorDisplay>
 
-### `OCE015`
+<ErrorDisplay message="1-Click Conflict Request for this Phone Number, Please Try Again" description="1-Click Conflict Request for Phone Number">
+#### `OCE016`
+</ErrorDisplay>
 
-> 1-Click Signup request not found
-
-<table>
-    <tr>
-        <th>`messsage`</th>
-        <td>`"1-Click Not Found"`</td>
-    </tr>
-</table>
-
-
-### `OCE016`
-
-> 1-Click Conflict Request for Phone Number
-
-<table>
-  <tr>
-    <th>`messsage`</th>
-    <td>`"1-Click Conflict Request for this Phone Number, Please Try Again"`</td>
-  </tr>
-</table>
-
-
-### `OCE017`
-
-> 1-Click Blocked: Risk Score Too High
-
-<table>
-  <tr>
-    <th>`messsage`</th>
-    <td>`"1-Click Blocked: Risk Score Too High"`</td>
-  </tr>
-</table>
+<ErrorDisplay message="1-Click Blocked: Risk Score Too High" description="1-Click Blocked: Risk Score Too High">
+#### `OCE017`
+</ErrorDisplay>

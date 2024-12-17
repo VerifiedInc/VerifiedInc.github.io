@@ -1,13 +1,14 @@
 import Markdown from 'react-markdown';
+import PropTypes from 'prop-types';
 
-export const ErrorDisplay = ({ code, message, description, children }) => {
-    const markdownCode = `#### \`${code}\``;
+export const ErrorDisplay = ({ message, description, children: code }) => {
     const markdownDescription = description ? `> ${description}` : null;
     const markdownMessage = `\`"${message}"\``;
 
     return (
         <>
-            <Markdown>{markdownCode}</Markdown>
+            {/* Had to send the header through the children due to docussaurus limitation in having react generated headers */}
+            {code}
             {markdownDescription && <Markdown>{markdownDescription}</Markdown>}
             <table className="error-table">
                 <tbody>
@@ -17,7 +18,12 @@ export const ErrorDisplay = ({ code, message, description, children }) => {
                     </tr>
                 </tbody>
             </table>
-            {children}
         </>
-    );
+    )
+};
+
+ErrorDisplay.propTypes = {
+    message: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    children: PropTypes.node
 };

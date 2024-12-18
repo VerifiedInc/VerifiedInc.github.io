@@ -1,0 +1,60 @@
+---
+id: test-users
+title: Test Users
+sidebar_label: Test Users
+sidebar_position: 6.1
+description: Verified API Test Users
+slug: /test-users
+toc_max_heading_level: 3
+---
+
+import TestUserDisplay from '@site/src/components/TestUserDisplay';
+
+In addition to using your own phone number to receive [mock data](./environments#mock-data), you can use our test user Richard Hendricks, who has the following phone and email [identifiers](./types#identifiers), static verification code, and Birth Date:
+
+<TestUserDisplay
+  data={{
+    Phone: '+10123456789',
+    Email: 'richard@piedpiper.net',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+  }}
+></TestUserDisplay>
+
+:::tip Yes, You Read That Right
+This is Richard Hendricks from the show _Silicon Valley_! 😂
+:::
+
+:::warning Don't Send Messages to These Identifiers
+These are not valid phone numbers or email addresses, so sending messages to them won't work. To simulate SMS verification, for example, use the static verification code above.
+:::
+
+## Additional Test Users
+
+In addition to _Richard Hendricks_, we provide the following test users to help you implement specific flows and test error scenarios:
+
+### `ALWAYS REQUEST DOB`
+
+<TestUserDisplay
+  data={{
+    Phone: '+10019999999',
+    'Birth Date': '1989-08-01',
+    'Verification Code': '111111',
+    'Error Code': '[OCE011](./errors#oce011)',
+  }}
+  description='Triggers Additional Information error to test Birth Date handling.'
+></TestUserDisplay>
+
+Use this test user to implement the Date of Birth (DoB) flow. Requests with this phone number trigger the [OCE011](./errors#oce011) error, requiring additional information (Birth Date). This allows testing and implementing error handling.
+
+### `NO CREDENTIALS FOUND`
+
+<TestUserDisplay
+  data={{
+    Phone: '+10019999998',
+    'Error Code': '[OCE013](./errors#oce013)',
+  }}
+  description='Simulate no credentials found error.'
+></TestUserDisplay>
+
+This test user simulates the scenario where no credentials can be found for the provided phone number. Use this to implement proper error handling when the [OCE013](./errors#oce013) error is returned, ensuring your application gracefully handles cases where user data is unavailable.

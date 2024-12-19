@@ -1,0 +1,15 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+
+<ErrorDisplay
+  message='Unable to use 1-click due to missing mandatory credentials'
+  description='Mandatory credentials are missing for 1-Click Signup'
+>
+  #### `OCE007`
+</ErrorDisplay>
+Occurs when a user attempts to use 1-Click Signup without providing all required
+credential information.
+
+:::tip Example
+This issue can occur when a **Credential** is set with `"mandatory": "yes"`
+and `"allowUserInput": "disabled"`, but is not found.
+:::

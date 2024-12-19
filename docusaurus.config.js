@@ -37,13 +37,14 @@ module.exports = {
           position: 'left',
         },
         {
-          to: 'https://dashboard.verified.inc',
-          label: 'Dashboard',
+          to: 'https://1-click.demo.verified.inc',
+          label: 'Demo',
           position: 'left',
         },
         {
-          to: 'https://1-click.demo.verified.inc',
-          label: 'Demo',
+          type: 'custom-navbarButton',
+          to: 'https://dashboard.verified.inc',
+          label: 'Dashboard',
           position: 'left',
         },
         {

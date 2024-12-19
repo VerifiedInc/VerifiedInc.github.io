@@ -21,6 +21,7 @@
   --ifm-color-primary-light: #0ecf43;
   --ifm-color-primary-lighter: #0fd846;
   --ifm-color-primary-lightest: #16ef52;
+  --ifm-color-primary-white: #ffffff;
   /* secondary */
   --ifm-color-secondary: #dcdcdc;
   --ifm-color-secondary-dark: #c6c6c6;
@@ -313,6 +314,16 @@ td:first-child {
   color: var(--ifm-color-primary) !important;
   border-color: var(--ifm-color-primary) !important;
 }
+
+.MuiButton-colorPrimary {
+  background-color: var(--ifm-color-primary) !important;
+  color: var(--ifm-color-primary-white) !important;
+}
+
+.MuiButton-colorPrimary:hover {
+  background-color: var(--ifm-color-primary-darkest) !important;
+}
+
 
 .MuiCardContent-root {
   font-family: var(--ifm-font-family-base) !important;

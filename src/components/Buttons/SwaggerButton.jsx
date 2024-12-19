@@ -7,10 +7,11 @@ const SwaggerButton = ({ url }) => {
 
   return (
     <Button
-      href={url }
+      href={url}
       target="_blank"
       variant='outlined'
-      size="small" 
+      color='inherit'
+      size="small"
       startIcon={<OpenInNewIcon />}
       sx={{
         color: '#6EAD3A',

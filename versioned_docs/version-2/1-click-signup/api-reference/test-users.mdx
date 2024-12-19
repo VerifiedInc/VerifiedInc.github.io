@@ -33,7 +33,9 @@ These are not valid phone numbers or email addresses, so sending messages to the
 
 In addition to _Richard Hendricks_, we provide the following test users to help you implement specific flows and test error scenarios:
 
-### `ALWAYS REQUEST DOB`
+### Simulate `"Additional Information Required"`
+
+This mock user is designed to simulate a scenario where the user **must enter additional information** before receiving their credentials. This allows testing and implementing error handling for the [OCE011](./errors#oce011) error.
 
 <TestUserDisplay
   data={{
@@ -42,19 +44,28 @@ In addition to _Richard Hendricks_, we provide the following test users to help 
     'Verification Code': '111111',
     'Error Code': '[OCE011](./errors#oce011)',
   }}
-  description='Triggers Additional Information error to test Birth Date handling.'
 ></TestUserDisplay>
 
-Use this test user to implement the Date of Birth (DoB) flow. Requests with this phone number trigger the [OCE011](./errors#oce011) error, requiring additional information (Birth Date). This allows testing and implementing error handling.
+:::tip Try it on our Demo
+1. Access our [Demo](https://1-click.demo.verified.inc) and select the *Mock Data* option.
+2. Enter the test user's phone number: `"+10019999999"`.
+3. Enter the static Verification Code: `"111111"`
+4. For the Birthday field, enter: `"08/01/1989"`
 
-### `NO CREDENTIALS FOUND`
+And you're good to go!
+:::
+
+### Simulate `"No Credentials Found"`
+This test user simulates a scenario where no credentials are found for the provided credentials. Use this to validate and implement error-handling mechanisms for the [OCE013](./errors#oce013) error. This ensures your application gracefully manages situations where user data is unavailable.
 
 <TestUserDisplay
   data={{
     Phone: '+10019999998',
+    'Birth Date': '1989-08-01',
+    'Verification Code': '111111',
     'Error Code': '[OCE013](./errors#oce013)',
   }}
-  description='Simulate no credentials found error.'
 ></TestUserDisplay>
-
-This test user simulates the scenario where no credentials can be found for the provided phone number. Use this to implement proper error handling when the [OCE013](./errors#oce013) error is returned, ensuring your application gracefully handles cases where user data is unavailable.
+:::tip
+We recommend preparing your UI to handle cases where no credentials are found and **allowing users to manually input their data**.
+:::

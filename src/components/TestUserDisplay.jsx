@@ -24,7 +24,7 @@ const TestUserDisplay = ({ data, description, children }) => {
 
 TestUserDisplay.propTypes = {
     data: PropTypes.object.isRequired,
-    description: PropTypes.string.isRequired,
+    description: PropTypes.string,
     children: PropTypes.node
 };
 

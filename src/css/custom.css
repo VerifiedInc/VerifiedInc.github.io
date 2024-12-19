@@ -186,6 +186,24 @@ html[data-theme='dark'] {
   animation: pulse 2s infinite;
 }
 
+.legal-text a {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.legal-text a:hover {
+  text-decoration: underline;
+}
+
+/* MUI TextField primary color customization */
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--ifm-color-primary) !important;
+}
+
+.MuiFormLabel-root.Mui-focused {
+  color: var(--ifm-color-primary) !important;
+}
+
 @keyframes pulse {
   0% {
     opacity: 1
@@ -318,12 +336,14 @@ td:first-child {
 .MuiButton-colorPrimary {
   background-color: var(--ifm-color-primary) !important;
   color: var(--ifm-color-primary-white) !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  border: none !important;
 }
 
 .MuiButton-colorPrimary:hover {
   background-color: var(--ifm-color-primary-darkest) !important;
 }
-
 
 .MuiCardContent-root {
   font-family: var(--ifm-font-family-base) !important;

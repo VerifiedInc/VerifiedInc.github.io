@@ -1,6 +1,21 @@
 import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
 
-<ErrorDisplay message="Invalid or expired verification code" description="Invalid or expired verification code for 1-Click Signup" >
-    #### `OCE008`
-</ErrorDisplay >
-This error indicates that the verification code is either invalid or has expired, it only applies to a Semi-Hosted integration type.
+<ErrorDisplay
+  message='Invalid or expired verification code'
+  description='Invalid or expired verification code for 1-Click Signup'
+>
+  #### `OCE008`
+</ErrorDisplay>
+
+Occurs when a user provides an invalid Verification Code or attempts to use an expired code (valid for 5 minutes) during the Semi-Hosted 1-Click flow.
+
+:::tip This issue can occur in two situations
+
+- User enters the wrong Verification Code
+- User attempts to use a code received at 12:00 PM after 12:05 PM
+
+:::
+
+:::info
+This error only applies to **Semi-Hosted** flow where **Verified** handles both **Verification Code** generation and validation.
+:::

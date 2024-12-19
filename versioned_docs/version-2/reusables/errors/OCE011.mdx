@@ -1,7 +1,23 @@
 import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
-import SandboxBirthDateAdmonition from '@site/versioned_docs/version-2/reusables/sandbox-birth-date-admonition.mdx'
+import SandboxBirthDateAdmonition from '@site/versioned_docs/version-2/reusables/sandbox-birth-date-admonition.mdx';
 
-<ErrorDisplay message="Additional information is required to source data for user: {inputs}" description="Additional information is required to source data for user: `{inputs}`">
-    #### `OCE011`
+<ErrorDisplay
+  message='Additional information is required to source data for user: {inputs}'
+  description='Additional information is required to source data for user: `{inputs}`'
+>
+  #### `OCE011`
 </ErrorDisplay>
+
+Occurs when additional information (typically Birth Date) is required to fetch user credentials during the 1-Click flow.
+
+:::tip Example
+
+1. A user initiates 1-Click with only a phone number
+2. The system determines it needs the user's birth date to fetch their credentials
+3. The user will need to provide their birth date to proceed
+
+:::
+
+:::info
 The `{inputs}` included in `message` is a comma separated list of required additional information. Generally, it's a single item: `birthDate`.
+:::

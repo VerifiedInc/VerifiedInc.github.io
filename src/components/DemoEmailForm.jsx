@@ -14,6 +14,7 @@ import {
   Typography
 } from '@mui/material';
 import React, { useState } from 'react';
+import LinkedInButton from '@site/src/components/Buttons/LinkedInButton';
 
 const SALES_SERVICE_URL_SANDBOX = "https://sales-tools-service-api.sandbox-verifiedinc.com/customers/brands";
 const SALES_SERVICE_URL_PRODUCTION = "https://sales-tools-service-api.verified.inc/customers/brands";
@@ -72,37 +73,38 @@ export const DemoEmailForm = () => {
   };
 
   function renderGeneratedDemoContent() {
+    const buttonsStyle = {
+      minWidth: '180px',
+      width: '180px',
+      padding: '6px 16px'
+    }
+
     return (
       <>
         <Typography
           variant="h6"
           sx={{
             fontWeight: 600,
-            fontSize: '1.1rem',
+            fontSize: '1.1em',
             mb: 3,
-            textAlign: 'center'
+            textAlign: 'center',
           }}
         >
           Custom demo of 1-Click Signup for Verified!
         </Typography>
         <Stack direction="row" spacing={2} justifyContent="center">
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<LinkedIn />}
-            onClick={() => {
-              window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(demoUrl)}`, '_blank');
-            }}
-          >
-            Share on LinkedIn
-          </Button>
+          <LinkedInButton
+            url={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(demoUrl)}`}
+            sx={buttonsStyle}
+          />
           <Button
             variant="outlined"
             color="primary"
             startIcon={<OpenInNew />}
             onClick={() => window.open(demoUrl, '_blank')}
+            sx={buttonsStyle}
           >
-            Open Demo in New Tab
+            Open Demo
           </Button>
         </Stack>
       </>
@@ -115,22 +117,24 @@ export const DemoEmailForm = () => {
         width: '100%',
         my: 2,
         transition: 'all 0.3s ease-in-out',
-
+        boxShadow: 'none',
+        border: '1px solid #e0e0e0',
+        borderRadius: '8px',
       }}
+
+
     >
-      <CardContent>
+      <CardContent onClick={handleExpandClick} sx={{
+        '&:hover': {
+          cursor: 'pointer',
+        }
+      }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 600,
-              fontSize: '1.1rem',
-            }}
-          >
-            Create a Custom Demo in 1-Second
-          </Typography>
+
+          Create a Custom Demo in 1-Second
+
           <IconButton
-            onClick={handleExpandClick}
+
             sx={{
               transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
               transition: 'transform 0.3s',

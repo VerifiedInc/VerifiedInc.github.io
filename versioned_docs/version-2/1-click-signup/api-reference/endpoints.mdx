@@ -33,6 +33,7 @@ import DefaultCredentialRequestsNotHosted from '@site/versioned_docs/version-2/r
 import RecencyRequirementAdmonition from '@site/versioned_docs/version-2/reusables/recency-requirement-admonition.mdx'
 import SandboxBirthDateAdmonition from '@site/versioned_docs/version-2/reusables/sandbox-birth-date-admonition.mdx'
 import EndpointHeader from '@site/src/components/EndpointHeader.jsx'
+import { CollapsableGroup, CollapsableSection, CollapsableHeader } from '@site/src/components/Collapsable';
 
 {/* :::note
 See also our [Postman docs](https://api.docs.verified.inc/).
@@ -59,8 +60,11 @@ See also our [Postman docs](https://api.docs.verified.inc/).
   </tr>
 </table>
 
-
+<CollapsableGroup>
+<CollapsableSection>
+<CollapsableHeader>
 ### Request {#post-1-click-request} 
+</CollapsableHeader>
 
 <details>
     <summary>Full Definition</summary>
@@ -158,8 +162,12 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 
 <SandboxBirthDateAdmonition/>
 
+</CollapsableSection>
 
+<CollapsableSection>
+<CollapsableHeader>
 ### Response {#post-1-click-response}
+</CollapsableHeader>
 
 <details>
     <summary>Full Definition</summary>
@@ -226,7 +234,8 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 
 ---
 
-
+</CollapsableSection>
+</CollapsableGroup>
 
 <EndpointHeader 
     swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/get_1_click__id_" 
@@ -248,8 +257,11 @@ See also our [Postman docs](https://api.docs.verified.inc/).
   </tr>
 </table>
 
-
+<CollapsableGroup>
+<CollapsableSection>
+<CollapsableHeader>
 ### Request {#get-1-click-request}
+</CollapsableHeader>
 
 <Tabs groupId="integrationType" queryString="integrationType">
 <TabItem value="hosted" label="Hosted" default>
@@ -284,8 +296,12 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 </TabItem>
 </Tabs>
 
+</CollapsableSection>
 
+<CollapsableSection>
+<CollapsableHeader>
 ### Response {#get-1-click-response}
+</CollapsableHeader>
 
 ```typescript title="GET /1-click Response (All Integration Types)"
 {
@@ -296,6 +312,9 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 See [`1ClickEntity`](./types#1clickentity).
 
 ---
+
+</CollapsableSection>
+</CollapsableGroup>
 
 <EndpointHeader 
     swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/patch_1_click__id_" 
@@ -318,8 +337,11 @@ See [`1ClickEntity`](./types#1clickentity).
   </tr>
 </table>
 
-
+<CollapsableGroup>
+<CollapsableSection>
+<CollapsableHeader>
 ### Request {#patch-1-click-request}
+</CollapsableHeader>
 
 <Tabs groupId="integrationType" queryString="integrationType">
 <TabItem value="hosted" label="Hosted" default>
@@ -373,8 +395,12 @@ See [`1ClickEntity`](./types#1clickentity).
 </TabItem>
 </Tabs>
 
+</CollapsableSection>
 
+<CollapsableSection>
+<CollapsableHeader>
 ### Response {#patch-1-click-response}
+</CollapsableHeader>
 
 ```typescript title="PATCH /1-click Response (All Integration Types)"
 {
@@ -384,7 +410,8 @@ See [`1ClickEntity`](./types#1clickentity).
 
 See [`1ClickEntity`](./types#1clickentity).
 
-
+</CollapsableSection>
+</CollapsableGroup>
 
 
 {/* ## Update 1-Click Credentials

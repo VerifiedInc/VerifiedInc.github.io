@@ -37,13 +37,14 @@ module.exports = {
           position: 'left',
         },
         {
-          to: 'https://dashboard.verified.inc',
-          label: 'Dashboard',
+          to: 'https://1-click.demo.verified.inc',
+          label: 'Demo',
           position: 'left',
         },
         {
-          to: 'https://1-click.demo.verified.inc',
-          label: 'Demo',
+          type: 'custom-navbarButton',
+          to: 'https://dashboard.verified.inc',
+          label: 'Dashboard',
           position: 'left',
         },
         {
@@ -155,6 +156,13 @@ module.exports = {
     [
       '@docusaurus/preset-classic',
       {
+        // Already a dependency of @docusaurus/preset-classic, and don't need to install this plugin as a dependency.
+        gtag: {
+          // The tracking ID of your gtag service. It is possible to provide multiple ids.
+          trackingID: 'G-XLFB0MY99N',
+          // Whether the IP should be anonymized when sending requests.
+          // anonymizeIP: true,
+        },
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           sidebarCollapsible: false,
@@ -183,7 +191,7 @@ module.exports = {
   ],
   plugins: [
     [
-      require.resolve('docusaurus-lunr-search'), 
+      require.resolve('docusaurus-lunr-search'),
       {
         // options, ref: https://github.com/praveenn77/docusaurus-lunr-search#options-available
         // Commenting out for now because removing hidden directory

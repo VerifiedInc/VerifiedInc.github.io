@@ -31,6 +31,9 @@ import ErrorOCE013 from '@site/versioned_docs/version-2/reusables/errors/OCE013.
 import ErrorOCE015 from '@site/versioned_docs/version-2/reusables/errors/OCE015.mdx';
 import ErrorOCE016 from '@site/versioned_docs/version-2/reusables/errors/OCE016.mdx';
 import ErrorOCE017 from '@site/versioned_docs/version-2/reusables/errors/OCE017.mdx';
+import ErrorOCE018 from '@site/versioned_docs/version-2/reusables/errors/OCE018.mdx';
+import ErrorOCE019 from '@site/versioned_docs/version-2/reusables/errors/OCE019.mdx';
+
 
 To handle errors returned by Verified API endpoints, we recommend that you primarily use the respons body's `data.errorCode`, which is a Verified specific error code. See [Error Codes](#error-codes) below for descriptions of what each code means.
 
@@ -73,6 +76,10 @@ An `errorCode` is a Verified specific error code consisting of 3 letters and 3 n
 <ErrorOCE015 />
 
 <ErrorOCE017 />
+
+<ErrorOCE018 />
+
+<ErrorOCE019 />
 
 </CollapsableSection>
 
@@ -155,19 +162,9 @@ This only applies to a Semi-Hosted integration type.
 
 <ErrorOCE017 />
 
-<ErrorDisplay
-  message='Maximum code attempts exceeded. Please start a new 1-click flow.'
-  description='1-Click Error: Maximum code attempts exceeded.'
->
-  #### `OCE018`
-</ErrorDisplay>
+<ErrorOCE018 />
 
-<ErrorDisplay
-  message='Maximum birthDate attempts exceeded. Please try again later.'
-  description='1-Click Error: Maximum birthDate attempts exceeded.'
->
-  #### `OCE019`
-</ErrorDisplay>
+<ErrorOCE019 />
 
 </CollapsableSection>
 </CollapsableGroup>

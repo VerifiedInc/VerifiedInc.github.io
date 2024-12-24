@@ -4,14 +4,15 @@ import Button from '@mui/material/Button';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 const PostmanButton = ({ url }) => {
-  
+
 
   return (
     <Button
       href={url}
       target="_blank"
-      variant="outlined" 
-      size="small" 
+      variant="outlined"
+      color='inherit'
+      size="small"
       startIcon={<OpenInNewIcon />}
       sx={{
         ml: 1,

@@ -345,7 +345,7 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
 
     One of two things should happen:
     - **Success:** If we can source data based on just the phone number, the [response body](./endpoints?integrationType=semi-hosted#post-1-click-response) will contain a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 8](#8-prompt-user-to-confirm-their-data).
-    - **Error:** Otherwise, the response body will contain an [error](./errors) indicating that we need additional information (the user's birth date) to source data. In this case, continue to [step 6](#6-if-necessary-prompt-user-for-birth-date). The error will have error code [`OCE011`](./errors#oce011) and look like this:
+    - **Error:** Otherwise, the response body will contain an [error](./errors) indicating that the code was invalid or we need additional information (the user's birth date) to source data. In the case of an incorrect `code`, the error code will be [`OCE008`](./errors#oce008). Only three invalid attempts are allowed, after which an error with error code [`OCE018`](./errors#oce018) will be returned. In the case of needing additional information, continue to [step 6](#6-if-necessary-prompt-user-for-birth-date). The error will have error code [`OCE011`](./errors#oce011) and look like this:
     <ErrorExampleOce011/>
 
     ---

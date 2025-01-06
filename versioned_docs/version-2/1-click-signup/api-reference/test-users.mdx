@@ -1,0 +1,71 @@
+---
+id: test-users
+title: Test Users
+sidebar_label: Test Users
+sidebar_position: 6.1
+description: Verified API Test Users
+slug: /test-users
+toc_max_heading_level: 3
+---
+
+import TestUserDisplay from '@site/src/components/TestUserDisplay';
+
+In addition to using your own phone number to receive [mock data](./environments#mock-data), you can use our test user Richard Hendricks, who has the following phone and email [identifiers](./types#identifiers), static verification code, and Birth Date:
+
+<TestUserDisplay
+  data={{
+    Phone: '+10123456789',
+    Email: 'richard@piedpiper.net',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+  }}
+></TestUserDisplay>
+
+:::tip Yes, You Read That Right
+This is Richard Hendricks from the show _Silicon Valley_! 😂
+:::
+
+:::warning Don't Send Messages to These Identifiers
+These are not valid phone numbers or email addresses, so sending messages to them won't work. To simulate SMS verification, for example, use the static verification code above.
+:::
+
+## Additional Test Users
+
+In addition to _Richard Hendricks_, we provide the following test users to help you implement specific flows and test error scenarios:
+
+### Simulate `"Additional Information Required"`
+
+This mock user is designed to simulate a scenario where the user **must enter additional information** before receiving their credentials. This allows testing and implementing error handling for the [OCE011](./errors#oce011) error.
+
+<TestUserDisplay
+  data={{
+    Phone: '+10019999999',
+    'Birth Date': '1989-08-01',
+    'Verification Code': '111111',
+    'Error Code': '[OCE011](./errors#oce011)',
+  }}
+></TestUserDisplay>
+
+:::tip Try it on our Demo
+1. Access our [Demo](https://1-click.demo.verified.inc) and select the *Mock Data* option.
+2. Enter the test user's phone number: `"+10019999999"`.
+3. Enter the static Verification Code: `"111111"`
+4. For the Birthday field, enter: `"08/01/1989"`
+
+And you're good to go!
+:::
+
+### Simulate `"No Credentials Found"`
+This test user simulates a scenario where no credentials are found for the provided credentials. Use this to validate and implement error-handling mechanisms for the [OCE013](./errors#oce013) error. This ensures your application gracefully manages situations where user data is unavailable.
+
+<TestUserDisplay
+  data={{
+    Phone: '+10019999998',
+    'Birth Date': '1989-08-01',
+    'Verification Code': '111111',
+    'Error Code': '[OCE013](./errors#oce013)',
+  }}
+></TestUserDisplay>
+:::tip
+We recommend preparing your UI to handle cases where no credentials are found and **allowing users to manually input their data**.
+:::

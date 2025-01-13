@@ -76,7 +76,9 @@ It is also preferred if one could create an official Github release (also makes 
 
 #### Preview Deployment
 
-All pull requests create a preview deployment automatically thanks to use Vercel for deployment.
+All pull requests create a preview deployment automatically thanks to the preview Github action job that triggers a Vercel preview deployment.
+
+Vercel only triggers preview deployments by default if the vercel.json's `git.deploymentEnabled` was not set to `false`. We needed this config that way so that we could do our tag-based Production deployment process.
 
 ### Search
 

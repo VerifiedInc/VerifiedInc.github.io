@@ -1,0 +1,12 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+
+<ErrorDisplay
+  message='User identifier is missing'
+  description=''
+  integrationType=''
+  whenThisIsReturned="When you don't include a phone or email identifier when calling POST /1-click." 
+  howToHandle='Prompt user to enter one or more identifiers (phone number and/or email address), and then call POST /1-click with those identifiers.'
+  youShouldNeverGetThisError='You should always pass at least one identifier to the Verified API for 1-Click Signup to work.'
+>
+  #### `OCE006`
+</ErrorDisplay>

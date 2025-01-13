@@ -1,6 +1,6 @@
-# .github/workflows/preview.yml
+name: Preview Environment Vercel Deployment
 
-name: Preview Environment
+# ref: https://github.com/marketplace/actions/vercel-preview-deployments
 
 env:
   VERCEL_ACCESS_TOKEN: ${{ secrets.VERCEL_ACCESS_TOKEN }}
@@ -10,8 +10,6 @@ env:
 on:
   pull_request:
     types: [opened, synchronize, closed]
-    branches:
-      - main
 
 jobs:
   deploy:

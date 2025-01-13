@@ -1,6 +1,6 @@
 name: Preview Environment Vercel Deployment
 
-# ref: https://github.com/marketplace/actions/vercel-preview-deployments
+# ref: https://github.com/marketplace/actions/vercel-preview-deployments, https://github.com/snaplet/vercel-action
 
 env:
   VERCEL_ACCESS_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -21,11 +21,11 @@ jobs:
     if: ${{ github.event.action == 'opened' || github.event.action == 'synchronize' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: snaplet/vercel-action@v3.0.1
+      - uses: snaplet/vercel-action@a84e8e02e05dc563cb94bf816c04a8c6d135571f # v3.0.1, but GH security scan insists on using a commit hash thanks to tags being mutable
   delete:
     if: ${{ github.event.action == 'closed' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: snaplet/vercel-action@v3.0.1
+      - uses: snaplet/vercel-action@a84e8e02e05dc563cb94bf816c04a8c6d135571f # v3.0.1, but GH security scan insists on using a commit hash thanks to tags being mutable
         with:
           delete: true

@@ -1,18 +1,14 @@
 import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
 
-<ErrorDisplay
-  message='1-Click Not Found'
-  description='1-Click Signup request not found'
+<ErrorDisplay 
+  message='1-Click Not Found' 
+  description=''
+  integrationType=''
+  whenThisIsReturned='When a 1-Click Signup request does not exist, for example when it has been deleted.' 
+  howToHandle='Start 1-Click Signup over again.'
+  youShouldNeverGetThisError=''
 >
   #### `OCE015`
 </ErrorDisplay>
-This error indicates that the `"uuid"` provided for the 1-Click Signup request was
-not found or has expired.
 
-:::info
-1-Click requests expire **30 minutes** after being generated.
-:::
-
-:::warning
-For **Semi-Hosted**, the user must complete the 1-Click flow within this **30 minutes** window.
-:::
+1-Click requests expire in 30 minutes.

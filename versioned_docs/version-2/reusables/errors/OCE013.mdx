@@ -1,7 +1,12 @@
 import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
 
-<ErrorDisplay message='No credentials found' description='No credentials found'>
+<ErrorDisplay 
+  message='No credentials found' 
+  description=''
+  integrationType=''
+  whenThisIsReturned='When Verified is unable to source data for a user.' 
+  howToHandle='Fall back to a manual signup flow.'
+  youShouldNeverGetThisError=''
+>
   #### `OCE013`
 </ErrorDisplay>
-
-Occurs when no Credentials associated with the given Identifiers can be found during the 1-Click Signup process.

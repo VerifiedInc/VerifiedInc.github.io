@@ -65,10 +65,10 @@ module.exports = {
         {
           title: '1-Click Signup',
           items: [
-            {
-              label: 'Overview',
-              to: '/overview',
-            },
+            // {
+            //   label: 'Overview',
+            //   to: '/overview',
+            // },
             {
               label: 'Quick Start Guide',
               to: '/quick-start-guide',

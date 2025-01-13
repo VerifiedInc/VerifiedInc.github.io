@@ -10,7 +10,7 @@ toc_max_heading_level: 3
 
 import TestUserDisplay from '@site/src/components/TestUserDisplay';
 
-In addition to using your own phone number to receive [mock data](./environments#mock-data), you can use our test user Richard Hendricks, who has the following phone and email [identifiers](./types#identifiers), static verification code, and Birth Date:
+In addition to using your own phone number to receive [mock data](./environments#mock-data), you can use our test user Richard Hendricks, who has the following phone and email [identifiers](./data#identifiers), static verification code, and Birth Date:
 
 <TestUserDisplay
   data={{
@@ -31,11 +31,11 @@ These are not valid phone numbers or email addresses, so sending messages to the
 
 ## Additional Test Users
 
-In addition to _Richard Hendricks_, we provide the following test users to help you implement specific flows and test error scenarios:
+We also provide the following test users to help you implement specific flows and test error scenarios:
 
-### Simulate `"Additional Information Required"`
+### Trigger `OCE011`
 
-This mock user is designed to simulate a scenario where the user **must enter additional information** before receiving their credentials. This allows testing and implementing error handling for the [OCE011](./errors#oce011) error.
+This test user is designed to simulate a scenario where **additional information is required** from the user for Verified to source data for them. This allows testing and implementing error handling for the [OCE011](./errors#oce011) error.
 
 <TestUserDisplay
   data={{
@@ -55,8 +55,9 @@ This mock user is designed to simulate a scenario where the user **must enter ad
 And you're good to go!
 :::
 
-### Simulate `"No Credentials Found"`
-This test user simulates a scenario where no credentials are found for the provided credentials. Use this to validate and implement error-handling mechanisms for the [OCE013](./errors#oce013) error. This ensures your application gracefully manages situations where user data is unavailable.
+### Trigger `OCE013`
+
+This test user simulates a scenario where there are **no credentials found** for the provided identifiers (inputs). Use this to validate and implement error handling mechanisms for the [OCE013](./errors#oce013) error. This ensures your application gracefully manages situations where user data is unavailable.
 
 <TestUserDisplay
   data={{
@@ -67,5 +68,5 @@ This test user simulates a scenario where no credentials are found for the provi
   }}
 ></TestUserDisplay>
 :::tip
-We recommend preparing your UI to handle cases where no credentials are found and **allowing users to manually input their data**.
+We recommend preparing your UI to handle cases where no credentials are found by **allowing users to manually input their data**.
 :::

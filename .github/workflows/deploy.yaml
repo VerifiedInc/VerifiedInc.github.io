@@ -1,4 +1,5 @@
 name: Production Tag-Based Deployment
+# ref: https://vercel.com/guides/can-you-deploy-based-on-tags-releases-on-vercel
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}

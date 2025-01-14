@@ -54,6 +54,10 @@ This command generates static content into the `build` directory and can be serv
 
 #### Vercel Method
 
+Using [this guide](https://vercel.com/guides/can-you-deploy-based-on-tags-releases-on-vercel), we are now using a Github Action job to trigger a Vercel production deployment off of release tags, `v.*.*.*` just like our other repos.
+
+##### Deprecated Trunk-based Method
+
 Vercel does not use [trunk-based](https://circleci.com/blog/trunk-vs-feature-based-dev/) development workflow by default, instead defaulting to a feature-based strategy. While we could set it up to [trigger deployments based on tags](https://vercel.com/guides/can-you-deploy-based-on-tags-releases-on-vercel), it would require additional work to get the preview deployments working. So this reason, we are opting to move to feature-based developemnt / deployment strategy which unique in our org, just to this repo. To release to Production, one needs to merge `dev` branch into `main`. Ideally, still creating a tag on `dev` so we can continue to reference by version. 
 
 #### Deprecated Github Pages Method
@@ -72,7 +76,9 @@ It is also preferred if one could create an official Github release (also makes 
 
 #### Preview Deployment
 
-All pull requests create a preview deployment automatically thanks to use Vercel for deployment.
+All pull requests create a preview deployment automatically thanks to the preview Github action job that triggers a Vercel preview deployment.
+
+Vercel only triggers preview deployments by default if the vercel.json's `git.deploymentEnabled` was not set to `false`. We needed this config that way so that we could do our tag-based Production deployment process.
 
 ### Search
 

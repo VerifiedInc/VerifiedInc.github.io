@@ -1,55 +1,31 @@
-name: preview-deployment
+name: Preview Environment Vercel Deployment
+
+# ref: https://github.com/marketplace/actions/vercel-preview-deployments, https://github.com/snaplet/vercel-action
+
+env:
+  VERCEL_ACCESS_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 on:
-  push:
-    tags:
-      - 'preview-v*.*.*'
+  pull_request:
+    types: [opened, synchronize, closed]
+
+permissions:
+  contents: read
+  deployments: write
+  pull-requests: write
 
 jobs:
-  checks:
-    if: github.event_name != 'push'
+  deploy:
+    if: ${{ github.event.action == 'opened' || github.event.action == 'synchronize' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-      - name: Test Build
-        run: |
-          if [ -e yarn.lock ]; then
-          yarn install --frozen-lockfile
-          elif [ -e package-lock.json ]; then
-          npm ci
-          else
-          npm i
-          fi
-          npm run build
-
-  gh-release:
-    if: github.event_name != 'pull_request'
+      - uses: snaplet/vercel-action@a84e8e02e05dc563cb94bf816c04a8c6d135571f # v3.0.1, but GH security scan insists on using a commit hash thanks to tags being mutable
+  delete:
+    if: ${{ github.event.action == 'closed' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: snaplet/vercel-action@a84e8e02e05dc563cb94bf816c04a8c6d135571f # v3.0.1, but GH security scan insists on using a commit hash thanks to tags being mutable
         with:
-          node-version: '18.15.0'
-      - uses: webfactory/ssh-agent@v0.5.0
-        with:
-          ssh-private-key: ${{ secrets.GH_PAGES_DEPLOY }}
-      
-      - name: Deploy preview via Netlify
-        env:
-          USE_SSH: true
-          DEPLOYMENT_BRANCH: preview
-          GIT_USER: git
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "gh-actions"
-          if [ -e yarn.lock ]; then
-          yarn install --frozen-lockfile
-          elif [ -e package-lock.json ]; then
-          npm ci
-          else
-          npm i
-          fi
-          npm run deploy
+          delete: true

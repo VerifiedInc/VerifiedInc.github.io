@@ -1,0 +1,22 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+import SandboxBirthDateAdmonition from '@site/versioned_docs/version-2/reusables/sandbox-birth-date-admonition.mdx';
+
+<ErrorDisplay
+  message='Additional information is required to source data for user: {inputs}'
+  description=''
+  integrationType=''
+  whenThisIsReturned='When additional information is required to source verified user data through 1-Click Signup.' 
+  howToHandle='Prompt the user to input the additional information, and then call the Verified API again.'
+  youShouldNeverGetThisError=''
+>
+  #### `OCE011`
+</ErrorDisplay>
+
+{/* The `{inputs}` included in `message` is a comma separated list of additional information, generally `birthDate, ssn4`. It always indicates an **inclusive OR:** for example, `birthDate, ssn4` indicates that you can pass `birthDate`, `ssn4`, or both. */}
+
+The `{inputs}` included in `message` is a comma separated list of additional information, generally just `birthDate`. It always indicates an **inclusive OR:** that is, you can pass one or more of the additional inputs.
+
+{/* We recommend using `birthDate` over `ssn4` when possible because: 
+1. Users are typically more comfortable providing their birthday.
+2. Some users will have an autofill option for birthday from their browser or OS.
+3. Everyone has a birthday, but not everyone has an SSN. */}

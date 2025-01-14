@@ -17,8 +17,12 @@ A basic usage guide is currently at [docs.verified.inc/usage-guide](https://docs
 
 The guide also includes examples on how to use custom React code within our `mdx` files, e.g. Tooltips.
 
-#### Custom Components
+### Custom Components
 Custom React Components can be defined in `/src/components/` and leveraged throughout our `mdx` files. A current example of this is our Tip.jsx component for the tooltip functionality.
+
+### Search
+
+For Docusaurus [search](https://docusaurus.io/docs/search) functionality we are using a local indexing solution called [lunr](https://github.com/praveenn77/docusaurus-lunr-search#options-available).
 
 ### Installation
 ```console
@@ -28,7 +32,9 @@ npm install
 #### Requirements
 Node version 16.14+, latest minimum version can be found [here](https://docusaurus.io/docs/installation#requirements). We are self imposing a NPM version requirement of 8.19.2+ so the package-lock.json is not updated unnecessarily with individuals using older NPM versions. It is recommended to use NVM to install and use different Node and NPM versions. 
 
-### Local Development
+## Development
+
+### Local
 
 ```console
 npm run start
@@ -36,60 +42,23 @@ npm run start
 
 This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
 
-#### Branching Scheme
+You can use `build` script generate static content into the `build` directory and can be served using any static contents hosting service. However, for local development, we recommend just using the `start` command. The deployment job and infra manages builds.
 
-This repo is unique in that the `dev` branch is consider the primary branch. Thanks to the previous Github pages method of publishing we needed a branch for CI to push the build files to and then be deployed from. Now that we are using Vercel we no longer need said CI job that we manage. Please refer to the [Deployment](#deployment) section for more info.
+### Branching Scheme
 
-However, because of this characteristic, one should be creating their feature branch off of `dev` for local development. The PR will be open against `dev` and should be merged to `dev`.
-
-### Build
-
-```console
-npm run build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+The main branch changes should be based off of is `main`. Previously we had to use `dev` as the main branch for various considerations. However, now that is no longer the case. This repo git flow is identical to all other repos in the organization. Like every other repo PRs ought be open against `main` and should be merged to `main`. Release version should be made off of `main` as well. Please see [deployments](#deployment) section below for more details.
 
 ### Deployment
 
-#### Vercel Method
+Deployments are handled through a Github Action workflow that builds and deploys to Vercel.
 
-Using [this guide](https://vercel.com/guides/can-you-deploy-based-on-tags-releases-on-vercel), we are now using a Github Action job to trigger a Vercel production deployment off of release tags, `v.*.*.*` just like our other repos.
+#### Production
 
-##### Deprecated Trunk-based Method
+Using [this guide](https://vercel.com/guides/can-you-deploy-based-on-tags-releases-on-vercel), we are now using a Github Action job to trigger a Vercel production deployment off of release tags, `v.*.*.*`, from the `main` branch just like our other repos.
 
-Vercel does not use [trunk-based](https://circleci.com/blog/trunk-vs-feature-based-dev/) development workflow by default, instead defaulting to a feature-based strategy. While we could set it up to [trigger deployments based on tags](https://vercel.com/guides/can-you-deploy-based-on-tags-releases-on-vercel), it would require additional work to get the preview deployments working. So this reason, we are opting to move to feature-based developemnt / deployment strategy which unique in our org, just to this repo. To release to Production, one needs to merge `dev` branch into `main`. Ideally, still creating a tag on `dev` so we can continue to reference by version. 
-
-#### Deprecated Github Pages Method
-
-**Important:** Publishing to `master` will publish to [docs.verified.inc](https://docs.verified.inc/)! Please don't publish any documentation by pushing directly to `master`. If one wants to see the deployment they can run locally using `yarn start` or one can deploy to a different branch like `private` using:
-
-```console
-GIT_USER=<Your GitHub username> DEPLOYMENT_BRANCH=private USE_SSH=true yarn deploy
-```
-
-However, you should **not** deploy from your local machine. There is now a CI job using Github Actions which will auto deploy when a tag with a preceding `v` is pushed to any branch. By convention we have been using the `dev` branch as the source of truth. That said, `v` tags should really only be pushed to `dev` branch. This triggers a "build" version of the docs that is auto committed to the `master` branch.
-
-It is also preferred if one could create an official Github release (also makes a tag) with a preceding `v` so that the Github Slack integration sends a message to the whole team letting them know that a docs release is happening. One can do this via the Github web UI or via the CLI with the `gh` [cli tool](https://cli.github.com/manual/gh_release_create), `gh release create <tag> [<files>...]`. For example, `gh release create v1.0.0 -n "Initial documentation release v1.0.0"`, will add the tag and release on the repo's main branch, `dev`, and trigger a release which is an automatic compiled commit from the Action CI job to the `master` branch. This GitHub actions configuration can be found in the [deploy.yaml](.github/workflows/deploy.yaml) file. 
-
-**TL;DR never commit directly to master and create Github releases with preceding `v`, i.e. `v1.3.2`, only to `dev` branch.**
-
-#### Preview Deployment
+#### Preview
 
 All pull requests create a preview deployment automatically thanks to the preview Github action job that triggers a Vercel preview deployment.
 
 Vercel only triggers preview deployments by default if the vercel.json's `git.deploymentEnabled` was not set to `false`. We needed this config that way so that we could do our tag-based Production deployment process.
 
-### Search
-
-For Docusaurus [search](https://docusaurus.io/docs/search) functionality we are using a local indexing solution called [lunr](https://github.com/praveenn77/docusaurus-lunr-search#options-available).
-
-## GitHub Pages [Deprecated]
-
-*No longer used for deployed. Now Vercel is the chosen deployment platform*
-
-Every GitHub user and organization gets a free [GitHub Pages](https://pages.github.com/) page. Docusaurus offers this as a simple deployment and hosting option. The setup (which feels a little arbitrary!) is:
-
-We have a repo named [organization].github.io (so in our case UnumID.github.io) and add this to `docusaurus.config.js`.
-When we push to the `master` branch of that repo we deploy to GitHub pages.
-When we push to the `gh-pages` branch of any other repo in the UnumID organization, we deploy to GitHub pages.

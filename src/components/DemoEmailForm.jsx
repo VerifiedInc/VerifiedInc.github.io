@@ -22,7 +22,7 @@ const SALES_SERVICE_URL_PRODUCTION = "https://sales-tools-service-api.verified.i
 export const DemoEmailForm = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
   const [demoUrl, setDemoUrl] = useState(null);
 
   const handleExpandClick = () => {
@@ -113,6 +113,7 @@ export const DemoEmailForm = () => {
 
   return (
     <Card
+      id="demo-email-card"
       sx={{
         width: '100%',
         my: 2,

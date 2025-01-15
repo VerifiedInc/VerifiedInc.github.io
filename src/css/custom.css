@@ -351,6 +351,12 @@ td:first-child {
   text-align: center !important;
 }
 
+/* To make MUI use lato, TODO: Wrap the app in a MuiThemeProvider and change the font */
+.MuiInputBase-root,
+.MuiInputBase-root input,
+.MuiTypography-root {
+  font-family: var(--ifm-font-family-base) !important;
+}
 /** Custom CSS for Collapsable Component */
 
 /* Needed to remove the headers margins to vertically align the collapsable arrow icon */
@@ -379,5 +385,9 @@ td:first-child {
 /* Remove bottom margin of the message from ErrorDisplay component */
 .error-table p {
   margin: 0;
+
+}
+#demo-email-card {
+  font-family: var(--ifm-font-family-base) !important;
 
 }

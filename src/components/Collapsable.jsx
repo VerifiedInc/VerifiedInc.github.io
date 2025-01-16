@@ -133,7 +133,7 @@ export const CollapsableGroup = ({ children, firstSectionExpanded = true }) => {
 
         });
 
-    }, [children]);
+    }, []);
 
     // Should render if firstSectionExpanded is false or the default expanded section was already loaded
     // This is to avoid any transition animation when the first section is expanded by default

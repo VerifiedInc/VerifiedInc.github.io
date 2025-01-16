@@ -283,27 +283,27 @@ input:checked+.slider:before {
 
 /* For some reason, Docusaurus seems to downsize all headers within tabs, so e.g. ### shows up as if it's #### size. */
 [role=tabpanel] h2,
-.collapsable-section h2 {
+.collapsible-section h2 {
   font-size: var(--ifm-h3-font-size);
 }
 
 [role=tabpanel] h3,
-.collapsable-section h3 {
+.collapsible-section h3 {
   font-size: var(--ifm-h2-font-size);
 }
 
 [role=tabpanel] h4,
-.collapsable-section h4 {
+.collapsible-section h4 {
   font-size: var(--ifm-h3-font-size);
 }
 
 [role=tabpanel] h5,
-.collapsable-section h5 {
+.collapsible-section h5 {
   font-size: var(--ifm-h4-font-size);
 }
 
 [role=tabpanel] h6,
-.collapsable-section h6 {
+.collapsible-section h6 {
   font-size: var(--ifm-h5-font-size);
 }
 
@@ -357,18 +357,18 @@ td:first-child {
 .MuiTypography-root {
   font-family: var(--ifm-font-family-base) !important;
 }
-/** Custom CSS for Collapsable Component */
+/** Custom CSS for Collapsible Component */
 
-/* Needed to remove the headers margins to vertically align the collapsable arrow icon */
-.collapsable-header h2,
-.collapsable-header h3,
-.collapsable-header h4,
-.collapsable-header h5,
-.collapsable-header h6 {
+/* Needed to remove the headers margins to vertically align the collapsible arrow icon */
+.collapsible-header h2,
+.collapsible-header h3,
+.collapsible-header h4,
+.collapsible-header h5,
+.collapsible-header h6 {
   margin-bottom: 0;
 }
 
-.collapsable-header {
+.collapsible-header {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -378,7 +378,7 @@ td:first-child {
   padding-bottom: var(--ifm-heading-margin-bottom);
 }
 
-.collapsable-header svg {
+.collapsible-header svg {
   display: inline-block;
 }
 

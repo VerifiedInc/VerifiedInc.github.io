@@ -30,29 +30,32 @@ sequenceDiagram
     U->>-C: Enter phone number
     rect rgb(200,200,200,0.25)
         note left of C: 1. Call 1-Click Endpoint
-        C->>+V: Call POST /1-click with phone number
-        V-->>-C: Return URL and Verification Code    
-        C->>+U: Send SMS
+        C->>+V: Call POST /1-click
+        V-->>-C: Return url and code    
+        C->>+U: Send SMS with code
         rect rgb(200,200,200,0.85)
-            C->>+U: Redirect user to URL
             note left of C: 2. Redirect User
+            C->>+U: Redirect user to url
             note right of V: (handled by Verified)
-            
             U->>-V: Enter code
-            alt Additional information required
-                V->>+U: Show DOB input
-                U->>-V: Enter DOB
+            alt Additional info required
+                V->>+U: Show DOB/SSN4 input(s)
+                U->>-V: Enter DOB/SSN4
+                alt Additional info mismatched
+                    V->>+U: Show DOB/SSN4 input(s)
+                    U->>-V: Enter DOB/SSN4
+                end
             end
-            V->>V: Pull verified user data
-            V->>+U: Display data
+            V->>V: Source data (credentials and metadata)
+            V->>+U: Display credentials
             U->>-V: Consent to share data
             V-->>C: Redirect user to customer
         end
-        note left of C: 3. Receive User Data
+        note left of C: 3. Receive Data
         
         C->>C: Parse identityUuid from URL param
         C->>+V: Call GET /1-click with identityUuid
-        V-->>-C: Return user data    
+        V-->>-C: Return data    
     end
 ```
 <br />

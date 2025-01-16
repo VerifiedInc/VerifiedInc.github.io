@@ -31,9 +31,9 @@ import CredentialRequestTableHosted from '@site/versioned_docs/version-2/reusabl
 import DefaultCredentialRequestsHosted from '@site/versioned_docs/version-2/reusables/default-credential-requests-hosted.mdx'
 import DefaultCredentialRequestsNotHosted from '@site/versioned_docs/version-2/reusables/default-credential-requests-not-hosted.mdx'
 import RecencyRequirementAdmonition from '@site/versioned_docs/version-2/reusables/recency-requirement-admonition.mdx'
-import SandboxBirthDateAdmonition from '@site/versioned_docs/version-2/reusables/sandbox-birth-date-admonition.mdx'
+import SandboxValidationAdmonition from '@site/versioned_docs/version-2/reusables/sandbox-validation-admonition.mdx'
 import EndpointHeader from '@site/src/components/EndpointHeader.jsx'
-import { CollapsableGroup, CollapsableSection, CollapsableHeader } from '@site/src/components/Collapsable';
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
 
 {/* :::note
 See also our [Postman docs](https://api.docs.verified.inc/).
@@ -60,11 +60,11 @@ See also our [Postman docs](https://api.docs.verified.inc/).
   </tr>
 </table>
 
-<CollapsableGroup>
-<CollapsableSection>
-<CollapsableHeader>
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
 ### Request {#post-1-click-request} 
-</CollapsableHeader>
+</CollapsibleHeader>
 
 <details>
     <summary>Full Definition</summary>
@@ -74,6 +74,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         phone: string,
         email?: string,
         birthDate?: string,
+        ssn4?: string,
         credentialRequests?: CredentialRequest[],
         content?: {
             title?: "Signup" | "Login" | "Verify" | "Apply",
@@ -96,6 +97,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         phone: string,
         email?: string,
         birthDate?: string,
+        ssn4?: string,
         credentialRequests?: CredentialRequest[],
         content?: {
             title?: "Signup" | "Login" | "Verify" | "Apply",
@@ -109,7 +111,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         <Post1ClickRequestBodyTableHosted/>
     </table>
 
-    <SandboxBirthDateAdmonition/>
+    <SandboxValidationAdmonition/>
 
 
     #### Default Credential Requests 
@@ -123,6 +125,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         phone: string,
         email?: string,
         birthDate?: string,
+        ssn4?: string,
         credentialRequests?: CredentialRequest[]
     }
     ```
@@ -130,7 +133,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         <Post1ClickRequestBodyTableShared/>
     </table>
 
-    <SandboxBirthDateAdmonition/>
+    <SandboxValidationAdmonition/>
 
 
     #### Default Credential Requests 
@@ -151,7 +154,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         <Post1ClickRequestBodyTableShared/>
     </table>
 
-    <SandboxBirthDateAdmonition/>
+    <SandboxValidationAdmonition/>
 
 
     #### Default Credential Requests 
@@ -160,14 +163,16 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 </TabItem>
 </Tabs>
 
-<SandboxBirthDateAdmonition/>
+<SandboxValidationAdmonition/>
 
-</CollapsableSection>
+</CollapsibleSection>
+</CollapsibleGroup>
 
-<CollapsableSection>
-<CollapsableHeader>
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
 ### Response {#post-1-click-response}
-</CollapsableHeader>
+</CollapsibleHeader>
 
 <details>
     <summary>Full Definition</summary>
@@ -232,10 +237,10 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 </TabItem>
 </Tabs>
 
----
+</CollapsibleSection>
+</CollapsibleGroup>
 
-</CollapsableSection>
-</CollapsableGroup>
+---
 
 <EndpointHeader 
     swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/get_1_click__id_" 
@@ -257,11 +262,11 @@ See also our [Postman docs](https://api.docs.verified.inc/).
   </tr>
 </table>
 
-<CollapsableGroup>
-<CollapsableSection>
-<CollapsableHeader>
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
 ### Request {#get-1-click-request}
-</CollapsableHeader>
+</CollapsibleHeader>
 
 <Tabs groupId="integrationType" queryString="integrationType">
 <TabItem value="hosted" label="Hosted" default>
@@ -296,12 +301,14 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 </TabItem>
 </Tabs>
 
-</CollapsableSection>
+</CollapsibleSection>
+</CollapsibleGroup>
 
-<CollapsableSection>
-<CollapsableHeader>
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
 ### Response {#get-1-click-response}
-</CollapsableHeader>
+</CollapsibleHeader>
 
 ```typescript title="GET /1-click Response (All Integration Types)"
 {
@@ -313,8 +320,8 @@ See [`1ClickEntity`](./types#1clickentity).
 
 ---
 
-</CollapsableSection>
-</CollapsableGroup>
+</CollapsibleSection>
+</CollapsibleGroup>
 
 <EndpointHeader 
     swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/patch_1_click__id_" 
@@ -337,11 +344,11 @@ See [`1ClickEntity`](./types#1clickentity).
   </tr>
 </table>
 
-<CollapsableGroup>
-<CollapsableSection>
-<CollapsableHeader>
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
 ### Request {#patch-1-click-request}
-</CollapsableHeader>
+</CollapsibleHeader>
 
 <Tabs groupId="integrationType" queryString="integrationType">
 <TabItem value="hosted" label="Hosted" default>
@@ -361,7 +368,8 @@ See [`1ClickEntity`](./types#1clickentity).
     Use this request body:
     ```typescript title="PATCH /1-click Request Body (Semi-Hosted Integration Type)"
     {
-        birthDate: string
+        birthDate?: string,
+        ssn4?: string
     }
     ```
     <table>
@@ -375,7 +383,7 @@ See [`1ClickEntity`](./types#1clickentity).
             <th>Example</th>
         </tr>
         <tr>
-            <td>`birthDate`</td>
+            <td>`birthDate?`</td>
             <td>optional</td>
             <td>`string`</td>
             <td>`YYYY-MM-DD`</td>
@@ -383,8 +391,17 @@ See [`1ClickEntity`](./types#1clickentity).
             <td>User's birth date</td>
             <td>`"1989-08-01"`</td>
         </tr>
+        <tr>
+            <td>`ssn4?`</td>
+            <td>optional</td>
+            <td>`string`</td>
+            <td>4 digits (0-9)</td>
+            <td>none</td>
+            <td>Last 4 digits of user's Social Security Number (in [Sandbox](/environments#sandbox), this must be `"6789"` to pass validation)</td>
+            <td>`"6789"`</td>
+        </tr>
     </table>
-    <SandboxBirthDateAdmonition/>
+    <SandboxValidationAdmonition/>
     <RecencyRequirementAdmonition/>
 </TabItem>
 <TabItem value="non-hosted" label="Non-Hosted">
@@ -395,12 +412,14 @@ See [`1ClickEntity`](./types#1clickentity).
 </TabItem>
 </Tabs>
 
-</CollapsableSection>
+</CollapsibleSection>
+</CollapsibleGroup>
 
-<CollapsableSection>
-<CollapsableHeader>
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
 ### Response {#patch-1-click-response}
-</CollapsableHeader>
+</CollapsibleHeader>
 
 ```typescript title="PATCH /1-click Response (All Integration Types)"
 {
@@ -410,8 +429,8 @@ See [`1ClickEntity`](./types#1clickentity).
 
 See [`1ClickEntity`](./types#1clickentity).
 
-</CollapsableSection>
-</CollapsableGroup>
+</CollapsibleSection>
+</CollapsibleGroup>
 
 
 {/* ## Update 1-Click Credentials

@@ -10,7 +10,7 @@ import ErrorExampleOce011 from '@site/versioned_docs/version-2/reusables/error-e
         "errorCode": string,
         "additionalInputs": [string], // only for error code OCE011
         "inputAttemptsExceeded": [string], // only for error code OCE019
-        "riskSignals": RiskSignals
+        "riskSignals": RiskSignals // only for error code OCE017
     }
 }
 ```
@@ -57,27 +57,7 @@ import ErrorExampleOce011 from '@site/versioned_docs/version-2/reusables/error-e
             <details>
                 <summary>`enum`</summary>
 
-                Possible values (see [Error Codes](./errors#error-codes) for details):
-                    - `"ERR001"`
-                    - `"OCE001"`
-                    - `"OCE002"`
-                    - `"OCE003"`
-                    - `"OCE004"`
-                    - `"OCE005"`
-                    - `"OCE006"`
-                    - `"OCE007"`
-                    - `"OCE008"`
-                    - `"OCE009"`
-                    - `"OCE0010"`
-                    - `"OCE011"`
-                    - `"OCE012"`
-                    - `"OCE013"`
-                    - `"OCE014"`
-                    - `"OCE015"`
-                    - `"OCE016"`
-                    - `"OCE017"`
-                    - `"OCE018"`
-                    - `"OCE019"`
+                See [Error Codes](./errors#error-codes) for possible values
             </details>
         </td>
         <td>3 letters and 3 digits (0-9)</td>

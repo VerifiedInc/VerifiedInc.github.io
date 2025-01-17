@@ -7,18 +7,18 @@ import AnchorOffset from '@site/src/components/AnchorOffset.jsx'
 
 
 /**
- * This is used to create collapsable sections. It allows one section per group to be open at a time.
+ * This is used to create collapsible sections. It allows one section per group to be open at a time.
  * 
- * CollapsableGroup is a wrapper component that contains CollapsableSection components.
- * CollapsableSection is a component that contains CollapsableHeader and the content.
- * CollapsableHeader is a component that contains the title of the section.
+ * CollapsibleGroup is a wrapper component that contains CollapsibleSection components.
+ * CollapsibleSection is a component that contains CollapsibleHeader and the content.
+ * CollapsibleHeader is a component that contains the title of the section.
  * 
  * Example usage:
-     <CollapsableGroup>
-        <CollapsableSection>
-            <CollapsableHeader>
+     <CollapsibleGroup>
+        <CollapsibleSection>
+            <CollapsibleHeader>
                 ### Title 1 
-            </CollapsableHeader>
+            </CollapsibleHeader>
             
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec pur
 
@@ -26,32 +26,32 @@ import AnchorOffset from '@site/src/components/AnchorOffset.jsx'
             this is a example of a caution block
             :::
     
-        </CollapsableSection>
-        <CollapsableSection>
+        </CollapsibleSection>
+        <CollapsibleSection>
         [...]
-        </CollapsableSection>
-    </CollapsableGroup>
-    <CollapsableGroup firstSectionExpanded={false}>
+        </CollapsibleSection>
+    </CollapsibleGroup>
+    <CollapsibleGroup firstSectionExpanded={false}>
         [...]
-    </CollapsableGroup>
+    </CollapsibleGroup>
  */
 
 
-export const CollapsableHeader = ({ children, isActive }) => (
-    <div className='collapsable-header'>
+export const CollapsibleHeader = ({ children, isActive }) => (
+    <div className='collapsible-header'>
         {isActive ? <ExpandLess /> : <ExpandMore />}
         {children}
     </div>
 );
 
-export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
+export const CollapsibleSection = ({ activeId, setActiveId, id, children }) => {
     const isActive = id === activeId;
     const header = React.Children.toArray(children).find(
-        (child) => child.type === CollapsableHeader
+        (child) => child.type === CollapsibleHeader
     );
 
     const body = React.Children.toArray(children).filter(
-        (child) => child.type !== CollapsableHeader
+        (child) => child.type !== CollapsibleHeader
     );
 
 
@@ -65,7 +65,7 @@ export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
     return (
         <>
             <AnchorOffset id={`section-anchor-${id}`} className="section-anchor" offset="-80px" />
-            <div id={`collapsable-section-${id}`} className="collapsable-section">
+            <div id={`collapsible-section-${id}`} className="collapsible-section">
                 <Box onClick={handleClick} style={{ cursor: "pointer", fontWeight: "bold" }}>
                     {React.cloneElement(header, { isActive: isActive })}
                 </Box>
@@ -83,8 +83,8 @@ export const CollapsableSection = ({ activeId, setActiveId, id, children }) => {
  * Is optional and is used to define if the first section should be expanded by default. 
  * If not defined, the first section will be expanded by default. 
  */
-export const CollapsableGroup = ({ children, firstSectionExpanded = true }) => {
-    // state control for the open CollapsableSection
+export const CollapsibleGroup = ({ children, firstSectionExpanded = true }) => {
+    // state control for the open CollapsibleSection
     const [activeId, setActiveId] = useState(undefined);
     const componentId = useId();
     const loadedDefaultExpanded = useRef(false);
@@ -94,7 +94,7 @@ export const CollapsableGroup = ({ children, firstSectionExpanded = true }) => {
     }
 
     const scrollToSection = (id, behavior = 'instant', offset = -80) => {
-        const element = document.querySelector(`#collapsable-section-${CSS.escape(id)}`);
+        const element = document.querySelector(`#collapsible-section-${CSS.escape(id)}`);
 
         // Top position of the element with the offset, since the menu obscures the top of the section
         const y = element.getBoundingClientRect().top + window.scrollY + offset;
@@ -123,7 +123,7 @@ export const CollapsableGroup = ({ children, firstSectionExpanded = true }) => {
         let firstSectionIndex = null;
 
         React.Children.forEach(children, (child, index) => {
-            if (child.type !== CollapsableSection || firstSectionIndex !== null) {
+            if (child.type !== CollapsibleSection || firstSectionIndex !== null) {
                 return;
             }
 
@@ -143,11 +143,11 @@ export const CollapsableGroup = ({ children, firstSectionExpanded = true }) => {
         <>
             {/* Only renders if active Id was already defined to avoid transition at the beginning */}
             {shouldRender && React.Children.map(children, (child, index) => {
-                if (child.type !== CollapsableSection) {
+                if (child.type !== CollapsibleSection) {
                     return child;
                 }
 
-                // Pass the activeId and setActiveId to the CollapsableSection
+                // Pass the activeId and setActiveId to the CollapsibleSection
                 const cloneElement = React.cloneElement(child, { activeId, setActiveId: handleChangeActive, id: getCurrentIdBasedOnIndex(index), componentId });
                 return (
                     <div key={index + componentId}>
@@ -159,16 +159,16 @@ export const CollapsableGroup = ({ children, firstSectionExpanded = true }) => {
     )
 };
 
-CollapsableHeader.propTypes = {
+CollapsibleHeader.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-CollapsableSection.propTypes = {
+CollapsibleSection.propTypes = {
     activeId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     children: PropTypes.node.isRequired,
 };
 
-CollapsableGroup.propTypes = {
+CollapsibleGroup.propTypes = {
     children: PropTypes.node.isRequired,
     firstSectionExpanded: PropTypes.bool,
 };

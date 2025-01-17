@@ -1,11 +1,12 @@
 ```typescript title="Error Example"
 {
     "name": "BadRequest",
-    "message": "Additional information is required to source data for user: birthDate"
+    "message": "Additional information is required to source data for user: birthDate, ssn4"
     "code": 400,
     "className": "bad-request",
     "data": {
-        "errorCode": "OCE011"
+        "errorCode": "OCE011",
+        "additionalInputs": ["birthDate", "ssn4"]
     }
 }
 ```

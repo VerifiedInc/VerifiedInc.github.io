@@ -31,22 +31,34 @@ sequenceDiagram
     U ->>- C: Enter phone number
     rect rgb(200,200,200,0.25)
         Note left of C: 1. Call 1-Click Endpoint
-        C ->>+ V: Call POST /1-click with phone number
+        C ->>+ V: Call POST /1-click
         V -->>- C: Return uuid and code
         Note left of C: 2. Verify Phone Number
-        C ->>+ U: Send SMS
+        C ->>+ U: Send SMS with code
         C ->>+ U: Show code input
-        U ->>- C: Enter code
-        C ->>+ V: Call GET /1-click with uuid and code
-        alt Additional information required
-            V -->>- C: Additional information error
-            C ->>+ U: Show DOB input
-            U ->>- C: Enter DOB
-            C ->>+ V: Call PATCH /1-click with birthDate
+        U ->>- C: Enter code (userInput)
+        C ->>+ V: Call GET /1-click with uuid and userInput
+        alt Additional info required
+            V -->>- C: OCE011 error code
+            C ->>+ U: Show DOB/SSN4 input(s)
+            U ->>- C: Enter DOB/SSN4
+            C ->>+ V: Call PATCH /1-click with DOB/SSN4
+            alt Additional info mismatched
+                V -->>- C: OCE012 error code
+                C ->>+ U: Show DOB/SSN4 input(s)
+                U ->>- C: Enter DOB/SSN4
+                C ->>+ V: Call PATCH /1-click with DOB/SSN4
+                break No credentials found
+                    V -->>- C: OCE013 error code
+                    C ->>+ U: Take to manual signup
+                end
+            end
         end
-        V ->> V: Pull verified user data
-        Note left of C: 3. Receive User Data
-        V -->>- C: Return user data
+        V ->> V: Source data (credentials and metadata)
+        Note left of C: 3. Receive and Confirm Data
+        V -->> C: Return data
+        C ->>+ U: Display credentials
+        U ->>- C: Confirm credentials
     end
 ```
 <br />

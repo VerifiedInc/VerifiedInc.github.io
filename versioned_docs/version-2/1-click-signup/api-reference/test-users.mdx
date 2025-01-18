@@ -5,7 +5,7 @@ sidebar_label: Test Users
 sidebar_position: 6.1
 description: Verified API Test Users
 slug: /test-users
-toc_max_heading_level: 4
+toc_max_heading_level: 5
 ---
 
 import TestUserDisplay from '@site/src/components/TestUserDisplay';
@@ -29,26 +29,31 @@ You can use our test users with our [Demo](https://1-click.demo.verified.inc) an
 2. Select *Mock Data (sandbox)* and click *Start Demo*.
 3. Enter the test user's phone number (varies by user).
 4. Enter the test user's (static) verification code (always `111111`).
-5. If prompted, enter the test user's birth date (always `08/01/1989`) and/or SSN4 (always `6789`).
+5. If prompted, enter the test user's birth date (always 08/01/1989) and/or SSN4 (always 6789).
 
 **With the API:**
 1. Access the [Dashboard](https://dashboard.verified.inc) and go the Brand Details page for your brand,
 2. Note what *integration type* setting your brand has (Hosted, Semi-Hosted, or Non-Hosted).
 3. Copy a [Sandbox](./environments#sandbox) API key for your brand.
 4. Use the API, following the steps in the [Integration Guide](../integration-guide), making sure you have the correct integration type tab selected. For example, for Non-Hosted:
-    1. Test
-    2. Test
+    1. [Call `POST /1-click`](../integration-guide?integrationType=non-hosted#2-call-post-1-click-with-phone-number) with the test user's phone number (varies by user).
+    2. (if applicable) [Call `POST /1-click`](../integration-guide?integrationType=non-hosted#2-call-post-1-click-with-phone-number) again, adding the test user's birth date (always `1989-08-01`) and/or SSN4 (always `6789`).
 :::
 
 
 ## Success
 
-Use these test users to go through a successful 1-Click Signup flow (where Verified is able to return [credentials](./data#credentials) for the user). 
+Use these test users to go through successful 1-Click Signup flows (where Verified returns [credentials](./data#credentials)). 
 
 
 ### Phone Only
 
-For this user, only a phone number is needed to source [credentials](./data#credentials) for the user.
+For these users, only a phone number is needed to source [credentials](./data#credentials).
+
+
+#### Primary Test User
+
+Our primary test user is Richard Hendricks:
 
 <TestUserDisplay
   data={{
@@ -65,9 +70,37 @@ This is Richard Hendricks from the show _Silicon Valley_! 😂
 :::
 
 
+#### Allowed
+
+Use this user to specifically test the low risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [medium risk (flagged)](#flagged) and [high risk (blocked)](#blocked) test users._
+
+<TestUserDisplay
+  data={{
+    'Phone': '+15555550000',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
+
+
+#### Flagged
+
+Use this user to specifically test the medium risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
+
+<TestUserDisplay
+  data={{
+    'Phone': '+15555550001',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
+
+
 ### Phone and Additional Info
 
-For these users, both a phone number and additional information is needed to source [credentials](./data#credentials) for the user. 
+For these users, both a phone number and additional information is needed to source [credentials](./data#credentials). 
 
 If you start with phone only, as we recommend (see the [Integration Guide](../integration-guide.mdx)), you will get the [`OCE011`](./errors#oce011) error code, indicating that additional information is required. Within the error, `data.additionalInputs` specifies which additional inputs you can pass (see [`OCE011`](./errors#oce011) for details).
 
@@ -80,7 +113,7 @@ For example, use `1979-01-01` for `birthDate` (since all test users have `1989-0
 
 #### Phone and Birth Date and/or SSN4
 
-For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](./data#credentials) for the user.
+For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](./data#credentials).
 
 <TestUserDisplay
   data={{
@@ -109,7 +142,7 @@ For this user, both a phone number and either a birth date or SSN4 is needed to 
 
 #### Phone and Birth Date
 
-For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](./data#credentials) for the user.
+For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](./data#credentials).
 
 <TestUserDisplay
   data={{
@@ -137,7 +170,7 @@ For this user, both a phone number and either a birth date or SSN4 is needed to 
 
 #### Phone and SSN4
 
-For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](./data#credentials) for the user.
+For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](./data#credentials).
 
 <TestUserDisplay
   data={{
@@ -163,11 +196,136 @@ For this user, both a phone number and either a birth date or SSN4 is needed to 
 </table>
 
 
+### Credential Cases
+
+Use these test users to write specific cases for [credential](./data#credentials) data, if it's relevant to your use case.
+
+
+#### Address
+
+
+##### Different Values
+
+For each of these 10 test users, you will get a [`1ClickEntity`](./types#1clickentity) with a different address. Each address is a standard address in a US state (as opposed to an address in an [overseas territory](#overseas-territory) or a [P.O. box](#po-box) address).
+
+<TestUserDisplay
+  data={{
+    'Phone': '+12225550000 → +12225550009',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
+
+
+##### Overseas Territory
+
+For this test user, you will get a [`1ClickEntity`](./types#1clickentity) with an address in Puerto Rico (a US overseas territory).
+
+<TestUserDisplay
+  data={{
+    'Phone': '+12225550010',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
+
+```typescript title="1ClickEntity"
+{
+    "identifiers": {
+        "phone": "+12225550010"
+    }
+    "credentials": {
+        ...
+        "address": {
+            "line1": "3167 Av Roosevelt",
+            "city": "Ponce",
+            "state": "PR",
+            "zipCode": "00717",
+            "country": "US"
+        },
+        ...
+    },
+    ...
+}
+```
+
+
+##### P.O. Box
+
+For this test user, you will get a [`1ClickEntity`](./types#1clickentity) with a P.O. box address.
+
+<TestUserDisplay
+  data={{
+    'Phone': '+12225550011',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
+
+```typescript title="1ClickEntity"
+{
+    "identifiers": {
+        "phone": "+12225550011"
+    }
+    "credentials": {
+        ...
+        "address": {
+            "line1": "P.o. Box 8672",
+            "city": "Ketchikan",
+            "state": "AK",
+            "zipCode": "99901",
+            "country": "US"
+        },
+        ...
+    },
+    ...
+}
+```
+
+
+#### Birth Date: Under 18
+
+For this test user, you will get a [`1ClickEntity`](./types#1clickentity) with a birth date less than 18 years ago (until January 1, 2035).
+
+:::info
+**You should never receive data from Verified for a user under 18 years old,** but this test user facilitates writing a check for that on your side if you wish.
+:::
+
+<TestUserDisplay
+  data={{
+    'Phone': '+12225550012',
+    'Verification Code': '111111',
+    'Birth Date': '2017-01-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
+
+```typescript title="1ClickEntity"
+{
+    "identifiers": {
+        "phone": "+12225550012"
+    }
+    "credentials": {
+        ...
+        "birthDate": "2017-01-01",
+        ...
+    },
+    ...
+}
+```
+
+
 ## Failure
 
-Use this test user to go through an unsuccessful 1-Click Signup flow (where Verified is _not_ able to return [credentials](./data#credentials) for the user). 
+Use these test users to go through unsuccessful 1-Click Signup flows (where Verified does _not_ return [credentials](./data#credentials)). 
 
-If you start with phone only, as we recommend (see the [Integration Guide](../integration-guide.mdx)), you will get the [`OCE011`](./errors#oce011) error code, indicating that additional information is required. Within the error, `data.additionalInputs` specifies which additional information you can pass (see [`OCE011`](./errors#oce011) for details).
+
+### No Credentials Found
+
+For this user — if you start with phone only, as we recommend (see the [Integration Guide](../integration-guide.mdx)) — you will get the [`OCE011`](./errors#oce011) error code, indicating that additional information is required. Within the error, `data.additionalInputs` specifies which additional information you can pass (see [`OCE011`](./errors#oce011) for details).
 
 <TestUserDisplay
   data={{
@@ -191,7 +349,7 @@ If you start with phone only, as we recommend (see the [Integration Guide](../in
     </tr>
 </table>
 
-If you then pass additional inputs (with any values), you will get the [`OCE013`](./errors#oce013) error code, indicating that Verified found no credentials for the user.
+If you then pass additional inputs (with any values), you will get the [`OCE013`](./errors#oce013) error code, indicating that Verified found no credentials.
 
 <table>
     <tr>
@@ -205,16 +363,32 @@ If you then pass additional inputs (with any values), you will get the [`OCE013`
 </table>
 
 
-### No Data Found
+### Blocked
 
-This test user simulates a scenario where there are **no credentials found** for the provided identifiers (inputs). Use this to validate and implement error handling mechanisms for the [OCE013](./errors#oce013) error. This ensures your application gracefully manages situations where user data is unavailable.
+Use this user to specifically test the high risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [medium risk (flagged)](#flagged) test users._
+
+For this user, you will get the [`OCE017`](./errors#oce017) error code, indicating that Verified blocked returning data for the user because the risk score is too high. 
 
 <TestUserDisplay
   data={{
-    'Phone': '+10019999998',
+    'Phone': '+15555550002',
     'Verification Code': '111111',
     'Birth Date': '1989-08-01',
-    'SSN4': '6789',
-    'Error Code': '[OCE013](./errors#oce013)'
+    'SSN4': '6789'
   }}
 ></TestUserDisplay>
+
+<table>
+    <tr>
+        <th>Error Attribute</th>
+        <th>Value</th>
+    </tr>
+    <tr>
+        <td>`data.errorCode`</td>
+        <td>[`OCE017`](./errors#oce017)</td>
+    </tr>
+    <tr>
+        <td>`data.riskSignals`</td>
+        <td>[`RiskSignals`](./types#risksignals)</td>
+    </tr>
+</table>

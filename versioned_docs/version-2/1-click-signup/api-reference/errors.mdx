@@ -5,7 +5,7 @@ sidebar_label: Errors
 sidebar_position: 8
 description: Verified API errors
 slug: /errors
-toc_max_heading_level: 4
+toc_max_heading_level: 5
 ---
 
 import Admonition from '@theme/Admonition';
@@ -41,30 +41,110 @@ import ErrorOCE016 from '@site/versioned_docs/version-2/reusables/errors/OCE016.
 import ErrorOCE017 from '@site/versioned_docs/version-2/reusables/errors/OCE017.mdx';
 import ErrorOCE018 from '@site/versioned_docs/version-2/reusables/errors/OCE018.mdx';
 import ErrorOCE019 from '@site/versioned_docs/version-2/reusables/errors/OCE019.mdx';
+import ApiKeysAdmonition from '@site/versioned_docs/version-2/reusables/api-keys-admonition.mdx';
 
 
-To handle errors returned by Verified API endpoints, we recommend that you primarily use the respons body's `data.errorCode`, which is a Verified specific error code. See [Error Codes](#error-codes) below for descriptions of what each code means.
+## Firewall Errors
 
-## `Error` Type
+You will get a network error if your API request is blocked by our firewall.
+
+
+### Generic
+
+<table className="error-table">
+    <tbody>
+        <tr>
+          <th>
+            HTTP Status Code
+          </th>
+          <td>
+            `403`
+          </td>
+        </tr>
+    </tbody>
+</table>
+
+```typescript title="Firewall Error: 418 (Generic)"
+{
+    "error": "Request blocked by firewall", 
+    "message": "Your request was blocked by our firewall. Please contact us if you believe this was in error."
+}
+```
+
+
+### API Key Used Client Side
+
+<table className="error-table">
+    <tbody>
+        <tr>
+          <th>
+            HTTP Status Code
+          </th>
+          <td>
+            `418`
+          </td>
+        </tr>
+    </tbody>
+</table>
+
+```typescript title="Firewall Error: API Key Used Client Side"
+{
+    "error": "Request blocked by firewall", 
+    "message": "Your request was blocked by our firewall because your API key is being used client side. Verified API keys must only be used server side. Please contact us if you believe this was in error."
+}
+```
+
+<ApiKeysAdmonition/>
+
+
+### Rate Limit
+
+<table className="error-table">
+    <tbody>
+        <tr>
+          <th>
+            HTTP Status Code
+          </th>
+          <td>
+            `429`
+          </td>
+        </tr>
+    </tbody>
+</table>
+
+```typescript title="Firewall Error: 429 (Rate Limit)"
+{
+    "error": "Request blocked by firewall", 
+    "message": "Your request was blocked by our firewall due to abnormally high request volume. Please contact us if you believe this was in error."
+}
+```
+
+
+## Application Errors
+
+To handle application level errors (returned by Verified API endpoints), we recommend that you primarily use the response body's `data.errorCode`, which is a Verified specific error code. See [Verified Error Codes](#verified-error-codes) below for descriptions of what each code means.
+
+
+### `Error` Type
 
 _This definition is also in [`Error`](./types#error) in [Types](./types)._
 
 <ErrorType />
 
-### Example {#example-error}
+#### Example {#example-error}
 
 <ErrorExampleOce011 />
 
 ---
 
-## Error Codes
+### Verified Error Codes
 
 An `errorCode` is a Verified specific error code consisting of 3 letters and 3 numbers. Codes that begin with `ERR` are generic, and those that begin with `OCE` are specific to 1-Click Signup. (`OCE` refers to a One Click Error.)
 
 <CollapsibleGroup>
   <CollapsibleSection>
     <CollapsibleHeader>
-    ### Most Common Errors
+    #### Most Common Errors
     </CollapsibleHeader>
 
     <ErrorOCE008 />
@@ -101,7 +181,7 @@ An `errorCode` is a Verified specific error code consisting of 3 letters and 3 n
 
   <CollapsibleSection>
     <CollapsibleHeader>
-    ### All Errors
+    #### All Errors
     </CollapsibleHeader>
 
     <ErrorERR001 />

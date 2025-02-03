@@ -686,9 +686,9 @@ See [Risk Signals](./data#risk-signals) on the Data page for details about each 
 ```typescript title="RiskSignals Type"
 {
     "overall": {
-        "score": integer, // always enabled
-        "level": "low" | "medium-low" | "medium" | "medium-high" | "high", // always enabled
-        "recommendation": "allow" | "flag" | "block", // always enabled
+        "score": integer, // on by default
+        "level": "low" | "medium-low" | "medium" | "medium-high" | "high", // on by default
+        "recommendation": "allow" | "flag" | "block", // on by default
         "reasonCodes": [string] // add on (ask Verified support to enable)
     },
     "phone": { // add on (ask Verified support to enable)

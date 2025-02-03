@@ -5,12 +5,13 @@ import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2/reusable
 <ErrorDisplay 
   message='BirthDate mismatch." | "SSN4 mismatch." | "BirthDate mismatch and SSN4 mismatch.' 
   description=''
+  riskSignals='true'
   integrationType=''
   whenThisIsReturned='When the inputted birth date or SSN4 (or both) does not match Verified records.' 
   howToHandle='Prompt the user to try again or confirm that the value they provided is accurate. If they confirm, fall back to a manual signup flow.'
   youShouldNeverGetThisError=''
 >
-  #### `OCE012`
+  ##### `OCE012`
 </ErrorDisplay>
 <SandboxValidationAdmonition />
 
@@ -22,7 +23,8 @@ import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2/reusable
     "message": "BirthDate mismatch."
     ...
     "data": {
-        "errorCode": "OCE012"
+        "errorCode": "OCE012",
+        ...
     }
 }
 ```
@@ -33,7 +35,8 @@ import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2/reusable
     "message": "SSN4 mismatch."
     ...
     "data": {
-        "errorCode": "OCE012"
+        "errorCode": "OCE012",
+        ...
     }
 }
 ```
@@ -44,7 +47,8 @@ import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2/reusable
     "message": "BirthDate mismatch and SSN4 mismatch."
     ...
     "data": {
-        "errorCode": "OCE012"
+        "errorCode": "OCE012",
+        ...
     }
 }
 ```

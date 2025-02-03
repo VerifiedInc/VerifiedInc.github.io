@@ -801,30 +801,20 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         <td>`"35"`</td>
     </tr>
     <tr>
-        <td>Sex</td>
-        <td>`sex`</td>
+        <td>Gender</td>
+        <td>`gender`</td>
         <td>`string`</td>
         <td>
             <details>
                 <summary>`enum`</summary>
 
                 Possible values:
-                    - `"male"`
-                    - `"female"`
-                    - `"intersex"`
-                    - `"other"`
+                    - `"Male"`
+                    - `"Female"`
             </details>
         </td>
-        <td>Sex</td>
-        <td>`"female"`</td>
-    </tr>
-    <tr>
         <td>Gender</td>
-        <td>`gender`</td>
-        <td>`string`</td>
-        <td>`snake_case`</td>
-        <td>Gender</td>
-        <td>`"woman"`</td>
+        <td>`"Female"`</td>
     </tr>
     <tr>
         <td>Race</td>
@@ -925,65 +915,10 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         <td>Risk signals associated with the identifiers provided</td>
         <td>See [`RiskSignals` example](./types#example-risksignals)</td>
     </tr>
-    <tr>
-        <td>ID</td>
-        <td>`id`</td>
-        <td>`string`</td>
-        <td>
-            - Credentials
-        </td>
-        <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
-        <td>Unique identifier for a credential</td>
-        <td>`"174b9aaf-3219-4499-b54c-0eb6acc5dbf2"`</td>
-    </tr>
-    <tr>
-        <td>Status</td>
-        <td>`status`</td>
-        <td>
-            <details>
-                <summary>`enum`</summary>
-
-                Possible values:
-                    - `"valid"`
-                    - `"revoked"`
-                    - `"otp"`
-                    - `"self_attested"`
-                    - `null`
-            </details>
-        </td>
-        <td>
-            - Credentials
-        </td>
-        <td>`snake_case`</td>
-        <td>The status of a credential</td>
-        <td>`"valid"`</td>
-    </tr>
-    <tr>
-        <td>Expiration Date</td>
-        <td>`expirationDate`</td>
-        <td>`string`</td>
-        <td>
-            - Credentials
-        </td>
-        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds) or `null`</td>
-        <td>The date a credential expires</td>
-        <td>`"1671847264479"`</td>
-    </tr>
-    <tr>
-        <td>Fraud Signals <Chip label="Legacy" variant="outlined" size="small" color="error"/></td>
-        <td>`fraudSignals`</td>
-        <td>`string`</td>
-        <td>
-            - Identifiers
-        </td>
-        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds) or `null`</td>
-        <td>The date a credential expires</td>
-        <td>`"1671847264479"`</td>
-    </tr>
 </table>
 
 :::tip
-**The most commonly used type of metadata is `verificationMethod`, which describes how a credential was verified:**
+**`verificationMethod` describes how a credential was verified:**
 - `"phone_carrier"`: verified via phone carrier records
 - `"credit_bureau"`: verified via credit bureau records
 - `"otp"`: verified via an OTP (one time passcode)
@@ -1002,7 +937,11 @@ You can build custom logic to handle credentials based on their `verificationMet
 ### Risk Signals
 </CollapsibleHeader>
 
-By default, Verified returns either the Overall Risk Score, Risk Level, and Risk Recommendation, or (if the risk is too high) a [`OCE017` error](./errors#oce017). Other risk signals are optional add ons. To enable them, please ask your Verified support representative or email us at Support@Verified.inc.
+Risk signals metadata enhance 1-Click Signup's anti-fraud capabilities. They come with extra cost and can be disabled if desired, but we recommend that you use them to improve your ability to prevent fraud.
+
+**High level risk signals (Overall Score, Level, and Recommendation) are on by default.** If the Score is too high, we return a [`OCE017` error](./errors#oce017).
+
+Additional risk signals are add ons, and you should consider using them if they are relevant to your use case. To enable them, please ask your Verified support representative or email us at Support@Verified.inc.
 
 See also the [`RiskSignals` type](./types#risksignals).
 
@@ -1032,7 +971,7 @@ See also the [`RiskSignals` type](./types#risksignals).
             `integer`
         </td>
         <td>
-            Number from 0 (low risk) to 600 (medium risk)
+            Number from 0 (low risk) to 1000 (high risk)
         </td>
         <td>Overall risk score, considering all identifiers provided. (If the score is over 600, Verified blocks the user and returns a [`OCE017` error](./errors#oce017).)</td>
         <td>
@@ -1050,12 +989,14 @@ See also the [`RiskSignals` type](./types#risksignals).
                     - `"low"`
                     - `"medium-low"`
                     - `"medium"`
+                    - `"medium-high"`
+                    - `"high"`
             </details>
         </td>
         <td>
             `kebab-case`
         </td>
-        <td>Overall risk level, considering all identifiers provided. (This is a bucketing of the risk score, where `0`-`200` is `"low"`, `201`-`400` is `"medium-low"`, and `401`-`600` is `"medium"`.)</td>
+        <td>Overall risk level, considering all identifiers provided. (This is a bucketing of the risk score, where `0`-`200` is `"low"`, `201`-`400` is `"medium-low"`, `401`-`600` is `"medium"`, `601`-`800` is `"medium-high"`, and `801`-`1000` is `"high"`.)</td>
         <td>
             `"medium"`
         </td>
@@ -1070,12 +1011,13 @@ See also the [`RiskSignals` type](./types#risksignals).
                 Possible values:
                     - `"allow"`
                     - `"flag"`
+                    - `"block"`
             </details>
         </td>
         <td>
             `kebab-case`
         </td>
-        <td>Overall risk recommendation, considering all identifiers provided. (This is a bucketing of the risk level, where `"low"` and `"medium-low"` are `"allow"` and `"medium"` is `"flag"`.)</td>
+        <td>Overall risk recommendation, considering all identifiers provided. (This is a bucketing of the risk level, where `"low"` and `"medium-low"` are `"allow"`, `"medium"` is `"flag"`, and `"medium-high"` and `"high"` are `"block"`.)</td>
         <td>
             `"flag"`
         </td>

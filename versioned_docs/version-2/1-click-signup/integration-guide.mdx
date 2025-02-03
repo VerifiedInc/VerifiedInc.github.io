@@ -347,9 +347,10 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
     - **Success:** If we can source data based on just the phone number, the [response body](./endpoints?integrationType=semi-hosted#post-1-click-response) will contain a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 8](#8-prompt-user-to-confirm-their-data).
     - **Error:** Otherwise, the response body will contain an [error](./errors) with a Verified error code:
         - **[`OCE008`](./errors#oce008)** indicates that the `code` is invalid or expired. → _Return to [step 2](#2-call-post-1-click-1)._
-        - **[`OCE018`](./errors#oce018)** indicates that the maximum number of `code` attempts has been reached. → _Return to [step 2](#2-call-post-1-click-1)._
         - **[`OCE011`](./errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. → _Continue to [step 6](#6-if-necessary-prompt-user-for-additional-info)_
         - **[`OCE013`](./errors#oce013)** indicates that Verified found no [credentials](./api-reference/data#credentials) for the user. → _Fall back to a manual signup flow._
+        - **[`OCE017`](./errors#oce017)** indicates that Verified blocked the user because the risk score was too high. → _Reject the user or flag them and fall back to a manual signup flow._
+        - **[`OCE018`](./errors#oce018)** indicates that the maximum number of `code` attempts has been reached. → _Return to [step 2](#2-call-post-1-click-1)._
 
     ---
 
@@ -453,6 +454,7 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
     - **Error:** Otherwise, the response body will contain an [error](./errors) with a Verified error code:
         - **[`OCE011`](./errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. → _Continue to [step 3](#3-if-necessary-prompt-user-for-additional-info)_
         - **[`OCE013`](./errors#oce013)** indicates that Verified found no [credentials](./api-reference/data#credentials) for the user. → _Fall back to a manual signup flow._(#6-if-necessary-prompt-user-for-additional-info)._
+        - **[`OCE017`](./errors#oce017)** indicates that Verified blocked the user because the risk score was too high. → _Reject the user or flag them and fall back to a manual signup flow._
 
     </CollapsibleSection>
 

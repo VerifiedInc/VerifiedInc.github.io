@@ -5,13 +5,14 @@ import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2/reusable
 <ErrorDisplay
   message='Additional information is required to source data for user: {inputs}'
   additionalInputs='[inputs]'
+  riskSignals='true'
   description=''
   integrationType=''
   whenThisIsReturned='When additional information is required to source verified user data through 1-Click Signup.' 
   howToHandle='Prompt the user to input the additional information, and then call the Verified API again.'
   youShouldNeverGetThisError=''
 >
-  #### `OCE011`
+  ##### `OCE011`
 </ErrorDisplay>
 
 The `inputs` included in `message` and `data.additionalInputs` is a comma separated list of additional information, Multiple values always indicate an **inclusive OR:** that is, you can pass one or more of the additional inputs.
@@ -27,7 +28,8 @@ Currently `inputs` will always be birth date, SSN4, or both — see the example
     ...
     "data": {
         "errorCode": "OCE011",
-        "additionalInputs": ["birthDate"]
+        "additionalInputs": ["birthDate"],
+        ...
     }
 }
 ```
@@ -39,7 +41,8 @@ Currently `inputs` will always be birth date, SSN4, or both — see the example
     ...
     "data": {
         "errorCode": "OCE011",
-        "additionalInputs": ["ssn4"]
+        "additionalInputs": ["ssn4"],
+        ...
     }
 }
 ```
@@ -51,7 +54,8 @@ Currently `inputs` will always be birth date, SSN4, or both — see the example
     ...
     "data": {
         "errorCode": "OCE011",
-        "additionalInputs": ["birthDate", "ssn4"]
+        "additionalInputs": ["birthDate", "ssn4"], // inclusive OR: can pass either or both in next call
+        ...
     }
 }
 ```

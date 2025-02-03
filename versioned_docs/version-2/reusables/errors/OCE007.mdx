@@ -8,7 +8,7 @@ import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
   howToHandle='Fall back to a manual signup flow. Consider setting the credential in question to be non-mandatory.'
   youShouldNeverGetThisError=''
 >
-  #### `OCE007`
+  ##### `OCE007`
 </ErrorDisplay>
 
 You'll only get this error if you set `mandatory` to `yes` in the [credential request](./types#credentialrequest) for a [credential](./data#credentials). (Generally, you'd do this for the default credential requests defined for your brand in the [Dashboard](https://dashboard.verified.inc), though you can also set it at the code level per API request.) We don't recommend doing this because it will prevent any credential data from being returned. In other words, if we can't source data for a mandatory credential, we won't return data for _any_ credentials. 

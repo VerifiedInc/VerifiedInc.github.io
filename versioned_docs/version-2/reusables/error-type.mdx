@@ -10,7 +10,7 @@ import ErrorExampleOce011 from '@site/versioned_docs/version-2/reusables/error-e
         "errorCode": string,
         "additionalInputs": [string], // only for error code OCE011
         "inputAttemptsExceeded": [string], // only for error code OCE019
-        "riskSignals": RiskSignals // only for error code OCE017
+        "riskSignals": RiskSignals // only for error codes OCE011, OCE012, OCE013, OCE017, and OCE019
     }
 }
 ```
@@ -82,7 +82,7 @@ import ErrorExampleOce011 from '@site/versioned_docs/version-2/reusables/error-e
         <td>`data.riskSignals`</td>
         <td>[`RiskSignals`](#risksignals)</td>
         <td>`Object`</td>
-        <td>[Verified risk signals](./data#risk-signals) associated with the 1-Click Signup event</td>
+        <td>[Verified risk signals](./data#risk-signals) associated with the 1-Click Signup event (only included for [`OCE011`](./errors#oce011), [`OCE012`](./errors#oce012), [`OCE013`](./errors#oce013), [`OCE017`](./errors#oce017), and [`OCE019`](./errors#oce019))</td>
         <td>See [`RiskSignals` example](#example-risksignals)</td>
     </tr>
 </table>

@@ -23,12 +23,12 @@ Here is the **Sequence Diagram** for the **Non-Hosted** integration type:
 }
 }%%
 sequenceDiagram
-    participant C as Customer
     actor U as User
+    participant C as Customer
     participant V as Verified
 
     Note left of C: 1. Verify Phone Number
-    note right of V: (handled by customer)
+    Note left of C: (handled by customer)
     C ->>+ U: Show phone number input
     U ->>- C: Enter phone number
     C ->> C: Generate verification code

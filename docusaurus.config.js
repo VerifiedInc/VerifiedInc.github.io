@@ -32,19 +32,20 @@ module.exports = {
         srcDark: 'img/logo_dark.png',
       },
       items: [
+        // Disabling because we're removing v1
+        // {
+        //   type: 'docsVersionDropdown',
+        //   position: 'left',
+        // },
         {
-          type: 'docsVersionDropdown',
+          type: 'custom-navbarButton',
+          to: 'https://dashboard.verified.inc',
+          label: 'Dashboard',
           position: 'left',
         },
         {
           to: 'https://1-click.demo.verified.inc',
           label: 'Demo',
-          position: 'left',
-        },
-        {
-          type: 'custom-navbarButton',
-          to: 'https://dashboard.verified.inc',
-          label: 'Dashboard',
           position: 'left',
         },
         {
@@ -140,11 +141,6 @@ module.exports = {
         },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Verified`,
-    },
-    mermaid: {
-      options: {
-        // TODO: I can't seem to get global styling to work
-      },
     },
     mermaid: {
       options: {

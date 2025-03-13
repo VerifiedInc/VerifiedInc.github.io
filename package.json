@@ -31,6 +31,7 @@
     "@mui/x-data-grid": "^7.23.5",
     "clsx": "^1.1.1",
     "docusaurus-lunr-search": "^3.5.0",
+    "docusaurus-plugin-image-zoom": "^3.0.1",
     "docusaurus-plugin-openapi-docs": "^3.0.2",
     "docusaurus-theme-openapi-docs": "^3.0.2",
     "framer-motion": "^6.5.1",

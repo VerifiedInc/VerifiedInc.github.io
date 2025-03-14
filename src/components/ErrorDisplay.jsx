@@ -6,7 +6,7 @@ import IntegrationTypeErrorsAdmonition from '@site/versioned_docs/version-2/reus
 
 const ErrorDisplay = ({ message, description, additionalInputs, riskSignals, inputAttemptsExceeded, integrationType, whenThisIsReturned, howToHandle, youShouldNeverGetThisError, children: code, sx }) => {
     const markdownMessage = `\`"${message}"\``;
-    const tableRowMessage = message ? <tr><th><Markdown>`messsage`</Markdown></th><td><Markdown>{markdownMessage}</Markdown></td></tr> : null;
+    const tableRowMessage = message ? <tr><th><Markdown>`message`</Markdown></th><td><Markdown>{markdownMessage}</Markdown></td></tr> : null;
     const markdownDescription = description ? `> ${description}` : null;
     const markdownAdditionalInputs = additionalInputs ? `\`${additionalInputs}\`` : null;
     const tableRowAdditionalInputs = additionalInputs ? <tr><th><Markdown>`data.additionalInputs`</Markdown></th><td><Markdown>{markdownAdditionalInputs}</Markdown></td></tr> : null;

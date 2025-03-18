@@ -19,31 +19,32 @@ import { GridContainer, GridRow, GridColumn, GridNonStickyElement, GridStickyEle
 import ComponentTypeIndicator from '@site/src/components/ComponentTypeIndicator';
 import ColorIndicator from '@site/src/components/ColorIndicator';
 import IncludePoweredByGraphic from '@site/versioned_docs/version-2/reusables/include-powered-by-graphic.mdx';
+import PoweredByGraphic from '@site/versioned_docs/version-2/reusables/powered-by-graphic.mdx';
 
 
-At Verified, _signup is what we do._ We are experts in how to optimize onboarding flows to maximize conversion and give users the best possible experience.
+At Verified, _signup is what we do._ We are experts in how to optimize onboarding flows to maximize conversion and give users the best possible experience. We've helped our customers onboard — and delight! — millions of new users.
 
-The recommended UX below is the result of countless hours of research, design, testing, and development. It is the UX we use ourselves (for example in our upcoming SDK), and we highly recommend you use it as well.
+The recommended UX below is the result of countless hours of research, design, testing, and iteration by our team. It is the UX we use ourselves (for example in our upcoming SDK), and we highly recommend you use it, too. 
 
-This guide is divided into the following sections:
+{/* This guide is divided into the following sections:
 - **[Variables](#variables):** colors and graphic variants you can choose
-- **[Flow Chart](#flow-chart):**
-- **[Screens and Components](#screens-and-components):** the 4 screens you'll need and components for each
+- **[Flow Chart](#flow-chart):** the flow between screens
+- **[Screens and Components](#screens-and-components):** the 4 screens you'll need and components for each */}
 
 :::tip You Only Need 4 Screens!
 This guide may look complicated, and in some ways it is. (Achieving world class UX requires getting many small details right.)
 
-But at its core, this guide is very simple. You only need 4 screens ([Phone](#phone), [Verification Code](#verification-code), [Birthday](#birthday), and [Info](#info)) to integrate 1-Click Signup!
+But at its core, this guide is very simple. **You only need 4 screens to integrate 1-Click Signup!** You probably already have versions of these screens ([Phone](#phone), [Verification Code](#verification-code), [Birthday](#birthday), and [Info](#info)).
 :::
 
 
-## Variables
+{/* ## Variables
 
 
 ### Colors
 
 
-##### <ColorIndicator color="primary" isRightMargined={true}/>Primary
+#### <ColorIndicator color="primary" isRightMargined={true}/>Primary
 
 - Used for primary buttons and success indicators
 - Verified default: `#0DBC3D`
@@ -69,13 +70,13 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
 ### Graphic
 
-<IncludePoweredByGraphic/>
+<IncludePoweredByGraphic/> */}
 
 
 ## Flow Chart
 
 :::important
-**This flow chart shows 1-Click Signup using the [Non-Hosted integration type](/integration-guide?integrationType=non-hosted#integration).** For more information on integration types, see [here](/integration-guide?integrationType=non-hosted#2-configure-brand-settings).
+**This flow chart shows 1-Click Signup using our recommended integration type, [Non-Hosted](/integration-guide?integrationType=non-hosted#integration).** For more information on integration types, see [here](/integration-guide?integrationType=non-hosted#2-configure-brand-settings).
 :::
 
 ![](/img/flow_chart-api-non_hosted.png)
@@ -107,7 +108,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
                 - Muted color
                 - “Verified”:
                     - Hyperlinked to https://www.verified.inc
-                    - <ColorIndicator color="primary"/> [Primary](#primary) color
+                    - Primary color
                     - Underlined
 
 
@@ -115,7 +116,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 > +1 (_ _ _) _ _ _ - _ _ _ _ 
 
-                - <ColorIndicator color="primary"/> [Primary](#primary) and <ColorIndicator color="error"/> [error](#error) colors
+                - Primary and error colors
                 - Auto focused
                 - Opens numeric keyboard
                 - Accepts only digits
@@ -127,13 +128,16 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
 
-                - With “1-Click Signup”, green logo
+                - Green Signup variant
+
+                <PoweredByGraphic/>
+
 
                 #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Divider
 
                 > OR
 
-                - <ColorIndicator color="muted"/> [Muted](#muted) color
+                - Muted color
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Opt Out
@@ -142,7 +146,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 *Takes user to Info screen in manual signup (edit) state.*
 
-                - <ColorIndicator color="muted"/> [Muted](#muted) color
+                - Muted color
 
 
                 #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Error
@@ -151,7 +155,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 *Appears when phone number is invalid.*
 
-                - <ColorIndicator color="error"/> [Error](#error) color
+                - Error color
 
             </GridNonStickyElement>
         </GridColumn>
@@ -190,7 +194,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Verification Code
 
-                - <ColorIndicator color="primary"/> [Primary](#primary) and <ColorIndicator color="error"/> [error](#error) colors
+                - Primary and error colors
                 - Auto focused
                 - 6 separate boxes
                 - Opens numeric keyboard
@@ -201,7 +205,9 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
 
-                - With “1-Click Signup”, green logo
+                - Green Signup variant
+
+                <PoweredByGraphic/>
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Edit
@@ -210,7 +216,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 *Takes user back to phone input.*
 
-                - <ColorIndicator color="muted"/> [Muted](#muted) color
+                - Muted color
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Resend
@@ -219,7 +225,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 *Sends another SMS with fresh verification code.*
 
-                - <ColorIndicator color="muted"/> [Muted](#muted) color
+                - Muted color
                 - Allows for at most 2 resends
 
 
@@ -229,7 +235,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 *Appears when verification code is invalid or expired.*
 
-                - <ColorIndicator color="error"/> [Error](#error) color
+                - Error color
 
 
                 #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Code Resent
@@ -238,7 +244,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 *Appears when user clicks [resend button](#resend).*
 
-                - <ColorIndicator color="primary"/> [Primary](#primary) color
+                - Primary color
 
             </GridNonStickyElement>
         </GridColumn>
@@ -282,7 +288,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 > _ _ / _ _ / _ _ _ _
 
-                - <ColorIndicator color="primary"/> [Primary](#primary) and <ColorIndicator color="error"/> [error](#error) colors
+                - Primary and error colors
                 - “Birthday” not “Birth Date” because the former is friendlier
                 - Auto focused
                 - Helper: 
@@ -298,7 +304,9 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
 
-                - With “1-Click Signup”, green logo
+                - Green Signup variant
+
+                <PoweredByGraphic/>
 
                 
                 #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Error
@@ -307,7 +315,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 *Appears when there's a [birthday mismatch error](/errors#oce012) (`OCE012`).*
 
-                - <ColorIndicator color="error"/> [Error](#error) color
+                - Error color
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Continue
@@ -325,7 +333,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 If the user tries the same value again, auto continue them.
 
-                - <ColorIndicator color="muted"/> [Muted](#muted) color
+                - Muted color
 
             </GridNonStickyElement>
         </GridColumn>
@@ -360,7 +368,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 *Opens [informational modal](#informational).*
 
-                - <ColorIndicator color="muted"/> [Muted](#muted) color
+                - Muted color
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Close Modal
@@ -371,7 +379,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 *Closes [informational modal](#informational).*
 
-                - <ColorIndicator color="muted"/> [Muted](#muted) color
+                - Muted color
                 - Clicking anywhere outside the modal should also close it
 
 
@@ -408,6 +416,15 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
                 > Enter your info below.
 
 
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
+
+                - Green Signup variant
+
+                <PoweredByGraphic/>
+
+                *Appears only in the 1-Click Signup states.*
+
+
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Back
 
                 > Back to 1-Click Signup
@@ -418,12 +435,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 *Takes user back to [phone screen](#phone).*
 
-                - <ColorIndicator color="muted"/> [Muted](#muted) color
-
-
-                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
-
-                - With “1-Click Signup”, green logo
+                - Muted color
 
 
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>First Name
@@ -486,7 +498,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 The entire data display area should be clickable as the Edit button, not just the button itself.
 
-                - <ColorIndicator color="muted"/> [Muted](#muted) color
+                - Muted color
 
 
                 #### <ComponentTypeIndicator type="input" isRightMargined={true}/>First Name
@@ -556,7 +568,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 > By clicking “Confirm”, I agree that the info above is accurate.
 
-                - <ColorIndicator color="muted"/> [Muted](#muted) color
+                - Muted color
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Confirm
@@ -565,7 +577,7 @@ But at its core, this guide is very simple. You only need 4 screens ([Phone](#ph
 
                 *Submits form with user's info.*
 
-                - <ColorIndicator color="primary"/> [Primary](#primary) color
+                - Primary color
 
             </GridNonStickyElement>
         </GridColumn>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128px" height="128px" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>background</title>
+    <g id="background" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" stroke="#BDBDBD" stroke-width="3" fill="#FFFFFF" x="1.5" y="1.5" width="125" height="125" rx="20"></rect>
+        <text id="B" font-family="Lato-Black, Lato" font-size="76" font-weight="800" fill="#000000" fill-opacity="0.87">
+            <tspan x="39.072" y="93.5">B</tspan>
+        </text>
+    </g>
+</svg>

@@ -14,6 +14,7 @@ export default function NavbarButton({ to, label, }) {
         fontWeight: '900 !important',
         borderRadius: '8px',
         textTransform: 'none',
+        letterSpacing: 'normal',
         boxShadow: 'none',
         '&:hover': {
           boxShadow: 'none',

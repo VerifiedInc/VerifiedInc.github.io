@@ -62,6 +62,8 @@
   --ifm-color-danger-light: #f31e38;
   --ifm-color-danger-lighter: #f32a42;
   --ifm-color-danger-lightest: #f54d62;
+  /* blockquotes */
+  --ifm-blockquote-color: #a5a5a5;
 
   /* FONTS */
   /* base */
@@ -75,6 +77,9 @@
 
   /* sidebar width (default is 300px) */
   --doc-sidebar-width: 175px !important;
+
+  /* SPACING */
+  --ifm-list-margin: 1.25rem;
 }
 
 /* ADMONITIONS */
@@ -374,7 +379,7 @@ td:first-child {
   gap: 8px;
   /* Space between the icon and the text */
 
-  /* Calculate the margin bottom based on Docussaurus margin for headers */
+  /* Calculate the margin bottom based on Docusaurus margin for headers */
   padding-bottom: var(--ifm-heading-margin-bottom);
 }
 
@@ -390,4 +395,39 @@ td:first-child {
 #demo-email-card {
   font-family: var(--ifm-font-family-base) !important;
 
+}
+
+/* For grid layout (e.g. on Recommended UX page) */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1rem;
+}
+.grid-row {
+  display: contents;
+}
+.grid-column {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.grid-non-sticky-element {
+  position: relative;
+}
+.grid-sticky-element {
+  position: sticky;
+  top: 3.5rem;
+  background: white;
+  padding: 1rem 0 0 0;
+  z-index: 10;
+}
+
+/* For component type and color indicators (e.g. on Recommended UX page) */
+.component-type-indicator, .component-type-indicator-with-right-margin, .color-indicator, .color-indicator-with-right-margin {
+  display: inline-block;
+  height: 1em;
+  margin-bottom: -0.15em;
+}
+.component-type-indicator-with-right-margin, .color-indicator-with-right-margin {
+  margin-right: 0.25em;
 }

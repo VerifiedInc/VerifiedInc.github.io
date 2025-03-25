@@ -368,7 +368,7 @@ See the [sequence diagram](#sequence-diagram) above.
 
     Make sure to use a 10-digit string, with the `+1` country code at the beginning:
     ```text title="Phone"
-    +10123456789
+    +12125550010
     ```
     Currently, only US phone numbers work with 1-Click Signup (and we're able to source verified data for 95% of these numbers).
 </details>
@@ -431,7 +431,7 @@ Just include a phone number:
 
 ```typescript title="POST /1-click Request Body"
 {
-    "phone": "+10123456789"
+    "phone": "+12125550010"
 }
 ```
 
@@ -448,7 +448,7 @@ You can also use `/1-click` in more advanced ways:
 
     ```typescript title="POST /1-click Request Body"
     {
-        "phone": "+10123456789",
+        "phone": "+12125550010",
         "verificationOptions": "only_code"
     }
     ```
@@ -465,7 +465,7 @@ You can also use `/1-click` in more advanced ways:
 
     ```typescript title="POST /1-click Request Body"
     {
-        "phone": "+10123456789",
+        "phone": "+12125550010",
         "content": {
             "title": "Verify"
         }
@@ -484,7 +484,7 @@ You can also use `/1-click` in more advanced ways:
 
     ```typescript title="POST /1-click Request Body"
     {
-        "phone": "+10123456789",
+        "phone": "+12125550010",
         "redirectUrl": "https://example.com"
     }
     ```
@@ -499,7 +499,7 @@ You can also use `/1-click` in more advanced ways:
 
     ```typescript title="POST /1-click Request Body"
     {
-        "phone": "+10123456789",
+        "phone": "+12125550010",
         "credentialRequests": [
             "FullNameCredential",
             "EmailCredential",
@@ -540,7 +540,7 @@ You can also use `/1-click` in more advanced ways:
 
     ```typescript title="POST /1-click Request Body"
     {
-        "phone": "+10123456789",
+        "phone": "+12125550010",
         "credentialRequests": [
             {
                 "type": "FullNameCredential",
@@ -908,7 +908,7 @@ One particularly valuable piece of metadata is **`verificationMethod`**, which d
 ```typescript title="Data the User Shared"
 {
     "identifiers": {
-        "phone": "+10123456789"
+        "phone": "+12125550010"
     },
     "credentials": {
         "email": "richard@piedpiper.net",
@@ -1142,7 +1142,7 @@ This method requires additional work; mainly, you will have to build a UI for th
     The resultant URL that you need to redirect to would look like this:
 
     ```typescript title="Redirect URL Post User Inputted OTP Code"
-    https://wallet.verified.inc/signin/verify/generic?code=123456&phone=%2B10123456789&phoneCarrier=true&requestId=242189ee-c120-4f62-af85-a0a19423ffc0&issuePhoneCarrierCredentials=false&isHosted=false
+    https://wallet.verified.inc/signin/verify/generic?code=123456&phone=%2B12125550010&phoneCarrier=true&requestId=242189ee-c120-4f62-af85-a0a19423ffc0&issuePhoneCarrierCredentials=false&isHosted=false
     ```
 
     This redirect will ultimately land the user back on your defined `redirectUrl` with no user interaction appearing as if only a page refresh has occurred.

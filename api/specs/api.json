@@ -206,7 +206,7 @@
                   "success (match)": {
                     "value": {
                       "match": true,
-                      "url": "https://wallet.unumid.co/request/{id}"
+                      "url": "https://wallet.verified.inc/request/{id}"
                     }
                   },
                   "success (no match)": {
@@ -4111,7 +4111,7 @@
                       "properties": {
                         "schema": {
                           "type": "string",
-                          "example": "https://schema.unumid.co/"
+                          "example": "https://schema.verified.inc/"
                         },
                         "sorg": {
                           "type": "string",
@@ -5833,7 +5833,7 @@
                   "Success: context entire file": {
                     "value": {
                       "@context": {
-                        "schema": "https://schema.unumid.co/",
+                        "schema": "https://schema.verified.inc/",
                         "sorg": "https://schema.org/"
                       },
                       "@graph": [
@@ -7016,7 +7016,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.unumid.co"
+                              "example": "https://schema.verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7079,7 +7079,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7142,7 +7142,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7209,7 +7209,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.unumid.co"
+                              "example": "https://schema.verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7276,7 +7276,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7339,7 +7339,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7402,7 +7402,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7465,7 +7465,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.unumid.co"
+                              "example": "https://schema.verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7528,7 +7528,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7591,7 +7591,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7658,7 +7658,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7725,7 +7725,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7788,7 +7788,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7851,7 +7851,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.unumid.co"
+                              "example": "https://schema.verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7914,7 +7914,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -7977,7 +7977,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -8044,7 +8044,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.dev-unumid.co"
+                              "example": "https://schema.dev-verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -8111,7 +8111,7 @@
                           "properties": {
                             "@context": {
                               "type": "string",
-                              "example": "https://schema.unumid.co"
+                              "example": "https://schema.verified.inc"
                             },
                             "@type": {
                               "type": "string",
@@ -8145,7 +8145,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.unumid.co",
+                          "@context": "https://schema.verified.inc",
                           "@type": "AddressCredential",
                           "address": "schema:address"
                         }
@@ -8165,7 +8165,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "BirthDateCredential",
                           "birthDate": "schema:birthDate"
                         }
@@ -8185,7 +8185,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "CountryResidenceCredential",
                           "country": "schema:addressCountry"
                         }
@@ -8206,7 +8206,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.unumid.co",
+                          "@context": "https://schema.verified.inc",
                           "@type": "EmailCredential",
                           "email": "schema:email"
                         }
@@ -8227,7 +8227,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "FacialImageCredential",
                           "image": "schema:faceImage"
                         }
@@ -8247,7 +8247,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "FacialMatchConfidenceCredential",
                           "confidence": "schema:facialMatchConfidence"
                         }
@@ -8267,7 +8267,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "FacialMatchCredential",
                           "match": "schema:facialMatch"
                         }
@@ -8287,7 +8287,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.unumid.co",
+                          "@context": "https://schema.verified.inc",
                           "@type": "FirstNameCredential",
                           "firstName": "schema:firstName"
                         }
@@ -8307,7 +8307,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "FullNameCredential",
                           "fullName": "schema:fullName"
                         }
@@ -8327,7 +8327,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "GenderCredential",
                           "gender": "schema:gender"
                         }
@@ -8348,7 +8348,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "GovernmentIdDocumentImageCredential",
                           "image": "schema:documentImage"
                         }
@@ -8369,7 +8369,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "GovernmentIdDocumentImageCredential",
                           "image": "schema:documentImage"
                         }
@@ -8389,7 +8389,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "GovernmentIdTypeCredential",
                           "documentType": "schema:documentType"
                         }
@@ -8409,7 +8409,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.unumid.co",
+                          "@context": "https://schema.verified.inc",
                           "@type": "LastNameCredential",
                           "lastName": "schema:lastName"
                         }
@@ -8429,7 +8429,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "LivelinessConfidenceCredential",
                           "confidence": "schema:livelinessConfidence"
                         }
@@ -8449,7 +8449,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "LivelinessCredential",
                           "liveliness": "schema:liveliness"
                         }
@@ -8470,7 +8470,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.dev-unumid.co",
+                          "@context": "https://schema.dev-verified.inc",
                           "@type": "PhoneCredential",
                           "phone": "schema:phoneNumber"
                         }
@@ -8491,7 +8491,7 @@
                           "type": "object"
                         },
                         "jsonLD": {
-                          "@context": "https://schema.unumid.co",
+                          "@context": "https://schema.verified.inc",
                           "@type": "SsnCredential",
                           "ssn": "schema:ssn"
                         }
@@ -8751,7 +8751,7 @@
                       "properties": {
                         "@context": {
                           "type": "string",
-                          "example": "https://schema.unumid.co"
+                          "example": "https://schema.verified.inc"
                         },
                         "@type": {
                           "type": "string",
@@ -8792,7 +8792,7 @@
                         "type": "object"
                       },
                       "jsonLD": {
-                        "@context": "https://schema.unumid.co",
+                        "@context": "https://schema.verified.inc",
                         "@type": "AddressCredential",
                         "address": "schema:address"
                       }
@@ -9799,11 +9799,11 @@
                     },
                     "email": {
                       "type": "string",
-                      "example": "test@unumid.co"
+                      "example": "test@verified.inc"
                     },
                     "phone": {
                       "type": "string",
-                      "example": "+10123456789"
+                      "example": "+12125550010"
                     },
                     "uuid": {
                       "type": "string",
@@ -9834,8 +9834,8 @@
                           "uuid": "e50b964c-124f-4d22-95df-a51940966b03"
                         }
                       ],
-                      "email": "test@unumid.co",
-                      "phone": "+10123456789",
+                      "email": "test@verified.inc",
+                      "phone": "+12125550010",
                       "uuid": "92c2a716-e0c9-4492-97c0-86bb41c5c448"
                     }
                   }
@@ -9976,7 +9976,7 @@
                               },
                               "phone": {
                                 "type": "string",
-                                "example": "+10123456789"
+                                "example": "+12125550010"
                               },
                               "ssn": {
                                 "type": "string",
@@ -10153,7 +10153,7 @@
                         {
                           "createdAt": "1685818437826",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "f80932a1-6ee7-4e53-9258-0328a01697b2",
@@ -10166,7 +10166,7 @@
                         {
                           "createdAt": "1685739848240",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "68263a31-aa65-4c9c-8666-f9d21d14bfd8",
@@ -10439,7 +10439,7 @@
                         {
                           "createdAt": "1685747395274",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "e43023fa-652d-43f8-ba2d-231ed2e5d528",
@@ -10569,7 +10569,7 @@
                         {
                           "createdAt": "1685675446615",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "4a468ab1-9b0c-4e09-aa0e-c9cdcad1a315",
@@ -10725,7 +10725,7 @@
                         {
                           "createdAt": "1685816680643",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "69721cfe-0b51-4cd7-b314-7c393b64d9e3",
@@ -10876,7 +10876,7 @@
                         {
                           "createdAt": "1685818437826",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "f80932a1-6ee7-4e53-9258-0328a01697b2",
@@ -10889,7 +10889,7 @@
                         {
                           "createdAt": "1685739848240",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "68263a31-aa65-4c9c-8666-f9d21d14bfd8",
@@ -11162,7 +11162,7 @@
                         {
                           "createdAt": "1685747395274",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "e43023fa-652d-43f8-ba2d-231ed2e5d528",
@@ -11292,7 +11292,7 @@
                         {
                           "createdAt": "1685675446615",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "4a468ab1-9b0c-4e09-aa0e-c9cdcad1a315",
@@ -11448,7 +11448,7 @@
                         {
                           "createdAt": "1685816680643",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "69721cfe-0b51-4cd7-b314-7c393b64d9e3",
@@ -11607,7 +11607,7 @@
                               },
                               "phone": {
                                 "type": "string",
-                                "example": "+10123456789"
+                                "example": "+12125550010"
                               },
                               "ssn": {
                                 "type": "string",
@@ -11784,7 +11784,7 @@
                         {
                           "createdAt": "1685818437826",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "f80932a1-6ee7-4e53-9258-0328a01697b2",
@@ -11797,7 +11797,7 @@
                         {
                           "createdAt": "1685739848240",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "68263a31-aa65-4c9c-8666-f9d21d14bfd8",
@@ -12070,7 +12070,7 @@
                         {
                           "createdAt": "1685747395274",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "e43023fa-652d-43f8-ba2d-231ed2e5d528",
@@ -12200,7 +12200,7 @@
                         {
                           "createdAt": "1685675446615",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "4a468ab1-9b0c-4e09-aa0e-c9cdcad1a315",
@@ -12356,7 +12356,7 @@
                         {
                           "createdAt": "1685816680643",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "69721cfe-0b51-4cd7-b314-7c393b64d9e3",
@@ -12507,7 +12507,7 @@
                         {
                           "createdAt": "1685818437826",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "f80932a1-6ee7-4e53-9258-0328a01697b2",
@@ -12520,7 +12520,7 @@
                         {
                           "createdAt": "1685739848240",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "68263a31-aa65-4c9c-8666-f9d21d14bfd8",
@@ -12793,7 +12793,7 @@
                         {
                           "createdAt": "1685747395274",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "e43023fa-652d-43f8-ba2d-231ed2e5d528",
@@ -12923,7 +12923,7 @@
                         {
                           "createdAt": "1685675446615",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "4a468ab1-9b0c-4e09-aa0e-c9cdcad1a315",
@@ -13079,7 +13079,7 @@
                         {
                           "createdAt": "1685816680643",
                           "data": {
-                            "phone": "+10123456789"
+                            "phone": "+12125550010"
                           },
                           "expirationDate": null,
                           "id": "69721cfe-0b51-4cd7-b314-7c393b64d9e3",

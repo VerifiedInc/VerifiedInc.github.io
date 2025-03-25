@@ -89,7 +89,7 @@ const tooltips =  {
     </div>
     <Collapsible trigger="+ More..." triggerWhenOpen="- Less">
         <div>
-            <b>Example:</b> richard@pipedpiper.net is one of Richard Hendrick's user identifiers. He also has a phone number of +10123456789, another one of his user identifiers.
+            <b>Example:</b> richard@pipedpiper.net is one of Richard Hendrick's user identifiers. He also has a phone number of +12125550010, another one of his user identifiers.
         </div>
         <div>
             <b>Components:</b> We have abstracted away the complexity of dealing with a third party uuid to refer to a user. Instead, you can use the user's email or phone number to refer to and issue credentials to users in our system.

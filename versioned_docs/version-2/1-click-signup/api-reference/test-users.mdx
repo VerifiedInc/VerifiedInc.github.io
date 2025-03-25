@@ -72,7 +72,7 @@ This is Richard Hendricks from the show _Silicon Valley_! 😂
 
 #### Allowed
 
-Use this user to specifically test the low risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [medium risk (flagged)](#flagged) and [high risk (blocked)](#blocked) test users._
+Use these users to specifically test the `low` and `medium-low` risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [medium risk (flagged)](#flagged) and [high risk (blocked)](#blocked) test users._
 
 <TestUserDisplay
   data={{
@@ -83,11 +83,6 @@ Use this user to specifically test the low risk case of [risk signals metadata](
   }}
 ></TestUserDisplay>
 
-
-#### Flagged
-
-Use these users to specifically test the `medium-low` and `medium` risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
-
 <TestUserDisplay
   data={{
     'Phone': '+12135551301',
@@ -96,6 +91,11 @@ Use these users to specifically test the `medium-low` and `medium` risk case of 
     'SSN4': '6789'
   }}
 ></TestUserDisplay>
+
+
+#### Flagged
+
+Use this user to specifically test the `medium` risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
 
 <TestUserDisplay
   data={{
@@ -374,7 +374,7 @@ If you then pass additional inputs (with any values), you will get the [`OCE013`
 
 ### Blocked
 
-Use this user to specifically test the high risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [medium risk (flagged)](#flagged) test users._
+Use these users to specifically test the `medium-high` and `high` risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [medium risk (flagged)](#flagged) test users._
 
 For these users, you will get the [`OCE017`](./errors#oce017) error code, indicating that Verified blocked returning data for the user because the risk score levels are `medium-high` and `high`.
 

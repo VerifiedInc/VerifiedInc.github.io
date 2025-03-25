@@ -76,7 +76,7 @@ Use this user to specifically test the low risk case of [risk signals metadata](
 
 <TestUserDisplay
   data={{
-    'Phone': '+15555550000',
+    'Phone': '+12135550000',
     'Verification Code': '111111',
     'Birth Date': '1989-08-01',
     'SSN4': '6789'
@@ -86,11 +86,20 @@ Use this user to specifically test the low risk case of [risk signals metadata](
 
 #### Flagged
 
-Use this user to specifically test the medium risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
+Use these users to specifically test the `medium-low` and `medium` risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
 
 <TestUserDisplay
   data={{
-    'Phone': '+15555550001',
+    'Phone': '+12135551301',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
+
+<TestUserDisplay
+  data={{
+    'Phone': '+12135551500',
     'Verification Code': '111111',
     'Birth Date': '1989-08-01',
     'SSN4': '6789'
@@ -117,7 +126,7 @@ For this user, both a phone number and either a birth date or SSN4 is needed to 
 
 <TestUserDisplay
   data={{
-    'Phone': '+10019999999',
+    'Phone': '+12125550020',
     'Verification Code': '111111',
     'Birth Date': '1989-08-01',
     'SSN4': '6789'
@@ -146,7 +155,7 @@ For this user, both a phone number and birth date is needed to source [credentia
 
 <TestUserDisplay
   data={{
-    'Phone': '+10019999997',
+    'Phone': '+12125550022',
     'Verification Code': '111111',
     'Birth Date': '1989-08-01'
   }}
@@ -174,7 +183,7 @@ For this user, both a phone number and SSN4 is needed to source [credentials](./
 
 <TestUserDisplay
   data={{
-    'Phone': '+10019999996',
+    'Phone': '+12125550021',
     'Verification Code': '111111',
     'SSN4': '6789'
   }}
@@ -210,7 +219,7 @@ For each of these 10 test users, you will get a [`1ClickEntity`](./types#1clicke
 
 <TestUserDisplay
   data={{
-    'Phone': '+12225550000 → +12225550009',
+    'Phone': '+12135550000 → +12135550009',
     'Verification Code': '111111',
     'Birth Date': '1989-08-01',
     'SSN4': '6789'
@@ -224,7 +233,7 @@ For this test user, you will get a [`1ClickEntity`](./types#1clickentity) with a
 
 <TestUserDisplay
   data={{
-    'Phone': '+12225550010',
+    'Phone': '+12135550010',
     'Verification Code': '111111',
     'Birth Date': '1989-08-01',
     'SSN4': '6789'
@@ -234,7 +243,7 @@ For this test user, you will get a [`1ClickEntity`](./types#1clickentity) with a
 ```typescript title="1ClickEntity"
 {
     "identifiers": {
-        "phone": "+12225550010"
+        "phone": "+12135550010"
     }
     "credentials": {
         ...
@@ -258,7 +267,7 @@ For this test user, you will get a [`1ClickEntity`](./types#1clickentity) with a
 
 <TestUserDisplay
   data={{
-    'Phone': '+12225550011',
+    'Phone': '+121355500020',
     'Verification Code': '111111',
     'Birth Date': '1989-08-01',
     'SSN4': '6789'
@@ -268,7 +277,7 @@ For this test user, you will get a [`1ClickEntity`](./types#1clickentity) with a
 ```typescript title="1ClickEntity"
 {
     "identifiers": {
-        "phone": "+12225550011"
+        "phone": "+121355500020"
     }
     "credentials": {
         ...
@@ -296,7 +305,7 @@ For this test user, you will get a [`1ClickEntity`](./types#1clickentity) with a
 
 <TestUserDisplay
   data={{
-    'Phone': '+12225550012',
+    'Phone': '+121355500030',
     'Verification Code': '111111',
     'Birth Date': '2017-01-01',
     'SSN4': '6789'
@@ -306,7 +315,7 @@ For this test user, you will get a [`1ClickEntity`](./types#1clickentity) with a
 ```typescript title="1ClickEntity"
 {
     "identifiers": {
-        "phone": "+12225550012"
+        "phone": "+121355500030"
     }
     "credentials": {
         ...
@@ -329,7 +338,7 @@ For this user — if you start with phone only, as we recommend (see the [Integr
 
 <TestUserDisplay
   data={{
-    'Phone': '+10019999998',
+    'Phone': '+14045550100',
     'Verification Code': '111111'
   }}
 ></TestUserDisplay>
@@ -367,11 +376,21 @@ If you then pass additional inputs (with any values), you will get the [`OCE013`
 
 Use this user to specifically test the high risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [medium risk (flagged)](#flagged) test users._
 
-For this user, you will get the [`OCE017`](./errors#oce017) error code, indicating that Verified blocked returning data for the user because the risk score is too high. 
+For these users, you will get the [`OCE017`](./errors#oce017) error code, indicating that Verified blocked returning data for the user because the risk score levels are `medium-high` and `high`.
 
 <TestUserDisplay
   data={{
-    'Phone': '+15555550002',
+    'Phone': '+14045551750',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
+
+
+<TestUserDisplay
+  data={{
+    'Phone': '+14045551000',
     'Verification Code': '111111',
     'Birth Date': '1989-08-01',
     'SSN4': '6789'

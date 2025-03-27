@@ -32,11 +32,10 @@ module.exports = {
         srcDark: 'img/logo_dark.png',
       },
       items: [
-        // Disabling because we're removing v1
-        // {
-        //   type: 'docsVersionDropdown',
-        //   position: 'left',
-        // },
+        {
+          type: 'docsVersionDropdown',
+          position: 'left',
+        },
         {
           type: 'custom-navbarButton',
           to: 'https://dashboard.verified.inc',
@@ -164,7 +163,7 @@ module.exports = {
           sidebarCollapsible: false,
           routeBasePath: '/',
           includeCurrentVersion: false,
-          lastVersion: '2',
+          lastVersion: '2.1',
           breadcrumbs: true,
           versions: {
             '1': {
@@ -174,6 +173,11 @@ module.exports = {
             },
             '2': {
               label: 'v2',
+              badge: false,
+              path: '/v2'
+            },
+            '2.1': {
+              label: 'v2.1',
               badge: false,
               path: '/'
             },

@@ -1,0 +1,61 @@
+Here is the **Sequence Diagram** for the **Hosted** integration type:
+
+```mermaid
+%%{
+    init: {
+        'theme': 'base',
+        'themeVariables': {
+            'primaryColor': '#e6f6e6',
+            'primaryTextColor': '#003100',
+            'primaryBorderColor': '#0dbc3d',
+            'secondaryColor': '#eef9fd',
+            'secondaryTextColor': '#193c47',
+            'secondaryBorderColor': '#164fd6',
+            'activationBkgColor': '#e6f6e6',
+            'activationBorderColor': '#0dbc3d',
+            'labelBoxBkgColor': '#eef9fd',
+            'labelBoxBorderColor': '#164fd6',
+            'labelTextColor': '#193c47',
+            'edgeLabelBackground': '#ffffff',
+            'textColor': '#000000',
+            'fontFamily': 'Lato'
+        }
+    }
+}%%
+sequenceDiagram
+    participant C as Customer
+    actor U as User
+    participant V as Verified
+    C->>+U: Show phone number input
+    U->>-C: Enter phone number
+    rect rgb(200,200,200,0.25)
+        note left of C: 1. Call 1-Click Endpoint
+        C->>+V: Call POST /1-click
+        V-->>-C: Return url and code    
+        C->>+U: Send SMS with code
+        rect rgb(200,200,200,0.85)
+            note left of C: 2. Redirect User
+            C->>+U: Redirect user to url
+            note right of V: (handled by Verified)
+            U->>-V: Enter code
+            alt Additional info required
+                V->>+U: Show DOB/SSN4 input(s)
+                U->>-V: Enter DOB/SSN4
+                alt Additional info mismatched
+                    V->>+U: Show DOB/SSN4 input(s)
+                    U->>-V: Enter DOB/SSN4
+                end
+            end
+            V->>V: Source data (credentials and metadata)
+            V->>+U: Display credentials
+            U->>-V: Consent to share data
+            V-->>C: Redirect user to customer
+        end
+        note left of C: 3. Receive Data
+        
+        C->>C: Parse identityUuid from URL param
+        C->>+V: Call GET /1-click with identityUuid
+        V-->>-C: Return data    
+    end
+```
+<br />

@@ -1,0 +1,45 @@
+---
+id: authentication
+title: Authentication
+sidebar_position: 4
+sidebar_label: Authentication
+description: How to authenticate to the Verified API
+slug: /authentication
+toc_max_heading_level: 4
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import BrandsAdmonition from '@site/versioned_docs/version-2/reusables/brands-admonition.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2/reusables/integration-type-admonition.mdx';
+import DomainsAdmonition from '@site/versioned_docs/version-2/reusables/domains-admonition.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2/reusables/development-work-admonition.mdx';
+import FullDefinitionAdmonition from '@site/versioned_docs/version-2/reusables/full-definition-admonition.mdx';
+import Post1ClickRequestBodyTableShared from '@site/versioned_docs/version-2/reusables/post-1-click-request-body-table-shared.mdx';
+import Post1ClickRequestBodyTableHosted from '@site/versioned_docs/version-2/reusables/post-1-click-request-body-table-hosted.mdx'
+import Post1ClickResponseBodyTableUuid from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-uuid.mdx';
+import Post1ClickResponseBodyTableUrl from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-url.mdx';
+import Post1ClickResponseBodyTableCode from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-code.mdx';
+import Post1ClickResponseBodyTableIdentity from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-identity.mdx';
+import UseUserInputAdmonition from '@site/versioned_docs/version-2/reusables/use-user-input-admonition.mdx'
+import CredentialRequestTableShared from '@site/versioned_docs/version-2/reusables/credential-request-table-shared.mdx'
+import CredentialRequestTableHosted from '@site/versioned_docs/version-2/reusables/credential-request-table-hosted.mdx'
+import ApiKeysAdmonition from '@site/versioned_docs/version-2/reusables/api-keys-admonition.mdx'
+
+{/* :::note
+See also our [Postman docs](https://api.docs.verified.inc/).
+::: */}
+
+All requests to the Verified API require an API key as an `Authorization` header value. 
+
+You can access and manage the API keys for your brands in the Verified [Dashboard](https://dashboard.verified.inc).
+
+<ApiKeysAdmonition/>
+
+Your company account can have one or more brands, and each brand can have one or more API keys. Each API key is specific to a brand and an [environment](./environments).
+
+<BrandsAdmonition/>

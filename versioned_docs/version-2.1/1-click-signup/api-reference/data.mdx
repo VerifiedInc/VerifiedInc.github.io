@@ -1,0 +1,2742 @@
+---
+id: data
+title: Data
+sidebar_label: Data
+sidebar_position: 10
+description: Data returned by the Verified API
+slug: /data
+toc_max_heading_level: 5
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import BrandsAdmonition from '@site/versioned_docs/version-2/reusables/brands-admonition.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2/reusables/integration-type-admonition.mdx';
+import DomainsAdmonition from '@site/versioned_docs/version-2/reusables/domains-admonition.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2/reusables/development-work-admonition.mdx';
+import FullDefinitionAdmonition from '@site/versioned_docs/version-2/reusables/full-definition-admonition.mdx';
+import Post1ClickRequestBodyTableShared from '@site/versioned_docs/version-2/reusables/post-1-click-request-body-table-shared.mdx';
+import Post1ClickRequestBodyTableHosted from '@site/versioned_docs/version-2/reusables/post-1-click-request-body-table-hosted.mdx'
+import Post1ClickResponseBodyTableUuid from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-uuid.mdx';
+import Post1ClickResponseBodyTableUrl from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-url.mdx';
+import Post1ClickResponseBodyTableCode from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-code.mdx';
+import Post1ClickResponseBodyTableIdentity from '@site/versioned_docs/version-2/reusables/post-1-click-response-body-table-identity.mdx';
+import UseUserInputAdmonition from '@site/versioned_docs/version-2/reusables/use-user-input-admonition.mdx'
+import CredentialRequestTableShared from '@site/versioned_docs/version-2/reusables/credential-request-table-shared.mdx'
+import CredentialRequestTableHosted from '@site/versioned_docs/version-2/reusables/credential-request-table-hosted.mdx'
+import OneClickEntityExample from '@site/versioned_docs/version-2/reusables/1-click-entity-example.mdx'
+import Chip from '@mui/material/Chip';
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+
+
+## Identifiers
+
+> An **identifier** is a phone number or email address the user uses to verify for 1-Click Signup.
+
+**Identifiers are _inputs_:** you pass them to us in API request bodies.
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td>`phone`</td>
+        <td>`string`</td>
+        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
+        <td>Phone number a user uses to verify for 1-Click Signup</td>
+        <td>`"+12125550010"`</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>`email`</td>
+        <td>`string`</td>
+        <td>email</td>
+        <td>Email address a user uses to verify for 1-Click Signup</td>
+        <td>`"richard@piedpiper.net"`</td>
+    </tr>
+    <tr>
+        <td>Birth Date</td>
+        <td>`birthDate`</td>
+        <td>`string`</td>
+        <td>`YYYY-MM-DD`</td>
+        <td>User's birth date (in [Sandbox](/environments#sandbox), this must be `"1989-08-01"` to pass validation)</td>
+        <td>`"1989-08-01"`</td>
+    </tr>
+    <tr>
+        <td>SSN4</td>
+        <td>`ssn4`</td>
+        <td>`string`</td>
+        <td>4 digits (0-9)</td>
+        <td>Last 4 digits of user's Social Security Number (in [Sandbox](/environments#sandbox), this must be `"6789"` to pass validation)</td>
+        <td>`"6789"`</td>
+    </tr>
+    {/* <tr>
+        <td>IP Address</td>
+        <td>`ipAddress`</td>
+        <td>`string`</td>
+        <td>IPv6</td>
+        <td>IP address for the user as they do 1-Click Signup</td>
+        <td>`"richard@piedpiper.net"`</td>
+    </tr> */}
+</table>
+
+:::note
+To source verified data ([credentials](#credentials) and [metadata](#metadata)) for a user:
+- **Phone is always required.** 
+- **Email is optional,** but including it helps source better and more data — especially [risk signals](#risk-signals) metadata.
+- **Birth date and/or SSN4 are only required sometimes:** if you get the [`OCE11`](/errors#oce011) error code, which indicates that additional information is required. This happens when Verified is unable to narrow down to a single user based on only phone (and email if included).
+:::
+
+
+## Credentials
+
+> A **credential** is a piece of identity data about a user.
+
+**Credentials are _outputs_:** we return them to you in API response bodies.
+
+:::info[Credential Formats]
+**We support multiple formats for some credential types (see below).** If you'd like to use formats different than the defaults, please reach out to us at Support@Verified.inc and we'll enable them for you.
+:::
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+### KYC (Know Your Customer)
+</CollapsibleHeader>
+
+:::note Coverage
+We can source verified KYC type data for **~95% of US adults.** Coverage for your user base may vary.
+:::
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td>`phone`</td>
+        <td>`string`</td>
+        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
+        <td>Phone number</td>
+        <td>`"+12125550010"`</td>
+    </tr>
+    <tr>
+        <td>Full Name</td>
+        <td>`fullName`</td>
+        <td>
+            - **Default:** `Object`
+            - `string`
+        </td>
+        <td>
+            - **Default:** Object with keys for all child credentials listed below
+            - Any combination of child `shortenedCredentialType`s under `fullName`, `,` (comma), and `-` (dash)
+        </td>
+        <td>Full name</td>
+        <td>
+            - See [`1ClickEntity` example](./types#example-1clickentity)
+            - `"Hendricks, Richard"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ First Name</td>
+        <td>`fullName.firstName`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>First name</td>
+        <td>`"Richard"`</td>
+    </tr>
+    <tr>
+        <td>↳ Middle Name</td>
+        <td>`fullName.middleName`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Middle name</td>
+        <td>`"Baudelaire"`</td>
+    </tr>
+    <tr>
+        <td>↳ Last Name</td>
+        <td>`fullName.lastName`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Last name</td>
+        <td>`"Henricks"`</td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td>`address`</td>
+        <td>
+            - **Default:** `Object`
+            - `string`
+        </td>
+        <td>
+            - **Default:** Object with keys for all child credentials listed below
+            - Any combination of child `shortenedCredentialType`s under `address`, `,` (comma), and `-` (dash)
+        </td>
+        <td>Address</td>
+        <td>
+            - See [`1ClickEntity` example](./types#example-1clickentity)
+            - `"Palo Alto, US-CA"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Line 1</td>
+        <td>`address.line1`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Line 1 of address</td>
+        <td>`"5320 Newell Rd"`</td>
+    </tr>
+    <tr>
+        <td>↳ Line 2</td>
+        <td>`address.line2`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Line 2 of address</td>
+        <td>`""`</td>
+    </tr>
+    <tr>
+        <td>↳ City</td>
+        <td>`address.city`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>City of address</td>
+        <td>`"Palo Alto"`</td>
+    </tr>
+    <tr>
+        <td>↳ State</td>
+        <td>`address.state`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
+            - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
+        </td>
+        <td>State of address</td>
+        <td>
+            - `"CA"`
+            - `"California"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ZIP Code</td>
+        <td>`address.zipCode`</td>
+        <td>`string`</td>
+        <td>[ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9) or [ZIP+4](https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4) (9 digits, 0-9, with a hypen after the first 5)</td>
+        <td>ZIP code of address</td>
+        <td>`"94303"` or `"94303-3058"`</td>
+    </tr>
+    <tr>
+        <td>↳ Country</td>
+        <td>`address.country`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
+            - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
+        </td>
+        <td>Country of address</td>
+        <td>`"US"`</td>
+    </tr>
+    <tr>
+        <td>Birth Date</td>
+        <td>`birthDate`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
+            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+        </td>
+        <td>Birth date</td>
+        <td>
+            - `"617947200000"`
+            - `"08/01/1989"`
+        </td>
+    </tr>
+    <tr>
+        <td>SSN</td>
+        <td>`ssn`</td>
+        <td>`string`</td>
+        <td>9 digits (0-9)</td>
+        <td>Social Security Number</td>
+        <td>`"123-45-6789"`</td>
+    </tr>
+    <tr>
+        <td>Email <Chip label="Not Recommended" variant="outlined" size="small" color="error"/></td>
+        <td>`email`</td>
+        <td>`string`</td>
+        <td>email</td>
+        <td>Email address</td>
+        <td>`"richard@piedpiper.net"`</td>
+    </tr>
+</table>
+
+:::warning[Email Reliability]
+**Email credentials can be less reliable compared to other types of data.** Verifying them is challenging because many people use multiple email addresses, making it difficult to associate one email with a single individual. If email accuracy is critical, we recommend directly asking users for their email during your workflow to ensure reliability.
+:::
+
+</CollapsibleSection>
+
+<CollapsibleSection>
+<CollapsibleHeader>
+### Credit Card <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#financials}
+</CollapsibleHeader>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Credit Card</td>
+        <td>`creditCard`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all child credentials listed below</td>
+        <td>Credit card information</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ Network</td>
+        <td>`creditCard.network`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Network of credit card</td>
+        <td>`"VISA"`</td>
+    </tr>
+    <tr>
+        <td>↳ Issuing Bank</td>
+        <td>`creditCard.issuingBank`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Issuing bank of credit card</td>
+        <td>`"Bank of America"`</td>
+    </tr>
+    <tr>
+        <td>↳ Cardholder Name</td>
+        <td>`creditCard.cardholderName`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Cardholder name of credit card</td>
+        <td>`"Richard Hendricks"`</td>
+    </tr>
+    <tr>
+        <td>↳ PAN</td>
+        <td>`creditCard.pan`</td>
+        <td>`string`</td>
+        <td>16 digits (0-9)</td>
+        <td>Primary Account Number of credit card</td>
+        <td>`"1234123412341234"`</td>
+    </tr>
+    <tr>
+        <td>↳ Expiration Date</td>
+        <td>`creditCard.expirationDate`</td>
+        <td>`string`</td>
+        <td>4 digits (0-9)</td>
+        <td>Expiration date of credit card</td>
+        <td>`"0828"`</td>
+    </tr>
+    <tr>
+        <td>↳ CVC</td>
+        <td>`creditCard.cvc`</td>
+        <td>`string`</td>
+        <td>16 digits (0-9)</td>
+        <td>Card Verification Code</td>
+        <td>`"123"`</td>
+    </tr>
+    <tr>
+        <td>↳ Billing Address</td>
+        <td>`creditCard.billingAddress`</td>
+        <td>
+            - **Default:** `Object`
+            - `string`
+        </td>
+        <td>
+            - **Default:** Object with keys for all child credentials listed below
+            - Any combination of child `shortenedCredentialType`s under `address`, `,` (comma), and `-` (dash)
+        </td>
+        <td>Address</td>
+        <td>
+            - See [`1ClickEntity` example](./types#example-1clickentity)
+            - `"Palo Alto, US-CA"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Line 1</td>
+        <td>`creditCard.billingAddress.line1`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Line 1 of address</td>
+        <td>`"5320 Newell Rd"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Line 2</td>
+        <td>`creditCard.billingAddress.line2`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Line 2 of address</td>
+        <td>`""`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ City</td>
+        <td>`creditCard.billingAddress.city`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>City of address</td>
+        <td>`"Palo Alto"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ State</td>
+        <td>`creditCard.billingAddress.state`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
+            - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
+        </td>
+        <td>State of address</td>
+        <td>
+            - `"CA"`
+            - `"California"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ZIP Code</td>
+        <td>`creditCard.billingAddress.zipCode`</td>
+        <td>`string`</td>
+        <td>[ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9) or [ZIP+4](https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4) (9 digits, 0-9, with a hypen after the first 5)</td>
+        <td>ZIP code of address</td>
+        <td>`"94303"` or `"94303-3058"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Country</td>
+        <td>`creditCard.billingAddress.country`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
+            - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
+        </td>
+        <td>Country of address</td>
+        <td>`"US"`</td>
+    </tr>
+</table>
+
+</CollapsibleSection>
+
+<CollapsibleSection>
+<CollapsibleHeader>
+### Employment <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#employment}
+</CollapsibleHeader>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Employer</td>
+        <td>`employer`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all child credentials listed below</td>
+        <td>Employer information</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ Employer Name</td>
+        <td>`employer.employerName`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Employer name</td>
+        <td>`"Pied Piper"`</td>
+    </tr>
+    <tr>
+        <td>↳ Employment Start Date</td>
+        <td>`employer.employmentStartDate`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
+            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+        </td>
+        <td>Employment start date</td>
+        <td>
+            - `"1396310400000"`
+            - `"04/01/2014"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Title</td>
+        <td>`employer.title`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Title of employment</td>
+        <td>`"CEO"`</td>
+    </tr>
+</table>
+
+</CollapsibleSection>
+
+<CollapsibleSection>
+<CollapsibleHeader>
+### Vehicles <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#vehicles}
+</CollapsibleHeader>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Vehicle</td>
+        <td>`vehicle`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all child credentials listed below</td>
+        <td>Vehicle information</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ VIN</td>
+        <td>`vehicle.vin`</td>
+        <td>`string`</td>
+        <td>[FMVSS 115, Part 565](https://en.wikipedia.org/wiki/Vehicle_identification_number#Classification) (US standard to calculate VIN)</td>
+        <td>Vehicle Identification Number</td>
+        <td>`"4Y1SL65848Z411439"`</td>
+    </tr>
+    <tr>
+        <td>↳ Make</td>
+        <td>`vehicle.make`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Vehicle make</td>
+        <td>`"Toyota"`</td>
+    </tr>
+    <tr>
+        <td>↳ Model</td>
+        <td>`vehicle.model`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Vehicle model</td>
+        <td>`"RAV4"`</td>
+    </tr>
+    <tr>
+        <td>↳ Year</td>
+        <td>`vehicle.year`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
+            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+        </td>
+        <td>Year of vehicle manufacture</td>
+        <td>
+            - `"617947200000"`
+            - `"08/01/1989"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Owner(s)</td>
+        <td>`vehicle.owners`</td>
+        <td>`string[]`</td>
+        <td>`Title Case`</td>
+        <td>Names of vehicle owner(s)</td>
+        <td>`["Richard Hendricks", "Erlich Bachman"]`</td>
+    </tr>
+    <tr>
+        <td>↳ MSRP</td>
+        <td>`vehicle.msrp`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Manufacturer's suggested retail price</td>
+        <td>`"Richard"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Currency</td>
+        <td>`vehicle.msrp.currency`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"USD"`
+            </details>
+        </td>
+        <td>[ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) currency code</td>
+        <td>Currency of manufacturer's suggested retail price</td>
+        <td>`"USD"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Amount</td>
+        <td>`vehicle.msrp.amount`</td>
+        <td>`string`</td>
+        <td>Any number of digits (0-9)</td>
+        <td>Amount of manufacturer's suggested retail price</td>
+        <td>`"10000"`</td>
+    </tr>
+</table>
+
+</CollapsibleSection>
+
+<CollapsibleSection>
+<CollapsibleHeader>
+### Properties <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#properties}
+</CollapsibleHeader>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Property</td>
+        <td>`property`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all child credentials listed below</td>
+        <td>Property information</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ Address</td>
+        <td>`property.address`</td>
+        <td>
+            - **Default:** `Object`
+            - `string`
+        </td>
+        <td>
+            - **Default:** Object with keys for all child credentials listed below
+            - Any combination of child `shortenedCredentialType`s under `address`, `,` (comma), and `-` (dash)
+        </td>
+        <td>Address</td>
+        <td>
+            - See [`1ClickEntity` example](./types#example-1clickentity)
+            - `"Palo Alto, US-CA"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Line 1</td>
+        <td>`property.address.line1`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Line 1 of address</td>
+        <td>`"5320 Newell Rd"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Line 2</td>
+        <td>`property.address.line2`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Line 2 of address</td>
+        <td>`""`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ City</td>
+        <td>`property.address.city`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>City of address</td>
+        <td>`"Palo Alto"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ State</td>
+        <td>`property.address.state`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
+            - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
+        </td>
+        <td>State of address</td>
+        <td>
+            - `"CA"`
+            - `"California"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ZIP Code</td>
+        <td>`property.address.zipCode`</td>
+        <td>`string`</td>
+        <td>[ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9) or [ZIP+4](https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4) (9 digits, 0-9, with a hypen after the first 5)</td>
+        <td>ZIP code of address</td>
+        <td>`"94303"` or `"94303-3058"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Country</td>
+        <td>`property.address.country`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
+            - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
+        </td>
+        <td>Country of address</td>
+        <td>`"US"`</td>
+    </tr>
+    <tr>
+        <td>↳ Owner(s)</td>
+        <td>`property.owners`</td>
+        <td>`string[]`</td>
+        <td>`Title Case`</td>
+        <td>Names of property owner(s)</td>
+        <td>`["Erlich Bachman"]`</td>
+    </tr>
+    <tr>
+        <td>↳ Details</td>
+        <td>`property.details`</td>
+        <td>`string`</td>
+        <td>`Sentence case`</td>
+        <td>Any additional property details</td>
+        <td>`"Single family home, 4BR/3BA"`</td>
+    </tr>
+</table>
+
+</CollapsibleSection>
+
+<CollapsibleSection>
+<CollapsibleHeader>
+### Government IDs <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#government-ids}
+</CollapsibleHeader>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Government ID</td>
+        <td>`governmentId`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all child credentials listed below</td>
+        <td>Government ID</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ Document Type</td>
+        <td>`governmentId.documentType`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"drivers_license"`
+                    - `"passport"`
+                    - `"resident_card"`
+            </details>
+        </td>
+        <td>`snake_case`</td>
+        <td>Type of government ID</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ Document Number</td>
+        <td>`governmentId.documentNumber`</td>
+        <td>`string`</td>
+        <td>Any number of digits (0-9)</td>
+        <td>Number of government ID</td>
+        <td>`"9876543210"`</td>
+    </tr>
+    <tr>
+        <td>↳ Document Front Image</td>
+        <td>`governmentId.documentFrontImage`</td>
+        <td>`string`</td>
+        <td>URL</td>
+        <td>Link to image of front of government ID</td>
+        <td>`"+12125550010"`</td>
+    </tr>
+    <tr>
+        <td>↳ Document Back Image</td>
+        <td>`governmentId.documentBackImage`</td>
+        <td>`string`</td>
+        <td>URL</td>
+        <td>Link to image of back of government ID</td>
+        <td>`"+12125550010"`</td>
+    </tr>
+</table>
+
+</CollapsibleSection>
+
+<CollapsibleSection>
+<CollapsibleHeader>
+### Demographics <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#demographics}
+</CollapsibleHeader>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Age</td>
+        <td>`age`</td>
+        <td>`string`</td>
+        <td>1-3 digits (0-9)</td>
+        <td>Age</td>
+        <td>`"35"`</td>
+    </tr>
+    <tr>
+        <td>Gender</td>
+        <td>`gender`</td>
+        <td>`string`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"Male"`
+                    - `"Female"`
+            </details>
+        </td>
+        <td>Gender</td>
+        <td>`"Female"`</td>
+    </tr>
+    <tr>
+        <td>Race</td>
+        <td>`race`</td>
+        <td>
+            <details>
+                <summary>`enum[]`</summary>
+
+                Possible values:
+                    - `"white"`
+                    - `"black_or_african_american"`
+                    - `"american_indian_or_alaska_native"`
+                    - `"asian"`
+                    - `"native_hawaiian_or_other_pacific_islander"`
+            </details>
+        </td>
+        <td>`snake_case`</td>
+        <td>Race</td>
+        <td>`["black_or_african_american", "asian"]`</td>
+    </tr>
+    <tr>
+        <td>Ethnicity</td>
+        <td>`ethnicity`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"hispanic_or_latino"`
+                    - `"not_hispanic_or_latino"`
+            </details>
+        </td>
+        <td>`snake_case`</td>
+        <td>Ethnicity</td>
+        <td>`"hispanic_or_latino"`</td>
+    </tr>
+    <tr>
+        <td>Nationality</td>
+        <td>`nationality`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Nationality</td>
+        <td>`"United States"`</td>
+    </tr>
+</table>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+## Metadata
+
+> A piece of **metadata** is additional data that's not a user's identity data (their identifiers or credentials) — though it's often _about_ that identity data.
+
+**Metadata are _outputs_:** we return them to you in API response bodies.
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Applies To</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Verification Method</td>
+        <td>`verificationMethod`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"phone_carrier"`
+                    - `"credit_bureau"`
+                    - `"otp"`
+                    - `"customer_otp"`
+                    - `"self_attested"`
+                    - `null`
+            </details>
+        </td>
+        <td>
+            - Identifiers
+            - Credentials
+        </td>
+        <td>`snake_case`</td>
+        <td>How an identifier or credential was verified</td>
+        <td>`"phone_carrier"`</td>
+    </tr>
+    <tr>
+        <td>Risk Signals</td>
+        <td>`riskSignals`</td>
+        <td>`Object`</td>
+        <td>
+            - Identifiers
+        </td>
+        <td>Object with keys specified below in [Risk Signals](#risk-signals)</td>
+        <td>Risk signals associated with the identifiers provided</td>
+        <td>See [`RiskSignals` example](./types#example-risksignals)</td>
+    </tr>
+</table>
+
+:::tip
+**`verificationMethod` describes how a credential was verified:**
+- `"phone_carrier"`: verified via phone carrier records
+- `"credit_bureau"`: verified via credit bureau records
+- `"otp"`: verified via an OTP (one time passcode)
+- `"customer_otp"`: verified via an OTP (one time passcode) by a Verified customer, not directly by Verified
+- `"self_attested"`: attested by the user themselves (not verified)
+- `null`
+
+You can build custom logic to handle credentials based on their `verificationMethod`, for example requiring additional verification if an important credential is `"self_attested"`.
+:::
+
+
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+### Risk Signals
+</CollapsibleHeader>
+
+Risk signals metadata enhance 1-Click Signup's anti-fraud capabilities. They come with extra cost and can be disabled if desired, but we recommend that you use them to improve your ability to prevent fraud.
+
+**High level risk signals (Overall Score, Level, and Recommendation) are on by default.** If the Score is too high, we return a [`OCE017` error](./errors#oce017).
+
+Additional risk signals are add ons, and you should consider using them if they are relevant to your use case. To enable them, please ask your Verified support representative or email us at Support@Verified.inc.
+
+See also the [`RiskSignals` type](./types#risksignals).
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Overall</td>
+        <td>`overall`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all overall risk signals listed below</td>
+        <td>Overall risk signals, considering all identifiers provided</td>
+        <td>
+            See [`RiskSignals` example](./types#example-risksignals)
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Score</td>
+        <td>`overall.score`</td>
+        <td>
+            `integer`
+        </td>
+        <td>
+            Number from 0 (low risk) to 1000 (high risk)
+        </td>
+        <td>Overall risk score, considering all identifiers provided. (If the score is over 600, Verified blocks the user and returns a [`OCE017` error](./errors#oce017).)</td>
+        <td>
+            `463`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Level</td>
+        <td>`overall.level`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"low"`
+                    - `"medium-low"`
+                    - `"medium"`
+                    - `"medium-high"`
+                    - `"high"`
+            </details>
+        </td>
+        <td>
+            `kebab-case`
+        </td>
+        <td>Overall risk level, considering all identifiers provided. (This is a bucketing of the risk score, where `0`-`200` is `"low"`, `201`-`400` is `"medium-low"`, `401`-`600` is `"medium"`, `601`-`800` is `"medium-high"`, and `801`-`1000` is `"high"`.)</td>
+        <td>
+            `"medium"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Recommendation</td>
+        <td>`overall.recommendation`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"allow"`
+                    - `"flag"`
+                    - `"block"`
+            </details>
+        </td>
+        <td>
+            `kebab-case`
+        </td>
+        <td>Overall risk recommendation, considering all identifiers provided. (This is a bucketing of the risk level, where `"low"` and `"medium-low"` are `"allow"`, `"medium"` is `"flag"`, and `"medium-high"` and `"high"` are `"block"`.)</td>
+        <td>
+            `"flag"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`overall.reasonCodes`</td>
+        <td>
+            <details>
+                <summary>`enum[]`</summary>
+
+                Possible values: see [Overall](#overall) reason codes
+            </details>
+        </td>
+        <td>
+            `"OCR"` (for One Click Reason) followed by 5 digits (0-9)
+        </td>
+        <td>Overall reason codes for risk score/level/recommendation, considering all identifiers provided</td>
+        <td>
+            `"OCR10021"`
+        </td>
+    </tr>
+    <tr>
+        <td>Phone <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`phone`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all phone identifier risk signals listed below</td>
+        <td>Phone identifier risk signals</td>
+        <td>
+            See [`RiskSignals` example](./types#example-risksignals)
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Carrier <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`phone.carrier`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all carrier details listed below</td>
+        <td>Carrier information</td>
+        <td>
+            `"flag"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ID <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`phone.carrier.id`</td>
+        <td>`integer`</td>
+        <td>Any number of digits (0-9)</td>
+        <td>Carrier ID number</td>
+        <td>`309`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Name <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`phone.carrier.name`</td>
+        <td>`string`</td>
+        <td>`"Title Case"`</td>
+        <td>Carrier name</td>
+        <td>`"AT&T Wireless"`</td>
+    </tr>
+    <tr>
+        <td>↳ Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`phone.reasonCodes`</td>
+        <td>
+            <details>
+                <summary>`enum[]`</summary>
+
+                Possible values: see [Phone](#phone) reason codes
+            </details>
+        </td>
+        <td>
+            `"OCR"` (for One Click Reason) followed by 5 digits (0-9)
+        </td>
+        <td>Phone identifier reason codes for risk score/level/recommendation</td>
+        <td>
+            `"OCR20004"`
+        </td>
+    </tr>
+    <tr>
+        <td>Email <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`email`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all email identifier risk signals listed below</td>
+        <td>Email identifier risk signals</td>
+        <td>
+            See [`RiskSignals` example](./types#example-risksignals)
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`email.reasonCodes`</td>
+        <td>
+            <details>
+                <summary>`enum[]`</summary>
+
+                Possible values: see [Email](#email) reason codes
+            </details>
+        </td>
+        <td>
+            `"OCR"` (for One Click Reason) followed by 5 digits (0-9)
+        </td>
+        <td>Email identifier reason codes for risk score/level/recommendation</td>
+        <td>
+            `"OCR60001"`
+        </td>
+    </tr>
+    {/* Commenting out until we support IP address identifiers */}
+    {/* <tr>
+        <td>IP Address <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`ipAddress`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all IP address identifier risk signals listed below</td>
+        <td>IP address identifier risk signals</td>
+        <td>
+            See [`RiskSignals` example](./types#example-risksignals)
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/></td>
+        <td>`ipAddress.reasonCodes`</td>
+        <td>
+            <details>
+                <summary>`enum[]`</summary>
+                Possible values: see [IP Address](#ip-address) reason codes
+            </details>
+        </td>
+        <td>
+            `"OCR"` (for One Click Reason) followed by 5 digits (0-9)
+        </td>
+        <td>IP address identifier reason codes for risk score/level/recommendation</td>
+        <td>
+            `"OCR50001"`
+        </td>
+    </tr> */}
+</table>
+
+#### Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/>
+
+
+##### Overall <Chip label="Add On" variant="outlined" size="small" color="primary"/>
+
+<table>
+    <tr>
+        <th>
+            Code
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Details
+        </th>
+        <th>
+            Risk Indicator
+        </th>
+        <th>
+            Trust Indicator
+        </th>
+    </tr>
+    <tr>
+        <td>
+            `OCR10010`
+        </td>
+        <td>
+            low activity
+        </td>
+        <td>
+            Not enough activity or attributes to classify the transaction as either risky or trustworthy.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR10020`
+        </td>
+        <td>
+            low regular activity
+        </td>
+        <td>
+            Trustworthy category, based on past behavior.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR10021`
+        </td>
+        <td>
+            regular activity
+        </td>
+        <td>
+            Most trustworthy category, based on past behavior.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR10030`
+        </td>
+        <td>
+            low-risk irregular activity
+        </td>
+        <td>
+            Risky category, based on past behavior.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR10031`
+        </td>
+        <td>
+            medium-risk irregular activity
+        </td>
+        <td>
+            High-risk category, based on past behavior.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR10032`
+        </td>
+        <td>
+            high-risk irregular activity
+        </td>
+        <td>
+            Highest-risk category, based on past behavior.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR10040`
+        </td>
+        <td>
+            irregular number type
+        </td>
+        <td>
+            This number has risky static attributes (like VOIP phone type or being on a blocklist).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+
+
+##### Phone <Chip label="Add On" variant="outlined" size="small" color="primary"/>
+
+<table>
+    <tr>
+        <th>
+            Code
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Details
+        </th>
+        <th>
+            Risk Indicator
+        </th>
+        <th>
+            Trust Indicator
+        </th>
+    </tr>
+    <tr>
+        <td>
+            `OCR20001`
+        </td>
+        <td>
+            no long-term activity
+        </td>
+        <td>
+            Much less than expected activity, or none at all, for this number over the past 90 days. Cannot classify.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20002`
+        </td>
+        <td>
+            high long-term activity
+        </td>
+        <td>
+            More than expected activity for this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20003`
+        </td>
+        <td>
+            high short-term activity
+        </td>
+        <td>
+            More than expected activity for this number over the last 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20004`
+        </td>
+        <td>
+            moderate long-term activity
+        </td>
+        <td>
+            Expected activity for this number over the past 90 days.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20005`
+        </td>
+        <td>
+            moderate short-term activity
+        </td>
+        <td>
+            Expected activity for this number over the last 24 hours.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20006`
+        </td>
+        <td>
+            sparse long-term activity
+        </td>
+        <td>
+            Sparse, regular volume of verification traffic on this number over the past 90 days.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20007`
+        </td>
+        <td>
+            continuous long-term activity
+        </td>
+        <td>
+            Continuous, regular volume of verification traffic on this number over the past 90 days.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20008`
+        </td>
+        <td>
+            very high long-term activity
+        </td>
+        <td>
+            Very high volume of verification traffic on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20009`
+        </td>
+        <td>
+            very high short-term activity
+        </td>
+        <td>
+            Very high volume of verification traffic on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20010`
+        </td>
+        <td>
+            no activity
+        </td>
+        <td>
+            Very low volume of verification traffic, or none at all, was ever observed on this number.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20011`
+        </td>
+        <td>
+            low long-term activity
+        </td>
+        <td>
+            Low volume of verification traffic on this phone number over the past 90 days.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20012`
+        </td>
+        <td>
+            low short-term activity
+        </td>
+        <td>
+            Low volume of verification traffic on this phone number over the past 24 hours. Very low volume of verification traffic, or none at all over the past 90 days.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20013`
+        </td>
+        <td>
+            low activity
+        </td>
+        <td>
+            Less than expected activity for this number.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20101`
+        </td>
+        <td>
+            no range activity
+        </td>
+        <td>
+            Very little activity, or none at all, for a risky range that this number belongs to over the past 90 days. Also returned if the number does not belong to a risky range.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20102`
+        </td>
+        <td>
+            low range activity
+        </td>
+        <td>
+            Some activity for a risky range that this number belongs to over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20103`
+        </td>
+        <td>
+            moderate short-term range activity
+        </td>
+        <td>
+            Significant activity for a risky range that this number belongs to over the last 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20104`
+        </td>
+        <td>
+            moderate long-term range activity
+        </td>
+        <td>
+            Significant activity for a risky range that this number belongs to over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20105`
+        </td>
+        <td>
+            high short-term range activity
+        </td>
+        <td>
+            Very significant activity for a risky range that this number belongs to over the last 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20106`
+        </td>
+        <td>
+            high long-term range activity
+        </td>
+        <td>
+            Very significant activity for a risky range that this number belongs to over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20107`
+        </td>
+        <td>
+            very high long-term range activity
+        </td>
+        <td>
+            Extremely significant activity for a risky range that this number belongs to over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR20108`
+        </td>
+        <td>
+            very high short-term range activity
+        </td>
+        <td>
+            Extremely significant activity for a risky range that this number belongs to over the last 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21001`
+        </td>
+        <td>
+            moderate activity on risky services
+        </td>
+        <td>
+            Significant activity on this number to or from risky services over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21002`
+        </td>
+        <td>
+            high activity on risky services
+        </td>
+        <td>
+            Very significant activity on this number to or from risky services over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21004`
+        </td>
+        <td>
+            long-term activity on risky services
+        </td>
+        <td>
+            Verification traffic on risky services on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21005`
+        </td>
+        <td>
+            short-term activity on risky services
+        </td>
+        <td>
+            Verification traffic on risky services on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21006`
+        </td>
+        <td>
+            high long-term activity on risky services
+        </td>
+        <td>
+            High volume of verification traffic on risky services on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21007`
+        </td>
+        <td>
+            high short-term activity on risky services
+        </td>
+        <td>
+            High volume of verification traffic on risky services on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21008`
+        </td>
+        <td>
+            long-term range activity on risky services
+        </td>
+        <td>
+            Verification traffic on risky services on the range this number belongs to over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21009`
+        </td>
+        <td>
+            short-term range activity on risky services
+        </td>
+        <td>
+            Verification traffic on risky services on the range this number belongs to over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21010`
+        </td>
+        <td>
+            high long-term range activity on risky services
+        </td>
+        <td>
+            High volume of verification traffic on risky services on the range this number belongs to over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21011`
+        </td>
+        <td>
+            high short-term range activity on risky services
+        </td>
+        <td>
+            High volume of verification traffic on risky services on the range this number belongs to over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21012`
+        </td>
+        <td>
+            very high short-term activity on risky services
+        </td>
+        <td>
+            Very high volume of verification traffic on risky services on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21013`
+        </td>
+        <td>
+            very high long-term activity on risky services
+        </td>
+        <td>
+            Very high volume of verification traffic on risky services on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21014`
+        </td>
+        <td>
+            very high short-term range activity on risky services
+        </td>
+        <td>
+            Very high volume of verification traffic on risky services on the range this number belongs to over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21015`
+        </td>
+        <td>
+            very high long-term range activity on risky services
+        </td>
+        <td>
+            Very high volume of verification traffic on risky services on the range this number belongs to over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21003`
+        </td>
+        <td>
+            machine-like activity
+        </td>
+        <td>
+            Behavior pattern that suggests this number is being used by a bot. Although we expect a submitted number engaged in A2P traffic to communicate with automated systems, we don’t expect the user of that number to be an automated system.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR21016`
+        </td>
+        <td>
+            machine-like range activity
+        </td>
+        <td>
+            Extremely high volume of verification traffic in a very short period (less than 1 hour) on the range this number belongs to.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22001`
+        </td>
+        <td>
+            seen in the last 1 day
+        </td>
+        <td>
+            This number was seen in verification traffic in the last 1 day.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22007`
+        </td>
+        <td>
+            seen in the last 7 days
+        </td>
+        <td>
+            This number was seen in verification traffic in the last 7 days.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22015`
+        </td>
+        <td>
+            seen in the last 15 days
+        </td>
+        <td>
+            This number was seen in verification traffic in the last 15 days.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22101`
+        </td>
+        <td>
+            seen in the last 1 month
+        </td>
+        <td>
+            This number was seen in verification traffic in the last 1 month.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22102`
+        </td>
+        <td>
+            seen in the last 2 months
+        </td>
+        <td>
+            This number was seen in verification traffic in the last 2 months.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22103`
+        </td>
+        <td>
+            seen in the last 3 months
+        </td>
+        <td>
+            This number was seen in verification traffic in the last 3 months.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR22203`
+        </td>
+        <td>
+            seen more than 3 months ago
+        </td>
+        <td>
+            This number was not seen in verification traffic in the last 3 months.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR30201`
+        </td>
+        <td>
+            no P2P data analyzed
+        </td>
+        <td>
+            P2P data was not analyzed. Cannot classify.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40001`
+        </td>
+        <td>
+            premium number
+        </td>
+        <td>
+            This is a premium number.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40002`
+        </td>
+        <td>
+            VOIP number
+        </td>
+        <td>
+            This is a VOIP number.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40003`
+        </td>
+        <td>
+            toll-free number
+        </td>
+        <td>
+            This is a toll-free number.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40004`
+        </td>
+        <td>
+            invalid number
+        </td>
+        <td>
+            This is an invalid number.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40005`
+        </td>
+        <td>
+            payphone number
+        </td>
+        <td>
+            This number is associated with a payphone.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40006`
+        </td>
+        <td>
+            voicemail number
+        </td>
+        <td>
+            This is a voicemail number.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40007`
+        </td>
+        <td>
+            pager number
+        </td>
+        <td>
+            This number is associated with a pager.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40008`
+        </td>
+        <td>
+            high-risk phone type
+        </td>
+        <td>
+            This number has another phone type that is risky, and that is not covered by any of the other number_type reason codes.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40009`
+        </td>
+        <td>
+            high-risk carrier
+        </td>
+        <td>
+            This number is associated with a very risky carrier.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40010`
+        </td>
+        <td>
+            medium-risk carrier
+        </td>
+        <td>
+            This number is associated with a risky carrier.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40011`
+        </td>
+        <td>
+            high-risk prefix
+        </td>
+        <td>
+            This number has a risky prefix.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40012`
+        </td>
+        <td>
+            phone too long
+        </td>
+        <td>
+            This number is invalid because it is too long, even after the application of cleansing rules.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40013`
+        </td>
+        <td>
+            blacklisted number
+        </td>
+        <td>
+            This number has been flagged as a source of fraud.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40014`
+        </td>
+        <td>
+            high-risk country
+        </td>
+        <td>
+            The country code of this number is for a risky country, one that originates a disproportionate share of fraud attacks.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40015`
+        </td>
+        <td>
+            technical number
+        </td>
+        <td>
+            This number is used for special technical purposes by telecom companies, such as for roaming.
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40016`
+        </td>
+        <td>
+            number used by application
+        </td>
+        <td>
+            Reserved for use by customers with our applications (for example to send verification messages), but it appears that it is being used for a different purpose.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40017`
+        </td>
+        <td>
+            number whitelisted by customer
+        </td>
+        <td>
+            You have flagged this number as safe.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR40018`
+        </td>
+        <td>
+            phone too short
+        </td>
+        <td>
+            This number is too short to be a valid phone number.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+
+
+##### Email <Chip label="Add On" variant="outlined" size="small" color="primary"/>
+
+<table>
+    <tr>
+        <th>
+            Code
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Details
+        </th>
+        <th>
+            Risk Indicator
+        </th>
+        <th>
+            Trust Indicator
+        </th>
+    </tr>
+    <tr>
+        <td>
+            `OCR60001`
+        </td>
+        <td>
+	        moderate short-term activity
+        </td>
+        <td>
+	        Expected level of activity for this email address over the last 24-hours.
+        </td>
+        <td>
+        </td>
+        <td>
+	        ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR60002`
+        </td>
+        <td>
+            moderate long-term activity
+        </td>
+        <td>
+            Expected level of activity for this email address over the past 90 days.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR60003`
+        </td>
+        <td>
+            moderate short-term activity on risky services
+        </td>
+        <td>
+            Significant activity for this email address to or from risky services over the last 24 hours (see risky services above for definition of that term).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR60004`
+        </td>
+        <td>
+            moderate long-term activity on risky services
+        </td>
+        <td>
+            Significant activity on this email address to or from risky services over the last 90 days (see risky services above for definition of that term).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR60005`
+        </td>
+        <td>
+            high short-term activity
+        </td>
+        <td>
+            More than expected activity for this email address over the last 24-hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR60006`
+        </td>
+        <td>
+            high long-term activity
+        </td>
+        <td>
+            More than expected activity for this email address over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+{/* Commenting out until we support IP address identifiers */}
+
+{/* ##### IP Address <Chip label="Add On" variant="outlined" size="small" color="primary"/>
+
+<table>
+    <tr>
+        <th>
+            Code
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Details
+        </th>
+        <th>
+            Risk Indicator
+        </th>
+        <th>
+            Trust Indicator
+        </th>
+    </tr>
+    <tr>
+        <td>
+            `OCR50001`
+        </td>
+        <td>
+            moderate short-term activity
+        </td>
+        <td>
+            Expected level of activity for this IP address over the last 24 hours.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50002`
+        </td>
+        <td>
+            moderate long-term activity
+        </td>
+        <td>
+            Expected level of activity for this IP address over the past 90 days.
+        </td>
+        <td>
+        </td>
+        <td>
+            ✔
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50003`
+        </td>
+        <td>
+            moderate short-term activity on risky services
+        </td>
+        <td>
+            Significant activity for this IP address to or from risky services over the last 24 hours (see risky services above for definition of that term).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50004`
+        </td>
+        <td>
+            moderate long-term activity on risky services
+        </td>
+        <td>
+            Significant activity on this IP address to or from risky services over the last 90 days (see risky services above for definition of that term).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50005`
+        </td>
+        <td>
+            high short-term activity
+        </td>
+        <td>
+            More than expected activity for this IP address over the last 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50006`
+        </td>
+        <td>
+            high long-term activity
+        </td>
+        <td>
+            More than expected activity for this IP address over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50007`
+        </td>
+        <td>
+            high short-term activity on risky services
+        </td>
+        <td>
+            Very significant activity for this IP address to or from risky services over the last 24 hours (see risky services above for definition of that term).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50008`
+        </td>
+        <td>
+            high long-term activity on risky services
+        </td>
+        <td>
+            Very significant activity on this IP address to or from risky services over the last 90 days (see risky services above for definition of that term).
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50009`
+        </td>
+        <td>
+            very high short-term activity
+        </td>
+        <td>
+            Very frequent changes of IP address attributes in verification traffic on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50010`
+        </td>
+        <td>
+            very high long-term activity
+        </td>
+        <td>
+            Very frequent changes of IP address attributes in verification traffic on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50011`
+        </td>
+        <td>
+            short-term activity on risky services
+        </td>
+        <td>
+            Changes of IP address attributes in verification traffic on risky services on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50012`
+        </td>
+        <td>
+            long-term activity on risky services
+        </td>
+        <td>
+            Changes of IP address attributes in verification traffic on risky services on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50013`
+        </td>
+        <td>
+            very high short-term activity on risky services
+        </td>
+        <td>
+            Very frequent changes of IP address attributes in verification traffic on risky services on this number over the past 24 hours.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50014`
+        </td>
+        <td>
+            very high long-term activity on risky services
+        </td>
+        <td>
+            Very frequent changes of IP address attributes in verification traffic on risky services on this number over the past 90 days.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50015`
+        </td>
+        <td>
+            anonymous proxy
+        </td>
+        <td>
+            This IP address is associated with anonymous proxies, which can help conceal the true origins of online traffic.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50016`
+        </td>
+        <td>
+            VPN
+        </td>
+        <td>
+            This IP address is associated with virtual private networks (VPNs), which can help conceal the true origins of online traffic.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50017`
+        </td>
+        <td>
+            hosting provider
+        </td>
+        <td>
+            This IP address is associated with web hosting servers, which have a pattern of activity different than genuine end users.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `OCR50018`
+        </td>
+        <td>
+            TOR exit node
+        </td>
+        <td>
+            This IP address is associated with Tor anonymous browsers, which can help conceal the true origins of online traffic.
+        </td>
+        <td>
+            ✔
+        </td>
+        <td>
+        </td>
+    </tr>
+</table> */}

@@ -1,0 +1,36 @@
+import IncludePoweredByGraphic from '@site/versioned_docs/version-2/reusables/include-powered-by-graphic.mdx'
+import IncludeVerifiedLegalLanguage from '@site/versioned_docs/version-2/reusables/include-verified-legal-language.mdx'
+import SupportedPhoneNumbersAdmonition from '@site/versioned_docs/version-2/reusables/supported-phone-numbers-admonition.mdx'
+import AnchorOffset from '@site/src/components/AnchorOffset.jsx'
+
+<SupportedPhoneNumbersAdmonition/>
+
+**You'll also need to:**
+<ol type="a">
+    <li>
+        <a href={`#a-include-a-powered-by-verified-graphic-${props.integrationType}`}>
+            <strong>Include a "powered by Verified" graphic</strong>
+        </a>
+    </li>
+    <li>
+        <a href={`#b-include-verified-legal-language-${props.integrationType}`}>
+            <strong>Include Verified legal language</strong>
+        </a>
+    </li>
+</ol>
+
+Here's a full example:
+
+![](/img/legal-language.png)
+*Hooli uses a phone number input, and they include a gray variant of the "powered by" graphic and Verified legal language.*
+
+{/* Necessary because the scrolling position was not showing the title when the id was directly placed into it */}
+<AnchorOffset id={`a-include-a-powered-by-verified-graphic-${props.integrationType}`} />
+#### a. Include "powered by Verified" graphic.
+
+<IncludePoweredByGraphic/>
+
+<AnchorOffset id={`b-include-verified-legal-language-${props.integrationType}`} />
+#### b. Include Verified legal language.
+
+<IncludeVerifiedLegalLanguage agreeToAction="receive an SMS to create a Verified account"/>

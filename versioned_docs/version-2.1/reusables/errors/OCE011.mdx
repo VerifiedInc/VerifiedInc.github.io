@@ -1,0 +1,68 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+import SandboxValidationAdmonition from '@site/versioned_docs/version-2/reusables/sandbox-validation-admonition.mdx';
+import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2/reusables/birth-date-over-ssn4-admonition.mdx'; 
+import Admonition from '@theme/Admonition';
+
+<ErrorDisplay
+  message='Additional information is required to source data for user: {inputs}'
+  additionalInputs='[inputs]'
+  riskSignals='true'
+  description=''
+  integrationType=''
+  whenThisIsReturned='When additional information is required to source verified user data through 1-Click Signup.' 
+  howToHandle='Prompt the user to input the additional information, and then call the Verified API again.'
+  youShouldNeverGetThisError=''
+>
+  ##### `OCE011`
+</ErrorDisplay>
+
+<Admonition type="warning" title="Inclusive OR">
+    The `inputs` included in `message` and `data.additionalInputs` is a comma separated list of additional information. 
+    
+    **Multiple values always indicate an inclusive OR:** that is, you can **pass one or more** of the additional inputs. You do _not_ need to pass all of the additional inputs included in the list!
+
+    For example, if `inputs` is `birthDate, ssn4`, you can pass either the user's birth date or their SSN4 (or both). We always recommend passing just one first because both are required only very rarely and, if they _are_ both required, you will get another `OCE011` error code indicating that the other one is required.
+</Admonition>
+
+Currently `inputs` will always be birth date, SSN4, or both — see the examples below.
+
+<BirthDateOverSsn4Admonition/>
+
+```typescript title="Example: Birth Date Only"
+{
+    ...
+    "message": "Additional information is required to source data for user: birthDate"
+    ...
+    "data": {
+        "errorCode": "OCE011",
+        "additionalInputs": ["birthDate"],
+        ...
+    }
+}
+```
+
+```typescript title="Example: SSN4 Only"
+{
+    ...
+    "message": "Additional information is required to source data for user: ssn4"
+    ...
+    "data": {
+        "errorCode": "OCE011",
+        "additionalInputs": ["ssn4"],
+        ...
+    }
+}
+```
+
+```typescript title="Example: Both Birth Date and SSN4"
+{
+    ...
+    "message": "Additional information is required to source data for user: birthDate, ssn4"
+    ...
+    "data": {
+        "errorCode": "OCE011",
+        "additionalInputs": ["birthDate", "ssn4"], // inclusive OR: can pass either or both in next call
+        ...
+    }
+}
+```

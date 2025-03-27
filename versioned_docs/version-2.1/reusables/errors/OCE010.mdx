@@ -1,0 +1,12 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+
+<ErrorDisplay
+  message='Missing required fields to autofill credentials'
+  description=''
+  integrationType=''
+  whenThisIsReturned='When Verified cannot source data for a mandatory credential.' 
+  howToHandle='Fall back to a manual signup flow. Consider setting the credential in question to be non-mandatory.'
+  youShouldNeverGetThisError='Verified should always either be able to return data for a user or return another error code, like OCE013 or OCE007.'
+>
+  ##### `OCE010`
+</ErrorDisplay>

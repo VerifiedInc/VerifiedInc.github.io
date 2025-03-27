@@ -1,0 +1,60 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2/reusables/birth-date-over-ssn4-admonition.mdx'; 
+
+<ErrorDisplay
+  message='Maximum input attempts exceeded. Please try again later.'
+  inputAttemptsExceeded='[inputs]'
+  description=''
+  riskSignals='true'
+  integrationType=''
+  whenThisIsReturned='When the maximum number of birth date attempts has been exceeded.' 
+  howToHandle='Consider flagging or restricting the phone number associated with the user, so a bad actor cannot keep trying new birth date values.'
+  youShouldNeverGetThisError=''
+>
+  ##### `OCE019`
+</ErrorDisplay>
+
+The `inputs` included in `data.inputAttemptsExceeded` is a comma separated list of inputs for which the attempts limit has been exceeded.
+
+Currently `inputs` will always be birth date, SSN4, or both — see the examples below. **The attempts limit for either type of input is 3.**
+
+<BirthDateOverSsn4Admonition/>
+
+```typescript title="Example: Birth Date Only"
+{
+    ...
+    "message": "Maximum input attempts exceeded. Please try again later."
+    ...
+    "data": {
+        "errorCode": "OCE019",
+        "additionalInputs": ["birthDate"],
+        ...
+    }
+}
+```
+
+```typescript title="Example: SSN4 Only"
+{
+    ...
+    "message": "Maximum input attempts exceeded. Please try again later."
+    ...
+    "data": {
+        "errorCode": "OCE019",
+        "additionalInputs": ["ssn4"],
+        ...
+    }
+}
+```
+
+```typescript title="Example: Both Birth Date and SSN4"
+{
+    ...
+    "message": "Maximum input attempts exceeded. Please try again later."
+    ...
+    "data": {
+        "errorCode": "OCE019",
+        "additionalInputs": ["birthDate", "ssn4"],
+        ...
+    }
+}
+```

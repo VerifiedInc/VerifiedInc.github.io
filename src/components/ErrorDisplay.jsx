@@ -2,7 +2,7 @@ import Markdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
 import Admonition from '@theme/Admonition';
-import IntegrationTypeErrorsAdmonition from '@site/versioned_docs/version-2/reusables/integration-type-errors-admonition.mdx'
+import IntegrationTypeErrorsAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-errors-admonition.mdx'
 
 const ErrorDisplay = ({ message, description, additionalInputs, riskSignals, inputAttemptsExceeded, integrationType, whenThisIsReturned, howToHandle, youShouldNeverGetThisError, children: code, sx }) => {
     const markdownMessage = `\`"${message}"\``;

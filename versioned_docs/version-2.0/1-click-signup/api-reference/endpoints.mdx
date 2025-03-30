@@ -1,0 +1,485 @@
+---
+id: endpoints
+title: Endpoints
+sidebar_label: Endpoints
+sidebar_position: 7
+description: How to use Verified API endpoints
+slug: /endpoints
+toc_max_heading_level: 3
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import BrandsAdmonition from '@site/versioned_docs/version-2.0/reusables/brands-admonition.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2.0/reusables/integration-type-admonition.mdx';
+import DomainsAdmonition from '@site/versioned_docs/version-2.0/reusables/domains-admonition.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.0/reusables/development-work-admonition.mdx';
+import FullDefinitionAdmonition from '@site/versioned_docs/version-2.0/reusables/full-definition-admonition.mdx';
+import Post1ClickRequestBodyTableShared from '@site/versioned_docs/version-2.0/reusables/post-1-click-request-body-table-shared.mdx';
+import Post1ClickRequestBodyTableHosted from '@site/versioned_docs/version-2.0/reusables/post-1-click-request-body-table-hosted.mdx'
+import Post1ClickResponseBodyTableUuid from '@site/versioned_docs/version-2.0/reusables/post-1-click-response-body-table-uuid.mdx';
+import Post1ClickResponseBodyTableUrl from '@site/versioned_docs/version-2.0/reusables/post-1-click-response-body-table-url.mdx';
+import Post1ClickResponseBodyTableCode from '@site/versioned_docs/version-2.0/reusables/post-1-click-response-body-table-code.mdx';
+import Post1ClickResponseBodyTableIdentity from '@site/versioned_docs/version-2.0/reusables/post-1-click-response-body-table-identity.mdx';
+import UseUserInputAdmonition from '@site/versioned_docs/version-2.0/reusables/use-user-input-admonition.mdx'
+import CredentialRequestTableShared from '@site/versioned_docs/version-2.0/reusables/credential-request-table-shared.mdx'
+import CredentialRequestTableHosted from '@site/versioned_docs/version-2.0/reusables/credential-request-table-hosted.mdx'
+import DefaultCredentialRequestsHosted from '@site/versioned_docs/version-2.0/reusables/default-credential-requests-hosted.mdx'
+import DefaultCredentialRequestsNotHosted from '@site/versioned_docs/version-2.0/reusables/default-credential-requests-not-hosted.mdx'
+import RecencyRequirementAdmonition from '@site/versioned_docs/version-2.0/reusables/recency-requirement-admonition.mdx'
+import SandboxValidationAdmonition from '@site/versioned_docs/version-2.0/reusables/sandbox-validation-admonition.mdx'
+import EndpointHeader from '@site/src/components/EndpointHeader.jsx'
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+
+{/* :::note
+See also our [Postman docs](https://api.docs.verified.inc/).
+::: */}
+
+<EndpointHeader 
+    swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/post_1_click" 
+    postmanUrl="https://documenter.getpostman.com/view/37980054/2sAYBbd8gf#e108f3ae-cf07-44e2-9924-dfca976ef533"
+>
+    ## `POST /1-click`
+</EndpointHeader>
+
+
+> Begin a 1-Click Signup flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click`</td>
+  </tr>
+</table>
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+### Request {#post-1-click-request} 
+</CollapsibleHeader>
+
+<details>
+    <summary>Full Definition</summary>
+    <FullDefinitionAdmonition/>
+    ```typescript title="POST /1-click Request Body"
+    {
+        phone: string,
+        email?: string,
+        birthDate?: string,
+        ssn4?: string,
+        credentialRequests?: CredentialRequest[],
+        content?: {
+            title?: "Signup" | "Login" | "Verify" | "Apply",
+            description?: string
+        }
+        redirectUrl?: string
+    }
+    ```
+    <table>
+        <Post1ClickRequestBodyTableShared/>
+        <Post1ClickRequestBodyTableHosted/>
+    </table>
+</details>
+
+<Tabs groupId="integrationType" queryString="integrationType">
+<TabItem value="hosted" label="Hosted" default>
+    <IntegrationTypeAdmonition option="Hosted"/>
+    ```typescript title="POST /1-click Request Body (Hosted Integration Type)"
+    {
+        phone: string,
+        email?: string,
+        birthDate?: string,
+        ssn4?: string,
+        credentialRequests?: CredentialRequest[],
+        content?: {
+            title?: "Signup" | "Login" | "Verify" | "Apply",
+            description?: string
+        }
+        redirectUrl?: string
+    }
+    ```
+    <table>
+        <Post1ClickRequestBodyTableShared/>
+        <Post1ClickRequestBodyTableHosted/>
+    </table>
+
+    <SandboxValidationAdmonition/>
+
+
+    #### Default Credential Requests 
+
+    <DefaultCredentialRequestsHosted/>
+</TabItem>
+<TabItem value="semi-hosted" label="Semi-Hosted">
+    <IntegrationTypeAdmonition option="Semi-Hosted"/>
+    ```typescript title="POST /1-click Request Body (Semi-Hosted Integration Type)"
+    {
+        phone: string,
+        email?: string,
+        birthDate?: string,
+        ssn4?: string,
+        credentialRequests?: CredentialRequest[]
+    }
+    ```
+    <table>
+        <Post1ClickRequestBodyTableShared/>
+    </table>
+
+    <SandboxValidationAdmonition/>
+
+
+    #### Default Credential Requests 
+
+    <DefaultCredentialRequestsNotHosted/>
+</TabItem>
+<TabItem value="non-hosted" label="Non-Hosted">
+    <IntegrationTypeAdmonition option="Non-Hosted"/>
+    ```typescript title="POST /1-click Request Body (Non-Hosted Integration Type)"
+    {
+        phone: string,
+        email?: string,
+        birthDate?: string,
+        credentialRequests?: CredentialRequest[]
+    }
+    ```
+    <table>
+        <Post1ClickRequestBodyTableShared/>
+    </table>
+
+    <SandboxValidationAdmonition/>
+
+
+    #### Default Credential Requests 
+
+    <DefaultCredentialRequestsNotHosted/>
+</TabItem>
+</Tabs>
+
+<SandboxValidationAdmonition/>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+### Response {#post-1-click-response}
+</CollapsibleHeader>
+
+<details>
+    <summary>Full Definition</summary>
+    <FullDefinitionAdmonition/>
+    ```typescript title="POST /1-click Response Body"
+    {
+        uuid: string,
+        url?: string,
+        code?: string,
+        identity?: 1ClickEntity
+    }
+    ```
+    <table>
+        <Post1ClickResponseBodyTableUuid/>
+        <Post1ClickResponseBodyTableUrl/>
+        <Post1ClickResponseBodyTableCode/>
+        <Post1ClickResponseBodyTableIdentity/>
+    </table>
+</details>
+
+<Tabs groupId="integrationType" queryString="integrationType">
+<TabItem value="hosted" label="Hosted" default>
+    <IntegrationTypeAdmonition option="Hosted"/>
+    ```typescript title="POST /1-click Response Body (Hosted Integration Type)"
+    {
+        uuid: string,
+        url: string,
+        code: string
+    }
+    ```
+    <table>
+        <Post1ClickResponseBodyTableUuid/>
+        <Post1ClickResponseBodyTableUrl/>
+        <Post1ClickResponseBodyTableCode/>
+    </table>
+</TabItem>
+<TabItem value="semi-hosted" label="Semi-Hosted" default>
+    <IntegrationTypeAdmonition option="Semi-Hosted"/>
+    ```typescript title="POST /1-click Response Body (Semi-Hosted Integration Type)"
+    {
+        uuid: string,
+        code: string
+    }
+    ```
+    <table>
+        <Post1ClickResponseBodyTableUuid/>
+        <Post1ClickResponseBodyTableCode/>
+    </table>
+</TabItem>
+<TabItem value="non-hosted" label="Non-Hosted" default>
+    <IntegrationTypeAdmonition option="Non-Hosted"/>
+    ```typescript title="POST /1-click Response Body (Non-Hosted Integration Type)"
+    {
+        uuid: string,
+        identity: 1ClickEntity
+    }
+    ```
+    <table>
+        <Post1ClickResponseBodyTableUuid/>
+        <Post1ClickResponseBodyTableIdentity/>
+    </table>
+</TabItem>
+</Tabs>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+---
+
+<EndpointHeader 
+    swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/get_1_click__id_" 
+    postmanUrl="https://documenter.getpostman.com/view/37980054/2sAYBbd8gf#c300967f-3422-4eb0-90ef-2a3eb4095450"
+>
+    ## `GET /1-click`
+</EndpointHeader>
+
+> Get data for a user who has completed a 1-Click Signup flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`GET`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/{uuid}?code={userInput}`</td>
+  </tr>
+</table>
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+### Request {#get-1-click-request}
+</CollapsibleHeader>
+
+<Tabs groupId="integrationType" queryString="integrationType">
+<TabItem value="hosted" label="Hosted" default>
+    <IntegrationTypeAdmonition option="Hosted"/>
+    Call:
+    ```json title="GET /1-click Request (Hosted Integration Type)"
+    GET /1-click/{identityUuid}
+    ```
+    - For the `{uuid}` endpoint path parameter, use the value of the `identityUuid` URL parameter from the redirect URL.
+    - _The `{userInput}` endpoint URL parameter isn't relevant here._
+</TabItem>
+<TabItem value="semi-hosted" label="Semi-Hosted" default>
+    <IntegrationTypeAdmonition option="Semi-Hosted"/>
+    Call:
+    ```json title="GET /1-click Request (Semi-Hosted Integration Type)"
+    GET /1-click/{uuid}?code={userInput}
+    ```
+    - For the `{uuid}` endpoint path parameter, use the value of `uuid` from the [response body of `POST /1-click`](#post-1-click-response).
+    - For the `{userInput}` endpoint URL parameter, use the value the user inputted when you prompted them to enter their verification code.
+    <UseUserInputAdmonition/>
+</TabItem>
+<TabItem value="non-hosted" label="Non-Hosted" default>
+    <IntegrationTypeAdmonition option="Non-Hosted"/>
+    There's no need to call `GET /1-click` if your brand's integration type is Non-Hosted, because the response body of `POST /1-click` contains the same [`1ClickEntity`](./types#1clickentity).
+
+    However, if you'd like to retrieve the same data again, you can call:
+    ```json title="GET /1-click Request (Non-Hosted Integration Type)"
+    GET /1-click/{uuid}
+    ```
+    - For the `{uuid}` endpoint path parameter, use the value of `uuid` from the [response body of `POST /1-click`](#post-1-click-response).
+    - _The `{userInput}` endpoint URL parameter isn't relevant here._
+</TabItem>
+</Tabs>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+### Response {#get-1-click-response}
+</CollapsibleHeader>
+
+```typescript title="GET /1-click Response (All Integration Types)"
+{
+    ...1ClickEntity
+}
+```
+
+See [`1ClickEntity`](./types#1clickentity).
+
+---
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+<EndpointHeader 
+    swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/patch_1_click__id_" 
+    postmanUrl="https://documenter.getpostman.com/view/37980054/2sAYBbd8gf#175fcf84-ca40-4551-9d54-5d8be3d0e646"
+>
+    ## `PATCH /1-click`
+</EndpointHeader>
+
+
+> Pass additional information about a user to complete a 1-Click Signup flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`PATCH`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/{uuid}`</td>
+  </tr>
+</table>
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+### Request {#patch-1-click-request}
+</CollapsibleHeader>
+
+<Tabs groupId="integrationType" queryString="integrationType">
+<TabItem value="hosted" label="Hosted" default>
+    <IntegrationTypeAdmonition option="Hosted"/>
+    There's no need to call `PATCH /1-click` if your brand's integration type is Hosted, because our web app handles collecting additional information (birth date) from the user if it's required — see [here](././integration-guide?integrationType=hosted#4-redirect-user).
+
+    For a Hosted integration, you should only use [`POST /1-click`](#post-1-click) and [`GET /1-click`](#get-1-click).
+</TabItem>
+<TabItem value="semi-hosted" label="Semi-Hosted">
+    <IntegrationTypeAdmonition option="Semi-Hosted"/>
+    Call:
+    ```json title="PATCH /1-click Request (Semi-Hosted Integration Type)"
+    PATCH /1-click/{uuid}
+    ```
+    - For the `{uuid}` endpoint path parameter, use the value of `uuid` from the [response body of `POST /1-click`](#post-1-click-response).
+
+    Use this request body:
+    ```typescript title="PATCH /1-click Request Body (Semi-Hosted Integration Type)"
+    {
+        birthDate?: string,
+        ssn4?: string
+    }
+    ```
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Required?</th>
+            <th>Type</th>
+            <th>Format</th>
+            <th>Default</th>
+            <th>Description</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td>`birthDate?`</td>
+            <td>optional</td>
+            <td>`string`</td>
+            <td>`YYYY-MM-DD`</td>
+            <td>none</td>
+            <td>User's birth date</td>
+            <td>`"1989-08-01"`</td>
+        </tr>
+        <tr>
+            <td>`ssn4?`</td>
+            <td>optional</td>
+            <td>`string`</td>
+            <td>4 digits (0-9)</td>
+            <td>none</td>
+            <td>Last 4 digits of user's Social Security Number (in [Sandbox](/environments#sandbox), this must be `"6789"` to pass validation)</td>
+            <td>`"6789"`</td>
+        </tr>
+    </table>
+    <SandboxValidationAdmonition/>
+    <RecencyRequirementAdmonition/>
+</TabItem>
+<TabItem value="non-hosted" label="Non-Hosted">
+    <IntegrationTypeAdmonition option="Non-Hosted"/>
+    There's no need to call `PATCH /1-click` if your brand's integration type is Non-Hosted, because the [request body of `POST /1-click`](#post-1-click-request) accepts a `birthDate` input, and [its response body](#post-1-click-response) contains the same [`1ClickEntity`](./types#1clickentity) that would be returned by `PATCH /1-click`.
+
+    For a Non-Hosted integration, you should only use [`POST /1-click`](#post-1-click).
+</TabItem>
+</Tabs>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+### Response {#patch-1-click-response}
+</CollapsibleHeader>
+
+```typescript title="PATCH /1-click Response (All Integration Types)"
+{
+    ...1ClickEntity
+}
+```
+
+See [`1ClickEntity`](./types#1clickentity).
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+
+{/* ## Update 1-Click Credentials
+
+> This endpoint is to be used for updating the 1-click credentials passed to your brand in the 1-click non-hosted and 1-click trusted flows.
+
+**Method**: `POST` <br />
+**Path**: `/1-click/{uuid}/credentials`
+
+You need to provide:
+
+1. **The 1-click uuid**
+2. **The credential values in same format they were provided.** See example below.
+
+<SimplifiedCredentialsExample />
+
+This is an optional endpoint only relevant for the 1-click [non-hosted](/#non-hosted-variant) and [trusted](/#trusted-variants) variants. Because we send the user's data directly to your application, without the user using our web Wallet (which is part of the hosted variant), the user never gets a chance to update any of the data that's autofilled for them. If you allow them to editing and/or enrich their data on your side,  within a UI/UX that you manage and implement, you can use this endpoint to pass that information back to us (and earn revenue share as a result).
+
+:::important
+If this endpoint is optional, why use it?
+
+If you to call this endpoint after the user has made edits to their data on your side, you will earn a share of the revenue generated when the user uses that data elsewhere.revenue streams.
+:::
+
+#### Request Body {#update-1-click-credentials-request-body}
+
+```typescript title="Update 1-Click Credentials Request Body"
+{
+  "uuid": string // the 1-click uuid from the POST /1-click/trusted response
+  "credentials": {
+      [shortenedCredentialType: string]: string
+  }
+}
+```
+
+The response body will contain credentials conforming to [credential schemas](/schema#example). Please see the [Postman](https://api.docs.verified.inc/#159ad031-30da-4e2b-afbb-c2abf15bd194) docs for examples of this response body.
+
+#### Response Body {#update-1-click-credentials-response-body}
+
+```typescript title="1-Click Response"
+[
+  {
+    type: string, // credential type
+    verificationMethod: string // verification method
+    data: CredentialsList | {
+      [credentialKey: string]: string // credential data
+    },
+  }
+]
+```
+
+The response body is currently in a more verbose format than that of the response for GET `/sharedCredentials` or POST `/1-click` (both trusted and non-hosted). However, in practice, the details of the response body are non-consequential for you as long as a 201 HTTP status code is received. */}

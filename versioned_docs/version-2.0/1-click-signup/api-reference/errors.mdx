@@ -1,0 +1,270 @@
+---
+id: errors
+title: Errors
+sidebar_label: Errors
+sidebar_position: 8
+description: Verified API errors
+slug: /errors
+toc_max_heading_level: 5
+---
+
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ErrorType from '@site/versioned_docs/version-2.0/reusables/error-type.mdx';
+import ErrorExampleOce011 from '@site/versioned_docs/version-2.0/reusables/error-example-oce011.mdx';
+import {
+  CollapsibleGroup,
+  CollapsibleSection,
+  CollapsibleHeader,
+} from '@site/src/components/Collapsible';
+import ErrorDisplay from '@site/src/components/ErrorDisplay';
+
+import ErrorERR001 from '@site/versioned_docs/version-2.0/reusables/errors/ERR001.mdx';
+import ErrorOCE001 from '@site/versioned_docs/version-2.0/reusables/errors/OCE001.mdx';
+import ErrorOCE002 from '@site/versioned_docs/version-2.0/reusables/errors/OCE002.mdx';
+import ErrorOCE003 from '@site/versioned_docs/version-2.0/reusables/errors/OCE003.mdx';
+import ErrorOCE004 from '@site/versioned_docs/version-2.0/reusables/errors/OCE004.mdx';
+import ErrorOCE005 from '@site/versioned_docs/version-2.0/reusables/errors/OCE005.mdx';
+import ErrorOCE006 from '@site/versioned_docs/version-2.0/reusables/errors/OCE006.mdx';
+import ErrorOCE007 from '@site/versioned_docs/version-2.0/reusables/errors/OCE007.mdx';
+import ErrorOCE008 from '@site/versioned_docs/version-2.0/reusables/errors/OCE008.mdx';
+import ErrorOCE009 from '@site/versioned_docs/version-2.0/reusables/errors/OCE009.mdx';
+import ErrorOCE010 from '@site/versioned_docs/version-2.0/reusables/errors/OCE010.mdx';
+import ErrorOCE011 from '@site/versioned_docs/version-2.0/reusables/errors/OCE011.mdx';
+import ErrorOCE012 from '@site/versioned_docs/version-2.0/reusables/errors/OCE012.mdx';
+import ErrorOCE013 from '@site/versioned_docs/version-2.0/reusables/errors/OCE013.mdx';
+import ErrorOCE014 from '@site/versioned_docs/version-2.0/reusables/errors/OCE014.mdx';
+import ErrorOCE015 from '@site/versioned_docs/version-2.0/reusables/errors/OCE015.mdx';
+import ErrorOCE016 from '@site/versioned_docs/version-2.0/reusables/errors/OCE016.mdx';
+import ErrorOCE017 from '@site/versioned_docs/version-2.0/reusables/errors/OCE017.mdx';
+import ErrorOCE018 from '@site/versioned_docs/version-2.0/reusables/errors/OCE018.mdx';
+import ErrorOCE019 from '@site/versioned_docs/version-2.0/reusables/errors/OCE019.mdx';
+import ApiKeysAdmonition from '@site/versioned_docs/version-2.0/reusables/api-keys-admonition.mdx';
+
+
+## Firewall Errors
+
+You will get a network error if your API request is blocked by our firewall.
+
+
+### Generic
+
+<table className="error-table">
+    <tbody>
+        <tr>
+          <th>
+            HTTP Status Code
+          </th>
+          <td>
+            `403`
+          </td>
+        </tr>
+    </tbody>
+</table>
+
+```typescript title="Firewall Error: 418 (Generic)"
+{
+    "error": "Request blocked by firewall", 
+    "message": "Your request was blocked by our firewall. Please contact us if you believe this was in error."
+}
+```
+
+
+### API Key Used Client Side
+
+<table className="error-table">
+    <tbody>
+        <tr>
+          <th>
+            HTTP Status Code
+          </th>
+          <td>
+            `418`
+          </td>
+        </tr>
+    </tbody>
+</table>
+
+```typescript title="Firewall Error: API Key Used Client Side"
+{
+    "error": "Request blocked by firewall", 
+    "message": "Your request was blocked by our firewall because your API key is being used client side. Verified API keys must only be used server side. Please contact us if you believe this was in error."
+}
+```
+
+<ApiKeysAdmonition/>
+
+
+### Rate Limit
+
+<table className="error-table">
+    <tbody>
+        <tr>
+          <th>
+            HTTP Status Code
+          </th>
+          <td>
+            `429`
+          </td>
+        </tr>
+    </tbody>
+</table>
+
+```typescript title="Firewall Error: 429 (Rate Limit)"
+{
+    "error": "Request blocked by firewall", 
+    "message": "Your request was blocked by our firewall due to abnormally high request volume. Please contact us if you believe this was in error."
+}
+```
+
+
+## Application Errors
+
+To handle application level errors (returned by Verified API endpoints), we recommend that you primarily use the response body's `data.errorCode`, which is a Verified specific error code. See [Verified Error Codes](#verified-error-codes) below for descriptions of what each code means.
+
+
+### `Error` Type
+
+_This definition is also in [`Error`](./types#error) in [Types](./types)._
+
+<ErrorType />
+
+#### Example {#example-error}
+
+<ErrorExampleOce011 />
+
+---
+
+### Verified Error Codes
+
+An `errorCode` is a Verified specific error code consisting of 3 letters and 3 numbers. Codes that begin with `ERR` are generic, and those that begin with `OCE` are specific to 1-Click Signup. (`OCE` refers to a One Click Error.)
+
+<CollapsibleGroup>
+  <CollapsibleSection>
+    <CollapsibleHeader>
+    #### Most Common Errors
+    </CollapsibleHeader>
+
+    <ErrorOCE008 />
+
+    ---
+
+    <ErrorOCE011 />
+
+    ---
+
+    <ErrorOCE012 />
+
+    ---
+
+    <ErrorOCE013 />
+
+    ---
+
+    <ErrorOCE017 />
+
+    ---
+
+    <ErrorOCE018 />
+
+    ---
+
+    <ErrorOCE019 />
+
+
+  </CollapsibleSection>
+</CollapsibleGroup>
+
+<CollapsibleGroup>
+
+  <CollapsibleSection>
+    <CollapsibleHeader>
+    #### All Errors
+    </CollapsibleHeader>
+
+    <ErrorERR001 />
+
+    ---
+
+    <ErrorOCE001 />
+
+    ---
+
+    <ErrorOCE002 />
+
+    ---
+
+    <ErrorOCE003 />
+
+    ---
+
+    <ErrorOCE004 />
+
+    ---
+
+    <ErrorOCE005 />
+
+    ---
+
+    <ErrorOCE006 />
+
+    ---
+
+    <ErrorOCE007 />
+
+    ---
+
+    <ErrorOCE008 />
+
+    ---
+
+    <ErrorOCE009 />
+
+    ---
+
+    <ErrorOCE010 />
+
+    ---
+
+    <ErrorOCE011 />
+
+    ---
+
+    <ErrorOCE012 />
+
+    ---
+
+    <ErrorOCE013 />
+
+    ---
+
+    <ErrorOCE014 />
+
+    ---
+
+    <ErrorOCE015 />
+
+    ---
+
+    <ErrorOCE016 />
+
+    ---
+
+    <ErrorOCE017 />
+
+    ---
+
+    <ErrorOCE018 />
+
+    ---
+
+    <ErrorOCE019 />
+
+  </CollapsibleSection>
+</CollapsibleGroup>
+
+
+
+

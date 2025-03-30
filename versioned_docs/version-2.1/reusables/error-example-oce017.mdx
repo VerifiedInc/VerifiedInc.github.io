@@ -1,0 +1,39 @@
+```typescript title="Error Example"
+{
+    "name": "BadRequest",
+    "message": "1-Click Blocked: Risk Score Too High",
+    "code": 400,
+    "className": "bad-request",
+    "data": {
+        "errorCode": "OCE017",
+        "riskSignals": {
+            "overall": {
+                "score": 1000, // always enabled
+                "level": "high", // always enabled
+                "recommendation": "block", // always enabled
+                "reasonCodes": [ // add on (ask Verified support to enable)
+                    "OCR10032"
+                ]
+            },
+            "phone": { // add on (ask Verified support to enable)
+                "carrier": {
+                    "id": 1,
+                    "name": "Risky Carrier"
+                }
+                "reasonCodes": [
+                    "OCR20009",
+                    "OCR20107",
+                    "OCR21012",
+                    "OCR21003"
+                ]
+            },
+            "email": { // add on (ask Verified support to enable)
+                "reasonCodes": [
+                    "OCR60006",
+                    "OCR60006"
+                ]
+            }
+        }
+    }
+}
+```

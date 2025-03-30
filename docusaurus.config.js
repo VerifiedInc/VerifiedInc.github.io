@@ -10,14 +10,14 @@ module.exports = {
   url: 'https://docs.verified.inc',
   baseUrl: '',
   /* change to 'warn' if unable to fix broken link issue */
-  onBrokenLinks: 'warn',
+  onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'VerifiedInc', // Usually your GitHub org/user name.
   projectName: 'VerifiedInc.github.io', // Usually your repo name.
   themeConfig: {
     announcementBar: {
-      content: '<b>1-Click Signup v2 is live!</b> It\'s over <i>3x faster</i> than v1',
+      content: '<b>The new 1-Click Signup SDK is live!</b> It\'s <i>10x faster</i> to integrate than the API',
       backgroundColor: '#0dbc3d',
       textColor: '#ffffff',
     },
@@ -32,11 +32,10 @@ module.exports = {
         srcDark: 'img/logo_dark.png',
       },
       items: [
-        // Disabling because we're removing v1
-        // {
-        //   type: 'docsVersionDropdown',
-        //   position: 'left',
-        // },
+        {
+          type: 'docsVersionDropdown',
+          position: 'left',
+        },
         {
           type: 'custom-navbarButton',
           to: 'https://dashboard.verified.inc',
@@ -66,21 +65,63 @@ module.exports = {
         {
           title: '1-Click Signup',
           items: [
-            // {
-            //   label: 'Overview',
-            //   to: '/overview',
-            // },
             {
-              label: 'Quick Start Guide',
-              to: '/quick-start-guide',
+              label: 'Overview',
+              to: '/overview',
             },
             {
-              label: 'Integration Guide',
-              to: '/integration-guide',
+              label: 'Custom Demo',
+              to: '/custom-demo',
             },
             {
-              label: 'Migration Guide (v1 to v2)',
-              to: '/migration-guide',
+              label: 'Test Users',
+              to: '/test-users',
+            },
+            {
+              label: 'Data',
+              to: '/data',
+            },
+          ],
+        },
+        {
+          title: 'Guides',
+          items: [
+            {
+              label: 'User Experience',
+              to: '/guides/user-experience',
+            },
+            {
+              label: 'Setup',
+              to: '/guides/setup',
+            },
+            {
+              label: 'SDK Integration',
+              to: '/guides/sdk-integration',
+            },
+            {
+              label: 'API Integration',
+              to: '/guides/api-integration',
+            },
+          ],
+        },
+        {
+          title: 'SDK Reference',
+          items: [
+            {
+              label: 'Installation',
+              to: '/sdk-reference/installation',
+            },
+            {
+              label: 'Constants',
+              to: '/sdk-reference/constants',
+            },
+            {
+              label: 'Methods',
+              to: '/sdk-reference/methods',
+            },
+            {
+              label: 'Types',
+              to: '/sdk-reference/types',
             },
           ],
         },
@@ -89,23 +130,23 @@ module.exports = {
           items: [
             {
                 label: 'Authentication',
-                to: '/authentication',
+                to: '/api-reference/authentication',
             },
             {
               label: 'Environments',
-              to: '/environments',
+              to: '/api-reference/environments',
             },
             {
               label: 'Endpoints',
-              to: '/endpoints',
+              to: '/api-reference/endpoints',
             },
             {
               label: 'Errors',
-              to: '/errors',
+              to: '/api-reference/errors',
             },
             {
               label: 'Types',
-              to: '/types',
+              to: '/api-reference/types',
             },
           ],
         },
@@ -140,7 +181,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Verified`,
+      copyright: `Copyright © ${new Date().getFullYear()} Verified Network Inc. All rights reserved.`,
     },
     mermaid: {
       options: {
@@ -164,16 +205,22 @@ module.exports = {
           sidebarCollapsible: false,
           routeBasePath: '/',
           includeCurrentVersion: false,
-          lastVersion: '2',
+          lastVersion: '2.1',
           breadcrumbs: true,
           versions: {
-            '1': {
-              label: 'v1',
+            // Hiding because we no longer want to show v1 Docs
+            // '1.0': {
+            //   label: 'v1.0',
+            //   badge: false,
+            //   path: '/v1.0'
+            // },
+            '2.0': {
+              label: 'v2.0',
               badge: false,
-              path: '/v1'
+              path: '/v2.0'
             },
-            '2': {
-              label: 'v2',
+            '2.1': {
+              label: 'v2.1',
               badge: false,
               path: '/'
             },

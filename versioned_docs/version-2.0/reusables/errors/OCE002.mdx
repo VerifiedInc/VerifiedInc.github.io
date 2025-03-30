@@ -1,0 +1,14 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+
+<ErrorDisplay
+  message='Unsupported phone number to use 1-Click'
+  description=''
+  integrationType=''
+  whenThisIsReturned='When the phone number is unsupported or has an invalid format.' 
+  howToHandle='Prompt user to reenter phone number.'
+  youShouldNeverGetThisError='You should validate phone numbers client side, so you only call the Verified API with supported phone numbers.'
+>
+  ##### `OCE002`
+</ErrorDisplay>
+
+[Phone identifiers](/v2.0/data#identifiers) (which are passed as inputs to the Verified API) must be in [E.164](https://www.twilio.com/docs/glossary/what-e164) format: for example, `"+12125550010"`. 1-Click Signup currently only supports US phone numbers (ones that start with country code `+1`).

@@ -4,7 +4,7 @@ import PostmanButton from './Buttons/PostmanButton.jsx';
 import SwaggerButton from './Buttons/SwaggerButton.jsx';
 
 const EndpointHeader = ({ children, postmanUrl, swaggerUrl }) => (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'top' }}>
+    <div className='endpoint-header' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'top' }}>
         {children}
         <div>
             <SwaggerButton url={swaggerUrl} />

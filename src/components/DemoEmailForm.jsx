@@ -81,7 +81,7 @@ export const DemoEmailForm = () => {
 
     return (
       <>
-        <Typography
+        {/* <Typography
           variant="h6"
           sx={{
             fontWeight: 600,
@@ -91,7 +91,7 @@ export const DemoEmailForm = () => {
           }}
         >
           Custom demo of 1-Click Signup for Verified!
-        </Typography>
+        </Typography> */}
         <Stack direction="row" spacing={2} justifyContent="center">
           <LinkedInButton
             url={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(demoUrl)}`}
@@ -125,81 +125,68 @@ export const DemoEmailForm = () => {
 
 
     >
-      <CardContent onClick={handleExpandClick} sx={{
+      {/* <CardContent onClick={handleExpandClick} sx={{
         '&:hover': {
           cursor: 'pointer',
         }
       }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-
           Create a Custom Demo in 1-Second
-
-          <IconButton
-
-            sx={{
-              transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
-              transition: 'transform 0.3s',
-            }}
-            aria-expanded={expanded}
-            aria-label="show form"
-          >
-            <KeyboardArrowDownIcon />
-          </IconButton>
         </Box>
-      </CardContent>
-      <Collapse in={expanded}>
-        <CardContent>
-          {!demoUrl ? (
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
+      </CardContent> */}
+      <CardContent>
+        {!demoUrl ? (
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+              '& .MuiTextField-root': {
+                backgroundColor: 'white',
+              },
+            }}
+          >
+            <TextField
+              fullWidth
+              type="email"
+              label="Work Email"
+              className="work-email-field"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              size="small"
+              margin="dense"
+              variant="outlined"
+              color="primary"
+            />
+            <Typography variant="caption" className="legal-text" sx={{ display: 'block', mt: 1, mb: 1 }}>
+              By continuing, you agree to our <Link href="https://www.verified.inc/legal#terms-of-use" target="_blank" rel="noopener">Terms</Link> and acknowledge our <Link href="https://www.verified.inc/legal#privacy-policy" target="_blank" rel="noopener">Privacy Policy</Link>.
+            </Typography>
+            <Button
+              type="submit"
+              variant="contained"
+              className="generate-demo-button"
+              color="primary"
+              startIcon={!loading && <AutoAwesome />}
+              disabled={loading}
               sx={{
-                '& .MuiTextField-root': {
-                  backgroundColor: 'white',
-                },
+                textTransform: 'none',
+                minWidth: '120px',
+                mt: 2,
               }}
             >
-              <TextField
-                fullWidth
-                type="email"
-                label="Work Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                size="small"
-                margin="dense"
-                variant="outlined"
-                color="primary"
-              />
-              <Typography variant="caption" className="legal-text" sx={{ display: 'block', mt: 1, mb: 1 }}>
-                By continuing, you agree to our <Link href="https://www.verified.inc/legal#terms-of-use" target="_blank" rel="noopener">Terms</Link> and acknowledge our <Link href="https://www.verified.inc/legal#privacy-policy" target="_blank" rel="noopener">Privacy Policy</Link>.
-              </Typography>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                startIcon={!loading && <AutoAwesome />}
-                disabled={loading}
-                sx={{
-                  textTransform: 'none',
-                  minWidth: '120px',
-                  mt: 2,
-                }}
-              >
-                {loading ? (
-                  <CircularProgress size={24} color="inherit" />
-                ) : (
-                  <>
-                    Generate Demo
-                  </>
-                )}
-              </Button>
-            </Box>
-          ) : (
-            renderGeneratedDemoContent()
-          )}
-        </CardContent>
-      </Collapse>
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                <>
+                  Generate Demo
+                </>
+              )}
+            </Button>
+          </Box>
+        ) : (
+          renderGeneratedDemoContent()
+        )}
+      </CardContent>
     </Card>
   );
 };

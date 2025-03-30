@@ -1,0 +1,75 @@
+---
+id: types
+title: Types
+sidebar_label: Types
+sidebar_position: 4
+description: Types used in the Verified SDK
+slug: /sdk-reference/types
+toc_max_heading_level: 4
+---
+
+
+## `SdkResult`
+
+```typescript title="SdkResult Type"
+type SdkResult =
+  | {
+      type: typeof SdkResultValues.USER_SHARED_CREDENTIALS;
+      identityUuid: string;
+    }
+  | {
+      type: typeof SdkResultValues.USER_OPTED_OUT;
+    };
+```
+
+See the [`SdkResultValues` constant](../sdk-reference/constants#sdkresultvalues).
+
+
+### Examples
+
+```typescript title="SdkResult Example (User Shared Credentials)"
+{
+    type: 'USER_SHARED_CREDENTIALS',
+    identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d'
+}
+```
+
+```typescript title="SdkResult Example (User Opted Out)"
+{
+    type: 'USER_OPTED_OUT'
+}
+```
+
+---
+
+
+## `SdkError`
+
+```typescript
+type SdkError = {
+  reason: typeof SdkErrorReasons;
+};
+```
+
+See the [`SdkErrorReasons` constant](../sdk-reference/constants#sdkerrorreasons).
+
+
+### Examples
+
+```typescript title="SdkError Example (Session Timeout)"
+{
+    reason: 'SESSION_TIMEOUT'
+}
+```
+
+```typescript title="SdkError Example (Invalid Session Key)"
+{
+    reason: 'INVALID_SESSION_KEY'
+}
+```
+
+```typescript title="SdkError Example (Share Credentials Error)"
+{
+    reason: 'SHARE_CREDENTIALS_ERROR'
+}
+```

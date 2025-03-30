@@ -1,0 +1,90 @@
+---
+id: overview
+title: Overview
+sidebar_position: 1
+sidebar_label: Overview
+description: Overview of 1-Click Signup
+slug: /overview
+toc_max_heading_level: 3
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
+import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
+import HowToTestAdmonition from '@site/versioned_docs/version-2.1/reusables/how-to-test-admonition.mdx'
+import DocCardList from '@theme/DocCardList';
+
+
+<table>
+    <tr>
+        <th>User Experience</th>
+        <td>< 10 seconds to complete 1-Click Signup</td>
+    </tr>
+    <tr>
+        <th>Coverage</th>
+        <td>> 95% of US adults (253M people)</td>
+    </tr>
+    <tr>
+        <th>Time to Integrate</th>
+        <td>2-4 hours (with the SDK [integration type](./guides/setup#integration-type))</td>
+    </tr>
+</table>
+
+
+## About 1-Click Signup
+
+**1-Click Signup is the _fastest_ way to sign up new users.** From just a phone number, Verified can autofill a user's data so they can share it in less than 10 seconds.
+
+**See [Data](./data) for what this data can include.** We provide a wide range of [credentials](./data#credentials) (pieces of user identity data) and rich [metadata](./data#metadata) about them, including dozens of sophisticated [risk signals](./data#risk-signals).
+
+:::info Privacy First
+**A user's data is never shared without their consent.** We are committed to putting people in control of their own data. We are SOC 2 Type II certified and compliant with major regulatory frameworks like GDPR and CCPA. For more information, please see [How We Operate](https://www.verified.inc/how-we-operate).
+:::
+
+
+:::tip Resources
+- **[Custom Demo](https://1-click.demo.verified.inc):** Try 1-Click Signup yourself with a demo auto-magically customized for your company.
+- **Guides:**
+    - **[User Experience](./guides/setup):** See the 1-Click Signup user experience and flow chart.
+    - **[Setup](./guides/setup):** Create a [Dashboard](https://dashboard.verified.inc) account and configure brand settings.
+    - **[SDK Integration](./guides/sdk-integration):** How to integrate 1-Click Signup using the Verified SDK (for web clients).
+    - **[API Integration](./guides/api-integration):** How to integrate 1-Click Signup using the Verified API.
+- **[Verified Website](https://verified.inc):** Learn about 1-Click Signup from a business perspective.
+- **[Book a Call](https://calendly.com/verified-inc/intro-with-verified?text_color=000000&primary_color=0dbc3d)**: Talk to our sales team.
+:::
+
+
+## How It Works
+
+To use 1-Click Signup, all a user needs to do is:
+1. Enter phone number
+2. Verify phone number
+3. (if necessary) Enter birthday/SSN4
+4. Confirm autofilled info
+
+_It takes less than 10 seconds, end to end!_ 
+
+1-Click Signup uses the exact same user experience as 1-click checkout solutions (like Stripe Link and Shop Pay), so it's familiar to users. See [User Experience](./guides/user-experience) for full details.
+
+:::note
+Step 3 above — prompting for a challenge (birthday/SSN4) — is necessary only if the phone number alone doesn't uniquely identify the user, for example if it's part of a shared phone carrier plan. (You can also configure your brand settings to always [prompt for a challenge](./guides/setup#prompt-for-challenges).)
+:::
+
+
+## Coverage
+
+We can source verified data for over 95% of US adults (253M people). The data is extremely high quality because it comes from phone carriers, credit bureaus, and other trusted providers. Thanks to this quality, the data can be leveraged as part of a KYC/AML process.
+
+:::important
+**We currently only cover people in the United States.** But we are soon adding new geographies. If there are particular geographies that would be most helpful for our use case, please let us know by emailing Support@Verified.inc, and we'll prioritize accordingly.
+:::
+
+
+## Benefits
+
+- **Increase conversion:** Dramatically reduce friction, making it as easy as possible for new users to share their verified data.
+- **Increase pass rates:** Avoid user error by leveraging our autofilled, verified data.
+- **Prevent fraud:** Stop bad actors by using our [risk signals](./data#risk-signals) metadata.

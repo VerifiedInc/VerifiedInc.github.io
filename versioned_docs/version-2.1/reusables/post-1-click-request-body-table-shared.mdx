@@ -1,0 +1,54 @@
+<tr>
+    <th>Property</th>
+    <th>Required?</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Default</th>
+    <th>Description</th>
+    <th>Example</th>
+</tr>
+<tr>
+    <td>`phone`</td>
+    <td>required</td>
+    <td>`string`</td>
+    <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
+    <td>none</td>
+    <td>User's phone number (in [E.164](https://www.twilio.com/docs/glossary/what-e164) format)</td>
+    <td>`"+12125550010"`</td>
+</tr>
+<tr>
+    <td>`email`</td>
+    <td>optional</td>
+    <td>`string`</td>
+    <td>email</td>
+    <td>none</td>
+    <td>User's email address</td>
+    <td>`"richard@piedpiper.net"`</td>
+</tr>
+<tr>
+    <td>`birthDate`</td>
+    <td>optional</td>
+    <td>`string`</td>
+    <td>`YYYY-MM-DD`</td>
+    <td>none</td>
+    <td>User's birth date (in [Sandbox](/api-reference/environments#sandbox), this must be `"1989-08-01"` to pass validation)</td>
+    <td>`"1989-08-01"`</td>
+</tr>
+<tr>
+    <td>`ssn4`</td>
+    <td>optional</td>
+    <td>`string`</td>
+    <td>4 digits (0-9)</td>
+    <td>none</td>
+    <td>Last 4 digits of user's Social Security Number (in [Sandbox](/api-reference/environments#sandbox), this must be `"6789"` to pass validation)</td>
+    <td>`"6789"`</td>
+</tr>
+<tr>
+    <td>`credentialRequests`</td>
+    <td>optional</td>
+    <td>`CredentialRequest[]`</td>
+    <td>See [`CredentialRequest`](/api-reference/types#credentialrequest)</td>
+    <td>Defined by the **default credential requests** brand setting in your [Dashboard](https://dashboard.verified.inc)</td>
+    <td>List of [`CredentialRequest`](/api-reference/types#credentialrequest) objects (which encode which credentials you're asking for)</td>
+    <td>See [`CredentialRequest` example](/api-reference/types#example-credentialrequest)</td>
+</tr>

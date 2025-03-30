@@ -1,0 +1,7 @@
+import Admonition from '@theme/Admonition';
+
+<Admonition type="note">
+    This step is necessary if <a href={props.stepLink}>{props.stepName}</a> doesn't succeed, which means we need more information (the user's birth date and/or SSN4) to uniquely identify the user. The response body of `POST /1-click` will be an [error](/v2.0/errors) with error code [`OCE011`](/v2.0/errors#oce011).
+
+    Note that this error code, which is Verified specific, is `data.errorCode` in the error object, _not_ `code` (which is a standard HTTP response status code).
+</Admonition>

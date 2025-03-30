@@ -1,0 +1,57 @@
+---
+id: methods
+title: Methods
+sidebar_label: Methods
+sidebar_position: 3
+description: How to use Verified SDK methods
+slug: /sdk-reference/methods
+toc_max_heading_level: 4
+---
+
+
+## `show()`
+
+> Show the SDK to the user
+
+```typescript title="show() Definition"
+public show(element?: HTMLElement): void
+```
+
+If no `element` is passed, the SDK will be injected into `document.body`.
+
+
+### Example
+
+```typescript title="Example Usage of show()"
+import { VerifiedClientSdk, ... } from '@verifiedinc-public/client-sdk';
+
+const verifiedClientSdk = new VerifiedClientSdk({ ... });
+
+// Show SDK to user (in document.body if no HTML element is passed)
+// highlight-next-line
+verifiedClientSdk.show(document.getElementById('verifiedClientSdk-container')); 
+```
+
+---
+
+
+## `destroy()`
+
+> Destroy the SDK element and invalidate the instance
+
+```typescript title="destroy() Definition"
+public destroy(): void
+```
+
+
+### Example
+
+```typescript title="Example Usage of destroy()"
+import { VerifiedClientSdk, ... } from '@verifiedinc-public/client-sdk';
+
+const verifiedClientSdk = new VerifiedClientSdk({ ... });
+
+// Destroy the SDK
+// highlight-next-line
+verifiedClientSdk.destroy(); 
+```

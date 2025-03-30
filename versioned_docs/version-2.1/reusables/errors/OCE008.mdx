@@ -1,0 +1,14 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+
+<ErrorDisplay
+  message='Invalid or expired verification code'
+  description=''
+  integrationType='Semi-Hosted (in v2.0)'
+  whenThisIsReturned='When the user input does not match the verification code, or when the user input matches an expired verification code.' 
+  howToHandle='Call the Verified API again to create a new verification code, send this code to the user via SMS, and prompt the user to input the new code.'
+  youShouldNeverGetThisError=''
+>
+  ##### `OCE008`
+</ErrorDisplay>
+
+Verification codes expire after 5 minutes.

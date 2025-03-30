@@ -1,0 +1,326 @@
+---
+id: sdk-integration
+title: SDK Integration
+sidebar_position: 3
+sidebar_label: SDK Integration
+description: Full details on how to integrate 1-Click Signup
+slug: /guides/sdk-integration
+toc_max_heading_level: 3
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
+import SendSmsToUser from '@site/versioned_docs/version-2.1/reusables/send-sms-to-user.mdx';
+import About1ClickSignupAdmonition from '@site/versioned_docs/version-2.1/reusables/about-1-click-signup-admonition.mdx';
+import PrivacyFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/privacy-first-admonition.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-admonition.mdx';
+import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
+import PromptUserToConfirmTheirData from '@site/versioned_docs/version-2.1/reusables/prompt-user-to-confirm-their-data.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
+import UseUserInputAdmonition from '@site/versioned_docs/version-2.1/reusables/use-user-input-admonition.mdx';
+import HowToTestAdmonition from '@site/versioned_docs/version-2.1/reusables/how-to-test-admonition.mdx';
+import BirthDateFormatAdmonition from '@site/versioned_docs/version-2.1/reusables/birth-date-format-admonition.mdx';
+import Chip from '@mui/material/Chip';
+import RecencyRequirementAdmonition from '@site/versioned_docs/version-2.1/reusables/recency-requirement-admonition.mdx';
+import WhenStepIsNecessaryAdmonition from '@site/versioned_docs/version-2.1/reusables/when-step-is-necessary-admonition.mdx';
+import IncludeAdditionalInfoIfPossibleAdmonition from '@site/versioned_docs/version-2.1/reusables/include-additional-info-if-possible-admonition.mdx';
+import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error-example-oce011.mdx';
+import SandboxValidationAdmonition from '@site/versioned_docs/version-2.1/reusables/sandbox-validation-admonition.mdx';
+import SequenceDiagramSDK from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-sdk.mdx';
+import SequenceDiagramAPI from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-api.mdx';
+import LocalTestingAdmonition from '@site/versioned_docs/version-2.1/reusables/local-testing-admonition.mdx';
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+import ApiKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/api-keys-admonition.mdx';
+import OneClickEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-entity-example.mdx';
+import SessionKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/session-keys-admonition.mdx';
+import ErrorSKE001 from '@site/versioned_docs/version-2.1/reusables/errors/SKE001.mdx';
+
+
+{/* 1-Click Signup is the fastest way to onboard new users.
+
+Integrating 1-Click Signup is extremely easy.
+
+:::tip ✅ 1-Hour Guarantee
+We are _obsessed_ with making it as easy as possible for you to implement 1-Click Signup.
+- If it takes you more than 1 hour to implement, we'll send you a free Verified t-shirt! 
+- If it takes you less than 1 hour, we'll send you a free t-shirt _and_ mug!
+::: */}
+
+<table>
+    <tr>
+        <th>Time to Complete</th>
+        <td>1 hour</td>
+    </tr>
+    <tr>
+        <th>Time to Test and Deploy</th>
+        <td>2-4 hours</td>
+    </tr>
+    <tr>
+        <th>Skills Required</th>
+        <td>Make API calls</td>
+    </tr>
+</table>
+
+:::tip
+**Complete the [Setup](../guides/setup) guide before following this SDK Integration guide.**
+:::
+
+:::info This is a Web Client SDK
+**The current SDK is for web clients.** Mobile client SDKs are coming soon. If you need mobile client SDKs, please [let us know](mailto:support@verified.inc) so we can prioritize them.
+:::
+
+<SequenceDiagramSDK/>
+
+<details>
+    <summary>Full Example</summary>
+
+    ```typescript title="Integrate SDK"
+    // Import SDK
+    import { VerifiedClientSdk, SdkResult, SdkError, SdkResultValues, SdkErrorReasons } from '@verifiedinc-public/client-sdk';
+
+    // Create session key: Call server to call POST /sessionKey with Verified API key
+    const SESSION_KEY = createSessionKey(); // sessionKey from POST /sessionKey
+
+    // Create SDK Instance
+    const verifiedClientSdk = new VerifiedClientSdk({
+        environment: 'sandbox', // 'sandbox' or 'production'
+        sessionKey: SESSION_KEY,
+        onResult: handleResult,
+        onError: handleError
+    });
+
+    // Handle results
+    function handleResult(data: SdkResult): void {
+        switch (data.type) {
+            case SdkResultValues.USER_SHARED_CREDENTIALS: // Success!
+                // Retrieve data: Call server with data.identityUuid to call GET /1-click/{identityUuid}
+            case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
+                // Take user to manual signup flow
+        }
+    }
+
+    // Handle errors
+    function handleError(error: SdkError)  {
+        // Restart SDK: Create new session key and SDK instance
+    }
+
+    // Show SDK to user (in document.body if no HTML element is passed)
+    verifiedClientSdk.show(document.getElementById('verifiedClientSdk-container')); 
+    ```
+</details>
+
+## 1. Create a session key.
+
+Have your client call your server to create a session key. The server should use your Verified API key to call [`POST /sessionKey`](../api-reference/endpoints#post-sessionkey). The response body will contain a `sessionKey`:
+
+```typescript title="POST /sessionKey Response Body"
+{
+    sessionKey: string
+}
+```
+
+If you get an error with [Verified error code `SKE001`](../api-reference/errors#ske001), you need to change your brand's integration type setting. Go to the Brand Details page in the [Dashboard](https://dashboard.verified.inc) and change that setting to **SDK.**
+
+Your server should return the `sessionKey` to your client, so you can use it in [step 2](#2-initialize-the-sdk).
+
+<ApiKeysAdmonition/>
+
+<SessionKeysAdmonition/>
+
+
+## 2. Initialize the SDK.
+
+Make sure you've [installed](../sdk-reference/installation) the SDK:
+
+```none title="Install SDK with NPM"
+npm i @verifiedinc-public/client-sdk
+```
+
+Then, initialize the SDK as follows.
+
+
+### a. Import the SDK.
+
+Import the SDK into your application:
+
+```typescript
+import { VerifiedClientSdk, SdkResult, SdkError, SdkResultValues, SdkErrorReasons } from '@verifiedinc-public/client-sdk';
+```
+
+
+### b. Create an SDK instance.
+
+Create a `VerifiedClientSdk` instance, setting the `environment` and passing the `sessionKey` you received from `POST /sessionKey` in [step 1](#1-create-a-session-key):
+
+```typescript
+const verifiedClientSdk = new VerifiedClientSdk({
+    environment: 'sandbox', // 'sandbox' or 'production'
+    sessionKey: 'SESSION_KEY', // sessionKey from POST /sessionKey
+    onResult: handleResult, // Result function
+    onError: handleError // Error function
+});
+```
+
+<DevelopmentWorkAdmonition/>
+
+
+### c. Define a result function.
+
+Define a function to handle results, leveraging the [`SdkResult` type](../sdk-reference/types#sdkresult):
+
+```typescript
+function handleResult(data: SdkResult) {
+    // See step 3a
+}
+```
+
+See [step 3a](#a-handle-results) for how to handle results.
+
+
+### d. Define an error function.
+
+Define a function to handle errors, leveraging the [`SdkError` type](../sdk-reference/types#sdkerror):
+
+```typescript
+function handleError(error: SdkError) {
+    // See step 3b
+}
+```
+
+See [step 3b](#b-handle-errors) for how to handle errors.
+
+
+### e. Show the SDK.
+
+Show the SDK to the user, leveraging the [`show()` method](../sdk-reference/methods#show).
+
+```typescript
+// Injected into document.body if no HTML element is passed)
+verifiedClientSdk.show(document.getElementById('verifiedClientSdk-container')); 
+```
+
+:::note
+There's also a [`destroy()` method](../sdk-reference/methods#destroy) that destroys the SDK element and invalidates the instance.
+:::
+
+
+## 3. Handle responses.
+
+
+### a. Handle results.
+
+Complete the `handleResult` function you defined in [step 2c](#c-define-a-result-function), leveraging the [`SdkResultValues` constant](../sdk-reference/constants#sdkresultvalues):
+
+```typescript
+function handleResult(data: SdkResult): void {
+    switch (data.type) {
+        case SdkResultValues.USER_SHARED_CREDENTIALS: // Success!
+            // Retrieve data: Call server with data.identityUuid to call GET /1-click/{identityUuid}
+        case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
+            // Take user to manual signup flow
+    }
+}
+```
+
+There are 2 result values to handle:
+
+<table>
+    <tr>
+        <th>Result Value</th>
+        <th>Description</th>
+        <th>How to Handle</th>
+    </tr>
+    <tr>
+        <td>`USER_SHARED_CREDENTIALS`</td>
+        <td>User successfully shared [credentials](../data#credentials) (identity data)</td>
+        <td>Retrieve data</td>
+    </tr>
+    <tr>
+        <td>`USER_OPTED_OUT`</td>
+        <td>User opted out by clicking the "Sign Up Manually Instead" button</td>
+        <td>Take user to manual signup flow</td>
+    </tr>
+</table>
+
+To retrieve data, call your server with `data.identityUuid`. The server should use your Verified API key to call [`GET /1-click/{identityUuid}`](../api-reference/endpoints#get-1-click):
+
+<ApiKeysAdmonition/>
+
+The response will be a [`1ClickEntity`](../api-reference/types#1clickentity) that contains data (user [credentials](../data#credentials) and [metadata](../data#metadata)):
+
+```typescript title="GET /1-click Response Body"
+{
+    ...1ClickEntity
+}
+```
+
+<details>
+    <summary><code>1ClickEntity</code> Example</summary>
+
+    <OneClickEntityExample/>
+</details>
+
+
+### b. Handle errors.
+
+Complete the `handleError` function you defined in [step 2d](#d-define-an-error-function):
+
+```typescript
+function handleError(error: SdkError) {
+    // Restart SDK: Create new session key and SDK instance
+}
+```
+
+There are 3 error reasons to handle:
+
+<table>
+    <tr>
+        <th>Error Reason</th>
+        <th>Description</th>
+        <th>How to Handle</th>
+    </tr>
+    <tr>
+        <td>`INVALID_SESSION_KEY`</td>
+        <td>Session key (used in [step 2b](#b-create-an-sdk-instance)) is invalid</td>
+        <td>Restart SDK</td>
+    </tr>
+    <tr>
+        <td>`SESSION_TIMEOUT`</td>
+        <td>Session timed out</td>
+        <td>Restart SDK</td>
+    </tr>
+    <tr>
+        <td>`SHARE_CREDENTIALS_ERROR`</td>
+        <td>There was an error when the user tried to share [credentials](../data#credentials) (identity data)</td>
+        <td>Restart SDK</td>
+    </tr>
+</table>
+
+We recommend you handle all error reasons by restarting the SDK. To do so, create another session key ([step 1](#1-create-a-session-key)) and initialize a new SDK instance ([step 2](#2-initialize-the-sdk)).
+
+<details>
+    <summary>How to Handle Error Reasons Differently</summary>
+
+    If you prefer to handle each error reason differently, you can certainly do so by leveraging the [`SdkErrorReasons` constant](../sdk-reference/constants#sdkerrorreasons):
+
+    ```typescript
+    switch (error.reason) {
+        case SdkErrorReasons.INVALID_SESSION_KEY:
+            // ...
+        case SdkErrorReasons.SESSION_TIMEOUT:
+            // ...
+        case SdkErrorReasons.SHARE_CREDENTIALS_ERROR:
+            // ...
+    }
+    ```
+</details>
+
+
+## Go Live!
+
+When you're ready to go live, look for a Production API key in the Dashboard (on the Brand Details page, with the Production tab active). As long as you have a contract signed with us, we will have approved you for Production access, and you'll be able to see your Production API key.
+
+Just use your Production API key to redo [step 1](#1-create-a-session-key) and [step 2](#2-initialize-the-sdk), and you'll be live with 1-Click Signup!

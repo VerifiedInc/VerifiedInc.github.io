@@ -16,20 +16,29 @@ import Admonition from '@theme/Admonition';
 import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
 import HowToTestAdmonition from '@site/versioned_docs/version-2.1/reusables/how-to-test-admonition.mdx'
 import DocCardList from '@theme/DocCardList';
+import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-recommendation-admonition.mdx';
 
 
 <table>
     <tr>
         <th>User Experience</th>
-        <td>< 10 seconds to complete 1-Click Signup</td>
+        <td>\<10 seconds to complete 1-Click Signup</td>
+    </tr>
+    <tr>
+        <th>Benefits</th>
+        <td>Increase conversion, improve KYC operations, prevent fraud</td>
     </tr>
     <tr>
         <th>Coverage</th>
-        <td>> 95% of US adults (253M people)</td>
+        <td>~95% of US adults (>253M people) — currently available in US only</td>
     </tr>
     <tr>
         <th>Time to Integrate</th>
-        <td>2-4 hours (with the SDK [integration type](./guides/setup#integration-type))</td>
+        <td>
+            <div class="small-margin-bottom">Depends on [integration type](./guides/setup#integration-type):</div>
+            - \<1 day for [**SDK**](./guides/sdk-integration)
+            - 1-2 weeks for [**API**](./guides/api-integration)
+        </td>
     </tr>
 </table>
 
@@ -38,14 +47,14 @@ import DocCardList from '@theme/DocCardList';
 
 **1-Click Signup is the _fastest_ way to sign up new users.** From just a phone number, Verified can autofill a user's data so they can share it in less than 10 seconds.
 
-**See [Data](./data) for what this data can include.** We provide a wide range of [credentials](./data#credentials) (pieces of user identity data) and rich [metadata](./data#metadata) about them, including dozens of sophisticated [risk signals](./data#risk-signals).
+**See [Data](./data) for what this data can include.** We provide a wide range of [credentials](./data/outputs/credentials) (pieces of user identity data) and rich [metadata](./data/outputs/metadata) about them, including dozens of sophisticated [risk signals](./data/outputs/metadata#risk-signals).
 
 :::info Privacy First
 **A user's data is never shared without their consent.** We are committed to putting people in control of their own data. We are SOC 2 Type II certified and compliant with major regulatory frameworks like GDPR and CCPA. For more information, please see [How We Operate](https://www.verified.inc/how-we-operate).
 :::
 
 
-:::tip Resources
+{/* :::tip Resources
 - **[Custom Demo](https://1-click.demo.verified.inc):** Try 1-Click Signup yourself with a demo auto-magically customized for your company.
 - **Guides:**
     - **[User Experience](./guides/setup):** See the 1-Click Signup user experience and flow chart.
@@ -54,10 +63,10 @@ import DocCardList from '@theme/DocCardList';
     - **[API Integration](./guides/api-integration):** How to integrate 1-Click Signup using the Verified API.
 - **[Verified Website](https://verified.inc):** Learn about 1-Click Signup from a business perspective.
 - **[Book a Call](https://calendly.com/verified-inc/intro-with-verified?text_color=000000&primary_color=0dbc3d)**: Talk to our sales team.
-:::
+::: */}
 
 
-## How It Works
+## User Experience
 
 To use 1-Click Signup, all a user needs to do is:
 1. Enter phone number
@@ -74,6 +83,13 @@ Step 3 above — prompting for a challenge (birthday/SSN4) — is necessary onl
 :::
 
 
+## Benefits
+
+- **Increase conversion:** Dramatically reduce friction, making it as easy as possible for new users to share their verified data.
+- **Increase pass rates:** Avoid user error by leveraging our autofilled, verified data.
+- **Prevent fraud:** Stop bad actors by using our [risk signals](./data/outputs/metadata#risk-signals) metadata.
+
+
 ## Coverage
 
 We can source verified data for over 95% of US adults (253M people). The data is extremely high quality because it comes from phone carriers, credit bureaus, and other trusted providers. Thanks to this quality, the data can be leveraged as part of a KYC/AML process.
@@ -83,8 +99,12 @@ We can source verified data for over 95% of US adults (253M people). The data is
 :::
 
 
-## Benefits
+## Integration
 
-- **Increase conversion:** Dramatically reduce friction, making it as easy as possible for new users to share their verified data.
-- **Increase pass rates:** Avoid user error by leveraging our autofilled, verified data.
-- **Prevent fraud:** Stop bad actors by using our [risk signals](./data#risk-signals) metadata.
+Integrating 1-Click Signup is simple. How long it takes depends on the [integration type](./guides/setup#integration-type) you choose:
+- \<1 day for [**SDK**](./guides/sdk-integration)
+- 1-2 weeks for [**API**](./guides/api-integration)
+
+To integrate, first follow the [Setup](./guides/setup) guide and then either the [SDK Integration](./guides/sdk-integration) or [API Integration](./guides/api-integration) guide.
+
+<IntegrationTypeRecommendationAdmonition/>

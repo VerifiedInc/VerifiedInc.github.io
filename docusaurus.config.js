@@ -202,7 +202,7 @@ module.exports = {
         },
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          sidebarCollapsible: false,
+          sidebarCollapsible: true,
           routeBasePath: '/',
           includeCurrentVersion: false,
           lastVersion: '2.1',

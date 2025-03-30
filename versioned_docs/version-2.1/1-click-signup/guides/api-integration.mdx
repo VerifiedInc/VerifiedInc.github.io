@@ -155,7 +155,7 @@ One of two things will happen:
 - **Success:** If we can source data based on just the phone number, the [response body](../api-reference/endpoints#post-1-click-response) will contain a [`1ClickEntity`](../api-reference/types#1clickentity) (see this [example](../api-reference/types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 5](#5-prompt-user-to-confirm-their-data).
 - **Error:** Otherwise, the response body will contain an [error](../api-reference/errors) with a Verified error code:
     - **[`OCE011`](../api-reference/errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. → _Continue to [step 3](#3-if-necessary-prompt-user-for-additional-info)_
-    - **[`OCE013`](../api-reference/errors#oce013)** indicates that Verified found no [credentials](../data#credentials) for the user. → _Fall back to a manual signup flow._(#6-if-necessary-prompt-user-for-additional-info)._
+    - **[`OCE013`](../api-reference/errors#oce013)** indicates that Verified found no [credentials](../data/outputs/credentials) for the user. → _Fall back to a manual signup flow._(#6-if-necessary-prompt-user-for-additional-info)._
     - **[`OCE017`](../api-reference/errors#oce017)** indicates that Verified blocked the user because the risk score was too high. → _Reject the user or flag them and fall back to a manual signup flow._
 
 ---
@@ -220,7 +220,7 @@ One of two things should happen:
 - **Success:** If we can source data based on the phone number and birth date, the [response body](../api-reference/endpoints#post-1-click-response) will be a [`1ClickEntity`](../api-reference/types#1clickentity) (see this [example](../api-reference/types#example-1clickentity)), which contains the user's data and metadata about it. → _Continue to [step 5](#5-prompt-user-to-confirm-their-data)._
 - **Error:** Otherwise, the response body will contain an [error](../api-reference/errors) with a Verified error code:
     - **[`OCE012`](../api-reference/errors#oce012)** indicates that one or more of the additional inputs you passed (the user's birth date and/or SSN4) mismatched. → _Return to [step 3](#3-if-necessary-prompt-user-for-additional-info)._
-    - **[`OCE013`](../api-reference/errors#oce013)** indicates that Verified found no [credentials](../data#credentials) for the user. → _Fall back to a manual signup flow._
+    - **[`OCE013`](../api-reference/errors#oce013)** indicates that Verified found no [credentials](../data/outputs/credentials) for the user. → _Fall back to a manual signup flow._
     - **[`OCE019`](../api-reference/errors#oce019)** indicates that the maximum number of attempts has been reached for one or more of the additional inputs. → _Fall back to a manual signup flow._
 
 ---

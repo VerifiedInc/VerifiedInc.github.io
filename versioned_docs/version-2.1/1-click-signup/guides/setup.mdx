@@ -11,6 +11,8 @@ toc_max_heading_level: 4
 import Admonition from '@theme/Admonition';
 import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
 import Chip from '@mui/material/Chip';
+import RiskSignalsOptionsTable from '@site/versioned_docs/version-2.1/reusables/risk-signals-options-table.mdx';
+import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-recommendation-admonition.mdx';
 
 
 {/* 1-Click Signup is the fastest way to onboard new users.
@@ -66,25 +68,24 @@ Choose which integration type you want to use:
     </tr>
     <tr>
         <td>**SDK** <Chip label="Recommended" variant="outlined" size="small" color="primary"/> <br/> <span class="font-weight-normal"></span></td>
-        <td>Very low (< 1 day)</td>
+        <td>\<1 day</td>
         <td>You use our (web) client SDK, and we handle the rest</td>
     </tr>
     <tr>
         <td>**API** <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/> <br/> <span class="font-weight-normal"></span></td>
-        <td>Medium High (1-2 weeks)</td>
+        <td>1-2 weeks</td>
         <td>You use our API only and build everything yourself</td>
     </tr>
 </table>
 
 :::note Looking for Hosted, Semi-Hosted, or Non-Hosted?
-**Hosted,** **Semi-Hosted,** and **Non-Hosted** are integration types [in v2.0](/v2.0/integration-guide#2-configure-brand-settings) but not in v2.1. _**Non-Hosted** in v2.0 is equivalent to **API** in v2.1._
+<div class="small-margin-bottom">**We’ve reorganized!** The integration types [in v2.0](/v2.0/integration-guide#2-configure-brand-settings) are updated for v2.1 as follows:</div>
+- **Hosted** in v2.0 is replaced by **SDK** in v2.1
+- **Semi-Hosted** in v2.0 is no longer available in v2.1
+- **Non-Hosted** in v2.0 is equivalent to **API** in v2.1
 :::
 
-<Admonition type="tip" title="We Strongly Recommend the SDK Integration Type">
-    **The SDK integration type is by *far* the easier option, and we strongly recommend using it.** The SDK handles almost everything for you and is highly customizable, so you can use it to exactly match your branding and desired user experience. It implements our recommended [user experience](../guides/user-experience), which is hyper optimized from our experience verifying millions of users.
-
-    With the **API** integration type, you need to handle everything yourself, and you need approval from us to go live.
-</Admonition>
+<IntegrationTypeRecommendationAdmonition/>
     
 
 {/* Commenting out until we have backend support */}
@@ -190,29 +191,12 @@ Always prompting for a challenge can help improve data quality for some user pop
 ### Risk Signals 
 
 :::note Definition
-[**Risk signals**](../data#risk-signals) are metadata that enhance 1-Click Signup's anti-fraud capabilities.
+[**Risk signals**](../data/outputs/metadata#risk-signals) are metadata that enhance 1-Click Signup's anti-fraud capabilities.
 :::
 
 Choose which risk signals to include in Verified's responses:
 
-<table>
-    <tr>
-        <th>Option</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>Basic</td>
-        <td>Include only high level risk signals (Overall Score, Level, and Recommendation).</td>
-    </tr>
-    <tr>
-        <td>Advanced <Chip label="Extra" variant="outlined" size="small" color="primary"/></td>
-        <td>Include all risk signals.</td>
-    </tr>
-    <tr>
-        <td>Off <Chip label="Not Recommended" variant="outlined" size="small" color="error"/></td>
-        <td>Include no risk signals.</td>
-    </tr>
-</table>
+<RiskSignalsOptionsTable/>
 
 :::tip Advanced Has Extra Cost 
 **Advanced** risk signals come with extra cost. They're particularly relevant if you're using 1-Click Signup for a high sensitivity use case where fraud is a major risk. 
@@ -226,11 +210,11 @@ Choose which risk signals to include in Verified's responses:
 ### Default Credential Requests 
 
 :::note Definitions
-- A [**credential**](../data#credentials) is a piece of identity data about a user (like a first name or address).
+- A [**credential**](../data/outputs/credentials) is a piece of identity data about a user (like a first name or address).
 - A **credential request** is how you ask Verified for a particular credential. It encodes what type of data you're asking for, whether it's required or optional, whether multiple values should be returned, etc. See the [`CredentialRequest`](../api-reference/types#credentialrequest) type for full details.
 :::
 
-Choose which [credentials](../data#credentials) Verified should try to source about the user:
+Choose which [credentials](../data/outputs/credentials) Verified should try to source about the user:
 
 
 <details>
@@ -247,7 +231,7 @@ Choose which [credentials](../data#credentials) Verified should try to source ab
         <tr>
             <td>Field Type</td>
             <td>SDK and API</td>
-            <td>[Credential](../data#credentials) type</td>
+            <td>[Credential](../data/outputs/credentials) type</td>
             <td>-</td>
             <td>Type of user data this field is for</td>
             <td>Full Name</td>

@@ -1,7 +1,7 @@
 import Admonition from '@theme/Admonition';
 import { GridContainer, GridRow, GridColumn, GridNonStickyElement, GridStickyElement } from '@site/src/components/Grid';
 
-Depending on your use case, you may need to display the user's data to them and have them confirm it's correct. You only need to display the user's [credential](/data#credentials) data (their identity data, like their address or birth date). You don't need to display any [metadata](/data#metadata), though you can choose to if it's relevant.
+Depending on your use case, you may need to display the user's data to them and have them confirm it's correct. You only need to display the user's [credential](/data/outputs/credentials) data (their identity data, like their address or birth date). You don't need to display any [metadata](/data/outputs/metadata), though you can choose to if it's relevant.
 
 <Admonition type="tip" title="Why We Recommend You Do This">
     In general, we recommend you have the user confirm their data for two reasons:
@@ -46,7 +46,7 @@ Depending on your use case, you may need to display the user's data to them and 
 
 In edit mode, we recommend that you display the user's data statically and show an edit button that lets them go into edit mode. 
 
-If you receive multiple [credentials](/data#credentials) of a given type (for example Address), you can display a dropdown of options. If the user goes into edit mode, you should use the selected value in the dropdown to autofill an input for that credential type.
+If you receive multiple [credentials](/data/outputs/credentials) of a given type (for example Address), you can display a dropdown of options. If the user goes into edit mode, you should use the selected value in the dropdown to autofill an input for that credential type.
 
 
 #### b. Use a form with autofilled inputs for edit mode.

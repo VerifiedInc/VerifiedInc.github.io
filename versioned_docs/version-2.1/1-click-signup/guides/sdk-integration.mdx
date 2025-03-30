@@ -235,7 +235,7 @@ There are 2 result values to handle:
     </tr>
     <tr>
         <td>`USER_SHARED_CREDENTIALS`</td>
-        <td>User successfully shared [credentials](../data#credentials) (identity data)</td>
+        <td>User successfully shared [credentials](../data/outputs/credentials) (identity data)</td>
         <td>Retrieve data</td>
     </tr>
     <tr>
@@ -249,7 +249,7 @@ To retrieve data, call your server with `data.identityUuid`. The server should u
 
 <ApiKeysAdmonition/>
 
-The response will be a [`1ClickEntity`](../api-reference/types#1clickentity) that contains data (user [credentials](../data#credentials) and [metadata](../data#metadata)):
+The response will be a [`1ClickEntity`](../api-reference/types#1clickentity) that contains data (user [credentials](../data/outputs/credentials) and [metadata](../data/outputs/metadata)):
 
 ```typescript title="GET /1-click Response Body"
 {
@@ -294,7 +294,7 @@ There are 3 error reasons to handle:
     </tr>
     <tr>
         <td>`SHARE_CREDENTIALS_ERROR`</td>
-        <td>There was an error when the user tried to share [credentials](../data#credentials) (identity data)</td>
+        <td>There was an error when the user tried to share [credentials](../data/outputs/credentials) (identity data)</td>
         <td>Restart SDK</td>
     </tr>
 </table>

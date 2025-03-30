@@ -476,6 +476,14 @@ td:first-child {
   margin-right: 0.25em;
 }
 
+/* For chips in headers */
+.chip-for-header-with-left-margin {
+  margin-left: 0.25em;
+}
+.chip-for-header-with-right-margin {
+  margin-right: 0.25em;
+}
+
 .font-weight-normal {
   font-weight: normal;
 }
@@ -483,4 +491,8 @@ td:first-child {
 /* Remove space after lists within tables */
 table ul, table ol {
   margin-bottom: 0;
+}
+
+.small-margin-bottom {
+  margin-bottom: calc(0.25 * var(--ifm-paragraph-margin-bottom));
 }

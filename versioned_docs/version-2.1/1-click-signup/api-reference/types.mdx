@@ -85,7 +85,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         <td>`identifiers`</td>
         <td>`Object`</td>
         <td>See above</td>
-        <td>User [identifiers](../data/#identifiers), keyed on `identifierKey`</td>
+        <td>User [identifiers](../data/inputs/identifiers), keyed on `identifierKey`</td>
         <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
     </tr>
     <tr>
@@ -94,7 +94,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
             <details>
                 <summary>`enum`</summary>
 
-                Possible values (see [identifiers](../data/#identifiers) for details):
+                Possible values (see [identifiers](../data/inputs/identifiers) for details):
                     - `phone`
                     - `email`
             </details>
@@ -107,7 +107,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         <td>`credentials`</td>
         <td>`Object`</td>
         <td>See above</td>
-        <td>User [credentials](../data/#credentials), keyed on `credentialKey`</td>
+        <td>User [credentials](../data/outputs/credentials), keyed on `credentialKey`</td>
         <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
     </tr>
     <tr>
@@ -116,7 +116,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
             <details>
                 <summary>`enum`</summary>
 
-                Possible values (see [credentials](../data/#credential) for details):
+                Possible values (see [credentials](../data/outputs/credentials) for details):
                     - `phone`
                     - `email`
                     - `fullName.firstName`
@@ -142,7 +142,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
         <td>`metadata`</td>
         <td>`Object`</td>
         <td>See above</td>
-        <td>[Metadata](../data/#metadata), keyed on `metadataKey`</td>
+        <td>[Metadata](../data/outputs/metadata), keyed on `metadataKey`</td>
         <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
     </tr>
     <tr>
@@ -484,7 +484,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
 
 ## `RiskSignals`
 
-See [Risk Signals](../data#risk-signals) on the Data page for details about the attributes and when they're included.
+See [Risk Signals](../data/outputs/metadata#risk-signals) on the Data page for details about the attributes and when they're included.
 
 {/* Should add ipAddress when we enable support for it */}
 

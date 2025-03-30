@@ -1,9 +1,9 @@
 {
-  "label": "Guides",
-  "position": 3,
+  "label": "Data",
+  "position": 4,
   "collapsed": false,
   "link": {
     "type": "generated-index",
-    "slug": "/guides"
+    "slug": "/data"
   }
 }

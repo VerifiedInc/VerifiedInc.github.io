@@ -1,0 +1,96 @@
+---
+id: identifiers
+title: Identifiers
+sidebar_label: Identifiers
+sidebar_position: 3
+description: Inputs passed to the Verified SDK and API
+slug: /data/inputs/identifiers
+toc_max_heading_level: 5
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import BrandsAdmonition from '@site/versioned_docs/version-2.1/reusables/brands-admonition.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-admonition.mdx';
+import DomainsAdmonition from '@site/versioned_docs/version-2.1/reusables/domains-admonition.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
+import FullDefinitionAdmonition from '@site/versioned_docs/version-2.1/reusables/full-definition-admonition.mdx';
+import Post1ClickRequestBodyTableShared from '@site/versioned_docs/version-2.1/reusables/post-1-click-request-body-table-shared.mdx';
+import Post1ClickRequestBodyTableHosted from '@site/versioned_docs/version-2.1/reusables/post-1-click-request-body-table-hosted.mdx'
+import Post1ClickResponseBodyTableUuid from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-uuid.mdx';
+import Post1ClickResponseBodyTableUrl from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-url.mdx';
+import Post1ClickResponseBodyTableCode from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-code.mdx';
+import Post1ClickResponseBodyTableIdentity from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-identity.mdx';
+import UseUserInputAdmonition from '@site/versioned_docs/version-2.1/reusables/use-user-input-admonition.mdx'
+import CredentialRequestTableShared from '@site/versioned_docs/version-2.1/reusables/credential-request-table-shared.mdx'
+import CredentialRequestTableHosted from '@site/versioned_docs/version-2.1/reusables/credential-request-table-sdk.mdx'
+import OneClickEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-entity-example.mdx'
+import Chip from '@mui/material/Chip';
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+
+
+> An **identifier** is a phone number or email address the user uses to verify for 1-Click Signup.
+
+**Identifiers are _inputs_:** users input them and/or you pass them to us in API request bodies.
+
+:::note
+To source verified data ([credentials](../outputs/credentials) and [metadata](../outputs/metadata)) for a user:
+- **Phone is always required.** 
+- **Email is optional,** but including it helps source better and more metadata — especially [risk signals](../outputs/metadata#risk-signals). It cannot be used on its own to source [credentials](../outputs/credentials) (user identity data).
+- **Birth date and/or SSN4 are only required sometimes:** if you get the [`OCE11`](../../api-reference/errors#oce011) error code, which indicates that additional information is required. This happens when Verified is unable to narrow down to a single user based on only phone (and email if included).
+:::
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td>`phone`</td>
+        <td>`string`</td>
+        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
+        <td>Phone number a user uses to verify for 1-Click Signup</td>
+        <td>`"+12125550010"`</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>`email`</td>
+        <td>`string`</td>
+        <td>email</td>
+        <td>Email address a user uses to verify for 1-Click Signup</td>
+        <td>`"richard@piedpiper.net"`</td>
+    </tr>
+    <tr>
+        <td>Birth Date</td>
+        <td>`birthDate`</td>
+        <td>`string`</td>
+        <td>`YYYY-MM-DD`</td>
+        <td>User's birth date (in [Sandbox](../../api-reference/environments#sandbox), this must be `"1989-08-01"` to pass validation)</td>
+        <td>`"1989-08-01"`</td>
+    </tr>
+    <tr>
+        <td>SSN4</td>
+        <td>`ssn4`</td>
+        <td>`string`</td>
+        <td>4 digits (0-9)</td>
+        <td>Last 4 digits of user's Social Security Number (in [Sandbox](../../api-reference/environments#sandbox), this must be `"6789"` to pass validation)</td>
+        <td>`"6789"`</td>
+    </tr>
+    {/* <tr>
+        <td>IP Address</td>
+        <td>`ipAddress`</td>
+        <td>`string`</td>
+        <td>IPv6</td>
+        <td>IP address for the user as they do 1-Click Signup</td>
+        <td>`"richard@piedpiper.net"`</td>
+    </tr> */}
+</table>

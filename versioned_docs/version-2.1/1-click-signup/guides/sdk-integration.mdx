@@ -114,7 +114,13 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 
 ## 1. Create a session key.
 
-Have your client call your server to create a session key. The server should use your Verified API key to call [`POST /sessionKey`](../api-reference/endpoints#post-sessionkey). The response body will contain a `sessionKey`:
+Have your client call your server to create a session key. The server should use your Verified API key to call [`POST /sessionKey`](../api-reference/endpoints#post-sessionkey).
+
+:::tip
+**You can access your API keys in the [Dashboard](https://dashboard.verified.inc):** see the [Setup](../guides/setup) guide.
+:::
+
+The response body will contain a `sessionKey`:
 
 ```typescript title="POST /sessionKey Response Body"
 {
@@ -321,6 +327,22 @@ We recommend you handle all error reasons by restarting the SDK. To do so, creat
 
 ## Go Live!
 
-When you're ready to go live, look for a Production API key in the Dashboard (on the Brand Details page, with the Production tab active). As long as you have a contract signed with us, we will have approved you for Production access, and you'll be able to see your Production API key.
+:::tip Customize SDK Styling
+Remember that you can customize [SDK styling](../guides/setup#sdk-styling) in the [Dashboard](https://dashboard.verified.inc) at any time.
+:::
 
-Just use your Production API key to redo [step 1](#1-create-a-session-key) and [step 2](#2-initialize-the-sdk), and you'll be live with 1-Click Signup!
+**When you're ready to go live, get a Production API key:**
+1. Go to the **Brand Details** page for your brand.
+2. Click the **Sandbox** tab in the upper right, and make sure your brand settings are synced. _If they're not, click the **Sync to Production** button._
+3. Click the **Production** tab in the upper right, and copy a **Production API key** from the top of the page.
+
+:::note
+As long as you have a contract signed with us, we will have approved you for [Production](../api-reference/environments#production) access, and you'll be able to see your Production API key. If you don't see one, reach out to your Verified representative.
+:::
+
+**Just swap Sandbox for Production:**
+1. Swap your Sandbox API key for your Production API key.
+2. Swap the [Sandbox base URL](../api-reference/environments#sandbox) for the [Production base URL](../api-reference/environments#production).
+3. Swap `'sandbox'` for `'production'` in the `environment` attribute of the SDK instance (see [step 2b](#b-create-an-sdk-instance)).
+
+Then you'll be live with 1-Click Signup! ✅

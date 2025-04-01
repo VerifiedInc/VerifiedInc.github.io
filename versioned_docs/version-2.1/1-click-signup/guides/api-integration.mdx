@@ -243,37 +243,49 @@ One of two things should happen:
 
 ## Go Live!
 
-When you're ready to go live:
+
+### Request Approval
+
+**When you're ready to go live, request approval for [Production](../api-reference/environments#production) access:**
 1. Go to the **Brand Details** page for your brand in the Verified [Dashboard](https://dashboard.verified.inc).
-2. Click the **Production** tab in the upper right.
-3. Click the **Request Approval** button under the API Keys section.
-4. Complete the steps listed in the dialog that appears:
-5. Click the **Submit Request** button.
+2. Click the **Sandbox** tab in the upper right, and make sure your brand settings are synced. _If they're not, click the **Sync to Production** button._
+3. Click the **Production** tab in the upper right, and click the **Request Approval** button under the API Keys section.
+5. Complete the **steps** listed in the dialog.
+6. Click the **Submit Request** button.
 
 In step 4, you'll be asked to confirm the following:
 <input type="checkbox" id="legal"/>
-<label for="legal">**We've included a "powered by Verified" graphic and the Verified legal language.** (See [step 1](#1-prompt-user-for-phone-number-and-verify-it))</label>
+<label for="legal">We've included a "powered by Verified" graphic and the Verified legal language. (See [step 1](#1-prompt-user-for-phone-number-and-verify-it))</label>
 <br/>
 <input type="checkbox" id="keys"/>
-<label for="keys">**We’re using Verified API keys securely: server side, never client side.**</label>
+<label for="keys">We’re using Verified API keys securely: server side, never client side.</label>
 <br/>
 <input type="checkbox" id="phones"/>
-<label for="phonse">**We're properly verifying users' phone numbers.**</label>
+<label for="phonse">We're properly verifying users' phone numbers.</label>
 <br/>
 <input type="checkbox" id="errors"/>
-<label for="error">**We’re handling relevant [Verified error codes](../api-reference/errors#verified-error-codes).**</label>
+<label for="error">We’re handling relevant [Verified error codes](../api-reference/errors#verified-error-codes).</label>
 <br/>
 <input type="checkbox" id="ssns"/>
-<label for="ssns">**If we’re requesting SSNs, we’re masking them server side and only exposing the last 4 digits client side.**</label>
+<label for="ssns">If we’re requesting SSNs, we’re masking them server side and only exposing the last 4 digits client side.</label>
 <br/>
 <input type="checkbox" id="testing"/>
-<label for="testing">**Our 1-Click Signup flow is working end-to-end in [Sandbox](../api-reference/environments#sandbox).**</label>
+<label for="testing">Our 1-Click Signup flow is working end-to-end in [Sandbox](../api-reference/environments#sandbox).</label>
 <br/>
 <br/>
 
-We will review your integration to see that it's compliant and working properly. Once we approve it, you'll have access to a [Production](../api-reference/environments#production) API key on the Brand Details page. 
+:::important
+You'll also be prompted to share a link to your Sandbox integration and/or schedule a 15 minute call with us, so we can review your integration to see that it's compliant and working properly. Once we approve it, you'll have access to a Production API key on the Brand Details page. 
+:::
 
-Just swap your Sandbox API key and the [Sandbox base URL](../api-reference/environments#sandbox) for a Production API key and the [Production base URL](../api-reference/environments#production), and you'll be live with 1-Click Signup!
+
+### Swap Sandbox for Production
+
+**Once you have Production access, just swap Sandbox for Production:**
+1. Swap your Sandbox API key for your Production API key.
+2. Swap the [Sandbox base URL](../api-reference/environments#sandbox) for the [Production base URL](../api-reference/environments#production).
+
+Then you'll be live with 1-Click Signup! ✅
 
 
 {/* ## User Experience

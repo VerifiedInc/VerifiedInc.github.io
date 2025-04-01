@@ -17,7 +17,7 @@ module.exports = {
   projectName: 'VerifiedInc.github.io', // Usually your repo name.
   themeConfig: {
     announcementBar: {
-      content: '<b>The new 1-Click Signup SDK is live!</b> It\'s <i>10x faster</i> to integrate than the API',
+      content: '<b>The new [1-Click Signup SDK](/guides/sdk-integration) is live!</b> It\'s <i>10x faster</i> to integrate than the API',
       backgroundColor: '#0dbc3d',
       textColor: '#ffffff',
     },
@@ -217,11 +217,13 @@ module.exports = {
             '2.0': {
               label: 'v2.0',
               badge: false,
+              banner: 'none',
               path: '/v2.0'
             },
             '2.1': {
               label: 'v2.1',
               badge: false,
+              banner: 'none',
               path: '/'
             },
           },
@@ -237,8 +239,8 @@ module.exports = {
       require.resolve('docusaurus-lunr-search'),
       {
         // options, ref: https://github.com/praveenn77/docusaurus-lunr-search#options-available
-        // Commenting out for now because removing hidden directory
-        // excludeRoutes: hiddenFiles,
+        // Exclude v2.0 to avoid people accidentally switching versions
+        excludeRoutes: ['/versioned_docs/version-2.0', '/versioned_docs/version-2.1/reusables'],
         indexBaseUrl: true
       }
     ],

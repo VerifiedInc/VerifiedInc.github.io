@@ -28,10 +28,9 @@ At Verified, _signup is what we do._ We are experts in how to optimize onboardin
 :::
 
 Full details are below, but the basic user experience is:
-1. Enter phone number
-2. Verify phone number
-3. (if necessary) Enter birthday/SSN4
-4. Confirm autofilled info
+1. Enter and verify phone number
+2. (if necessary) Enter birthday/SSN4
+3. Confirm autofilled info
 
 :::note There Are Only a Few Screens!
 This user experience may look complicated, and in some ways it is: achieving world class UX requires getting many small details right. But at its core, it's simple by design and takes only a few screens. Users complete 1-Click Signup in less than 10 seconds: try it yourself with a [custom demo](../custom-demo).
@@ -40,8 +39,8 @@ This user experience may look complicated, and in some ways it is: achieving wor
 
 ## Flow Chart
 
-![](/img/ux-flow-chart.png)
-↗️ [Open in new tab](/img/ux-flow-chart.png) (for easy zooming)
+![](/img/ux-flow-chart-without-manual-signup.png)
+↗️ [Open in new tab](/img/ux-flow-chart-without-manual-signup.png) (for easy zooming)
 
 :::important
 To implement this user experience yourself (which is only necessary if you choose the **API** [integration type](../guides/setup#integration-type)), without our SDK, you need to handle each action labeled Verified.
@@ -415,7 +414,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 > ?
 
-                *Appears only for 1-Click Signup, not manual signup.*
+                {/* *Appears only for 1-Click Signup, not manual signup.* */}
 
                 *Opens [informational modal](#informational).*
 
@@ -426,7 +425,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 > X
 
-                *Appears only for 1-Click Signup, not manual signup.*
+                {/* *Appears only for 1-Click Signup, not manual signup.* */}
 
                 *Closes [informational modal](#informational).*
 
@@ -438,7 +437,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 > Verified autofills your info from trusted sources so you don’t have to enter it manually. It’s fast, safe, and secure.
 
-                *Appears only for 1-Click Signup, not manual signup.*
+                {/* *Appears only for 1-Click Signup, not manual signup.* */}
 
                 - Graphic
                 - Lock icon with: 
@@ -447,24 +446,24 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Header
 
-                If in view or edit state:
+                {/* If in view or edit state: */}
 
                 > Confirm Your Info
 
-                If in manual signup state:
+                {/* If in manual signup state:
 
-                > Manual Signup
+                > Manual Signup */}
 
 
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Description
 
-                If in view or edit state:
+                {/* If in view or edit state: */}
 
                 > Make sure everything is accurate.
 
-                If in manual signup state:
+                {/* If in manual signup state:
 
-                > Enter your info below.
+                > Enter your info below. */}
 
 
                 #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
@@ -473,9 +472,10 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 <PoweredByGraphic/>
 
-                *Appears only in the 1-Click Signup states.*
+                {/* *Appears only in the 1-Click Signup states.* */}
 
-
+                
+                {/*
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Back
 
                 > Back to 1-Click Signup
@@ -487,6 +487,7 @@ To implement this user experience yourself (which is only necessary if you choos
                 *Takes user back to [phone screen](#phone).*
 
                 - [Error](../guides/setup#sdk-styling) color
+                */}
 
 
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>First Name
@@ -646,8 +647,8 @@ To implement this user experience yourself (which is only necessary if you choos
                 ![](/img/ux-screens/info-edit.png)
                 *Edit State* ↗️ [Open in new tab](/img/ux-screens/info-edit.png)
 
-                ![](/img/ux-screens/info-manual_signup.png)
-                *Manual Signup State* ↗️ [Open in new tab](/img/ux-screens/info-manual_signup.png)
+                {/* ![](/img/ux-screens/info-manual_signup.png)
+                *Manual Signup State* ↗️ [Open in new tab](/img/ux-screens/info-manual_signup.png) */}
 
             </GridStickyElement>
         </GridColumn>

@@ -31,6 +31,9 @@ import CredentialRequestTableHosted from '@site/versioned_docs/version-2.0/reusa
 import OneClickEntityExample from '@site/versioned_docs/version-2.0/reusables/1-click-entity-example.mdx'
 import Chip from '@mui/material/Chip';
 import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+import MigrationAdmonition from '@site/versioned_docs/version-2.0/reusables/migration-admonition.mdx';
+
+<MigrationAdmonition/>
 
 
 ## Identifiers
@@ -111,7 +114,7 @@ To source verified data ([credentials](#credentials) and [metadata](#metadata)) 
 <CollapsibleGroup>
 <CollapsibleSection>
 <CollapsibleHeader>
-### KYC (Know Your Customer)
+### Core KYC (Know Your Customer) {#core-kyc}
 </CollapsibleHeader>
 
 :::note Coverage
@@ -148,7 +151,7 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         </td>
         <td>Full name</td>
         <td>
-            - See [`1ClickEntity` example](./types#example-1clickentity)
+            - See [`1ClickEntity` example](../../api-reference/types#example-1clickentity)
             - `"Hendricks, Richard"`
         </td>
     </tr>
@@ -189,7 +192,7 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         </td>
         <td>Address</td>
         <td>
-            - See [`1ClickEntity` example](./types#example-1clickentity)
+            - See [`1ClickEntity` example](../../api-reference/types#example-1clickentity)
             - `"Palo Alto, US-CA"`
         </td>
     </tr>
@@ -248,7 +251,10 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
             - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
         </td>
         <td>Country of address</td>
-        <td>`"US"`</td>
+        <td>
+            - `"US"`
+            - `"United States of America"`
+        </td>
     </tr>
     <tr>
         <td>Birth Date</td>
@@ -272,6 +278,30 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         <td>Social Security Number</td>
         <td>`"123-45-6789"`</td>
     </tr>
+    {/* <tr>
+        <td>Age</td>
+        <td>`age`</td>
+        <td>`string`</td>
+        <td>1-3 digits (0-9)</td>
+        <td>Age in years</td>
+        <td>`"35"`</td>
+    </tr> */}
+    <tr>
+        <td>Gender</td>
+        <td>`gender`</td>
+        <td>`string`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"Male"`
+                    - `"Female"`
+            </details>
+        </td>
+        <td>Gender</td>
+        <td>`"Female"`</td>
+    </tr>
     <tr>
         <td>Email <Chip label="Not Recommended" variant="outlined" size="small" color="error"/></td>
         <td>`email`</td>
@@ -288,9 +318,11 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
 
 </CollapsibleSection>
 
-<CollapsibleSection>
+
+
+{/*<CollapsibleSection>
 <CollapsibleHeader>
-### Credit Card <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#financials}
+### Credit Card <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#credit-card}
 </CollapsibleHeader>
 
 <table>
@@ -371,7 +403,7 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         </td>
         <td>Address</td>
         <td>
-            - See [`1ClickEntity` example](./types#example-1clickentity)
+            - See [`1ClickEntity` example](../../api-reference/types#example-1clickentity)
             - `"Palo Alto, US-CA"`
         </td>
     </tr>
@@ -430,67 +462,15 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
             - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
         </td>
         <td>Country of address</td>
-        <td>`"US"`</td>
+        <td>
+            - `"US"`
+            - `"United States of America"`
+        </td>
     </tr>
 </table>
 
-</CollapsibleSection>
+</CollapsibleSection> */}
 
-<CollapsibleSection>
-<CollapsibleHeader>
-### Employment <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#employment}
-</CollapsibleHeader>
-
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Key</th>
-        <th>Type</th>
-        <th>Format(s)</th>
-        <th>Description</th>
-        <th>Example</th>
-    </tr>
-    <tr>
-        <td>Employer</td>
-        <td>`employer`</td>
-        <td>`Object`</td>
-        <td>Object with keys for all child credentials listed below</td>
-        <td>Employer information</td>
-        <td>-</td>
-    </tr>
-    <tr>
-        <td>↳ Employer Name</td>
-        <td>`employer.employerName`</td>
-        <td>`string`</td>
-        <td>`Title Case`</td>
-        <td>Employer name</td>
-        <td>`"Pied Piper"`</td>
-    </tr>
-    <tr>
-        <td>↳ Employment Start Date</td>
-        <td>`employer.employmentStartDate`</td>
-        <td>`string`</td>
-        <td>
-            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
-            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
-        </td>
-        <td>Employment start date</td>
-        <td>
-            - `"1396310400000"`
-            - `"04/01/2014"`
-        </td>
-    </tr>
-    <tr>
-        <td>↳ Title</td>
-        <td>`employer.title`</td>
-        <td>`string`</td>
-        <td>`Title Case`</td>
-        <td>Title of employment</td>
-        <td>`"CEO"`</td>
-    </tr>
-</table>
-
-</CollapsibleSection>
 
 <CollapsibleSection>
 <CollapsibleHeader>
@@ -523,6 +503,14 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         <td>`"4Y1SL65848Z411439"`</td>
     </tr>
     <tr>
+        <td>↳ License Plate</td>
+        <td>`vehicle.licensePlate`</td>
+        <td>`string`</td>
+        <td>Any alphanumeric string</td>
+        <td>Vehicle license plate</td>
+        <td>`"ABC123"`</td>
+    </tr>
+    <tr>
         <td>↳ Make</td>
         <td>`vehicle.make`</td>
         <td>`string`</td>
@@ -552,7 +540,7 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
             - `"08/01/1989"`
         </td>
     </tr>
-    <tr>
+    {/* <tr>
         <td>↳ Owner(s)</td>
         <td>`vehicle.owners`</td>
         <td>`string[]`</td>
@@ -574,7 +562,6 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         <td>
             <details>
                 <summary>`enum`</summary>
-
                 Possible values:
                     - `"USD"`
             </details>
@@ -590,14 +577,15 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         <td>Any number of digits (0-9)</td>
         <td>Amount of manufacturer's suggested retail price</td>
         <td>`"10000"`</td>
-    </tr>
+    </tr> */}
 </table>
 
 </CollapsibleSection>
 
+
 <CollapsibleSection>
 <CollapsibleHeader>
-### Properties <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#properties}
+### Employment <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#employment}
 </CollapsibleHeader>
 
 <table>
@@ -610,16 +598,24 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         <th>Example</th>
     </tr>
     <tr>
-        <td>Property</td>
-        <td>`property`</td>
+        <td>Employer</td>
+        <td>`employer`</td>
         <td>`Object`</td>
         <td>Object with keys for all child credentials listed below</td>
-        <td>Property information</td>
+        <td>Employer information</td>
         <td>-</td>
     </tr>
     <tr>
+        <td>↳ Name</td>
+        <td>`employer.name`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Employer name</td>
+        <td>`"Pied Piper"`</td>
+    </tr>
+    <tr>
         <td>↳ Address</td>
-        <td>`property.address`</td>
+        <td>`employer.address`</td>
         <td>
             - **Default:** `Object`
             - `string`
@@ -630,7 +626,7 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         </td>
         <td>Address</td>
         <td>
-            - See [`1ClickEntity` example](./types#example-1clickentity)
+            - See [`1ClickEntity` example](../../api-reference/types#example-1clickentity)
             - `"Palo Alto, US-CA"`
         </td>
     </tr>
@@ -689,31 +685,41 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
             - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
         </td>
         <td>Country of address</td>
-        <td>`"US"`</td>
+        <td>
+            - `"US"`
+            - `"United States of America"`
+        </td>
     </tr>
-    <tr>
-        <td>↳ Owner(s)</td>
-        <td>`property.owners`</td>
-        <td>`string[]`</td>
-        <td>`Title Case`</td>
-        <td>Names of property owner(s)</td>
-        <td>`["Erlich Bachman"]`</td>
-    </tr>
-    <tr>
-        <td>↳ Details</td>
-        <td>`property.details`</td>
+    {/* <tr>
+        <td>↳ Employment Start Date</td>
+        <td>`employer.employmentStartDate`</td>
         <td>`string`</td>
-        <td>`Sentence case`</td>
-        <td>Any additional property details</td>
-        <td>`"Single family home, 4BR/3BA"`</td>
+        <td>
+            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
+            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+        </td>
+        <td>Employment start date</td>
+        <td>
+            - `"1396310400000"`
+            - `"04/01/2014"`
+        </td>
     </tr>
+    <tr>
+        <td>↳ Title</td>
+        <td>`employer.title`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Title of employment</td>
+        <td>`"CEO"`</td>
+    </tr> */}
 </table>
 
 </CollapsibleSection>
 
+
 <CollapsibleSection>
 <CollapsibleHeader>
-### Government IDs <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#government-ids}
+### Properties <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#properties}
 </CollapsibleHeader>
 
 <table>
@@ -726,59 +732,120 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         <th>Example</th>
     </tr>
     <tr>
-        <td>Government ID</td>
-        <td>`governmentId`</td>
+        <td>Property</td>
+        <td>`property`</td>
         <td>`Object`</td>
         <td>Object with keys for all child credentials listed below</td>
-        <td>Government ID</td>
+        <td>Property information</td>
         <td>-</td>
     </tr>
     <tr>
-        <td>↳ Document Type</td>
-        <td>`governmentId.documentType`</td>
+        <td>↳ Address</td>
+        <td>`property.address`</td>
         <td>
-            <details>
-                <summary>`enum`</summary>
-
-                Possible values:
-                    - `"drivers_license"`
-                    - `"passport"`
-                    - `"resident_card"`
-            </details>
+            - **Default:** `Object`
+            - `string`
         </td>
-        <td>`snake_case`</td>
-        <td>Type of government ID</td>
-        <td>-</td>
+        <td>
+            - **Default:** Object with keys for all child credentials listed below
+            - Any combination of child `shortenedCredentialType`s under `address`, `,` (comma), and `-` (dash)
+        </td>
+        <td>Address</td>
+        <td>
+            - See [`1ClickEntity` example](../../api-reference/types#example-1clickentity)
+            - `"Palo Alto, US-CA"`
+        </td>
     </tr>
     <tr>
-        <td>↳ Document Number</td>
-        <td>`governmentId.documentNumber`</td>
+        <td>↳ ↳ Line 1</td>
+        <td>`property.address.line1`</td>
         <td>`string`</td>
-        <td>Any number of digits (0-9)</td>
-        <td>Number of government ID</td>
-        <td>`"9876543210"`</td>
+        <td>`Title Case`</td>
+        <td>Line 1 of address</td>
+        <td>`"5320 Newell Rd"`</td>
     </tr>
     <tr>
-        <td>↳ Document Front Image</td>
-        <td>`governmentId.documentFrontImage`</td>
+        <td>↳ ↳ Line 2</td>
+        <td>`property.address.line2`</td>
         <td>`string`</td>
-        <td>URL</td>
-        <td>Link to image of front of government ID</td>
-        <td>`"+12125550010"`</td>
+        <td>`Title Case`</td>
+        <td>Line 2 of address</td>
+        <td>`""`</td>
     </tr>
     <tr>
-        <td>↳ Document Back Image</td>
-        <td>`governmentId.documentBackImage`</td>
+        <td>↳ ↳ City</td>
+        <td>`property.address.city`</td>
         <td>`string`</td>
-        <td>URL</td>
-        <td>Link to image of back of government ID</td>
-        <td>`"+12125550010"`</td>
+        <td>`Title Case`</td>
+        <td>City of address</td>
+        <td>`"Palo Alto"`</td>
     </tr>
+    <tr>
+        <td>↳ ↳ State</td>
+        <td>`property.address.state`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
+            - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
+        </td>
+        <td>State of address</td>
+        <td>
+            - `"CA"`
+            - `"California"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ZIP Code</td>
+        <td>`property.address.zipCode`</td>
+        <td>`string`</td>
+        <td>[ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9) or [ZIP+4](https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4) (9 digits, 0-9, with a hypen after the first 5)</td>
+        <td>ZIP code of address</td>
+        <td>`"94303"` or `"94303-3058"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Country</td>
+        <td>`property.address.country`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
+            - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
+        </td>
+        <td>Country of address</td>
+        <td>
+            - `"US"`
+            - `"United States of America"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Owner(s)</td>
+        <td>`property.owners`</td>
+        <td>`string[]`</td>
+        <td>`Title Case`</td>
+        <td>Names of property owner(s)</td>
+        <td>`["Erlich Bachman"]`</td>
+    </tr>
+    <tr>
+        <td>↳ Seller(s)</td>
+        <td>`property.sellers`</td>
+        <td>`string[]`</td>
+        <td>`Title Case`</td>
+        <td>Names of property seller(s)</td>
+        <td>`["Erlich Bachman"]`</td>
+    </tr>
+    {/* <tr>
+        <td>↳ Details</td>
+        <td>`property.details`</td>
+        <td>`string`</td>
+        <td>`Sentence case`</td>
+        <td>Any additional property details</td>
+        <td>`"Single family home, 4BR/3BA"`</td>
+    </tr> */}
 </table>
 
 </CollapsibleSection>
 
-<CollapsibleSection>
+
+{/* <CollapsibleSection>
 <CollapsibleHeader>
 ### Demographics <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#demographics}
 </CollapsibleHeader>
@@ -861,8 +928,117 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
     </tr>
 </table>
 
+</CollapsibleSection> */}
+
+
+<CollapsibleSection>
+<CollapsibleHeader>
+### Government IDs <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#government-ids}
+</CollapsibleHeader>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Government ID</td>
+        <td>`governmentId`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all child credentials listed below</td>
+        <td>Government ID</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ Document Type</td>
+        <td>`governmentId.documentType`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"drivers_license"`
+                    - `"passport"`
+                    - `"resident_card"`
+            </details>
+        </td>
+        <td>`snake_case`</td>
+        <td>Type of government ID</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ Document Number</td>
+        <td>`governmentId.documentNumber`</td>
+        <td>`string`</td>
+        <td>Any alphanumeric string</td>
+        <td>Number of government ID</td>
+        <td>`"F4698E1"`</td>
+    </tr>
+    <tr>
+        <td>↳ Issuance Date</td>
+        <td>`governmentId.issuanceDate`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
+            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+        </td>
+        <td>Issuance date of government ID</td>
+        <td>
+            - `"617947200000"`
+            - `"08/01/1989"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Expiration Date</td>
+        <td>`governmentId.expirationDate`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
+            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+        </td>
+        <td>Issuance date of government ID</td>
+        <td>
+            - `"2069553600"`
+            - `"08/01/2035"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ State</td>
+        <td>`governmentId.state`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
+            - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
+        </td>
+        <td>State of issance of government ID</td>
+        <td>
+            - `"CA"`
+            - `"California"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Country</td>
+        <td>`governmentId.country`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
+            - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
+        </td>
+        <td>Country of issance of address</td>
+        <td>
+            - `"US"`
+            - `"United States of America"`
+        </td>
+    </tr>
+</table>
+
 </CollapsibleSection>
 </CollapsibleGroup>
+
 
 ## Metadata
 

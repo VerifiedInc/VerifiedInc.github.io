@@ -496,3 +496,18 @@ table ul, table ol {
 .small-margin-bottom {
   margin-bottom: calc(0.25 * var(--ifm-paragraph-margin-bottom));
 }
+
+/* 550px and down */
+@media only screen and (max-width: 600px) {
+  /* Hide search bar (overlaps with other UI) */
+  .navbarSearchContainer_Bca1 {
+    display: none;
+  }
+}
+
+.docusaurus-mermaid-container {
+  background-color: white;
+  padding: 1rem;
+  border-radius: var(--ifm-alert-border-radius);
+  margin-bottom: 1em;
+}

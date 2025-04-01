@@ -21,16 +21,20 @@ import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/versio
 
 <table>
     <tr>
-        <th>User Experience</th>
+        <th>Speed</th>
         <td>\<10 seconds to complete 1-Click Signup</td>
     </tr>
     <tr>
         <th>Benefits</th>
-        <td>Increase conversion, improve KYC operations, prevent fraud</td>
+        <td>
+            - Increase conversion
+            - Streamline KYC operations
+            - Prevent fraud
+        </td>
     </tr>
     <tr>
         <th>Coverage</th>
-        <td>~95% of US adults (>253M people) — currently available in US only</td>
+        <td>~95% of US adults (>253M people)</td>
     </tr>
     <tr>
         <th>Time to Integrate</th>
@@ -69,30 +73,29 @@ import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/versio
 ## User Experience
 
 To use 1-Click Signup, all a user needs to do is:
-1. Enter phone number
-2. Verify phone number
-3. (if necessary) Enter birthday/SSN4
-4. Confirm autofilled info
+1. Enter and verify phone number
+2. (if necessary) Enter birthday/SSN4
+3. Confirm autofilled info
 
 _It takes less than 10 seconds, end to end!_ 
 
 1-Click Signup uses the exact same user experience as 1-click checkout solutions (like Stripe Link and Shop Pay), so it's familiar to users. See [User Experience](./guides/user-experience) for full details.
 
 :::note
-Step 3 above — prompting for a challenge (birthday/SSN4) — is necessary only if the phone number alone doesn't uniquely identify the user, for example if it's part of a shared phone carrier plan. (You can also configure your brand settings to always [prompt for a challenge](./guides/setup#prompt-for-challenges).)
+Step 2 above — prompting for a challenge (birthday/SSN4) — is necessary only if the phone number alone doesn't uniquely identify the user, for example if it's part of a shared phone carrier plan. (You can also configure your brand settings to always [prompt for a challenge](./guides/setup#prompt-for-challenges).)
 :::
 
 
 ## Benefits
 
 - **Increase conversion:** Dramatically reduce friction, making it as easy as possible for new users to share their verified data.
-- **Increase pass rates:** Avoid user error by leveraging our autofilled, verified data.
+- **Streamline KYC operations:** Avoid user error and increase pass rates by leveraging our autofilled, verified data.
 - **Prevent fraud:** Stop bad actors by using our [risk signals](./data/outputs/metadata#risk-signals) metadata.
 
 
 ## Coverage
 
-We can source verified data for over 95% of US adults (253M people). The data is extremely high quality because it comes from phone carriers, credit bureaus, and other trusted providers. Thanks to this quality, the data can be leveraged as part of a KYC/AML process.
+We can source verified data for about 95% of US adults (253M people). The data is extremely high quality because it comes from phone carriers, credit bureaus, and other trusted providers. Thanks to this quality, the data can be leveraged as part of a KYC/AML process.
 
 :::important
 **We currently only cover people in the United States.** But we are soon adding new geographies. If there are particular geographies that would be most helpful for our use case, please let us know by emailing Support@Verified.inc, and we'll prioritize accordingly.

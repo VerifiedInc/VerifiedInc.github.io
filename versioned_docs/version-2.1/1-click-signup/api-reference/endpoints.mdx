@@ -34,19 +34,21 @@ import DefaultCredentialRequestsHosted from '@site/versioned_docs/version-2.1/re
 import DefaultCredentialRequestsNotHosted from '@site/versioned_docs/version-2.1/reusables/default-credential-requests-not-hosted.mdx'
 import RecencyRequirementAdmonition from '@site/versioned_docs/version-2.1/reusables/recency-requirement-admonition.mdx'
 import SandboxValidationAdmonition from '@site/versioned_docs/version-2.1/reusables/sandbox-validation-admonition.mdx'
-import EndpointHeader from '@site/src/components/EndpointHeader.jsx'
+import EndpointHeaderWithoutSwagger from '@site/src/components/EndpointHeaderWithoutSwagger.jsx'
 import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+
+
+{/* TODO: Update Swagger URLs */}
 
 
 <DevelopmentWorkAdmonition/>
 
-{/* TODO: Update these */}
-<EndpointHeader 
-    swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/post_1_click" 
-    postmanUrl="https://documenter.getpostman.com/view/37980054/2sAYBbd8gf#e108f3ae-cf07-44e2-9924-dfca976ef533"
+
+<EndpointHeaderWithoutSwagger 
+    postmanUrl="https://api.docs.verified.inc/#cde4fdf8-1521-4da0-9280-094e1f550aa8"
 >
     ## `POST /sessionKey`
-</EndpointHeader>
+</EndpointHeaderWithoutSwagger>
 
 > Create a (one time use) session key for the SDK
 
@@ -100,12 +102,11 @@ There's no request body.
 
 ---
 
-<EndpointHeader 
-    swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/get_1_click__id_" 
+<EndpointHeaderWithoutSwagger
     postmanUrl="https://documenter.getpostman.com/view/37980054/2sAYBbd8gf#c300967f-3422-4eb0-90ef-2a3eb4095450"
 >
     ## `GET /1-click`
-</EndpointHeader>
+</EndpointHeaderWithoutSwagger>
 
 > Get data for a user who has completed a 1-Click Signup flow
 
@@ -144,12 +145,11 @@ See [`1ClickEntity`](../api-reference/types#1clickentity).
 
 ---
 
-<EndpointHeader 
-    swaggerUrl="https://core-api.sandbox-verifiedinc.com/v2/docs/#/1-click/post_1_click" 
-    postmanUrl="https://documenter.getpostman.com/view/37980054/2sAYBbd8gf#e108f3ae-cf07-44e2-9924-dfca976ef533"
+<EndpointHeaderWithoutSwagger 
+    postmanUrl="https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7"
 >
     ## `POST /1-click`
-</EndpointHeader>
+</EndpointHeaderWithoutSwagger>
 
 > Begin a 1-Click Signup flow
 

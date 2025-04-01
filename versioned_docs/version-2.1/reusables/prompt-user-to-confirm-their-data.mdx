@@ -1,18 +1,15 @@
 import Admonition from '@theme/Admonition';
 import { GridContainer, GridRow, GridColumn, GridNonStickyElement, GridStickyElement } from '@site/src/components/Grid';
 
-Depending on your use case, you may need to display the user's data to them and have them confirm it's correct. You only need to display the user's [credential](/data/outputs/credentials) data (their identity data, like their address or birth date). You don't need to display any [metadata](/data/outputs/metadata), though you can choose to if it's relevant.
+**You must display the user's [credential](/v2.0/data#credentials) data to them and have them confirm it's correct.** The credential data is contained in `credentials` in the [`1ClickEntity`](/v2.0/types#example-1clickentity) from the API response. You don't need to display any [metadata](/v2.0/data#metadata) (contained in `metadata` in the [`1ClickEntity`](/v2.0/types#example-1clickentity)) though you can choose to if it's relevant.
 
-<Admonition type="tip" title="Why We Recommend You Do This">
-    In general, we recommend you have the user confirm their data for two reasons:
+:::danger User Confirmation is a Requirement
+**You may not store a user's credential data if they don't confirm it.** This is a compliance requirement. We will not approve your integration if you don't abide by it.
+:::
+
+<Admonition type="tip" title="Benefits of Doing This">
     1. **Transparency:** By displaying the user's data to them, you ensure they're aware of what data you've received about them.
     2. **Accuracy:** Although Verified provides _very_ high quality data, we can never guarantee all data will be perfectly accurate. By having the user confirm their data, you can better avoid inaccuracies. Depending on your use case, you may want to give the user the ability to edit their data.
-
-    However, for some use cases, it may be appropriate and make more sense to not display the user's data to them or have them confirm it. Choose the approach that's best for your use case, but make sure it's compliant with regulations.
-</Admonition>
-
-<Admonition type="warning" title="You May Be Required to Do This">
-    If you're subject to financial data regulations — for example, if you're opening a financial account for a user with the data we return about them — you are **required** to have the user confirm their data. 
 </Admonition>
 
 **We recommend that you:** 

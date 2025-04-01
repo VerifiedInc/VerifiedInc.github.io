@@ -17,7 +17,7 @@ module.exports = {
   projectName: 'VerifiedInc.github.io', // Usually your repo name.
   themeConfig: {
     announcementBar: {
-      content: '<b>The new [1-Click Signup SDK](/guides/sdk-integration) is live!</b> It\'s <i>10x faster</i> to integrate than the API',
+      content: '<b>The new 1-Click Signup SDK is live!</b> It\'s <i>10x faster</i> to integrate than the API',
       backgroundColor: '#0dbc3d',
       textColor: '#ffffff',
     },
@@ -77,10 +77,6 @@ module.exports = {
               label: 'Test Users',
               to: '/test-users',
             },
-            {
-              label: 'Data',
-              to: '/data',
-            },
           ],
         },
         {
@@ -101,6 +97,23 @@ module.exports = {
             {
               label: 'API Integration',
               to: '/guides/api-integration',
+            },
+          ],
+        },
+        {
+          title: 'Data',
+          items: [
+            {
+              label: 'Identifiers',
+              to: '/data/inputs/identifiers',
+            },
+            {
+              label: 'Credentials',
+              to: '/data/outputs/credentials',
+            },
+            {
+              label: 'Metadata',
+              to: '/data/outputs/metadata',
             },
           ],
         },
@@ -240,38 +253,73 @@ module.exports = {
       {
         // options, ref: https://github.com/praveenn77/docusaurus-lunr-search#options-available
         // Exclude v2.0 to avoid people accidentally switching versions
-        excludeRoutes: ['/versioned_docs/version-2.0', '/versioned_docs/version-2.1/reusables'],
-        indexBaseUrl: true
+        // NOT WORKING: not sure why
+        // excludeRoutes: ['/versioned_docs/version-2.0', '/versioned_docs/version-2.1/reusables'],
+        // indexBaseUrl: true
+        excludeRoutes: ['/versioned_docs/version-2.1/reusables'],
+        includeRoutes: ['/versioned_docs/version-2.1'],
       }
     ],
-    // [
+    [
       // Can't get the explicity redirects working either!
-      // '@docusaurus/plugin-client-redirects',
-      // {
-      //   // Explicitly handling page redirects for v1 because the more sophisticated approach below isn't working
-      //   redirects: [
-      //     // /X -> /v1/X
-      //     {
-      //       to: '/v1/issue-to-earn',
-      //       from: '/issue-to-earn',
-      //     },
-      //     {
-      //       to: '/v1/demo-1-click-signup',
-      //       from: '/demo-1-click-signup',
-      //     },
-      //     {
-      //       to: '/v1/demo-issue-to-earn',
-      //       from: '/demo-issue-to-earn',
-      //     },
-      //     {
-      //       to: '/v1/api-reference',
-      //       from: '/api-reference',
-      //     },
-      //     {
-      //       to: '/v1/schema',
-      //       from: '/schema',
-      //     },
-      //   ],
+      '@docusaurus/plugin-client-redirects',
+      {
+        // Explicitly handling page redirects for v2.0 because the more sophisticated approach below isn't working
+        redirects: [
+          // /X -> /v2.0/X
+          {
+            to: '/v2.0/recommended-ux',
+            from: '/recommended-ux',
+          },
+          {
+            to: '/v2.0/quick-start-guide',
+            from: '/quick-start-guide',
+          },
+          {
+            to: '/v2.0/integration-guide',
+            from: '/integration-guide',
+          },
+          {
+            to: '/v2.0/migration-guide-v1-to-v2',
+            from: '/migration-guide-v1-to-v2',
+          },
+          {
+            to: '/v2.0/example-app',
+            from: '/example-app',
+          },
+          {
+            to: '/v2.0/demo',
+            from: '/demo',
+          },
+          {
+            to: '/v2.0/authentication',
+            from: '/authentication',
+          },
+          {
+            to: '/v2.0/environments',
+            from: '/environments',
+          },
+          {
+            to: '/v2.0/test-users',
+            from: '/test-users',
+          },
+          {
+            to: '/v2.0/endpoints',
+            from: '/endpoints',
+          },
+          {
+            to: '/v2.0/errors',
+            from: '/errors',
+          },
+          {
+            to: '/v2.0/types',
+            from: '/types',
+          },
+          {
+            to: '/v2.0/data',
+            from: '/data',
+          },
+        ],
         // This isn't working — not sure why
         // createRedirects(existingPath) {
         //   if (existingPath.includes('/v2')) {
@@ -282,8 +330,8 @@ module.exports = {
         //   }
         //   return undefined; // Return a falsy value: no redirect created
         // },
-      // },
-    // ],
+      },
+    ],
     // This plugin isn't working with Docusaurus v3 yet
     // [
     //   'docusaurus-plugin-openapi-docs', // See https://github.com/PaloAltoNetworks/docusaurus-openapi-docs/tree/main

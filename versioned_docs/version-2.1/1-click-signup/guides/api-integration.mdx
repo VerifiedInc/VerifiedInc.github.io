@@ -73,11 +73,7 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 <DevelopmentWorkAdmonition/>
 
 
-<CollapsibleGroup>
-<CollapsibleSection>
-<CollapsibleHeader>
 ## 1. Prompt user for phone number and verify it.
-</CollapsibleHeader>
 
 To start 1-Click Signup for a user (using the Non-Hosted integration type), you'll need their phone number, and you'll need to verify it using your own solution. You can do this however you like, as long as you verify the user's phone number with a **one-time verification code at least 6 digits long.**
 
@@ -91,7 +87,7 @@ _See our [Demo](https://1-click.demo.verified.inc) for an example of this._
     <li>**[Include a "powered by Verified" graphic](#b-include-a-powered-by-verified-graphic).**</li>
 </ol>
 
-We recommend using a phone number input that auto submits when the user enters 10 digits. (See the [Phone](.../guides/user-experience#phone) screen of our User Experience guide for full details.) Here's an example:
+We recommend using a phone number input that auto submits when the user enters 10 digits. (See the [Phone](../guides/user-experience#phone) screen of our User Experience guide for full details.) Here's an example:
 
 ![](/img/phone-empty-without-sms-consent.png)
 *Verified consent language, phone number input, and the green signup variant of the "powered by" graphic*
@@ -106,7 +102,7 @@ Use this language:
 > By `{taking this action}`, I agree that [Verified](https://verified.inc) (`{Brand Name}`’s service provider) and its vendors may receive my personal info and autofill more info about me, including my social security number.
 
 - **Replace `{taking this action}` with the action the user will take to start 1-Click Signup.** For example:
-    - If you use a form with a phone number input that autosubmits (which [we recommend](.../guides/user-experience#phone)), you should use "entering my phone number".
+    - If you use a form with a phone number input that autosubmits (which [we recommend](../guides/user-experience#phone)), you should use "entering my phone number".
     - If you use a Continue button, you should use "clicking Continue".
 - **Link "Verified" to https://verified.inc and make it underlined and a different color than the rest of the text** (so the user knows it's a link).
 - **Replace `{Brand Name}` with your brand name.**
@@ -125,15 +121,8 @@ We provide several variants of the graphic, with different words than "Signup" a
 
 <PoweredByGraphic/>
 
----
 
-</CollapsibleSection>
-
-
-<CollapsibleSection>
-<CollapsibleHeader>
 ## 2. Call `POST /1-click`.
-</CollapsibleHeader>
 
 Call [`POST /1-click`](../api-reference/endpoints#post-1-click) with the user's phone number:
 
@@ -158,19 +147,12 @@ One of two things will happen:
     - **[`OCE013`](../api-reference/errors#oce013)** indicates that Verified found no [credentials](../data/outputs/credentials) for the user. → _Fall back to a manual signup flow._(#6-if-necessary-prompt-user-for-additional-info)._
     - **[`OCE017`](../api-reference/errors#oce017)** indicates that Verified blocked the user because the risk score was too high. → _Reject the user or flag them and fall back to a manual signup flow._
 
----
 
-</CollapsibleSection>
-
-
-<CollapsibleSection>
-<CollapsibleHeader>
 ## 3. (if necessary) Prompt user for additional info.
-</CollapsibleHeader>
 
 <WhenStepIsNecessaryAdmonition stepName="step 2" stepLink="#2-call-post-1-click"/>
 
-We recommend using a numeric input (formatted as MM/DD/YYYY for birthday) that automatically submits when the user enters enough digits (8 for birth date and 4 for SSN4). (See the [Birthday](.../guides/user-experience#birthday) and [SSN4](.../guides/user-experience#ssn4) screens of our User Experience guide for full details.) 
+We recommend using a numeric input (formatted as MM/DD/YYYY for birthday) that automatically submits when the user enters enough digits (8 for birth date and 4 for SSN4). (See the [Birthday](../guides/user-experience#birthday) and [SSN4](../guides/user-experience#ssn4) screens of our User Experience guide for full details.) 
 
 <BirthDateFormatAdmonition/>
 
@@ -189,15 +171,8 @@ Here are examples:
     </div>
 </div>
 
----
 
-</CollapsibleSection>
-
-
-<CollapsibleSection>
-<CollapsibleHeader>
 ## 4. (if necessary) Call `POST /1-click` with additional info.
-</CollapsibleHeader>
 
 <WhenStepIsNecessaryAdmonition stepName="step 2" stepLink="#2-call-post-1-click"/>
 
@@ -223,22 +198,10 @@ One of two things should happen:
     - **[`OCE013`](../api-reference/errors#oce013)** indicates that Verified found no [credentials](../data/outputs/credentials) for the user. → _Fall back to a manual signup flow._
     - **[`OCE019`](../api-reference/errors#oce019)** indicates that the maximum number of attempts has been reached for one or more of the additional inputs. → _Fall back to a manual signup flow._
 
----
 
-</CollapsibleSection>
-
-
-<CollapsibleSection>
-<CollapsibleHeader>
 ## 5. Prompt user to confirm their data.
-</CollapsibleHeader>
 
 <PromptUserToConfirmTheirData/>
-
----
-
-</CollapsibleSection>
-</CollapsibleGroup>
 
 
 ## Go Live!

@@ -10,14 +10,14 @@ module.exports = {
   url: 'https://docs.verified.inc',
   baseUrl: '',
   /* change to 'warn' if unable to fix broken link issue */
-  onBrokenLinks: 'warn',
+  onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'VerifiedInc', // Usually your GitHub org/user name.
   projectName: 'VerifiedInc.github.io', // Usually your repo name.
   themeConfig: {
     announcementBar: {
-      content: '<b>1-Click Signup v2 is live!</b> It\'s over <i>3x faster</i> than v1',
+      content: '<b>The new 1-Click Signup SDK is live!</b> It\'s <i>10x faster</i> to integrate than the API',
       backgroundColor: '#0dbc3d',
       textColor: '#ffffff',
     },
@@ -32,11 +32,10 @@ module.exports = {
         srcDark: 'img/logo_dark.png',
       },
       items: [
-        // Disabling because we're removing v1
-        // {
-        //   type: 'docsVersionDropdown',
-        //   position: 'left',
-        // },
+        {
+          type: 'docsVersionDropdown',
+          position: 'left',
+        },
         {
           type: 'custom-navbarButton',
           to: 'https://dashboard.verified.inc',
@@ -66,21 +65,76 @@ module.exports = {
         {
           title: '1-Click Signup',
           items: [
-            // {
-            //   label: 'Overview',
-            //   to: '/overview',
-            // },
             {
-              label: 'Quick Start Guide',
-              to: '/quick-start-guide',
+              label: 'Overview',
+              to: '/overview',
             },
             {
-              label: 'Integration Guide',
-              to: '/integration-guide',
+              label: 'Custom Demo',
+              to: '/custom-demo',
             },
             {
-              label: 'Migration Guide (v1 to v2)',
-              to: '/migration-guide',
+              label: 'Test Users',
+              to: '/test-users',
+            },
+          ],
+        },
+        {
+          title: 'Guides',
+          items: [
+            {
+              label: 'User Experience',
+              to: '/guides/user-experience',
+            },
+            {
+              label: 'Setup',
+              to: '/guides/setup',
+            },
+            {
+              label: 'SDK Integration',
+              to: '/guides/sdk-integration',
+            },
+            {
+              label: 'API Integration',
+              to: '/guides/api-integration',
+            },
+          ],
+        },
+        {
+          title: 'Data',
+          items: [
+            {
+              label: 'Identifiers',
+              to: '/data/inputs/identifiers',
+            },
+            {
+              label: 'Credentials',
+              to: '/data/outputs/credentials',
+            },
+            {
+              label: 'Metadata',
+              to: '/data/outputs/metadata',
+            },
+          ],
+        },
+        {
+          title: 'SDK Reference',
+          items: [
+            {
+              label: 'Installation',
+              to: '/sdk-reference/installation',
+            },
+            {
+              label: 'Constants',
+              to: '/sdk-reference/constants',
+            },
+            {
+              label: 'Methods',
+              to: '/sdk-reference/methods',
+            },
+            {
+              label: 'Types',
+              to: '/sdk-reference/types',
             },
           ],
         },
@@ -89,23 +143,23 @@ module.exports = {
           items: [
             {
                 label: 'Authentication',
-                to: '/authentication',
+                to: '/api-reference/authentication',
             },
             {
               label: 'Environments',
-              to: '/environments',
+              to: '/api-reference/environments',
             },
             {
               label: 'Endpoints',
-              to: '/endpoints',
+              to: '/api-reference/endpoints',
             },
             {
               label: 'Errors',
-              to: '/errors',
+              to: '/api-reference/errors',
             },
             {
               label: 'Types',
-              to: '/types',
+              to: '/api-reference/types',
             },
           ],
         },
@@ -140,7 +194,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Verified`,
+      copyright: `Copyright © ${new Date().getFullYear()} Verified Network Inc. All rights reserved.`,
     },
     mermaid: {
       options: {
@@ -161,20 +215,28 @@ module.exports = {
         },
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          sidebarCollapsible: false,
+          sidebarCollapsible: true,
           routeBasePath: '/',
           includeCurrentVersion: false,
-          lastVersion: '2',
+          lastVersion: '2.1',
           breadcrumbs: true,
           versions: {
-            '1': {
-              label: 'v1',
+            // Hiding because we no longer want to show v1 Docs
+            // '1.0': {
+            //   label: 'v1.0',
+            //   badge: false,
+            //   path: '/v1.0'
+            // },
+            '2.0': {
+              label: 'v2.0',
               badge: false,
-              path: '/v1'
+              banner: 'none',
+              path: '/v2.0'
             },
-            '2': {
-              label: 'v2',
+            '2.1': {
+              label: 'v2.1',
               badge: false,
+              banner: 'none',
               path: '/'
             },
           },
@@ -190,39 +252,74 @@ module.exports = {
       require.resolve('docusaurus-lunr-search'),
       {
         // options, ref: https://github.com/praveenn77/docusaurus-lunr-search#options-available
-        // Commenting out for now because removing hidden directory
-        // excludeRoutes: hiddenFiles,
-        indexBaseUrl: true
+        // Exclude v2.0 to avoid people accidentally switching versions
+        // NOT WORKING: not sure why
+        // excludeRoutes: ['/versioned_docs/version-2.0', '/versioned_docs/version-2.1/reusables'],
+        // indexBaseUrl: true
+        excludeRoutes: ['/versioned_docs/version-2.1/reusables'],
+        includeRoutes: ['/versioned_docs/version-2.1'],
       }
     ],
-    // [
+    [
       // Can't get the explicity redirects working either!
-      // '@docusaurus/plugin-client-redirects',
-      // {
-      //   // Explicitly handling page redirects for v1 because the more sophisticated approach below isn't working
-      //   redirects: [
-      //     // /X -> /v1/X
-      //     {
-      //       to: '/v1/issue-to-earn',
-      //       from: '/issue-to-earn',
-      //     },
-      //     {
-      //       to: '/v1/demo-1-click-signup',
-      //       from: '/demo-1-click-signup',
-      //     },
-      //     {
-      //       to: '/v1/demo-issue-to-earn',
-      //       from: '/demo-issue-to-earn',
-      //     },
-      //     {
-      //       to: '/v1/api-reference',
-      //       from: '/api-reference',
-      //     },
-      //     {
-      //       to: '/v1/schema',
-      //       from: '/schema',
-      //     },
-      //   ],
+      '@docusaurus/plugin-client-redirects',
+      {
+        // Explicitly handling page redirects for v2.0 because the more sophisticated approach below isn't working
+        redirects: [
+          // /X -> /v2.0/X
+          {
+            to: '/v2.0/recommended-ux',
+            from: '/recommended-ux',
+          },
+          {
+            to: '/v2.0/quick-start-guide',
+            from: '/quick-start-guide',
+          },
+          {
+            to: '/v2.0/integration-guide',
+            from: '/integration-guide',
+          },
+          {
+            to: '/v2.0/migration-guide-v1-to-v2',
+            from: '/migration-guide-v1-to-v2',
+          },
+          {
+            to: '/v2.0/example-app',
+            from: '/example-app',
+          },
+          {
+            to: '/v2.0/demo',
+            from: '/demo',
+          },
+          {
+            to: '/v2.0/authentication',
+            from: '/authentication',
+          },
+          {
+            to: '/v2.0/environments',
+            from: '/environments',
+          },
+          {
+            to: '/v2.0/test-users',
+            from: '/test-users',
+          },
+          {
+            to: '/v2.0/endpoints',
+            from: '/endpoints',
+          },
+          {
+            to: '/v2.0/errors',
+            from: '/errors',
+          },
+          {
+            to: '/v2.0/types',
+            from: '/types',
+          },
+          {
+            to: '/v2.0/data',
+            from: '/data',
+          },
+        ],
         // This isn't working — not sure why
         // createRedirects(existingPath) {
         //   if (existingPath.includes('/v2')) {
@@ -233,8 +330,8 @@ module.exports = {
         //   }
         //   return undefined; // Return a falsy value: no redirect created
         // },
-      // },
-    // ],
+      },
+    ],
     // This plugin isn't working with Docusaurus v3 yet
     // [
     //   'docusaurus-plugin-openapi-docs', // See https://github.com/PaloAltoNetworks/docusaurus-openapi-docs/tree/main

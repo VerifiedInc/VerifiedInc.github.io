@@ -1,0 +1,45 @@
+import Admonition from '@theme/Admonition';
+
+**You must display the user's [credential](/v2.0/data#credentials) data to them and have them confirm it's correct.** The credential data is contained in `credentials` in the [`1ClickEntity`](/v2.0/types#example-1clickentity) from the API response. You don't need to display any [metadata](/v2.0/data#metadata) (contained in `metadata` in the [`1ClickEntity`](/v2.0/types#example-1clickentity)) though you can choose to if it's relevant.
+
+:::danger User Confirmation is a Requirement
+**You may not store a user's credential data if they don't confirm it.** This is a compliance requirement. We will not approve your integration if you don't abide by it.
+:::
+
+<Admonition type="tip" title="Benefits of Doing This">
+    1. **Transparency:** By displaying the user's data to them, you ensure they're aware of what data you've received about them.
+    2. **Accuracy:** Although Verified provides _very_ high quality data, we can never guarantee all data will be perfectly accurate. By having the user confirm their data, you can better avoid inaccuracies. Depending on your use case, you may want to give the user the ability to edit their data.
+</Admonition>
+
+**We recommend that you:** 
+<ol type="a">
+    <li>[**Use a form with autofilled inputs**](#a-use-a-form-with-autofilled-inputs)</li>
+    <li>[**Include information about where the data comes from**](#b-include-information-about-where-the-data-comes-from)</li>
+</ol>
+
+#### a. Use a form with autofilled inputs
+
+We recommend that you display the user's data using a form with autofilled inputs. 
+
+You can enable or disable each input depending on whether you want the user to be able to edit the data it contains. The upside of allowing the user to edit data is that it allows them to correct any inaccuracies. The downside is that user input isn't verified and may make fraud more likely.
+
+<Admonition type="danger" title="Mask Social Security Numbers">
+    **We require you to mask Social Security Numbers because they're particularly sensitive:**
+    - Mask the first 5 digits so the client only displays the last 4 digits.
+    - If you allow the user to edit the SSN, clear the entire value when they start editing (so they don't just edit the last 4 digits).
+</Admonition>
+
+#### b. Include information about where the data comes from
+
+Including some information about where the data comes from helps users understand the magic of 1-Click Signup and feel comfortable with it. We recommend this language:
+> We use Verified to autofill your data from trusted sources, so you don't have to enter it manually.
+
+You can include this information in a variety of ways, for example as a tooltip on a "Where This Data Comes From" button.
+
+<Admonition type="info" title="Possible Data Inaccuracies">
+    The most common inaccuracy is an outdated address. We keep user addresses up to date as much as possible, but if the user has moved very recently, we may not yet have their current address.
+
+    Less commonly, a user may have an outdated name, if they've recently had it legally changed and we haven't yet updated it.
+
+    Some data points, like date of birth and SSN, should never change, but it's still possible (in very rare cases) for these to be inaccurate. So, if having perfectly accurate data is crucial for your use case, we recommend that you have users confirm it.
+</Admonition>

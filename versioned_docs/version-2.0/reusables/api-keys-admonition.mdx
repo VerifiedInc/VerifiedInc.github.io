@@ -1,0 +1,5 @@
+:::danger
+**Never use Verified API keys client side. Only use them server side.** Verified API keys allow you to source sensitive data about user, so you must keep them secure. This is why we require that you get clear user consent before calling our API and why we review your integration in [Sandbox](/v2.0/environments#sandbox) before giving you [Production](/v2.0/environments#production) access. See our [go live checklist](/v2.0/integration-guide#go-live) for details.
+
+**If you use a Verified API key client side, our firewall will block your request, and you'll get a [firewall error](/v2.0/errors#api-key-used-client-side).**
+:::

@@ -1,0 +1,14 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+
+<ErrorDisplay 
+  message='1-Click Request Expired' 
+  description=''
+  integrationType=''
+  whenThisIsReturned='When a 1-Click Signup request is expired.' 
+  howToHandle='Start 1-Click Signup over again.'
+  youShouldNeverGetThisError='Verified should always return error code OCE015 instead because the 1ClickEntity is deleted when it expires.'
+>
+  ##### `OCE014`
+</ErrorDisplay>
+
+1-Click requests expire in 30 minutes.

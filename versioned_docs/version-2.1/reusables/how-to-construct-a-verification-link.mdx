@@ -1,0 +1,15 @@
+import Admonition from '@theme/Admonition';
+
+<Admonition type="tip" title="How To Construct a Verification Link">
+    You can also optionally use `code` to construct a verification link. For example, if `url` is a link to your application, you could:
+    - Append `code` as a URL parameter to `url`: `{url}?code={code}`.
+    - Set up your application to parse `code` from the URL.
+
+    Then, you could include language like this in the SMS:
+
+    > Click this link to verify for `{Brand Name}`: `{url}?code={code}`
+
+    For example, if the `url` for the Hooli brand is `https://hooli.com/verified`:
+
+    > Click this link to verify for Hooli: https://hooli.com/verified?code=123456
+</Admonition>

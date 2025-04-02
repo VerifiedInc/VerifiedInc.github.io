@@ -1,0 +1,30 @@
+import Admonition from '@theme/Admonition';
+import DomainsAdmonition from '@site/versioned_docs/version-2.0/reusables/domains-admonition.mdx'
+
+Append the `/v2` path to the Sandbox base URL for your Verified API calls, and replace your old Sandbox API key with the v2 Sandbox API key for your brand. _You can copy this API key from the top of the Brand Details page in the Dashboard._
+
+In v1, you had to include your API key as a bearer token in the authorization header. In v2, you should include your API key directly, not as a bearer token: just remove `Bearer` from the authorization header.
+
+<table>
+    <tr>
+        <th>Version</th>
+        <th>Base URL</th>
+        <th>Authorization Header</th>
+    </tr>
+    <tr>
+        <th>v1</th>
+        <td><code><span>https://</span>core-api.sandbox-verifiedinc<b>.com</b></code></td>
+        <td><code>Authorization: Bearer `{API_KEY}`</code></td>
+    </tr>
+    <tr>
+        <th>v2</th>
+        <td><code><span>https://</span>core-api.sandbox-verifiedinc<b>.com</b>/v2</code></td>
+        <td><code>Authorization: `{API_KEY}`</code></td>
+    </tr>
+</table>
+
+<DomainsAdmonition/>
+
+<Admonition type="danger">
+    Wait to update the Production base URL and API key until you're ready to go live.
+</Admonition>

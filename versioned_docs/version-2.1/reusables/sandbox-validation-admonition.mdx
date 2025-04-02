@@ -1,0 +1,9 @@
+import Admonition from '@theme/Admonition';
+
+<Admonition type="warning" title="Sandbox Validation">
+    **In [Sandbox](/api-reference/environments#sandbox), you need to do the following to pass validation:** 
+    - If you use `birthDate`, use a value of `"1989-08-01"`.
+    - If you use `ssn4`, use a value of `"6789"`.
+    
+    If you use other values, you'll get the [`OCE012`](/api-reference/errors#oce012) error code, which indicates that there's a mismatch.
+</Admonition>

@@ -1,0 +1,656 @@
+---
+id: user-experience
+title: User Experience
+sidebar_position: 1
+sidebar_label: User Experience
+description: User Experience for 1-Click Signup
+slug: /guides/user-experience
+toc_max_heading_level: 4
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
+import Chip from '@mui/material/Chip';
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+import { GridContainer, GridRow, GridColumn, GridNonStickyElement, GridStickyElement } from '@site/src/components/Grid';
+import ComponentTypeIndicator from '@site/src/components/ComponentTypeIndicator';
+import ColorIndicator from '@site/src/components/ColorIndicator';
+import PoweredByGraphic from '@site/versioned_docs/version-2.1/reusables/powered-by-graphic.mdx';
+
+
+At Verified, _signup is what we do._ We are experts in how to optimize onboarding flows to maximize conversion and give users the best possible experience. We've helped our customers onboard — and delight! — millions of new users. The user experience described in this guide is the result of countless hours of research, design, testing, and iteration by our team. 
+
+:::tip Use Our SDK to Get This UX
+**Our SDK implements this user experience, and we strongly recommend you use it by choosing the SDK [integration type](../guides/setup#integration-type).** If you instead choose the **API** integration type, we recommend you implement a user experience similar to this one.
+:::
+
+Full details are below, but the basic user experience is:
+1. Enter and verify phone number
+2. (if necessary) Enter birthday/SSN4
+3. Confirm autofilled info
+
+:::note There Are Only a Few Screens!
+This user experience may look complicated, and in some ways it is: achieving world class UX requires getting many small details right. But at its core, it's simple by design and takes only a few screens. Users complete 1-Click Signup in less than 10 seconds: try it yourself with a [custom demo](../custom-demo).
+:::
+
+
+## Flow Chart
+
+![](/img/ux-flow-chart-without-manual-signup.png)
+↗️ [Open in new tab](/img/ux-flow-chart-without-manual-signup.png) (for easy zooming)
+
+:::important
+To implement this user experience yourself (which is only necessary if you choose the **API** [integration type](../guides/setup#integration-type)), without our SDK, you need to handle each action labeled Verified.
+:::
+
+
+## Screens and Components
+
+<GridContainer>
+    <GridRow>
+        <GridColumn>
+            <GridStickyElement>
+                ### Phone
+            </GridStickyElement>
+            <GridNonStickyElement>
+
+            
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Header
+
+                > Enter Your Phone Number
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Consent Language
+
+                > By entering my phone number, I agree that [Verified](https://www.verified.inc) (`{Brand Name}`'s service provider) and its vendors may receive my personal info and autofill more info about me, including my social security number.
+
+                If your [credential requests](../guides/setup#default-credential-requests) do not include SSN, "including my social security number" will be omitted.
+
+                - [Error](../guides/setup#sdk-styling) color
+                - “Verified”:
+                    - Hyperlinked to https://www.verified.inc
+                    - [Primary](../guides/setup#sdk-styling) color
+                    - Underlined
+                - `{Brand Name}`: replaced with your brand name
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Phone
+
+                > +1 (_ _ _) _ _ _ - _ _ _ _ 
+
+                - [Primary](../guides/setup#sdk-styling) and [error](../guides/setup#sdk-styling) colors
+                - Auto focused
+                - Opens numeric keyboard
+                - Accepts only digits
+                - Accepts OS autofill
+                - Validates US phone number
+                - Auto formats to +1 (NNN) NNN-NNNN (most common US format)
+                - Auto submits on 10 digits
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
+
+                - Green Signup variant
+
+                <PoweredByGraphic/>
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Divider
+
+                > OR
+
+                - [Error](../guides/setup#sdk-styling) color
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Opt Out
+
+                > Sign Up Manually Instead
+
+                *Takes user to Info screen in manual signup (edit) state.*
+
+                - [Error](../guides/setup#sdk-styling) color
+
+
+                #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Error
+
+                > That phone number is invalid. Please try again.
+
+                *Appears when phone number is invalid.*
+
+                - [Error](../guides/setup#sdk-styling) color
+
+            </GridNonStickyElement>
+        </GridColumn>
+        <GridColumn>
+            <GridStickyElement>
+                ![](/img/ux-screens/phone-empty.png)
+                *Starting State* ↗️ [Open in new tab](/img/ux-screens/phone-empty.png)
+
+                ![](/img/ux-screens/phone-error.png)
+                *Error State* ↗️ [Open in new tab](/img/ux-screens/phone-error.png)
+            </GridStickyElement>
+        </GridColumn>
+    </GridRow>
+    <GridRow>
+        <GridColumn>
+            <GridStickyElement>
+                ---
+                ### Verification Code
+            </GridStickyElement>
+            <GridNonStickyElement>
+
+                
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Header
+
+                > Verify Your Phone Number
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Description
+
+                > Enter the verification code we texted to 
+                **`{phone}`**.
+
+                - New line before `{phone}`
+                - Bold `{phone}`
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Verification Code
+
+                - [Primary](../guides/setup#sdk-styling) and [error](../guides/setup#sdk-styling) colors
+                - Auto focused
+                - 6 separate boxes
+                - En dash (–) in between first and last 3 boxes, to indicate hypen in verification code sent by SMS, which is included for readability:
+                    > 123-456
+                - Opens numeric keyboard
+                - Accepts only digits
+                - Accepts OS autofill
+                - Auto submits on 6 digits
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
+
+                - Green Signup variant
+
+                <PoweredByGraphic/>
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Edit
+
+                > Edit Phone
+
+                *Takes user back to phone input.*
+
+                - [Error](../guides/setup#sdk-styling) color
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Resend
+
+                > Resend Code
+
+                *Sends another SMS with fresh verification code.*
+
+                - [Error](../guides/setup#sdk-styling) color
+                - Allows for at most 2 resends
+
+
+                #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Error
+
+                > That code didn’t match. Please try again.
+
+                *Appears when verification code is invalid or expired.*
+
+                - [Error](../guides/setup#sdk-styling) color
+
+
+                #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Code Resent
+
+                > We sent you a new verification code.
+
+                *Appears when user clicks [resend button](#resend).*
+
+                - [Primary](../guides/setup#sdk-styling) color
+
+            </GridNonStickyElement>
+        </GridColumn>
+        <GridColumn>
+            <GridStickyElement>
+                
+                ---
+
+                ![](/img/ux-screens/verification_code-empty.png)
+                *Starting State* ↗️ [Open in new tab](/img/ux-screens/verification_code-empty.png)
+                
+                ![](/img/ux-screens/verification_code-error.png)
+                *Error State* ↗️ [Open in new tab](/img/ux-screens/verification_code-error.png)
+
+                ![](/img/ux-screens/verification_code-resent.png)
+                *Resent Code State* ↗️ [Open in new tab](/img/ux-screens/verification_code-resent.png)
+
+            </GridStickyElement>
+        </GridColumn>
+    </GridRow>
+    <GridRow>
+        <GridColumn>
+            <GridStickyElement>
+                ---
+                ### Birthday
+            </GridStickyElement>
+            <GridNonStickyElement>
+
+                
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Header
+
+                > Enter Your Birthday
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Description
+
+                > Enter your real birthday, so we can verify you and autofill your info.
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Birthday
+
+                > _ _ / _ _ / _ _ _ _
+
+                - [Primary](../guides/setup#sdk-styling) and [error](../guides/setup#sdk-styling) colors
+                - “Birthday” not “Birth Date” because the former is friendlier
+                - Auto focused
+                - Helper: 
+                    > MM/DD/YYYY
+                - Calendar icon on right opens date picker (which defaults to 08/01/1989)
+                - Opens numeric keyboard
+                - Accepts only digits
+                - Accepts OS autofill
+                - Validates format
+                - Auto formats to MM/DD/YYYY (most common US format)
+                - Auto submits on 8 digits
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
+
+                - Green Signup variant
+
+                <PoweredByGraphic/>
+
+                
+                #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Error
+
+                > That didn’t match our records. Please try again.
+
+                *Appears when there's a [birthday mismatch error](../api-reference/errors#oce012) (`OCE012`).*
+
+                - [Error](../guides/setup#sdk-styling) color
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Continue
+
+                > Continue Anyway
+
+                *Appears if either of the following conditions are met:*
+
+                <em>
+                    1. There have been 3 seconds of inaction (after error).
+                    2. The user tried a different value than the first value (and also got an error).
+                </em>
+
+                *Takes user to manual signup.*
+
+                If the user tries the same value again, auto continue them.
+
+                - [Error](../guides/setup#sdk-styling) color
+
+            </GridNonStickyElement>
+        </GridColumn>
+        <GridColumn>
+            <GridStickyElement>
+                
+                ---
+
+                ![](/img/ux-screens/birthday-empty.png)
+                *Starting State* ↗️ [Open in new tab](/img/ux-screens/birthday-empty.png)
+                
+                ![](/img/ux-screens/birthday-error.png)
+                *Error State* ↗️ [Open in new tab](/img/ux-screens/birthday-error.png)
+                
+            </GridStickyElement>
+        </GridColumn>
+    </GridRow>
+    <GridRow>
+        <GridColumn>
+            <GridStickyElement>
+                ---
+                ### SSN4
+            </GridStickyElement>
+            <GridNonStickyElement>
+
+                
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Header
+
+                > Enter the Last 4 of Your SSN
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Description
+
+                > Enter the last 4 digits of your Social Security Number, so we can verify you and autofill your info.
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Birthday
+
+                > _ _ _ _
+
+                - [Primary](../guides/setup#sdk-styling) and [error](../guides/setup#sdk-styling) colors
+                - Auto focused
+                - Helper: 
+                    > Last 4 digits of your Social Security Number
+                - Opens numeric keyboard
+                - Accepts only digits
+                - Validates format
+                - Auto submits on 4 digits
+                * Auto focused
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
+
+                - Green Signup variant
+
+                <PoweredByGraphic/>
+
+                
+                #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Error
+
+                > That didn’t match our records. Please try again.
+
+                *Appears when there's a [SSN4 mismatch error](../api-reference/errors#oce012) (`OCE012`).*
+
+                - [Error](../guides/setup#sdk-styling) color
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Continue
+
+                > Continue Anyway
+
+                *Appears if either of the following conditions are met:*
+
+                <em>
+                    1. There have been 3 seconds of inaction (after error).
+                    2. The user tried a different value than the first value (and also got an error).
+                </em>
+
+                *Takes user to manual signup.*
+
+                If the user tries the same value again, auto continue them.
+
+                - [Error](../guides/setup#sdk-styling) color
+
+            </GridNonStickyElement>
+        </GridColumn>
+        <GridColumn>
+            <GridStickyElement>
+                
+                ---
+
+                ![](/img/ux-screens/ssn4-empty.png)
+                *Starting State* ↗️ [Open in new tab](/img/ux-screens/ssn4-empty.png)
+                
+                ![](/img/ux-screens/ssn4-error.png)
+                *Error State* ↗️ [Open in new tab](/img/ux-screens/ssn4-error.png)
+                
+            </GridStickyElement>
+        </GridColumn>
+    </GridRow>
+    <GridRow>
+        <GridColumn>
+            <GridStickyElement>
+                ---
+                ### Info
+            </GridStickyElement>
+            <GridNonStickyElement>
+
+                
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Open Modal
+
+                > ?
+
+                {/* *Appears only for 1-Click Signup, not manual signup.* */}
+
+                *Opens [informational modal](#informational).*
+
+                - [Error](../guides/setup#sdk-styling) color
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Close Modal
+
+                > X
+
+                {/* *Appears only for 1-Click Signup, not manual signup.* */}
+
+                *Closes [informational modal](#informational).*
+
+                - [Error](../guides/setup#sdk-styling) color
+                - Clicking anywhere outside the modal should also close it
+
+
+                #### <ComponentTypeIndicator type="modal" isRightMargined={true}/>Informational
+
+                > Verified autofills your info from trusted sources so you don’t have to enter it manually. It’s fast, safe, and secure.
+
+                {/* *Appears only for 1-Click Signup, not manual signup.* */}
+
+                - Graphic
+                - Lock icon with: 
+                    > Protected with bank level encryption
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Header
+
+                {/* If in view or edit state: */}
+
+                > Confirm Your Info
+
+                {/* If in manual signup state:
+
+                > Manual Signup */}
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Description
+
+                {/* If in view or edit state: */}
+
+                > Make sure everything is accurate.
+
+                {/* If in manual signup state:
+
+                > Enter your info below. */}
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
+
+                - Green Signup variant
+
+                <PoweredByGraphic/>
+
+                {/* *Appears only in the 1-Click Signup states.* */}
+
+                
+                {/*
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Back
+
+                > Back to 1-Click Signup
+
+                *Appears only in the manual signup state, if the user gets there by clicking the [opt out button](#opt-out) on the phone screen.*
+                
+                The user can also get to the manual signup state by clicking the [continue button](#continue) on the birthday screen or by being auto continued on that screen. In those cases, this back button should not appear.
+
+                *Takes user back to [phone screen](#phone).*
+
+                - [Error](../guides/setup#sdk-styling) color
+                */}
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>First Name
+
+                > First Name
+
+                *Appears in view state.*
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Last Name
+
+                > Last Name
+
+                *Appears in view state.*
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Address
+
+                > Address
+
+                *Appears in view state.*
+
+                Two lines:
+
+                1. `{Address Line 1}, {Address Line 2}`
+                2. `{City}, {State} {ZIP Code}`
+
+                If multiple values are available:
+
+                - Dropdown
+
+                If only one value is available:
+
+                - Static text
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Birthday
+
+                > Birthday
+
+                *Appears in view state.*
+
+                - “Birthday” not “Birth Date” because the former is friendlier.
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>SSN
+
+                > SSN
+
+                *Appears in view state.*
+
+                - “SSN” not “Social Security Number” for compactness.
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Edit
+
+                > Edit
+
+                *Switches from view to edit state.*
+
+                The entire data display area should be clickable as the Edit button, not just the button itself.
+
+                - [Error](../guides/setup#sdk-styling) color
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>First Name
+
+                *Appears in edit state.*
+
+                - Clear ("X") button on right side that appears if there's any value
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Last Name
+
+                *Appears in edit state.*
+
+                - Clear ("X") button on right side that appears if there's any value
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Address
+
+                *Appears in edit state.*
+
+                - Uses value selected in dropdown (from view state), if multiple values are available
+                - Has clear ("X") button on right side that appears if there's any value
+                - Uses third party service (e.g. [Google Places API](https://developers.google.com/maps/documentation/places/web-service/overview)) to show autofill options when the user types
+                - Expands to show full value (without Address Line 2), in two lines:
+
+                1. `{Address Line 1}, {Address Line 2}`
+                2. `{City}, {State} {ZIP Code}`
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Line 2
+
+                - Has value `{Address Line 2}` if it exists
+                - Helper: 
+                    > Apt, Unit, etc.
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Birthday
+
+                > _ _ / _ _ / _ _ _ _
+
+                - “Birthday” not “Birth Date” because the former is friendlier
+                - Helper: 
+                    > MM/DD/YYYY
+                - Calendar icon on right opens date picker (which defaults to 08/01/1989)
+                - Opens numeric keyboard
+                - Accepts only digits
+                - Accepts OS autofill
+                - Validates format
+                - Auto formats to MM/DD/YYYY (most common US format)
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Social Security Number
+
+                > _ _ _ - _ _ - _ _ _ _
+
+                - “Social Security Number” not “SSN” (unlike view state — see [above](#ssn)) for clarity
+                - Opens numeric keyboard
+                - Accepts only digits
+                - Validates format
+                - Auto formats to •••-••-NNNN (most common US format)
+                    - Masks first 5 digits, server side not client side
+                - If starting with value:
+                    - If user starts to edit (by deleting one character), clear entire value
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Accuracy Confirmation
+
+                > By clicking “Confirm”, I agree that the info above is accurate.
+
+                - [Error](../guides/setup#sdk-styling) color
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Confirm
+
+                > Confirm
+
+                *Submits form with user's info.*
+
+                - [Primary](../guides/setup#sdk-styling) color
+
+            </GridNonStickyElement>
+        </GridColumn>
+        <GridColumn>
+            <GridStickyElement>
+                
+                ---
+
+                ![](/img/ux-screens/info-view-tooltip_hidden.png)
+                *View State* ↗️ [Open in new tab](/img/ux-screens/info-view-tooltip_hidden.png)
+                
+                ![](/img/ux-screens/info-view-tooltip_visible.png)
+                *Modal State* ↗️ [Open in new tab](/img/ux-screens/info-view-tooltip_visible.png)
+
+                ![](/img/ux-screens/info-edit.png)
+                *Edit State* ↗️ [Open in new tab](/img/ux-screens/info-edit.png)
+
+                {/* ![](/img/ux-screens/info-manual_signup.png)
+                *Manual Signup State* ↗️ [Open in new tab](/img/ux-screens/info-manual_signup.png) */}
+
+            </GridStickyElement>
+        </GridColumn>
+    </GridRow>
+</GridContainer>

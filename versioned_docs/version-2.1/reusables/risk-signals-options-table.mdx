@@ -1,0 +1,20 @@
+import Chip from '@mui/material/Chip';
+
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>Basic</td>
+        <td>Include only high level risk signals (Overall Score, Level, and Recommendation).</td>
+    </tr>
+    <tr>
+        <td>Advanced <Chip label="Extra" variant="outlined" size="small" color="primary"/></td>
+        <td>Include all risk signals (Reason Codes, carrier data, and more).</td>
+    </tr>
+    <tr>
+        <td>Off <Chip label="Not Recommended" variant="outlined" size="small" color="error"/></td>
+        <td>Include no risk signals.</td>
+    </tr>
+</table>

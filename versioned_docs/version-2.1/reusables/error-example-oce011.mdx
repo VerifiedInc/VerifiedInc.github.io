@@ -1,0 +1,40 @@
+```typescript title="Error Example"
+{
+    "name": "BadRequest",
+    "message": "Additional information is required to source data for user: birthDate, ssn4"
+    "code": 400,
+    "className": "bad-request",
+    "data": {
+        "errorCode": "OCE011",
+        "additionalInputs": ["birthDate", "ssn4"], // inclusive OR: can pass either or both in next call
+        "riskSignals": {
+            "overall": {
+                "score": 0, // always enabled
+                "level": "low", // always enabled
+                "recommendation": "allow", // always enabled
+                "reasonCodes": [ // add on (ask Verified support to enable)
+                    "OCR10021"
+                ]
+            },
+            "phone": { // add on (ask Verified support to enable)
+                "carrier": {
+                    "id": 0,
+                    "name": "Example Carrier"
+                }
+                "reasonCodes": [
+                    "OCR20004",
+                    "OCR20005",
+                    "OCR20007",
+                    "OCR20101"
+                ]
+            },
+            "email": { // add on (ask Verified support to enable)
+                "reasonCodes": [
+                    "OCR60001",
+                    "OCR60002"
+                ]
+            }
+        }
+    }
+}
+```

@@ -1,0 +1,62 @@
+```mermaid
+%%{
+    init: {
+    'theme': 'base',
+    'themeVariables': {
+        'primaryColor': '#e6f6e6',
+        'primaryTextColor': '#003100',
+        'primaryBorderColor': '#0dbc3d',
+        'secondaryColor': '#eef9fd',
+        'secondaryTextColor': '#193c47',
+        'secondaryBorderColor': '#164fd6',
+        'activationBkgColor': '#e6f6e6',
+        'activationBorderColor': '#0dbc3d',
+        'labelBoxBkgColor': '#eef9fd',
+        'labelBoxBorderColor': '#164fd6',
+        'labelTextColor': '#193c47',
+        'edgeLabelBackground': '#ffffff',
+        'textColor': '#000000',
+        'fontFamily': 'Lato'
+    }
+}
+}%%
+sequenceDiagram
+    actor U as User
+    participant C as Customer
+    participant V as Verified
+
+    Note left of C: 1. Verify Phone Number <br/> (handled by customer)
+    C ->>+ U: Show phone number input
+    U ->>- C: Enter phone number
+    C ->> C: Generate verification code
+    C ->> U: Send SMS with code
+    C ->>+ U: Show code input
+    U ->>- C: Enter code
+    C ->> C: Verify code
+    rect rgb(200,200,200,0.25)
+        Note left of C: 2. Call 1-Click Endpoint
+        C ->>+ V: Call POST /1-click
+        alt Additional info required
+            V -->>- C: OCE011 error code
+            C ->>+ U: Show DOB/SSN4 input(s)
+            U ->>- C: Enter DOB/SSN4
+            C ->>+ V: Call POST /1-click with DOB/SSN4
+            alt Additional info mismatched
+                V -->>- C: OCE012 error code
+                C ->>+ U: Show DOB/SSN4 input(s)
+                U ->>- C: Enter DOB/SSN4
+                C ->>+ V: Call POST /1-click with DOB/SSN4
+                break No credentials found
+                    V -->>- C: OCE013 error code
+                    C ->>+ U: Take to manual signup
+                end
+            end
+        end
+        V ->> V: Source data (credentials and metadata)
+        Note left of C: 3. Receive and Confirm Data
+        V -->> C: Return data
+        C ->>+ U: Display credentials
+        U ->>- C: Confirm credentials
+    end
+```
+<br />

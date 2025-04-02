@@ -1,0 +1,17 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+import SandboxValidationAdmonition from '@site/versioned_docs/version-2.0/reusables/sandbox-validation-admonition.mdx';
+import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2.0/reusables/birth-date-over-ssn4-admonition.mdx'; 
+import Admonition from '@theme/Admonition';
+
+<ErrorDisplay
+  message="Brand cannot be used for SDK. Its integration type must be 'SDK'."
+  additionalInputs=''
+  riskSignals=''
+  description=''
+  integrationType='SDK'
+  whenThisIsReturned='When an API key used to call POST /sessionKey (to create a session key for initializing the SDK) is for a brand whose integration type is not set to SDK.' 
+  howToHandle="Change the brand's integration type setting to SDK in the Dashboard (or create a new brand), and then try again."
+  youShouldNeverGetThisError=''
+>
+  ##### `SKE001`
+</ErrorDisplay>

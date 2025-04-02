@@ -76,7 +76,7 @@
   --ifm-modal-overlay: rgba(255, 255, 255, 0.8);
 
   /* sidebar width (default is 300px) */
-  --doc-sidebar-width: 175px !important;
+  --doc-sidebar-width: 200px !important;
 
   /* SPACING */
   --ifm-list-margin: 1.25rem;
@@ -191,6 +191,14 @@ html[data-theme='dark'] {
   animation: pulse 2s infinite;
 }
 
+.work-email-field label {
+  font-family: var(--ifm-font-family-base);
+}
+
+.legal-text, .legal-text a, .generate-demo-button, .work-email-field label {
+  letter-spacing: normal !important;
+}
+
 .legal-text a {
   color: var(--ifm-color-primary);
   text-decoration: none;
@@ -288,27 +296,32 @@ input:checked+.slider:before {
 
 /* For some reason, Docusaurus seems to downsize all headers within tabs, so e.g. ### shows up as if it's #### size. */
 [role=tabpanel] h2,
-.collapsible-section h2 {
-  font-size: var(--ifm-h3-font-size);
+.collapsible-section h2,
+.endpoint-header h2 {
+  font-size: var(--ifm-h1-font-size);
 }
 
 [role=tabpanel] h3,
-.collapsible-section h3 {
+.collapsible-section h3,
+.endpoint-header h3 {
   font-size: var(--ifm-h2-font-size);
 }
 
 [role=tabpanel] h4,
-.collapsible-section h4 {
+.collapsible-section h4,
+.endpoint-header h4 {
   font-size: var(--ifm-h3-font-size);
 }
 
 [role=tabpanel] h5,
-.collapsible-section h5 {
+.collapsible-section h5,
+.endpoint-header h5 {
   font-size: var(--ifm-h4-font-size);
 }
 
 [role=tabpanel] h6,
-.collapsible-section h6 {
+.collapsible-section h6,
+.endpoint-header h6 {
   font-size: var(--ifm-h5-font-size);
 }
 
@@ -333,9 +346,14 @@ td:first-child {
   font-weight: 700 !important;
 }
 
+/* These are hacks. Ideally we'd set styling for the Chip components. */
 .MuiChip-colorPrimary {
   color: var(--ifm-color-primary) !important;
   border-color: var(--ifm-color-primary) !important;
+}
+.MuiChip-colorWarning {
+  color: var(--ifm-color-warning) !important;
+  border-color: var(--ifm-color-warning) !important;
 }
 
 .MuiButton-colorPrimary {
@@ -376,7 +394,7 @@ td:first-child {
 .collapsible-header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.25em;
   /* Space between the icon and the text */
 
   /* Calculate the margin bottom based on Docusaurus margin for headers */
@@ -422,6 +440,32 @@ td:first-child {
   z-index: 10;
 }
 
+/* For image grid layouts */
+.three-image-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 1rem;
+}
+.three-image-grid-row {
+  display: contents;
+}
+.three-image-grid-column {
+  display: flex;
+  flex-direction: column;
+}
+.two-image-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1rem;
+}
+.two-image-grid-row {
+  display: contents;
+}
+.two-image-grid-column {
+  display: flex;
+  flex-direction: column;
+}
+
 /* For component type and color indicators (e.g. on Recommended UX page) */
 .component-type-indicator, .component-type-indicator-with-right-margin, .color-indicator, .color-indicator-with-right-margin {
   display: inline-block;
@@ -430,4 +474,40 @@ td:first-child {
 }
 .component-type-indicator-with-right-margin, .color-indicator-with-right-margin {
   margin-right: 0.25em;
+}
+
+/* For chips in headers */
+.chip-for-header-with-left-margin {
+  margin-left: 0.25em;
+}
+.chip-for-header-with-right-margin {
+  margin-right: 0.25em;
+}
+
+.font-weight-normal {
+  font-weight: normal;
+}
+
+/* Remove space after lists within tables */
+table ul, table ol {
+  margin-bottom: 0;
+}
+
+.small-margin-bottom {
+  margin-bottom: calc(0.25 * var(--ifm-paragraph-margin-bottom));
+}
+
+/* 550px and down */
+@media only screen and (max-width: 600px) {
+  /* Hide search bar (overlaps with other UI) */
+  .navbarSearchContainer_Bca1 {
+    display: none;
+  }
+}
+
+.docusaurus-mermaid-container {
+  background-color: white;
+  padding: 1rem;
+  border-radius: var(--ifm-alert-border-radius);
+  margin-bottom: 1em;
 }

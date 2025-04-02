@@ -1,0 +1,208 @@
+---
+id: endpoints
+title: Endpoints
+sidebar_label: Endpoints
+sidebar_position: 7
+description: How to use Verified API endpoints
+slug: /api-reference/endpoints
+toc_max_heading_level: 3
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import BrandsAdmonition from '@site/versioned_docs/version-2.1/reusables/brands-admonition.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-admonition.mdx';
+import IntegrationTypeEndpointAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-endpoint-admonition.mdx';
+import DomainsAdmonition from '@site/versioned_docs/version-2.1/reusables/domains-admonition.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
+import FullDefinitionAdmonition from '@site/versioned_docs/version-2.1/reusables/full-definition-admonition.mdx';
+import PostSessionKeyRequestBodyTable from '@site/versioned_docs/version-2.1/reusables/post-sessionKey-request-body-table.mdx';
+import PostSessionKeyResponseBodyTable from '@site/versioned_docs/version-2.1/reusables/post-sessionKey-response-body-table.mdx';
+import Post1ClickRequestBodyTableShared from '@site/versioned_docs/version-2.1/reusables/post-1-click-request-body-table-shared.mdx';
+import Post1ClickResponseBodyTableUuid from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-uuid.mdx';
+import Post1ClickResponseBodyTableUrl from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-url.mdx';
+import Post1ClickResponseBodyTableCode from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-code.mdx';
+import Post1ClickResponseBodyTableIdentity from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-identity.mdx';
+import UseUserInputAdmonition from '@site/versioned_docs/version-2.1/reusables/use-user-input-admonition.mdx'
+import CredentialRequestTableShared from '@site/versioned_docs/version-2.1/reusables/credential-request-table-shared.mdx'
+import CredentialRequestTableHosted from '@site/versioned_docs/version-2.1/reusables/credential-request-table-sdk.mdx'
+import DefaultCredentialRequestsHosted from '@site/versioned_docs/version-2.1/reusables/default-credential-requests-hosted.mdx'
+import DefaultCredentialRequestsNotHosted from '@site/versioned_docs/version-2.1/reusables/default-credential-requests-not-hosted.mdx'
+import RecencyRequirementAdmonition from '@site/versioned_docs/version-2.1/reusables/recency-requirement-admonition.mdx'
+import SandboxValidationAdmonition from '@site/versioned_docs/version-2.1/reusables/sandbox-validation-admonition.mdx'
+import EndpointHeaderWithoutSwagger from '@site/src/components/EndpointHeaderWithoutSwagger.jsx'
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+
+
+{/* TODO: Update Swagger URLs */}
+
+:::tip 
+Postman API documentation is available at https://api.docs.verified.inc.
+:::
+
+
+<DevelopmentWorkAdmonition/>
+
+
+<EndpointHeaderWithoutSwagger 
+    postmanUrl="https://api.docs.verified.inc/#cde4fdf8-1521-4da0-9280-094e1f550aa8"
+>
+    ## `POST /sessionKey`
+</EndpointHeaderWithoutSwagger>
+
+> Create a (one time use) session key for the SDK
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/sessionKey`</td>
+  </tr>
+</table>
+
+<IntegrationTypeEndpointAdmonition option="SDK"/>
+
+
+### Request {#post-sessionKey-request} 
+
+Call:
+```
+POST /sessionKey
+```
+
+There's no request body.
+
+{/* Commenting out until we support customer SMS verification */}
+{/* ```typescript title="POST /sessionKey Request Body"
+{
+    phone?: string,
+    email?: string,
+    birthDate?: string,
+    ssn4?: string
+}
+```
+<table>
+    <PostSessionKeyRequestBodyTable/>
+</table> */}
+
+
+### Response {#post-sessionKey-response}
+
+```typescript title="POST /sessionKey Response Body"
+{
+    sessionKey: string
+}
+```
+<table>
+    <PostSessionKeyResponseBodyTable/>
+</table>
+
+---
+
+<EndpointHeaderWithoutSwagger
+    postmanUrl="https://api.docs.verified.inc/#e80daa1e-5337-4f6f-b769-d46a9bc72e0c"
+>
+    ## `GET /1-click`
+</EndpointHeaderWithoutSwagger>
+
+> Get data for a user who has completed a 1-Click Signup flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`GET`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/{identityUuid}`</td>
+  </tr>
+</table>
+
+<IntegrationTypeEndpointAdmonition option="SDK"/>
+
+
+### Request {#get-1-click-request}
+
+Call:
+```
+GET /1-click/{identityUuid}
+```
+- For the `{identityUuid}` path parameter, use the value of the `identityUuid` returned by the SDK or included as a URL parameter on the redirect URL.
+
+
+### Response {#get-1-click-response}
+
+```typescript title="GET /1-click Response Body"
+{
+    ...1ClickEntity
+}
+```
+
+See [`1ClickEntity`](../api-reference/types#1clickentity).
+
+---
+
+<EndpointHeaderWithoutSwagger 
+    postmanUrl="https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7"
+>
+    ## `POST /1-click`
+</EndpointHeaderWithoutSwagger>
+
+> Begin a 1-Click Signup flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click`</td>
+  </tr>
+</table>
+
+<IntegrationTypeEndpointAdmonition option="API"/>
+
+
+### Request {#post-1-click-request} 
+
+```typescript title="POST /1-click Request Body"
+{
+    phone: string,
+    email?: string,
+    birthDate?: string,
+    ssn4?: string,
+    credentialRequests?: CredentialRequest[]
+}
+```
+<table>
+    <Post1ClickRequestBodyTableShared/>
+</table>
+
+<SandboxValidationAdmonition/>
+
+
+#### Default Credential Requests 
+
+<DefaultCredentialRequestsNotHosted/>
+
+
+### Response {#post-1-click-response}
+
+```typescript title="POST /1-click Response Body"
+{
+    uuid: string,
+    identity: 1ClickEntity
+}
+```
+<table>
+    <Post1ClickResponseBodyTableUuid/>
+    <Post1ClickResponseBodyTableIdentity/>
+</table>

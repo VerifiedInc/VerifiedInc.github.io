@@ -1,0 +1,81 @@
+```typescript title="1ClickEntity Example"
+{
+    "identifiers": {
+        "phone": "+12125550010"
+    },
+    "credentials": {
+        "fullName": {
+            "firstName": "Richard",
+            "lastName": "Hendricks"
+        },
+        // Array because `multi` was set to `true` in the address credential request
+        "address": [
+            {
+                "line1": "5320 Newell Rd",
+                "city": "Palo Alto",
+                "state": "CA",
+                "zipCode": "94303",
+                "country": "US"
+            }
+        ],
+        "birthDate": "1989-08-01",
+        "ssn": "000456789"
+    },
+    "metadata": {
+        "identifiers": {
+            "verificationMethod": {
+                "phone": "otp"
+            },
+            "riskSignals": {
+                "overall": {
+                    "score": 0, // included in Basic
+                    "level": "low", // included in Basic
+                    "recommendation": "allow", // included in Basic
+                    "reasonCodes": [ // included in Advanced
+                        "OCR10021"
+                    ]
+                },
+                "phone": { // included in Advanced
+                    "carrier": {
+                        "id": 0,
+                        "name": "Example Carrier"
+                    }
+                    "reasonCodes": [
+                        "OCR20004",
+                        "OCR20005",
+                        "OCR20007",
+                        "OCR20101"
+                    ]
+                },
+                "email": { // included in Advanced
+                    "reasonCodes": [
+                        "OCR60001",
+                        "OCR60002"
+                    ]
+                }
+            }
+        },
+        // Follows the same structure as `credentials` and maintains the same order for array items when `multi` is set to `true`
+        "credentials": {
+            "verificationMethod": {
+                "fullName": {
+                    "firstName": "phone_carrier",
+                    "lastName": "phone_carrier"
+                },
+                // Array because `multi` was set to `true` in the address credential request
+                "address": [
+                    {
+                        "line1": "credit_bureau",
+                        "city": "credit_bureau",
+                        "state": "credit_bureau",
+                        "zipCode": "credit_bureau",
+                        "country": "credit_bureau"
+                    }
+                ],
+                "birthDate": "phone_carrier",
+                "ssn": "phone_carrier"
+            }
+        }
+    }
+}
+```

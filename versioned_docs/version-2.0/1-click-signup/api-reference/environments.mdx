@@ -1,0 +1,88 @@
+---
+id: environments
+title: Environments
+sidebar_position: 6
+sidebar_label: Environments
+description: How to use Verified API environments
+slug: /environments
+toc_max_heading_level: 4
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import BrandsAdmonition from '@site/versioned_docs/version-2.0/reusables/brands-admonition.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2.0/reusables/integration-type-admonition.mdx';
+import DomainsAdmonition from '@site/versioned_docs/version-2.0/reusables/domains-admonition.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.0/reusables/development-work-admonition.mdx';
+import FullDefinitionAdmonition from '@site/versioned_docs/version-2.0/reusables/full-definition-admonition.mdx';
+import Post1ClickRequestBodyTableShared from '@site/versioned_docs/version-2.0/reusables/post-1-click-request-body-table-shared.mdx';
+import Post1ClickRequestBodyTableHosted from '@site/versioned_docs/version-2.0/reusables/post-1-click-request-body-table-hosted.mdx'
+import Post1ClickResponseBodyTableUuid from '@site/versioned_docs/version-2.0/reusables/post-1-click-response-body-table-uuid.mdx';
+import Post1ClickResponseBodyTableUrl from '@site/versioned_docs/version-2.0/reusables/post-1-click-response-body-table-url.mdx';
+import Post1ClickResponseBodyTableCode from '@site/versioned_docs/version-2.0/reusables/post-1-click-response-body-table-code.mdx';
+import Post1ClickResponseBodyTableIdentity from '@site/versioned_docs/version-2.0/reusables/post-1-click-response-body-table-identity.mdx';
+import UseUserInputAdmonition from '@site/versioned_docs/version-2.0/reusables/use-user-input-admonition.mdx'
+import CredentialRequestTableShared from '@site/versioned_docs/version-2.0/reusables/credential-request-table-shared.mdx'
+import CredentialRequestTableHosted from '@site/versioned_docs/version-2.0/reusables/credential-request-table-hosted.mdx'
+import MigrationAdmonition from '@site/versioned_docs/version-2.0/reusables/migration-admonition.mdx';
+
+<MigrationAdmonition/>
+
+{/* :::note
+See also our [Postman docs](https://api.docs.verified.inc/).
+::: */}
+
+
+We expose two environments: [**Sandbox**](#sandbox) and [**Production**](#production). 
+
+<DevelopmentWorkAdmonition/>
+
+
+## Sandbox
+
+<table>
+    <tr>
+        <th>Domain</th>
+        <td><code>sandbox-verifiedinc<b>.com</b></code></td>
+    </tr>
+    <tr>
+        <th>Base URL</th>
+        <td><code><span>https://</span>core-api.sandbox-verifiedinc<b>.com</b>/v2</code></td>
+    </tr>
+</table>
+
+<DomainsAdmonition/>
+
+
+### Mock Data
+
+In Sandbox, we return mock user data regardless of what phone (or email) [identifier](./types#identifiers) you use. 
+- **We recommend that you use own phone number,** so you can succesfully send and receive SMS during the development process. You'll see in the [Integration Guide](./integration-guide) that sending SMS is a necessary part of integration.
+- **You can also use our [test user](#test-user)'s phone number.** This test user has a static verification code, which can sometimes make testing easier.
+- **You should use a value of `"1989-08-01"` for birth date in either case.** We don't require a birth date in Sandbox (we always return mock user data based on just a phone number), but if you want to use a birth date for testing in Sandbox, you'll need to use that specific value to pass validation.
+
+If you'd like us to return custom mock data for your phone number(s), please email us at Support@Verified.inc — we're happy to enable that for you.
+
+:::tip Test Users
+For easy testing and troubleshooting, utilize the available **test users** provided in the system. This allows you to simulate various scenarios with our Mock Data.
+For more information, see the [Test Users Page](./test-users).
+:::
+
+## Production
+
+<table>
+    <tr>
+        <th>Domain</th>
+        <td><code>verified<b>.inc</b></code></td>
+    </tr>
+    <tr>
+        <th>Base URL</th>
+        <td><code><span>https://</span>core-api.verified<b>.inc</b>/v2</code></td>
+    </tr>
+</table>
+
+<DomainsAdmonition/>

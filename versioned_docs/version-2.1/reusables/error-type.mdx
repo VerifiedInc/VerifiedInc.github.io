@@ -1,0 +1,88 @@
+import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error-example-oce011.mdx'
+
+```typescript title="Error Type"
+{
+    "name": string,
+    "message": string,
+    "code": number,
+    "className": string,
+    "data": {
+        "errorCode": string,
+        "additionalInputs": [string], // only for error code OCE011
+        "inputAttemptsExceeded": [string], // only for error code OCE019
+        "riskSignals": RiskSignals // only for error codes OCE011, OCE012, OCE013, OCE017, and OCE019
+    }
+}
+```
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`name`</td>
+        <td>`string`</td>
+        <td>`PascalCase`</td>
+        <td>Name of the error</td>
+        <td>`"BadRequest"`</td>
+    </tr>
+    <tr>
+        <td>`message`</td>
+        <td>`string`</td>
+        <td>`Sentence case`</td>
+        <td>Message for developer that explains the error</td>
+        <td>`"Additional information is required to source data for user: birthDate"`</td>
+    </tr>
+    <tr>
+        <td>`code`</td>
+        <td>`number`</td>
+        <td>3 digits (0-9)</td>
+        <td>[HTTP response status code](https://httpwg.org/specs/rfc9110.html#overview.of.status.codes)</td>
+        <td>`400`</td>
+    </tr>
+    <tr>
+        <td>`className`</td>
+        <td>`string`</td>
+        <td>`kebab-case`</td>
+        <td>Class of error</td>
+        <td>`bad-request`</td>
+    </tr>
+    <tr>
+        <td>`data.errorCode`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                See [Error Codes](/api-reference/errors#error-codes) for possible values
+            </details>
+        </td>
+        <td>3 letters and 3 digits (0-9)</td>
+        <td>[Verified error code](/api-reference/errors#error-codes)</td>
+        <td>`"OCE011"`</td>
+    </tr>
+    <tr>
+        <td>`data.additionalInputs`</td>
+        <td>`[string]`</td>
+        <td>`camelCase`</td>
+        <td>Additional inputs to source [credentials](/data/outputs/credentials) for user, where multiple values indicates **inclusive OR** (only included for [`OCE011`](/api-reference/errors#oce011))</td>
+        <td>`["birthDate", "ssn4"]`</td>
+    </tr>
+    <tr>
+        <td>`data.inputAttemptsExceeded`</td>
+        <td>`[string]`</td>
+        <td>`camelCase`</td>
+        <td>Input(s) for which the attempts limit (3 for each input) has been exceeded (only included for [`OCE019`](/api-reference/errors#oce019))</td>
+        <td>`["birthDate", "ssn4"]`</td>
+    </tr>
+    <tr>
+        <td>`data.riskSignals`</td>
+        <td>[`RiskSignals`](/api-reference/types#risksignals)</td>
+        <td>`Object`</td>
+        <td>[Verified risk signals](/data/outputs/metadata#risk-signals) associated with the 1-Click Signup event (only included for [`OCE011`](/api-reference/errors#oce011), [`OCE012`](/api-reference/errors#oce012), [`OCE013`](/api-reference/errors#oce013), [`OCE017`](/api-reference/errors#oce017), and [`OCE019`](/api-reference/errors#oce019))</td>
+        <td>See [`RiskSignals` example](/api-reference/types#example-risksignals)</td>
+    </tr>
+</table>

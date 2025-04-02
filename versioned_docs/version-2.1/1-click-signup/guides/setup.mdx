@@ -1,0 +1,509 @@
+---
+id: setup
+title: Setup
+sidebar_position: 2
+sidebar_label: Setup
+description: How to get setup to integrate 1-Click Signup
+slug: /guides/setup
+toc_max_heading_level: 4
+---
+
+import Admonition from '@theme/Admonition';
+import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
+import Chip from '@mui/material/Chip';
+import RiskSignalsOptionsTable from '@site/versioned_docs/version-2.1/reusables/risk-signals-options-table.mdx';
+import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-recommendation-admonition.mdx';
+
+
+{/* 1-Click Signup is the fastest way to onboard new users.
+
+Integrating 1-Click Signup is extremely easy.
+
+:::tip ✅ 1-Hour Guarantee
+We are _obsessed_ with making it as easy as possible for you to implement 1-Click Signup.
+- If it takes you more than 1 hour to implement, we'll send you a free Verified t-shirt! 
+- If it takes you less than 1 hour, we'll send you a free t-shirt _and_ mug!
+::: */}
+
+<table>
+    <tr>
+        <th>Time to Complete</th>
+        <td>15 minutes</td>
+    </tr>
+    <tr>
+        <th>Skills Required</th>
+        <td>No technical skills!</td>
+    </tr>
+</table>
+
+:::tip
+**Complete this Setup guide before following the [SDK Integration](../guides/sdk-integration) or [API Integration](../guides/api-integration) guide.** (Which integration guide you should follow depends on which [integration type](#integration-type) you choose.)
+:::
+
+
+## 1. Access the [Dashboard](https://dashboard.verified.inc).
+
+<SetupLoginToDashboard/>
+
+
+## 2. Configure brand settings.
+
+On the Brand Details page in the Dashboard, you can configure settings for your brand. 
+
+
+### Brand Name
+
+Choose a name for your brand. This will be used elsewhere in the Dashboard (for example on the Metrics page) and displayed to users if you choose the **SDK** [integration type](#integration-type).
+
+
+### Integration Type
+
+Choose which integration type you want to use:
+
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Development Effort</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>**SDK** <Chip label="Recommended" variant="outlined" size="small" color="primary"/> <br/> <span class="font-weight-normal"></span></td>
+        <td>\<1 day</td>
+        <td>You use our (web) client SDK, and we handle the rest</td>
+    </tr>
+    <tr>
+        <td>**API** <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/> <br/> <span class="font-weight-normal"></span></td>
+        <td>1-2 weeks</td>
+        <td>You use our API only and build everything yourself</td>
+    </tr>
+</table>
+
+<IntegrationTypeRecommendationAdmonition/>
+
+:::note Looking for Hosted, Semi-Hosted, or Non-Hosted?
+<div class="small-margin-bottom">**We’ve reorganized!** The integration types [in v2.0](/v2.0/integration-guide#2-configure-brand-settings) are updated for v2.1 as follows:</div>
+- **Hosted** in v2.0 is replaced by **SDK** in v2.1
+- **Semi-Hosted** in v2.0 is no longer available in v2.1
+- **Non-Hosted** in v2.0 is equivalent to **API** in v2.1
+:::
+    
+
+{/* Commenting out until we have backend support */}
+{/* ### Phone Verification
+
+Choose whether to use Verified's phone verification or your own:
+
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>Use Verified's</td>
+        <td>Use Verified to send the user verification SMS.</td>
+    </tr>
+    <tr>
+        <td>Use your own <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/></td>
+        <td>Use your own solution to send the user verification SMS.</td>
+    </tr>
+</table>
+
+:::important You Must Use Your Own with the API Integration Type
+If you choose the **API** [integration type](#integration-type), you must use your own phone verification.
+:::
+
+:::warning Using Your Own Requires Approval
+If you use your own solution for phone verification, we must approve you for [Production](../api-reference/environments#production) access by evaluating that you're properly verifying users' phone numbers.
+::: */}
+
+
+### Challenges
+
+:::note Definition
+A **challenge** is a piece of information we will prompt the user to input if we're unable to source data for them based on previous inputs (for example, phone). 
+:::
+
+Choose which challenge(s) to allow:
+
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>Birthday or SSN4 <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
+        <td>Prompt the user for their birthday, SSN4, or both (only if necessary). Birthday always comes first.</td>
+    </tr>
+    <tr>
+        <td>Birthday only</td>
+        <td>Prompt the user for their birthday only — never their SSN4.</td>
+    </tr>
+    <tr>
+        <td>SSN4 only</td>
+        <td>Prompt the user for their SSN4 only — never their birthday.</td>
+    </tr>
+</table>
+
+<details>
+    <summary>Why We Recommend <b>Birthday or SSN4</b></summary>
+
+    **Birthday or SSN4** is the option we recommend because the user is only prompted for both challenges if necessary. This is quite rare, so it adds very little friction, but it increases conversion by a few percentage points.
+
+    One example is the case of twins:
+    - Based on just a phone number, we find two users.
+    - We prompt for birthday, but we still find two users — because they're twins with the same birthday!
+    - So, we prompt for SSN4, which narrows down to a single user.
+
+    The birth rate of twins (and triplets, etc.) in the US is [3.2%](https://www.cdc.gov/nchs/fastats/multiple.htm), so choosing **Birthday or SSN4** instead of **Birthday only** increases success rate by about that much.
+</details>
+
+
+### Prompt for Challenges
+
+Choose when to prompt for challenge(s):
+
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>Only if necessary</td>
+        <td>Prompt the user for challenge(s) only if Verified can't source data based on just phone.</td>
+    </tr>
+    <tr>
+        <td>Always</td>
+        <td>Prompt the user for a challenge upfront, every time.</td>
+    </tr>
+</table>
+
+:::note
+If you choose **Always**, the user will only be prompted for one challenge. 
+- If you chose **Birthday or SSN4** or **Birthday only** for the [Challenges](#challenges) setting, the challenge will be their birthday.
+- If you chose **SSN4 only** for the [Challenges](#challenges) setting, the challenge will be their SSN4.
+:::
+
+:::tip
+Always prompting for a challenge can help improve data quality for some user populations.
+:::
+
+
+### Risk Signals 
+
+:::note Definition
+[**Risk signals**](../data/outputs/metadata#risk-signals) are metadata that enhance 1-Click Signup's anti-fraud capabilities.
+:::
+
+Choose which risk signals to include in Verified's responses:
+
+<RiskSignalsOptionsTable/>
+
+:::tip Advanced Has Extra Cost 
+**Advanced** risk signals come with extra cost. They're particularly relevant if you're using 1-Click Signup for a high sensitivity use case where fraud is a major risk. 
+:::
+
+:::danger
+**Off** is not recommended. It will prevent Verified from sourcing risk signals for a user and blocking them if the risk score is too high.
+:::
+
+
+### Default Credential Requests 
+
+:::note Definitions
+- A [**credential**](../data/outputs/credentials) is a piece of identity data about a user (like a first name or address).
+- A **credential request** is how you ask Verified for a particular credential. It encodes what type of data you're asking for, whether it's required or optional, whether multiple values should be returned, etc. See the [`CredentialRequest`](../api-reference/types#credentialrequest) type for full details.
+:::
+
+Choose which [credentials](../data/outputs/credentials) Verified should try to source about the user:
+
+
+<details>
+    <summary>Settings for a Credential Request</summary>
+    <table>
+        <tr>
+            <th>Setting</th>
+            <th>Relevant to Integration Type</th>
+            <th>Options</th>
+            <th>Default</th>
+            <th>Description</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td>Field Type</td>
+            <td>SDK and API</td>
+            <td>[Credential](../data/outputs/credentials) type</td>
+            <td>-</td>
+            <td>Type of user data this field is for</td>
+            <td>Full Name</td>
+        </tr>
+        <tr>
+            <td>Field Description</td>
+            <td>SDK only</td>
+            <td>Text</td>
+            <td>-</td>
+            <td>Text that appears under the field</td>
+            <td>Legal name (for Full Name field type)</td>
+        </tr>
+        <tr>
+            <td>Optional or Required</td>
+            <td>SDK only</td>
+            <td>
+                - Optional
+                - Required if available (see note below)
+            </td>
+            <td>Optional</td>
+            <td>Whether the field is optional or required</td>
+            <td>Optional</td>
+        </tr>
+        <tr>
+            <td>Allow User Input</td>
+            <td>SDK only</td>
+            <td>
+                - Yes
+                - No
+            </td>
+            <td>Yes</td>
+            <td>Whether the user is allowed data returned for the field</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>Multiple Values</td>
+            <td>SDK and API</td>
+            <td>
+                - Yes
+                - No
+            </td>
+            <td>
+                - Yes for Address field type
+                - No for all other field types
+            </td>
+            <td>Whether the user can choose among multiple values (if they're returned)</td>
+            <td>No</td>
+        </tr>
+    </table>
+
+    <Admonition type="note">
+        **Field Description,** **Optional or Required,** and **Allow User Input** are only relevant to the **SDK** [integration type](#integration-type) because they affect the user interface the SDK displays. 
+    </Admonition>
+
+    <Admonition type="tip" title="What Required If Available Means"> 
+        If **Optional or Required** is set to **Required if available**:
+        - If data is returned for the field, the user is required to share it. (If **Allow User Input** is set to **Yes**, the user can edit the data.)
+        - If data is not returned for the field, the user can optionally share it. (If **Allow User Input** is set to **Yes**, the user can edit the data. If it's set to **No**, the field is not displayed to the user.)
+    </Admonition>
+</details>
+
+When you create a new brand, the Dashboard starts you off with standard credential requests to provide you with a helpful starting point:
+
+<details>
+    <summary>Standard Credential Requests</summary>
+    <table>
+        <tr>
+            <th>Field Type</th>
+            <th>Field Description</th>
+            <th>Optional or Required</th>
+            <th>Allow User Input</th>
+            <th>Multiple Values</th>
+        </tr>
+        <tr>
+            <td>Full Name</td>
+            <td>-</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>↳ First Name</td>
+            <td>-</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>↳ Last Name</td>
+            <td>-</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td>-</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>-</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>↳ Line 1</td>
+            <td>-</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>↳ Line 2</td>
+            <td>Apt, Unit, etc.</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>↳ City</td>
+            <td>-</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>↳ State</td>
+            <td>-</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>↳ ZIP Code</td>
+            <td>-</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>↳ Country</td>
+            <td>-</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Birth Date</td>
+            <td>-</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>SSN</td>
+            <td>-</td>
+            <td>Optional</td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+    </table>
+</details>
+
+
+### SDK Styling
+
+:::note
+These styling settings are only relevant to the **SDK** [integration type](#integration-type) because they affect the user interface the SDK displays.
+:::
+
+:::tip Verified Auto-Magically Configures Styling Settings
+We use AI to auto-magically configure styling settings based on your email domain, so you don't have to do so manually from scratch!
+::::
+
+<table>
+    <tr>
+        <th>Setting</th>
+        <th>Options</th>
+        <th>Default</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>Logo</td>
+        <td>Any square image (max size 200 KB, JPG or PNG)</td>
+        <td>-</td>
+        <td>Logo displayed to users</td>
+    </tr>
+    <tr>
+        <td>Primary Color</td>
+        <td>Any hex code</td>
+        <td>#0DBC3D</td>
+        <td>Color used for primary buttons and success indicators</td>
+    </tr>
+    <tr>
+        <td>Error Color</td>
+        <td>Any hex code</td>
+        <td>#EB0D28</td>
+        <td>Color used for errors</td>
+    </tr>
+    <tr>
+        <td>Muted Color</td>
+        <td>Any hex code</td>
+        <td>#BDBDBD</td>
+        <td>Color used for secondary buttons and text</td>
+    </tr>
+    <tr>
+        <td>Background Color</td>
+        <td>Any hex code</td>
+        <td>#FFFFFF</td>
+        <td>Color used for background</td>
+    </tr>
+    <tr>
+        <td>Alignment</td>
+        <td>
+            - Left
+            - Center
+            - Right
+            - Stretch
+        </td>
+        <td>Center</td>
+        <td>Alignment used for most text, buttons, and the powered by Verified graphic</td>
+    </tr>
+    <tr>
+        <td>Font Family</td>
+        <td>Any [Google font](https://fonts.google.com/)</td>
+        <td>Lato</td>
+        <td>Font used for all elements</td>
+    </tr>
+    <tr>
+        <td>1-Click Word</td>
+        <td>
+            - Signup
+            - Login 
+            - Verify 
+            - Apply 
+            - Access 
+            - AutoFill
+        </td>
+        <td>Signup</td>
+        <td>Word that appears after "1-Click" in the powered by Verified graphic</td>
+    </tr>
+    <tr>
+        <td>Graphic Color</td>
+        <td>
+            - Green
+            - Gray
+            - Black
+            - White 
+        </td>
+        <td>Green</td>
+        <td>Color of the Verified logo in the powered by Verified graphic</td>
+    </tr>
+    <tr>
+        <td>Input Border Radius</td>
+        <td>Any number</td>
+        <td>4</td>
+        <td>Border radius used for all inputs</td>
+    </tr>
+    <tr>
+        <td>Button Border Radius</td>
+        <td>Any number</td>
+        <td>4</td>
+        <td>Border radius used for all buttons</td>
+    </tr>
+</table>
+
+:::tip The SDK Automatically Adjusts Text Color for Contrast
+The SDK will automaticallly adjust the color of text to achieve good contrast, given the color of an element. For example:
+- If you set **Background Color** to be dark, the SDK will adjust text on the background to be light.
+- If you set **Primary Color** to be light, the SDK will adjust text on buttons to be dark.
+:::

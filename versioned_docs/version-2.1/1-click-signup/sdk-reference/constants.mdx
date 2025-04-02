@@ -1,0 +1,76 @@
+---
+id: constants
+title: Constants
+sidebar_label: Constants
+sidebar_position: 2
+description: How to use Verified SDK constants
+slug: /sdk-reference/constants
+toc_max_heading_level: 4
+---
+
+
+## `SdkResultValues`
+
+> Values for an SDK result
+
+```typescript title="SdkResultValues Definition"
+const SdkResultValues = {
+  USER_SHARED_CREDENTIALS: 'USER_SHARED_CREDENTIALS',
+  USER_OPTED_OUT: 'USER_OPTED_OUT',
+};
+```
+
+
+### Example
+
+```typescript title="Example Usage of SdkResultValues"
+import { SdkResultValues, SdkResult, ... } from '@verifiedinc-public/client-sdk';
+
+function handleResult(data: SdkResult) {
+    switch (data.type) {
+        // highlight-next-line
+        case SdkResultValues.USER_SHARED_CREDENTIALS: // Success!
+            // Pass data.identityUuid to server (to call GET /1-click/{identityUuid})
+        // highlight-next-line
+        case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
+            // Take user to manual signup flow
+    }
+}
+```
+
+---
+
+
+## `SdkErrorReasons`
+
+> Reasons for an SDK error
+
+```typescript title="SdkErrorReasons Definition"
+const SdkErrorReasons = {
+  SESSION_TIMEOUT: 'SESSION_TIMEOUT',
+  INVALID_SESSION_KEY: 'INVALID_SESSION_KEY',
+  SHARE_CREDENTIALS_ERROR: 'SHARE_CREDENTIALS_ERROR',
+};
+```
+
+
+### Example
+
+```typescript title="Example Usage of SdkErrorReasons"
+import { SdkErrorReasons, SdkError, ... } from '@verifiedinc-public/client-sdk';
+
+function handleError(error: SdkError) {
+    switch (error.reason) {
+        // highlight-next-line
+        case SdkErrorReasons.INVALID_SESSION_KEY:
+            // Create new session key (call POST /sessionKey server side)
+        // highlight-next-line
+        case SdkErrorReasons.SESSION_TIMEOUT:
+            // Create new session key (call POST /sessionKey server side)
+            // Initalize new VerifiedClientSDK instance
+        // highlight-next-line
+        case SdkErrorReasons.SHARE_CREDENTIALS_ERROR:
+            // Take user to manual signup flow
+    }
+}
+```

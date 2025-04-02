@@ -1,0 +1,16 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+
+<ErrorDisplay
+  message='Unable to use 1-click due to missing mandatory credentials'
+  description=''
+  integrationType=''
+  whenThisIsReturned='When Verified cannot source data for a mandatory credential.' 
+  howToHandle='Fall back to a manual signup flow. Consider setting the credential in question to be non-mandatory.'
+  youShouldNeverGetThisError=''
+>
+  ##### `OCE007`
+</ErrorDisplay>
+
+You'll only get this error if you set `mandatory` to `yes` in the [credential request](/api-reference/types#credentialrequest) for a [credential](/data/outputs/credentials). (Generally, you'd do this for the default credential requests defined for your brand in the [Dashboard](https://dashboard.verified.inc), though you can also set it at the code level per API request.) We don't recommend doing this because it will prevent any credential data from being returned. In other words, if we can't source data for a mandatory credential, we won't return data for _any_ credentials. 
+
+Instead, for `mandatory` we recommend using `if_available` or `no`. Then, if we can't source data for that credential, we'll still return data for other credentials. There's only a difference between those two options if your brand's **integration type** setting is set to **SDK** in the [Dashboard](https://dashboard.verified.inc), in which case `if_available` still marks the credential field as required, whereas `no` marks it as optional. _See [Integration Type](/guides/setup#integration-type) in the Setup guide for more information about integration types._

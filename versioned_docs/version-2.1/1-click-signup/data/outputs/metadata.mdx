@@ -117,6 +117,10 @@ You can configure which risk signals you receive using the [risk signals brand s
 If Basic or Advanced risk signals are enabled, we will block users with an Overall Score greater than 600 and return a [`OCE017` error](../../api-reference/errors#oce017).
 :::
 
+:::info Definition of Risky Services
+We and other companies assign specific services — called "risky services" — to interact with numbers that are considered more likely to be malicious. These risky services are not themselves risky. Rather, if the phone number you submit to our API has had a lot of interaction with them, that phone number is potentially risky.
+:::
+
 <table>
     <tr>
         <th>Name</th>
@@ -1538,7 +1542,7 @@ If Basic or Advanced risk signals are enabled, we will block users with an Overa
             moderate short-term activity on risky services
         </td>
         <td>
-            Significant activity for this email address to or from risky services over the last 24 hours (see risky services above for definition of that term).
+            Significant activity for this email address to or from risky services over the last 24 hours .
         </td>
         <td>
             ✔
@@ -1554,7 +1558,7 @@ If Basic or Advanced risk signals are enabled, we will block users with an Overa
             moderate long-term activity on risky services
         </td>
         <td>
-            Significant activity on this email address to or from risky services over the last 90 days (see risky services above for definition of that term).
+            Significant activity on this email address to or from risky services over the last 90 days .
         </td>
         <td>
             ✔
@@ -1661,7 +1665,7 @@ If Basic or Advanced risk signals are enabled, we will block users with an Overa
             moderate short-term activity on risky services
         </td>
         <td>
-            Significant activity for this IP address to or from risky services over the last 24 hours (see risky services above for definition of that term).
+            Significant activity for this IP address to or from risky services over the last 24 hours .
         </td>
         <td>
             ✔
@@ -1677,7 +1681,7 @@ If Basic or Advanced risk signals are enabled, we will block users with an Overa
             moderate long-term activity on risky services
         </td>
         <td>
-            Significant activity on this IP address to or from risky services over the last 90 days (see risky services above for definition of that term).
+            Significant activity on this IP address to or from risky services over the last 90 days .
         </td>
         <td>
             ✔
@@ -1725,7 +1729,7 @@ If Basic or Advanced risk signals are enabled, we will block users with an Overa
             high short-term activity on risky services
         </td>
         <td>
-            Very significant activity for this IP address to or from risky services over the last 24 hours (see risky services above for definition of that term).
+            Very significant activity for this IP address to or from risky services over the last 24 hours .
         </td>
         <td>
             ✔
@@ -1741,7 +1745,7 @@ If Basic or Advanced risk signals are enabled, we will block users with an Overa
             high long-term activity on risky services
         </td>
         <td>
-            Very significant activity on this IP address to or from risky services over the last 90 days (see risky services above for definition of that term).
+            Very significant activity on this IP address to or from risky services over the last 90 days .
         </td>
         <td>
             ✔

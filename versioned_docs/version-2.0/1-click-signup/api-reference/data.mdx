@@ -302,19 +302,19 @@ We can source verified KYC type data for **~95% of US adults.** Coverage for you
         <td>Gender</td>
         <td>`"Female"`</td>
     </tr>
-    <tr>
+    {/* <tr>
         <td>Email <Chip label="Not Recommended" variant="outlined" size="small" color="error"/></td>
         <td>`email`</td>
         <td>`string`</td>
         <td>email</td>
         <td>Email address</td>
         <td>`"richard@piedpiper.net"`</td>
-    </tr>
+    </tr> */}
 </table>
 
-:::warning[Email Reliability]
+{/* :::warning[Email Reliability]
 **Email credentials can be less reliable compared to other types of data.** Verifying them is challenging because many people use multiple email addresses, making it difficult to associate one email with a single individual. If email accuracy is critical, we recommend directly asking users for their email during your workflow to ensure reliability.
-:::
+::: */}
 
 </CollapsibleSection>
 
@@ -1120,6 +1120,10 @@ Risk signals metadata enhance 1-Click Signup's anti-fraud capabilities. They com
 Additional risk signals are add ons, and you should consider using them if they are relevant to your use case. To enable them, please ask your Verified support representative or email us at Support@Verified.inc.
 
 See also the [`RiskSignals` type](./types#risksignals).
+
+:::info Definition of Risky Services
+We and other companies assign specific services — called "risky services" — to interact with numbers that are considered more likely to be malicious. These risky services are not themselves risky. Rather, if the phone number you submit to our API has had a lot of interaction with them, that phone number is potentially risky.
+:::
 
 <table>
     <tr>
@@ -2542,7 +2546,7 @@ See also the [`RiskSignals` type](./types#risksignals).
             moderate short-term activity on risky services
         </td>
         <td>
-            Significant activity for this email address to or from risky services over the last 24 hours (see risky services above for definition of that term).
+            Significant activity for this email address to or from risky services over the last 24 hours .
         </td>
         <td>
             ✔
@@ -2558,7 +2562,7 @@ See also the [`RiskSignals` type](./types#risksignals).
             moderate long-term activity on risky services
         </td>
         <td>
-            Significant activity on this email address to or from risky services over the last 90 days (see risky services above for definition of that term).
+            Significant activity on this email address to or from risky services over the last 90 days .
         </td>
         <td>
             ✔
@@ -2667,7 +2671,7 @@ See also the [`RiskSignals` type](./types#risksignals).
             moderate short-term activity on risky services
         </td>
         <td>
-            Significant activity for this IP address to or from risky services over the last 24 hours (see risky services above for definition of that term).
+            Significant activity for this IP address to or from risky services over the last 24 hours .
         </td>
         <td>
             ✔
@@ -2683,7 +2687,7 @@ See also the [`RiskSignals` type](./types#risksignals).
             moderate long-term activity on risky services
         </td>
         <td>
-            Significant activity on this IP address to or from risky services over the last 90 days (see risky services above for definition of that term).
+            Significant activity on this IP address to or from risky services over the last 90 days .
         </td>
         <td>
             ✔
@@ -2731,7 +2735,7 @@ See also the [`RiskSignals` type](./types#risksignals).
             high short-term activity on risky services
         </td>
         <td>
-            Very significant activity for this IP address to or from risky services over the last 24 hours (see risky services above for definition of that term).
+            Very significant activity for this IP address to or from risky services over the last 24 hours .
         </td>
         <td>
             ✔
@@ -2747,7 +2751,7 @@ See also the [`RiskSignals` type](./types#risksignals).
             high long-term activity on risky services
         </td>
         <td>
-            Very significant activity on this IP address to or from risky services over the last 90 days (see risky services above for definition of that term).
+            Very significant activity on this IP address to or from risky services over the last 90 days .
         </td>
         <td>
             ✔

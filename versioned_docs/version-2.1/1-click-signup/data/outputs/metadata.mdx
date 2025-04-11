@@ -31,7 +31,7 @@ import CredentialRequestTableHosted from '@site/versioned_docs/version-2.1/reusa
 import OneClickEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-entity-example.mdx'
 import Chip from '@mui/material/Chip';
 import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
-import RiskSignalsOptionsTable from '@site/versioned_docs/version-2.1/reusables/risk-signals-options-table.mdx';
+import RiskSignalsSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/risk-signals-setting-admonition.mdx';
 
 
 > A piece of **metadata** is additional data that's not a user's identity data (their identifiers or credentials) — though it's often _about_ that identity data.
@@ -111,11 +111,7 @@ Risk signals metadata enhance 1-Click Signup's anti-fraud capabilities. They com
 
 See also the [`RiskSignals` type](../../api-reference/types#risksignals).
 
-:::tip
-You can configure which risk signals you receive using the [risk signals brand setting](./guides/setup#risk-signals):
-<RiskSignalsOptionsTable/>
-If Basic or Advanced risk signals are enabled, we will block users with an Overall Score greater than 600 and return a [`OCE017` error](../../api-reference/errors#oce017).
-:::
+<RiskSignalsSettingAdmonition/>
 
 :::info Definition of Risky Services
 We and other companies assign specific services — called "risky services" — to interact with numbers that are considered more likely to be malicious. These risky services are not themselves risky. Rather, if the phone number you submit to our API has had a lot of interaction with them, that phone number is potentially risky.

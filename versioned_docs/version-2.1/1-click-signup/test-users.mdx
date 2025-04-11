@@ -54,6 +54,213 @@ You can use a [custom demo](./custom-demo) by generating one or opening one with
 3. Call [`POST /1-click`](./api-reference/endpoints#post-1-click) with the test user's phone number (varies by user).
 4. (if applicable) Call [`POST /1-click`](./api-reference/endpoints#post-1-click) again, adding the test user's birth date (always `1989-08-01`) and/or SSN4 (always `6789`).
 
+---
+
+
+## Summary
+
+:::important
+See the later sections for full details on how each of these test users is designed to be used.
+:::
+
+### Inputs 
+
+<table>
+    <tr>
+        <th>Required Inputs</th>
+        <th>Phone</th>
+        <th>Verification Code</th>
+        <th>Phone Only Error</th>
+        <th>Birth Date</th>
+        <th>SSN4</th>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td>+12125550010</td>
+        <td>111111</td>
+        <td>-</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>Phone + Birth Date and/or SSN4</td>
+        <td>+12125550020</td>
+        <td>111111</td>
+        <td>[`OCE011`](./api-reference/errors#oce011) <br/> (`birthDate, ssn4`)</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>Phone + Birth Date</td>
+        <td>+12125550022</td>
+        <td>111111</td>
+        <td>[`OCE011`](./api-reference/errors#oce011) <br/> (`birthDate`)</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>Phone + SSN4</td>
+        <td>+12125550021</td>
+        <td>111111</td>
+        <td>[`OCE011`](./api-reference/errors#oce011) <br/> (`ssn4`)</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+</table>
+
+
+### Outputs
+
+
+#### Metadata
+
+
+##### Risk Signals
+
+<table>
+    <tr>
+        <th>Score, Level, Recommendation</th>
+        <th>Phone</th>
+        <th>Verification Code</th>
+        <th>Error</th>
+        <th>Birth Date</th>
+        <th>SSN4</th>
+    </tr>
+    <tr>
+        <td>0, Low, Allow</td>
+        <td>+16565550000</td>
+        <td>111111</td>
+        <td>-</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>301, Medium Low, Allow</td>
+        <td>+16565550301</td>
+        <td>111111</td>
+        <td>-</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>500, Medium, Flag</td>
+        <td>+16565550500</td>
+        <td>111111</td>
+        <td>-</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>775, Medium High, Block</td>
+        <td>+14045551775</td>
+        <td>111111</td>
+        <td>[`OCE017`](./api-reference/errors#oce017)</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>999, High, Block</td>
+        <td>+14045551799</td>
+        <td>111111</td>
+        <td>[`OCE017`](./api-reference/errors#oce017)</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+</table>
+
+
+#### Credentials
+
+
+##### Address
+
+<table>
+    <tr>
+        <th>Credential Variations</th>
+        <th>Phone</th>
+        <th>Verification Code</th>
+        <th>Birth Date</th>
+        <th>SSN4</th>
+    </tr>
+    <tr>
+        <td>Different values (all in US states)</td>
+        <td>+13135550000 <br/> → +13135550009</td>
+        <td>111111</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>In US overseas territory</td>
+        <td>+13135550010</td>
+        <td>111111</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>With P.O. box</td>
+        <td>+131355500020</td>
+        <td>111111</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+</table>
+
+
+##### Birth Date 
+
+<table>
+    <tr>
+        <th>Credential Variations</th>
+        <th>Phone</th>
+        <th>Verification Code</th>
+        <th>Birth Date</th>
+        <th>SSN4</th>
+    </tr>
+    <tr>
+        <td>Under 18</td>
+        <td>13135550100</td>
+        <td>111111</td>
+        <td>2017-01-01</td>
+        <td>6789</td>
+    </tr>
+</table>
+
+
+### Errors 
+
+<table>
+    <tr>
+        <th>Error(s)</th>
+        <th>Phone</th>
+        <th>Verification Code</th>
+        <th>Birth Date</th>
+        <th>SSN4</th>
+    </tr>
+    <tr>
+        <td>[`OCE011`](./api-reference/errors#oce011), then [`OCE013`](./api-reference/errors#oce013)</td>
+        <td>+14045551300</td>
+        <td>111111</td>
+        <td>-</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>[`OCE017`](./api-reference/errors#oce017)</td>
+        <td>+14045551775</td>
+        <td>111111</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>[`OCE017`](./api-reference/errors#oce017)</td>
+        <td>+14045551799</td>
+        <td>111111</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+</table>
+
+---
+
 
 ## Success
 

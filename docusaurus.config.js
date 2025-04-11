@@ -248,20 +248,22 @@ module.exports = {
     ],
   ],
   plugins: [
-    [
-      require.resolve('docusaurus-lunr-search'),
-      {
+    // [
+      // Disabling for now. There's a bug with Lunr (it seems) that's preventing excludeRoutes and includeRoutes from working. We don't want people inadvertently switching versions by searching.
+      // require.resolve('docusaurus-lunr-search'),
+      // {
         // options, ref: https://github.com/praveenn77/docusaurus-lunr-search#options-available
-        // Exclude v2.0 to avoid people accidentally switching versions
-        // NOT WORKING: not sure why
-        // excludeRoutes: ['/versioned_docs/version-2.0', '/versioned_docs/version-2.1/reusables'],
         // indexBaseUrl: true
-        excludeRoutes: ['/versioned_docs/version-2.1/reusables'],
-        includeRoutes: ['/versioned_docs/version-2.1'],
-      }
-    ],
+        // NOT WORKING: not sure why
+        // Exclude v2.0 to avoid people accidentally switching versions
+        // excludeRoutes: [
+        //   'versioned_docs/version-2.1/reusables', 
+        //   'versioned_docs/version-2.0'
+        // ],
+        // includeRoutes: ['versioned_docs/version-2.1/**'],
+      // }
+    // ],
     [
-      // Can't get the explicity redirects working either!
       '@docusaurus/plugin-client-redirects',
       {
         // Explicitly handling page redirects for v2.0 because the more sophisticated approach below isn't working

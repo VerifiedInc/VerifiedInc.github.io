@@ -33,6 +33,7 @@ import OneClickEntityExample from '@site/versioned_docs/version-2.1/reusables/1-
 import ErrorType from '@site/versioned_docs/version-2.1/reusables/error-type.mdx'
 import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error-example-oce011.mdx'
 import ErrorExampleOce017 from '@site/versioned_docs/version-2.1/reusables/error-example-oce017.mdx'
+import RiskSignalsSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/risk-signals-setting-admonition.mdx';
 
 {/* :::note
 See also our [Postman docs](https://api.docs.verified.inc/).
@@ -486,24 +487,26 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
 
 See [Risk Signals](../data/outputs/metadata#risk-signals) on the Data page for details about the attributes and when they're included.
 
+<RiskSignalsSettingAdmonition/>
+
 {/* Should add ipAddress when we enable support for it */}
 
 ```typescript title="RiskSignals Type"
 {
     "overall": {
-        "score": integer, // on by default
-        "level": "low" | "medium-low" | "medium" | "medium-high" | "high", // on by default
-        "recommendation": "allow" | "flag" | "block", // on by default
-        "reasonCodes": [string] // add on (ask Verified support to enable)
+        "score": integer, // included with Basic (default) and Advanced
+        "level": "low" | "medium-low" | "medium" | "medium-high" | "high", // included with Basic (default) and Advanced
+        "recommendation": "allow" | "flag" | "block", // included with Basic (default) and Advanced
+        "reasonCodes": [string] // included with Advanced
     },
-    "phone": { // add on (ask Verified support to enable)
+    "phone": { // included with Advanced
         "carrier": {
             "id": integer,
             "name": string
         }
         "reasonCodes": [string]
     },
-    "email": { // add on (ask Verified support to enable)
+    "email": { // included with Advanced
         "reasonCodes": [string]
     }
 }
@@ -549,14 +552,14 @@ When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntit
             ...
             "riskSignals": {
                 "overall": {
-                    "score": 0, // included in Basic
-                    "level": "low", // included in Basic
-                    "recommendation": "allow", // included in Basic
-                    "reasonCodes": [ // included in Advanced
+                    "score": 0, // included with Basic (default) and Advanced
+                    "level": "low", // included with Basic (default) and Advanced
+                    "recommendation": "allow", // included with Basic (default) and Advanced
+                    "reasonCodes": [ // included with Advanced
                         "OCR10021"
                     ]
                 },
-                "phone": { // included in Advanced
+                "phone": { // included with Advanced
                     "carrier": {
                         "id": 0,
                         "name": "Example Carrier"
@@ -568,7 +571,7 @@ When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntit
                         "OCR20101"
                     ]
                 },
-                "email": { // included in Advanced
+                "email": { // included with Advanced
                     "reasonCodes": [
                         "OCR60001",
                         "OCR60002"

@@ -20,8 +20,8 @@ import IntegrationTypeEndpointAdmonition from '@site/versioned_docs/version-2.1/
 import DomainsAdmonition from '@site/versioned_docs/version-2.1/reusables/domains-admonition.mdx';
 import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
 import FullDefinitionAdmonition from '@site/versioned_docs/version-2.1/reusables/full-definition-admonition.mdx';
-import PostSessionKeyRequestBodyTable from '@site/versioned_docs/version-2.1/reusables/post-sessionKey-request-body-table.mdx';
-import PostSessionKeyResponseBodyTable from '@site/versioned_docs/version-2.1/reusables/post-sessionKey-response-body-table.mdx';
+import PostClient1ClickRequestBodyTable from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-request-body-table.mdx';
+import PostClient1ClickResponseBodyTable from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-response-body-table.mdx';
 import Post1ClickRequestBodyTableShared from '@site/versioned_docs/version-2.1/reusables/post-1-click-request-body-table-shared.mdx';
 import Post1ClickResponseBodyTableUuid from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-uuid.mdx';
 import Post1ClickResponseBodyTableUrl from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-url.mdx';
@@ -51,10 +51,10 @@ Postman API documentation is available at https://api.docs.verified.inc.
 <EndpointHeaderWithoutSwagger 
     postmanUrl="https://api.docs.verified.inc/#cde4fdf8-1521-4da0-9280-094e1f550aa8"
 >
-    ## `POST /sessionKey`
+    ## `POST /client/1-click`
 </EndpointHeaderWithoutSwagger>
 
-> Create a (one time use) session key for the SDK
+> Create a (one time use) session key for the client SDK
 
 <table>
   <tr>
@@ -63,24 +63,24 @@ Postman API documentation is available at https://api.docs.verified.inc.
   </tr>
   <tr>
     <th>Path</th>
-    <td>`/sessionKey`</td>
+    <td>`/client/1-click`</td>
   </tr>
 </table>
 
 <IntegrationTypeEndpointAdmonition option="SDK"/>
 
 
-### Request {#post-sessionKey-request} 
+### Request {#post-client-1click-request} 
 
 Call:
 ```
-POST /sessionKey
+POST /client/1-click
 ```
 
 There's no request body.
 
 {/* Commenting out until we support customer SMS verification */}
-{/* ```typescript title="POST /sessionKey Request Body"
+{/* ```typescript title="POST /client/1-click Request Body"
 {
     phone?: string,
     email?: string,
@@ -89,19 +89,19 @@ There's no request body.
 }
 ```
 <table>
-    <PostSessionKeyRequestBodyTable/>
+    <PostClient1ClickRequestBodyTable/>
 </table> */}
 
 
 ### Response {#post-sessionKey-response}
 
-```typescript title="POST /sessionKey Response Body"
+```typescript title="POST /client/1-click Response Body"
 {
     sessionKey: string
 }
 ```
 <table>
-    <PostSessionKeyResponseBodyTable/>
+    <PostClient1ClickResponseBodyTable/>
 </table>
 
 ---
@@ -124,8 +124,6 @@ There's no request body.
     <td>`/1-click/{identityUuid}`</td>
   </tr>
 </table>
-
-<IntegrationTypeEndpointAdmonition option="SDK"/>
 
 
 ### Request {#get-1-click-request}

@@ -81,8 +81,8 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
     // Import SDK
     import { VerifiedClientSdk, SdkResult, SdkError, SdkResultValues, SdkErrorReasons } from '@verifiedinc-public/client-sdk';
 
-    // Create session key: Call server to call POST /sessionKey with Verified API key
-    const SESSION_KEY = createSessionKey(); // sessionKey from POST /sessionKey
+    // Create session key: Call server to call POST /client/1-click with Verified API key
+    const SESSION_KEY = createSessionKey(); // sessionKey from POST /client/1-click
 
     // Create SDK Instance
     const verifiedClientSdk = new VerifiedClientSdk({
@@ -114,7 +114,7 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 
 ## 1. Create a session key.
 
-Have your client call your server to create a session key. The server should use your Verified API key to call [`POST /sessionKey`](../api-reference/endpoints#post-sessionkey).
+Have your client call your server to create a session key. The server should use your Verified API key to call [`POST /client/1-click`](../api-reference/endpoints#post-client1-click).
 
 :::tip
 **You can access your API keys in the [Dashboard](https://dashboard.verified.inc):** see the [Setup](../guides/setup) guide.
@@ -122,7 +122,7 @@ Have your client call your server to create a session key. The server should use
 
 The response body will contain a `sessionKey`:
 
-```typescript title="POST /sessionKey Response Body"
+```typescript title="POST /client/1-click Response Body"
 {
     sessionKey: string
 }
@@ -159,12 +159,12 @@ import { VerifiedClientSdk, SdkResult, SdkError, SdkResultValues, SdkErrorReason
 
 ### b. Create an SDK instance.
 
-Create a `VerifiedClientSdk` instance, setting the `environment` and passing the `sessionKey` you received from `POST /sessionKey` in [step 1](#1-create-a-session-key):
+Create a `VerifiedClientSdk` instance, setting the `environment` and passing the `sessionKey` you received from `POST /client/1-click` in [step 1](#1-create-a-session-key):
 
 ```typescript
 const verifiedClientSdk = new VerifiedClientSdk({
     environment: 'sandbox', // 'sandbox' or 'production'
-    sessionKey: 'SESSION_KEY', // sessionKey from POST /sessionKey
+    sessionKey: 'SESSION_KEY', // sessionKey from POST /client/1-click
     onResult: handleResult, // Result function
     onError: handleError // Error function
 });

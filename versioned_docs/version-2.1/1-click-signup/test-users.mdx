@@ -482,40 +482,6 @@ For this test user, you will get a [`1ClickEntity`](./api-reference/types#1click
 ```
 
 
-##### P.O. Box
-
-For this test user, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with a P.O. box address.
-
-<TestUserDisplay
-  data={{
-    'Phone': '+13135550020',
-    'Verification Code': '111111',
-    'Birth Date': '1989-08-01',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
-
-```typescript title="1ClickEntity"
-{
-    "identifiers": {
-        "phone": "+13135550020"
-    }
-    "credentials": {
-        ...
-        "address": {
-            "line1": "P.o. Box 8672",
-            "city": "Ketchikan",
-            "state": "AK",
-            "zipCode": "99901",
-            "country": "US"
-        },
-        ...
-    },
-    ...
-}
-```
-
-
 #### Birth Date: Under 18
 
 For this test user, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with a birth date less than 18 years ago (until January 1, 2035).

@@ -209,7 +209,7 @@ Use these test users to write specific cases for [credential](./data#credentials
 
 ##### Different Values
 
-For each of these 10 test users, you will get a [`1ClickEntity`](./types#1clickentity) with a different address. Each address is a standard address in a US state (as opposed to an address in an [overseas territory](#overseas-territory) or a [P.O. box](#po-box) address).
+For each of these 10 test users, you will get a [`1ClickEntity`](./types#1clickentity) with a different address. Each address is a standard address in a US state (as opposed to an address in an [overseas territory](#overseas-territory)).
 
 <TestUserDisplay
   data={{
@@ -253,41 +253,6 @@ For this test user, you will get a [`1ClickEntity`](./types#1clickentity) with a
     ...
 }
 ```
-
-
-##### P.O. Box
-
-For this test user, you will get a [`1ClickEntity`](./types#1clickentity) with a P.O. box address.
-
-<TestUserDisplay
-  data={{
-    'Phone': '+12225550011',
-    'Verification Code': '111111',
-    'Birth Date': '1989-08-01',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
-
-```typescript title="1ClickEntity"
-{
-    "identifiers": {
-        "phone": "+12225550011"
-    }
-    "credentials": {
-        ...
-        "address": {
-            "line1": "P.o. Box 8672",
-            "city": "Ketchikan",
-            "state": "AK",
-            "zipCode": "99901",
-            "country": "US"
-        },
-        ...
-    },
-    ...
-}
-```
-
 
 #### Birth Date: Under 18
 

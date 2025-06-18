@@ -1,15 +1,16 @@
 import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
 
-<ErrorDisplay 
-    message='1-Click Blocked: Risk Score Too High'
-    description=''
-    riskSignals='true'
-    integrationType=''
-    whenThisIsReturned='When Verified blocks returning data for a user because the risk score is too high (over 600).' 
-    howToHandle='Reject the user or flag them and fall back to a manual signup flow.'
-    youShouldNeverGetThisError=''
+<ErrorDisplay
+  message='1-Click Blocked: Risk Score Too High'
+  description=''
+  riskSignals='true'
+  verificationMethod='true'
+  integrationType=''
+  whenThisIsReturned='When Verified blocks returning data for a user because the risk score is too high (over 600).'
+  howToHandle='Reject the user or flag them and fall back to a manual signup flow.'
+  youShouldNeverGetThisError=''
 >
-    ##### `OCE017`
+  ##### `OCE017`
 </ErrorDisplay>
 
-See [Risk Signals](/data/outputs/metadata#risk-signals) metadata for more information.
+See [Risk Signals](/v2.0/data#risk-signals) and [Verification Method](/data/outputs/metadata) metadata for more information.

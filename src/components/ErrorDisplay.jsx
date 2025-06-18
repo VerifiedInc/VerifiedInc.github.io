@@ -10,6 +10,7 @@ const ErrorDisplay = ({
   additionalInputs,
   riskSignals,
   data,
+  dataPhone,
   inputAttemptsExceeded,
   integrationType,
   whenThisIsReturned,
@@ -67,6 +68,16 @@ const ErrorDisplay = ({
       </td>
     </tr>
   ) : null;
+  const tableRowDataPhone = dataPhone ? (
+    <tr>
+      <th>
+        <Markdown>`data.phone`</Markdown>
+      </th>
+      <td>
+        <Markdown>{dataPhone}</Markdown>
+      </td>
+    </tr>
+  ) : null;
   const markdownInputAttemptsExceeded = inputAttemptsExceeded
     ? `\`${inputAttemptsExceeded}\``
     : null;
@@ -111,6 +122,7 @@ const ErrorDisplay = ({
           {tableRowMarkdownInputAttemptsExceeded}
           {tableRowRiskSignals}
           {tableRowData}
+          {tableRowDataPhone}
         </tbody>
       </table>
 

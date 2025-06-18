@@ -8,7 +8,6 @@ slug: /sdk-reference/types
 toc_max_heading_level: 4
 ---
 
-
 ## `SdkResult`
 
 ```typescript title="SdkResult Type"
@@ -16,32 +15,48 @@ type SdkResult =
   | {
       type: typeof SdkResultValues.USER_SHARED_CREDENTIALS;
       identityUuid: string;
+      redirectUrl: string | null;
+      birthDate: string | null;
+      phone: string | null;
+      ssn4: string | null;
     }
   | {
       type: typeof SdkResultValues.USER_OPTED_OUT;
+      identityUuid: string | null;
+      redirectUrl: string | null;
+      birthDate: string | null;
+      phone: string | null;
+      ssn4: string | null;
     };
 ```
 
 See the [`SdkResultValues` constant](../sdk-reference/constants#sdkresultvalues).
-
 
 ### Examples
 
 ```typescript title="SdkResult Example (User Shared Credentials)"
 {
     type: 'USER_SHARED_CREDENTIALS',
-    identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d'
+    identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
+    redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
+    birthDate: "08/01/1989",
+    phone: "+12125550021",
+    ssn4: "6789"
 }
 ```
 
 ```typescript title="SdkResult Example (User Opted Out)"
 {
-    type: 'USER_OPTED_OUT'
+  type: 'USER_OPTED_OUT';
+  identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
+  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
+  birthDate: "08/01/1989",
+  phone: "+12125550021",
+  ssn4: "6789"
 }
 ```
 
 ---
-
 
 ## `SdkError`
 
@@ -53,23 +68,22 @@ type SdkError = {
 
 See the [`SdkErrorReasons` constant](../sdk-reference/constants#sdkerrorreasons).
 
-
 ### Examples
 
 ```typescript title="SdkError Example (Session Timeout)"
 {
-    reason: 'SESSION_TIMEOUT'
+  reason: 'SESSION_TIMEOUT';
 }
 ```
 
 ```typescript title="SdkError Example (Invalid Session Key)"
 {
-    reason: 'INVALID_SESSION_KEY'
+  reason: 'INVALID_SESSION_KEY';
 }
 ```
 
 ```typescript title="SdkError Example (Share Credentials Error)"
 {
-    reason: 'SHARE_CREDENTIALS_ERROR'
+  reason: 'SHARE_CREDENTIALS_ERROR';
 }
 ```

@@ -1,0 +1,31 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2.0/reusables/birth-date-over-ssn4-admonition.mdx';
+
+<ErrorDisplay
+  message='User Opted Out'
+  inputAttemptsExceeded=''
+  description=''
+  riskSignals=''
+  integrationType=''
+  whenThisIsReturned={
+    <>
+      When the user has opted out of the <strong>1-Click</strong> flow in the <strong>SDK</strong>.
+    </>
+
+}
+howToHandle={
+
+<>
+  Capture the metadata available on <strong>onResult</strong> callback in the
+  SDK or requesting GET <strong>/1-click</strong> endpoint using{' '}
+  <strong>identityUuid</strong>. Know how to use the metadata{' '}
+  <a href='/sdk-reference/types#sdkresult'>here</a> and{' '}
+  <a href='/api-reference/types#1clickentity'>here</a>.
+</>
+} youShouldNeverGetThisError=''
+
+>
+
+##### `OCE021`
+
+</ErrorDisplay>

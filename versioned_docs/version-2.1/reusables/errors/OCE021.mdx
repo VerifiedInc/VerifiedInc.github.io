@@ -1,0 +1,29 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+
+<ErrorDisplay
+  message='User Opted Out'
+  inputAttemptsExceeded=''
+  description=''
+  riskSignals=''
+  verificationMethod='true'
+  integrationType=''
+  whenThisIsReturned={
+    <>
+      When the user has opted out of the 1-Click Signup flow in the SDK.
+    </>
+}
+howToHandle={
+<>
+  Request <strong>GET /1-click/:identityUuid</strong> endpoint using{' '}
+  <strong>identityUuid</strong> to retrieve the metadata. Learn how to use the metadata{' '}
+  <a href='/api-reference/types#1clickentity'>here</a>.
+</>
+} youShouldNeverGetThisError=''
+
+>
+
+##### `OCE021`
+
+</ErrorDisplay>
+
+See [Verification Method](/data/outputs/metadata) metadata for more information.

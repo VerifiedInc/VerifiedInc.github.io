@@ -1,0 +1,30 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+import SandboxValidationAdmonition from '@site/versioned_docs/version-2.0/reusables/sandbox-validation-admonition.mdx';
+import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2.0/reusables/birth-date-over-ssn4-admonition.mdx';
+import Admonition from '@theme/Admonition';
+
+<ErrorDisplay
+  message='Error resolving data'
+  dataPhone={'"phone" is required'}
+  additionalInputs=''
+  riskSignals=''
+  description=''
+  integrationType='SDK'
+  whenThisIsReturned={
+    <>
+      When an API key used to call POST /client/1-click (to create a session key
+      for initializing the SDK) is for a brand whose{' '}
+      <strong>phoneVerificationType</strong> is
+      <strong>byCustomer</strong>, the phone number must be included in the request
+      body.
+    </>
+  }
+  howToHandle={
+    <>
+      Include a phone number in the request body.
+    </>
+  }
+  youShouldNeverGetThisError=''
+>
+  ##### `SKE002`
+</ErrorDisplay>

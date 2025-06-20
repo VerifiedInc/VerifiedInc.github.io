@@ -9,6 +9,7 @@ const ErrorDisplay = ({
   description,
   additionalInputs,
   riskSignals,
+  verificationMethod,
   data,
   dataPhone,
   inputAttemptsExceeded,
@@ -51,6 +52,16 @@ const ErrorDisplay = ({
       </th>
       <td>
         <Markdown>[`RiskSignals`](./types#risksignals)</Markdown>
+      </td>
+    </tr>
+  ) : null;
+  const tableRowVerificationMethod = verificationMethod ? (
+    <tr>
+      <th>
+        <Markdown>`data.verificationMethod`</Markdown>
+      </th>
+      <td>
+        <Markdown>[`VerificationMethod`](./types#1clickentity)</Markdown>
       </td>
     </tr>
   ) : null;
@@ -121,6 +132,7 @@ const ErrorDisplay = ({
           {tableRowAdditionalInputs}
           {tableRowMarkdownInputAttemptsExceeded}
           {tableRowRiskSignals}
+          {tableRowVerificationMethod}
           {tableRowData}
           {tableRowDataPhone}
         </tbody>

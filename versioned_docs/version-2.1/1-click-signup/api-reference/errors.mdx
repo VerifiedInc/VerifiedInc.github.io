@@ -23,6 +23,7 @@ import ErrorDisplay from '@site/src/components/ErrorDisplay';
 
 import ErrorERR001 from '@site/versioned_docs/version-2.1/reusables/errors/ERR001.mdx';
 import ErrorSKE001 from '@site/versioned_docs/version-2.1/reusables/errors/SKE001.mdx';
+import ErrorSKE002 from '@site/versioned_docs/version-2.1/reusables/errors/SKE002.mdx';
 import ErrorOCE001 from '@site/versioned_docs/version-2.1/reusables/errors/OCE001.mdx';
 import ErrorOCE002 from '@site/versioned_docs/version-2.1/reusables/errors/OCE002.mdx';
 import ErrorOCE003 from '@site/versioned_docs/version-2.1/reusables/errors/OCE003.mdx';
@@ -42,89 +43,73 @@ import ErrorOCE016 from '@site/versioned_docs/version-2.1/reusables/errors/OCE01
 import ErrorOCE017 from '@site/versioned_docs/version-2.1/reusables/errors/OCE017.mdx';
 import ErrorOCE018 from '@site/versioned_docs/version-2.1/reusables/errors/OCE018.mdx';
 import ErrorOCE019 from '@site/versioned_docs/version-2.1/reusables/errors/OCE019.mdx';
+import ErrorOCE020 from '@site/versioned_docs/version-2.1/reusables/errors/OCE020.mdx';
+import ErrorOCE021 from '@site/versioned_docs/version-2.1/reusables/errors/OCE021.mdx';
 import ApiKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/api-keys-admonition.mdx';
-
 
 ## Firewall Errors
 
 You will get a network error if your API request is blocked by our firewall.
 
-
 ### Generic
 
-<table className="error-table">
-    <tbody>
-        <tr>
-          <th>
-            HTTP Status Code
-          </th>
-          <td>
-            `403`
-          </td>
-        </tr>
-    </tbody>
+<table className='error-table'>
+  <tbody>
+    <tr>
+      <th>HTTP Status Code</th>
+      <td>`403`</td>
+    </tr>
+  </tbody>
 </table>
 
 ```typescript title="Firewall Error: 418 (Generic)"
 {
-    "error": "Request blocked by firewall", 
+    "error": "Request blocked by firewall",
     "message": "Your request was blocked by our firewall. Please contact us if you believe this was in error."
 }
 ```
 
-
 ### API Key Used Client Side
 
-<table className="error-table">
-    <tbody>
-        <tr>
-          <th>
-            HTTP Status Code
-          </th>
-          <td>
-            `418`
-          </td>
-        </tr>
-    </tbody>
+<table className='error-table'>
+  <tbody>
+    <tr>
+      <th>HTTP Status Code</th>
+      <td>`418`</td>
+    </tr>
+  </tbody>
 </table>
 
 ```typescript title="Firewall Error: API Key Used Client Side"
 {
-    "error": "Request blocked by firewall", 
+    "error": "Request blocked by firewall",
     "message": "Your request was blocked by our firewall because your API key is being used client side. Verified API keys must only be used server side. Please contact us if you believe this was in error."
 }
 ```
 
-<ApiKeysAdmonition/>
-
+<ApiKeysAdmonition />
 
 ### Rate Limit
 
-<table className="error-table">
-    <tbody>
-        <tr>
-          <th>
-            HTTP Status Code
-          </th>
-          <td>
-            `429`
-          </td>
-        </tr>
-    </tbody>
+<table className='error-table'>
+  <tbody>
+    <tr>
+      <th>HTTP Status Code</th>
+      <td>`429`</td>
+    </tr>
+  </tbody>
 </table>
 
 ```typescript title="Firewall Error: 429 (Rate Limit)"
 {
-    "error": "Request blocked by firewall", 
+    "error": "Request blocked by firewall",
     "message": "Your request was blocked by our firewall due to abnormally high request volume. Please contact us if you believe this was in error."
 }
 ```
 
-
 ## Application Errors
 
 To handle application level errors (returned by Verified API endpoints), we recommend that you primarily use the response body's `data.errorCode`, which is a Verified specific error code. See [Verified Error Codes](#verified-error-codes) below for descriptions of what each code means.
-
 
 ### `Error` Type
 
@@ -141,6 +126,7 @@ _This definition is also in [`Error`](../api-reference/types#error) in [Types](.
 ### Verified Error Codes
 
 An `errorCode` is a Verified specific error code consisting of 3 letters and 3 numbers:
+
 - Codes that begin with `ERR` are generic.
 - Codes that begin with `SKE` are specific to the [`/client/1-click` path](../api-reference/endpoints#post-client1-click), which creates a session key for use in the Verified client [SDK](../guides/sdk-integration). (`SKE` refers to a Session Key Error.)
 - Codes that begin with `OCE` are specific to the [`/1-click` path](../api-reference/endpoints#get-1-click). (`OCE` refers to a One Click Error.)
@@ -152,6 +138,10 @@ An `errorCode` is a Verified specific error code consisting of 3 letters and 3 n
     </CollapsibleHeader>
 
     <ErrorSKE001 />
+
+    ---
+
+    <ErrorSKE002 />
 
     ---
 
@@ -173,6 +163,13 @@ An `errorCode` is a Verified specific error code consisting of 3 letters and 3 n
 
     <ErrorOCE019 />
 
+    ---
+
+    <ErrorOCE020 />
+
+    ---
+
+    <ErrorOCE021 />
 
   </CollapsibleSection>
 </CollapsibleGroup>
@@ -264,7 +261,3 @@ An `errorCode` is a Verified specific error code consisting of 3 letters and 3 n
 
   </CollapsibleSection>
 </CollapsibleGroup>
-
-
-
-

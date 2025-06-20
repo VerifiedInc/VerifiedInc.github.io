@@ -1,0 +1,29 @@
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2.0/reusables/birth-date-over-ssn4-admonition.mdx';
+
+<ErrorDisplay
+  message='Brand cannot be used for 1-Click API'
+  inputAttemptsExceeded=''
+  description=''
+  riskSignals=''
+  integrationType=''
+  whenThisIsReturned={
+    <>
+      If the integration type is <strong>SDK</strong> and the customer attempts
+      to call POST <strong>/1-click</strong> with <strong>phone</strong> in the
+      request body.
+    </>
+  }
+  howToHandle={
+    <>
+      Create a new brand with the <strong>integrationType</strong> set to{' '}
+      <strong>API</strong> in the Dashboard, then try the request again.
+    </>
+  }
+  youShouldNeverGetThisError=''
+
+>
+
+##### `OCE020`
+
+</ErrorDisplay>

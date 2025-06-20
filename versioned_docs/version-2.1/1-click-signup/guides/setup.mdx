@@ -131,30 +131,32 @@ Choose which challenge(s) to allow:
         <th>Description</th>
     </tr>
     <tr>
-        <td>Birthday or SSN4 <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
-        <td>Prompt the user for their birthday, SSN4, or both (only if necessary). Birthday always comes first.</td>
-    </tr>
-    <tr>
-        <td>Birthday only</td>
+        <td>Birthday only <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
         <td>Prompt the user for their birthday only — never their SSN4.</td>
     </tr>
     <tr>
         <td>SSN4 only</td>
         <td>Prompt the user for their SSN4 only — never their birthday.</td>
     </tr>
+    <tr>
+        <td>Birthday or SSN4</td>
+        <td>Prompt the user for their birthday, SSN4, or both (only if necessary). Birthday always comes first.</td>
+    </tr>
 </table>
 
 <details>
-    <summary>Why We Recommend <b>Birthday or SSN4</b></summary>
+    <summary>Why We Recommend <b>Birthday only</b></summary>
 
-    **Birthday or SSN4** is the option we recommend because the user is only prompted for both challenges if necessary. This is quite rare, so it adds very little friction, but it increases conversion by a few percentage points.
+    **Birthday only** is the option we recommend because:
 
-    One example is the case of twins:
-    - Based on just a phone number, we find two users.
-    - We prompt for birthday, but we still find two users — because they're twins with the same birthday!
-    - So, we prompt for SSN4, which narrows down to a single user.
-
-    The birth rate of twins (and triplets, etc.) in the US is [3.2%](https://www.cdc.gov/nchs/fastats/multiple.htm), so choosing **Birthday or SSN4** instead of **Birthday only** increases success rate by about that much.
+    - We recommend using only one challenge:
+        - Every additional input adds friction, with the risk that we won't be able to source data for the user.
+        - We can successfully source data based on phone and one challenge the vast majority of the time.
+        - Prompting for another challenge only slightly increases the chance that we'll be able to source data for the user, and it adds substantial friction.
+    - We recommend using birthday over SSN4:
+        - Users are typically more comfortable providing their birthday.
+        - Some users will have an autofill option for birthday from their browser or OS.
+        - Everyone has a birthday, but not everyone has an SSN.
 </details>
 
 

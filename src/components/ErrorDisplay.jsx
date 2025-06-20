@@ -62,6 +62,8 @@ const ErrorDisplay = ({
       </th>
       <td>
         <Markdown>[`VerificationMethod`](./types#1clickentity)</Markdown>
+      </td>
+    </tr>
   ) : null;
   const tableRowData = data ? (
     <tr>

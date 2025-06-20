@@ -231,6 +231,10 @@ function handleResult(data: SdkResult): void {
 }
 ```
 
+:::note
+Regardless of the result type, you can access specific metadata properties directly from the <b>data</b> object. See [SdkResult](../sdk-reference/types#sdkresult) type definition for the complete structure.
+:::
+
 There are 2 result values to handle:
 
 <table>
@@ -251,7 +255,7 @@ There are 2 result values to handle:
     </tr>
 </table>
 
-To retrieve data, call your server with `data.identityUuid`. The server should use your Verified API key to call [`GET /1-click/{identityUuid}`](../api-reference/endpoints#get-1-click):
+Some metadata may be available directly in the `data` object (see [SdkResult](../sdk-reference/types#sdkresult)). You can also call your server with `data.identityUuid`. The server should use your Verified API key to call [`GET /1-click/{identityUuid}`](../api-reference/endpoints#get-1-click):
 
 <ApiKeysAdmonition/>
 

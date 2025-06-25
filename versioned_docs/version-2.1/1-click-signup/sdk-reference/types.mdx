@@ -11,23 +11,64 @@ toc_max_heading_level: 4
 ## `SdkResult`
 
 ```typescript title="SdkResult Type"
-type SdkResult =
-  | {
-      type: typeof SdkResultValues.USER_SHARED_CREDENTIALS;
-      identityUuid: string;
-      redirectUrl: string | null;
-      birthDate: string | null;
-      phone: string | null;
-      ssn4: string | null;
-    }
-  | {
+export type SdkStep =
+  | 'consent'
+  | 'phone'
+  | 'verificationCode'
+  | 'birthday'
+  | 'ssn4'
+  | 'info';
+
+type SdkResultData = {
+  identityUuid: string;
+  redirectUrl: string | null;
+  birthDate: string | null;
+  birthDateMismatched: boolean | null;
+  phone: string | null;
+  ssn4: string | null;
+  ssn4Mismatched: boolean | null;
+  step: SdkStep;
+};
+
+type SdkResultDataNullable = Nullable<SdkResultData>;
+
+type SdkResultUserOptedOut =
+  | (SdkResultDataNullable & {
       type: typeof SdkResultValues.USER_OPTED_OUT;
-      identityUuid: string | null;
-      redirectUrl: string | null;
-      birthDate: string | null;
-      phone: string | null;
-      ssn4: string | null;
-    };
+      step: 'phone';
+    })
+  | (SdkResultData & {
+      type: typeof SdkResultValues.USER_OPTED_OUT;
+      step: Exclude<SdkStep, 'phone'>;
+    });
+
+type SdkResultNoCredentialsFound = {
+  type: typeof SdkResultValues.NO_CREDENTIALS_FOUND;
+} & SdkResultData;
+
+type SdkResultRiskScoreTooHigh = {
+  type: typeof SdkResultValues.RISK_SCORE_TOO_HIGH;
+} & SdkResultData;
+
+type SdkResultMaxInputsAttemptsExceeded = {
+  type: typeof SdkResultValues.MAX_INPUT_ATTEMPTS_EXCEEDED;
+} & SdkResultData;
+
+type SdkResultMaxVerificationCodeAttemptsExceeded = {
+  type: typeof SdkResultValues.MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED;
+} & SdkResultData;
+
+type SdkResultUserSharedCredentials = {
+  type: typeof SdkResultValues.USER_SHARED_CREDENTIALS;
+} & SdkResultData;
+
+export type SdkResult =
+  | SdkResultUserOptedOut
+  | SdkResultNoCredentialsFound
+  | SdkResultRiskScoreTooHigh
+  | SdkResultMaxInputsAttemptsExceeded
+  | SdkResultMaxVerificationCodeAttemptsExceeded
+  | SdkResultUserSharedCredentials;
 ```
 
 See the [`SdkResultValues` constant](../sdk-reference/constants#sdkresultvalues).
@@ -39,20 +80,82 @@ See the [`SdkResultValues` constant](../sdk-reference/constants#sdkresultvalues)
   type: 'USER_SHARED_CREDENTIALS',
   identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
   redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
-  birthDate: "08/01/1989",
+  birthDate: "1989-08-01",
+  birthDateMismatched: null,
   phone: "+12125550021",
-  ssn4: "6789"
+  ssn4: "6789",
+  ssn4Mismatched: null,
+  step: 'info'
 }
 ```
 
 ```typescript title="SdkResult Example (User Opted Out)"
 {
-  type: 'USER_OPTED_OUT';
+  type: 'USER_OPTED_OUT',
   identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
   redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
-  birthDate: "08/01/1989",
+  birthDate: null,
+  birthDateMismatched: null,
   phone: "+12125550021",
-  ssn4: "6789"
+  ssn4: null,
+  ssn4Mismatched: null,
+  step: 'phone'
+}
+```
+
+```typescript title="SdkResult Example (No Credentials Found)"
+{
+  type: 'NO_CREDENTIALS_FOUND',
+  identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
+  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
+  birthDate: "1989-08-01",
+  birthDateMismatched: null,
+  phone: "+12125550021",
+  ssn4: "6789",
+  ssn4Mismatched: null,
+  step: 'ssn4'
+}
+```
+
+```typescript title="SdkResult Example (Risk Score Too High)"
+{
+  type: 'RISK_SCORE_TOO_HIGH',
+  identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
+  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
+  birthDate: "1989-08-01",
+  birthDateMismatched: null,
+  phone: "+12125550021",
+  ssn4: "6789",
+  ssn4Mismatched: null,
+  step: 'verificationCode'
+}
+```
+
+```typescript title="SdkResult Example (Max Input Attempts Exceeded)"
+{
+  type: 'MAX_INPUT_ATTEMPTS_EXCEEDED',
+  identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
+  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
+  birthDate: "1989-08-01",
+  birthDateMismatched: false,
+  phone: "+12125550021",
+  ssn4: "6789",
+  ssn4Mismatched: true,
+  step: 'ssn4'
+}
+```
+
+```typescript title="SdkResult Example (Max OTP Attempts Exceeded)"
+{
+  type: 'MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED',
+  identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
+  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
+  birthDate: "1989-08-01",
+  birthDateMismatched: null,
+  phone: "+12125550021",
+  ssn4: "6789",
+  ssn4Mismatched: null,
+  step: 'verificationCode'
 }
 ```
 

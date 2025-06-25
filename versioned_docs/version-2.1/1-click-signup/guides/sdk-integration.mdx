@@ -223,10 +223,24 @@ Complete the `handleResult` function you defined in [step 2c](#c-define-a-result
 ```typescript
 function handleResult(data: SdkResult): void {
     switch (data.type) {
+        // highlight-next-line
         case SdkResultValues.USER_SHARED_CREDENTIALS: // Success!
-            // Retrieve data: Call server with data.identityUuid to call GET /1-click/{identityUuid}
+            // Pass data.identityUuid to server (to call GET /1-click/{identityUuid})
+        // highlight-next-line
         case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
             // Take user to manual signup flow
+        // highlight-next-line
+        case SdkResultValues.NO_CREDENTIALS_FOUND: // OCE013 Verified error code
+            // Take user to manual signup flow. Additional metadata may be available.
+        // highlight-next-line
+        case SdkResultValues.RISK_SCORE_TOO_HIGH: // OCE017 Verified error code
+            // Take user to manual signup flow. Additional metadata may be available.
+        // highlight-next-line
+        case SdkResultValues.MAX_INPUT_ATTEMPTS_EXCEEDED: // OCE019 Verified error code
+            // Take user to manual signup flow. Additional metadata may be available.
+        // highlight-next-line
+        case SdkResultValues.MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED: // User tried verification code too many times
+            // Take user to manual signup flow. Additional metadata may be available.
     }
 }
 ```
@@ -235,7 +249,7 @@ function handleResult(data: SdkResult): void {
 Regardless of the result type, you can access specific metadata properties directly from the <b>data</b> object. See [SdkResult](../sdk-reference/types#sdkresult) type definition for the complete structure.
 :::
 
-There are 2 result values to handle:
+There are 6 result values to handle:
 
 <table>
     <tr>
@@ -252,6 +266,26 @@ There are 2 result values to handle:
         <td>`USER_OPTED_OUT`</td>
         <td>User opted out by clicking the "Sign Up Manually Instead" button</td>
         <td>Take user to manual signup flow</td>
+    </tr>
+    <tr>
+        <td>`NO_CREDENTIALS_FOUND`</td>
+        <td>OCE013 Verified error code</td>
+        <td>Take user to manual signup flow. Additional metadata may be available.</td>
+    </tr>
+    <tr>
+        <td>`RISK_SCORE_TOO_HIGH`</td>
+        <td>OCE017 Verified error code</td>
+        <td>Take user to manual signup flow. Additional metadata may be available.</td>
+    </tr>
+    <tr>
+        <td>`MAX_INPUT_ATTEMPTS_EXCEEDED`</td>
+        <td>OCE019 Verified error code</td>
+        <td>Take user to manual signup flow. Additional metadata may be available.</td>
+    </tr>
+    <tr>
+        <td>`MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED`</td>
+        <td>User tried verification code too many times</td>
+        <td>Take user to manual signup flow. Additional metadata may be available.</td>
     </tr>
 </table>
 

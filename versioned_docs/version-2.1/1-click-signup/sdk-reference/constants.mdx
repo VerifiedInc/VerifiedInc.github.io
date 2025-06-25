@@ -36,7 +36,7 @@ function handleResult(data: SdkResult) {
         // highlight-next-line
         case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
             // Take user to manual signup flow
-        case SdkResultValues.NO_CREDENTIALS_FOUND:
+        case SdkResultValues.NO_CREDENTIALS_FOUND: // OCE013 Verified error code
             // Take user to manual signup flow. Additional metadata may be available.
         case SdkResultValues.RISK_SCORE_TOO_HIGH:
             // Take user to manual signup flow. Additional metadata may be available.

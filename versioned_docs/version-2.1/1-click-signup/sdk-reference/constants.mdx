@@ -42,7 +42,7 @@ function handleResult(data: SdkResult) {
             // Take user to manual signup flow. Additional metadata may be available.
         case SdkResultValues.MAX_INPUT_ATTEMPTS_EXCEEDED: // OCE019 Verified error code
             // Take user to manual signup flow. Additional metadata may be available.
-        case SdkResultValues.MAX_OTP_ATTEMPTS_EXCEEDED:
+        case SdkResultValues.MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED: // User tried verification code too many times
             // Take user to manual signup flow. Additional metadata may be available.
     }
 }

@@ -37,12 +37,16 @@ function handleResult(data: SdkResult) {
         // highlight-next-line
         case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
             // Take user to manual signup flow
+        // highlight-next-line
         case SdkResultValues.NO_CREDENTIALS_FOUND: // OCE013 Verified error code
             // Take user to manual signup flow. Additional metadata may be available.
+        // highlight-next-line
         case SdkResultValues.RISK_SCORE_TOO_HIGH: // OCE017 Verified error code
             // Take user to manual signup flow. Additional metadata may be available.
+        // highlight-next-line
         case SdkResultValues.MAX_INPUT_ATTEMPTS_EXCEEDED: // OCE019 Verified error code
             // Take user to manual signup flow. Additional metadata may be available.
+        // highlight-next-line
         case SdkResultValues.MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED: // User tried verification code too many times
             // Take user to manual signup flow. Additional metadata may be available.
     }

@@ -8,7 +8,6 @@ slug: /sdk-reference/constants
 toc_max_heading_level: 4
 ---
 
-
 ## `SdkResultValues`
 
 > Values for an SDK result
@@ -17,9 +16,12 @@ toc_max_heading_level: 4
 const SdkResultValues = {
   USER_SHARED_CREDENTIALS: 'USER_SHARED_CREDENTIALS',
   USER_OPTED_OUT: 'USER_OPTED_OUT',
+  NO_CREDENTIALS_FOUND: 'NO_CREDENTIALS_FOUND',
+  RISK_SCORE_TOO_HIGH: 'RISK_SCORE_TOO_HIGH',
+  MAX_INPUT_ATTEMPTS_EXCEEDED: 'MAX_INPUT_ATTEMPTS_EXCEEDED',
+  MAX_OTP_ATTEMPTS_EXCEEDED: 'MAX_OTP_ATTEMPTS_EXCEEDED',
 };
 ```
-
 
 ### Example
 
@@ -34,12 +36,19 @@ function handleResult(data: SdkResult) {
         // highlight-next-line
         case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
             // Take user to manual signup flow
+        case SdkResultValues.NO_CREDENTIALS_FOUND:
+            // Take user to manual signup flow. Additional metadata may be available.
+        case SdkResultValues.RISK_SCORE_TOO_HIGH:
+            // Take user to manual signup flow. Additional metadata may be available.
+        case SdkResultValues.MAX_INPUT_ATTEMPTS_EXCEEDED:
+            // Take user to manual signup flow. Additional metadata may be available.
+        case SdkResultValues.MAX_OTP_ATTEMPTS_EXCEEDED:
+            // Take user to manual signup flow. Additional metadata may be available.
     }
 }
 ```
 
 ---
-
 
 ## `SdkErrorReasons`
 
@@ -52,7 +61,6 @@ const SdkErrorReasons = {
   SHARE_CREDENTIALS_ERROR: 'SHARE_CREDENTIALS_ERROR',
 };
 ```
-
 
 ### Example
 

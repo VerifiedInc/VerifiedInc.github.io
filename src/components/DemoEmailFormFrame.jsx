@@ -21,8 +21,6 @@ export function DemoEmailFormFrame() {
           : [
               'https://1-click-preview.demo.verified.inc',
               'https://1-click.demo.verified.inc',
-              'https://docs.verified.inc',
-              // TODO -add sandbox vebflow domain
             ]; // Only trusted domains in production
 
       if (!approvedOrigins.some((origin) => event.origin === origin)) {

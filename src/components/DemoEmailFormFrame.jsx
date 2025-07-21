@@ -41,17 +41,16 @@ function FormFrameBody() {
           setIframeHeight(Number(data.height));
         }
         if (data.type === 'terms-click') {
-          window
-            .open('https://www.verified.inc/legal/#terms-of-use', '_blank')
-            .focus();
+          window.open('https://www.verified.inc/legal/#terms-of-use', '_blank');
         }
         if (data.type === 'privacy-click') {
-          window
-            .open('https://www.verified.inc/legal/#privacy-policy', '_blank')
-            .focus();
+          window.open(
+            'https://www.verified.inc/legal/#privacy-policy',
+            '_blank'
+          );
         }
         if (data.type === 'docs-click') {
-          window.open('https://docs.verified.inc', '_blank').focus();
+          window.open('https://docs.verified.inc', '_blank');
         }
       } catch (error) {
         console.error('Error parsing message:', error);

@@ -40,18 +40,6 @@ function FormFrameBody() {
         if (data.type === 'resize') {
           setIframeHeight(Number(data.height));
         }
-        if (data.type === 'terms-click') {
-          window.open('https://www.verified.inc/legal/#terms-of-use', '_blank');
-        }
-        if (data.type === 'privacy-click') {
-          window.open(
-            'https://www.verified.inc/legal/#privacy-policy',
-            '_blank'
-          );
-        }
-        if (data.type === 'docs-click') {
-          window.open('https://docs.verified.inc', '_blank');
-        }
       } catch (error) {
         console.error('Error parsing message:', error);
       }
@@ -77,7 +65,7 @@ function FormFrameBody() {
           src={url.toString()}
           ref={iframeRef}
           title='Embedded Page'
-          sandbox='allow-scripts allow-forms allow-same-origin'
+          sandbox='allow-scripts allow-forms allow-same-origin allow-popups'
           style={{
             width: '100%',
             height: '100%',

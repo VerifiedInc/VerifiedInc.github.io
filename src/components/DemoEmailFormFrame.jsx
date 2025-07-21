@@ -33,7 +33,6 @@ function FormFrameBody() {
 
       try {
         const data = JSON.parse(event.data);
-        console.log({ data });
 
         // Accept only demo client messages
         if (data.source !== 'VerifiedInc.Demo-Client') return;
@@ -50,6 +49,9 @@ function FormFrameBody() {
           window
             .open('https://www.verified.inc/legal/#privacy-policy', '_blank')
             .focus();
+        }
+        if (data.type === 'docs-click') {
+          window.open('https://docs.verified.inc', '_blank').focus();
         }
       } catch (error) {
         console.error('Error parsing message:', error);

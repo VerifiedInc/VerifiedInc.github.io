@@ -39,7 +39,7 @@ function FormFrameBody() {
           setIframeHeight(Number(data.height));
         }
       } catch (error) {
-        // Do nothing
+        console.error('Error parsing message:', error);
       }
     };
 
@@ -48,7 +48,7 @@ function FormFrameBody() {
     return () => {
       window.removeEventListener('message', handleMessage, false);
     };
-  }, [iframeRef]);
+  }, []);
 
   return (
     <div style={{ overflow: 'hidden', marginBottom: 20 }}>
@@ -63,6 +63,7 @@ function FormFrameBody() {
           src={url.toString()}
           ref={iframeRef}
           title='Embedded Page'
+          sandbox='allow-scripts allow-forms allow-same-origin'
           style={{
             width: '100%',
             height: '100%',

@@ -25,9 +25,6 @@ function FormFrameBody() {
             ]; // Only trusted domains in production
 
       if (!approvedOrigins.some((origin) => event.origin === origin)) {
-        console.warn(
-          `Rejected message from unauthorized origin: ${event.origin}`
-        );
         return;
       }
 

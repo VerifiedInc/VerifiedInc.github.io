@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function DemoEmailFormFrame() {
+function FormFrameBody() {
   const domain =
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:7020'
@@ -72,4 +72,15 @@ export function DemoEmailFormFrame() {
       </div>
     </div>
   );
+}
+
+export function DemoEmailFormFrame() {
+  const [mount, setMount] = useState(false);
+  useEffect(() => {
+    setMount(true);
+  }, []);
+
+  if (!mount) return null;
+
+  return <FormFrameBody />;
 }

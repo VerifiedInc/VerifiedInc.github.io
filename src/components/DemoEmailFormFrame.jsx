@@ -4,7 +4,7 @@ function FormFrameBody() {
   const domain =
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:7020'
-      : window.location.origin;
+      : 'https://1-click-preview.demo.dev-verifiedinc.com';
   const url = new URL('/email-form?isEmbedded=true', domain);
   const iframeRef = useRef(null);
   const [iframeHeight, setIframeHeight] = useState(0);
@@ -19,6 +19,7 @@ function FormFrameBody() {
         process.env.NODE_ENV === 'development'
           ? ['http://localhost:7020'] // Allow localhost in dev
           : [
+              'https://1-click-preview.demo.dev-verifiedinc.com',
               'https://1-click-preview.demo.verified.inc',
               'https://1-click.demo.verified.inc',
             ]; // Only trusted domains in production

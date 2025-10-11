@@ -1,10 +1,11 @@
 ---
 id: api-integration
 title: API Integration
-sidebar_position: 4
+sidebar_position: 3
 sidebar_label: API Integration
+sidebar_class_name: sidebar-header-regular
 description: Full details on how to integrate 1-Click Signup
-slug: /guides/api-integration
+slug: /1-click-signup/guides/api-integration
 toc_max_heading_level: 3
 ---
 
@@ -65,7 +66,7 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 </table>
 
 :::tip
-**Complete the [Setup](../guides/setup) guide before following this API Integration guide.**
+**Complete the 1-Click Signup [Setup](/1-click-signup/guides/setup) guide before following this API Integration guide.**
 :::
 
 <SequenceDiagramAPI/>
@@ -87,7 +88,7 @@ _See our [Demo](https://1-click.demo.verified.inc) for an example of this._
     <li>**[Include a "powered by Verified" graphic](#b-include-a-powered-by-verified-graphic).**</li>
 </ol>
 
-We recommend using a phone number input that auto submits when the user enters 10 digits. (See the [Phone](../guides/user-experience#phone) screen of our User Experience guide for full details.) Here's an example:
+We recommend using a phone number input that auto submits when the user enters 10 digits. (See the [Phone](/1-click-signup/user-experience#phone) screen of our User Experience guide for full details.) Here's an example:
 
 ![](/img/phone-empty-without-sms-consent.png)
 *Verified consent language, phone number input, and the green signup variant of the "powered by" graphic*
@@ -102,7 +103,7 @@ Use this language:
 > By `{taking this action}`, I agree that [Verified](https://verified.inc) (`{Brand Name}`’s service provider) and its vendors may receive my personal info and autofill more info about me, including my social security number.
 
 - **Replace `{taking this action}` with the action the user will take to start 1-Click Signup.** For example:
-    - If you use a form with a phone number input that autosubmits (which [we recommend](../guides/user-experience#phone)), you should use "entering my phone number".
+    - If you use a form with a phone number input that autosubmits (which [we recommend](/1-click-signup/user-experience#phone)), you should use "entering my phone number".
     - If you use a Continue button, you should use "clicking Continue".
 - **Link "Verified" to https://verified.inc and make it underlined and a different color than the rest of the text** (so the user knows it's a link).
 - **Replace `{Brand Name}` with your brand name.**
@@ -124,7 +125,7 @@ We provide several variants of the graphic, with different words than "Signup" a
 
 ## 2. Call `POST /1-click`.
 
-Call [`POST /1-click`](../api-reference/endpoints#post-1-click) with the user's phone number:
+Call [`POST /1-click`](/reference/api/endpoints#post-1-click) with the user's phone number:
 
 ```typescript title="POST /1-click Request Body"
 {
@@ -141,18 +142,18 @@ Call [`POST /1-click`](../api-reference/endpoints#post-1-click) with the user's 
 <IncludeAdditionalInfoIfPossibleAdmonition/>
 
 One of two things will happen:
-- **Success:** If we can source data based on just the phone number, the [response body](../api-reference/endpoints#post-1-click-response) will contain a [`1ClickEntity`](../api-reference/types#1clickentity) (see this [example](../api-reference/types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 5](#5-prompt-user-to-confirm-their-data).
-- **Error:** Otherwise, the response body will contain an [error](../api-reference/errors) with a Verified error code:
-    - **[`OCE011`](../api-reference/errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. → _Continue to [step 3](#3-if-necessary-prompt-user-for-additional-info)_
-    - **[`OCE013`](../api-reference/errors#oce013)** indicates that Verified found no [credentials](../data/outputs/credentials) for the user. → _Fall back to a manual signup flow._(#6-if-necessary-prompt-user-for-additional-info)._
-    - **[`OCE017`](../api-reference/errors#oce017)** indicates that Verified blocked the user because the risk score was too high. → _Reject the user or flag them and fall back to a manual signup flow._
+- **Success:** If we can source data based on just the phone number, the [response body](/reference/api/endpoints#post-1-click-response) will contain a [`1ClickEntity`](/reference/api/types#1clickentity) (see this [example](/reference/api/types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 5](#5-prompt-user-to-confirm-their-data).
+- **Error:** Otherwise, the response body will contain an [error](/reference/api/errors) with a Verified error code:
+    - **[`OCE011`](/reference/api/errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. → _Continue to [step 3](#3-if-necessary-prompt-user-for-additional-info)_
+    - **[`OCE013`](/reference/api/errors#oce013)** indicates that Verified found no [credentials](/reference/data/outputs/credentials) for the user. → _Fall back to a manual signup flow._
+    - **[`OCE017`](/reference/api/errors#oce017)** indicates that Verified blocked the user because the risk score was too high. → _Reject the user or flag them and fall back to a manual signup flow._
 
 
 ## 3. (if necessary) Prompt user for additional info.
 
 <WhenStepIsNecessaryAdmonition stepName="step 2" stepLink="#2-call-post-1-click"/>
 
-We recommend using a numeric input (formatted as MM/DD/YYYY for birthday) that automatically submits when the user enters enough digits (8 for birth date and 4 for SSN4). (See the [Birthday](../guides/user-experience#birthday) and [SSN4](../guides/user-experience#ssn4) screens of our User Experience guide for full details.) 
+We recommend using a numeric input (formatted as MM/DD/YYYY for birthday) that automatically submits when the user enters enough digits (8 for birth date and 4 for SSN4). (See the [Birthday](/1-click-signup/user-experience#birthday) and [SSN4](/1-click-signup/user-experience#ssn4) screens of our User Experience guide for full details.) 
 
 <BirthDateFormatAdmonition/>
 
@@ -161,11 +162,11 @@ Here are examples:
 <div class="two-image-grid-container">
     <div class="two-image-grid-row">
         <div class="two-image-grid-column">
-            ![](/img/ux-screens/birthday-empty.png)
+            ![](/img/1cs-ux-screens/birthday-empty.png)
             *Numeric input, formatted as MM/DD/YYYY, and the green signup variant of the "powered by" graphic*
         </div>
         <div class="two-image-grid-column">
-            ![](/img/ux-screens/ssn4-empty.png)
+            ![](/img/1cs-ux-screens/ssn4-empty.png)
             *Numeric input and the green signup variant of the "powered by" graphic*
         </div>
     </div>
@@ -176,7 +177,7 @@ Here are examples:
 
 <WhenStepIsNecessaryAdmonition stepName="step 2" stepLink="#2-call-post-1-click"/>
 
-Call [`POST /1-click`](../api-reference/endpoints#post-1-click) with the user's phone number and birth date or SSN4 (or both):
+Call [`POST /1-click`](/reference/api/endpoints#post-1-click) with the user's phone number and birth date or SSN4 (or both):
 
 ```typescript title="POST /1-click Request Body"
 {
@@ -192,16 +193,18 @@ Call [`POST /1-click`](../api-reference/endpoints#post-1-click) with the user's 
 </Admonition>
 
 One of two things should happen:
-- **Success:** If we can source data based on the phone number and birth date, the [response body](../api-reference/endpoints#post-1-click-response) will be a [`1ClickEntity`](../api-reference/types#1clickentity) (see this [example](../api-reference/types#example-1clickentity)), which contains the user's data and metadata about it. → _Continue to [step 5](#5-prompt-user-to-confirm-their-data)._
-- **Error:** Otherwise, the response body will contain an [error](../api-reference/errors) with a Verified error code:
-    - **[`OCE012`](../api-reference/errors#oce012)** indicates that one or more of the additional inputs you passed (the user's birth date and/or SSN4) mismatched. → _Return to [step 3](#3-if-necessary-prompt-user-for-additional-info)._
-    - **[`OCE013`](../api-reference/errors#oce013)** indicates that Verified found no [credentials](../data/outputs/credentials) for the user. → _Fall back to a manual signup flow._
-    - **[`OCE019`](../api-reference/errors#oce019)** indicates that the maximum number of attempts has been reached for one or more of the additional inputs. → _Fall back to a manual signup flow._
+- **Success:** If we can source data based on the phone number and birth date, the [response body](/reference/api/endpoints#post-1-click-response) will be a [`1ClickEntity`](/reference/api/types#1clickentity) (see this [example](/reference/api/types#example-1clickentity)), which contains the user's data and metadata about it. → _Continue to [step 5](#5-prompt-user-to-confirm-their-data)._
+- **Error:** Otherwise, the response body will contain an [error](/reference/api/errors) with a Verified error code:
+    - **[`OCE012`](/reference/api/errors#oce012)** indicates that one or more of the additional inputs you passed (the user's birth date and/or SSN4) mismatched. → _Return to [step 3](#3-if-necessary-prompt-user-for-additional-info)._
+    - **[`OCE013`](/reference/api/errors#oce013)** indicates that Verified found no [credentials](/reference/data/outputs/credentials) for the user. → _Fall back to a manual signup flow._
+    - **[`OCE019`](/reference/api/errors#oce019)** indicates that the maximum number of attempts has been reached for one or more of the additional inputs. → _Fall back to a manual signup flow._
 
 
 ## 5. Prompt user to confirm their data.
 
 <PromptUserToConfirmTheirData/>
+
+---
 
 
 ## Go Live!
@@ -209,7 +212,7 @@ One of two things should happen:
 
 ### Request Approval
 
-**When you're ready to go live, request approval for [Production](../api-reference/environments#production) access:**
+**When you're ready to go live, request approval for [Production](/reference/api/environments#production) access:**
 1. Go to the **Brand Details** page for your brand in the Verified [Dashboard](https://dashboard.verified.inc).
 2. Click the **Sandbox** tab in the upper right, and make sure your brand settings are synced. _If they're not, click the **Sync to Production** button._
 3. Click the **Production** tab in the upper right, and click the **Request Approval** button under the API Keys section.
@@ -227,13 +230,13 @@ In step 4, you'll be asked to confirm the following:
 <label for="phonse">We're properly verifying users' phone numbers.</label>
 <br/>
 <input type="checkbox" id="errors"/>
-<label for="error">We’re handling relevant [Verified error codes](../api-reference/errors#verified-error-codes).</label>
+<label for="error">We’re handling relevant [Verified error codes](/reference/api/errors#verified-error-codes).</label>
 <br/>
 <input type="checkbox" id="ssns"/>
 <label for="ssns">If we’re requesting SSNs, we’re masking them server side and only exposing the last 4 digits client side.</label>
 <br/>
 <input type="checkbox" id="testing"/>
-<label for="testing">Our 1-Click Signup flow is working end-to-end in [Sandbox](../api-reference/environments#sandbox).</label>
+<label for="testing">Our 1-Click Signup flow is working end-to-end in [Sandbox](/reference/api/environments#sandbox).</label>
 <br/>
 <br/>
 
@@ -246,9 +249,9 @@ You'll also be prompted to share a link to your Sandbox integration and/or sched
 
 **Once you have Production access, just swap Sandbox for Production:**
 1. Swap your Sandbox API key for your Production API key.
-2. Swap the [Sandbox base URL](../api-reference/environments#sandbox) for the [Production base URL](../api-reference/environments#production).
+2. Swap the [Sandbox base URL](/reference/api/environments#sandbox) for the [Production base URL](/reference/api/environments#production).
 
-Then you'll be live with 1-Click Signup! ✅
+**Then you'll be live with 1-Click Signup! ✅**
 
 
 {/* ## User Experience

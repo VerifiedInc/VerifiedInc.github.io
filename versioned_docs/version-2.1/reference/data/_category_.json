@@ -1,0 +1,10 @@
+{
+  "label": "Data",
+  "className": "sidebar-header-regular",
+  "position": 0,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "slug": "/reference/data"
+  }
+}

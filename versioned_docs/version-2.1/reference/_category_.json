@@ -1,0 +1,10 @@
+{
+  "label": "Reference",
+  "className": "sidebar-header-black",
+  "position": 4,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "slug": "/reference"
+  }
+}

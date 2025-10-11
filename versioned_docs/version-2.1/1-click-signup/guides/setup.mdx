@@ -1,18 +1,28 @@
 ---
 id: setup
 title: Setup
-sidebar_position: 2
+sidebar_position: 0
 sidebar_label: Setup
+sidebar_class_name: sidebar-header-regular
 description: How to get setup to integrate 1-Click Signup
-slug: /guides/setup
+slug: /1-click-signup/guides/setup
 toc_max_heading_level: 4
 ---
 
 import Admonition from '@theme/Admonition';
 import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
 import Chip from '@mui/material/Chip';
-import RiskSignalsOptionsTable from '@site/versioned_docs/version-2.1/reusables/risk-signals-options-table.mdx';
 import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-recommendation-admonition.mdx';
+import StylingSettingLogo from '@site/versioned_docs/version-2.1/reusables/styling-setting-logo.mdx';
+import StylingSettingFontFamily from '@site/versioned_docs/version-2.1/reusables/styling-setting-font-family.mdx';
+import StylingSettingButtonBorderRadius from '@site/versioned_docs/version-2.1/reusables/styling-setting-button-border-radius.mdx';
+import StylingSettingPrimaryColor from '@site/versioned_docs/version-2.1/reusables/styling-setting-primary-color.mdx';
+import StylingSettingGraphicColor from '@site/versioned_docs/version-2.1/reusables/styling-setting-graphic-color.mdx';
+import BrandSettingBrandName from '@site/versioned_docs/version-2.1/reusables/brand-setting-brand-name.mdx';
+import ImmutableSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/immutable-setting-admonition.mdx';
+import BrandSettingRiskSignals from '@site/versioned_docs/version-2.1/reusables/brand-setting-risk-signals.mdx';
+import ConfigureBrandSettings from '@site/versioned_docs/version-2.1/reusables/configure-brand-settings.mdx';
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
 
 
 {/* 1-Click Signup is the fastest way to onboard new users.
@@ -37,380 +47,403 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 </table>
 
 :::tip
-**Complete this Setup guide before following the [SDK Integration](../guides/sdk-integration) or [API Integration](../guides/api-integration) guide.** (Which integration guide you should follow depends on which [integration type](#integration-type) you choose.)
+**Complete this Setup guide before following the 1-Click Signup [SDK Integration](/1-click-signup/guides/sdk-integration) or [API Integration](/1-click-signup/guides/api-integration) guide.** (Which integration guide you should follow depends on which [integration type](#integration-type) you choose.)
 :::
 
-
-## 1. Access the [Dashboard](https://dashboard.verified.inc).
 
 <SetupLoginToDashboard/>
 
 
-## 2. Configure brand settings.
-
-On the Brand Details page in the Dashboard, you can configure settings for your brand. 
+<ConfigureBrandSettings/>
 
 
 ### Brand Name
 
-Choose a name for your brand. This will be used elsewhere in the Dashboard (for example on the Metrics page) and displayed to users if you choose the **SDK** [integration type](#integration-type).
+<BrandSettingBrandName/>
 
 
-### Integration Type
+### 1-Click Signup Settings
 
-Choose which integration type you want to use:
+**Click the 1-Click Signup tab to access these settings.**
 
-<table>
-    <tr>
-        <th>Option</th>
-        <th>Development Effort</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>**SDK** <Chip label="Recommended" variant="outlined" size="small" color="primary"/> <br/> <span class="font-weight-normal"></span></td>
-        <td>\<1 day</td>
-        <td>You use our (web) client SDK, and we handle the rest</td>
-    </tr>
-    <tr>
-        <td>**API** <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/> <br/> <span class="font-weight-normal"></span></td>
-        <td>1-2 weeks</td>
-        <td>You use our API only and build everything yourself</td>
-    </tr>
-</table>
 
-<IntegrationTypeRecommendationAdmonition/>
+<CollapsibleGroup firstSectionExpanded={false}>
 
-:::note Looking for Hosted, Semi-Hosted, or Non-Hosted?
-<div class="small-margin-bottom">**We’ve reorganized!** The integration types [in v2.0](/v2.0/integration-guide#2-configure-brand-settings) are updated for v2.1 as follows:</div>
-- **Hosted** in v2.0 is replaced by **SDK** in v2.1
-- **Semi-Hosted** in v2.0 is no longer available in v2.1
-- **Non-Hosted** in v2.0 is equivalent to **API** in v2.1
-:::
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### Integration Type
+        </CollapsibleHeader>
+
+        <ImmutableSettingAdmonition/>
+
+        **Choose which integration type you want to use:**
+
+        <table>
+            <tr>
+                <th>Option</th>
+                <th>Development Effort</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>**SDK** <Chip label="Recommended" variant="outlined" size="small" color="primary"/> <br/> <span class="font-weight-normal"></span></td>
+                <td>\<1 day</td>
+                <td>You use our (web) client SDK, and we handle the rest</td>
+            </tr>
+            <tr>
+                <td>**API** <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/> <br/> <span class="font-weight-normal"></span></td>
+                <td>1-2 weeks</td>
+                <td>You use our API only and build everything yourself</td>
+            </tr>
+        </table>
+
+        <IntegrationTypeRecommendationAdmonition/>
+
+    </CollapsibleSection>
     
+    <CollapsibleSection>
 
-{/* Commenting out until we have backend support */}
-{/* ### Phone Verification
+        <CollapsibleHeader>
+        #### Phone Verification
+        </CollapsibleHeader>
 
-Choose whether to use Verified's phone verification or your own:
+        <ImmutableSettingAdmonition/>
 
-<table>
-    <tr>
-        <th>Option</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>Use Verified's</td>
-        <td>Use Verified to send the user verification SMS.</td>
-    </tr>
-    <tr>
-        <td>Use your own <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/></td>
-        <td>Use your own solution to send the user verification SMS.</td>
-    </tr>
-</table>
+        **Choose whether to use Verified's phone verification or your own:**
 
-:::important You Must Use Your Own with the API Integration Type
-If you choose the **API** [integration type](#integration-type), you must use your own phone verification.
-:::
+        <table>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Use Verified's</td>
+                <td>Use Verified to send the user verification SMS.</td>
+            </tr>
+            <tr>
+                <td>Use your own <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/></td>
+                <td>Use your own solution to send the user verification SMS.</td>
+            </tr>
+        </table>
 
-:::warning Using Your Own Requires Approval
-If you use your own solution for phone verification, we must approve you for [Production](../api-reference/environments#production) access by evaluating that you're properly verifying users' phone numbers.
-::: */}
+        <Admonition type="important" title="You Must Use Your Own with the API Integration Type">
+            If you choose the **API** [integration type](#integration-type), you must use your own phone verification.
+        </Admonition>
+
+        <Admonition type="warning" title="Using Your Own Requires Approval">
+            If you use your own solution for phone verification, we must approve you for [Production](/reference/api/environments#production) access by evaluating that you're properly verifying users' phone numbers.
+        </Admonition>
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### Risk Signals
+        </CollapsibleHeader>
+
+        <BrandSettingRiskSignals/>
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### Challenges
+        </CollapsibleHeader>
+
+        <Admonition type="note" title="Definition">
+            A **challenge** is a piece of information we will prompt the user to input if we're unable to source data for them based on previous inputs (for example, phone).
+        </Admonition>
+
+        **Choose which challenge(s) to allow:**
+
+        <table>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Birthday only <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
+                <td>Prompt the user for their birthday only — never their SSN4.</td>
+            </tr>
+            <tr>
+                <td>SSN4 only</td>
+                <td>Prompt the user for their SSN4 only — never their birthday.</td>
+            </tr>
+            <tr>
+                <td>Birthday or SSN4</td>
+                <td>Prompt the user for their birthday, SSN4, or both (only if necessary). Birthday always comes first.</td>
+            </tr>
+        </table>
+
+        <details>
+            <summary>Why We Recommend <b>Birthday only</b></summary>
+
+            **Birthday only** is the option we recommend because:
+
+            - We recommend using only one challenge:
+                - Every additional input adds friction, with the risk that we won't be able to source data for the user.
+                - We can successfully source data based on phone and one challenge the vast majority of the time.
+                - Prompting for another challenge only slightly increases the chance that we'll be able to source data for the user, and it adds substantial friction.
+            - We recommend using birthday over SSN4:
+                - Users are typically more comfortable providing their birthday.
+                - Some users will have an autofill option for birthday from their browser or OS.
+                - Everyone has a birthday, but not everyone has an SSN.
+        </details>
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### Prompt for Challenges
+        </CollapsibleHeader>
+
+        **Choose when to prompt for challenge(s):**
+
+        <table>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Only if necessary</td>
+                <td>Prompt the user for challenge(s) only if Verified can't source data based on just phone.</td>
+            </tr>
+            <tr>
+                <td>Always</td>
+                <td>Prompt the user for a challenge upfront, every time.</td>
+            </tr>
+        </table>
+
+        <Admonition type="note">
+            If you choose **Always**, the user will only be prompted for one challenge. 
+            - If you chose **Birthday or SSN4** or **Birthday only** for the [Challenges](#challenges) setting, the challenge will be their birthday.
+            - If you chose **SSN4 only** for the [Challenges](#challenges) setting, the challenge will be their SSN4.
+        </Admonition>
+
+        <Admonition type="tip">
+            Always prompting for a challenge can help improve data quality for some user populations.
+        </Admonition>
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### Default Credential Requests
+        </CollapsibleHeader>
+
+        <Admonition type="note" title="Definitions"> 
+            - A [**credential**](/reference/data/outputs/credentials) is a piece of identity data about a user (like a first name or address).
+            - A **credential request** is how you ask Verified for a particular credential. It encodes what type of data you're asking for, whether it's required or optional, whether multiple values should be returned, etc. See the [`CredentialRequest`](/reference/api/types#credentialrequest) type for full details.
+        </Admonition>
+
+        **Choose which [credentials](/reference/data/outputs/credentials) Verified should try to source about the user:**
+
+        <details>
+            <summary>Settings for a Credential Request</summary>
+            <table>
+                <tr>
+                    <th>Setting</th>
+                    <th>Relevant to Integration Type</th>
+                    <th>Options</th>
+                    <th>Default</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>Field Type</td>
+                    <td>SDK and API</td>
+                    <td>[Credential](/reference/data/outputs/credentials) type</td>
+                    <td>-</td>
+                    <td>Type of user data this field is for</td>
+                    <td>Full Name</td>
+                </tr>
+                <tr>
+                    <td>Field Description</td>
+                    <td>SDK only</td>
+                    <td>Text</td>
+                    <td>-</td>
+                    <td>Text that appears under the field</td>
+                    <td>Legal name (for Full Name field type)</td>
+                </tr>
+                <tr>
+                    <td>Optional or Required</td>
+                    <td>SDK only</td>
+                    <td>
+                        - Optional
+                        - Required if available (see note below)
+                    </td>
+                    <td>Optional</td>
+                    <td>Whether the field is optional or required</td>
+                    <td>Optional</td>
+                </tr>
+                <tr>
+                    <td>Allow User Input</td>
+                    <td>SDK only</td>
+                    <td>
+                        - Yes
+                        - No
+                    </td>
+                    <td>Yes</td>
+                    <td>Whether the user is allowed data returned for the field</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Multiple Values</td>
+                    <td>SDK and API</td>
+                    <td>
+                        - Yes
+                        - No
+                    </td>
+                    <td>
+                        - Yes for Address field type
+                        - No for all other field types
+                    </td>
+                    <td>Whether the user can choose among multiple values (if they're returned)</td>
+                    <td>No</td>
+                </tr>
+            </table>
+        </details>
+
+        <Admonition type="note">
+            **Field Description,** **Optional or Required,** and **Allow User Input** are only relevant to the **SDK** [integration type](#integration-type) because they affect the user interface the SDK displays. 
+        </Admonition>
+
+        <Admonition type="tip" title="What Required If Available Means"> 
+            If **Optional or Required** is set to **Required if available**:
+            - If data is returned for the field, the user is required to share it. (If **Allow User Input** is set to **Yes**, the user can edit the data.)
+            - If data is not returned for the field, the user can optionally share it. (If **Allow User Input** is set to **Yes**, the user can edit the data. If it's set to **No**, the field is not displayed to the user.)
+        </Admonition>
+
+        When you create a new brand, the Dashboard starts you off with standard credential requests to provide you with a helpful starting point:
+
+        <details>
+            <summary>Standard Credential Requests</summary>
+            <table>
+                <tr>
+                    <th>Field Type</th>
+                    <th>Field Description</th>
+                    <th>Optional or Required</th>
+                    <th>Allow User Input</th>
+                    <th>Multiple Values</th>
+                </tr>
+                <tr>
+                    <td>Full Name</td>
+                    <td>-</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>↳ First Name</td>
+                    <td>-</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>↳ Last Name</td>
+                    <td>-</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>-</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>-</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>↳ Line 1</td>
+                    <td>-</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>↳ Line 2</td>
+                    <td>Apt, Unit, etc.</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>↳ City</td>
+                    <td>-</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>↳ State</td>
+                    <td>-</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>↳ ZIP Code</td>
+                    <td>-</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>↳ Country</td>
+                    <td>-</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Birth Date</td>
+                    <td>-</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>SSN</td>
+                    <td>-</td>
+                    <td>Optional</td>
+                    <td>Yes</td>
+                    <td>-</td>
+                </tr>
+            </table>
+        </details>
+
+    </CollapsibleSection>
+
+</CollapsibleGroup>
 
 
-### Challenges
+### Styling Settings
 
-:::note Definition
-A **challenge** is a piece of information we will prompt the user to input if we're unable to source data for them based on previous inputs (for example, phone). 
-:::
+:::important
+Styling settings only apply to **1-Click Signup** using the **SDK** [integration type](#integration-type) because they affect the user interface the SDK displays. (They also apply to [**Text to Signup**](/text-to-signup).)
 
-Choose which challenge(s) to allow:
-
-<table>
-    <tr>
-        <th>Option</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>Birthday only <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
-        <td>Prompt the user for their birthday only — never their SSN4.</td>
-    </tr>
-    <tr>
-        <td>SSN4 only</td>
-        <td>Prompt the user for their SSN4 only — never their birthday.</td>
-    </tr>
-    <tr>
-        <td>Birthday or SSN4</td>
-        <td>Prompt the user for their birthday, SSN4, or both (only if necessary). Birthday always comes first.</td>
-    </tr>
-</table>
-
-<details>
-    <summary>Why We Recommend <b>Birthday only</b></summary>
-
-    **Birthday only** is the option we recommend because:
-
-    - We recommend using only one challenge:
-        - Every additional input adds friction, with the risk that we won't be able to source data for the user.
-        - We can successfully source data based on phone and one challenge the vast majority of the time.
-        - Prompting for another challenge only slightly increases the chance that we'll be able to source data for the user, and it adds substantial friction.
-    - We recommend using birthday over SSN4:
-        - Users are typically more comfortable providing their birthday.
-        - Some users will have an autofill option for birthday from their browser or OS.
-        - Everyone has a birthday, but not everyone has an SSN.
-</details>
-
-
-### Prompt for Challenges
-
-Choose when to prompt for challenge(s):
-
-<table>
-    <tr>
-        <th>Option</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>Only if necessary</td>
-        <td>Prompt the user for challenge(s) only if Verified can't source data based on just phone.</td>
-    </tr>
-    <tr>
-        <td>Always</td>
-        <td>Prompt the user for a challenge upfront, every time.</td>
-    </tr>
-</table>
-
-:::note
-If you choose **Always**, the user will only be prompted for one challenge. 
-- If you chose **Birthday or SSN4** or **Birthday only** for the [Challenges](#challenges) setting, the challenge will be their birthday.
-- If you chose **SSN4 only** for the [Challenges](#challenges) setting, the challenge will be their SSN4.
-:::
-
-:::tip
-Always prompting for a challenge can help improve data quality for some user populations.
-:::
-
-
-### Risk Signals 
-
-:::note Definition
-[**Risk signals**](../data/outputs/metadata#risk-signals) are metadata that enhance 1-Click Signup's anti-fraud capabilities.
-:::
-
-Choose which risk signals to include in Verified's responses:
-
-<RiskSignalsOptionsTable/>
-
-:::tip Advanced Has Extra Cost 
-**Advanced** risk signals come with extra cost. They're particularly relevant if you're using 1-Click Signup for a high sensitivity use case where fraud is a major risk. 
-:::
-
-:::danger
-**Off** is not recommended. It will prevent Verified from sourcing risk signals for a user and blocking them if the risk score is too high.
-:::
-
-
-### Default Credential Requests 
-
-:::note Definitions
-- A [**credential**](../data/outputs/credentials) is a piece of identity data about a user (like a first name or address).
-- A **credential request** is how you ask Verified for a particular credential. It encodes what type of data you're asking for, whether it's required or optional, whether multiple values should be returned, etc. See the [`CredentialRequest`](../api-reference/types#credentialrequest) type for full details.
-:::
-
-Choose which [credentials](../data/outputs/credentials) Verified should try to source about the user:
-
-
-<details>
-    <summary>Settings for a Credential Request</summary>
-    <table>
-        <tr>
-            <th>Setting</th>
-            <th>Relevant to Integration Type</th>
-            <th>Options</th>
-            <th>Default</th>
-            <th>Description</th>
-            <th>Example</th>
-        </tr>
-        <tr>
-            <td>Field Type</td>
-            <td>SDK and API</td>
-            <td>[Credential](../data/outputs/credentials) type</td>
-            <td>-</td>
-            <td>Type of user data this field is for</td>
-            <td>Full Name</td>
-        </tr>
-        <tr>
-            <td>Field Description</td>
-            <td>SDK only</td>
-            <td>Text</td>
-            <td>-</td>
-            <td>Text that appears under the field</td>
-            <td>Legal name (for Full Name field type)</td>
-        </tr>
-        <tr>
-            <td>Optional or Required</td>
-            <td>SDK only</td>
-            <td>
-                - Optional
-                - Required if available (see note below)
-            </td>
-            <td>Optional</td>
-            <td>Whether the field is optional or required</td>
-            <td>Optional</td>
-        </tr>
-        <tr>
-            <td>Allow User Input</td>
-            <td>SDK only</td>
-            <td>
-                - Yes
-                - No
-            </td>
-            <td>Yes</td>
-            <td>Whether the user is allowed data returned for the field</td>
-            <td>Yes</td>
-        </tr>
-        <tr>
-            <td>Multiple Values</td>
-            <td>SDK and API</td>
-            <td>
-                - Yes
-                - No
-            </td>
-            <td>
-                - Yes for Address field type
-                - No for all other field types
-            </td>
-            <td>Whether the user can choose among multiple values (if they're returned)</td>
-            <td>No</td>
-        </tr>
-    </table>
-
-    <Admonition type="note">
-        **Field Description,** **Optional or Required,** and **Allow User Input** are only relevant to the **SDK** [integration type](#integration-type) because they affect the user interface the SDK displays. 
-    </Admonition>
-
-    <Admonition type="tip" title="What Required If Available Means"> 
-        If **Optional or Required** is set to **Required if available**:
-        - If data is returned for the field, the user is required to share it. (If **Allow User Input** is set to **Yes**, the user can edit the data.)
-        - If data is not returned for the field, the user can optionally share it. (If **Allow User Input** is set to **Yes**, the user can edit the data. If it's set to **No**, the field is not displayed to the user.)
-    </Admonition>
-</details>
-
-When you create a new brand, the Dashboard starts you off with standard credential requests to provide you with a helpful starting point:
-
-<details>
-    <summary>Standard Credential Requests</summary>
-    <table>
-        <tr>
-            <th>Field Type</th>
-            <th>Field Description</th>
-            <th>Optional or Required</th>
-            <th>Allow User Input</th>
-            <th>Multiple Values</th>
-        </tr>
-        <tr>
-            <td>Full Name</td>
-            <td>-</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>↳ First Name</td>
-            <td>-</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>↳ Last Name</td>
-            <td>-</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>Phone</td>
-            <td>-</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>Address</td>
-            <td>-</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>Yes</td>
-        </tr>
-        <tr>
-            <td>↳ Line 1</td>
-            <td>-</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>↳ Line 2</td>
-            <td>Apt, Unit, etc.</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>↳ City</td>
-            <td>-</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>↳ State</td>
-            <td>-</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>↳ ZIP Code</td>
-            <td>-</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>↳ Country</td>
-            <td>-</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>Birth Date</td>
-            <td>-</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>SSN</td>
-            <td>-</td>
-            <td>Optional</td>
-            <td>Yes</td>
-            <td>-</td>
-        </tr>
-    </table>
-</details>
-
-
-### SDK Styling
-
-:::note
-These styling settings are only relevant to the **SDK** [integration type](#integration-type) because they affect the user interface the SDK displays.
+So, if you are only using **1-Click Signup** with the the **API** [integration type](#integration-type), you can ignore these settings.
 :::
 
 :::tip Verified Auto-Magically Configures Styling Settings
 We use AI to auto-magically configure styling settings based on your email domain, so you don't have to do so manually from scratch!
 ::::
+
+**Click the Styling tab to access these settings.**
+
+**Choose how to style the SDK:**
 
 <table>
     <tr>
@@ -419,18 +452,49 @@ We use AI to auto-magically configure styling settings based on your email domai
         <th>Default</th>
         <th>Description</th>
     </tr>
+    <StylingSettingLogo/>
     <tr>
-        <td>Logo</td>
-        <td>Any square image (max size 200 KB, JPG or PNG)</td>
-        <td>-</td>
-        <td>Logo displayed to users</td>
+        <td>Alignment</td>
+        <td>
+            - Left
+            - Center
+            - Right
+            - Stretch
+        </td>
+        <td>Center</td>
+        <td>Alignment used for most text, buttons, and the powered by Verified graphic</td>
+    </tr>
+    <StylingSettingFontFamily/>
+    <tr>
+        <td>1-Click Word</td>
+        <td>
+            - Signup
+            - Login 
+            - Verify 
+            - Apply 
+            - Access 
+            - AutoFill
+        </td>
+        <td>Signup</td>
+        <td>Word that appears after "1-Click" in the powered by Verified graphic</td>
     </tr>
     <tr>
-        <td>Primary Color</td>
-        <td>Any hex code</td>
-        <td>#0DBC3D</td>
-        <td>Color used for primary buttons and success indicators</td>
+        <td>Input Border Radius</td>
+        <td>Any number</td>
+        <td>4</td>
+        <td>Border radius used for all inputs</td>
     </tr>
+    <StylingSettingButtonBorderRadius/>
+    <tr>
+        <td>Success Animation</td>
+        <td>
+            - Full
+            - None
+        </td>
+        <td>Full</td>
+        <td>Whether to show the success animation</td>
+    </tr>
+    <StylingSettingPrimaryColor/>
     <tr>
         <td>Error Color</td>
         <td>Any hex code</td>
@@ -449,61 +513,9 @@ We use AI to auto-magically configure styling settings based on your email domai
         <td>#FFFFFF</td>
         <td>Color used for background</td>
     </tr>
+    <StylingSettingGraphicColor/>
     <tr>
-        <td>Alignment</td>
-        <td>
-            - Left
-            - Center
-            - Right
-            - Stretch
-        </td>
-        <td>Center</td>
-        <td>Alignment used for most text, buttons, and the powered by Verified graphic</td>
-    </tr>
-    <tr>
-        <td>Font Family</td>
-        <td>Any [Google font](https://fonts.google.com/)</td>
-        <td>Lato</td>
-        <td>Font used for all elements</td>
-    </tr>
-    <tr>
-        <td>1-Click Word</td>
-        <td>
-            - Signup
-            - Login 
-            - Verify 
-            - Apply 
-            - Access 
-            - AutoFill
-        </td>
-        <td>Signup</td>
-        <td>Word that appears after "1-Click" in the powered by Verified graphic</td>
-    </tr>
-    <tr>
-        <td>Graphic Color</td>
-        <td>
-            - Green
-            - Gray
-            - Black
-            - White 
-        </td>
-        <td>Green</td>
-        <td>Color of the Verified logo in the powered by Verified graphic</td>
-    </tr>
-    <tr>
-        <td>Input Border Radius</td>
-        <td>Any number</td>
-        <td>4</td>
-        <td>Border radius used for all inputs</td>
-    </tr>
-    <tr>
-        <td>Button Border Radius</td>
-        <td>Any number</td>
-        <td>4</td>
-        <td>Border radius used for all buttons</td>
-    </tr>
-    <tr>
-        <td>Advanced Theme</td>
+        <td>Advanced Styling</td>
         <td>Custom JSON</td>
         <td>-</td>
         <td>Custom JSON configuration that allows fine-grained control over any SDK component styling, using the [MUI theme system](https://mui.com/material-ui/customization/default-theme)</td>

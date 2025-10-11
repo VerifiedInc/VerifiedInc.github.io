@@ -1,0 +1,20 @@
+import RiskSignalsOptionsTable from '@site/versioned_docs/version-2.1/reusables/risk-signals-options-table.mdx';
+import ImmutableSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/immutable-setting-admonition.mdx'; 
+
+<ImmutableSettingAdmonition/>
+
+:::note Definition
+[**Risk signals**](/reference/data/outputs/metadata#risk-signals) are metadata that enhance 1-Click Signup's anti-fraud capabilities.
+:::
+
+**Choose which risk signals to include in Verified's responses:**
+
+<RiskSignalsOptionsTable/>
+
+:::tip Advanced Has Extra Cost 
+**Advanced** risk signals come with extra cost. They're particularly relevant if you're using 1-Click Signup for a high sensitivity use case where fraud is a major risk. 
+:::
+
+:::danger
+**Off** is not recommended. It will prevent Verified from sourcing risk signals for a user and blocking them if the risk score is too high.
+:::

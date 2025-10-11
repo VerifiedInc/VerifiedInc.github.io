@@ -1,6 +1,6 @@
 import React, { useState, useId, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-
+import { useLocation } from '@docusaurus/router';
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import AnchorOffset from '@site/src/components/AnchorOffset.jsx'
@@ -46,6 +46,8 @@ export const CollapsibleHeader = ({ children, isActive }) => (
 
 export const CollapsibleSection = ({ activeId, setActiveId, id, children }) => {
     const isActive = id === activeId;
+    const rootRef = useRef(null);
+    const { hash } = useLocation();
     const header = React.Children.toArray(children).find(
         (child) => child.type === CollapsibleHeader
     );
@@ -56,23 +58,40 @@ export const CollapsibleSection = ({ activeId, setActiveId, id, children }) => {
 
 
     const handleClick = (e) => {
-        if (e.target.classList.contains('hash-link')) {
-            return;
-        }
+        // Don’t toggle if the user clicked the built-in Docusaurus hash icon/link
+        if (e.target.classList?.contains('hash-link')) return;
         setActiveId(isActive ? undefined : id);
     };
 
+    // Find the first rendered heading inside this section (h1–h6) and read its id.
+    const getHeadingId = () => {
+        const el = rootRef.current;
+        if (!el) return null;
+        const heading = el.querySelector('h1, h2, h3, h4, h5, h6');
+        return heading?.id || null;
+    };
+
+    // When the URL hash matches our heading id, open this section.
+    useEffect(() => {
+        if (!hash) return;
+        const current = hash.replace(/^#/, '');
+        const myHeadingId = getHeadingId();
+        if (myHeadingId && current === myHeadingId) {
+        setActiveId(id); // group will scroll after state update
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [hash, id]);
+
     return (
         <>
-            <AnchorOffset id={`section-anchor-${id}`} className="section-anchor" offset="-80px" />
-            <div id={`collapsible-section-${id}`} className="collapsible-section">
-                <Box onClick={handleClick} style={{ cursor: "pointer", fontWeight: "bold" }}>
-                    {React.cloneElement(header, { isActive: isActive })}
-                </Box>
-                {/* Collapse from MUI has smooth transictions, but it brings issues with scrolling large collapsed contents */}
-                {/* <Collapse in={isActive} addEndListener={(() => done(isActive, id))}>{body}</Collapse> */}
-                {isActive && body}
-            </div >
+        {/* Keep your AnchorOffset if you want offset scrolling; optional */}
+        <AnchorOffset id={`section-anchor-${id}`} className="section-anchor" offset="-80px" />
+        <div id={`collapsible-section-${id}`} className="collapsible-section" ref={rootRef}>
+            <Box onClick={handleClick} style={{ cursor: "pointer", fontWeight: "bold" }}>
+            {React.cloneElement(header, { isActive })}
+            </Box>
+            {isActive && body}
+        </div>
         </>
     );
 };

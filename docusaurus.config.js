@@ -17,7 +17,7 @@ module.exports = {
   projectName: 'VerifiedInc.github.io', // Usually your repo name.
   themeConfig: {
     announcementBar: {
-      content: '<b>The new 1-Click Signup SDK is live!</b> It\'s <i>10x faster</i> to integrate than the API',
+      content: 'Announcing <b><a href="/text-to-signup">Text to Signup!</a></b> A marketing <i>superpower</i>',
       backgroundColor: '#0dbc3d',
       textColor: '#ffffff',
     },
@@ -48,7 +48,7 @@ module.exports = {
           position: 'left',
         },
         {
-          to: 'https://www.verified.inc',
+          to: 'https://verified.inc',
           label: 'Website',
           position: 'right',
         },
@@ -63,103 +63,78 @@ module.exports = {
       style: 'dark',
       links: [
         {
+          label: 'Stack Overflow',
+          href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+        },
+        {
+          label: 'Discord',
+          href: 'https://discordapp.com/invite/docusaurus',
+        },
+        {
+          label: 'X',
+          href: 'https://x.com/docusaurus',
+        },
+        {
+          html: `
+              <a href="https://www.netlify.com" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
+                <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify" width="114" height="51" />
+              </a>
+            `,
+        },
+      ],
+      links: [
+        {
           title: '1-Click Signup',
           items: [
             {
               label: 'Overview',
-              to: '/overview',
+              to: '/1-click-signup/overview',
             },
             {
-              label: 'Custom Demo',
-              to: '/custom-demo',
+              label: 'User Experience',
+              to: '/1-click-signup/user-experience',
             },
             {
               label: 'Test Users',
-              to: '/test-users',
+              to: '/1-click-signup/test-users',
+            },
+            {
+              label: 'Guides',
+              to: '/1-click-signup/guides',
             },
           ],
         },
         {
-          title: 'Guides',
+          title: 'Text to Signup',
           items: [
+            {
+              label: 'Overview',
+              to: '/text-to-signup/overview',
+            },
             {
               label: 'User Experience',
-              to: '/guides/user-experience',
+              to: '/text-to-signup/user-experience',
             },
             {
-              label: 'Setup',
-              to: '/guides/setup',
-            },
-            {
-              label: 'SDK Integration',
-              to: '/guides/sdk-integration',
-            },
-            {
-              label: 'API Integration',
-              to: '/guides/api-integration',
+              label: 'Guide',
+              to: '/text-to-signup/guide',
             },
           ],
         },
         {
-          title: 'Data',
+          title: 'Reference',
           items: [
             {
-              label: 'Identifiers',
-              to: '/data/inputs/identifiers',
+              label: 'Data',
+              to: '/reference/data',
             },
             {
-              label: 'Credentials',
-              to: '/data/outputs/credentials',
+              label: 'SDK',
+              to: '/reference/sdk',
             },
             {
-              label: 'Metadata',
-              to: '/data/outputs/metadata',
-            },
-          ],
-        },
-        {
-          title: 'SDK Reference',
-          items: [
-            {
-              label: 'Installation',
-              to: '/sdk-reference/installation',
-            },
-            {
-              label: 'Constants',
-              to: '/sdk-reference/constants',
-            },
-            {
-              label: 'Methods',
-              to: '/sdk-reference/methods',
-            },
-            {
-              label: 'Types',
-              to: '/sdk-reference/types',
-            },
-          ],
-        },
-        {
-          title: 'API Reference',
-          items: [
-            {
-                label: 'Authentication',
-                to: '/api-reference/authentication',
-            },
-            {
-              label: 'Environments',
-              to: '/api-reference/environments',
-            },
-            {
-              label: 'Endpoints',
-              to: '/api-reference/endpoints',
-            },
-            {
-              label: 'Errors',
-              to: '/api-reference/errors',
-            },
-            {
-              label: 'Types',
-              to: '/api-reference/types',
+              label: 'API',
+              to: '/reference/api',
             },
           ],
         },
@@ -181,7 +156,7 @@ module.exports = {
           items: [
             {
               label: 'Website',
-              to: 'https://www.verified.inc',
+              to: 'https://verified.inc',
             },
             {
               label: 'GitHub',
@@ -320,6 +295,104 @@ module.exports = {
           {
             to: '/v2.0/data',
             from: '/data',
+          },
+          // For Text to Signup revamp
+          // /X -> /1-click-signup/X
+          {
+            to: '/1-click-signup/overview',
+            from: '/overview',
+          },
+          {
+            to: '/1-click-signup/test-users',
+            from: '/test-users',
+          },
+          {
+            to: '/1-click-signup/guides',
+            from: '/guides',
+          },
+          {
+            to: '/1-click-signup/user-experience',
+            from: '/guides/user-experience',
+          },
+          {
+            to: '/1-click-signup/guides/setup',
+            from: '/guides/setup',
+          },
+          {
+            to: '/1-click-signup/guides/sdk-integration',
+            from: '/guides/sdk-integration',
+          },
+          {
+            to: '/1-click-signup/guides/api-integration',
+            from: '/guides/api-integration',
+          },
+          {
+            to: '/reference/data',
+            from: '/data',
+          },
+          {
+            to: '/reference/data/inputs',
+            from: '/data/inputs',
+          },
+          {
+            to: '/reference/data/inputs/identifiers',
+            from: '/data/inputs/identifiers',
+          },
+          {
+            to: '/reference/data/outputs',
+            from: '/data/outputs',
+          },
+          {
+            to: '/reference/data/outputs/credentials',
+            from: '/data/outputs/credentials',
+          },
+          {
+            to: '/reference/data/outputs/metadata',
+            from: '/data/outputs/metadata',
+          },
+          {
+            to: '/reference/sdk',
+            from: '/sdk-reference',
+          },
+          {
+            to: '/reference/sdk/installation',
+            from: '/sdk-reference/installation',
+          },
+          {
+            to: '/reference/sdk/constants',
+            from: '/sdk-reference/constants',
+          },
+          {
+            to: '/reference/sdk/methods',
+            from: '/sdk-reference/methods',
+          },
+          {
+            to: '/reference/sdk/types',
+            from: '/sdk-reference/types',
+          },
+          {
+            to: '/reference/api',
+            from: '/api-reference',
+          },
+          {
+            to: '/reference/api/authentication',
+            from: '/api-reference/authentication',
+          },
+          {
+            to: '/reference/api/environments',
+            from: '/api-reference/environments',
+          },
+          {
+            to: '/reference/api/endpoints',
+            from: '/api-reference/endpoints',
+          },
+          {
+            to: '/reference/api/errors',
+            from: '/api-reference/errors',
+          },
+          {
+            to: '/reference/api/types',
+            from: '/api-reference/types',
           },
         ],
         // This isn't working — not sure why

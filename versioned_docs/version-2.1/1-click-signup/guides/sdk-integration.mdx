@@ -1,10 +1,11 @@
 ---
 id: sdk-integration
 title: SDK Integration
-sidebar_position: 3
+sidebar_position: 2
 sidebar_label: SDK Integration
+sidebar_class_name: sidebar-header-regular
 description: Full details on how to integrate 1-Click Signup
-slug: /guides/sdk-integration
+slug: /1-click-signup/guides/sdk-integration
 toc_max_heading_level: 3
 ---
 
@@ -65,11 +66,11 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 </table>
 
 :::tip
-**Complete the [Setup](../guides/setup) guide before following this SDK Integration guide.**
+**Complete the 1-Click Signup [Setup](/1-click-signup/guides/setup) guide before following this SDK Integration guide.**
 :::
 
 :::info This is a Web Client SDK
-**The current SDK is for web clients.** Mobile client SDKs are coming soon. If you need mobile client SDKs, please [let us know](mailto:support@verified.inc) so we can prioritize them.
+**The current SDK is for web clients.** Mobile client SDKs are coming soon. If you need mobile client SDKs, please [let us know](mailto:Support@Verified.inc) so we can prioritize them.
 :::
 
 <SequenceDiagramSDK/>
@@ -94,16 +95,24 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 
     // Handle results
     function handleResult(data: SdkResult): void {
-        switch (data.type) {
-            case SdkResultValues.USER_SHARED_CREDENTIALS: // Success!
-                // Retrieve data: Call server with data.identityUuid to call GET /1-click/{identityUuid}
-            case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
-                // Take user to manual signup flow
-        }
+    switch (data.type) {
+        case SdkResultValues.USER_SHARED_CREDENTIALS: // Success!
+            // Pass data.identityUuid to server (to call GET /1-click/{identityUuid})
+        case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
+            // Take user to manual signup flow
+        case SdkResultValues.NO_CREDENTIALS_FOUND: // OCE013 Verified error code
+            // Take user to manual signup flow. Additional metadata may be available.
+        case SdkResultValues.RISK_SCORE_TOO_HIGH: // OCE017 Verified error code
+            // Take user to manual signup flow. Additional metadata may be available.
+        case SdkResultValues.MAX_INPUT_ATTEMPTS_EXCEEDED: // OCE019 Verified error code
+            // Take user to manual signup flow. Additional metadata may be available.
+        case SdkResultValues.MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED: // User tried verification code too many times
+            // Take user to manual signup flow. Additional metadata may be available.
     }
+}
 
     // Handle errors
-    function handleError(error: SdkError)  {
+    function handleError(error: SdkError): void {
         // Restart SDK: Create new session key and SDK instance
     }
 
@@ -114,10 +123,10 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 
 ## 1. Create a session key.
 
-Have your client call your server to create a session key. The server should use your Verified API key to call [`POST /client/1-click`](../api-reference/endpoints#post-client1-click).
+Have your client call your server to create a session key. The server should use your Verified API key to call [`POST /client/1-click`](/reference/api/endpoints#post-client1-click).
 
 :::tip
-**You can access your API keys in the [Dashboard](https://dashboard.verified.inc):** see the [Setup](../guides/setup) guide.
+**You can access your API keys in the [Dashboard](https://dashboard.verified.inc):** see the [Setup](/1-click-signup/guides/setup) guide.
 :::
 
 The response body will contain a `sessionKey`:
@@ -128,7 +137,7 @@ The response body will contain a `sessionKey`:
 }
 ```
 
-If you get an error with [Verified error code `SKE001`](../api-reference/errors#ske001), you need to change your brand's integration type setting. Go to the Brand Details page in the [Dashboard](https://dashboard.verified.inc) and change that setting to **SDK.**
+If you get an error with [Verified error code `SKE001`](/reference/api/errors#ske001), you need to change your brand's integration type setting. Go to the Brand Details page in the [Dashboard](https://dashboard.verified.inc) and change that setting to **SDK.**
 
 Your server should return the `sessionKey` to your client, so you can use it in [step 2](#2-initialize-the-sdk).
 
@@ -139,7 +148,7 @@ Your server should return the `sessionKey` to your client, so you can use it in 
 
 ## 2. Initialize the SDK.
 
-Make sure you've [installed](../sdk-reference/installation) the SDK:
+Make sure you've [installed](/reference/sdk/installation) the SDK:
 
 ```none title="Install SDK with NPM"
 npm i @verifiedinc-public/client-sdk
@@ -175,10 +184,10 @@ const verifiedClientSdk = new VerifiedClientSdk({
 
 ### c. Define a result function.
 
-Define a function to handle results, leveraging the [`SdkResult` type](../sdk-reference/types#sdkresult):
+Define a function to handle results, leveraging the [`SdkResult` type](/reference/sdk/types#sdkresult):
 
 ```typescript
-function handleResult(data: SdkResult) {
+function handleResult(data: SdkResult): void {
     // See step 3a
 }
 ```
@@ -188,7 +197,7 @@ See [step 3a](#a-handle-results) for how to handle results.
 
 ### d. Define an error function.
 
-Define a function to handle errors, leveraging the [`SdkError` type](../sdk-reference/types#sdkerror):
+Define a function to handle errors, leveraging the [`SdkError` type](/reference/sdk/types#sdkerror):
 
 ```typescript
 function handleError(error: SdkError) {
@@ -201,7 +210,7 @@ See [step 3b](#b-handle-errors) for how to handle errors.
 
 ### e. Show the SDK.
 
-Show the SDK to the user, leveraging the [`show()` method](../sdk-reference/methods#show).
+Show the SDK to the user, leveraging the [`show()` method](/reference/sdk/methods#show).
 
 ```typescript
 // Injected into document.body if no HTML element is passed)
@@ -209,7 +218,7 @@ verifiedClientSdk.show(document.getElementById('verifiedClientSdk-container'));
 ```
 
 :::note
-There's also a [`destroy()` method](../sdk-reference/methods#destroy) that destroys the SDK element and invalidates the instance.
+There's also a [`destroy()` method](/reference/sdk/methods#destroy) that destroys the SDK element and invalidates the instance.
 :::
 
 
@@ -218,7 +227,7 @@ There's also a [`destroy()` method](../sdk-reference/methods#destroy) that destr
 
 ### a. Handle results.
 
-Complete the `handleResult` function you defined in [step 2c](#c-define-a-result-function), leveraging the [`SdkResultValues` constant](../sdk-reference/constants#sdkresultvalues):
+Complete the `handleResult` function you defined in [step 2c](#c-define-a-result-function), leveraging the [`SdkResultValues` constant](/reference/sdk/constants#sdkresultvalues):
 
 ```typescript
 function handleResult(data: SdkResult): void {
@@ -246,7 +255,7 @@ function handleResult(data: SdkResult): void {
 ```
 
 :::note
-Regardless of the result type, you can access specific metadata properties directly from the <b>data</b> object. See [SdkResult](../sdk-reference/types#sdkresult) type definition for the complete structure.
+Regardless of the result type, you can access specific metadata properties directly from the <b>data</b> object. See [SdkResult](/reference/sdk/types#sdkresult) type definition for the complete structure.
 :::
 
 There are 6 result values to handle:
@@ -259,7 +268,7 @@ There are 6 result values to handle:
     </tr>
     <tr>
         <td>`USER_SHARED_CREDENTIALS`</td>
-        <td>User successfully shared [credentials](../data/outputs/credentials) (identity data)</td>
+        <td>User successfully shared [credentials](/reference/data/outputs/credentials) (identity data)</td>
         <td>Retrieve data</td>
     </tr>
     <tr>
@@ -289,11 +298,15 @@ There are 6 result values to handle:
     </tr>
 </table>
 
-Some metadata may be available directly in the `data` object (see [SdkResult](../sdk-reference/types#sdkresult)). You can also call your server with `data.identityUuid`. The server should use your Verified API key to call [`GET /1-click/{identityUuid}`](../api-reference/endpoints#get-1-click):
+Some [metadata](/reference/data/outputs/metadata) may be available directly in the `data` object (see [`SdkResult`](/reference/sdk/types#sdkresult)). To retrieve all metadata (and [credentials](/reference/data/outputs/credentials) if the result value is `USER_SHARED_CREDENTIALS`), call your server with `data.identityUuid`. The server should use your Verified API key to call [`GET /1-click/{identityUuid}`](/reference/api/endpoints#get-1-click):
+
+```
+GET /1-click/{identityUuid}
+```
 
 <ApiKeysAdmonition/>
 
-The response will be a [`1ClickEntity`](../api-reference/types#1clickentity) that contains data (user [credentials](../data/outputs/credentials) and [metadata](../data/outputs/metadata)):
+The response will be a [`1ClickEntity`](/reference/api/types#1clickentity) that contains data (user [credentials](/reference/data/outputs/credentials) and [metadata](/reference/data/outputs/metadata)):
 
 ```typescript title="GET /1-click Response Body"
 {
@@ -313,7 +326,7 @@ The response will be a [`1ClickEntity`](../api-reference/types#1clickentity) tha
 Complete the `handleError` function you defined in [step 2d](#d-define-an-error-function):
 
 ```typescript
-function handleError(error: SdkError) {
+function handleError(error: SdkError): void {
     // Restart SDK: Create new session key and SDK instance
 }
 ```
@@ -338,7 +351,7 @@ There are 3 error reasons to handle:
     </tr>
     <tr>
         <td>`SHARE_CREDENTIALS_ERROR`</td>
-        <td>There was an error when the user tried to share [credentials](../data/outputs/credentials) (identity data)</td>
+        <td>There was an error when the user tried to share [credentials](/reference/data/outputs/credentials) (identity data)</td>
         <td>Restart SDK</td>
     </tr>
 </table>
@@ -348,7 +361,7 @@ We recommend you handle all error reasons by restarting the SDK. To do so, creat
 <details>
     <summary>How to Handle Error Reasons Differently</summary>
 
-    If you prefer to handle each error reason differently, you can certainly do so by leveraging the [`SdkErrorReasons` constant](../sdk-reference/constants#sdkerrorreasons):
+    If you prefer to handle each error reason differently, you can certainly do so by leveraging the [`SdkErrorReasons` constant](/reference/sdk/constants#sdkerrorreasons):
 
     ```typescript
     switch (error.reason) {
@@ -362,25 +375,19 @@ We recommend you handle all error reasons by restarting the SDK. To do so, creat
     ```
 </details>
 
+---
+
 
 ## Go Live!
-
-:::tip Customize SDK Styling
-Remember that you can customize [SDK styling](../guides/setup#sdk-styling) in the [Dashboard](https://dashboard.verified.inc) at any time.
-:::
 
 **When you're ready to go live, get a Production API key:**
 1. Go to the **Brand Details** page for your brand.
 2. Click the **Sandbox** tab in the upper right, and make sure your brand settings are synced. _If they're not, click the **Sync to Production** button._
 3. Click the **Production** tab in the upper right, and copy a **Production API key** from the top of the page.
 
-:::note
-As long as you have a contract signed with us, we will have approved you for [Production](../api-reference/environments#production) access, and you'll be able to see your Production API key. If you don't see one, reach out to your Verified representative.
-:::
-
 **Just swap Sandbox for Production:**
 1. Swap your Sandbox API key for your Production API key.
-2. Swap the [Sandbox base URL](../api-reference/environments#sandbox) for the [Production base URL](../api-reference/environments#production).
+2. Swap the [Sandbox base URL](/reference/api/environments#sandbox) for the [Production base URL](/reference/api/environments#production).
 3. Swap `'sandbox'` for `'production'` in the `environment` attribute of the SDK instance (see [step 2b](#b-create-an-sdk-instance)).
 
-Then you'll be live with 1-Click Signup! ✅
+**Then you'll be live with 1-Click Signup! ✅**

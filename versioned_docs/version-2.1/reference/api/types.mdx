@@ -1,0 +1,762 @@
+---
+id: types
+title: Types
+sidebar_label: Types
+sidebar_position: 4
+sidebar_class_name: sidebar-header-regular
+description: Types used in the Verified API
+slug: /reference/api/types
+toc_max_heading_level: 4
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import BrandsAdmonition from '@site/versioned_docs/version-2.1/reusables/brands-admonition.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-admonition.mdx';
+import DomainsAdmonition from '@site/versioned_docs/version-2.1/reusables/domains-admonition.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
+import FullDefinitionAdmonition from '@site/versioned_docs/version-2.1/reusables/full-definition-admonition.mdx';
+import Post1ClickRequestBodyTableShared from '@site/versioned_docs/version-2.1/reusables/post-1-click-request-body-table-shared.mdx';
+import Post1ClickRequestBodyTableHosted from '@site/versioned_docs/version-2.1/reusables/post-1-click-request-body-table-hosted.mdx'
+import Post1ClickResponseBodyTableUuid from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-uuid.mdx';
+import Post1ClickResponseBodyTableUrl from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-url.mdx';
+import Post1ClickResponseBodyTableCode from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-code.mdx';
+import Post1ClickResponseBodyTableIdentity from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-identity.mdx';
+import UseUserInputAdmonition from '@site/versioned_docs/version-2.1/reusables/use-user-input-admonition.mdx'
+import CredentialRequestTableShared from '@site/versioned_docs/version-2.1/reusables/credential-request-table-shared.mdx'
+import CredentialRequestTableHosted from '@site/versioned_docs/version-2.1/reusables/credential-request-table-sdk.mdx'
+import CredentialRequestTableSemiHostedAndNonHosted from '@site/versioned_docs/version-2.1/reusables/credential-request-table-api.mdx'
+import OneClickEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-entity-example.mdx'
+import OneClickVerificationEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-verification-entity-example.mdx'
+import ErrorType from '@site/versioned_docs/version-2.1/reusables/error-type.mdx'
+import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error-example-oce011.mdx'
+import ErrorExampleOce017 from '@site/versioned_docs/version-2.1/reusables/error-example-oce017.mdx'
+import RiskSignalsSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/risk-signals-setting-admonition.mdx';
+
+{/* :::note
+See also our [Postman docs](https://api.docs.verified.inc/).
+::: */}
+
+
+## `1ClickEntity`
+
+```typescript title="1ClickEntity Type"
+{
+    "identifiers": {
+        [identifierKey: string]: string
+    },
+    "credentials": {
+        [credentialKey: string]: 
+            string     // Single string value when `multi` is false and `children` isn't included in the credential requests
+            | [string] // Array of string values when `multi` is true and `children` isn't included in the credential requests
+            | Object   // Single object value when `multi` is false and `children` is included in the credential requests
+            | [Object] // Array of object values when `multi` is true and `children` is included in the credential requests
+    },
+    "metadata": {
+        "identifiers": {
+            [identifierKey: string]: {
+                [metadataKey: string]: string
+            }
+        },
+        "credentials": {
+            [credentialKey: string]: {
+                // Follows the same structure as `credentials` and maintains the same order for array items when `multi` is set to `true`
+                [metadataKey: string]: 
+                string     // Single string value when `multi` is false and `children` isn't included in the credential requests
+                | [string] // Array of string values when `multi` is true and `children` isn't included in the credential requests
+                | Object   // Single object value when `multi` is false and `children` is included in the credential requests
+                | [Object] // Array of object values when `multi` is true and `children` is included in the credential requests
+            }
+        }
+    }
+}
+```
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`identifiers`</td>
+        <td>`Object`</td>
+        <td>See above</td>
+        <td>User [identifiers](/reference/data/inputs/identifiers), keyed on `identifierKey`</td>
+        <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
+    </tr>
+    <tr>
+        <td>`identifierKey`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values (see [identifiers](/reference/data/inputs/identifiers) for details):
+                    - `phone`
+                    - `email`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>The type of identifier</td>
+        <td>`"phone"`</td>
+    </tr>
+    <tr>
+        <td>`credentials`</td>
+        <td>`Object`</td>
+        <td>See above</td>
+        <td>User [credentials](/reference/data/outputs/credentials), keyed on `credentialKey`</td>
+        <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
+    </tr>
+    <tr>
+        <td>`credentialKey`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values (see [credentials](/reference/data/outputs/credentials) for details):
+                    - `phone`
+                    - `email`
+                    - `fullName.firstName`
+                    - `fullName.middleName`
+                    - `fullName.lastName`
+                    - `address.line1`
+                    - `address.line2`
+                    - `address.city`
+                    - `address.state`
+                    - `address.zipCode`
+                    - `address.country`
+                    - `birthDate`
+                    - `ssn`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>
+            The type of user data a credential has
+        </td>
+        <td>`"firstName"`</td>
+    </tr>
+    <tr>
+        <td>`metadata`</td>
+        <td>`Object`</td>
+        <td>See above</td>
+        <td>[Metadata](/reference/data/outputs/metadata), keyed on `metadataKey`</td>
+        <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
+    </tr>
+    <tr>
+        <td>`metadataKey`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `id`
+                    - `verificationMethod`
+                    - `status`
+                    - `issuanceDate`
+                    - `expirationDate`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Any additional data that's not a user's identity data (identifiers or credentials)</td>
+        <td>`"verificationMethod"`</td>
+    </tr>
+</table>
+
+The data keyed on a `credentialKey` will be one or more credential values. This data will have a type that depends on `children` and `multi` in the [credential request](#credentialrequest):
+- Based on `children`:
+    - If the credential request has `children`, each credential value will have type `Object`.
+        <details>
+            <summary>
+                Example: Credential Value of Type `Object`
+            </summary>
+            If the credential request has `children`:
+            ```typescript title="CredentialRequest with children"
+            {
+                "type": "AddressCredential",
+                "children": [
+                    {
+                        "type": "Line1Credential"
+                    },
+                    {
+                        "type": "Line2Credential"
+                    },
+                    {
+                        "type": "CityCredential"
+                    },
+                    {
+                        "type": "StateCredential"
+                    },
+                    {
+                        "type": "ZipCodeCredential"
+                    },
+                    {
+                        "type": "CountryCredential"
+                    }
+                ]
+            }
+            ```
+
+            Then, the credential returned will have type `Object` (and so will the corresponding metadata):
+            ```typescript title="1ClickEntity for CredentialRequest with children"
+            {
+                ...
+                "credentials": {
+                    "address": {
+                        "line1": "5320 Newell Rd",
+                        "city": "Palo Alto",
+                        "state": "CA",
+                        "zipCode": "94303",
+                        "country": "US"
+                    }
+                },
+                "metadata": {
+                    ...
+                    "credentials": {
+                        "id": {
+                            "address": {
+                                "line1": "f5a4dc93-bc06-4bb8-bd05-17b5ba912bcd",
+                                "city": "efd3820f-676a-4db1-b63e-695b66ed8ba0",
+                                "state": "b65022a2-2016-41df-88f3-252e8e3a29c5",
+                                "zipCode": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
+                                "country": "d57a7bca-2a7c-4671-86ad-5647731cad02"
+                            },
+                        },
+                        ...
+                    }
+                }
+            }
+            ```
+        </details>
+
+    - If the credential request does _not_ have `children`, each credential value will have type `string`.
+        <details>
+            <summary>
+                Example: Credential Value of Type `string`
+            </summary>
+            If the credential request does _not_ have children:
+            ```typescript title="CredentialRequest without children"
+            {
+                "type": "EmailCredential",
+            }
+            ```
+
+            Then, the credential returned will have type `string` (and so will the corresponding metadata):
+            ```typescript title="1ClickEntity for CredentialRequest without children"
+            {
+                ...
+                "credentials": {
+                    "email": "richard@piedpiper.net"
+                },
+                "metadata": {
+                    ...
+                    "credentials": {
+                        "id": {
+                            "email": "8a1d4e35-413d-496b-b499-8810b55cfb5c"
+                        },
+                        ...
+                    }
+                }
+            }
+            ```
+        </details>
+- Based on `multi`:
+    - If the credential request has `multi` set to `true`, the data keyed on `credentialKey` will be an array of credential values.
+        <details>
+            <summary>
+                Example: Array of Credential Values
+            </summary>
+            If the credential request has `multi` set to `true`:
+            ```typescript title="CredentialRequest with multi true, with children"
+            {
+                "type": "AddressCredential",
+                "children": [
+                    {
+                        "type": "Line1Credential"
+                    },
+                    {
+                        "type": "Line2Credential"
+                    },
+                    {
+                        "type": "CityCredential"
+                    },
+                    {
+                        "type": "StateCredential"
+                    },
+                    {
+                        "type": "ZipCodeCredential"
+                    },
+                    {
+                        "type": "CountryCredential"
+                    }
+                ],
+                "multi": true
+            }
+            ```
+            ```typescript title="CredentialRequest with multi true, without children"
+            {
+                "type": "EmailCredential",
+                "multi": true
+            }
+            ```
+
+            Then, the data returned will be an array of credential values, so it will have type `[Object]` or `[string]` (and so will the corresponding metadata):
+            ```typescript title="1ClickEntity for CredentialRequest with multi true, with children"
+            {
+                ...
+                "credentials": {
+                    "address": [
+                        {
+                            "line1": "5320 Newell Rd",
+                            "city": "Palo Alto",
+                            "state": "CA",
+                            "zipCode": "94303",
+                            "country": "US"
+                        },
+                        {
+                            "line1": "9536 Meadow Dr",
+                            "line2": "Apt 301",
+                            "city": "San Francisco",
+                            "state": "CA",
+                            "zipCode": "94112",
+                            "country": "US"
+                        },
+                        ...
+                    ],
+                },
+                "metadata": {
+                    ...
+                    "credentials": {
+                        "id": {
+                            "address": [
+                                {
+                                    "line1": "f5a4dc93-bc06-4bb8-bd05-17b5ba912bcd",
+                                    "city": "efd3820f-676a-4db1-b63e-695b66ed8ba0",
+                                    "state": "b65022a2-2016-41df-88f3-252e8e3a29c5",
+                                    "zipCode": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
+                                    "country": "d57a7bca-2a7c-4671-86ad-5647731cad02"
+                                },
+                                {
+                                    "line1": "6c7350bd-ea84-485b-baa8-fba3381cc859",
+                                    "line2": "5311e2c8-67a1-4fe4-8ddb-88dc8a900915",
+                                    "city": "c315d4ed-34c6-41a9-b7ca-c17cb4bac927",
+                                    "state": "e3774b5f-0996-4dc7-a9b3-8ad24c9a286c",
+                                    "zipCode": "abc2e42c-2864-4bf6-b262-05cb51416957",
+                                    "country": "fca7d486-c99b-436e-9a92-95e221e4ba5d"
+                                },
+                                ...
+                            ],
+                        },
+                        ...
+                    }
+                }
+            }
+            ```
+            ```typescript title="1ClickEntity for CredentialRequest with multi true, without children"
+            {
+                ...
+                "credentials": {
+                    "email": [
+                        "richard@piedpiper.net",
+                        "richard@hooli.com",
+                        ...
+                    ],
+                },
+                "metadata": {
+                    ...
+                    "credentials": {
+                        "id": {
+                            "email": [
+                                "8a1d4e35-413d-496b-b499-8810b55cfb5c",
+                                "b82e39cf-3bb6-4105-b9c1-bfd1ed2a4dbc",
+                                ...
+                            ]
+                        },
+                        ...
+                    }
+                }
+            }
+            ```
+        </details>
+        <Admonition type="warning" title="Arrays May Be Single Valued">
+            **An array of credential values may only include one value.** If `multi` is set to `true` in a credential request, we'll return multiple values _if_ we can source them (**up to a maximum of 3**). But if we can only source a single value, we'll still return it in an array, to ensure the data type is predictable.
+        </Admonition>
+        <Admonition type="info" title="Multi Does Not Apply to Child Credential Requests">
+            **The `multi` option does not work on `children` credential requests.** It only applies to the parent credential request.
+        </Admonition>
+    - If the credential request has `multi` set to `false`, the data keyed on `credentialKey` will be a single credential value. 
+        <details>
+            <summary>
+                Example: Single Credential Value
+            </summary>
+            If the credential request has `multi` set to `false`:
+            ```typescript title="CredentialRequest with multi false, with children"
+            {
+                "type": "AddressCredential",
+                "children": [
+                    {
+                        "type": "Line1Credential"
+                    },
+                    {
+                        "type": "Line2Credential"
+                    },
+                    {
+                        "type": "CityCredential"
+                    },
+                    {
+                        "type": "StateCredential"
+                    },
+                    {
+                        "type": "ZipCodeCredential"
+                    },
+                    {
+                        "type": "CountryCredential"
+                    }
+                ],
+                "multi": false
+            }
+            ```
+            ```typescript title="CredentialRequest with multi false, without children"
+            {
+                "type": "EmailCredential",
+                "multi": false
+            }
+            ```
+
+            Then, the data returned will be a single credential value, so it will have type `Object` or `string` (and so will the corresponding metadata):
+            ```typescript title="1ClickEntity for CredentialRequest with multi false, with children"
+            {
+                ...
+                "credentials": {
+                    "address": {
+                        "line1": "5320 Newell Rd",
+                        "city": "Palo Alto",
+                        "state": "CA",
+                        "zipCode": "94303",
+                        "country": "US"
+                    }
+                },
+                "metadata": {
+                    ...
+                    "credentials": {
+                        "id": {
+                            "address": {
+                                "line1": "f5a4dc93-bc06-4bb8-bd05-17b5ba912bcd",
+                                "city": "efd3820f-676a-4db1-b63e-695b66ed8ba0",
+                                "state": "b65022a2-2016-41df-88f3-252e8e3a29c5",
+                                "zipCode": "b747ff84-39d8-4df9-98f9-24a465f1a9ae",
+                                "country": "d57a7bca-2a7c-4671-86ad-5647731cad02"
+                            }
+                        },
+                        ...
+                    }
+                }
+            }
+            ```
+            ```typescript title="1ClickEntity for CredentialRequest with multi false, without children"
+            {
+                ...
+                "credentials": {
+                    "email": "richard@piedpiper.net"
+                },
+                "metadata": {
+                    ...
+                    "credentials": {
+                        "id": {
+                            "email": "8a1d4e35-413d-496b-b499-8810b55cfb5c"
+                        },
+                        ...
+                    }
+                }
+            }
+            ```
+        </details>
+
+
+### Example {#example-1clickentity}
+
+<OneClickEntityExample/>
+
+---
+
+
+## `1ClickVerificationEntity`
+
+```typescript title="1ClickVerificationEntity Type"
+{
+    uuid: string,
+    phone: string,
+    channel: string,
+    status: string,
+    createdAt: integer,
+    expiresAt: integer,
+    verifiedAt?: integer,
+    attemptsRemaining?: integer
+}
+```
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`uuid`</td>
+        <td>`string`</td>
+        <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+        <td>Unique identifier for the `1ClickVerificationEntity`</td>
+        <td>`"535dba63-d4bd-442a-b3f6-21b785260a08"`</td>
+    </tr>
+    <tr>
+        <td>`phone`</td>
+        <td>`string`</td>
+        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
+        <td>User's phone number (in [E.164](https://www.twilio.com/docs/glossary/what-e164) format)</td>
+        <td>`"+12125550010"`</td>
+    </tr>
+    <tr>
+        <td>`channel`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `textToSignup`
+                    - `sms`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>The channel used for verification</td>
+        <td>`"textToSignup"`</td>
+    </tr>
+    <tr>
+        <td>`status`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `pending`
+                    - `sending`
+                    - `delivered`
+                    - `verified`
+                    - `expired`
+                    - `failed`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>The status of the verification</td>
+        <td>`"textToSignup"`</td>
+    </tr>
+    <tr>
+        <td>`createdAt`</td>
+        <td>`integer`</td>
+        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
+        <td>When the verification started</td>
+        <td>`1760053695000`</td>
+    </tr>
+    <tr>
+        <td>`expiresAt`</td>
+        <td>`integer`</td>
+        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
+        <td>When the verification expires (meaning it can no longer succeed)</td>
+        <td>`1760053995000`</td>
+    </tr>
+    <tr>
+        <td>`verifiedAt`</td>
+        <td>`integer`</td>
+        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
+        <td>When the verification succeeded</td>
+        <td>`1760053705000`</td>
+    </tr>
+    <tr>
+        <td>`attemptsRemaining`</td>
+        <td>`integer`</td>
+        <td>Any number of digits (0-9)</td>
+        <td>How many verification attempts the user has remaining</td>
+        <td>`3`</td>
+    </tr>
+</table>
+
+
+### Example {#example-1clickverificationentity}
+
+<OneClickVerificationEntityExample/>
+
+---
+
+
+## `RiskSignals`
+
+See [Risk Signals](/reference/data/outputs/metadata#risk-signals) on the Data page for details about the attributes and when they're included.
+
+<RiskSignalsSettingAdmonition/>
+
+{/* Should add ipAddress when we enable support for it */}
+
+```typescript title="RiskSignals Type"
+{
+    "overall": {
+        "score": integer, // included with Basic (default) and Advanced
+        "level": "low" | "medium-low" | "medium" | "medium-high" | "high", // included with Basic (default) and Advanced
+        "recommendation": "allow" | "flag" | "block", // included with Basic (default) and Advanced
+        "reasonCodes": [string] // included with Advanced
+    },
+    "phone": { // included with Advanced
+        "carrier": {
+            "id": integer,
+            "name": string
+        }
+        "reasonCodes": [string]
+    },
+    "email": { // included with Advanced
+        "reasonCodes": [string]
+    }
+}
+```
+
+When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntity`](#1clickentity) and in an error for the [`OCE017` error code](/reference/api/errors#oce017):
+
+```typescript title="1ClickEntity"
+{
+    ...
+    "metadata": {
+        "identifiers": {
+            "riskSignals": RiskSignals,
+            ...
+        },
+        ...
+    }
+}
+```
+```typescript title="OCE017 Error"
+{
+    "name": "BadRequest",
+    "message": "1-Click Blocked: Risk Score Too High",
+    "code": 400,
+    "className": "bad-request",
+    "data": {
+        "errorCode": "OCE017",
+        "riskSignals": RiskSignals
+    }
+}
+```
+
+
+### Example {#example-risksignals}
+
+{/* Should add ipAddress when we enable support for it */}
+
+```typescript title="RiskSignals Example"
+{
+    ...
+    "metadata": {
+        "identifiers": {
+            ...
+            "riskSignals": {
+                "overall": {
+                    "score": 0, // included with Basic (default) and Advanced
+                    "level": "low", // included with Basic (default) and Advanced
+                    "recommendation": "allow", // included with Basic (default) and Advanced
+                    "reasonCodes": [ // included with Advanced
+                        "OCR10021"
+                    ]
+                },
+                "phone": { // included with Advanced
+                    "carrier": {
+                        "id": 0,
+                        "name": "Example Carrier"
+                    }
+                    "reasonCodes": [
+                        "OCR20004",
+                        "OCR20005",
+                        "OCR20007",
+                        "OCR20101"
+                    ]
+                },
+                "email": { // included with Advanced
+                    "reasonCodes": [
+                        "OCR60001",
+                        "OCR60002"
+                    ]
+                }
+            }
+        },
+        ...
+    }
+}
+```
+
+
+---
+
+
+## `Error`
+
+<ErrorType/>
+
+
+### Example {#example-error}
+
+<ErrorExampleOce017/>
+
+---
+
+## `CredentialRequest`
+
+```typescript title="CredentialRequest Type"
+{
+    type: string,
+    mandatory?: "yes" | "no" | "if_available",
+    children?: CredentialRequest[],
+    multi?: boolean
+}
+```
+<table>
+    <CredentialRequestTableShared/>
+    <CredentialRequestTableSemiHostedAndNonHosted/>
+</table>
+
+
+### Example {#example-credentialrequest}
+
+```typescript title="CredentialRequest"
+{
+    "type": "AddressCredential",
+    "multi": true,
+    "children": [
+        {
+            "type": "Line1Credential",
+            "mandatory": "if_available"
+        },
+        {
+            "type": "Line2Credential",
+            "mandatory": "no"
+        },
+        {
+            "type": "CityCredential",
+            "mandatory": "if_available"
+        },
+        {
+            "type": "StateCredential",
+            "mandatory": "if_available"
+        },
+        {
+            "type": "ZipCodeCredential",
+            "mandatory": "if_available"
+        },
+        {
+            "type": "CountryCredential",
+            "mandatory": "if_available"
+        }
+    ]
+}
+```

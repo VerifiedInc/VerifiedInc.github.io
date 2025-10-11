@@ -1,10 +1,11 @@
 ---
 id: overview
 title: Overview
-sidebar_position: 1
+sidebar_position: 0
 sidebar_label: Overview
+sidebar_class_name: sidebar-header-regular
 description: Overview of 1-Click Signup
-slug: /overview
+slug: /1-click-signup/overview
 toc_max_heading_level: 3
 ---
 
@@ -37,11 +38,11 @@ import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/versio
         <td>~95% of US adults (>253M people)</td>
     </tr>
     <tr>
-        <th>Time to Integrate</th>
+        <th>Integration Time</th>
         <td>
-            <div class="small-margin-bottom">Depends on [integration type](./guides/setup#integration-type):</div>
-            - \<1 day for [**SDK**](./guides/sdk-integration)
-            - 1-2 weeks for [**API**](./guides/api-integration)
+            <div class="small-margin-bottom">Depends on [integration type](/1-click-signup/guides/setup#integration-type):</div>
+            - \<1 day for [**SDK**](/1-click-signup/guides/sdk-integration)
+            - 1-2 weeks for [**API**](/1-click-signup/guides/api-integration)
         </td>
     </tr>
 </table>
@@ -51,20 +52,20 @@ import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/versio
 
 **1-Click Signup is the _fastest_ way to sign up new users.** From just a phone number, Verified can autofill a user's data so they can share it in less than 10 seconds.
 
-**See [Data](./data) for what this data can include.** We provide a wide range of [credentials](./data/outputs/credentials) (pieces of user identity data) and rich [metadata](./data/outputs/metadata) about them, including dozens of sophisticated [risk signals](./data/outputs/metadata#risk-signals).
+**See [Outputs](/reference/data/outputs) for what this data can include.** We provide a wide range of [credentials](/reference/data/outputs/credentials) (pieces of user identity data) and rich [metadata](/reference/data/outputs/metadata) about them, including dozens of sophisticated [risk signals](/reference/data/outputs/metadata#risk-signals).
 
 :::info Privacy First
-**A user's data is never shared without their consent.** We are committed to putting people in control of their own data. We are SOC 2 Type II certified and compliant with major regulatory frameworks like GDPR and CCPA. For more information, please see [How We Operate](https://www.verified.inc/how-we-operate).
+**A user's data is never shared without their consent.** We are committed to putting people in control of their own data. We are SOC 2 Type II certified and compliant with major regulatory frameworks like GDPR and CCPA. For more information, please see [How We Operate](https://verified.inc/how-we-operate).
 :::
 
 
 {/* :::tip Resources
 - **[Custom Demo](https://1-click.demo.verified.inc):** Try 1-Click Signup yourself with a demo auto-magically customized for your company.
 - **Guides:**
-    - **[User Experience](./guides/setup):** See the 1-Click Signup user experience and flow chart.
-    - **[Setup](./guides/setup):** Create a [Dashboard](https://dashboard.verified.inc) account and configure brand settings.
-    - **[SDK Integration](./guides/sdk-integration):** How to integrate 1-Click Signup using the Verified SDK (for web clients).
-    - **[API Integration](./guides/api-integration):** How to integrate 1-Click Signup using the Verified API.
+    - **[User Experience](/1-click-signup/guides/setup):** See the 1-Click Signup user experience and flow chart.
+    - **[Setup](/1-click-signup/guides/setup):** Create a [Dashboard](https://dashboard.verified.inc) account and configure brand settings.
+    - **[SDK Integration](/1-click-signup/guides/sdk-integration):** How to integrate 1-Click Signup using the Verified SDK (for web clients).
+    - **[API Integration](/1-click-signup/guides/api-integration):** How to integrate 1-Click Signup using the Verified API.
 - **[Verified Website](https://verified.inc):** Learn about 1-Click Signup from a business perspective.
 - **[Book a Call](https://calendly.com/verified-inc/intro-with-verified?text_color=000000&primary_color=0dbc3d)**: Talk to our sales team.
 ::: */}
@@ -79,10 +80,10 @@ To use 1-Click Signup, all a user needs to do is:
 
 _It takes less than 10 seconds, end to end!_ 
 
-1-Click Signup uses the exact same user experience as 1-click checkout solutions (like Stripe Link and Shop Pay), so it's familiar to users. See [User Experience](./guides/user-experience) for full details.
+1-Click Signup uses the exact same user experience as 1-click checkout solutions (like Stripe Link and Shop Pay), so it's familiar to users. See [User Experience](/1-click-signup/user-experience) for full details.
 
 :::note
-Step 2 above — prompting for a challenge (birthday/SSN4) — is necessary only if the phone number alone doesn't uniquely identify the user, for example if it's part of a shared phone carrier plan. (You can also configure your brand settings to always [prompt for a challenge](./guides/setup#prompt-for-challenges).)
+Step 2 above — prompting for a challenge (birthday/SSN4) — is necessary only if the phone number alone doesn't uniquely identify the user, for example if it's part of a shared phone carrier plan. (You can also configure your brand settings to always [prompt for a challenge](/1-click-signup/guides/setup#prompt-for-challenges).)
 :::
 
 
@@ -90,7 +91,7 @@ Step 2 above — prompting for a challenge (birthday/SSN4) — is necessary onl
 
 - **Increase conversion:** Dramatically reduce friction, making it as easy as possible for new users to share their verified data.
 - **Streamline KYC operations:** Avoid user error and increase pass rates by leveraging our autofilled, verified data.
-- **Prevent fraud:** Stop bad actors by using our [risk signals](./data/outputs/metadata#risk-signals) metadata.
+- **Prevent fraud:** Stop bad actors by using our [risk signals](/reference/data/outputs/metadata#risk-signals) metadata.
 
 
 ## Coverage
@@ -104,10 +105,10 @@ We can source verified data for about 95% of US adults (253M people). The data i
 
 ## Integration
 
-Integrating 1-Click Signup is simple. How long it takes depends on the [integration type](./guides/setup#integration-type) you choose:
-- \<1 day for [**SDK**](./guides/sdk-integration)
-- 1-2 weeks for [**API**](./guides/api-integration)
+Integrating 1-Click Signup is simple. How long it takes depends on the [integration type](/1-click-signup/guides/setup#integration-type) you choose:
+- \<1 day for [**SDK**](/1-click-signup/guides/sdk-integration)
+- 1-2 weeks for [**API**](/1-click-signup/guides/api-integration)
 
-To integrate, first follow the [Setup](./guides/setup) guide and then either the [SDK Integration](./guides/sdk-integration) or [API Integration](./guides/api-integration) guide.
+To integrate, first follow the [Setup](/1-click-signup/guides/setup) guide and then either the [SDK Integration](/1-click-signup/guides/sdk-integration) or [API Integration](/1-click-signup/guides/api-integration) guide.
 
 <IntegrationTypeRecommendationAdmonition/>

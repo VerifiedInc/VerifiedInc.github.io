@@ -27,7 +27,8 @@ import ApiKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/api-ke
 import OneClickEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-entity-example.mdx';
 import SessionKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/session-keys-admonition.mdx';
 import ErrorSKE001 from '@site/versioned_docs/version-2.1/reusables/errors/SKE001.mdx';
-import SequenceDiagramTextToSignupIntegration from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-text-to-signup-integration.mdx';
+import SequenceDiagramTextToSignupConfirmUsersPhoneIsVerified from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-text-to-signup-confirm-users-phone-is-verified.mdx';
+import SequenceDiagramTextToSignupRetrieveUsersIdentityInfo from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-text-to-signup-retrieve-users-identity-info.mdx';
 import OneClickVerificationEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-verification-entity-example.mdx'
 
 <table>
@@ -243,11 +244,11 @@ This Guide includes lots of detail so you have all the information you might nee
             </tr>
             <tr>
                 <td>Text to Signup</td>
-                <td>After we verify the user’s phone number</td>
+                <td>After the Text to Signup flow (where we verify the user’s phone number)</td>
             </tr>
             <tr>
                 <td>Hosted 1-Click Signup</td>
-                <td>After we autofill info and have the user confirm it</td>
+                <td>After a [1-Click Signup](/1-click-signup) flow we host (where we autofill info and have the user confirm it)</td>
             </tr>
         </table>
 
@@ -273,7 +274,7 @@ This Guide includes lots of detail so you have all the information you might nee
 **Click the Styling tab to access these settings.**
 
 :::important
-Only the styling settings listed below apply to **Text to Signup**. There are other styling settings that apply to [**1-Click Signup**](/1-click-signup) (if you're using the **SDK** [integration type](#integration-type)). See [here](/1-click-signup/guides/setup#styling-settings) in the 1-Click Signup Setup guide for details.
+Only the styling settings listed below apply to **Text to Signup**. There are other styling settings that apply to [**1-Click Signup**](/1-click-signup) (if you're using the **SDK** [integration type](/1-click-signup/guides/setup#integration-type)). See [here](/1-click-signup/guides/setup#styling-settings) in the 1-Click Signup Setup guide for details.
 :::
 
 :::tip Verified Auto-Magically Configures Styling Settings
@@ -328,7 +329,7 @@ See the sections below for details about how to do each of these.
         This integration step is only relevant if the [redirect user after](#redirect-user-after) setting is set to **"Text to Signup".**
         </Admonition>
 
-        <SequenceDiagramTextToSignupIntegration/>
+        <SequenceDiagramTextToSignupConfirmUsersPhoneIsVerified/>
 
 
         #### a. Parse the `verificationUuid` URL parameter.
@@ -343,13 +344,13 @@ See the sections below for details about how to do each of these.
         Parse the value of this parameter, which you'll use in the next step. 
 
         <Admonition type="danger">
-        **A user arriving at your campaign [redirect URL](#redirect-url) with a `verificationUuid` URL parameter is NOT a technical guarantee that the user's phone is verified!** If your use case needs such a guarantee, you must confirm the phone is verified using [step b](b-call-get-1-clickverifications) and [step c](#c-check-verification-status). 
+        **A user arriving at your campaign [redirect URL](#redirect-url) with a `verificationUuid` URL parameter is NOT a technical guarantee that the user's phone is verified!** If your use case needs such a guarantee, you must confirm the phone is verified using [step b](#b-call-get-1-clickverifications) and [step c](#c-check-verification-status). 
         <details>
             <summary>Why is this the case?</summary>
 
             A bad actor can figure out what the redirect URL is (for example by simply going through the campaign flow themselves) and then append a `verificationUuid` parameter with a random UUID value.
 
-            So, to confirm the user's phone is verified, you need to _use_ the value of the `verificationUuid` parameter to call `GET /1-click/verifications/{verificationUuid}` (see [step b](b-call-get-1-clickverifications)) and then check the verification `status` in the response (see [step c](#c-check-verification-status)). This _can't_ be spoofed, because a bad actor doesn't have any way of correctly guessing a _valid_ UUID value for `verificationUuid`.
+            So, to confirm the user's phone is verified, you need to _use_ the value of the `verificationUuid` parameter to call `GET /1-click/verifications/{verificationUuid}` (see [step b](#b-call-get-1-clickverifications)) and then check the verification `status` in the response (see [step c](#c-check-verification-status)). This _can't_ be spoofed, because a bad actor doesn't have any way of correctly guessing a _valid_ UUID value for `verificationUuid`.
         </details>
         </Admonition>
 
@@ -417,6 +418,8 @@ See the sections below for details about how to do each of these.
         <Admonition type="note">
             This integration step is only relevant if the [redirect user after](#redirect-user-after) setting is set to **"Hosted 1-Click Signup".**
         </Admonition>
+
+        <SequenceDiagramTextToSignupRetrieveUsersIdentityInfo/>
 
 
         #### a. Parse the `identityUuid` URL parameter.
@@ -505,7 +508,7 @@ where `{keyword}` is the campaign [keyword](#keyword) and `{number}` is the [bra
 :::
 
 :::warning
-**We do _not_ recommend putting the call to action somewhere where a user may have intermittent or no cell service,** for example in a subway car. Text to Signup requires a user to send and receive an SMS and load a web page, so they need to have reliable service.
+**We do _not_ recommend putting the call to action somewhere a user may have intermittent or no cell service,** for example in a subway car. Text to Signup requires a user to send and receive an SMS and load a web page, so they need to have reliable service.
 :::
 
 

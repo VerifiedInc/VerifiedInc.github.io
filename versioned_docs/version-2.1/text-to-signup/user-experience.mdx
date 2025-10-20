@@ -47,7 +47,7 @@ Full details are below, but the basic user experience is:
             </GridStickyElement>
             <GridNonStickyElement>
 
-                This can be a physical or digital ad containing one or more [campaign assets](/text-to-signup/guide#3-use-campaign-assets):
+                This can be a physical or digital ad containing one or more [campaign assets](/text-to-signup/guide#4-use-campaign-assets):
 
             
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>[Call to Action](/text-to-signup/guide#call-to-action)
@@ -89,14 +89,14 @@ Full details are below, but the basic user experience is:
                 
                 ### Prompt to Draft SMS
 
-                *Appears if both of the following conditions are met:*
+                *The user can respond to the [call to action](/text-to-signup/guide#call-to-action) by simply opening their messaging app, in which case they then manually type a phone number and keyword (see the [Draft SMS](#draft-sms) screen).*
+
+                *An interstitial screen appears instead if both of the following conditions are met:*
 
                 <em>
                     1. The user clicked a [magic link](/text-to-signup/guide#magic-link) or [magic button](/text-to-signup/guide#magic-button) or scanned a [magic QR code](/text-to-signup/guide#magic-qr-code).
                     2. The user's device operating system prevents automatic opening of the default messaging app.
                 </em>
-
-                *Does not appear if the user manually opens the messaging app (in which case they manually type the brand phone number and keyword).*
 
                 
                 #### <ComponentTypeIndicator type="modal" isRightMargined={true}/>Open Messaging App
@@ -113,6 +113,17 @@ Full details are below, but the basic user experience is:
 
                 #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>[Magic Button](/text-to-signup/guide#magic-button)
 
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>[Magic QR Code](/text-to-signup/guide#magic-qr-code)
+
+                *Appears on desktop.*
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>[Powered by Graphic](/text-to-signup/guide#powered-by-graphic)
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>[Consent Language](/text-to-signup/guide#consent-language)
+
             </GridStickyElement>
             <GridNonStickyElement>
             </GridNonStickyElement>
@@ -122,11 +133,20 @@ Full details are below, but the basic user experience is:
                 
                 ---
 
-                ![](/img/tts-ux-steps/prompt-to-draft-sms-modal-open.png)
-                *Starting State* ↗️ [Open in new tab](/img/tts-ux-steps/prompt-to-draft-sms-modal-open.png)
+                ![](/img/tts-ux-steps/draft-sms-empty.png)
+                *Messaging App* ↗️ [Open in new tab](/img/tts-ux-steps/draft-sms-empty.png)
+
+                ![](/img/tts-ux-steps/prompt-to-draft-sms-mobile-modal-open.png)
+                *Mobile: Modal Open State* ↗️ [Open in new tab](/img/tts-ux-steps/prompt-to-draft-sms-mobile-modal-open.png)
                 
-                ![](/img/tts-ux-steps/prompt-to-draft-sms-modal-closed.png)
-                *Modal Closed State* ↗️ [Open in new tab](/img/tts-ux-steps/prompt-to-draft-sms-modal-closed.png)
+                ![](/img/tts-ux-steps/prompt-to-draft-sms-mobile-modal-closed.png)
+                *Mobile: Modal Closed State* ↗️ [Open in new tab](/img/tts-ux-steps/prompt-to-draft-sms-mobile-modal-closed.png)
+
+                ![](/img/tts-ux-steps/prompt-to-draft-sms-desktop-modal-open.png)
+                *Desktop: Modal Open State* ↗️ [Open in new tab](/img/tts-ux-steps/prompt-to-draft-sms-desktop-modal-open.png)
+                
+                ![](/img/tts-ux-steps/prompt-to-draft-sms-desktop-modal-closed.png)
+                *Desktop: Modal Closed State* ↗️ [Open in new tab](/img/tts-ux-steps/prompt-to-draft-sms-desktop-modal-closed.png)
 
             </GridStickyElement>
         </GridColumn>
@@ -166,6 +186,33 @@ Full details are below, but the basic user experience is:
                 
                 ![](/img/tts-ux-steps/draft-sms-full.png)
                 *SMS Draft from Campaign Settings* ↗️ [Open in new tab](/img/tts-ux-steps/draft-sms-full.png)
+                
+            </GridStickyElement>
+        </GridColumn>
+    </GridRow>
+    <GridRow>
+        <GridColumn>
+            <GridStickyElement>
+                ---
+
+                ### Sent SMS
+
+                *This will trigger an auto reply: a verification link if the SMS contains a valid keyword and an error message otherwise (see the [Auto Reply](#auto-reply) screen).*
+
+            </GridStickyElement>
+            <GridNonStickyElement>
+            </GridNonStickyElement>
+        </GridColumn>
+        <GridColumn>
+            <GridStickyElement>
+                
+                ---
+
+                ![](/img/tts-ux-steps/auto-reply-waiting.png)
+                *Containing Valid Keyword* ↗️ [Open in new tab](/img/tts-ux-steps/auto-reply-waiting.png)
+                
+                ![](/img/tts-ux-steps/auto-reply-waiting-error.png)
+                *Containing No Valid Keyword* ↗️ [Open in new tab](/img/tts-ux-steps/auto-reply-waiting-error.png)
                 
             </GridStickyElement>
         </GridColumn>

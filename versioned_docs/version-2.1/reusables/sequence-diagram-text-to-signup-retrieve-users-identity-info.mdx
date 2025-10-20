@@ -30,12 +30,10 @@ sequenceDiagram
     V -->> C: Redirect user to customer
     note left of S: 1. Parse redirect URL.
     C ->> C: Parse identityUuid from URL parameter
+    note left of S: 2. Get verification.
     C ->>+ S: Call server with identityUuid
     S ->>+ V: Call GET /1-click with identityUuid
-    V -->>- S: Return data
-    S -->>- C: Return success
-    note left of S: 2. Confirm phone is verified.
-    S ->> S: Check that metadata.identifiers.verificationMethod.phone is "otp"
+    V -->>- S: Return 1ClickEntity
     note left of S: 3. Use data.
-    S ->> S: Use credentials and metadata.
+    S ->> S: Use credentials and metadata
 ```

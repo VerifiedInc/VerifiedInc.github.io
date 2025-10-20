@@ -292,10 +292,6 @@ module.exports = {
             to: '/v2.0/types',
             from: '/types',
           },
-          {
-            to: '/v2.0/data',
-            from: '/data',
-          },
           // For Text to Signup revamp
           // /X -> /1-click-signup/X
           {

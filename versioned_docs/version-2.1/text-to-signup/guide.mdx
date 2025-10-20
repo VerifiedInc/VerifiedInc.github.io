@@ -1,0 +1,655 @@
+---
+id: guide
+title: Guide
+sidebar_position: 2
+sidebar_label: Guide
+sidebar_class_name: sidebar-header-regular
+description: How to set up and integrate Text to Signup
+slug: /text-to-signup/guide
+toc_max_heading_level: 3
+---
+
+import Admonition from '@theme/Admonition';
+import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
+import Chip from '@mui/material/Chip';
+import RiskSignalsOptionsTable from '@site/versioned_docs/version-2.1/reusables/risk-signals-options-table.mdx';
+import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-recommendation-admonition.mdx';
+import StylingSettingLogo from '@site/versioned_docs/version-2.1/reusables/styling-setting-logo.mdx';
+import StylingSettingFontFamily from '@site/versioned_docs/version-2.1/reusables/styling-setting-font-family.mdx';
+import StylingSettingButtonBorderRadius from '@site/versioned_docs/version-2.1/reusables/styling-setting-button-border-radius.mdx';
+import StylingSettingPrimaryColor from '@site/versioned_docs/version-2.1/reusables/styling-setting-primary-color.mdx';
+import StylingSettingGraphicColor from '@site/versioned_docs/version-2.1/reusables/styling-setting-graphic-color.mdx';
+import BrandSettingBrandName from '@site/versioned_docs/version-2.1/reusables/brand-setting-brand-name.mdx';
+import BrandSettingRiskSignals from '@site/versioned_docs/version-2.1/reusables/brand-setting-risk-signals.mdx';
+import ConfigureBrandSettings from '@site/versioned_docs/version-2.1/reusables/configure-brand-settings.mdx';
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+import ApiKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/api-keys-admonition.mdx';
+import OneClickEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-entity-example.mdx';
+import SessionKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/session-keys-admonition.mdx';
+import ErrorSKE001 from '@site/versioned_docs/version-2.1/reusables/errors/SKE001.mdx';
+import SequenceDiagramTextToSignupIntegration from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-text-to-signup-integration.mdx';
+import OneClickVerificationEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-verification-entity-example.mdx'
+
+<table>
+    <tr>
+        <th>Time to Complete</th>
+        <td>
+            <div class="small-margin-bottom">Depends on [integration work](#3-if-necessary-do-integration-work) (which is optional):</div>
+            - 5 minutes if no integration work
+            - 1-2 hours if some integration work
+        </td>
+    </tr>
+    <tr>
+        <th>Skills Required</th>
+        <td>
+            <div class="small-margin-bottom">Depends on [integration work](#3-if-necessary-do-integration-work) (which is optional):</div>
+            - No technical skills if no integration work
+            - Make API calls if some integration work
+        </td>
+    </tr>
+</table>
+
+This Guide includes lots of detail so you have all the information you might need. But don't let it scare you! **Using Text to Signup is extremely easy and intuitive, and you can go live with it in a matter of minutes.** If you spend a couple minutes clicking around in the [Dashboard](https://dashboard.verified.inc), you'll see how it works. You can try it yourself and go live immediately!
+
+
+<SetupLoginToDashboard/>
+
+
+<ConfigureBrandSettings/>
+
+
+### Brand Name
+
+<BrandSettingBrandName/>
+
+
+### Text to Signup Settings
+
+**Click the Text to Signup tab to access these settings.**
+
+
+{/* <CollapsibleGroup firstSectionExpanded={false}> */}
+
+    {/* Removing this setting: https://verified-inc.slack.com/archives/C03L7G1C154/p1760030095964169?thread_ts=1760026378.808749&cid=C03L7G1C154 */}
+    {/* <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### Risk Signals
+        </CollapsibleHeader>
+
+        <BrandSettingRiskSignals/>
+
+    </CollapsibleSection> */}
+
+    {/* <CollapsibleSection> */}
+
+        {/* <CollapsibleHeader> */}
+        #### Brand Phone Number
+        {/* </CollapsibleHeader> */}
+
+        **Choose which phone number you want users to send messages to:**
+
+        <table>
+            <tr>
+                <th>Option</th>
+                <th>Phone Number Type</th>
+                <th>Phone Number</th>
+                {/* <th>Pros</th> */}
+                {/* <th>Cons</th> */}
+            </tr>
+            <tr>
+                <td>Short</td>
+                <td>Short code</td>
+                <td>
+                    - 50555 in [Production](/reference/api/environments#production)
+                    - (866) 671-7183 in [Sandbox](/reference/api/environments#sandbox) (see note below)
+                </td>
+                {/* <td>Easier for users to type</td> */}
+                {/* <td>More expensive</td> */}
+            </tr>
+            <tr>
+                <td>Long</td>
+                <td>Long code</td>
+                <td>
+                    - (888) 323-7799 in [Production](/reference/api/environments#production)
+                    - (877) 894-8022 in [Sandbox](/reference/api/environments#sandbox)
+                </td>
+                {/* <td>Less expensive</td> */}
+                {/* <td>Harder for users to type</td> */}
+            </tr>
+        </table>
+
+        <Admonition type="important" title="Note: Short Phone Numbers Are Enabled Only in Production">
+            If you choose the **Short** option, a short phone number will be enabled in [Production](/reference/api/environments#production) but _not_ [Sandbox](/reference/api/environments#sandbox). This is because short code phone numbers are not suitable for testing, as they're subject to strict carrier compliance review.
+        </Admonition>
+
+        <Admonition type="tip">
+            **We recommend using the **Short** option because it's easier for users to type and therefore makes the [call to action](#call-to-action) higher converting.** However, some use cases may not need to use the call to action, which prompts users to manually type the brand phone number. Such uses cases may instead only use the [magic link](#magic-link), [magic button](#magic-button), and/or [magic QR code](#magic-qr-code), which autofill the brand phone number and [SMS draft](#sms-draft) for the user so they don't need to type anything. For these use cases, the **Long** option may be best.
+        </Admonition>
+
+    {/* </CollapsibleSection> */}
+
+{/* </CollapsibleGroup> */}
+
+
+
+#### Campaigns
+
+**Create up to 10 campaigns for a given brand. For each campaign, configure the following settings:**
+
+
+<CollapsibleGroup firstSectionExpanded={false}>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        ##### Keyword
+        </CollapsibleHeader>
+
+        > Triggers Text to Signup when a user includes it in an SMS they send to the [brand phone number](#brand-phone-number)
+
+        **Choose a keyword for the campaign.** The keyword can be any text (including emojis) that passes the following validation:
+        - Must not be longer than 153 characters if it only includes [GSM-7 characters](https://www.twilio.com/docs/glossary/what-is-gsm-7-character-encoding), or 67 characters if it includes any non-GSM-7 characters (like emojis).
+        - Must not be a keyword already used with the [brand phone number](#brand-phone-number).
+        - Must not be a reserved keyword:
+            <details>
+                <summary>Reserved Keywords</summary>
+                    - STOP
+                    - STOPALL
+                    - UNSUBSCRIBE
+                    - CANCEL
+                    - END
+                    - REVOKE
+                    - OPTOUT
+                    - QUIT
+                    - START
+                    - YES
+                    - UNSTOP
+                    - HELP
+                    - INFO
+            </details>
+
+        **Examples:**
+        - HOOLI
+        - 🩵
+
+        <Admonition type="note" title="Keywords are Case Insensitive">
+            Keywords are case insensitive. For example, "HOOLI" and "Hooli" are considered the same. However, **we recommend using an all caps version of the keyword in the [SMS draft](#sms-draft) (see below) and campaign ads,** since it makes it easier for users to understand what to do.
+        </Admonition>
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        ##### SMS Draft
+        </CollapsibleHeader>
+
+        > Draft SMS that's autofilled in a user's messaging app when they use a Text to Signup magic link, button, or QR code
+
+        **Write an SMS draft for the campaign.** The SMS draft can be any text (including emojis) that passes the following validation:
+        - Must include the campaign [keyword](#keyword).
+        - Must not be longer than 153 characters if it only includes [GSM-7 characters](https://www.twilio.com/docs/glossary/what-is-gsm-7-character-encoding), or 67 characters if it includes any non-GSM-7 characters (like emojis).
+
+        **Examples:**
+        - HOOLI - Send this message to experience the magic! ->
+            - _This example has only GSM-7 characters._
+        - 🩵 Send this message to experience the magic! ➡️
+            - _This example includes non-GSM-7 characters._
+
+        <Admonition type="tip" title="Tips">
+            - We recommend using using an all caps version of the [keyword](#keyword) so that it's clear to the user what word they need to type (if they choose to manually type the keyword in an SMS).
+            - We recommend including "Send this message" and either "➡️" or "->" at the end of the message to help guide the user toward sending the SMS draft, which will trigger Text to Signup because it includes the campaign [keyword](#keyword).
+        </Admonition>
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        ##### Redirect URL
+        </CollapsibleHeader>
+
+        > Where Text to Signup redirects a user to
+
+        **Set a redirect URL for the campaign.** The redirect URL can be any valid URL — whether a website link, app store link, or otherwise.
+
+        <Admonition type="tip">
+            We recommend using a campaign specific landing page, an app store link, or a page in your onboarding flow.
+        </Admonition>
+
+        **Examples:**
+        - https://hooli.com/verified/text-to-signup
+        - https://play.google.com/store/apps/details?id=com.hooli
+
+        We will append a URL parameter to the redirect URL, based on what you choose for the [redirect user after](#redirect-user-after) setting. See [step 3](#3-if-necessary-do-integration-work) for details about whether and how to use these parameter values.
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        ##### Redirect User After
+        </CollapsibleHeader>
+
+        > When a user is redirected to the [redirect URL](#redirect-url)
+
+        **Choose when a user should be redirected:**
+
+        <table>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Text to Signup</td>
+                <td>After we verify the user’s phone number</td>
+            </tr>
+            <tr>
+                <td>Hosted 1-Click Signup</td>
+                <td>After we autofill info and have the user confirm it</td>
+            </tr>
+        </table>
+
+        If you choose the **"Text to Signup"** option, we will redirect the user after we verify their phone number. You can then optionally:
+        - [Confirm the user's phone is verified.](#confirm-users-phone-is-verified)
+        - [Pass the user to an integrated 1-Click Signup flow](#pass-user-to-integrated-1-click-signup-flow) on your side.
+
+        See [step 3](#3-if-necessary-do-integration-work) for how to do this.
+        
+        <Admonition type="tip">
+        If you've already integrated 1-Click Signup (following the [SDK Integration](/1-click-signup/guides/sdk-integration) or [API Integration](/1-click-signup/guides/api-integration) guide), the **"Text to Signup"** option is best, because it ensures you can keep your signup flow consistent for all users.
+        </Admonition>
+
+        If you choose the **"Hosted 1-Click Signup"** option, we will take the user through a hosted 1-Click Signup flow that autofills identity info and has them confirm it. You'll need to [retrieve the user's info](#retrieve-users-identity-info) to benefit from this: see [step 3](#3-if-necessary-do-integration-work) for how.
+
+    </CollapsibleSection>
+
+</CollapsibleGroup>
+
+
+### Styling Settings
+
+**Click the Styling tab to access these settings.**
+
+:::important
+Only the styling settings listed below apply to **Text to Signup**. There are other styling settings that apply to [**1-Click Signup**](/1-click-signup) (if you're using the **SDK** [integration type](#integration-type)). See [here](/1-click-signup/guides/setup#styling-settings) in the 1-Click Signup Setup guide for details.
+:::
+
+:::tip Verified Auto-Magically Configures Styling Settings
+We use AI to auto-magically configure styling settings based on your email domain, so you don't have to do so manually from scratch!
+::::
+
+**Choose how to style campaign assets:**
+
+<table>
+    <tr>
+        <th>Setting</th>
+        <th>Options</th>
+        <th>Default</th>
+        <th>Description</th>
+    </tr>
+    <StylingSettingLogo/>
+    <StylingSettingFontFamily/>
+    <StylingSettingButtonBorderRadius/>
+    <StylingSettingPrimaryColor/>
+    <StylingSettingGraphicColor/>
+</table>
+
+
+## 3. (if necessary) Do integration work.
+
+:::important You May Not Need to Do Integration Work!
+**You may not need to do any integration work for Text to Signup.** You only need to if:
+1. **You need to confirm the the user's phone is verified.** This is crucial if you want to rely on Text to Signup for phone verification, including if you want to pass the user to an integrated 1-Click Signup flow on your side.
+2. **You chose the "Hosted 1-Click Signup" option for the [redirect user after](#redirect-user-after) setting.** We will take the user through a hosted 1-Click Signup flow that autofills identity info and has them confirm it. You'll need to retrieve the user's info to benefit from this.
+
+If neither of these apply to your use case, **_skip this step — you need no code!_**
+:::
+
+The integration work you can do depends on the [redirect user after](#redirect-user-after) setting:
+- If it's set to **"Text to Signup"**, you can optionally:
+    - [Confirm the user's phone is verified.](#confirm-users-phone-is-verified)
+    - [Pass the user to an integrated 1-Click Signup flow](#pass-user-to-integrated-1-click-signup-flow) on your side.
+- If it's set to **"Hosted 1-Click Signup"**, you need to [retrieve the user's identity info](#retrieve-users-identity-info).
+
+See the sections below for details about how to do each of these.
+
+
+<CollapsibleGroup firstSectionExpanded={false}>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        ### Confirm User's Phone is Verified
+        </CollapsibleHeader>
+
+        <Admonition type="note">
+        This integration step is only relevant if the [redirect user after](#redirect-user-after) setting is set to **"Text to Signup".**
+        </Admonition>
+
+        <SequenceDiagramTextToSignupIntegration/>
+
+
+        #### a. Parse the `verificationUuid` URL parameter.
+
+        When a user completes Text to Signup, we redirect them to your campaign's [redirect URL](#redirect-url), appending a URL parameter that depends on the [redirect user after](#redirect-user-after) setting. When it's set to **"Text to Signup"**, we redirect the user after we verify their phone number. Therefore, we append a `verificationUuid` parameter, which lets you check that the user's phone was verified:
+        ```
+        {redirectUrl}?verificationUuid={verificationUuid}
+
+        https://hooli.com/verified/text-to-signup?verificationUuid=68b7bf30-1a2d-4fcc-a2c8-be7de29e5b19
+        ```
+
+        Parse the value of this parameter, which you'll use in the next step. 
+
+        <Admonition type="danger">
+        **A user arriving at your campaign [redirect URL](#redirect-url) with a `verificationUuid` URL parameter is NOT a technical guarantee that the user's phone is verified!** If your use case needs such a guarantee, you must confirm the phone is verified using [step b](b-call-get-1-clickverifications) and [step c](#c-check-verification-status). 
+        <details>
+            <summary>Why is this the case?</summary>
+
+            A bad actor can figure out what the redirect URL is (for example by simply going through the campaign flow themselves) and then append a `verificationUuid` parameter with a random UUID value.
+
+            So, to confirm the user's phone is verified, you need to _use_ the value of the `verificationUuid` parameter to call `GET /1-click/verifications/{verificationUuid}` (see [step b](b-call-get-1-clickverifications)) and then check the verification `status` in the response (see [step c](#c-check-verification-status)). This _can't_ be spoofed, because a bad actor doesn't have any way of correctly guessing a _valid_ UUID value for `verificationUuid`.
+        </details>
+        </Admonition>
+
+
+        #### b. Call `GET /1-click/verifications`.
+
+        Call your server with `verificationUuid`, which you parsed in the previous step. The server should use your Verified API key to call [`GET /1-click/verifications/{verificationUuid}`](/reference/api/endpoints#get-1-click-verifications):
+
+        ```
+        GET /1-click/verifications/{verificationUuid}
+        ```
+
+        <Admonition type="note">
+        The endpoint you should use here is **`GET /1-click/verifications`**, which is different than `GET /1-click`.
+        </Admonition>
+
+        <ApiKeysAdmonition/>
+
+        The response will be a [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity):
+
+        ```typescript title="GET /1-click/verifications Response Body"
+        {
+            ...1ClickVerificationEntity
+        }
+        ```
+        <OneClickVerificationEntityExample/>
+
+
+        #### c. Check verification `status`.
+
+        Check that the value of `status` is `"verified"`, which means the user's phone is verified. Otherwise, it may be spoofed.
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        ### Pass User to Integrated 1-Click Signup Flow
+        </CollapsibleHeader>
+
+        <Admonition type="note">
+            This integration step is only relevant if the [redirect user after](#redirect-user-after) setting is set to **"Text to Signup".**
+        </Admonition>
+
+        Because Text to Signup verifies a user's phone number, you can pass the user to an integrated 1-Click Signup flow _that skips the standard phone verification process_ (enter phone, receive SMS verification code, enter verification code). The result is a frictionless, delightful user experience!
+
+        <Admonition type="important">
+            **Make sure to [confirm the user's phone is verified](#confirm-users-phone-is-verified)** before passing the user to a 1-Click Signup flow.
+        </Admonition>
+
+        How to do this depends on your brand's [integration type](/1-click-signup/guides/setup#integration-type):
+        - **SDK:** Start at [step 1](/1-click-signup/guides/sdk-integration#1-create-a-session-key) in the [SDK Integration](/1-click-signup/guides/sdk-integration) guide, but include `phone` in the request body of `POST /client/1-click` (instead of using an empty request body). This will make the SDK skip the [Phone](/1-click-signup/user-experience#phone) and [Verification Code](/1-click-signup/user-experience#verification-code) screens.
+        - **API:** Skip step 1 in the [API Integration](/1-click-signup/guides/api-integration) guide and go straight to [step 2](/1-click-signup/guides/api-integration#2-call-post-1-click).
+
+        It's that simple!
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        ### Retrieve User's Identity Info
+        </CollapsibleHeader>
+
+        <Admonition type="note">
+            This integration step is only relevant if the [redirect user after](#redirect-user-after) setting is set to **"Hosted 1-Click Signup".**
+        </Admonition>
+
+
+        #### a. Parse the `identityUuid` URL parameter.
+
+        When a user completes Text to Signup, we redirect them to your campaign's [redirect URL](#redirect-url), appending a URL parameter that depends on the [redirect user after](#redirect-user-after) setting. When it's set to **"Hosted 1-Click Signup"**, we take the user through a hosted 1-Click Signup flow that autofills identity info and has them confirm it. Therefore, we append an `identityUuid` parameter, which lets you retrieve data the user shared.
+        ```
+        {redirectUrl}?identityUuid={identityUuid}
+
+        https://hooli.com/verified/text-to-signup?identityUuid=68b7bf30-1a2d-4fcc-a2c8-be7de29e5b19
+        ```
+
+        Parse the value of this parameter, which you'll use in the next step. 
+
+
+        #### b. Call `GET /1-click`.
+
+        Call your server with `verificationUuid`, which you parsed in the previous step. The server should use your Verified API key to call [`GET /1-click/{identityUuid}`](/reference/api/endpoints#get-1-click):
+
+        ```
+        GET /1-click/{identityUuid}
+        ```
+
+        <Admonition type="note">
+        The endpoint you should use here is **`GET /1-click`**, which is different than `GET /1-click/verifications`.
+        </Admonition>
+
+        <ApiKeysAdmonition/>
+
+        The response will be a [`1ClickEntity`](/reference/api/types#1clickentity) that contains data (user [credentials](/reference/data/outputs/credentials) and [metadata](/reference/data/outputs/metadata)):
+
+        ```typescript title="GET /1-click Response Body"
+        {
+            ...1ClickEntity
+        }
+        ```
+
+        <details>
+            <summary><code>1ClickEntity</code> Example</summary>
+
+            <OneClickEntityExample/>
+        </details>
+
+    </CollapsibleSection>
+
+</CollapsibleGroup>
+
+
+## 4. Use campaign assets.
+
+**Click the Text to Signup tab to access these assets.** You can access assets for each [campaign](#campaigns) you configured using the Campaign dropdown. The Dashboard also shows campaign ad examples to help you brainstorm creative ways to use the assets.
+
+**Use the campaign assets in ads.** These ads can be offline or online, in just about any format you can imagine. The sections below have guidance for how to use each specific asset.
+
+:::warning
+**You are contractually required to use the [powered by Verified graphic](#powered-by-graphic) and the exact [consent language](#consent-language) — wherever you use the other Text to Signup assets.** This is necessary for compliance with SMS regulations.
+:::
+
+
+### Call to Action
+
+> Prompts user to start Text to Signup
+
+The call to action is always of the form:
+
+> Text `{keyword}` to `{number}`
+
+where `{keyword}` is the campaign [keyword](#keyword) and `{number}` is the [brand phone number](#brand-phone-number).
+
+**Examples:**
+
+- Text HOOLI to 50555
+- Text 🩵 to 888-323-7799
+
+:::tip
+**You can put the call to action _anywhere_ a user will have cell service!** It works equally well in both offline and online adds. For example, you can put it:
+- on billboards
+- on bus stop posters
+- in TV commercials
+- in radio ads
+- in paper handouts
+- in marketing mailings
+- in emails
+- in social media posts
+- on web pages
+- on banners flown behind airplanes
+:::
+
+:::warning
+**We do _not_ recommend putting the call to action somewhere where a user may have intermittent or no cell service,** for example in a subway car. Text to Signup requires a user to send and receive an SMS and load a web page, so they need to have reliable service.
+:::
+
+
+### Magic Link
+
+> Takes user to messaging app with SMS draft and phone number autofilled 
+
+The magic link takes a user to the messaging app (on any device) and autofills the campaign [SMS draft](#sms-draft) for them. This lets them send an SMS with the campaign [keyword](#keyword) with a single click (since the SMS draft always contains the keyword).
+
+**Examples:**
+
+- https://1-click.verified.inc/tts/84fdts
+- https://1-click.verified.inc/tts/83bc01
+
+:::tip
+**The magic link works best for ONline ads** — like on web pages, in social media posts, in emails — so that users can click the link. For offline ads, we recommend using the [magic QR code](#magic-qr-code).
+:::
+
+
+### Magic Button
+
+> Takes user to messaging app with SMS draft and phone number autofilled 
+
+**To use the magic button the Dashboard provides, download the image and link it to the magic link in an ad your company runs.**
+
+The magic button takes a user to the messaging app (on any device) and autofills the campaign [SMS draft](#sms-draft) for them. This lets them send an SMS with the campaign [keyword](#keyword) with a single click (since the SMS draft always contains the keyword).
+
+The magic button combines the [call to action](#call-to-action) and [magic link](#magic-link) to make Text to Signup clear and easy for the user. 
+
+**Examples:**
+
+<div>
+    <a href="https://1-click.verified.inc/tts/84fdts">
+        <img height={50} src="/img/tts-campaign-assets/magic-button-Text-HOOLI-to-50555.png"/>
+    </a>
+</div>
+<div>
+    <a href="https://1-click.verified.inc/tts/83bc01">
+        <img height={50} src="/img/tts-campaign-assets/magic-button-Text-🩵-to-888-323-7799.png"/>
+    </a>
+</div>
+<br/>
+
+:::tip
+**The magic button works best for ONline ads** — like on web pages and in emails — so that users can click the button. For offline ads, we recommend using the [magic QR code](#magic-qr-code).
+:::
+
+
+### Magic QR Code
+
+> Takes user to messaging app with SMS draft and phone number autofilled 
+
+The magic QR code takes a user to the messaging app (on any device) and autofills the campaign [SMS draft](#sms-draft) for them. This lets them send an SMS with the campaign [keyword](#keyword) with a single click (since the SMS draft always contains the keyword).
+
+**Examples:**
+
+<div>
+    <a href="https://1-click.verified.inc/tts/84fdts">
+        <img height={200} src="/img/tts-campaign-assets/magic-qr-code-Text-HOOLI-to-50555.png"/>
+    </a>
+    *Text HOOLI to 50555*
+</div>
+<div>
+    <a href="https://1-click.verified.inc/tts/83bc01">
+        <img height={200} src="/img/tts-campaign-assets/magic-qr-code-Text-🩵-to-888-323-7799.png"/>
+    </a>
+    *Text 🩵 to 888-323-7799*
+</div>
+<br/>
+
+:::tip
+**The magic QR code works best for OFFline ads** — like on billboards, in TV commercials, in marketing mail — so that users can scan the QR code. For online ads, we recommend using the [magic link](#magic-link) and [magic button](#magic-button).
+:::
+
+
+### Powered by Graphic
+
+:::warning
+**You are contractually required to use the powered by Verified graphic wherever you use the other Text to Signup assets.** This is necessary for compliance with SMS regulations.
+:::
+
+The color of the graphic depends on the [graphic color](/text-to-signup/guide#styling-settings) styling setting.
+
+**Examples:**
+
+<div>
+    <a href="https://1-click.verified.inc/tts/84fdts">
+        <img width={200} src="/img/tts-powered-by-graphics/green.png"/>
+    </a>
+</div>
+<br/>
+<div>
+    <a href="https://1-click.verified.inc/tts/83bc01">
+        <img width={200} src="/img/tts-powered-by-graphics/gray.png"/>
+    </a>
+</div>
+<br/>
+
+
+### Consent Language 
+
+:::warning
+**You are contractually required to use the exact consent language wherever you use the other Text to Signup assets.** This is necessary for compliance with SMS regulations.
+:::
+
+The consent language is:
+> Opt in to receive a verification link from Verified on behalf of `{Brand Name}`. Msg & data rates may apply. One message per interaction. Reply HELP for help or STOP to opt out. See Terms at verified.inc/sms-terms and Privacy at verified.inc/privacy.
+
+where `{Brand Name}` is your brand name. You can copy a customized version of this from the Dashboard.
+
+---
+
+
+## Go Live!
+
+:::important
+    **If you did any integration work** (as part of [step 3](#3-if-necessary-do-integration-work)): That involved using a [Sandbox](/reference/api/environments#sandbox) API key, and to go live you'll need to use a [Production](/reference/api/environments#production) one:
+
+    <details>
+        <summary>Get Production Access</summary>
+
+        1. Go to the **Brand Details** page for your brand in the Verified [Dashboard](https://dashboard.verified.inc).
+        2. Click the **Sandbox** tab in the upper right, and make sure your brand settings are synced. _If they're not, click the **Sync to Production** button._
+        3. Click the **Production** tab in the upper right, and click the **Request Approval** button under the API Keys section.
+        5. Complete the **steps** listed in the dialog.
+        6. Click the dialog submit button.
+    </details>
+
+    <details>
+        <summary>Swap Sandbox for Production</summary>
+
+        **Once you have Production access, just swap Sandbox for Production:**
+        1. Swap your Sandbox API key for your Production API key.
+        2. Swap the [Sandbox base URL](/reference/api/environments#sandbox) for the [Production base URL](/reference/api/environments#production).
+    </details>
+
+    **If you did NOT do any integration work:** You don't need any API keys, because you're using Text to Signup in a no code way!
+:::
+
+**Replace the Sandbox [campaign assets](#4-use-campaign-assets) in your ads with Production ones**. To access Production campaign assets: 
+1. Go to the **Brand Details** page for your brand in the Verified [Dashboard](https://dashboard.verified.inc).
+2. Click the **Production** tab in the upper right.
+3. Click the **Text to Signup** tab in the middle.
+
+Launch the ads on any relevant channels. 
+
+**Then you'll be live with Text to Signup! ✅**

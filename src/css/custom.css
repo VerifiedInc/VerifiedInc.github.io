@@ -74,9 +74,16 @@
   --ifm-code-font-size: 90%;
   /* modal */
   --ifm-modal-overlay: rgba(255, 255, 255, 0.8);
+  /* heading sizes */
+  --ifm-h1-font-size: 2rem;
+  --ifm-h2-font-size: 1.7rem;
+  --ifm-h3-font-size: 1.4rem;
+  --ifm-h4-font-size: 1.2rem;
+  --ifm-h5-font-size: 1.1rem;
+  --ifm-h6-font-size: 1rem;
 
   /* sidebar width (default is 300px) */
-  --doc-sidebar-width: 200px !important;
+  --doc-sidebar-width: 215px !important;
 
   /* SPACING */
   --ifm-list-margin: 1.25rem;
@@ -88,15 +95,17 @@
 .admonition-warning {
   color: white;
 }
-
 .admonition-tip .admonition-icon svg,
 .admonition-important .admonition-icon svg,
 .admonition-warning .admonition-icon svg {
   fill: white;
 }
-
 .admonition svg {
   margin-right: 5px;
+}
+/* Overrides the default of --ifm-h5-font-size */
+.admonitionHeading_Gvgb {
+  font-size: var(--ifm-h6-font-size) !important;
 }
 
 /* override link unstyling within admonitions */
@@ -295,7 +304,7 @@ input:checked+.slider:before {
 }
 
 /* For some reason, Docusaurus seems to downsize all headers within tabs, so e.g. ### shows up as if it's #### size. */
-[role=tabpanel] h2,
+/* [role=tabpanel] h2,
 .collapsible-section h2,
 .endpoint-header h2 {
   font-size: var(--ifm-h1-font-size);
@@ -323,7 +332,7 @@ input:checked+.slider:before {
 .collapsible-section h6,
 .endpoint-header h6 {
   font-size: var(--ifm-h5-font-size);
-}
+} */
 
 /* Table header rows aren't left aligned by default (even though other rows are), so this left aligns them */
 th {
@@ -510,4 +519,20 @@ table ul, table ol {
   padding: 1rem;
   border-radius: var(--ifm-alert-border-radius);
   margin-bottom: 1em;
+}
+
+/* SIDEBAR */
+.menu__link {
+  /* color: var(--ifm-heading-color); */
+}
+/* Headers */
+.sidebar-header-regular {
+  font-weight: 500;
+}
+.sidebar-header-black {
+  font-weight: 900;
+}
+/* To remove unnecessary extra padding between category and dropdown icon */
+.menu__link--sublist {
+  padding-right: 0;
 }

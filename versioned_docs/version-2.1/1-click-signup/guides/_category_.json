@@ -1,9 +1,10 @@
 {
   "label": "Guides",
+  "className": "sidebar-header-regular",
   "position": 3,
   "collapsed": false,
   "link": {
     "type": "generated-index",
-    "slug": "/guides"
+    "slug": "/1-click-signup/guides"
   }
 }

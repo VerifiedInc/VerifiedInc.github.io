@@ -1,10 +1,11 @@
 ---
 id: test-users
 title: Test Users
+sidebar_position: 2
 sidebar_label: Test Users
-sidebar_position: 5
+sidebar_class_name: sidebar-header-regular
 description: Verified API Test Users
-slug: /test-users
+slug: /1-click-signup/test-users
 toc_max_heading_level: 4
 ---
 
@@ -12,7 +13,7 @@ import TestUserDisplay from '@site/src/components/TestUserDisplay';
 import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
 
 
-You can test 1-Click Signup with mock data in [Sandbox](./api-reference/environments#sandbox), using either your own phone number our test users below.
+You can test 1-Click Signup with mock data in [Sandbox](/reference/api/environments#sandbox), using either your own phone number our test users below.
 
 <DevelopmentWorkAdmonition/>
 
@@ -34,13 +35,13 @@ The test user phone numbers and email addresses are not valid, so sending messag
 6. Confirm the test user's info to complete the flow.
 
 :::tip 
-You can use a [custom demo](./custom-demo) by generating one or opening one with your brand's settings from within the Dashboard.
+You can use a [custom demo](/custom-demo) by generating one or opening one with your brand's settings from within the Dashboard.
 :::
 
 
 ### SDK
 
-1. Complete the [SDK Integration](./guides/sdk-integration) guide and run the SDK.
+1. Complete the [SDK Integration](/1-click-signup/guides/sdk-integration) guide and run the SDK.
 2. Enter the test user's phone number (varies by user).
 3. Enter the test user's (static) verification code (always 111111).
 4. (if prompted) Enter the test user's birth date (always 08/01/1989) and/or SSN4 (always 6789).
@@ -50,9 +51,9 @@ You can use a [custom demo](./custom-demo) by generating one or opening one with
 ### API
 
 1. Access the [Dashboard](https://dashboard.verified.inc) and go the Brand Details page for your brand.
-2. Copy a [Sandbox](./api-reference/environments#sandbox) API key for your brand.
-3. Call [`POST /1-click`](./api-reference/endpoints#post-1-click) with the test user's phone number (varies by user).
-4. (if applicable) Call [`POST /1-click`](./api-reference/endpoints#post-1-click) again, adding the test user's birth date (always `1989-08-01`) and/or SSN4 (always `6789`).
+2. Copy a [Sandbox](/reference/api/environments#sandbox) API key for your brand.
+3. Call [`POST /1-click`](/reference/api/endpoints#post-1-click) with the test user's phone number (varies by user).
+4. (if applicable) Call [`POST /1-click`](/reference/api/endpoints#post-1-click) again, adding the test user's birth date (always `1989-08-01`) and/or SSN4 (always `6789`).
 
 ---
 
@@ -86,7 +87,7 @@ See the later sections for full details on how each of these test users is desig
         <td>Phone + Birth Date and/or SSN4</td>
         <td>+12125550020</td>
         <td>111111</td>
-        <td>[`OCE011`](./api-reference/errors#oce011) <br/> (`birthDate, ssn4`)</td>
+        <td>[`OCE011`](/reference/api/errors#oce011) <br/> (`birthDate, ssn4`)</td>
         <td>1989-08-01</td>
         <td>6789</td>
     </tr>
@@ -94,7 +95,7 @@ See the later sections for full details on how each of these test users is desig
         <td>Phone + Birth Date</td>
         <td>+12125550022</td>
         <td>111111</td>
-        <td>[`OCE011`](./api-reference/errors#oce011) <br/> (`birthDate`)</td>
+        <td>[`OCE011`](/reference/api/errors#oce011) <br/> (`birthDate`)</td>
         <td>1989-08-01</td>
         <td>6789</td>
     </tr>
@@ -102,7 +103,7 @@ See the later sections for full details on how each of these test users is desig
         <td>Phone + SSN4</td>
         <td>+12125550021</td>
         <td>111111</td>
-        <td>[`OCE011`](./api-reference/errors#oce011) <br/> (`ssn4`)</td>
+        <td>[`OCE011`](/reference/api/errors#oce011) <br/> (`ssn4`)</td>
         <td>1989-08-01</td>
         <td>6789</td>
     </tr>
@@ -154,7 +155,7 @@ See the later sections for full details on how each of these test users is desig
         <td>775, Medium High, Block</td>
         <td>+14045551775</td>
         <td>111111</td>
-        <td>[`OCE017`](./api-reference/errors#oce017)</td>
+        <td>[`OCE017`](/reference/api/errors#oce017)</td>
         <td>1989-08-01</td>
         <td>6789</td>
     </tr>
@@ -162,7 +163,7 @@ See the later sections for full details on how each of these test users is desig
         <td>999, High, Block</td>
         <td>+14045551799</td>
         <td>111111</td>
-        <td>[`OCE017`](./api-reference/errors#oce017)</td>
+        <td>[`OCE017`](/reference/api/errors#oce017)</td>
         <td>1989-08-01</td>
         <td>6789</td>
     </tr>
@@ -230,21 +231,21 @@ See the later sections for full details on how each of these test users is desig
         <th>SSN4</th>
     </tr>
     <tr>
-        <td>[`OCE011`](./api-reference/errors#oce011), then [`OCE013`](./api-reference/errors#oce013)</td>
+        <td>[`OCE011`](/reference/api/errors#oce011), then [`OCE013`](/reference/api/errors#oce013)</td>
         <td>+14045551300</td>
         <td>111111</td>
         <td>-</td>
         <td>-</td>
     </tr>
     <tr>
-        <td>[`OCE017`](./api-reference/errors#oce017)</td>
+        <td>[`OCE017`](/reference/api/errors#oce017)</td>
         <td>+14045551775</td>
         <td>111111</td>
         <td>1989-08-01</td>
         <td>6789</td>
     </tr>
     <tr>
-        <td>[`OCE017`](./api-reference/errors#oce017)</td>
+        <td>[`OCE017`](/reference/api/errors#oce017)</td>
         <td>+14045551799</td>
         <td>111111</td>
         <td>1989-08-01</td>
@@ -257,12 +258,12 @@ See the later sections for full details on how each of these test users is desig
 
 ## Success
 
-Use these test users to go through successful 1-Click Signup flows (where Verified returns [credentials](./data/outputs/credentials)). 
+Use these test users to go through successful 1-Click Signup flows (where Verified returns [credentials](/reference/data/outputs/credentials)). 
 
 
 ### Phone Only
 
-For these users, only a phone number is needed to source [credentials](./data/outputs/credentials).
+For these users, only a phone number is needed to source [credentials](/reference/data/outputs/credentials).
 
 
 #### Primary Test User
@@ -286,7 +287,7 @@ This is Richard Hendricks from the show _Silicon Valley_! 😂
 
 #### Allowed
 
-Use these users to specifically test the `low` and `medium-low` risk level cases of [risk signals](./data/outputs/metadata#risk-signals) metadata. _Compare them to the [medium risk (flagged)](#flagged) and [high risk (blocked)](#blocked) test users._
+Use these users to specifically test the `low` and `medium-low` risk level cases of [risk signals](/reference/data/outputs/metadata#risk-signals) metadata. _Compare them to the [medium risk (flagged)](#flagged) and [high risk (blocked)](#blocked) test users._
 
 <TestUserDisplay
   data={{
@@ -309,7 +310,7 @@ Use these users to specifically test the `low` and `medium-low` risk level cases
 
 #### Flagged
 
-Use this user to specifically test the `medium` risk level case of [risk signals](./data/outputs/metadata#risk-signals) metadata. _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
+Use this user to specifically test the `medium` risk level case of [risk signals](/reference/data/outputs/metadata#risk-signals) metadata. _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
 
 <TestUserDisplay
   data={{
@@ -323,12 +324,12 @@ Use this user to specifically test the `medium` risk level case of [risk signals
 
 ### Phone and Additional Info
 
-For these users, both a phone number and additional information is needed to source [credentials](./data/outputs/credentials). 
+For these users, both a phone number and additional information is needed to source [credentials](/reference/data/outputs/credentials). 
 
-If you start with phone only, as we recommend, you will get the [`OCE011`](./api-reference/errors#oce011) error code, indicating that additional information is required. Within the error, `data.additionalInputs` specifies which additional inputs you can pass (see [`OCE011`](./api-reference/errors#oce011) for details).
+If you start with phone only, as we recommend, you will get the [`OCE011`](/reference/api/errors#oce011) error code, indicating that additional information is required. Within the error, `data.additionalInputs` specifies which additional inputs you can pass (see [`OCE011`](/reference/api/errors#oce011) for details).
 
 :::tip
-The [`OCE012`](./api-reference/errors#oce012) error code indicates that there's a mismatch for one or more of the additional inputs you provided. To trigger this error code, use any value that doesn't match the value for the test user. 
+The [`OCE012`](/reference/api/errors#oce012) error code indicates that there's a mismatch for one or more of the additional inputs you provided. To trigger this error code, use any value that doesn't match the value for the test user. 
 
 For example, use `1979-01-01` for `birthDate` (since all test users have `1989-08-01` for `birthDate`).
 :::
@@ -336,7 +337,7 @@ For example, use `1979-01-01` for `birthDate` (since all test users have `1989-0
 
 #### Phone and Birth Date and/or SSN4
 
-For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](./data/outputs/credentials).
+For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](/reference/data/outputs/credentials).
 
 <TestUserDisplay
   data={{
@@ -354,7 +355,7 @@ For this user, both a phone number and either a birth date or SSN4 is needed to 
     </tr>
     <tr>
         <td>`data.errorCode`</td>
-        <td>[`OCE011`](./api-reference/errors#oce011)</td>
+        <td>[`OCE011`](/reference/api/errors#oce011)</td>
     </tr>
     <tr>
         <td>`data.additionalInputs`</td>
@@ -365,7 +366,7 @@ For this user, both a phone number and either a birth date or SSN4 is needed to 
 
 #### Phone and Birth Date
 
-For this user, both a phone number and a birth date is needed to source [credentials](./data/outputs/credentials).
+For this user, both a phone number and a birth date is needed to source [credentials](/reference/data/outputs/credentials).
 
 <TestUserDisplay
   data={{
@@ -382,7 +383,7 @@ For this user, both a phone number and a birth date is needed to source [credent
     </tr>
     <tr>
         <td>`data.errorCode`</td>
-        <td>[`OCE011`](./api-reference/errors#oce011)</td>
+        <td>[`OCE011`](/reference/api/errors#oce011)</td>
     </tr>
     <tr>
         <td>`data.additionalInputs`</td>
@@ -393,7 +394,7 @@ For this user, both a phone number and a birth date is needed to source [credent
 
 #### Phone and SSN4
 
-For this user, both a phone number and an SSN4 is needed to source [credentials](./data/outputs/credentials).
+For this user, both a phone number and an SSN4 is needed to source [credentials](/reference/data/outputs/credentials).
 
 <TestUserDisplay
   data={{
@@ -410,7 +411,7 @@ For this user, both a phone number and an SSN4 is needed to source [credentials]
     </tr>
     <tr>
         <td>`data.errorCode`</td>
-        <td>[`OCE011`](./api-reference/errors#oce011)</td>
+        <td>[`OCE011`](/reference/api/errors#oce011)</td>
     </tr>
     <tr>
         <td>`data.additionalInputs`</td>
@@ -421,7 +422,7 @@ For this user, both a phone number and an SSN4 is needed to source [credentials]
 
 ### Credential Cases
 
-Use these test users test specific cases of [credential](./data/outputs/credentials) data, if they're relevant to your use case.
+Use these test users test specific cases of [credential](/reference/data/outputs/credentials) data, if they're relevant to your use case.
 
 
 #### Address
@@ -429,7 +430,7 @@ Use these test users test specific cases of [credential](./data/outputs/credenti
 
 ##### Different Values
 
-For each of these 10 test users, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with a different address. Each address is a standard address in a US state (as opposed to an address in an [overseas territory](#overseas-territory)).
+For each of these 10 test users, you will get a [`1ClickEntity`](/reference/api/types#1clickentity) with a different address. Each address is a standard address in a US state (as opposed to an address in an [overseas territory](#overseas-territory)).
 
 <TestUserDisplay
   data={{
@@ -443,7 +444,7 @@ For each of these 10 test users, you will get a [`1ClickEntity`](./api-reference
 
 ##### Overseas Territory
 
-For this test user, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with an address in Puerto Rico (a US overseas territory).
+For this test user, you will get a [`1ClickEntity`](/reference/api/types#1clickentity) with an address in Puerto Rico (a US overseas territory).
 
 <TestUserDisplay
   data={{
@@ -477,7 +478,7 @@ For this test user, you will get a [`1ClickEntity`](./api-reference/types#1click
 
 #### Birth Date: Under 18
 
-For this test user, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with a birth date less than 18 years ago (until January 1, 2035).
+For this test user, you will get a [`1ClickEntity`](/reference/api/types#1clickentity) with a birth date less than 18 years ago (until January 1, 2035).
 
 :::info
 **You should never receive data from Verified for a user under 18 years old,** but this test user facilitates writing a check for that on your side if you wish.
@@ -509,12 +510,12 @@ For this test user, you will get a [`1ClickEntity`](./api-reference/types#1click
 
 ## Failure
 
-Use these test users to go through unsuccessful 1-Click Signup flows (where Verified does _not_ return [credentials](./data/outputs/credentials)). 
+Use these test users to go through unsuccessful 1-Click Signup flows (where Verified does _not_ return [credentials](/reference/data/outputs/credentials)). 
 
 
 ### No Credentials Found
 
-For this user — if you start with phone only, as we recommend — you will get the [`OCE011`](./api-reference/errors#oce011) error code, indicating that additional information is required. Within the error, `data.additionalInputs` specifies which additional information you can pass (see [`OCE011`](./api-reference/errors#oce011) for details).
+For this user — if you start with phone only, as we recommend — you will get the [`OCE011`](/reference/api/errors#oce011) error code, indicating that additional information is required. Within the error, `data.additionalInputs` specifies which additional information you can pass (see [`OCE011`](/reference/api/errors#oce011) for details).
 
 <TestUserDisplay
   data={{
@@ -530,7 +531,7 @@ For this user — if you start with phone only, as we recommend — you will get
     </tr>
     <tr>
         <td>`data.errorCode`</td>
-        <td>[`OCE011`](./api-reference/errors#oce011)</td>
+        <td>[`OCE011`](/reference/api/errors#oce011)</td>
     </tr>
     <tr>
         <td>`data.additionalInputs`</td>
@@ -538,7 +539,7 @@ For this user — if you start with phone only, as we recommend — you will get
     </tr>
 </table>
 
-If you then pass additional inputs (with any values), you will get the [`OCE013`](./api-reference/errors#oce013) error code, indicating that Verified found no credentials.
+If you then pass additional inputs (with any values), you will get the [`OCE013`](/reference/api/errors#oce013) error code, indicating that Verified found no credentials.
 
 <table>
     <tr>
@@ -547,16 +548,16 @@ If you then pass additional inputs (with any values), you will get the [`OCE013`
     </tr>
     <tr>
         <td>`data.errorCode`</td>
-        <td>[`OCE013`](./api-reference/errors#oce013)</td>
+        <td>[`OCE013`](/reference/api/errors#oce013)</td>
     </tr>
 </table>
 
 
 ### Blocked
 
-Use these users to specifically test the `medium-high` and `high` risk level cases of [risk signals](./data/outputs/metadata#risk-signals) metadata. _Compare them to the [low risk (allowed)](#allowed) and [medium risk (flagged)](#flagged) test users._
+Use these users to specifically test the `medium-high` and `high` risk level cases of [risk signals](/reference/data/outputs/metadata#risk-signals) metadata. _Compare them to the [low risk (allowed)](#allowed) and [medium risk (flagged)](#flagged) test users._
 
-For these users, you will get the [`OCE017`](./api-reference/errors#oce017) error code, indicating that Verified blocked returning data for the user because the risk levels are `medium-high` and `high`.
+For these users, you will get the [`OCE017`](/reference/api/errors#oce017) error code, indicating that Verified blocked returning data for the user because the risk levels are `medium-high` and `high`.
 
 <TestUserDisplay
   data={{
@@ -584,10 +585,10 @@ For these users, you will get the [`OCE017`](./api-reference/errors#oce017) erro
     </tr>
     <tr>
         <td>`data.errorCode`</td>
-        <td>[`OCE017`](./api-reference/errors#oce017)</td>
+        <td>[`OCE017`](/reference/api/errors#oce017)</td>
     </tr>
     <tr>
         <td>`data.riskSignals`</td>
-        <td>[`RiskSignals`](./api-reference/types#risksignals)</td>
+        <td>[`RiskSignals`](/reference/api/types#risksignals)</td>
     </tr>
 </table>

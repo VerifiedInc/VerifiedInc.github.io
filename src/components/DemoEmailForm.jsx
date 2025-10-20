@@ -159,7 +159,7 @@ export const DemoEmailForm = () => {
               color="primary"
             />
             <Typography variant="caption" className="legal-text" sx={{ display: 'block', mt: 1, mb: 1 }}>
-              By continuing, you agree to our <Link href="https://www.verified.inc/legal#terms-of-use" target="_blank" rel="noopener">Terms</Link> and acknowledge our <Link href="https://www.verified.inc/legal#privacy-policy" target="_blank" rel="noopener">Privacy Policy</Link>.
+              By continuing, you agree to our <Link href="https://verified.inc/legal#terms-of-use" target="_blank" rel="noopener">Terms</Link> and acknowledge our <Link href="https://verified.inc/legal#privacy-policy" target="_blank" rel="noopener">Privacy Policy</Link>.
             </Typography>
             <Button
               type="submit"

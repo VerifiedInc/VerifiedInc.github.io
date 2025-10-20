@@ -1,0 +1,10 @@
+{
+  "label": "SDK",
+  "className": "sidebar-header-regular",
+  "position": 1,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "slug": "/reference/sdk"
+  }
+}

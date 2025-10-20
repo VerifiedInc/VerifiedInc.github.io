@@ -149,7 +149,7 @@ The most important brand setting is **integration type,** which affects how you 
 Another important brand setting is **default credential requests**, which determines what user data Verified will try to source for you. 
 
 :::note Definitions
-- A [**credential**](./data#credentials) is a piece of identity data about a user (like a first name or address).
+- A [**credential**](/reference/data#credentials) is a piece of identity data about a user (like a first name or address).
 - A **credential request** is how you ask Verified for a particular credential. It encodes what type of data you're asking for, whether it's required or optional, whether multiple values should be returned, etc. See the [`CredentialRequest`](./types#credentialrequest) type for full details.
 :::
 
@@ -353,7 +353,7 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
     - **Error:** Otherwise, the response body will contain an [error](./errors) with a Verified error code:
         - **[`OCE008`](./errors#oce008)** indicates that the `code` is invalid or expired. → _Return to [step 2](#2-call-post-1-click-1)._
         - **[`OCE011`](./errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. → _Continue to [step 6](#6-if-necessary-prompt-user-for-additional-info)_
-        - **[`OCE013`](./errors#oce013)** indicates that Verified found no [credentials](./data#credentials) for the user. → _Fall back to a manual signup flow._
+        - **[`OCE013`](./errors#oce013)** indicates that Verified found no [credentials](/reference/data#credentials) for the user. → _Fall back to a manual signup flow._
         - **[`OCE017`](./errors#oce017)** indicates that Verified blocked the user because the risk score was too high. → _Reject the user or flag them and fall back to a manual signup flow._
         - **[`OCE018`](./errors#oce018)** indicates that the maximum number of `code` attempts has been reached. → _Return to [step 2](#2-call-post-1-click-1)._
 
@@ -389,7 +389,7 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
     - **Success:** If we can source data based on the phone number and birth date, the [response body](./endpoints?integrationType=semi-hosted#patch-1-click-response) will be a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), which contains the user's data and metadata about it. In this case, continue to [step 8](#8-prompt-user-to-confirm-their-data).
     - **Error:** Otherwise, the response body will contain an [error](./errors) with a Verified error code:
         - **[`OCE012`](./errors#oce012)** indicates that one or more of the additional inputs you passed (the user's birth date and/or SSN4) mismatched. → _Return to [step 6](#6-if-necessary-prompt-user-for-additional-info)._
-        - **[`OCE013`](./errors#oce013)** indicates that Verified found no [credentials](./data#credentials) for the user. → _Fall back to a manual signup flow._
+        - **[`OCE013`](./errors#oce013)** indicates that Verified found no [credentials](/reference/data#credentials) for the user. → _Fall back to a manual signup flow._
         - **[`OCE019`](./errors#oce019)** indicates that the maximum number of attempts has been reached for one or more of the additional inputs. → _Fall back to a manual signup flow._
 
     <SandboxValidationAdmonition/>
@@ -458,7 +458,7 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
     - **Success:** If we can source data based on just the phone number, the [response body](./endpoints?integrationType=non-hosted#post-1-click-response) will contain a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 5](#5-prompt-user-to-confirm-their-data).
     - **Error:** Otherwise, the response body will contain an [error](./errors) with a Verified error code:
         - **[`OCE011`](./errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. → _Continue to [step 3](#3-if-necessary-prompt-user-for-additional-info)_
-        - **[`OCE013`](./errors#oce013)** indicates that Verified found no [credentials](./data#credentials) for the user. → _Fall back to a manual signup flow._(#6-if-necessary-prompt-user-for-additional-info)._
+        - **[`OCE013`](./errors#oce013)** indicates that Verified found no [credentials](/reference/data#credentials) for the user. → _Fall back to a manual signup flow._(#6-if-necessary-prompt-user-for-additional-info)._
         - **[`OCE017`](./errors#oce017)** indicates that Verified blocked the user because the risk score was too high. → _Reject the user or flag them and fall back to a manual signup flow._
 
     </CollapsibleSection>
@@ -494,7 +494,7 @@ If you _do_ include `credentialRequests` in the request body of `POST /1-click`,
     - **Success:** If we can source data based on the phone number and birth date, the [response body](./endpoints?integrationType=semi-hosted#patch-1-click-response) will be a [`1ClickEntity`](./types#1clickentity) (see this [example](./types#example-1clickentity)), which contains the user's data and metadata about it. → _Continue to [step 5](#5-prompt-user-to-confirm-their-data)._
     - **Error:** Otherwise, the response body will contain an [error](./errors) with a Verified error code:
         - **[`OCE012`](./errors#oce012)** indicates that one or more of the additional inputs you passed (the user's birth date and/or SSN4) mismatched. → _Return to [step 3](#3-if-necessary-prompt-user-for-additional-info)._
-        - **[`OCE013`](./errors#oce013)** indicates that Verified found no [credentials](./data#credentials) for the user. → _Fall back to a manual signup flow._
+        - **[`OCE013`](./errors#oce013)** indicates that Verified found no [credentials](/reference/data#credentials) for the user. → _Fall back to a manual signup flow._
         - **[`OCE019`](./errors#oce019)** indicates that the maximum number of attempts has been reached for one or more of the additional inputs. → _Fall back to a manual signup flow._
 
     ---

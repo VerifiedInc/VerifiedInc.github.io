@@ -46,12 +46,12 @@ You can use our test users with our [Demo](https://1-click.demo.verified.inc) an
 
 ## Success
 
-Use these test users to go through successful 1-Click Signup flows (where Verified returns [credentials](./data#credentials)). 
+Use these test users to go through successful 1-Click Signup flows (where Verified returns [credentials](/reference/data#credentials)). 
 
 
 ### Phone Only
 
-For these users, only a phone number is needed to source [credentials](./data#credentials).
+For these users, only a phone number is needed to source [credentials](/reference/data#credentials).
 
 
 #### Primary Test User
@@ -75,7 +75,7 @@ This is Richard Hendricks from the show _Silicon Valley_! 😂
 
 #### Allowed
 
-Use this user to specifically test the low risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [medium risk (flagged)](#flagged) and [high risk (blocked)](#blocked) test users._
+Use this user to specifically test the low risk case of [risk signals metadata](/reference/data#risk-signals). _Compare it to the [medium risk (flagged)](#flagged) and [high risk (blocked)](#blocked) test users._
 
 <TestUserDisplay
   data={{
@@ -89,7 +89,7 @@ Use this user to specifically test the low risk case of [risk signals metadata](
 
 #### Flagged
 
-Use this user to specifically test the medium risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
+Use this user to specifically test the medium risk case of [risk signals metadata](/reference/data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
 
 <TestUserDisplay
   data={{
@@ -103,7 +103,7 @@ Use this user to specifically test the medium risk case of [risk signals metadat
 
 ### Phone and Additional Info
 
-For these users, both a phone number and additional information is needed to source [credentials](./data#credentials). 
+For these users, both a phone number and additional information is needed to source [credentials](/reference/data#credentials). 
 
 If you start with phone only, as we recommend (see the [Integration Guide](./integration-guide)), you will get the [`OCE011`](./errors#oce011) error code, indicating that additional information is required. Within the error, `data.additionalInputs` specifies which additional inputs you can pass (see [`OCE011`](./errors#oce011) for details).
 
@@ -116,7 +116,7 @@ For example, use `1979-01-01` for `birthDate` (since all test users have `1989-0
 
 #### Phone and Birth Date and/or SSN4
 
-For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](./data#credentials).
+For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](/reference/data#credentials).
 
 <TestUserDisplay
   data={{
@@ -145,7 +145,7 @@ For this user, both a phone number and either a birth date or SSN4 is needed to 
 
 #### Phone and Birth Date
 
-For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](./data#credentials).
+For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](/reference/data#credentials).
 
 <TestUserDisplay
   data={{
@@ -173,7 +173,7 @@ For this user, both a phone number and either a birth date or SSN4 is needed to 
 
 #### Phone and SSN4
 
-For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](./data#credentials).
+For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](/reference/data#credentials).
 
 <TestUserDisplay
   data={{
@@ -201,7 +201,7 @@ For this user, both a phone number and either a birth date or SSN4 is needed to 
 
 ### Credential Cases
 
-Use these test users to write specific cases for [credential](./data#credentials) data, if it's relevant to your use case.
+Use these test users to write specific cases for [credential](/reference/data#credentials) data, if it's relevant to your use case.
 
 
 #### Address
@@ -288,7 +288,7 @@ For this test user, you will get a [`1ClickEntity`](./types#1clickentity) with a
 
 ## Failure
 
-Use these test users to go through unsuccessful 1-Click Signup flows (where Verified does _not_ return [credentials](./data#credentials)). 
+Use these test users to go through unsuccessful 1-Click Signup flows (where Verified does _not_ return [credentials](/reference/data#credentials)). 
 
 
 ### No Credentials Found
@@ -333,7 +333,7 @@ If you then pass additional inputs (with any values), you will get the [`OCE013`
 
 ### Blocked
 
-Use this user to specifically test the high risk case of [risk signals metadata](./data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [medium risk (flagged)](#flagged) test users._
+Use this user to specifically test the high risk case of [risk signals metadata](/reference/data#risk-signals). _Compare it to the [low risk (allowed)](#allowed) and [medium risk (flagged)](#flagged) test users._
 
 For this user, you will get the [`OCE017`](./errors#oce017) error code, indicating that Verified blocked returning data for the user because the risk score is too high. 
 

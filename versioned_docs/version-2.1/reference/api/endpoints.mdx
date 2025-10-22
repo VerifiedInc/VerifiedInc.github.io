@@ -187,6 +187,15 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
     email?: string,
     birthDate?: string,
     ssn4?: string,
+    fullName?: {
+        firstName?: string,
+        middleName?: string,
+        lastName?: string
+    },
+    address?: {
+        state?: string,
+        zipCode?: string
+    }
     credentialRequests?: CredentialRequest[]
 }
 ```

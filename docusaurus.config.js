@@ -343,10 +343,6 @@ module.exports = {
             from: '/data/outputs/credentials',
           },
           {
-            to: '/reference/data/outputs/credentials#core-data',
-            from: '/data/outputs/credentials#core-kyc',
-          },
-          {
             to: '/reference/data/outputs/metadata',
             from: '/data/outputs/metadata',
           },

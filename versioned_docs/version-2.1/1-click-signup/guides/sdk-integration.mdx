@@ -69,8 +69,10 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 **Complete the 1-Click Signup [Setup](/1-click-signup/guides/setup) guide before following this SDK Integration guide.**
 :::
 
-:::info This is a Web Client SDK
-**This is a web client SDK, but it can easily be used inside mobile apps!** Many of our customers do exactly this, so they can provide users with a unified signup experience across web, iOS, and Android.
+:::info This SDK Works for Web and Native Mobile
+**You can use this SDK in both web and native mobile apps!** Many of our customers do exactly this, so they can provide users with a unified (and much easier to maintain) signup experience across web, iOS, and Android. 
+
+**For how to do this, see [Native Mobile App Integration](#native-mobile-app-integration).**
 :::
 
 <SequenceDiagramSDK/>
@@ -374,6 +376,943 @@ We recommend you handle all error reasons by restarting the SDK. To do so, creat
     }
     ```
 </details>
+
+---
+
+## Native Mobile App Integration
+
+The Verified SDK is a client side SDK that makes it easy to integrate 1-Click Signup into any application. Because it’s web based, **the SDK can be easily used within both web and native mobile apps.** 
+
+:::tip
+**Using a single SDK across all types of apps makes it far easier to maintain.** We highly recommend you do this if you have mobile apps! The result will be unified, easy to maintain signup experience across all platforms.
+:::
+
+For native mobile apps, the SDK should be rendered within a [WebView](https://en.wikipedia.org/wiki/WebView). By using the right type of WebView, and by opening and closing it on appropriate triggers, the SDK can be made to feel like a seamless part of the native app. Below, we provide guidance for [integration strategy](#integration-strategy) and include a [full example](#full-example) of a React Native app integration.
+
+
+### Integration Strategy
+
+Implementing the Verified SDK in a native mobile app has three parts:
+
+1. **JavaScript bridge between the WebView and application.** In the example below, it is the injected code.
+2. **Message handler.** In the example below, it happens through the React Native `postMessage` method.
+3. **UI handler.** In the example below, we create a `VerifiedSDK` component inside the codebase that renders a React Native WebView (from the `react-native-webview` library).
+
+
+### Full Example
+
+<CollapsibleGroup firstSectionExpanded={false}>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### Setup
+        </CollapsibleHeader>
+
+        ```tsx
+        import React, { useRef, useState, useEffect, forwardRef, useLayoutEffect } from 'react';
+        import { View, StyleSheet, ActivityIndicator, Platform, Text } from 'react-native';
+        import { WebView } from 'react-native-webview';
+
+        // Constants for Verified
+        const VERIFIED_ORIGINS = {
+            local: 'http://localhost:3070',
+            sandbox: 'https://1-click.sandbox-verifiedinc.com', // Use Sandbox for development
+            production: 'https://1-click.verified.inc',
+            custom: '', // Will be overridden with customUrl
+        };
+
+        const EVENT_SOURCE = 'Verified.Client';
+
+        const EVENT_TYPES = {
+            VIEWPORT_READY: 'VERIFIED_CLIENT_SDK_VIEWPORT_READY',
+            VIEWPORT_RESIZE: 'VERIFIED_CLIENT_SDK_VIEWPORT_RESIZE',
+            USER_OPTED_OUT: 'VERIFIED_CLIENT_SDK_USER_OPTED_OUT',
+            FORM_SUBMISSION: 'VERIFIED_CLIENT_SDK_FORM_SUBMISSION',
+            FORM_SUBMISSION_ERROR: 'VERIFIED_CLIENT_SDK_FORM_SUBMISSION_ERROR',
+            INVALID_SESSION_KEY: 'VERIFIED_CLIENT_SDK_INVALID_SESSION_KEY',
+            SESSION_TIMEOUT: 'VERIFIED_CLIENT_SDK_SESSION_TIMEOUT',
+        };
+
+        const RESULT_TYPES = {
+            USER_SHARED_CREDENTIALS: 'USER_SHARED_CREDENTIALS',
+            USER_OPTED_OUT: 'USER_OPTED_OUT',
+        };
+
+        const ERROR_REASONS = {
+            SESSION_TIMEOUT: 'SESSION_TIMEOUT',
+            INVALID_SESSION_KEY: 'INVALID_SESSION_KEY',
+            SHARE_CREDENTIALS_ERROR: 'SHARE_CREDENTIALS_ERROR',
+        };
+
+        // Define the props interface
+        interface VerifiedSdkProps {
+            sessionKey?: string;
+            environment?: 'local' | 'dev' | 'staging' | 'sandbox' | 'production' | 'custom';
+            customUrl?: string; // Add customUrl prop
+            onResult?: (result: any) => void;
+            onError?: (error: any) => void;
+            style?: any;
+            isLoading?: boolean;
+            error?: Error | null;
+        }
+
+        // Define a default height for the container
+        const DEFAULT_CONTAINER_HEIGHT = 326; // Minimum height as in the web SDK
+
+        const VerifiedSdk = forwardRef<WebView, VerifiedSdkProps>(
+            (
+                {
+                    sessionKey,
+                    environment = 'local',
+                    customUrl,
+                    onResult,
+                    onError,
+                    style,
+                    isLoading = false,
+                    error = null,
+                },
+                ref
+            ) => {
+                // Use refs for height management to avoid re-renders
+                const webViewContainerRef = useRef<View>(null);
+                const [loading, setLoading] = useState(true);
+                // Keep initial height in state for first render, but don't update it later
+                const [initialHeight] = useState(DEFAULT_CONTAINER_HEIGHT);
+                // Use a ref to track current height without causing re-renders
+                const heightRef = useRef(DEFAULT_CONTAINER_HEIGHT);
+
+                // Build the URL for the Verified service
+                let origin;
+
+                // Use customUrl when environment is 'custom' or when customUrl is provided
+                if (environment === 'custom' && customUrl) {
+                    // Strip any trailing slashes from customUrl
+                    origin = customUrl.replace(/\/$/, '');
+                } else {
+                    origin = VERIFIED_ORIGINS[environment] || VERIFIED_ORIGINS.production;
+                }
+
+                console.log('Environment:', environment);
+                console.log('Origin:', origin);
+                console.log('Custom URL:', customUrl);
+
+                // Always log values for debugging purposes
+                console.log('SessionKey available:', !!sessionKey);
+
+                // Construct the URL if possible, even with incomplete data for debugging
+                let urlString = '';
+                try {
+                    if (origin) {
+                        const url = new URL(`${origin}/sdk/client`);
+                        if (sessionKey) {
+                            url.searchParams.append('sessionKey', sessionKey);
+                        } else {
+                            console.log('Warning: No session key provided');
+                        }
+                        urlString = url.toString();
+                        console.log('SDK URL:', urlString);
+                    } else {
+                        console.log('Error: No valid origin to build URL');
+                    }
+                } catch (e) {
+                    console.error('Error building URL:', e);
+                }
+
+                // Log validation state
+                if (!sessionKey || !origin) {
+                    console.log('Missing required props:', !sessionKey ? 'sessionKey' : 'valid origin');
+                }
+
+                // This script will be injected into the WebView to handle communication
+                const injectedJavaScript = `
+                (function() {
+                    // Set up message listener to communicate with React Native
+                    window.addEventListener('message', function(event) {
+                        // Validate the source
+                        if (event.data && event.data.source === '${EVENT_SOURCE}') {
+                            // Post the message back to React Native
+                            window.ReactNativeWebView.postMessage(JSON.stringify(event.data));
+                        }
+                    });
+                    
+                    // Notify that the script has been injected
+                    true;
+                })();
+            `;
+
+                // Handle messages from the WebView
+                const handleMessage = (event: any) => {
+                    try {
+                        const message = JSON.parse(event.nativeEvent.data);
+
+                        if (message.source !== EVENT_SOURCE) {
+                            return;
+                        }
+
+                        // Handle different event types
+                        switch (message.type) {
+                            case EVENT_TYPES.USER_OPTED_OUT:
+                                onResult && onResult({ type: RESULT_TYPES.USER_OPTED_OUT });
+                                break;
+
+                            case EVENT_TYPES.FORM_SUBMISSION:
+                                onResult &&
+                                    onResult({
+                                        type: RESULT_TYPES.USER_SHARED_CREDENTIALS,
+                                        identityUuid: message.data?.identityUuid,
+                                    });
+                                break;
+
+                            case EVENT_TYPES.FORM_SUBMISSION_ERROR:
+                                onError && onError({ reason: ERROR_REASONS.SHARE_CREDENTIALS_ERROR });
+                                break;
+
+                            case EVENT_TYPES.INVALID_SESSION_KEY:
+                                onError && onError({ reason: ERROR_REASONS.INVALID_SESSION_KEY });
+                                break;
+
+                            case EVENT_TYPES.SESSION_TIMEOUT:
+                                onError && onError({ reason: ERROR_REASONS.SESSION_TIMEOUT });
+                                break;
+
+                            // Handle viewport events if needed
+                            case EVENT_TYPES.VIEWPORT_READY:
+                            case EVENT_TYPES.VIEWPORT_RESIZE:
+                                console.log('Viewport event:', message.type, message.data);
+                                const newHeight = message.data?.height;
+                                if (newHeight) {
+                                    onViewportResize && onViewportResize(newHeight);
+                                }
+                                break;
+                        }
+                    } catch (error) {
+                        console.error('Error parsing message from WebView:', error);
+                    }
+                };
+
+                // Handle viewport resize messages from the WebView
+                const onViewportResize = (height: number) => {
+                    console.log('Viewport height changed to:', height);
+                    if (height && height > 0 && webViewContainerRef.current) {
+                        // Update height ref
+                        heightRef.current = height;
+                        // Update the container style directly without re-rendering the component
+                        webViewContainerRef.current.setNativeProps({
+                            style: { height },
+                        });
+                    }
+                };
+
+                // Handle WebView load end
+                const handleLoadEnd = () => {
+                    setLoading(false);
+                };
+
+                // Define all hooks first, before any conditional returns
+                // This ensures hooks are always called in the same order
+                useEffect(() => {
+                    console.log('VerifiedSdk useEffect', sessionKey, error);
+                    if (!sessionKey || typeof sessionKey !== 'string') {
+                        console.error('Invalid session key:', sessionKey);
+                        onError && onError({ reason: ERROR_REASONS.INVALID_SESSION_KEY });
+                    }
+
+                    if (error) {
+                        console.error('Error:', error);
+                        onError && onError({ reason: ERROR_REASONS.INVALID_SESSION_KEY });
+                    }
+                }, [sessionKey, error, onError]);
+
+                // Now handle conditional rendering after all hooks are defined
+                // Handle loading state
+                if (isLoading) {
+                    return (
+                        <View style={[styles.container, styles.loadingContainer, style]}>
+                            <ActivityIndicator size="large" color="#0000ff" />
+                            <Text style={styles.loadingText}>Initializing Verified SDK...</Text>
+                        </View>
+                    );
+                }
+
+                // Handle error state
+                if (error) {
+                    return (
+                        <View style={[styles.container, styles.errorContainer, style]}>
+                            <Text style={styles.errorText}>Error: {error.message}</Text>
+                        </View>
+                    );
+                }
+
+                // Return early if no session key is provided
+                if (
+                    !sessionKey ||
+                    typeof sessionKey !== 'string' ||
+                    sessionKey.trim() === '' ||
+                    !urlString.includes('sessionKey=')
+                ) {
+                    return (
+                        <View style={[styles.container, styles.errorContainer, style]}>
+                            <Text style={styles.errorText}>Error: Invalid session key</Text>
+                        </View>
+                    );
+                }
+
+                // Set user agent based on platform
+                const userAgent = Platform.select({
+                    ios: 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148',
+                    android:
+                        'Mozilla/5.0 (Linux; Android 10; Android SDK built for x86) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36',
+                    default: undefined,
+                });
+
+                return (
+                    <View
+                        ref={webViewContainerRef}
+                        style={[styles.container, { height: heightRef.current }, style]}
+                    >
+                        <WebView
+                            ref={ref}
+                            source={{ uri: urlString }}
+                            style={styles.webview}
+                            originWhitelist={['*']}
+                            javaScriptEnabled={true}
+                            domStorageEnabled={true}
+                            injectedJavaScript={injectedJavaScript}
+                            onMessage={handleMessage}
+                            onLoadEnd={handleLoadEnd}
+                            userAgent={userAgent}
+                            // Security settings
+                            allowsInlineMediaPlayback={true}
+                            mediaPlaybackRequiresUserAction={true}
+                            // iOS specific props
+                            allowsBackForwardNavigationGestures={false}
+                            // Android specific props
+                            allowFileAccess={false}
+                            allowUniversalAccessFromFileURLs={false}
+                            allowFileAccessFromFileURLs={false}
+                            // Prevent navigation away from the Verified service
+                            onShouldStartLoadWithRequest={request => {
+                                // Allow the initial load and same-origin navigation
+                                const requestUrl = new URL(request.url);
+                                return requestUrl.origin === origin || request.url === urlString;
+                            }}
+                            webviewDebuggingEnabled={true}
+                        />
+                    </View>
+                );
+            }
+        );
+
+        const styles = StyleSheet.create({
+            container: {
+                width: '100%',
+                maxWidth: 396, // Maximum width as in the web SDK
+                alignSelf: 'center',
+                position: 'relative',
+                backgroundColor: 'white',
+                borderRadius: 8,
+                overflow: 'hidden',
+                marginVertical: 16,
+            },
+            webview: {
+                flex: 1,
+                backgroundColor: 'white',
+            },
+            loadingContainer: {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'white',
+                zIndex: 1,
+            },
+            loadingText: {
+                marginTop: 16,
+                fontSize: 14,
+                color: '#666',
+            },
+            errorContainer: {
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#ffebee',
+            },
+            errorText: {
+                color: '#d32f2f',
+                textAlign: 'center',
+                padding: 16,
+                fontSize: 14,
+            },
+        });
+
+        export default VerifiedSdk;
+        ```
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### Usage
+        </CollapsibleHeader>
+
+        ```tsx
+        import React, { useState, useEffect } from 'react';
+        import { StyleSheet, Alert, TouchableOpacity, ScrollView } from 'react-native';
+        import { ThemedText } from '@/components/ThemedText';
+        import { ThemedView } from '@/components/ThemedView';
+        import VerifiedSdk from '@/components/VerifiedSdk';
+        import DebugPanel from '@/components/DebugPanel';
+        import { useSessionKey, FeatureEnvEnum } from '@/hooks/useSessionKey';
+        import { VERIFIED_API_KEY } from '@env';
+
+        export default function VerifiedScreen() {
+            // State management
+            const [result, setResult] = useState<string | null>(null);
+            const [retryCount, setRetryCount] = useState<number>(0);
+            const [isRetrying, setIsRetrying] = useState<boolean>(false);
+            const [sessionStarted, setSessionStarted] = useState<boolean>(false);
+
+            // Debug options state
+            const [debugOptions, setDebugOptions] = useState<{
+                environment: FeatureEnvEnum;
+                phoneNumber: string;
+                customUrl: string;
+            }>({
+                environment: FeatureEnvEnum.Primary,
+                phoneNumber: '',
+                customUrl: 'http://core-api.dev-verifiedinc.com/',
+            });
+
+            // API key is loaded from environment variables
+            const apiKey = VERIFIED_API_KEY;
+            // Use the session key hook with autoInitialize set to false
+            const {
+                sessionKey,
+                sdkEnvironment,
+                isLoading,
+                error,
+                refreshSessionKey,
+                setPhoneNumber,
+                setCustomUrl,
+            } = useSessionKey({
+                apiKey, // Using API key from environment variables
+                environment: debugOptions.environment,
+                phoneNumber: debugOptions.phoneNumber,
+                customUrl: debugOptions.customUrl,
+                autoInitialize: false,
+            });
+
+            /**
+             * Handles the start button click from the debug panel
+             * Sets up debug options and initiates session creation
+             */
+            const handleDebugStart = (values: {
+                environment: FeatureEnvEnum;
+                phoneNumber: string;
+                customUrl: string;
+            }) => {
+                setDebugOptions(values);
+                setPhoneNumber(values.phoneNumber);
+                setCustomUrl(values.customUrl);
+                setRetryCount(0);
+                setIsRetrying(false);
+                setSessionStarted(true);
+                // After setting all values, refresh the session key
+                setTimeout(refreshSessionKey, 0);
+            };
+
+            /**
+             * Handles manual refresh of the session key
+             * Resets retry count and refreshes the session
+             */
+            const handleRefresh = () => {
+                setRetryCount(0);
+                setIsRetrying(false);
+                refreshSessionKey();
+            };
+
+            useEffect(() => {
+                console.log(`customUrl changed to: ${debugOptions.customUrl}`);
+            }, [debugOptions.customUrl]);
+
+            /**
+             * Gets the appropriate URL for the SDK based on the environment
+             * Maps feature environments to their corresponding SDK environments
+             */
+            const getSdkUrl = () => {
+                // Handle custom URL case
+                if (debugOptions.environment === FeatureEnvEnum.Custom && debugOptions.customUrl) {
+                    return debugOptions.customUrl;
+                }
+
+                // For standard environments, we'll let the SDK handle the URLs
+                // based on the environment passed to it
+                return undefined;
+            };
+
+            /**
+             * Maps the FeatureEnvEnum to appropriate SDK environment string
+             * This ensures proper mapping between our environment types and SDK's expected values
+             */
+            const getProperSdkEnvironment = (): string => {
+                switch (debugOptions.environment) {
+                    case FeatureEnvEnum.Local:
+                        return 'local';
+                    case FeatureEnvEnum.Dev:
+                        return 'dev';
+                    case FeatureEnvEnum.Staging:
+                        return 'staging';
+                    case FeatureEnvEnum.Sandbox:
+                        return 'sandbox';
+                    case FeatureEnvEnum.Production:
+                        return 'production';
+                    case FeatureEnvEnum.Custom:
+                        return 'custom';
+                    // Handle legacy values
+                    case FeatureEnvEnum.Primary:
+                        return 'local'; // Primary maps to local
+                    case FeatureEnvEnum.Secondary:
+                        return 'dev'; // Secondary maps to dev
+                    default:
+                        return 'local'; // Default to local
+                }
+            };
+
+            /**
+             * Auto-refresh effect that handles session key refresh on error
+             * Implements retry logic with limits and delay
+             */
+            useEffect(() => {
+                // Only attempt to retry if there's an error and we haven't exceeded retry limits
+                if (error && retryCount < 3 && !isRetrying) {
+                    console.log(`Error detected (attempt ${retryCount + 1}/3):`, error.message);
+                    setIsRetrying(true);
+
+                    // Add a delay before retrying to prevent rapid consecutive calls
+                    const timer = setTimeout(() => {
+                        setRetryCount(prev => prev + 1);
+                        refreshSessionKey();
+                        setIsRetrying(false);
+                    }, 2000); // 2 second delay
+
+                    return () => clearTimeout(timer);
+                }
+            }, [error, retryCount, refreshSessionKey, isRetrying]);
+
+            /**
+             * Handles the result returned from the Verified SDK
+             * Processes different result types and updates UI
+             */
+            const handleResult = (result: any) => {
+                console.log('Verified result:', result);
+
+                if (result.type === 'USER_SHARED_CREDENTIALS') {
+                    const message = `Credentials shared successfully!\nIdentity UUID: ${result.identityUuid}`;
+                    setResult(message);
+                    Alert.alert('Success', message);
+                } else if (result.type === 'USER_OPTED_OUT') {
+                    const message = 'You opted out of sharing credentials';
+                    setResult(message);
+                    Alert.alert('Opted Out', message);
+                }
+            };
+
+            /**
+             * Handles errors returned from the Verified SDK
+             * Maps error reasons to user-friendly messages
+             */
+            const handleError = (error: any) => {
+                console.error('Verified error:', error);
+                let errorMessage = 'An unknown error occurred';
+
+                switch (error.reason) {
+                    case 'INVALID_SESSION_KEY':
+                        errorMessage = 'The session key is invalid';
+                        break;
+                    case 'SESSION_TIMEOUT':
+                        errorMessage = 'The session timed out';
+                        break;
+                    case 'SHARE_CREDENTIALS_ERROR':
+                        errorMessage = 'Error sharing credentials';
+                        break;
+                }
+
+                setResult(`Error: ${errorMessage}`);
+                Alert.alert('Error', errorMessage);
+            };
+
+            return (
+                <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 50 }}>
+                    <ThemedView style={styles.container}>
+                        <ThemedText type="title" style={styles.title}>
+                            Verified 1-Click Integration
+                        </ThemedText>
+
+                        <ThemedText style={styles.description}>
+                            This screen demonstrates the integration of Verified's 1-Click service in a React Native
+                            app. The service allows users to securely share their credentials with just one click.
+                        </ThemedText>
+
+                        {/* Debug Panel */}
+                        <DebugPanel onStart={handleDebugStart} isLoading={isLoading} />
+                        {/* Only show status and SDK after session is started */}
+                        {sessionStarted && (
+                            <ThemedView style={styles.sessionContent}>
+                                {/* Status information */}
+                                <ThemedView style={styles.statusContainer}>
+                                    <ThemedText type="subtitle">Status:</ThemedText>
+                                    <ThemedText>
+                                        {isLoading || isRetrying
+                                            ? 'Initializing Verified SDK...'
+                                            : error
+                                                ? `Error: ${error.message} ${retryCount >= 3 ? '(Retry limit reached)' : ''}`
+                                                : sessionKey
+                                                    ? 'Session key generated successfully'
+                                                    : 'Waiting for session key...'}
+                                    </ThemedText>
+                                    {error && retryCount >= 3 && (
+                                        <TouchableOpacity style={styles.retryButton} onPress={handleRefresh}>
+                                            <ThemedText style={styles.buttonText}>Retry</ThemedText>
+                                        </TouchableOpacity>
+                                    )}
+                                </ThemedView>
+
+                                {/* Display debug information */}
+                                <ThemedView style={styles.debugInfoContainer}>
+                                    <ThemedText type="subtitle">Debug Information:</ThemedText>
+                                    <ThemedText>Environment: {debugOptions.environment}</ThemedText>
+                                    {debugOptions.environment === FeatureEnvEnum.Custom && (
+                                        <ThemedText>Custom URL: {debugOptions.customUrl}</ThemedText>
+                                    )}
+                                    {debugOptions.phoneNumber && (
+                                        <ThemedText>Phone Number: {debugOptions.phoneNumber}</ThemedText>
+                                    )}
+                                </ThemedView>
+
+                                {/* Display the session key when available */}
+                                {sessionKey && (
+                                    <ThemedView style={styles.sessionKeyContainer}>
+                                        <ThemedText type="subtitle">Session Key:</ThemedText>
+                                        <ThemedText style={styles.sessionKeyText} selectable={true}>
+                                            {sessionKey}
+                                        </ThemedText>
+                                    </ThemedView>
+                                )}
+
+                                {/* Verified SDK Component */}
+                                {sessionKey && (
+                                    <ThemedView style={styles.sdkWrapper}>
+                                        <ThemedText type="subtitle" style={styles.sdkTitle}>
+                                            Verified SDK:
+                                        </ThemedText>
+                                        <VerifiedSdk
+                                            sessionKey={sessionKey}
+                                            environment={getProperSdkEnvironment() as 'local' | 'dev' | 'staging' | 'sandbox' | 'production' | 'custom'}
+                                            customUrl={getSdkUrl()}
+                                            onResult={handleResult}
+                                            onError={handleError}
+                                            isLoading={isLoading}
+                                            error={error}
+                                            style={styles.verifiedContainer}
+                                        />
+                                    </ThemedView>
+                                )}
+
+                                {result && (
+                                    <ThemedView style={styles.resultContainer}>
+                                        <ThemedText type="subtitle">Result:</ThemedText>
+                                        <ThemedText>{result}</ThemedText>
+                                    </ThemedView>
+                                )}
+                            </ThemedView>
+                        )}
+
+                        <ThemedText style={styles.note}>
+                            Note: Configure your debug options and press Start Session to begin.
+                        </ThemedText>
+                    </ThemedView>
+                </ScrollView>
+            );
+        }
+
+        const styles = StyleSheet.create({
+            container: {
+                padding: 16,
+            },
+            sessionContent: {
+                width: '100%',
+            },
+            sdkWrapper: {
+                marginBottom: 24,
+            },
+            sdkTitle: {
+                marginBottom: 8,
+            },
+            title: {
+                textAlign: 'center',
+                marginBottom: 16,
+            },
+            description: {
+                marginBottom: 24,
+                textAlign: 'center',
+            },
+            statusContainer: {
+                marginBottom: 24,
+                padding: 16,
+                backgroundColor: '#f5f5f5',
+                borderRadius: 8,
+            },
+            debugInfoContainer: {
+                marginBottom: 24,
+                padding: 16,
+                backgroundColor: '#e3f2fd',
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: '#bbdefb',
+            },
+            sessionKeyContainer: {
+                marginBottom: 24,
+                padding: 16,
+                backgroundColor: '#e8f5e9',
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: '#c8e6c9',
+            },
+            sessionKeyText: {
+                fontFamily: 'monospace',
+                fontSize: 14,
+                marginTop: 8,
+                padding: 8,
+                backgroundColor: '#f1f8e9',
+                borderRadius: 4,
+                overflow: 'hidden',
+            },
+            retryButton: {
+                backgroundColor: '#2196F3',
+                padding: 12,
+                borderRadius: 4,
+                alignItems: 'center',
+                marginTop: 16,
+            },
+            buttonText: {
+                color: 'white',
+                fontWeight: 'bold',
+            },
+            verifiedContainer: {
+                borderWidth: 1,
+                borderColor: '#ddd',
+                borderRadius: 8,
+                marginBottom: 24,
+                overflow: 'hidden',
+                height: 350, // Set reasonable height for SDK
+            },
+            resultContainer: {
+                marginTop: 24,
+                padding: 16,
+                backgroundColor: '#f5f5f5',
+                borderRadius: 8,
+            },
+            note: {
+                marginTop: 24,
+                fontSize: 12,
+                fontStyle: 'italic',
+                textAlign: 'center',
+            },
+        });
+        ```
+    
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### Session Key Generation
+        </CollapsibleHeader>
+
+        ```tsx
+        import { useState, useCallback, useEffect } from 'react';
+
+        export enum FeatureEnvEnum {
+            Local = 'local',
+            Dev = 'dev',
+            Staging = 'staging',
+            Sandbox = 'sandbox',
+            Production = 'production',
+            Custom = 'custom',
+            // Keep backward compatibility
+            Primary = 'primary',
+            Secondary = 'secondary',
+        }
+
+        const DEFAULT_API_URLS = {
+            [FeatureEnvEnum.Local]: 'http://localhost:3010',
+            [FeatureEnvEnum.Dev]: 'https://core-api.dev-verifiedinc.com/v2',
+            [FeatureEnvEnum.Staging]: 'https://core-api.staging-verifiedinc.com/v2',
+            [FeatureEnvEnum.Sandbox]: 'https://core-api.sandbox-verifiedinc.com/v2',
+            [FeatureEnvEnum.Production]: 'https://api.verified.inc',
+            [FeatureEnvEnum.Custom]: '',
+            // Keep backward compatibility
+            [FeatureEnvEnum.Primary]: 'https://core-api.dev-verifiedinc.com/v2',
+            [FeatureEnvEnum.Secondary]: 'https://core-api.dev-verifiedinc.com/v2',
+        };
+
+        const DEFAULT_SDK_ENVIRONMENTS = {
+            [FeatureEnvEnum.Local]: 'local',
+            [FeatureEnvEnum.Dev]: 'dev',
+            [FeatureEnvEnum.Staging]: 'staging',
+            [FeatureEnvEnum.Sandbox]: 'sandbox',
+            [FeatureEnvEnum.Production]: 'production',
+            [FeatureEnvEnum.Custom]: 'custom',
+            // Keep backward compatibility
+            [FeatureEnvEnum.Primary]: 'local',
+            [FeatureEnvEnum.Secondary]: 'dev',
+        };
+
+        const getBaseUrl = (environment: FeatureEnvEnum, customUrl?: string): string => {
+            if (environment === FeatureEnvEnum.Custom && customUrl) {
+                return customUrl;
+            }
+            return DEFAULT_API_URLS[environment] || DEFAULT_API_URLS[FeatureEnvEnum.Primary];
+        };
+
+        export async function getSessionKey(
+            apiKey: string,
+            environment: FeatureEnvEnum = FeatureEnvEnum.Primary,
+            phoneNumber?: string,
+            customUrl?: string
+        ): Promise<string | undefined> {
+            const headers = {
+                Authorization: apiKey,
+                'Content-Type': 'application/json',
+            };
+
+            const payload: Record<string, any> = {};
+            if (phoneNumber) {
+                payload.phoneNumber = phoneNumber;
+            }
+
+            try {
+                console.log(`Fetching session key from ${getBaseUrl(environment, customUrl)}/client/1-click`);
+                const response = await fetch(`${getBaseUrl(environment, customUrl)}/client/1-click`, {
+                    method: 'POST',
+                    headers,
+                    body: phoneNumber ? JSON.stringify(payload) : undefined,
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (!result.sessionKey) {
+                    console.error('Failed to retrieve session key: ' + JSON.stringify(result));
+                    return undefined;
+                }
+
+                return result.sessionKey;
+            } catch (e) {
+                console.error(
+                    `Session key request failed. Error: ${e instanceof Error ? e.message : JSON.stringify(e)}`
+                );
+                return undefined;
+            }
+        }
+
+        interface UseSessionKeyProps {
+            apiKey?: string;
+            environment?: FeatureEnvEnum;
+            phoneNumber?: string;
+            customUrl?: string;
+            autoInitialize?: boolean;
+        }
+
+        interface UseSessionKeyResult {
+            sessionKey: string | undefined;
+            sdkEnvironment: string;
+            isLoading: boolean;
+            error: Error | null;
+            refreshSessionKey: () => Promise<void>;
+            setCustomUrl: (url: string) => void;
+            setPhoneNumber: (phone: string) => void;
+        }
+
+        export const useSessionKey = ({
+            apiKey,
+            environment = FeatureEnvEnum.Primary,
+            phoneNumber: initialPhoneNumber,
+            customUrl: initialCustomUrl,
+            autoInitialize = true,
+        }: UseSessionKeyProps): UseSessionKeyResult => {
+            const [sessionKey, setSessionKey] = useState<string | undefined>(undefined);
+            const [sdkEnvironment, setSdkEnvironment] = useState<string>(
+                DEFAULT_SDK_ENVIRONMENTS[environment]
+            );
+            const [isLoading, setIsLoading] = useState<boolean>(false);
+            const [error, setError] = useState<Error | null>(null);
+            const [phoneNumber, setPhoneNumber] = useState<string | undefined>(initialPhoneNumber);
+            const [customUrl, setCustomUrl] = useState<string | undefined>(initialCustomUrl);
+
+            const refreshSessionKey = useCallback(async () => {
+                if (!apiKey) {
+                    setError(new Error('API Key is required'));
+                    return;
+                }
+
+                setIsLoading(true);
+                setError(null);
+
+                try {
+                    const newSessionKey = await getSessionKey(apiKey, environment, phoneNumber, customUrl);
+
+                    if (newSessionKey) {
+                        setSessionKey(newSessionKey);
+                        const sdkEnv =
+                            environment === FeatureEnvEnum.Custom ? 'local' : DEFAULT_SDK_ENVIRONMENTS[environment];
+                        setSdkEnvironment(sdkEnv);
+                    } else {
+                        throw new Error('Failed to generate session key');
+                    }
+                } catch (err) {
+                    setError(err instanceof Error ? err : new Error('Failed to generate session key'));
+                    setSessionKey(undefined);
+                } finally {
+                    setIsLoading(false);
+                }
+            }, [apiKey, environment, phoneNumber, customUrl]);
+
+            // Update SDK environment when environment changes
+            useEffect(() => {
+                const sdkEnv =
+                    environment === FeatureEnvEnum.Custom ? 'local' : DEFAULT_SDK_ENVIRONMENTS[environment];
+                setSdkEnvironment(sdkEnv);
+            }, [environment]);
+
+            useEffect(() => {
+                if (apiKey && autoInitialize) {
+                    refreshSessionKey();
+                }
+            }, [apiKey, refreshSessionKey, autoInitialize]);
+
+            return {
+                sessionKey,
+                sdkEnvironment,
+                isLoading,
+                error,
+                refreshSessionKey,
+                setCustomUrl,
+                setPhoneNumber,
+            };
+        };
+        ```
+    
+    </CollapsibleSection>
+
+</CollapsibleGroup>
 
 ---
 

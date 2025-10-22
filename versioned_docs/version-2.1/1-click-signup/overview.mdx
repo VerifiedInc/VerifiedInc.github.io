@@ -18,6 +18,8 @@ import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/se
 import HowToTestAdmonition from '@site/versioned_docs/version-2.1/reusables/how-to-test-admonition.mdx'
 import DocCardList from '@theme/DocCardList';
 import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-recommendation-admonition.mdx';
+import PrivacyFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/privacy-first-admonition.mdx';
+import CoverageUsOnlyAdmonition from '@site/versioned_docs/version-2.1/reusables/coverage-us-only-admonition.mdx';
 
 
 <table>
@@ -54,9 +56,7 @@ import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/versio
 
 **See [Outputs](/reference/data/outputs) for what this data can include.** We provide a wide range of [credentials](/reference/data/outputs/credentials) (pieces of user identity data) and rich [metadata](/reference/data/outputs/metadata) about them, including dozens of sophisticated [risk signals](/reference/data/outputs/metadata#risk-signals).
 
-:::info Privacy First
-**A user's data is never shared without their consent.** We are committed to putting people in control of their own data. We are SOC 2 Type II certified and compliant with major regulatory frameworks like GDPR and CCPA. For more information, please see [How We Operate](https://verified.inc/how-we-operate).
-:::
+<PrivacyFirstAdmonition/>
 
 
 {/* :::tip Resources
@@ -96,11 +96,9 @@ Step 2 above — prompting for a challenge (birthday/SSN4) — is necessary onl
 
 ## Coverage
 
-We can source verified data for about 95% of US adults (253M people). The data is extremely high quality because it comes from phone carriers, credit bureaus, and other trusted providers. Thanks to this quality, the data can be leveraged as part of a KYC/AML process.
+We can source verified data for about **95% of US adults (253M people).** The data is extremely high quality because it comes from phone carriers, credit bureaus, and other trusted providers. Thanks to this quality, the data can be leveraged as part of a KYC/AML process.
 
-:::important
-**We currently only cover people in the United States.** But we are soon adding new geographies. If there are particular geographies that would be most helpful for our use case, please let us know by emailing Support@Verified.inc, and we'll prioritize accordingly.
-:::
+<CoverageUsOnlyAdmonition/>
 
 
 ## Integration

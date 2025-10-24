@@ -200,6 +200,47 @@ See the later sections for full details on how each of these test users is desig
 </table>
 
 
+##### Partial Responses
+
+<table>
+    <tr>
+        <th>Credential Variations</th>
+        <th>Phone</th>
+        <th>Verification Code</th>
+        <th>Birth Date</th>
+        <th>SSN4</th>
+    </tr>
+    <tr>
+        <td>No name</td>
+        <td>+13135550030</td>
+        <td>111111</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>No address</td>
+        <td>+13135550031</td>
+        <td>111111</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>Partial address</td>
+        <td>+13135550032</td>
+        <td>111111</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+    <tr>
+        <td>No SSN</td>
+        <td>+13135550033</td>
+        <td>111111</td>
+        <td>1989-08-01</td>
+        <td>6789</td>
+    </tr>
+</table>
+
+
 ##### Birth Date 
 
 <table>
@@ -442,6 +483,45 @@ For each of these 10 test users, you will get a [`1ClickEntity`](/reference/api/
 ></TestUserDisplay>
 
 
+##### With Line 2 Separately
+
+For this test user, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with an address that includes Line 2 separately (as `line2` — see [here](https://docs.verified.inc/data/outputs/credentials#core-kyc)).
+
+:::info Addresses Often Have Line 2 Info in Line 1
+Addresses often have Line 2 information included as part of Line 1. This is simply because Line 2 formats vary widely, so it's often difficult to accurately parse Line 2 from Line 1, and it's rarely necessary, since the address is valid either way. But this test user allows you to receive an address with Line 2 separately, in case that's helpful for your use case.
+:::
+
+<TestUserDisplay
+  data={{
+    'Phone': '+13135550020',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
+
+```typescript title="1ClickEntity"
+{
+    "identifiers": {
+        "phone": "+13135550010"
+    }
+    "credentials": {
+        ...
+        "address": {
+            "line1": "1 Central Park W",
+            "line2": "Apt 47bc",
+            "city": "New York",
+            "state": "NY",
+            "zipCode": "10023",
+            "country": "US"
+        },
+        ...
+    },
+    ...
+}
+```
+
+
 ##### Overseas Territory
 
 For this test user, you will get a [`1ClickEntity`](/reference/api/types#1clickentity) with an address in Puerto Rico (a US overseas territory).
@@ -474,6 +554,75 @@ For this test user, you will get a [`1ClickEntity`](/reference/api/types#1clicke
     ...
 }
 ```
+
+
+#### Partial Responses
+
+For each of these test users, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with [core KYC credentials](https://docs.verified.inc/data/outputs/credentials#core-kyc) where some are empty.
+
+:::info Responses are Almost Never Partial
+**[Core KYC credentials](https://docs.verified.inc/data/outputs/credentials#core-kyc) are almost always returned in an all or nothing way.** In other words, except in rare cases, you will receive either all of the credentials you include in your credential requests or none of them. 
+
+Most companies prefer to receive some credentials rather than none, and handling partial responses is typically simple. However, we can also force an all or nothing response if you prefer, so that you don't have to handle partial responses at all. If you'd like us to do this for your brand(s), reach out to your Verified representative or email us at [Support@Verified.inc](mailto:Support@Verified.inc).
+
+_Note that you will still be billed for a partial response._
+:::
+
+
+##### No Name
+
+For this test user, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with no full name.
+
+<TestUserDisplay
+  data={{
+    'Phone': '+13135550030',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
+
+
+##### No Address
+
+For this test user, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with no address.
+
+<TestUserDisplay
+  data={{
+    'Phone': '+13135550031',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
+
+
+##### Partial Address
+
+For this test user, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with an address that has no `line1` or `line2`.
+
+<TestUserDisplay
+  data={{
+    'Phone': '+13135550032',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
+
+
+##### No SSN
+
+For this test user, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with no SSN.
+
+<TestUserDisplay
+  data={{
+    'Phone': '+13135550033',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    'SSN4': '6789'
+  }}
+></TestUserDisplay>
 
 
 #### Birth Date: Under 18

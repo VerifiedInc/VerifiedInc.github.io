@@ -1,0 +1,46 @@
+```mermaid
+%%{
+    init: {
+        'theme': 'base',
+        'themeVariables': {
+            'primaryColor': '#e6f6e6',
+            'primaryTextColor': '#003100',
+            'primaryBorderColor': '#0dbc3d',
+            'secondaryColor': '#eef9fd',
+            'secondaryTextColor': '#193c47',
+            'secondaryBorderColor': '#164fd6',
+            'activationBkgColor': '#e6f6e6',
+            'activationBorderColor': '#0dbc3d',
+            'labelBoxBkgColor': '#eef9fd',
+            'labelBoxBorderColor': '#164fd6',
+            'labelTextColor': '#193c47',
+            'edgeLabelBackground': '#ffffff',
+            'textColor': '#000000',
+            'fontFamily': 'Lato'
+        }
+    }
+}%%
+sequenceDiagram
+    box Customer
+        participant S as Server
+        participant C as Client
+    end
+    actor U as User
+    participant V as Verified
+    V -->> C: Redirect user to customer
+    note left of S: 1. Parse redirect URL.
+    C ->> C: Parse verificationUuid from URL parameter
+    note left of S: 2. Get verification.
+    C ->>+ S: Call server with verificationUuid
+    S ->>+ V: Call GET /1-click/verifications with verificationUuid
+    V -->>- S: Return 1ClickVerificationEntity
+    note left of S: 3. Check verification status.
+    S ->> S: Check status
+    alt Status is "verified"
+        S -->>- C: Return success
+        C ->> U: Take user to success flow
+    else Status is not "verified"
+        S -->> C: Return error
+        C ->> U: Take user to phone verification
+    end
+```

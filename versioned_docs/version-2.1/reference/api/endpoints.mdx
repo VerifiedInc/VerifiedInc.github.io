@@ -193,8 +193,12 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
         lastName?: string
     },
     address?: {
+        line1?: string,
+        line2?: string,
+        city?: string,
         state?: string,
-        zipCode?: string
+        zipCode?: string,
+        country?: string
     }
     credentialRequests?: CredentialRequest[]
 }

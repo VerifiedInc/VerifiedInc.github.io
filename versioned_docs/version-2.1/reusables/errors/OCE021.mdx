@@ -2,10 +2,11 @@ import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
 
 <ErrorDisplay
   message='User Opted Out'
+  identifiers='{ [identifierType: string]: string }'
+  verificationMethod='{ [identifierType: string]: string }'
   inputAttemptsExceeded=''
   description=''
   riskSignals=''
-  verificationMethod='true'
   integrationType=''
   whenThisIsReturned={
     <>
@@ -26,4 +27,4 @@ howToHandle={
 
 </ErrorDisplay>
 
-See [Verification Method](/reference/data/outputs/metadata) metadata for more information.
+See [Verification Method](/reference/data/outputs#metadata) metadata for more information.

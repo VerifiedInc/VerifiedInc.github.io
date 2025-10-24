@@ -146,8 +146,12 @@ One of two things will happen:
 - **Success:** If we can source data based on just the phone number, the [response body](/reference/api/endpoints#post-1-click-response) will contain a [`1ClickEntity`](/reference/api/types#1clickentity) (see this [example](/reference/api/types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 5](#5-prompt-user-to-confirm-their-data).
 - **Error:** Otherwise, the response body will contain an [error](/reference/api/errors) with a Verified error code:
     - **[`OCE011`](/reference/api/errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. → _Continue to [step 3](#3-if-necessary-prompt-user-for-additional-info)_.
-    - **[`OCE013`](/reference/api/errors#oce013)** indicates that Verified found no [credentials](/reference/data/outputs/credentials) for the user. → _Fall back to a manual signup flow._
+    - **[`OCE013`](/reference/api/errors#oce013)** indicates that Verified found no [credentials](/reference/data/outputs#credentials) for the user. → _Fall back to a manual signup flow._
     - **[`OCE017`](/reference/api/errors#oce017)** indicates that Verified blocked the user because the risk score was too high. → _Reject the user or flag them and fall back to a manual signup flow._
+
+:::tip Data is Retrievable for 30 Minutes 
+**You can retrieve data for 30 minutes,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click`](/reference/api/endpoints#get-1-click) instead of `POST /1-click` so that a duplicate 1-Click Signup event isn't created (and so you aren't billed twice).
+:::
 
 
 ## 3. (if necessary) Prompt user for additional info.
@@ -199,7 +203,7 @@ One of two things should happen:
 - **Success:** If we can source data based on the phone number and birth date, the [response body](/reference/api/endpoints#post-1-click-response) will be a [`1ClickEntity`](/reference/api/types#1clickentity) (see this [example](/reference/api/types#example-1clickentity)), which contains the user's data and metadata about it. → _Continue to [step 5](#5-prompt-user-to-confirm-their-data)._
 - **Error:** Otherwise, the response body will contain an [error](/reference/api/errors) with a Verified error code:
     - **[`OCE012`](/reference/api/errors#oce012)** indicates that one or more of the additional inputs you passed (the user's birth date and/or SSN4) mismatched. → _Return to [step 3](#3-if-necessary-prompt-user-for-additional-info)._
-    - **[`OCE013`](/reference/api/errors#oce013)** indicates that Verified found no [credentials](/reference/data/outputs/credentials) for the user. → _Fall back to a manual signup flow._
+    - **[`OCE013`](/reference/api/errors#oce013)** indicates that Verified found no [credentials](/reference/data/outputs#credentials) for the user. → _Fall back to a manual signup flow._
     - **[`OCE019`](/reference/api/errors#oce019)** indicates that the maximum number of attempts has been reached for one or more of the additional inputs. → _Fall back to a manual signup flow._
 
 

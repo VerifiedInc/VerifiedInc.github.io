@@ -352,7 +352,7 @@ module.exports = {
             from: '/data/inputs',
           },
           {
-            to: '/reference/data/inputs/identifiers',
+            to: '/reference/data/inputs#identifiers',
             from: '/data/inputs/identifiers',
           },
           {
@@ -360,11 +360,11 @@ module.exports = {
             from: '/data/outputs',
           },
           {
-            to: '/reference/data/outputs/credentials',
+            to: '/reference/data/outputs#credentials',
             from: '/data/outputs/credentials',
           },
           {
-            to: '/reference/data/outputs/metadata',
+            to: '/reference/data/outputs#metadata',
             from: '/data/outputs/metadata',
           },
           {

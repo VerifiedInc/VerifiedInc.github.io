@@ -54,7 +54,7 @@ import CoverageUsOnlyAdmonition from '@site/versioned_docs/version-2.1/reusables
 
 **1-Click Signup is the _fastest_ way to sign up new users.** From just a phone number, Verified can autofill a user's data so they can share it in less than 10 seconds.
 
-**See [Outputs](/reference/data/outputs) for what this data can include.** We provide a wide range of [credentials](/reference/data/outputs/credentials) (pieces of user identity data) and rich [metadata](/reference/data/outputs/metadata) about them, including dozens of sophisticated [risk signals](/reference/data/outputs/metadata#risk-signals).
+**See [Outputs](/reference/data/outputs) for what this data can include.** We provide a wide range of [credentials](/reference/data/outputs#credentials) (pieces of user identity data) and rich [metadata](/reference/data/outputs#metadata) about them, including dozens of sophisticated [risk signals](/reference/data/outputs#metadata#risk-signals).
 
 <PrivacyFirstAdmonition/>
 
@@ -91,14 +91,22 @@ Step 2 above — prompting for a challenge (birthday/SSN4) — is necessary onl
 
 - **Increase conversion:** Dramatically reduce friction, making it as easy as possible for new users to share their verified data.
 - **Streamline KYC operations:** Avoid user error and increase pass rates by leveraging our autofilled, verified data.
-- **Prevent fraud:** Stop bad actors by using our [risk signals](/reference/data/outputs/metadata#risk-signals) metadata.
+- **Prevent fraud:** Stop bad actors by using our [risk signals](/reference/data/outputs#metadata#risk-signals) metadata.
 
 
 ## Coverage
 
-We can source verified data for about **95% of US adults (253M people).** The data is extremely high quality because it comes from phone carriers, credit bureaus, and other trusted providers. Thanks to this quality, the data can be leveraged as part of a KYC/AML process.
+We can source verified data for about **95% of US adults (253M people)** — if you provide both phone and a challenge (either birthday or SSN4) as inputs — and for about **20%** if you provide only phone. _Exact coverage depends on your user base._
 
 <CoverageUsOnlyAdmonition/>
+
+The data is extremely high quality because it comes from phone carriers, credit bureaus, and other trusted providers. Thanks to this quality, the data can be leveraged as part of a KYC/AML process.
+
+:::warning 1-Click Signup is Not Full KYC
+If your use case requires KYC (Know Your Customer) verification, the data we return can dramatically improve your processes by increasing pass rates and reducing incorrect and fraudulent data. **However, 1-Click Signup by itself is _not_ full KYC.** You should pass the data you receive from us through an additional KYC process to ensure compliance. 
+
+We're soon adding full KYC to 1-Click Signup, so we can provide you with a full stack solution. If that would be helpful for you, email us at Support@Verified.inc and we'll let you know when it's available.
+:::
 
 
 ## Integration

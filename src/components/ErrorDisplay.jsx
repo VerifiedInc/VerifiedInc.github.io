@@ -8,11 +8,12 @@ const ErrorDisplay = ({
   message,
   description,
   additionalInputs,
-  riskSignals,
+  inputAttemptsExceeded,
+  identifiers,
   verificationMethod,
+  riskSignals,
   data,
   dataPhone,
-  inputAttemptsExceeded,
   integrationType,
   whenThisIsReturned,
   howToHandle,
@@ -45,6 +46,32 @@ const ErrorDisplay = ({
       </td>
     </tr>
   ) : null;
+  const markdownIdentifiers = identifiers
+    ? `\`${identifiers}\``
+    : null;
+  const tableRowIdentifiers = identifiers ? (
+    <tr>
+      <th>
+        <Markdown>`data.identifiers`</Markdown>
+      </th>
+      <td>
+        <Markdown>{markdownIdentifiers}</Markdown>
+      </td>
+    </tr>
+  ) : null;
+  const markdownVerificationMethod = identifiers
+    ? `\`${verificationMethod}\``
+    : null;
+  const tableRowVerificationMethod = verificationMethod ? (
+    <tr>
+      <th>
+        <Markdown>`data.verificationMethod`</Markdown>
+      </th>
+      <td>
+        <Markdown>{markdownVerificationMethod}</Markdown>
+      </td>
+    </tr>
+  ) : null;
   const tableRowRiskSignals = riskSignals ? (
     <tr>
       <th>
@@ -52,16 +79,6 @@ const ErrorDisplay = ({
       </th>
       <td>
         <Markdown>[`RiskSignals`](./types#risksignals)</Markdown>
-      </td>
-    </tr>
-  ) : null;
-  const tableRowVerificationMethod = verificationMethod ? (
-    <tr>
-      <th>
-        <Markdown>`data.verificationMethod`</Markdown>
-      </th>
-      <td>
-        <Markdown>[`VerificationMethod`](./types#1clickentity)</Markdown>
       </td>
     </tr>
   ) : null;
@@ -131,8 +148,9 @@ const ErrorDisplay = ({
           {tableRowMessage}
           {tableRowAdditionalInputs}
           {tableRowMarkdownInputAttemptsExceeded}
-          {tableRowRiskSignals}
+          {tableRowIdentifiers}
           {tableRowVerificationMethod}
+          {tableRowRiskSignals}
           {tableRowData}
           {tableRowDataPhone}
         </tbody>

@@ -270,7 +270,7 @@ There are 6 result values to handle:
     </tr>
     <tr>
         <td>`USER_SHARED_CREDENTIALS`</td>
-        <td>User successfully shared [credentials](/reference/data/outputs/credentials) (identity data)</td>
+        <td>User successfully shared [credentials](/reference/data/outputs#credentials) (identity data)</td>
         <td>Retrieve data</td>
     </tr>
     <tr>
@@ -300,7 +300,7 @@ There are 6 result values to handle:
     </tr>
 </table>
 
-Some [metadata](/reference/data/outputs/metadata) may be available directly in the `data` object (see [`SdkResult`](/reference/sdk/types#sdkresult)). To retrieve all metadata (and [credentials](/reference/data/outputs/credentials) if the result value is `USER_SHARED_CREDENTIALS`), call your server with `data.identityUuid`. The server should use your Verified API key to call [`GET /1-click/{identityUuid}`](/reference/api/endpoints#get-1-click):
+Some [metadata](/reference/data/outputs#metadata) may be available directly in the `data` object (see [`SdkResult`](/reference/sdk/types#sdkresult)). To retrieve all metadata (and [credentials](/reference/data/outputs#credentials) if the result value is `USER_SHARED_CREDENTIALS`), call your server with `data.identityUuid`. The server should use your Verified API key to call [`GET /1-click/{identityUuid}`](/reference/api/endpoints#get-1-click):
 
 ```
 GET /1-click/{identityUuid}
@@ -308,7 +308,7 @@ GET /1-click/{identityUuid}
 
 <ApiKeysAdmonition/>
 
-The response will be a [`1ClickEntity`](/reference/api/types#1clickentity) that contains data (user [credentials](/reference/data/outputs/credentials) and [metadata](/reference/data/outputs/metadata)):
+The response will be a [`1ClickEntity`](/reference/api/types#1clickentity) that contains data (user [credentials](/reference/data/outputs#credentials) and [metadata](/reference/data/outputs#metadata)):
 
 ```typescript title="GET /1-click Response Body"
 {
@@ -353,7 +353,7 @@ There are 3 error reasons to handle:
     </tr>
     <tr>
         <td>`SHARE_CREDENTIALS_ERROR`</td>
-        <td>There was an error when the user tried to share [credentials](/reference/data/outputs/credentials) (identity data)</td>
+        <td>There was an error when the user tried to share [credentials](/reference/data/outputs#credentials) (identity data)</td>
         <td>Restart SDK</td>
     </tr>
 </table>

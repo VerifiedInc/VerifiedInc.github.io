@@ -2,6 +2,8 @@ import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
 
 <ErrorDisplay
   message='Invalid or expired verification code'
+  identifiers='{ [identifierType: string]: string }'
+  verificationMethod='{ [identifierType: string]: string }'
   description=''
   integrationType='Semi-Hosted (in v2.0)'
   whenThisIsReturned='When the user input does not match the verification code, or when the user input matches an expired verification code.' 

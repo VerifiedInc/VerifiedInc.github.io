@@ -13,7 +13,7 @@ import PrivacyFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/p
 import CoverageUsOnlyAdmonition from '@site/versioned_docs/version-2.1/reusables/coverage-us-only-admonition.mdx';
 import OneClickHealthComingSoonAdmonition from '@site/versioned_docs/version-2.1/reusables/1-click-health-coming-soon-admonition.mdx';
 
-<OneClickHealthComingSoonAdmonition/>
+<OneClickHealthComingSoonAdmonition />
 
 <table>
     <tr>
@@ -42,31 +42,29 @@ import OneClickHealthComingSoonAdmonition from '@site/versioned_docs/version-2.1
     </tr>
 </table>
 
-
 ## About 1-Click Health
 
 **1-Click Health autofills health insurance data for a user,** so they can share it in less than 30 seconds.
 
 {/* **See [Outputs](/reference/data/outputs) for what this data can include.** We provide a wide range of [credentials](/reference/data/outputs#credentials) (pieces of user identity data) and rich [metadata](/reference/data/outputs#metadata) about them, including dozens of sophisticated [risk signals](/reference/data/outputs#metadata#risk-signals). */}
 
-<PrivacyFirstAdmonition/>
+<PrivacyFirstAdmonition />
 
-
-{/* ## User Experience
+{/\* ## User Experience
 
 To use 1-Click Health, all a user needs to do is:
+
 1. Enter and verify phone number
 2. (if necessary) Enter birthday/SSN4
 3. Confirm autofilled info
 
-_It takes less than 10 seconds, end to end!_ 
+_It takes less than 10 seconds, end to end!_
 
 1-Click Signup uses the exact same user experience as 1-click checkout solutions (like Stripe Link and Shop Pay), so it's familiar to users. See [User Experience](/1-click-signup/user-experience) for full details.
 
 :::note
 Step 2 above — prompting for a challenge (birthday/SSN4) — is necessary only if the phone number alone doesn't uniquely identify the user, for example if it's part of a shared phone carrier plan. (You can also configure your brand settings to always [prompt for a challenge](/1-click-signup/guides/setup#prompt-for-challenges).)
-::: */}
-
+::: \*/}
 
 ## Benefits
 
@@ -74,17 +72,16 @@ Step 2 above — prompting for a challenge (birthday/SSN4) — is necessary onl
 - **Delight users:** Avoid aggravating users by asking them to type in their payer, member ID, and more. Given them a magical first experience with your brand.
 - **Prevent fraud:** Stop bad actors by autofilling insurance data and using our [risk signals](/reference/data/outputs#metadata#risk-signals) metadata.
 
-
 ## Coverage
 
 We can source verified health insurance data for about **85% of US adults (226M people).** The data is extremely high quality because we waterfall across a number of data provider partners like clearing houses.
 
-<CoverageUsOnlyAdmonition/>
-
+<CoverageUsOnlyAdmonition />
 
 ## Integration
 
 Integrating 1-Click Signup is simple. How long it takes depends on the [integration type](/1-click-signup/guides/setup#integration-type) you choose:
+
 - \<1 day for [**SDK**](/1-click-signup/guides/sdk-integration)
 - 1-2 weeks for [**API**](/1-click-signup/guides/api-integration)
 

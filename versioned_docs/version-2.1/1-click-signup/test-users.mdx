@@ -12,32 +12,28 @@ toc_max_heading_level: 4
 import TestUserDisplay from '@site/src/components/TestUserDisplay';
 import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
 
-
 You can test 1-Click Signup with mock data in [Sandbox](/reference/api/environments#sandbox), using either your own phone number our test users below.
 
-<DevelopmentWorkAdmonition/>
+<DevelopmentWorkAdmonition />
 
 :::warning Don't Send Messages to Test User Phones/Emails
 The test user phone numbers and email addresses are not valid, so sending messages to them won't work. To simulate SMS verification, for example, use the test user (static) verification codes. To test real SMS verification, use your own (real) phone number.
 :::
 
-
 ## How to Use Test Users
-
 
 ### Demo
 
 1. Go to the [Demo](https://1-click.demo.verified.inc) and customize the settings as desired.
-2. Select *Mock Data (sandbox)* and click *Start Demo*.
+2. Select _Mock Data (sandbox)_ and click _Start Demo_.
 3. Enter the test user's phone number (varies by user).
 4. Enter the test user's (static) verification code (always 111111).
 5. (if prompted) Enter the test user's birth date (always 08/01/1989) and/or SSN4 (always 6789).
 6. Confirm the test user's info to complete the flow.
 
-:::tip 
+:::tip
 You can use a [custom demo](/custom-demo) by generating one or opening one with your brand's settings from within the Dashboard.
 :::
-
 
 ### SDK
 
@@ -46,7 +42,6 @@ You can use a [custom demo](/custom-demo) by generating one or opening one with 
 3. Enter the test user's (static) verification code (always 111111).
 4. (if prompted) Enter the test user's birth date (always 08/01/1989) and/or SSN4 (always 6789).
 5. Confirm the test user's info to complete the flow.
-
 
 ### API
 
@@ -57,214 +52,251 @@ You can use a [custom demo](/custom-demo) by generating one or opening one with 
 
 ---
 
-
 ## Summary
 
 :::important
 See the later sections for full details on how each of these test users is designed to be used.
 :::
 
-### Inputs 
+### Inputs
 
 <table>
-    <tr>
-        <th>Required Inputs</th>
-        <th>Phone</th>
-        <th>Verification Code</th>
-        <th>Phone Only Error</th>
-        <th>Birth Date</th>
-        <th>SSN4</th>
-    </tr>
-    <tr>
-        <td>Phone</td>
-        <td>+12125550010</td>
-        <td>111111</td>
-        <td>-</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
-    <tr>
-        <td>Phone + Birth Date and/or SSN4</td>
-        <td>+12125550020</td>
-        <td>111111</td>
-        <td>[`OCE011`](/reference/api/errors#oce011) <br/> (`birthDate, ssn4`)</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
-    <tr>
-        <td>Phone + Birth Date</td>
-        <td>+12125550022</td>
-        <td>111111</td>
-        <td>[`OCE011`](/reference/api/errors#oce011) <br/> (`birthDate`)</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
-    <tr>
-        <td>Phone + SSN4</td>
-        <td>+12125550021</td>
-        <td>111111</td>
-        <td>[`OCE011`](/reference/api/errors#oce011) <br/> (`ssn4`)</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
+  <tr>
+    <th>Required Inputs</th>
+    <th>Phone</th>
+    <th>Verification Code</th>
+    <th>Phone Only Error</th>
+    <th>Birth Date</th>
+    <th>SSN4</th>
+  </tr>
+  <tr>
+    <td>Phone</td>
+    <td>+12125550010</td>
+    <td>111111</td>
+    <td>-</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
+  <tr>
+    <td>Phone + Birth Date and/or SSN4</td>
+    <td>+12125550020</td>
+    <td>111111</td>
+    <td>
+      [`OCE011`](/reference/api/errors#oce011) <br /> (`birthDate, ssn4`)
+    </td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
+  <tr>
+    <td>Phone + Birth Date</td>
+    <td>+12125550022</td>
+    <td>111111</td>
+    <td>
+      [`OCE011`](/reference/api/errors#oce011) <br /> (`birthDate`)
+    </td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
+  <tr>
+    <td>Phone + SSN4</td>
+    <td>+12125550021</td>
+    <td>111111</td>
+    <td>
+      [`OCE011`](/reference/api/errors#oce011) <br /> (`ssn4`)
+    </td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
 </table>
-
 
 ### Outputs
 
-
 #### Metadata
-
 
 ##### Risk Signals
 
 <table>
-    <tr>
-        <th>Score, Level, Recommendation</th>
-        <th>Phone</th>
-        <th>Verification Code</th>
-        <th>Error</th>
-        <th>Birth Date</th>
-        <th>SSN4</th>
-    </tr>
-    <tr>
-        <td>0, Low, Allow</td>
-        <td>+16565550000</td>
-        <td>111111</td>
-        <td>-</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
-    <tr>
-        <td>301, Medium Low, Allow</td>
-        <td>+16565550301</td>
-        <td>111111</td>
-        <td>-</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
-    <tr>
-        <td>500, Medium, Flag</td>
-        <td>+16565550500</td>
-        <td>111111</td>
-        <td>-</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
-    <tr>
-        <td>775, Medium High, Block</td>
-        <td>+14045551775</td>
-        <td>111111</td>
-        <td>[`OCE017`](/reference/api/errors#oce017)</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
-    <tr>
-        <td>999, High, Block</td>
-        <td>+14045551799</td>
-        <td>111111</td>
-        <td>[`OCE017`](/reference/api/errors#oce017)</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
+  <tr>
+    <th>Score, Level, Recommendation</th>
+    <th>Phone</th>
+    <th>Verification Code</th>
+    <th>Error</th>
+    <th>Birth Date</th>
+    <th>SSN4</th>
+  </tr>
+  <tr>
+    <td>0, Low, Allow</td>
+    <td>+16565550000</td>
+    <td>111111</td>
+    <td>-</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
+  <tr>
+    <td>301, Medium Low, Allow</td>
+    <td>+16565550301</td>
+    <td>111111</td>
+    <td>-</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
+  <tr>
+    <td>500, Medium, Flag</td>
+    <td>+16565550500</td>
+    <td>111111</td>
+    <td>-</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
+  <tr>
+    <td>775, Medium High, Block</td>
+    <td>+14045551775</td>
+    <td>111111</td>
+    <td>[`OCE017`](/reference/api/errors#oce017)</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
+  <tr>
+    <td>999, High, Block</td>
+    <td>+14045551799</td>
+    <td>111111</td>
+    <td>[`OCE017`](/reference/api/errors#oce017)</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
 </table>
 
-
 #### Credentials
-
 
 ##### Address
 
 <table>
-    <tr>
-        <th>Credential Variations</th>
-        <th>Phone</th>
-        <th>Verification Code</th>
-        <th>Birth Date</th>
-        <th>SSN4</th>
-    </tr>
-    <tr>
-        <td>Different values (all in US states)</td>
-        <td>+13135550000 <br/> → +13135550009</td>
-        <td>111111</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
-    <tr>
-        <td>In US overseas territory</td>
-        <td>+13135550010</td>
-        <td>111111</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
+  <tr>
+    <th>Credential Variations</th>
+    <th>Phone</th>
+    <th>Verification Code</th>
+    <th>Birth Date</th>
+    <th>SSN4</th>
+  </tr>
+  <tr>
+    <td>Different values (all in US states)</td>
+    <td>
+      +13135550000 <br /> → +13135550009
+    </td>
+    <td>111111</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
+  <tr>
+    <td>In US overseas territory</td>
+    <td>+13135550010</td>
+    <td>111111</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
 </table>
 
-
-##### Birth Date 
+##### Partial Responses
 
 <table>
-    <tr>
-        <th>Credential Variations</th>
-        <th>Phone</th>
-        <th>Verification Code</th>
-        <th>Birth Date</th>
-        <th>SSN4</th>
-    </tr>
-    <tr>
-        <td>Under 18</td>
-        <td>13135550100</td>
-        <td>111111</td>
-        <td>2017-01-01</td>
-        <td>6789</td>
-    </tr>
+  <tr>
+    <th>Credential Variations</th>
+    <th>Phone</th>
+    <th>Verification Code</th>
+    <th>Birth Date</th>
+    <th>SSN4</th>
+  </tr>
+  <tr>
+    <td>No name</td>
+    <td>+13135550030</td>
+    <td>111111</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
+  <tr>
+    <td>No address</td>
+    <td>+13135550031</td>
+    <td>111111</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
+  <tr>
+    <td>Partial address</td>
+    <td>+13135550032</td>
+    <td>111111</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
+  <tr>
+    <td>No SSN</td>
+    <td>+13135550033</td>
+    <td>111111</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
 </table>
 
-
-### Errors 
+##### Birth Date
 
 <table>
-    <tr>
-        <th>Error(s)</th>
-        <th>Phone</th>
-        <th>Verification Code</th>
-        <th>Birth Date</th>
-        <th>SSN4</th>
-    </tr>
-    <tr>
-        <td>[`OCE013`](/reference/api/errors#oce013)</td>
-        <td>+14045551300</td>
-        <td>111111</td>
-        <td>-</td>
-        <td>-</td>
-    </tr>
-    <tr>
-        <td>[`OCE017`](/reference/api/errors#oce017)</td>
-        <td>+14045551775</td>
-        <td>111111</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
-    <tr>
-        <td>[`OCE017`](/reference/api/errors#oce017)</td>
-        <td>+14045551799</td>
-        <td>111111</td>
-        <td>1989-08-01</td>
-        <td>6789</td>
-    </tr>
+  <tr>
+    <th>Credential Variations</th>
+    <th>Phone</th>
+    <th>Verification Code</th>
+    <th>Birth Date</th>
+    <th>SSN4</th>
+  </tr>
+  <tr>
+    <td>Under 18</td>
+    <td>13135550100</td>
+    <td>111111</td>
+    <td>2017-01-01</td>
+    <td>6789</td>
+  </tr>
+</table>
+
+### Errors
+
+<table>
+  <tr>
+    <th>Error(s)</th>
+    <th>Phone</th>
+    <th>Verification Code</th>
+    <th>Birth Date</th>
+    <th>SSN4</th>
+  </tr>
+  <tr>
+    <td>[`OCE013`](/reference/api/errors#oce013)</td>
+    <td>+14045551300</td>
+    <td>111111</td>
+    <td>-</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>[`OCE017`](/reference/api/errors#oce017)</td>
+    <td>+14045551775</td>
+    <td>111111</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
+  <tr>
+    <td>[`OCE017`](/reference/api/errors#oce017)</td>
+    <td>+14045551799</td>
+    <td>111111</td>
+    <td>1989-08-01</td>
+    <td>6789</td>
+  </tr>
 </table>
 
 ---
 
-
 ## Success
 
-Use these test users to go through successful 1-Click Signup flows (where Verified returns [credentials](/reference/data/outputs#credentials)). 
-
+Use these test users to go through successful 1-Click Signup flows (where Verified returns [credentials](/reference/data/outputs#credentials)).
 
 ### Phone Only
 
 For these users, only a phone number is needed to source [credentials](/reference/data/outputs#credentials).
-
 
 #### Primary Test User
 
@@ -274,22 +306,21 @@ Our primary test user is Richard Hendricks.
 This is Richard Hendricks from the show _Silicon Valley_! 😂
 :::
 
-
 ###### +12125550010
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+12125550010</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+12125550010</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -340,29 +371,28 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 #### Allowed
 
 Use these users to specifically test the `low` and `medium-low` risk level cases of [risk signals](/reference/data/outputs#metadata#risk-signals) metadata. _Compare them to the [medium risk (flagged)](#flagged) and [high risk (blocked)](#blocked) test users._
-
 
 ###### +16565550000
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+16565550000</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+16565550000</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -413,24 +443,24 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 ###### +16565550301
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+16565550301</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+16565550301</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -481,29 +511,28 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 #### Flagged
 
 Use this user to specifically test the `medium` risk level case of [risk signals](/reference/data/outputs#metadata#risk-signals) metadata. _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
-
 
 ###### +16565550500
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+16565550500</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+16565550500</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -554,50 +583,48 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 ### Phone and Additional Info
 
-For these users, both a phone number and additional information is needed to source [credentials](/reference/data/outputs#credentials). 
+For these users, both a phone number and additional information is needed to source [credentials](/reference/data/outputs#credentials).
 
 If you start with phone only, as we recommend, you will get the [`OCE011`](/reference/api/errors#oce011) error code, indicating that additional information is required. Within the error, `data.additionalInputs` specifies which additional inputs you can pass (see [`OCE011`](/reference/api/errors#oce011) for details).
 
 :::tip
-The [`OCE012`](/reference/api/errors#oce012) error code indicates that there's a mismatch for one or more of the additional inputs you provided. To trigger this error code, use any value that doesn't match the value for the test user. 
+The [`OCE012`](/reference/api/errors#oce012) error code indicates that there's a mismatch for one or more of the additional inputs you provided. To trigger this error code, use any value that doesn't match the value for the test user.
 
 For example, use `1979-01-01` for `birthDate` (since all test users have `1989-08-01` for `birthDate`).
 :::
 
-
 #### Phone and Birth Date and/or SSN4
 
 For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](/reference/data/outputs#credentials).
-
 
 ###### +12125550020
 
 Required inputs (one or both of birth date and SSN4):
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+12125550020</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-        <tr>
-            <th>Birth Date</th>
-            <td>1989-08-01</td>
-        </tr>
-        <tr>
-            <th>SSN4</th>
-            <td>6789</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+12125550020</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+    <tr>
+      <th>Birth Date</th>
+      <td>1989-08-01</td>
+    </tr>
+    <tr>
+      <th>SSN4</th>
+      <td>6789</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -640,50 +667,49 @@ Required inputs (one or both of birth date and SSN4):
             </tr>
         </tbody>
     </table>
+
 </details>
 
 Expected error:
 
 <table>
-    <tr>
-        <th>Error Attribute</th>
-        <th>Value</th>
-    </tr>
-    <tr>
-        <td>`data.errorCode`</td>
-        <td>[`OCE011`](/reference/api/errors#oce011)</td>
-    </tr>
-    <tr>
-        <td>`data.additionalInputs`</td>
-        <td>`["birthDate", "ssn4"]`</td>
-    </tr>
+  <tr>
+    <th>Error Attribute</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>`data.errorCode`</td>
+    <td>[`OCE011`](/reference/api/errors#oce011)</td>
+  </tr>
+  <tr>
+    <td>`data.additionalInputs`</td>
+    <td>`["birthDate", "ssn4"]`</td>
+  </tr>
 </table>
-
 
 #### Phone and Birth Date
 
 For this user, both a phone number and a birth date is needed to source [credentials](/reference/data/outputs#credentials).
-
 
 ###### +12125550022
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+12125550022</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-        <tr>
-            <th>Birth Date</th>
-            <td>1989-08-01</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+12125550022</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+    <tr>
+      <th>Birth Date</th>
+      <td>1989-08-01</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -730,50 +756,49 @@ Required inputs:
             </tr>
         </tbody>
     </table>
+
 </details>
 
 Expected error:
 
 <table>
-    <tr>
-        <th>Error Attribute</th>
-        <th>Value</th>
-    </tr>
-    <tr>
-        <td>`data.errorCode`</td>
-        <td>[`OCE011`](/reference/api/errors#oce011)</td>
-    </tr>
-    <tr>
-        <td>`data.additionalInputs`</td>
-        <td>`["birthDate"]`</td>
-    </tr>
+  <tr>
+    <th>Error Attribute</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>`data.errorCode`</td>
+    <td>[`OCE011`](/reference/api/errors#oce011)</td>
+  </tr>
+  <tr>
+    <td>`data.additionalInputs`</td>
+    <td>`["birthDate"]`</td>
+  </tr>
 </table>
-
 
 #### Phone and SSN4
 
 For this user, both a phone number and an SSN4 is needed to source [credentials](/reference/data/outputs#credentials).
-
 
 ###### +12125550021
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+12125550021</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-        <tr>
-            <th>SSN4</th>
-            <td>6789</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+12125550021</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+    <tr>
+      <th>SSN4</th>
+      <td>6789</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -820,54 +845,51 @@ Required inputs:
             </tr>
         </tbody>
     </table>
+
 </details>
 
 Expected error:
 
 <table>
-    <tr>
-        <th>Error Attribute</th>
-        <th>Value</th>
-    </tr>
-    <tr>
-        <td>`data.errorCode`</td>
-        <td>[`OCE011`](/reference/api/errors#oce011)</td>
-    </tr>
-    <tr>
-        <td>`data.additionalInputs`</td>
-        <td>`["ssn4"]`</td>
-    </tr>
+  <tr>
+    <th>Error Attribute</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>`data.errorCode`</td>
+    <td>[`OCE011`](/reference/api/errors#oce011)</td>
+  </tr>
+  <tr>
+    <td>`data.additionalInputs`</td>
+    <td>`["ssn4"]`</td>
+  </tr>
 </table>
-
 
 ### Credential Cases
 
 Use these test users test specific cases of [credential](/reference/data/outputs#credentials) data, if they're relevant to your use case.
 
-
 #### Address
-
 
 ##### Different Values
 
 For each of these 10 test users, you will get a [`1ClickEntity`](/reference/api/types#1clickentity) with a different address. Each address is a standard address in a US state (as opposed to an address in an [overseas territory](#overseas-territory)).
-
 
 ###### +13135550000
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+13135550000</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550000</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -918,24 +940,24 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 ###### +13135550001
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+13135550001</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550001</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -986,24 +1008,24 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 ###### +13135550002
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+13135550002</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550002</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1054,24 +1076,24 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 ###### +13135550003
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+13135550003</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550003</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1122,24 +1144,24 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 ###### +13135550004
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+13135550004</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550004</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1190,24 +1212,24 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 ###### +13135550005
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+13135550005</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550005</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1258,24 +1280,24 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 ###### +13135550006
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+13135550006</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550006</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1326,24 +1348,24 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 ###### +13135550007
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+13135550007</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550007</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1394,24 +1416,24 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 ###### +13135550008
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+13135550008</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550008</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1462,24 +1484,24 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 ###### +13135550009
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+13135550009</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550009</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1530,29 +1552,49 @@ Required inputs:
             </tr>
         </tbody>
     </table>
+
 </details>
 
+```typescript title="1ClickEntity"
+{
+    "identifiers": {
+        "phone": "+13135550010"
+    }
+    "credentials": {
+        ...
+        "address": {
+            "line1": "1 Central Park W",
+            "line2": "Apt 47bc",
+            "city": "New York",
+            "state": "NY",
+            "zipCode": "10023",
+            "country": "US"
+        },
+        ...
+    },
+    ...
+}
+```
 
 ##### Overseas Territory
 
 For this test user, you will get a [`1ClickEntity`](/reference/api/types#1clickentity) with an address in Puerto Rico (a US overseas territory).
-
 
 ###### +13135550010
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+13135550010</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550010</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1603,6 +1645,7 @@ Required inputs:
             </tr>
         </tbody>
     </table>
+
 </details>
 
 ```typescript title="1ClickEntity"
@@ -1625,31 +1668,29 @@ Required inputs:
 }
 ```
 
+#### Partial Responses
 
-#### Birth Date: Under 18
-
-For this test user, you will get a [`1ClickEntity`](/reference/api/types#1clickentity) with a birth date less than 18 years ago (until January 1, 2035).
+For each of these test users, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with [core KYC credentials](https://docs.verified.inc/data/outputs/credentials#core-kyc) where some are empty.
 
 :::important
 **You should never receive data from Verified for a user under 18 years old,** but this test user facilitates writing a check for that on your side if you wish.
 :::
-
 
 ###### +13135550100
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+13135550100</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550100</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1700,6 +1741,96 @@ Required inputs:
             </tr>
         </tbody>
     </table>
+
+</details>
+
+##### No SSN
+
+For this test user, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with no SSN.
+
+<TestUserDisplay
+  data={{
+    Phone: '+13135550033',
+    'Verification Code': '111111',
+    'Birth Date': '1989-08-01',
+    SSN4: '6789',
+  }}
+></TestUserDisplay>
+
+#### Birth Date: Under 18
+
+For this test user, you will get a [`1ClickEntity`](/reference/api/types#1clickentity) with a birth date less than 18 years ago (until January 1, 2035).
+
+:::important
+**You should never receive data from Verified for a user under 18 years old,** but this test user facilitates writing a check for that on your side if you wish.
+:::
+
+###### +13135550100
+
+Required inputs:
+
+<table>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550100</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>2017-01-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+
 </details>
 
 ```typescript title="1ClickEntity"
@@ -1716,32 +1847,29 @@ Required inputs:
 }
 ```
 
-
 ## Failure
 
-Use these test users to go through unsuccessful 1-Click Signup flows (where Verified does _not_ return [credentials](/reference/data/outputs#credentials)). 
-
+Use these test users to go through unsuccessful 1-Click Signup flows (where Verified does _not_ return [credentials](/reference/data/outputs#credentials)).
 
 ### No Credentials Found
 
 For this test user, you will get the [`OCE013`](/reference/api/errors#oce013) error code, indicating that Verified found no credentials.
-
 
 ###### +14045551300
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+14045551300</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+14045551300</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1792,21 +1920,21 @@ Required inputs:
             </tr>
         </tbody>
     </table>
+
 </details>
 
 Expected error:
 
 <table>
-    <tr>
-        <th>Error Attribute</th>
-        <th>Value</th>
-    </tr>
-    <tr>
-        <td>`data.errorCode`</td>
-        <td>[`OCE013`](/reference/api/errors#oce013)</td>
-    </tr>
+  <tr>
+    <th>Error Attribute</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>`data.errorCode`</td>
+    <td>[`OCE013`](/reference/api/errors#oce013)</td>
+  </tr>
 </table>
-
 
 ### Blocked
 
@@ -1814,22 +1942,21 @@ Use these users to specifically test the `medium-high` and `high` risk level cas
 
 For these users, you will get the [`OCE017`](/reference/api/errors#oce017) error code, indicating that Verified blocked returning data for the user because the risk levels are `medium-high` and `high`.
 
-
 ###### +14045551775
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+14045551775</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+14045551775</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1880,24 +2007,24 @@ Required inputs:
             </tr>
         </tbody>
     </table>
-</details>
 
+</details>
 
 ###### +14045551799
 
 Required inputs:
 
 <table>
-    <tbody>
-        <tr>
-            <th>Phone</th>
-            <td>+14045551799</td>
-        </tr>
-        <tr>
-            <th>Verification Code</th>
-            <td>111111</td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+14045551799</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
 </table>
 
 <details>
@@ -1948,21 +2075,22 @@ Required inputs:
             </tr>
         </tbody>
     </table>
+
 </details>
 
 Expected error:
 
 <table>
-    <tr>
-        <th>Error Attribute</th>
-        <th>Value</th>
-    </tr>
-    <tr>
-        <td>`data.errorCode`</td>
-        <td>[`OCE017`](/reference/api/errors#oce017)</td>
-    </tr>
-    <tr>
-        <td>`data.riskSignals`</td>
-        <td>[`RiskSignals`](/reference/api/types#risksignals)</td>
-    </tr>
+  <tr>
+    <th>Error Attribute</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>`data.errorCode`</td>
+    <td>[`OCE017`](/reference/api/errors#oce017)</td>
+  </tr>
+  <tr>
+    <td>`data.riskSignals`</td>
+    <td>[`RiskSignals`](/reference/api/types#risksignals)</td>
+  </tr>
 </table>

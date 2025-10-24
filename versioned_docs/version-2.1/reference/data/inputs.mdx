@@ -1,11 +1,11 @@
 ---
-id: identifiers
-title: Identifiers
-sidebar_label: Identifiers
+id: inputs
+title: Inputs
+sidebar_label: Inputs
 sidebar_position: 0
 sidebar_class_name: sidebar-header-regular
-description: Inputs passed to the Verified SDK and API
-slug: /reference/data/inputs/identifiers
+description: Input data passed to the Verified SDK and API
+slug: /reference/data/inputs
 toc_max_heading_level: 5
 ---
 
@@ -34,22 +34,19 @@ import Chip from '@mui/material/Chip';
 import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
 
 
-> An **identifier** is a phone number or email address the user uses to verify for 1-Click Signup.
-
-**Identifiers are _inputs_:** users input them and/or you pass them to us in API request bodies.
+> An **input** is a piece of data you pass to the SDK or API.
 
 :::note
-To source verified data ([credentials](../outputs/credentials) and [metadata](../outputs/metadata)) for a user:
-- **Phone is always required.** 
-- **Email is optional,** but including it helps source better and more metadata — especially [risk signals](../outputs/metadata#risk-signals). It cannot be used on its own to source [credentials](../outputs/credentials) (user identity data).
-- **Birth Date and SSN4 are only required sometimes:** if you get the [`OCE11`](/reference/api/errors#oce011) error code, which indicates that additional information is required. This happens when Verified is unable to narrow down to a single user based on only phone (and email if included).
-- **Full Name and Address (and their child credentials) are optional.** For name, we'll try to match against _all_ names we find associated with the user. This often means, for example, that a user's nickname will match as well as their legal name, but that depends on which names we can source for the user.
+To source verified data ([outputs](/reference/data/outputs)) for a user:
+- **[Identifiers](#identifiers):** Phone is always required. Email is optional, but including it helps source better and more metadata — especially [risk signals](/reference/data/outputs#risk-signals). It cannot be used on its own to source [credentials](/reference/data/outputs#credentials) (user identity data).
+- **[Challenges](#challenges):** These are only required sometimes: if you get the [`OCE11`](/reference/api/errors#oce011) error code, which indicates that additional information is required. This happens when Verified is unable to narrow down to a single user based on the inputs already provided.
+- **[Other Inputs](#other-inputs):** These are optional. For name, we'll try to match against _all_ names we find associated with the user. This often means, for example, that a user's nickname will match as well as their legal name, but that depends on which names we can source for the user.
 :::
 
-:::important
-- **Birth Date and SSN4 exclude results if they mismatch.** In other words, they have to match the records we find for a user, or you'll get an [`OCE012` error](/reference/api/errors#oce012). 
-- **Full Name and Address _don't_ exclude results if they mismatch.** This is because names and addresses vary, while birth dates and SSN4s don't. For example, a user may enter a nickname rather than their legal name, or they might have recently moved.
-:::
+
+## Identifiers
+
+> An **identifier** is a piece of user data that's used as a primary lookup for [outputs](/reference/data/outputs) and must match the outputs.
 
 <table>
     <tr>
@@ -79,6 +76,27 @@ To source verified data ([credentials](../outputs/credentials) and [metadata](..
         <td>Email address a user uses to verify for 1-Click Signup</td>
         <td>`"richard@piedpiper.net"`</td>
     </tr>
+</table>
+
+
+## Challenges
+
+> A **challenge** is a piece of user data that's used as a secondary lookup for [outputs](/reference/data/outputs) and must match the outputs.
+
+:::important
+Unlike [other inputs](#other-inputs), **challenges must match the [outputs](/reference/data/outputs)** sourced for a user. In other words, they have to match the records we find for a user, or you'll get an [`OCE012` error](/reference/api/errors#oce012). That's because birth dates and SSN4s don't vary, while names and addresses do. For example, a user may enter a nickname rather than their legal name, or they might have recently moved.
+:::
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Required?</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
     <tr>
         <td>Birth Date</td>
         <td>`birthDate`</td>
@@ -96,6 +114,28 @@ To source verified data ([credentials](../outputs/credentials) and [metadata](..
         <td>4 digits (0-9)</td>
         <td>Last 4 digits of user's Social Security Number (in [Sandbox](/reference/api/environments#sandbox), this must be `"6789"` to pass validation)</td>
         <td>`"6789"`</td>
+    </tr>
+</table>
+
+
+
+## Other Inputs
+
+> An **other input** is a piece of user data that's used as an additional lookup for [outputs](/reference/data/outputs) and does not have to match the outputs.
+
+:::important
+Unlike [challenges](#challenges), these **other inputs do not have to match the [outputs](/reference/data/outputs)** sourced for a user. That's because names and addresses vary, while birth dates and SSN4s don't. For example, a user may enter a nickname rather than their legal name, or they might have recently moved.
+:::
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Required?</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
     </tr>
     <tr>
         <td>Full Name</td>
@@ -156,7 +196,7 @@ To source verified data ([credentials](../outputs/credentials) and [metadata](..
             ```
         </td>
     </tr>
-    {/* <tr>
+    <tr>
         <td>↳ Line 1</td>
         <td>`address.line1`</td>
         <td>optional</td>
@@ -182,7 +222,7 @@ To source verified data ([credentials](../outputs/credentials) and [metadata](..
         <td>`cAse inSensiTive`</td>
         <td>City of address</td>
         <td>`"Palo Alto"`</td>
-    </tr> */}
+    </tr>
     <tr>
         <td>↳ State</td>
         <td>`address.state`</td>
@@ -213,7 +253,7 @@ To source verified data ([credentials](../outputs/credentials) and [metadata](..
             - `"94303-2846"`
         </td>
     </tr>
-    {/* <tr>
+    <tr>
         <td>↳ Country</td>
         <td>`address.country`</td>
         <td>optional</td>
@@ -227,7 +267,7 @@ To source verified data ([credentials](../outputs/credentials) and [metadata](..
             - `"US"`
             - `"United States of America"`
         </td>
-    </tr> */}
+    </tr>
     {/* <tr>
         <td>IP Address</td>
         <td>`ipAddress`</td>

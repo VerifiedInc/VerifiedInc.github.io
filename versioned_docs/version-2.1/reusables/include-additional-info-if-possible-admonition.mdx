@@ -1,19 +1,10 @@
 import Admonition from '@theme/Admonition';
 
 <Admonition type="tip">
-    You'll see in the [endpoint reference](/reference/api/endpoints#post-1-click) for `POST /1-click` that it supports additional inputs, including:
-    - `email`
-    - `birthDate`
-    - `ssn4`
-    - `fullName`
-    - ↳ `fullName.firstName`
-    - ↳ `fullName.middleName`
-    - ↳ `fullName.lastName`
-    - `address`
-    - ↳ `address.state`
-    - ↳ `address.zipCode`
+    You'll see in the [endpoint reference](/reference/api/endpoints#post-1-click) for `POST /1-click` that it supports additional [inputs](/reference/data/inputs).
 
     **If you already have any of these, include them in the request body** along with phone. (We don't recommend prompting for any of them yet if you don't already have them.)
 
     Here's why: You'll see later in this guide that, if we can't source data for the user based on just their phone number, you'll need to ask the user for additional information (birth date and/or SSN4) and then make another API call. If for any reason you already have this information, you should include at this step so no further call will be necessary.
+
 </Admonition>

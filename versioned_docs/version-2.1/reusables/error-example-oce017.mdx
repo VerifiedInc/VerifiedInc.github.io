@@ -6,9 +6,17 @@
     "className": "bad-request",
     "data": {
         "errorCode": "OCE017",
+        "identifiers": {
+            "phone": "+14045551799",
+            "email": "richard@piedpiper.com"
+        },
+        "verificationMethod": {
+            "phone": "customer_otp",
+            "email": "customer_otp"
+        },
         "riskSignals": {
             "overall": {
-                "score": 1000, // always enabled
+                "score": 999, // always enabled
                 "level": "high", // always enabled
                 "recommendation": "block", // always enabled
                 "reasonCodes": [ // add on (ask Verified support to enable)

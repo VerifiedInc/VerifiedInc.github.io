@@ -28,34 +28,32 @@ import Post1ClickResponseBodyTableUuid from '@site/versioned_docs/version-2.1/re
 import Post1ClickResponseBodyTableUrl from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-url.mdx';
 import Post1ClickResponseBodyTableCode from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-code.mdx';
 import Post1ClickResponseBodyTableIdentity from '@site/versioned_docs/version-2.1/reusables/post-1-click-response-body-table-identity.mdx';
-import UseUserInputAdmonition from '@site/versioned_docs/version-2.1/reusables/use-user-input-admonition.mdx'
-import CredentialRequestTableShared from '@site/versioned_docs/version-2.1/reusables/credential-request-table-shared.mdx'
-import CredentialRequestTableHosted from '@site/versioned_docs/version-2.1/reusables/credential-request-table-sdk.mdx'
-import DefaultCredentialRequestsHosted from '@site/versioned_docs/version-2.1/reusables/default-credential-requests-hosted.mdx'
-import DefaultCredentialRequestsNotHosted from '@site/versioned_docs/version-2.1/reusables/default-credential-requests-not-hosted.mdx'
-import RecencyRequirementAdmonition from '@site/versioned_docs/version-2.1/reusables/recency-requirement-admonition.mdx'
-import SandboxValidationAdmonition from '@site/versioned_docs/version-2.1/reusables/sandbox-validation-admonition.mdx'
-import EndpointHeaderWithoutSwagger from '@site/src/components/EndpointHeaderWithoutSwagger.jsx'
-import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
-
+import UseUserInputAdmonition from '@site/versioned_docs/version-2.1/reusables/use-user-input-admonition.mdx';
+import CredentialRequestTableShared from '@site/versioned_docs/version-2.1/reusables/credential-request-table-shared.mdx';
+import CredentialRequestTableHosted from '@site/versioned_docs/version-2.1/reusables/credential-request-table-sdk.mdx';
+import DefaultCredentialRequestsHosted from '@site/versioned_docs/version-2.1/reusables/default-credential-requests-hosted.mdx';
+import DefaultCredentialRequestsNotHosted from '@site/versioned_docs/version-2.1/reusables/default-credential-requests-not-hosted.mdx';
+import RecencyRequirementAdmonition from '@site/versioned_docs/version-2.1/reusables/recency-requirement-admonition.mdx';
+import SandboxValidationAdmonition from '@site/versioned_docs/version-2.1/reusables/sandbox-validation-admonition.mdx';
+import EndpointHeaderWithoutSwagger from '@site/src/components/EndpointHeaderWithoutSwagger.jsx';
+import {
+  CollapsibleGroup,
+  CollapsibleSection,
+  CollapsibleHeader,
+} from '@site/src/components/Collapsible';
 
 {/* TODO: Update Swagger URLs */}
 
-:::tip 
+:::tip
 Postman API documentation is available at https://api.docs.verified.inc.
 :::
 
-
-<DevelopmentWorkAdmonition/>
-
+<DevelopmentWorkAdmonition />
 
 ## 1-Click Signup
 
-
-<EndpointHeaderWithoutSwagger 
-    postmanUrl="https://api.docs.verified.inc/#cde4fdf8-1521-4da0-9280-094e1f550aa8"
->
-    ### `POST /client/1-click`
+<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#cde4fdf8-1521-4da0-9280-094e1f550aa8'>
+  ### `POST /client/1-click`
 </EndpointHeaderWithoutSwagger>
 
 > Create a (one time use) session key for the client SDK
@@ -71,29 +69,30 @@ Postman API documentation is available at https://api.docs.verified.inc.
   </tr>
 </table>
 
-<IntegrationTypeEndpointAdmonition option="SDK"/>
+<IntegrationTypeEndpointAdmonition option='SDK' />
 
-
-#### Request {#post-client-1click-request} 
+#### Request {#post-client-1click-request}
 
 ```typescript title="POST /client/1-click Request Body"
 {
     phone?: string
 }
 ```
+
 <table>
-    <PostClient1ClickRequestBodyTable/>
+  <PostClient1ClickRequestBodyTable />
 </table>
 
 {/* Commenting out until we support other inputs */}
-{/* ```typescript title="POST /client/1-click Request Body"
+{/\* ```typescript title="POST /client/1-click Request Body"
 {
-    phone?: string,
-    email?: string,
-    birthDate?: string,
-    ssn4?: string
+phone?: string,
+email?: string,
+birthDate?: string,
+ssn4?: string
 }
-```
+
+````
 <table>
     <PostClient1ClickRequestBodyTable/>
 </table> */}
@@ -109,17 +108,16 @@ If you don't have a user's phone number yet, call `POST /client/1-click` with an
 {
     sessionKey: string
 }
-```
+````
+
 <table>
-    <PostClient1ClickResponseBodyTable/>
+  <PostClient1ClickResponseBodyTable />
 </table>
 
 ---
 
-<EndpointHeaderWithoutSwagger
-    postmanUrl="https://api.docs.verified.inc/#e80daa1e-5337-4f6f-b769-d46a9bc72e0c"
->
-    ### `GET /1-click`
+<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#e80daa1e-5337-4f6f-b769-d46a9bc72e0c'>
+  ### `GET /1-click`
 </EndpointHeaderWithoutSwagger>
 
 > Get data for a user who has completed a 1-Click Signup flow
@@ -135,15 +133,15 @@ If you don't have a user's phone number yet, call `POST /client/1-click` with an
   </tr>
 </table>
 
-
 #### Request {#get-1-click-request}
 
 Call:
+
 ```
 GET /1-click/{identityUuid}
 ```
-- For the `{identityUuid}` path parameter, use the value of the `identityUuid` returned by the SDK or included as a URL parameter on the redirect URL.
 
+- For the `{identityUuid}` path parameter, use the value of the `identityUuid` returned by the SDK or included as a URL parameter on the redirect URL.
 
 #### Response {#get-1-click-response}
 
@@ -157,10 +155,8 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
 
 ---
 
-<EndpointHeaderWithoutSwagger 
-    postmanUrl="https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7"
->
-    ### `POST /1-click`
+<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7'>
+  ### `POST /1-click`
 </EndpointHeaderWithoutSwagger>
 
 > Begin a 1-Click Signup flow
@@ -176,10 +172,9 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
   </tr>
 </table>
 
-<IntegrationTypeEndpointAdmonition option="API"/>
+<IntegrationTypeEndpointAdmonition option='API' />
 
-
-#### Request {#post-1-click-request} 
+#### Request {#post-1-click-request}
 
 ```typescript title="POST /1-click Request Body"
 {
@@ -193,23 +188,26 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
         lastName?: string
     },
     address?: {
+        line1?: string,
+        line2?: string,
+        city?: string,
         state?: string,
-        zipCode?: string
+        zipCode?: string,
+        country?: string
     }
     credentialRequests?: CredentialRequest[]
 }
 ```
+
 <table>
-    <Post1ClickRequestBodyTableShared/>
+  <Post1ClickRequestBodyTableShared />
 </table>
 
-<SandboxValidationAdmonition/>
+<SandboxValidationAdmonition />
 
+##### Default Credential Requests
 
-##### Default Credential Requests 
-
-<DefaultCredentialRequestsNotHosted/>
-
+<DefaultCredentialRequestsNotHosted />
 
 #### Response {#post-1-click-response}
 
@@ -219,21 +217,24 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
     identity: 1ClickEntity
 }
 ```
+
 <table>
-    <Post1ClickResponseBodyTableUuid/>
-    <Post1ClickResponseBodyTableIdentity/>
+  <Post1ClickResponseBodyTableUuid />
+  <Post1ClickResponseBodyTableIdentity />
 </table>
 
 ---
 
-
 ## Verification
 
 {/* TODO: Update */}
-{/* <EndpointHeaderWithoutSwagger 
-    postmanUrl="https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7"
+{/\* <EndpointHeaderWithoutSwagger
+postmanUrl="https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7"
+
 >
+
     ### `POST /1-click/verifications`
+
 </EndpointHeaderWithoutSwagger>
 
 > Begin a verification flow
@@ -249,8 +250,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
   </tr>
 </table>
 
-
-#### Request {#post-1-click-verifications-request} 
+#### Request {#post-1-click-verifications-request}
 
 ```typescript title="POST /1-click/verifications Request Body"
 {
@@ -258,6 +258,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
     channel: string
 }
 ```
+
 <table>
     <tr>
         <th>Property</th>
@@ -293,8 +294,8 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
         <td>Channel used for verification</td>
         <td>`"sms"`</td>
     </tr>
-</table>
 
+</table>
 
 #### Response {#post-1-click-verifications-response}
 
@@ -309,16 +310,13 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
     attemptsRemaining: number????
 }
 ```
-<table>
-    
-</table> */}
 
+<table></table> */}
 
 {/* TODO: Update */}
-<EndpointHeaderWithoutSwagger 
-    postmanUrl=""
->
-    ### `GET /1-click/verifications`
+
+<EndpointHeaderWithoutSwagger postmanUrl=''>
+  ### `GET /1-click/verifications`
 </EndpointHeaderWithoutSwagger>
 
 > Check the status of a verification flow
@@ -334,15 +332,15 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
   </tr>
 </table>
 
-
 #### Request {#get-1-click-verifications-request}
 
 Call:
+
 ```
 GET /1-click/verifications/{verificationUuid}
 ```
-- For the `{verificationUuid}` path parameter, use the value of the `verificationUuid` included as a URL parameter on the redirect URL.
 
+- For the `{verificationUuid}` path parameter, use the value of the `verificationUuid` included as a URL parameter on the redirect URL.
 
 #### Response {#get-1-click-verifications-response}
 
@@ -351,6 +349,5 @@ GET /1-click/verifications/{verificationUuid}
     ...1ClickVerificationEntity
 }
 ```
-
 
 See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).

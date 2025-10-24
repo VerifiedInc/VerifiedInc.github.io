@@ -7,6 +7,14 @@
     "data": {
         "errorCode": "OCE011",
         "additionalInputs": ["birthDate", "ssn4"], // inclusive OR: can pass either or both in next call
+        "identifiers": {
+            "phone": "+12125550010",
+            "email": "richard@piedpiper.com"
+        },
+        "verificationMethod": {
+            "phone": "otp",
+            "email": "otp"
+        },
         "riskSignals": {
             "overall": {
                 "score": 0, // always enabled

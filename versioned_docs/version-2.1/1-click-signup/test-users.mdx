@@ -6,7 +6,7 @@ sidebar_label: Test Users
 sidebar_class_name: sidebar-header-regular
 description: Test Users for 1-Click Signup
 slug: /1-click-signup/test-users
-toc_max_heading_level: 4
+toc_max_heading_level: 5
 ---
 
 import TestUserDisplay from '@site/src/components/TestUserDisplay';
@@ -179,7 +179,7 @@ See the later sections for full details on how each of these test users is desig
     <th>SSN4</th>
   </tr>
   <tr>
-    <td>Different values (all in US states)</td>
+    <td>Different Values (all in US states)</td>
     <td>
       +13135550000 <br /> → +13135550009
     </td>
@@ -188,7 +188,7 @@ See the later sections for full details on how each of these test users is desig
     <td>6789</td>
   </tr>
   <tr>
-    <td>In US overseas territory</td>
+    <td>Overseas Territory (US)</td>
     <td>+13135550010</td>
     <td>111111</td>
     <td>1989-08-01</td>
@@ -207,21 +207,21 @@ See the later sections for full details on how each of these test users is desig
     <th>SSN4</th>
   </tr>
   <tr>
-    <td>No name</td>
+    <td>No Name</td>
     <td>+13135550030</td>
     <td>111111</td>
     <td>1989-08-01</td>
     <td>6789</td>
   </tr>
   <tr>
-    <td>No address</td>
+    <td>No Address</td>
     <td>+13135550031</td>
     <td>111111</td>
     <td>1989-08-01</td>
     <td>6789</td>
   </tr>
   <tr>
-    <td>Partial address</td>
+    <td>Partial Address</td>
     <td>+13135550032</td>
     <td>111111</td>
     <td>1989-08-01</td>
@@ -362,12 +362,24 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>CA</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
                 <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>
@@ -376,7 +388,7 @@ Required inputs:
 
 #### Allowed
 
-Use these users to specifically test the `low` and `medium-low` risk level cases of [risk signals](/reference/data/outputs#metadata#risk-signals) metadata. _Compare them to the [medium risk (flagged)](#flagged) and [high risk (blocked)](#blocked) test users._
+Use these users to specifically test the `low` and `medium-low` risk level cases of [risk signals](/reference/data/outputs#risk-signals) metadata. _Compare them to the [medium risk (flagged)](#flagged) and [high risk (blocked)](#blocked) test users._
 
 ###### +16565550000
 
@@ -434,12 +446,24 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>CA</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
                 <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>
@@ -502,12 +526,24 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>CA</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
                 <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>
@@ -516,7 +552,7 @@ Required inputs:
 
 #### Flagged
 
-Use this user to specifically test the `medium` risk level case of [risk signals](/reference/data/outputs#metadata#risk-signals) metadata. _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
+Use this user to specifically test the `medium` risk level case of [risk signals](/reference/data/outputs#risk-signals) metadata. _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
 
 ###### +16565550500
 
@@ -574,12 +610,24 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>CA</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
                 <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>
@@ -658,12 +706,24 @@ Required inputs (one or both of birth date and SSN4):
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>CA</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
                 <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>
@@ -747,12 +807,24 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>CA</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
                 <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>
@@ -836,12 +908,24 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>CA</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
                 <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>
@@ -931,17 +1015,30 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>456 Acorn St</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Slidell</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
-                <td>CA</td>
+                <td>LA</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
-                <td>94303</td>
+                <td>70458</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>
 
 </details>
+
 
 ###### +13135550001
 
@@ -999,6 +1096,14 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>811 Sycamore St</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Burlington</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>IA</td>
             </tr>
@@ -1006,10 +1111,15 @@ Required inputs:
                 <th>↳ ZIP Code</th>
                 <td>52601</td>
             </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
         </tbody>
     </table>
 
 </details>
+
 
 ###### +13135550002
 
@@ -1067,6 +1177,14 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>3742 Horseshoe Mesa St</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Las Vegas</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>NV</td>
             </tr>
@@ -1074,10 +1192,15 @@ Required inputs:
                 <th>↳ ZIP Code</th>
                 <td>89147</td>
             </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
         </tbody>
     </table>
 
 </details>
+
 
 ###### +13135550003
 
@@ -1135,6 +1258,14 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>4209 Englewood Blvd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Johnson City</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>TN</td>
             </tr>
@@ -1142,10 +1273,15 @@ Required inputs:
                 <th>↳ ZIP Code</th>
                 <td>37601</td>
             </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
         </tbody>
     </table>
 
 </details>
+
 
 ###### +13135550004
 
@@ -1203,6 +1339,14 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>3921 Dacotah View Ct</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Grand Forks</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>ND</td>
             </tr>
@@ -1210,10 +1354,15 @@ Required inputs:
                 <th>↳ ZIP Code</th>
                 <td>58201</td>
             </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
         </tbody>
     </table>
 
 </details>
+
 
 ###### +13135550005
 
@@ -1271,6 +1420,14 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>852 Marschall Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Shakopee</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>MN</td>
             </tr>
@@ -1278,10 +1435,15 @@ Required inputs:
                 <th>↳ ZIP Code</th>
                 <td>55379</td>
             </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
         </tbody>
     </table>
 
 </details>
+
 
 ###### +13135550006
 
@@ -1339,6 +1501,14 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>456 Acorn St</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Slidell</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>LA</td>
             </tr>
@@ -1346,10 +1516,15 @@ Required inputs:
                 <th>↳ ZIP Code</th>
                 <td>70458</td>
             </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
         </tbody>
     </table>
 
 </details>
+
 
 ###### +13135550007
 
@@ -1407,6 +1582,14 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>1111 W Touhy Ave</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Des Plaines</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>IL</td>
             </tr>
@@ -1414,10 +1597,15 @@ Required inputs:
                 <th>↳ ZIP Code</th>
                 <td>60018</td>
             </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
         </tbody>
     </table>
 
 </details>
+
 
 ###### +13135550008
 
@@ -1475,6 +1663,14 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>12413 Lampton Ln</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Fort Washington</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>MD</td>
             </tr>
@@ -1482,10 +1678,15 @@ Required inputs:
                 <th>↳ ZIP Code</th>
                 <td>20744</td>
             </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
         </tbody>
     </table>
 
 </details>
+
 
 ###### +13135550009
 
@@ -1543,6 +1744,14 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>7801 SW Blue Jay Ln</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Bentonville</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>AR</td>
             </tr>
@@ -1550,31 +1759,15 @@ Required inputs:
                 <th>↳ ZIP Code</th>
                 <td>72712</td>
             </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
         </tbody>
     </table>
 
 </details>
 
-```typescript title="1ClickEntity"
-{
-    "identifiers": {
-        "phone": "+13135550010"
-    }
-    "credentials": {
-        ...
-        "address": {
-            "line1": "1 Central Park W",
-            "line2": "Apt 47bc",
-            "city": "New York",
-            "state": "NY",
-            "zipCode": "10023",
-            "country": "US"
-        },
-        ...
-    },
-    ...
-}
-```
 
 ##### Overseas Territory
 
@@ -1636,12 +1829,24 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>3167 Av Roosevelt</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Ponce</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>PR</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
                 <td>00717</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>
@@ -1670,13 +1875,15 @@ Required inputs:
 
 #### Partial Responses
 
-For each of these test users, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with [core KYC credentials](https://docs.verified.inc/data/outputs/credentials#core-kyc) where some are empty.
+For each of these test users, you will get a [`1ClickEntity`](/reference/api/types#1clickentity) with some [core data](/reference/data/outputs#core-data) credentials missing.
 
 :::important
-**You should never receive data from Verified for a user under 18 years old,** but this test user facilitates writing a check for that on your side if you wish.
+**Most [core data](/reference/data/outputs#core-data) credentials are returned in an all or nothing way,** meaning partial responses are uncommon. The one exception is the Sex credential, for which coverage is a bit lower than the other credentials. See [Core Data](/reference/data/outputs#core-data) for details.
 :::
 
-###### +13135550100
+##### No Name
+
+###### +13135550030
 
 Required inputs:
 
@@ -1684,7 +1891,137 @@ Required inputs:
   <tbody>
     <tr>
       <th>Phone</th>
-      <td>+13135550100</td>
+      <td>+3135550030</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>2017-01-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
+        </tbody>
+    </table>
+
+</details>
+
+
+##### No Address
+
+###### +13135550031
+
+Required inputs:
+
+<table>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+3135550031</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>2017-01-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+        </tbody>
+    </table>
+
+</details>
+
+
+##### Partial Address
+
+###### +13135550032
+
+Required inputs:
+
+<table>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550032</td>
     </tr>
     <tr>
       <th>Verification Code</th>
@@ -1739,23 +2076,94 @@ Required inputs:
                 <th>↳ ZIP Code</th>
                 <td>94303</td>
             </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
         </tbody>
     </table>
 
 </details>
 
+
 ##### No SSN
 
-For this test user, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with no SSN.
+###### +13135550033
 
-<TestUserDisplay
-  data={{
-    Phone: '+13135550033',
-    'Verification Code': '111111',
-    'Birth Date': '1989-08-01',
-    SSN4: '6789',
-  }}
-></TestUserDisplay>
+Required inputs:
+
+<table>
+  <tbody>
+    <tr>
+      <th>Phone</th>
+      <td>+13135550033</td>
+    </tr>
+    <tr>
+      <th>Verification Code</th>
+      <td>111111</td>
+    </tr>
+  </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>2017-01-01</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
+        </tbody>
+    </table>
+
+</details>
+
 
 #### Birth Date: Under 18
 
@@ -1765,6 +2173,7 @@ For this test user, you will get a [`1ClickEntity`](/reference/api/types#1clicke
 **You should never receive data from Verified for a user under 18 years old,** but this test user facilitates writing a check for that on your side if you wish.
 :::
 
+
 ###### +13135550100
 
 Required inputs:
@@ -1821,12 +2230,24 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>CA</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
                 <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>
@@ -1911,12 +2332,24 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>CA</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
                 <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>
@@ -1938,7 +2371,7 @@ Expected error:
 
 ### Blocked
 
-Use these users to specifically test the `medium-high` and `high` risk level cases of [risk signals](/reference/data/outputs#metadata#risk-signals) metadata. _Compare them to the [low risk (allowed)](#allowed) and [medium risk (flagged)](#flagged) test users._
+Use these users to specifically test the `medium-high` and `high` risk level cases of [risk signals](/reference/data/outputs#risk-signals) metadata. _Compare them to the [low risk (allowed)](#allowed) and [medium risk (flagged)](#flagged) test users._
 
 For these users, you will get the [`OCE017`](/reference/api/errors#oce017) error code, indicating that Verified blocked returning data for the user because the risk levels are `medium-high` and `high`.
 
@@ -1998,12 +2431,24 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>CA</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
                 <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>
@@ -2066,12 +2511,24 @@ Required inputs:
                 <td>-</td>
             </tr>
             <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
                 <th>↳ State</th>
                 <td>CA</td>
             </tr>
             <tr>
                 <th>↳ ZIP Code</th>
                 <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
             </tr>
         </tbody>
     </table>

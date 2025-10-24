@@ -4,7 +4,7 @@ title: Test Users
 sidebar_position: 2
 sidebar_label: Test Users
 sidebar_class_name: sidebar-header-regular
-description: Verified API Test Users
+description: Test Users for 1-Click Signup
 slug: /1-click-signup/test-users
 toc_max_heading_level: 4
 ---
@@ -1710,6 +1710,77 @@ Required inputs:
 
 For each of these test users, you will get a [`1ClickEntity`](./api-reference/types#1clickentity) with [core KYC credentials](https://docs.verified.inc/data/outputs/credentials#core-kyc) where some are empty.
 
+:::important
+**You should never receive data from Verified for a user under 18 years old,** but this test user facilitates writing a check for that on your side if you wish.
+:::
+
+
+###### +13135550100
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550100</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>2017-01-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
 :::info Responses are Almost Never Partial
 **[Core KYC credentials](https://docs.verified.inc/data/outputs/credentials#core-kyc) are almost always returned in an all or nothing way.** In other words, except in rare cases, you will receive either all of the credentials you include in your credential requests or none of them. 
 
@@ -1874,6 +1945,10 @@ Use these test users to go through unsuccessful 1-Click Signup flows (where Veri
 ### No Credentials Found
 
 For this test user, you will get the [`OCE013`](/reference/api/errors#oce013) error code, indicating that Verified found no credentials.
+
+
+###### +14045551300
+
 
 
 ###### +14045551300

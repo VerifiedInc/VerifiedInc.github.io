@@ -105,6 +105,27 @@ module.exports = {
           ],
         },
         {
+          title: '1-Click Health',
+          items: [
+            {
+              label: 'Overview',
+              to: '/1-click-health/overview',
+            },
+            {
+              label: 'User Experience',
+              to: '/1-click-health/user-experience',
+            },
+            {
+              label: 'Test Users',
+              to: '/1-click-health/test-users',
+            },
+            {
+              label: 'Guides',
+              to: '/1-click-health/guides',
+            },
+          ],
+        },
+        {
           title: 'Text to Signup',
           items: [
             {

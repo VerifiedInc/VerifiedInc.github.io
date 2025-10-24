@@ -44,6 +44,95 @@
     <td>`"6789"`</td>
 </tr>
 <tr>
+    <td>`fullName`</td>
+    <td>optional</td>
+    <td>`Object`</td>
+    <td>Object with keys for one or more child credentials listed below</td>
+    <td>none</td>
+    <td>Full name</td>
+    <td>
+        ```json
+        {
+            "firstName": "Richard",
+            "lastName": "Hendricks"
+        }
+        ```
+    </td>
+</tr>
+<tr>
+    <td>↳ `fullName.firstName`</td>
+    <td>optional</td>
+    <td>`string`</td>
+    <td>`cAse inSensiTive`</td>
+    <td>none</td>
+    <td>First name</td>
+    <td>`"Richard"`</td>
+</tr>
+<tr>
+    <td>↳ `fullName.middleName`</td>
+    <td>optional</td>
+    <td>`string`</td>
+    <td>`cAse inSensiTive`</td>
+    <td>none</td>
+    <td>Middle name</td>
+    <td>`"Harrison"`</td>
+</tr>
+<tr>
+    <td>↳ `fullName.lastName`</td>
+    <td>optional</td>
+    <td>`string`</td>
+    <td>`cAse inSensiTive`</td>
+    <td>none</td>
+    <td>Last name</td>
+    <td>`"Hendricks"`</td>
+</tr>
+<tr>
+    <td>`address`</td>
+    <td>optional</td>
+    <td>`Object`</td>
+    <td>Object with keys for one or more child credentials listed below</td>
+    <td>none</td>
+    <td>Address</td>
+    <td>
+        ```json
+        {
+            "state": "CA",
+            "zipCode": "94303"
+        }
+        ```
+    </td>
+</tr>
+<tr>
+    <td>↳ `address.state`</td>
+    <td>optional</td>
+    <td>`string`</td>
+    <td>
+        - 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
+        - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
+    </td>
+    <td>none</td>
+    <td>State of address</td>
+    <td>
+        - `"CA"`
+        - `"California"`
+    </td>
+</tr>
+<tr>
+    <td>↳ `address.zipCode`</td>
+    <td>optional</td>
+    <td>`string`</td>
+    <td>
+        - [ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9)
+        - [ZIP+4](https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4) (5 digits, 0-9 + `-` + 4 digits, 0-9)
+    </td>
+    <td>none</td>
+    <td>ZIP Code of address</td>
+    <td>
+        - `"94303"`
+        - `"94303-2846"`
+    </td>
+</tr>
+<tr>
     <td>`credentialRequests`</td>
     <td>optional</td>
     <td>`CredentialRequest[]`</td>

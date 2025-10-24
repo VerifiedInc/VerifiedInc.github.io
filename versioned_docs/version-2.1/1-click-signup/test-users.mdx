@@ -272,7 +272,7 @@ See the later sections for full details on how each of these test users is desig
         <th>SSN4</th>
     </tr>
     <tr>
-        <td>[`OCE011`](/reference/api/errors#oce011), then [`OCE013`](/reference/api/errors#oce013)</td>
+        <td>[`OCE013`](/reference/api/errors#oce013)</td>
         <td>+14045551300</td>
         <td>111111</td>
         <td>-</td>
@@ -309,58 +309,293 @@ For these users, only a phone number is needed to source [credentials](/referenc
 
 #### Primary Test User
 
-Our primary test user is Richard Hendricks:
+Our primary test user is Richard Hendricks.
 
-<TestUserDisplay
-  data={{
-    'Phone': '+12125550010',
-    'Verification Code': '111111',
-    'Email': 'richard@piedpiper.net',
-    'Birth Date': '1989-08-01',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
-
-:::info Yes, You Read That Right
+:::tip Yes, You Read That Right
 This is Richard Hendricks from the show _Silicon Valley_! 😂
 :::
+
+
+###### +12125550010
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+12125550010</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
 
 
 #### Allowed
 
 Use these users to specifically test the `low` and `medium-low` risk level cases of [risk signals](/reference/data/outputs/metadata#risk-signals) metadata. _Compare them to the [medium risk (flagged)](#flagged) and [high risk (blocked)](#blocked) test users._
 
-<TestUserDisplay
-  data={{
-    'Phone': '+16565550000',
-    'Verification Code': '111111',
-    'Birth Date': '1989-08-01',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
 
-<TestUserDisplay
-  data={{
-    'Phone': '+16565550301',
-    'Verification Code': '111111',
-    'Birth Date': '1989-08-01',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
+###### +16565550000
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+16565550000</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+
+###### +16565550301
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+16565550301</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
 
 
 #### Flagged
 
 Use this user to specifically test the `medium` risk level case of [risk signals](/reference/data/outputs/metadata#risk-signals) metadata. _Compare it to the [low risk (allowed)](#allowed) and [high risk (blocked)](#blocked) test users._
 
-<TestUserDisplay
-  data={{
-    'Phone': '+16565550500',
-    'Verification Code': '111111',
-    'Birth Date': '1989-08-01',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
+
+###### +16565550500
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+16565550500</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
 
 
 ### Phone and Additional Info
@@ -380,14 +615,75 @@ For example, use `1979-01-01` for `birthDate` (since all test users have `1989-0
 
 For this user, both a phone number and either a birth date or SSN4 is needed to source [credentials](/reference/data/outputs/credentials).
 
-<TestUserDisplay
-  data={{
-    'Phone': '+12125550020',
-    'Verification Code': '111111',
-    'Birth Date': '1989-08-01',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
+
+###### +12125550020
+
+Required inputs (one or both of birth date and SSN4):
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+12125550020</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+        <tr>
+            <th>Birth Date</th>
+            <td>1989-08-01</td>
+        </tr>
+        <tr>
+            <th>SSN4</th>
+            <td>6789</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+Expected error:
 
 <table>
     <tr>
@@ -409,13 +705,75 @@ For this user, both a phone number and either a birth date or SSN4 is needed to 
 
 For this user, both a phone number and a birth date is needed to source [credentials](/reference/data/outputs/credentials).
 
-<TestUserDisplay
-  data={{
-    'Phone': '+12125550022',
-    'Verification Code': '111111',
-    'Birth Date': '1989-08-01'
-  }}
-></TestUserDisplay>
+
+###### +12125550022
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+12125550022</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+        <tr>
+            <th>Birth Date</th>
+            <td>1989-08-01</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+Expected error:
 
 <table>
     <tr>
@@ -437,13 +795,75 @@ For this user, both a phone number and a birth date is needed to source [credent
 
 For this user, both a phone number and an SSN4 is needed to source [credentials](/reference/data/outputs/credentials).
 
-<TestUserDisplay
-  data={{
-    'Phone': '+12125550021',
-    'Verification Code': '111111',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
+
+###### +12125550021
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+12125550021</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+        <tr>
+            <th>SSN4</th>
+            <td>6789</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+Expected error:
 
 <table>
     <tr>
@@ -473,14 +893,685 @@ Use these test users test specific cases of [credential](/reference/data/outputs
 
 For each of these 10 test users, you will get a [`1ClickEntity`](/reference/api/types#1clickentity) with a different address. Each address is a standard address in a US state (as opposed to an address in an [overseas territory](#overseas-territory)).
 
-<TestUserDisplay
-  data={{
-    'Phone': '+13135550000 → +13135550009',
-    'Verification Code': '111111',
-    'Birth Date': '1989-08-01',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
+
+###### +13135550000
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550000</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+
+###### +13135550001
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550001</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>IA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>52601</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+
+###### +13135550002
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550002</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>NV</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>89147</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+
+###### +13135550003
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550003</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>TN</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>37601</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+
+###### +13135550004
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550004</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>ND</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>58201</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+
+###### +13135550005
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550005</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>MN</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>55379</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+
+###### +13135550006
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550006</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>LA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>70458</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+
+###### +13135550007
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550007</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>IL</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>60018</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+
+###### +13135550008
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550008</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>MD</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>20744</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+
+###### +13135550009
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550009</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>AR</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>72712</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
 
 
 ##### With Line 2 Separately
@@ -526,14 +1617,73 @@ Addresses often have Line 2 information included as part of Line 1. This is simp
 
 For this test user, you will get a [`1ClickEntity`](/reference/api/types#1clickentity) with an address in Puerto Rico (a US overseas territory).
 
-<TestUserDisplay
-  data={{
-    'Phone': '+13135550010',
-    'Verification Code': '111111',
-    'Birth Date': '1989-08-01',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
+
+###### +13135550010
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550010</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>PR</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>00717</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
 
 ```typescript title="1ClickEntity"
 {
@@ -629,18 +1779,77 @@ For this test user, you will get a [`1ClickEntity`](./api-reference/types#1click
 
 For this test user, you will get a [`1ClickEntity`](/reference/api/types#1clickentity) with a birth date less than 18 years ago (until January 1, 2035).
 
-:::info
+:::important
 **You should never receive data from Verified for a user under 18 years old,** but this test user facilitates writing a check for that on your side if you wish.
 :::
 
-<TestUserDisplay
-  data={{
-    'Phone': '+13135550100',
-    'Verification Code': '111111',
-    'Birth Date': '2017-01-01',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
+
+###### +13135550100
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+13135550100</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>2017-01-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
 
 ```typescript title="1ClickEntity"
 {
@@ -664,31 +1873,77 @@ Use these test users to go through unsuccessful 1-Click Signup flows (where Veri
 
 ### No Credentials Found
 
-For this user — if you start with phone only, as we recommend — you will get the [`OCE011`](/reference/api/errors#oce011) error code, indicating that additional information is required. Within the error, `data.additionalInputs` specifies which additional information you can pass (see [`OCE011`](/reference/api/errors#oce011) for details).
+For this test user, you will get the [`OCE013`](/reference/api/errors#oce013) error code, indicating that Verified found no credentials.
 
-<TestUserDisplay
-  data={{
-    'Phone': '+14045551300',
-    'Verification Code': '111111'
-  }}
-></TestUserDisplay>
+
+###### +14045551300
+
+Required inputs:
 
 <table>
-    <tr>
-        <th>Error Attribute</th>
-        <th>Value</th>
-    </tr>
-    <tr>
-        <td>`data.errorCode`</td>
-        <td>[`OCE011`](/reference/api/errors#oce011)</td>
-    </tr>
-    <tr>
-        <td>`data.additionalInputs`</td>
-        <td>`["birthDate", "ssn4"]`</td>
-    </tr>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+14045551300</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
 </table>
 
-If you then pass additional inputs (with any values), you will get the [`OCE013`](/reference/api/errors#oce013) error code, indicating that Verified found no credentials.
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+Expected error:
 
 <table>
     <tr>
@@ -708,24 +1963,143 @@ Use these users to specifically test the `medium-high` and `high` risk level cas
 
 For these users, you will get the [`OCE017`](/reference/api/errors#oce017) error code, indicating that Verified blocked returning data for the user because the risk levels are `medium-high` and `high`.
 
-<TestUserDisplay
-  data={{
-    'Phone': '+14045551775',
-    'Verification Code': '111111',
-    'Birth Date': '1989-08-01',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
+
+###### +14045551775
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+14045551775</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
 
 
-<TestUserDisplay
-  data={{
-    'Phone': '+14045551799',
-    'Verification Code': '111111',
-    'Birth Date': '1989-08-01',
-    'SSN4': '6789'
-  }}
-></TestUserDisplay>
+###### +14045551799
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Phone</th>
+            <td>+14045551799</td>
+        </tr>
+        <tr>
+            <th>Verification Code</th>
+            <td>111111</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Email</th>
+                {/* The spans are to prevent automatic link formatting for the email */}
+                <td>richard@piedpiper<span>.net</span></td>
+            </tr>
+            <tr>
+                <th>Birth Date</th>
+                <td>1989-08-01</td>
+            </tr>
+            <tr>
+                <th>SSN4</th>
+                <td>6789</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ First Name</th>
+                <td>Richard</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>↳ Last Name</th>
+                <td>Hendricks</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+        </tbody>
+    </table>
+</details>
+
+Expected error:
 
 <table>
     <tr>

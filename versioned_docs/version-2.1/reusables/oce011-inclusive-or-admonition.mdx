@@ -1,0 +1,9 @@
+import Admonition from '@theme/Admonition';
+
+<Admonition type="warning" title="Inclusive OR">
+    The `inputs` included in `message` and `data.additionalInputs` is a comma separated list of additional information. 
+    
+    **Multiple values always indicate an inclusive OR:** that is, you can **pass one or more** of the additional inputs. You do _not_ need to pass all of the additional inputs included in the list!
+
+    For example, if `inputs` is `birthDate, ssn4`, you can pass either the user's birth date or their SSN4 (or both). We always recommend passing just one first because both are required only very rarely and, if they _are_ both required, you will get another `OCE011` error code indicating that the other one is required.
+</Admonition>

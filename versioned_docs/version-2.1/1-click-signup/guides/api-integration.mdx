@@ -37,7 +37,8 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
 import ApiKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/api-keys-admonition.mdx';
 import AnchorOffset from '@site/src/components/AnchorOffset.jsx';
 import SupportedPhoneNumbersAdmonition from '@site/versioned_docs/version-2.1/reusables/supported-phone-numbers-admonition.mdx';
-import PoweredByGraphic from '@site/versioned_docs/version-2.1/reusables/powered-by-graphic.mdx';
+import PoweredByGraphicVariantsForOneClickSignup from '@site/versioned_docs/version-2.1/reusables/powered-by-graphic-variants-for-1-click-signup.mdx';
+import OCE011InclusiveOrAdmonition from '@site/versioned_docs/version-2.1/reusables/oce011-inclusive-or-admonition.mdx'; 
 
 
 {/* 1-Click Signup is the fastest way to onboard new users.
@@ -112,15 +113,15 @@ Here's an example:
 > By entering my phone number, I agree that [Verified](https://verified.inc) (Hooli’s service provider) and its vendors may receive my personal info and autofill more info about me, including my social security number.
 
 
-#### b. Include a "powered by Verified" graphic.
+#### b. Include a "Powered by Verified" graphic.
 
-We require you to include a graphic that says "1-Click Signup powered by Verified". This helps the user understand they're about to go through a 1-Click flow — and motivates them to do so, since a 1-click experience is always best! 
+We require you to include a "Powered by Verified" graphic, which helps ensure the user gives legally valid consent for us to source data for them.
 
 The graphic should be placed just below the trigger you use to start the 1-Click Signup flow. Usually, this is a phone number or birthday input or a button.
-    
-We provide several variants of the graphic, with different words than "Signup" and in different colors, in both SVG and PNG format. Choose the one you prefer and that best fits the background color of your application:
 
-<PoweredByGraphic/>
+We provide many different variants of the graphic, so you can choose the one that best fits your use case and the background color of your application:
+
+<PoweredByGraphicVariantsForOneClickSignup/>
 
 
 ## 2. Call `POST /1-click`.
@@ -144,7 +145,7 @@ Call [`POST /1-click`](/reference/api/endpoints#post-1-click) with the user's ph
 One of two things will happen:
 - **Success:** If we can source data based on just the phone number, the [response body](/reference/api/endpoints#post-1-click-response) will contain a [`1ClickEntity`](/reference/api/types#1clickentity) (see this [example](/reference/api/types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 5](#5-prompt-user-to-confirm-their-data).
 - **Error:** Otherwise, the response body will contain an [error](/reference/api/errors) with a Verified error code:
-    - **[`OCE011`](/reference/api/errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. → _Continue to [step 3](#3-if-necessary-prompt-user-for-additional-info)_
+    - **[`OCE011`](/reference/api/errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. → _Continue to [step 3](#3-if-necessary-prompt-user-for-additional-info)_.
     - **[`OCE013`](/reference/api/errors#oce013)** indicates that Verified found no [credentials](/reference/data/outputs/credentials) for the user. → _Fall back to a manual signup flow._
     - **[`OCE017`](/reference/api/errors#oce017)** indicates that Verified blocked the user because the risk score was too high. → _Reject the user or flag them and fall back to a manual signup flow._
 
@@ -153,19 +154,21 @@ One of two things will happen:
 
 <WhenStepIsNecessaryAdmonition stepName="step 2" stepLink="#2-call-post-1-click"/>
 
+<OCE011InclusiveOrAdmonition/>
+
 We recommend using a numeric input (formatted as MM/DD/YYYY for birthday) that automatically submits when the user enters enough digits (8 for birth date and 4 for SSN4). (See the [Birthday](/1-click-signup/user-experience#birthday) and [SSN4](/1-click-signup/user-experience#ssn4) screens of our User Experience guide for full details.) 
 
 <BirthDateFormatAdmonition/>
 
 Here are examples:
 
-<div class="two-image-grid-container">
-    <div class="two-image-grid-row">
-        <div class="two-image-grid-column">
+<div class="two-column-grid-container">
+    <div class="two-column-grid-row">
+        <div class="two-column-grid-column">
             ![](/img/1cs-ux-screens/birthday-empty.png)
             *Numeric input, formatted as MM/DD/YYYY, and the green signup variant of the "powered by" graphic*
         </div>
-        <div class="two-image-grid-column">
+        <div class="two-column-grid-column">
             ![](/img/1cs-ux-screens/ssn4-empty.png)
             *Numeric input and the green signup variant of the "powered by" graphic*
         </div>

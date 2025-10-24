@@ -449,28 +449,28 @@ td:first-child {
   z-index: 10;
 }
 
-/* For image grid layouts */
-.three-image-grid-container {
+/* For grid layouts */
+.three-column-grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 1rem;
 }
-.three-image-grid-row {
+.three-column-grid-row {
   display: contents;
 }
-.three-image-grid-column {
+.three-column-grid-column {
   display: flex;
   flex-direction: column;
 }
-.two-image-grid-container {
+.two-column-grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 1rem;
 }
-.two-image-grid-row {
+.two-column-grid-row {
   display: contents;
 }
-.two-image-grid-column {
+.two-column-grid-column {
   display: flex;
   flex-direction: column;
 }

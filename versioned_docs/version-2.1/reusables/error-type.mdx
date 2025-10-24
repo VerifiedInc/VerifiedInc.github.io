@@ -63,11 +63,11 @@ import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error
             <details>
                 <summary>`enum`</summary>
 
-                See [Error Codes](/reference/api/errors#error-codes) for possible values
+                See [Error Codes](/reference/api/errors#verified-error-codes) for possible values
             </details>
         </td>
         <td>3 letters and 3 digits (0-9)</td>
-        <td>[Verified error code](/reference/api/errors#error-codes)</td>
+        <td>[Verified error code](/reference/api/errors#verified-error-codes)</td>
         <td>`"OCE011"`</td>
     </tr>
     <tr>
@@ -88,14 +88,14 @@ import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error
         <td>`data.identifiers`</td>
         <td>`Object`</td>
         <td>`camelCase`</td>
-        <td>[Identifiers](/reference/data/outputs#identifiers) includede in the request</td>
+        <td>[Identifiers](/reference/data/inputs#identifiers) includede in the request</td>
         <td>`["birthDate", "ssn4"]`</td>
     </tr>
     <tr>
         <td>`data.verificationMethod`</td>
         <td>`Object`</td>
         <td>`camelCase`</td>
-        <td>[Verification method](/reference/data/outputs#verification-method) for [identifiers](/reference/data/outputs#identifiers) includede in the request</td>
+        <td>[Verification method](/reference/data/outputs#verification-method) for [identifiers](/reference/data/inputs#identifiers) includede in the request</td>
         <td>`["birthDate", "ssn4"]`</td>
     </tr>
     <tr>
@@ -104,7 +104,7 @@ import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error
             <details>
                 <summary>`enum`</summary>
 
-                Possible values (see [identifiers](/reference/data/outputs#identifiers) for details):
+                Possible values (see [identifiers](/reference/data/inputs#identifiers) for details):
                     - `phone`
                     - `email`
             </details>
@@ -117,7 +117,7 @@ import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error
         <td>`data.riskSignals`</td>
         <td>[`RiskSignals`](/reference/api/types#risksignals)</td>
         <td>`Object`</td>
-        <td>[Verified risk signals](/reference/data/outputs#metadata#risk-signals) associated with the 1-Click Signup event (only included for [`OCE011`](/reference/api/errors#oce011), [`OCE012`](/reference/api/errors#oce012), [`OCE013`](/reference/api/errors#oce013), [`OCE017`](/reference/api/errors#oce017), and [`OCE019`](/reference/api/errors#oce019))</td>
+        <td>[Verified risk signals](/reference/data/outputs#risk-signals) associated with the 1-Click Signup event (only included for [`OCE011`](/reference/api/errors#oce011), [`OCE012`](/reference/api/errors#oce012), [`OCE013`](/reference/api/errors#oce013), [`OCE017`](/reference/api/errors#oce017), and [`OCE019`](/reference/api/errors#oce019))</td>
         <td>See [`RiskSignals` example](/reference/api/types#example-risksignals)</td>
     </tr>
 </table>

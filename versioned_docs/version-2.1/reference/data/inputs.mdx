@@ -38,7 +38,7 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
 
 :::note
 To source verified data ([outputs](/reference/data/outputs)) for a user:
-- **[Identifiers](#identifiers):** Phone is always required. Email is optional, but including it helps source better and more metadata — especially [risk signals](/reference/data/outputs#risk-signals). It cannot be used on its own to source [credentials](/reference/data/outputs/credentials) (user identity data).
+- **[Identifiers](#identifiers):** Phone is always required. Email is optional, but including it helps source better and more metadata — especially [risk signals](/reference/data/outputs#risk-signals). It cannot be used on its own to source [credentials](/reference/data/outputs#credentials) (user identity data).
 - **[Challenges](#challenges):** These are only required sometimes: if you get the [`OCE11`](/reference/api/errors#oce011) error code, which indicates that additional information is required. This happens when Verified is unable to narrow down to a single user based on the inputs already provided.
 - **[Other Inputs](#other-inputs):** These are optional. For name, we'll try to match against _all_ names we find associated with the user. This often means, for example, that a user's nickname will match as well as their legal name, but that depends on which names we can source for the user.
 :::

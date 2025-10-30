@@ -265,52 +265,98 @@ module.exports = {
         // Explicitly handling page redirects for v2.0 because the more sophisticated approach below isn't working
         redirects: [
           // /X -> /v2.0/X
+          // {
+          //   to: '/v2.0/recommended-ux',
+          //   from: '/recommended-ux',
+          // },
+          // {
+          //   to: '/v2.0/quick-start-guide',
+          //   from: '/quick-start-guide',
+          // },
+          // {
+          //   to: '/v2.0/integration-guide',
+          //   from: '/integration-guide',
+          // },
+          // {
+          //   to: '/v2.0/migration-guide-v1-to-v2',
+          //   from: '/migration-guide-v1-to-v2',
+          // },
+          // {
+          //   to: '/v2.0/example-app',
+          //   from: '/example-app',
+          // },
+          // {
+          //   to: '/v2.0/demo',
+          //   from: '/demo',
+          // },
+          // {
+          //   to: '/v2.0/authentication',
+          //   from: '/authentication',
+          // },
+          // {
+          //   to: '/v2.0/environments',
+          //   from: '/environments',
+          // },
+          // {
+          //   to: '/v2.0/test-users',
+          //   from: '/test-users',
+          // },
+          // {
+          //   to: '/v2.0/endpoints',
+          //   from: '/endpoints',
+          // },
+          // {
+          //   to: '/v2.0/errors',
+          //   from: '/errors',
+          // },
+          // {
+          //   to: '/v2.0/types',
+          //   from: '/types',
+          // },
+          // Effectively redirecting people from v2.0 to v2.1 to avoid confusion (e.g. from using outdated test users)
           {
-            to: '/v2.0/recommended-ux',
+            to: '/1-click-signup/user-experience',
             from: '/recommended-ux',
           },
           {
-            to: '/v2.0/quick-start-guide',
+            to: '/1-click-signup/guides',
             from: '/quick-start-guide',
           },
           {
-            to: '/v2.0/integration-guide',
+            to: '/1-click-signup/guides',
             from: '/integration-guide',
           },
+          // This is the one exception where we won't override v2.0
           {
             to: '/v2.0/migration-guide-v1-to-v2',
             from: '/migration-guide-v1-to-v2',
           },
           {
-            to: '/v2.0/example-app',
+            to: '/1-click-signup',
             from: '/example-app',
           },
           {
-            to: '/v2.0/demo',
+            to: '/custom-demo',
             from: '/demo',
           },
           {
-            to: '/v2.0/authentication',
+            to: '/reference/api/authentication',
             from: '/authentication',
           },
           {
-            to: '/v2.0/environments',
+            to: '/reference/api/environments',
             from: '/environments',
           },
           {
-            to: '/v2.0/test-users',
-            from: '/test-users',
-          },
-          {
-            to: '/v2.0/endpoints',
+            to: '/reference/api/endpoints',
             from: '/endpoints',
           },
           {
-            to: '/v2.0/errors',
+            to: '/reference/api/errors',
             from: '/errors',
           },
           {
-            to: '/v2.0/types',
+            to: '/reference/api/types',
             from: '/types',
           },
           // For Text to Signup revamp

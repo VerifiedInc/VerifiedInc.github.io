@@ -260,6 +260,255 @@ If you're using the **API** [integration type](/1-click-signup/guides/setup#inte
 </CollapsibleSection>
 
 
+<CollapsibleSection>
+<CollapsibleHeader>
+### Government IDs
+</CollapsibleHeader>
+
+:::note Coverage and Recency for Driver's License
+Access to driver's license data varies state by state, so coverage and recency are substantially lower than for [core data](#core-data).
+:::
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Driver's License</td>
+        <td>`driversLicense`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all child credentials listed below</td>
+        <td>Driver's license</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ Document Number</td>
+        <td>`driversLicense.documentNumber`</td>
+        <td>`string`</td>
+        <td>Format varies by state</td>
+        <td>Driver's license number</td>
+        <td>`"A0000000"`</td>
+    </tr>
+    <tr>
+        <td>↳ Issuance State</td>
+        <td>`driversLicense.issuanceState`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
+            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+        </td>
+        <td>Issuance state of driver's license</td>
+        <td>
+            - `"CA"`
+            - `"California"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Issuance Date</td>
+        <td>`driversLicense.issuanceDate`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
+            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+        </td>
+        <td>Issuance date of driver's license</td>
+        <td>
+            - `"1596254400"`
+            - `"08/01/2020"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Expiration Date</td>
+        <td>`driversLicense.expirationDate`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
+            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+        </td>
+        <td>Expiration date of of driver's license</td>
+        <td>
+            - `"1911787200"`
+            - `"08/01/2030"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Address</td>
+        <td>`driversLicense.address`</td>
+        <td>
+            - **Default:** `Object`
+            - `string`
+        </td>
+        <td>
+            - **Default:** Object with keys for all child credentials listed below
+            - Any combination of child `shortenedCredentialType`s under `address`, `,` (comma), and `-` (dash)
+        </td>
+        <td>Driver's license address</td>
+        <td>
+            - See [`1ClickEntity` example](/reference/api/types#example-1clickentity)
+            - `"Palo Alto, US-CA"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Line 1</td>
+        <td>`driversLicense.address.line1`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Line 1 of driver's license address</td>
+        <td>`"5320 Newell Rd"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Line 2</td>
+        <td>`driversLicense.address.line2`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Line 2 of driver's license address</td>
+        <td>`""`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ City</td>
+        <td>`driversLicense.address.city`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>City of driver's license address</td>
+        <td>`"Palo Alto"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ State</td>
+        <td>`driversLicense.address.state`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
+            - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
+        </td>
+        <td>State of driver's license address</td>
+        <td>
+            - `"CA"`
+            - `"California"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ZIP Code</td>
+        <td>`driversLicense.address.zipCode`</td>
+        <td>`string`</td>
+        <td>[ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9)</td>
+        <td>ZIP Code of driver's license address</td>
+        <td>`"94303"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Country</td>
+        <td>`driversLicense.address.country`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
+            - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
+        </td>
+        <td>Country of driver's license address</td>
+        <td>
+            - `"US"`
+            - `"United States of America"`
+        </td>
+    </tr>
+    {/* <tr>
+        <td>Government ID</td>
+        <td>`governmentId`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all child credentials listed below</td>
+        <td>Government ID</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ Document Type</td>
+        <td>`governmentId.documentType`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+                Possible values:
+                    - `"drivers_license"`
+                    - `"passport"`
+                    - `"resident_card"`
+            </details>
+        </td>
+        <td>`snake_case`</td>
+        <td>Type of government ID</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ Document Number</td>
+        <td>`governmentId.documentNumber`</td>
+        <td>`string`</td>
+        <td>Any alphanumeric string</td>
+        <td>Number of government ID</td>
+        <td>`"F4698E1"`</td>
+    </tr>
+    <tr>
+        <td>↳ Issuance Date</td>
+        <td>`governmentId.issuanceDate`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
+            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+        </td>
+        <td>Issuance date of government ID</td>
+        <td>
+            - `"617947200000"`
+            - `"08/01/1989"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Expiration Date</td>
+        <td>`governmentId.expirationDate`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
+            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
+        </td>
+        <td>Expiration date of government ID</td>
+        <td>
+            - `"2069553600"`
+            - `"08/01/2035"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ State</td>
+        <td>`governmentId.state`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
+            - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
+        </td>
+        <td>State of issance of government ID</td>
+        <td>
+            - `"CA"`
+            - `"California"`
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Country</td>
+        <td>`governmentId.country`</td>
+        <td>`string`</td>
+        <td>
+            - **Default:** 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
+            - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
+        </td>
+        <td>Country of issance of address</td>
+        <td>
+            - `"US"`
+            - `"United States of America"`
+        </td>
+    </tr> */}
+</table>
+
+:::note More Government IDs are Coming Soon
+We're working on adding support for new types of government ID. Let us know what would be most helpful for your use case! Email us at Support@Verified.inc and we'll prioritize accordingly.
+:::
+
+</CollapsibleSection>
+
 
 {/*<CollapsibleSection>
 <CollapsibleHeader>
@@ -415,7 +664,7 @@ If you're using the **API** [integration type](/1-click-signup/guides/setup#inte
 
 <CollapsibleSection>
 <CollapsibleHeader>
-### Vehicles <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#vehicles}
+### Vehicles <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/> {#vehicles}
 </CollapsibleHeader>
 
 <table>
@@ -526,7 +775,7 @@ If you're using the **API** [integration type](/1-click-signup/guides/setup#inte
 
 <CollapsibleSection>
 <CollapsibleHeader>
-### Employment <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#employment}
+### Employment <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/> {#employment}
 </CollapsibleHeader>
 
 <table>
@@ -660,7 +909,7 @@ If you're using the **API** [integration type](/1-click-signup/guides/setup#inte
 
 <CollapsibleSection>
 <CollapsibleHeader>
-### Properties <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#properties}
+### Properties <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/> {#properties}
 </CollapsibleHeader>
 
 <table>
@@ -871,113 +1120,6 @@ If you're using the **API** [integration type](/1-click-signup/guides/setup#inte
 
 </CollapsibleSection> */}
 
-
-<CollapsibleSection>
-<CollapsibleHeader>
-### Government IDs <Chip label="Beta" variant="outlined" size="small" color="primary"/> {#government-ids}
-</CollapsibleHeader>
-
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Key</th>
-        <th>Type</th>
-        <th>Format(s)</th>
-        <th>Description</th>
-        <th>Example</th>
-    </tr>
-    <tr>
-        <td>Government ID</td>
-        <td>`governmentId`</td>
-        <td>`Object`</td>
-        <td>Object with keys for all child credentials listed below</td>
-        <td>Government ID</td>
-        <td>-</td>
-    </tr>
-    <tr>
-        <td>↳ Document Type</td>
-        <td>`governmentId.documentType`</td>
-        <td>
-            <details>
-                <summary>`enum`</summary>
-
-                Possible values:
-                    - `"drivers_license"`
-                    - `"passport"`
-                    - `"resident_card"`
-            </details>
-        </td>
-        <td>`snake_case`</td>
-        <td>Type of government ID</td>
-        <td>-</td>
-    </tr>
-    <tr>
-        <td>↳ Document Number</td>
-        <td>`governmentId.documentNumber`</td>
-        <td>`string`</td>
-        <td>Any alphanumeric string</td>
-        <td>Number of government ID</td>
-        <td>`"F4698E1"`</td>
-    </tr>
-    <tr>
-        <td>↳ Issuance Date</td>
-        <td>`governmentId.issuanceDate`</td>
-        <td>`string`</td>
-        <td>
-            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
-            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
-        </td>
-        <td>Issuance date of government ID</td>
-        <td>
-            - `"617947200000"`
-            - `"08/01/1989"`
-        </td>
-    </tr>
-    <tr>
-        <td>↳ Expiration Date</td>
-        <td>`governmentId.expirationDate`</td>
-        <td>`string`</td>
-        <td>
-            - **Default:** [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
-            - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
-        </td>
-        <td>Issuance date of government ID</td>
-        <td>
-            - `"2069553600"`
-            - `"08/01/2035"`
-        </td>
-    </tr>
-    <tr>
-        <td>↳ State</td>
-        <td>`governmentId.state`</td>
-        <td>`string`</td>
-        <td>
-            - **Default:** 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
-            - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
-        </td>
-        <td>State of issance of government ID</td>
-        <td>
-            - `"CA"`
-            - `"California"`
-        </td>
-    </tr>
-    <tr>
-        <td>↳ Country</td>
-        <td>`governmentId.country`</td>
-        <td>`string`</td>
-        <td>
-            - **Default:** 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
-            - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
-        </td>
-        <td>Country of issance of address</td>
-        <td>
-            - `"US"`
-            - `"United States of America"`
-        </td>
-    </tr>
-</table>
-
-</CollapsibleSection>
 </CollapsibleGroup>
 
 

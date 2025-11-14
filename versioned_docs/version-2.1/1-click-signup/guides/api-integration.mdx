@@ -43,6 +43,7 @@ import AnchorOffset from '@site/src/components/AnchorOffset.jsx';
 import SupportedPhoneNumbersAdmonition from '@site/versioned_docs/version-2.1/reusables/supported-phone-numbers-admonition.mdx';
 import PoweredByGraphicVariantsForOneClickSignup from '@site/versioned_docs/version-2.1/reusables/powered-by-graphic-variants-for-1-click-signup.mdx';
 import OCE011InclusiveOrAdmonition from '@site/versioned_docs/version-2.1/reusables/oce011-inclusive-or-admonition.mdx';
+import SyncFromSandboxAdmonition from '@site/versioned_docs/version-2.1/reusables/sync-from-sandbox-admonition.mdx';
 
 {/* 1-Click Signup is the fastest way to onboard new users.
 
@@ -230,51 +231,41 @@ One of two things should happen:
 
 ---
 
+
 ## Go Live!
+
 
 ### Request Approval
 
 **When you're ready to go live, request approval for [Production](/reference/api/environments#production) access:**
 
 1. Go to the **Brand Details** page for your brand in the Verified [Dashboard](https://dashboard.verified.inc).
-2. Click the **Sandbox** tab in the upper right, and make sure your brand settings are synced. _If they're not, click the **Sync to Production** button._
-3. Click the **Production** tab in the upper right, and click the **Request Approval** button under the API Keys section.
+2. Click the **Production** tab in the upper right, and make sure your brand settings are configured as you intend them to be.
+3. Click the **Request Approval** button under the API Keys section.
 4. Complete the **steps** listed in the dialog.
 5. Click the **Submit Request** button.
+
+<SyncFromSandboxAdmonition/>
 
 In step 4, you'll be asked to confirm the following:
 
 <input type='checkbox' id='legal' />
-<label for='legal'>
-  We've included a "powered by Verified" graphic and the Verified legal
-  language. (See [step 1](#1-prompt-user-for-phone-number-and-verify-it))
-</label>
+<label for='legal'>We've included a "powered by Verified" graphic and the Verified legal language (see [step 1](#1-prompt-user-for-phone-number-and-verify-it)).</label>
 <br />
 <input type='checkbox' id='keys' />
-<label for='keys'>
-  We’re using Verified API keys securely: server side, never client side.
-</label>
+<label for='keys'>We’re using Verified API keys securely: server side, never client side.</label>
 <br />
 <input type='checkbox' id='phones' />
 <label for='phonse'>We're properly verifying users' phone numbers.</label>
 <br />
 <input type='checkbox' id='errors' />
-<label for='error'>
-  We’re handling relevant [Verified error
-  codes](/reference/api/errors#verified-error-codes).
-</label>
+<label for='error'>We’re handling relevant [Verified error codes](/reference/api/errors#verified-error-codes).</label>
 <br />
 <input type='checkbox' id='ssns' />
-<label for='ssns'>
-  If we’re requesting SSNs, we’re masking them server side and only exposing the
-  last 4 digits client side.
-</label>
+<label for='ssns'>If we’re requesting SSNs, we’re masking them server side and only exposing the last 4 digits client side.</label>
 <br />
 <input type='checkbox' id='testing' />
-<label for='testing'>
-  Our 1-Click Signup flow is working end-to-end in
-  [Sandbox](/reference/api/environments#sandbox).
-</label>
+<label for='testing'>Our 1-Click Signup flow is working end-to-end in [Sandbox](/reference/api/environments#sandbox).</label>
 <br />
 <br />
 

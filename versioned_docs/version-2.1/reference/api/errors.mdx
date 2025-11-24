@@ -110,21 +110,23 @@ You will get a network error if your API request is blocked by our firewall.
 
 ## Application Errors
 
-To handle application level errors (returned by Verified API endpoints), we recommend that you primarily use the response body's `data.errorCode`, which is a Verified specific error code. See [Verified Error Codes](#verified-error-codes) below for descriptions of what each code means.
+### 1-Click Signup
 
-### `Error` Type
+To handle application level errors (returned by Verified API endpoints) for 1-Click Signup, we recommend that you primarily use the response body's `data.errorCode`, which is a Verified specific error code. See [Verified Error Codes](#verified-error-codes) below for descriptions of what each code means.
+
+#### `Error` Type
 
 _This definition is also in [`Error`](/reference/api/types#error) in [Types](/reference/api/types)._
 
 <ErrorType />
 
-#### Example {#example-error}
+##### Example {#example-error}
 
 <ErrorExampleOce011 />
 
 ---
 
-### Verified Error Codes
+#### Verified Error Codes
 
 An `errorCode` is a Verified specific error code consisting of 3 letters and 3 numbers:
 
@@ -135,7 +137,7 @@ An `errorCode` is a Verified specific error code consisting of 3 letters and 3 n
 <CollapsibleGroup>
   <CollapsibleSection>
     <CollapsibleHeader>
-    #### Most Common Errors
+    ##### Most Common Errors
     </CollapsibleHeader>
 
     <ErrorSKE001 />
@@ -173,13 +175,10 @@ An `errorCode` is a Verified specific error code consisting of 3 letters and 3 n
     <ErrorOCE021 />
 
   </CollapsibleSection>
-</CollapsibleGroup>
-
-<CollapsibleGroup>
 
   <CollapsibleSection>
     <CollapsibleHeader>
-    #### All Errors
+    ##### All Errors
     </CollapsibleHeader>
 
     <ErrorERR001 />
@@ -262,3 +261,7 @@ An `errorCode` is a Verified specific error code consisting of 3 letters and 3 n
 
   </CollapsibleSection>
 </CollapsibleGroup>
+
+### 1-Click Health
+
+1-Click Health errors are returned via `errors` in a [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity).

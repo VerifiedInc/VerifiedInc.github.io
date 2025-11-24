@@ -6,7 +6,7 @@ sidebar_label: User Experience
 sidebar_class_name: sidebar-header-regular
 description: User Experience for 1-Click Signup
 slug: /1-click-signup/user-experience
-toc_max_heading_level: 4
+toc_max_heading_level: 3
 ---
 
 import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
@@ -40,8 +40,8 @@ This user experience may look complicated, and in some ways it is: achieving wor
 
 ## Flow Chart
 
-![](/img/ux-flow-chart-without-manual-signup.png)
-↗️ [Open in new tab](/img/ux-flow-chart-without-manual-signup.png) (for easy zooming)
+![](/img/ux-flow-chart-1-click-signup.png)
+↗️ [Open in new tab](/img/ux-flow-chart-1-click-signup.png) (for easy zooming)
 
 :::important
 To implement this user experience yourself (which is only necessary if you choose the **API** [integration type](/1-click-signup/guides/setup#integration-type)), without our SDK, you need to handle each action labeled Verified.
@@ -541,6 +541,7 @@ To implement this user experience yourself (which is only necessary if you choos
                 *Appears in view state.*
 
                 - “SSN” not “Social Security Number” for compactness.
+                - First 5 digits masked.
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Edit
@@ -621,7 +622,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 > By clicking “Confirm”, I agree that the info above is accurate.
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Confirm

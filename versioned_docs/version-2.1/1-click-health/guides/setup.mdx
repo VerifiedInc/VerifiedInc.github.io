@@ -9,6 +9,293 @@ slug: /1-click-health/guides/setup
 toc_max_heading_level: 4
 ---
 
-import OneClickHealthComingSoonAdmonition from '@site/versioned_docs/version-2.1/reusables/1-click-health-coming-soon-admonition.mdx';
+import Admonition from '@theme/Admonition';
+import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
+import Chip from '@mui/material/Chip';
+import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-recommendation-admonition.mdx';
+import StylingSettingLogo from '@site/versioned_docs/version-2.1/reusables/styling-setting-logo.mdx';
+import StylingSettingFontFamily from '@site/versioned_docs/version-2.1/reusables/styling-setting-font-family.mdx';
+import StylingSettingButtonBorderRadius from '@site/versioned_docs/version-2.1/reusables/styling-setting-button-border-radius.mdx';
+import StylingSettingPrimaryColor from '@site/versioned_docs/version-2.1/reusables/styling-setting-primary-color.mdx';
+import StylingSettingGraphicColor from '@site/versioned_docs/version-2.1/reusables/styling-setting-graphic-color.mdx';
+import BrandSettingBrandName from '@site/versioned_docs/version-2.1/reusables/brand-setting-brand-name.mdx';
+import ImmutableSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/immutable-setting-admonition.mdx';
+import BrandSettingRiskSignals from '@site/versioned_docs/version-2.1/reusables/brand-setting-risk-signals.mdx';
+import ConfigureBrandSettings from '@site/versioned_docs/version-2.1/reusables/configure-brand-settings.mdx';
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
 
-<OneClickHealthComingSoonAdmonition/>
+<table>
+    <tr>
+        <th>Time to Complete</th>
+        <td>15 minutes</td>
+    </tr>
+    <tr>
+        <th>Skills Required</th>
+        <td>No technical skills!</td>
+    </tr>
+</table>
+
+:::tip
+**Complete this Setup guide before following the 1-Click Health [SDK Integration](/1-click-health/guides/sdk-integration) or [API Integration](/1-click-health/guides/api-integration) guide.** (Which integration guide you should follow depends on which [integration type](#integration-type) you choose.)
+:::
+
+
+<SetupLoginToDashboard/>
+
+
+<ConfigureBrandSettings/>
+
+
+### Brand Name
+
+<BrandSettingBrandName/>
+
+
+### 1-Click Health Settings
+
+**Click the 1-Click Health tab to access these settings.**
+
+
+<CollapsibleGroup firstSectionExpanded={false}>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### Integration Type
+        </CollapsibleHeader>
+
+        <ImmutableSettingAdmonition/>
+
+        **Choose which integration type you want to use:**
+
+        <table>
+            <tr>
+                <th>Option</th>
+                <th>Development Effort</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>**SDK** <Chip label="Recommended" variant="outlined" size="small" color="primary"/> <br/> <span class="font-weight-normal"></span></td>
+                <td>\<1 day</td>
+                <td>You use our (web) client SDK, and we handle the rest</td>
+            </tr>
+            <tr>
+                <td>**API** <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/> <br/> <span class="font-weight-normal"></span></td>
+                <td>1-2 weeks</td>
+                <td>You use our API only and build everything yourself</td>
+            </tr>
+        </table>
+
+        <IntegrationTypeRecommendationAdmonition/>
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### Providers
+        </CollapsibleHeader>
+
+        <Admonition type="note" title="Definition">
+            A **provider** is a covered health care provider identified by a [National Provider Identifier (NPI)](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand).
+        </Admonition>
+
+        **Click the Add Provider button to add a provider and, for that provider, fill out the following fields:**
+
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>Name of the provider (e.g. from the [NPPES registry](https://npiregistry.cms.hhs.gov/search))</td>
+                <td>Hooli</td>
+            </tr>
+            <tr>
+                <td>NPI</td>
+                <td>[National Provider Identifier](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand) (10 digits)</td>
+                <td>0123456789</td>
+            </tr>
+            {/* <tr>
+                <td>EIN</td>
+                <td>[Employer Identification Number](https://www.irs.gov/businesses/employer-identification-number) (9 digits)</td>
+                <td>123456789</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>Email address of primary contact</td>
+                <td>richard@piedpiper.com</td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td>Phone number of primary contact</td>
+                <td>+1 (212) 555-0010</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>Address of primary contact</td>
+                <td>5320 Newell Rd Palo Alto, CA 94303</td>
+            </tr>
+            <tr>
+                <td>Line 2</td>
+                <td>Line 2 of address of primary contact</td>
+                <td>Apt 1</td>
+            </tr> */}
+        </table>
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### Webhook
+        </CollapsibleHeader>
+
+        **Optionally, click the Add Webhook button to add a webhook, and fill out the following fields:**
+
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Options</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>Any URL</td>
+                <td>The endpoint URL to send webhook requests to</td>
+                <td>https://hooli.com/1-click-health</td>
+            </tr>
+            <tr>
+                <td>Authentication</td>
+                <td>
+                    - None
+                    - API Key (Headers)
+                    - Basic Auth
+                </td>
+                <td>How to authenticate requests to your webhook</td>
+                <td>API Key (Bearer token, etc.)</td>
+            </tr>
+            <tr>
+                <td>Header Name / Username</td>
+                <td>Any string</td>
+                <td>Name of the authentication header / Basic auth username</td>
+                <td>Authorization</td>
+            </tr>
+            <tr>
+                <td>Header Value / Password</td>
+                <td>Any string</td>
+                <td>Value for the authentication header / Basic auth password</td>
+                <td>-</td>
+            </tr>
+        </table>
+
+        <Admonition type="info" title="The Webhook is Optional">
+            Using a webhook is optional: it's just one way to receive [output](/reference/data/outputs#1-click-health) 1-Click Health data. You can alternatively poll the [`GET /1-click/health`](/reference/api/endpoints#get-1-clickhealth) endpoint to achieve the same thing.
+        </Admonition>
+
+    </CollapsibleSection>
+
+</CollapsibleGroup>
+
+
+### Styling Settings
+
+:::important
+Styling settings only apply to **1-Click Health** using the **SDK** [integration type](#integration-type) because they affect the user interface the SDK displays. (They also apply to [**Text to Signup**](/text-to-signup).)
+
+So, if you are only using **1-Health Signup** with the the **API** [integration type](#integration-type), you can ignore these settings.
+:::
+
+:::tip Verified Auto-Magically Configures Styling Settings
+We use AI to auto-magically configure styling settings based on your email domain, so you don't have to do so manually from scratch!
+::::
+
+**Click the Styling tab to access these settings.**
+
+**Choose how to style the SDK:**
+
+<table>
+    <tr>
+        <th>Setting</th>
+        <th>Options</th>
+        <th>Default</th>
+        <th>Description</th>
+    </tr>
+    <StylingSettingLogo/>
+    <tr>
+        <td>Alignment</td>
+        <td>
+            - Left
+            - Center
+            - Right
+            - Stretch
+        </td>
+        <td>Center</td>
+        <td>Alignment used for most text, buttons, and the powered by Verified graphic</td>
+    </tr>
+    <StylingSettingFontFamily/>
+    <tr>
+        <td>1-Click Word</td>
+        <td>
+            - Signup
+            - Login 
+            - Verify 
+            - Apply 
+            - Access 
+            - AutoFill
+        </td>
+        <td>Signup</td>
+        <td>Word that appears after "1-Click" in the powered by Verified graphic</td>
+    </tr>
+    <tr>
+        <td>Input Border Radius</td>
+        <td>Any number</td>
+        <td>4</td>
+        <td>Border radius used for all inputs</td>
+    </tr>
+    <StylingSettingButtonBorderRadius/>
+    <tr>
+        <td>Success Animation</td>
+        <td>
+            - Full
+            - None
+        </td>
+        <td>Full</td>
+        <td>Whether to show the success animation</td>
+    </tr>
+    <StylingSettingPrimaryColor/>
+    <tr>
+        <td>Error Color</td>
+        <td>Any hex code</td>
+        <td>#EB0D28</td>
+        <td>Color used for errors</td>
+    </tr>
+    <tr>
+        <td>Muted Color</td>
+        <td>Any hex code</td>
+        <td>#BDBDBD</td>
+        <td>Color used for secondary buttons and text</td>
+    </tr>
+    <tr>
+        <td>Background Color</td>
+        <td>Any hex code</td>
+        <td>#FFFFFF</td>
+        <td>Color used for background</td>
+    </tr>
+    <StylingSettingGraphicColor/>
+    <tr>
+        <td>Advanced Styling</td>
+        <td>Custom JSON</td>
+        <td>-</td>
+        <td>Custom JSON configuration that allows fine-grained control over any SDK component styling, using the [MUI theme system](https://mui.com/material-ui/customization/default-theme)</td>
+    </tr>
+</table>
+
+:::tip The SDK Automatically Adjusts Text Color for Contrast
+The SDK will automaticallly adjust the color of text to achieve good contrast, given the color of an element. For example:
+- If you set **Background Color** to be dark, the SDK will adjust text on the background to be light.
+- If you set **Primary Color** to be light, the SDK will adjust text on buttons to be dark.
+:::

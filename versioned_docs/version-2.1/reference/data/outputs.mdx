@@ -37,7 +37,10 @@ import RiskSignalsSettingAdmonition from '@site/versioned_docs/version-2.1/reusa
 > An **output** is a piece of data we return from the SDK or API.
 
 
-## Credentials
+## 1-Click Signup
+
+
+### Credentials
 
 > A **credential** is a piece of identity data about a user.
 
@@ -48,7 +51,7 @@ import RiskSignalsSettingAdmonition from '@site/versioned_docs/version-2.1/reusa
 <CollapsibleGroup>
 <CollapsibleSection>
 <CollapsibleHeader>
-### Core Data
+#### Core Data
 </CollapsibleHeader>
 
 :::note Coverage
@@ -59,7 +62,7 @@ See [Coverage](/1-click-signup/overview#coverage) for more information.
 
 <table>
     <tr>
-        <th>Name</th>
+        <th>Output</th>
         <th>Key</th>
         <th>Type</th>
         <th>Format(s)</th>
@@ -237,7 +240,7 @@ See [Coverage](/1-click-signup/overview#coverage) for more information.
             </details>
         </td>
         <td>Sex</td>
-        <td>`"Female"`</td>
+        <td>`"Male"`</td>
     </tr>
     {/* <tr>
         <td>Email <Chip label="Not Recommended" variant="outlined" size="small" color="error"/></td>
@@ -250,7 +253,7 @@ See [Coverage](/1-click-signup/overview#coverage) for more information.
 </table>
 
 :::note Coverage for Sex Credential
-If you're using the **API** [integration type](/1-click-signup/guides/setup#integration-type), coverage for the Sex credential is a bit lower than for the other credentials at about **~85% of US adults.** Coverage for your user base may vary.
+If you're using the **API** [integration type](/1-click-signup/guides/setup#integration-type), coverage for the Sex credential is a bit lower than for the other credentials at about **~80% of US adults.** Coverage for your user base may vary.
 :::
 
 {/* :::warning[Email Reliability]
@@ -258,11 +261,12 @@ If you're using the **API** [integration type](/1-click-signup/guides/setup#inte
 ::: */}
 
 </CollapsibleSection>
+</CollapsibleGroup>
 
-
+<CollapsibleGroup>
 <CollapsibleSection>
 <CollapsibleHeader>
-### Government IDs
+#### Government IDs
 </CollapsibleHeader>
 
 :::note Coverage and Recency for Driver's License
@@ -271,7 +275,7 @@ Access to driver's license data varies state by state, so coverage and recency a
 
 <table>
     <tr>
-        <th>Name</th>
+        <th>Output</th>
         <th>Key</th>
         <th>Type</th>
         <th>Format(s)</th>
@@ -517,7 +521,7 @@ We're working on adding support for new types of government ID. Let us know what
 
 <table>
     <tr>
-        <th>Name</th>
+        <th>Output</th>
         <th>Key</th>
         <th>Type</th>
         <th>Format(s)</th>
@@ -664,12 +668,12 @@ We're working on adding support for new types of government ID. Let us know what
 
 <CollapsibleSection>
 <CollapsibleHeader>
-### Vehicles <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/> {#vehicles}
+#### Vehicles <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/> {#vehicles}
 </CollapsibleHeader>
 
 <table>
     <tr>
-        <th>Name</th>
+        <th>Output</th>
         <th>Key</th>
         <th>Type</th>
         <th>Format(s)</th>
@@ -775,12 +779,12 @@ We're working on adding support for new types of government ID. Let us know what
 
 <CollapsibleSection>
 <CollapsibleHeader>
-### Employment <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/> {#employment}
+#### Employment <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/> {#employment}
 </CollapsibleHeader>
 
 <table>
     <tr>
-        <th>Name</th>
+        <th>Output</th>
         <th>Key</th>
         <th>Type</th>
         <th>Format(s)</th>
@@ -909,12 +913,12 @@ We're working on adding support for new types of government ID. Let us know what
 
 <CollapsibleSection>
 <CollapsibleHeader>
-### Properties <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/> {#properties}
+#### Properties <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/> {#properties}
 </CollapsibleHeader>
 
 <table>
     <tr>
-        <th>Name</th>
+        <th>Output</th>
         <th>Key</th>
         <th>Type</th>
         <th>Format(s)</th>
@@ -1042,7 +1046,7 @@ We're working on adding support for new types of government ID. Let us know what
 
 <table>
     <tr>
-        <th>Name</th>
+        <th>Output</th>
         <th>Key</th>
         <th>Type</th>
         <th>Format(s)</th>
@@ -1123,7 +1127,7 @@ We're working on adding support for new types of government ID. Let us know what
 </CollapsibleGroup>
 
 
-## Metadata
+### Metadata
 
 > A piece of **metadata** is additional data that's not a user's identity data — though it's often _about_ that identity data.
 
@@ -1131,12 +1135,12 @@ We're working on adding support for new types of government ID. Let us know what
 <CollapsibleGroup>
 <CollapsibleSection>
 <CollapsibleHeader>
-### Verification Method
+#### Verification Method
 </CollapsibleHeader>
 
 <table>
     <tr>
-        <th>Name</th>
+        <th>Output</th>
         <th>Key</th>
         <th>Type</th>
         <th>Applies To</th>
@@ -1192,12 +1196,12 @@ We're working on adding support for new types of government ID. Let us know what
 <CollapsibleGroup>
 <CollapsibleSection>
 <CollapsibleHeader>
-### Risk Signals
+#### Risk Signals
 </CollapsibleHeader>
 
 <table>
     <tr>
-        <th>Name</th>
+        <th>Output</th>
         <th>Key</th>
         <th>Type</th>
         <th>Applies To</th>
@@ -1230,7 +1234,7 @@ We and other companies assign specific services — called "risky services" — 
 
 <table>
     <tr>
-        <th>Name</th>
+        <th>Output</th>
         <th>Key</th>
         <th>Type</th>
         <th>Format(s)</th>
@@ -1440,13 +1444,13 @@ We and other companies assign specific services — called "risky services" — 
 </CollapsibleGroup>
 
 
-#### Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#reason-codes}
+##### Reason Codes <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#reason-codes}
 
 
 <CollapsibleGroup firstSectionExpanded={false}>
 <CollapsibleSection>
 <CollapsibleHeader>
-##### Overall <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#overall}
+###### Overall <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#overall}
 </CollapsibleHeader>
 
 <table>
@@ -1584,7 +1588,7 @@ We and other companies assign specific services — called "risky services" — 
 
 <CollapsibleSection>
 <CollapsibleHeader>
-##### Phone <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#phone}
+###### Phone <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#phone}
 </CollapsibleHeader>
 
 <table>
@@ -2605,7 +2609,7 @@ We and other companies assign specific services — called "risky services" — 
 
 <CollapsibleSection>
 <CollapsibleHeader>
-##### Email <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#email}
+###### Email <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#email}
 </CollapsibleHeader>
 
 <table>
@@ -2729,7 +2733,7 @@ We and other companies assign specific services — called "risky services" — 
 {/* 
 <CollapsibleSection>
 <CollapsibleHeader>
-##### IP Address <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#ip-address}
+###### IP Address <Chip label="Add On" variant="outlined" size="small" color="primary"/> {#ip-address}
 </CollapsibleHeader>
 
 <table>
@@ -3039,6 +3043,73 @@ We and other companies assign specific services — called "risky services" — 
         </td>
     </tr>
 </table> */}
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+
+## 1-Click Health
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+### Health Insurance Plans
+</CollapsibleHeader>
+
+:::note Coverage
+We can source the data below for **~80% of US adults.** _Exact coverage depends on your user base._
+
+See [Coverage](/1-click-health/overview#coverage) for more information.
+:::
+
+<table>
+    <tr>
+        <th>Output</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Member ID</td>
+        <td>`memberId`</td>
+        <td>`string`</td>
+        <td>Alphanumeric</td>
+        <td>Member ID for health insurance plan</td>
+        <td>`"V000000000"`</td>
+    </tr>
+    <tr>
+        <td>Payer</td>
+        <td>`payer`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all child credentials listed below</td>
+        <td>Payer for health insurance plan</td>
+        <td>
+            ```json
+            {
+                "name": "FGI"
+            }
+            ```
+        </td>
+    </tr>
+    <tr>
+        <td>↳ Name</td>
+        <td>`payer.name`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Name of payer for health insurance plan</td>
+        <td>`"FGI"`</td>
+    </tr>
+    <tr>
+        <td>EDI 271</td>
+        <td>`edi_271`</td>
+        <td>`string`</td>
+        <td>X12 [EDI 271](https://x12.org/examples/005010x279) (Health Care Eligibility Benefit Response)</td>
+        <td>Address</td>
+        <td>See X12 [EDI 271 examples](https://x12.org/examples/005010x279)</td>
+    </tr>
+</table>
 
 </CollapsibleSection>
 </CollapsibleGroup>

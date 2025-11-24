@@ -1,0 +1,34 @@
+```typescript title="1ClickHealthEntity Success Example"
+{
+    "healthDataUuid": "9e12fe5b-5bb8-410a-ac6b-6e053e4c7e8d",
+    "status": "SUCCEEDED",
+    "results": [
+        {
+            "memberId": "V000000000",
+            "payer": {
+                "name": "FGI"
+            },
+            "edi_271": "ISA*00* *00* *ZZ*MOCK *ZZ*VERIFIED *20251117*1832*^*00501*000000002*1*P*:~GS*HB*MOCK*VERIFIED*20251117*1832*2*X*005010X279A1~ST*271*0001*005010X279A1~BHT*0022*11*UNSOLICITED*20251117*1832~HL*1**20*1~NM1*PR*2*FGI*****PI*00000~HL*2*1*21*1~NM1*1P*2*PROVIDER*****XX*1234567893~HL*3*2*22*0~NM1*IL*1*Hendricks*Richard***MI*444115555~REF*SY*123341234~REF*EJ*PatAcct56789~REF*EA*MRN1234~N3*5320 Newell Rd~N4*Palo Alto*CA*94303~DMG*D8*19890801*U~DTP*291*D8*20251117~EB*1**30**PLAN~EB*D**30~MSG*PATIENT MATCH SCORE – STRONG~SE*17*0001~GE*1*2~IEA*1*000000002~"
+        },
+        {
+            "memberId": "123456",
+            "payer": {
+                "name": "Aviato Health Insurance of California"
+            },
+            "edi_271": "ISA*00* *00* *ZZ*MOCK *ZZ*VERIFIED *20251117*1832*^*00501*000000003*1*P*:~GS*HB*MOCK*VERIFIED*20251117*1832*3*X*005010X279A1~ST*271*0001*005010X279A1~BHT*0022*11*UNSOLICITED*20251117*1832~HL*1**20*1~NM1*PR*2*AVIATO HEALTH INSURANCE OF CALIFORNIA*****PI*00001~HL*2*1*21*1~NM1*1P*2*PROVIDER*****XX*1234567893~HL*3*2*22*0~NM1*IL*1*Hendricks*Richard***MI*XTG300M0000~REF*SY*123341234~REF*EJ*PatAcct56789~REF*EA*MRN1234~N3*5320 Newell Rd~N4*Palo Alto*CA*94303~DMG*D8*19890801*U~DTP*291*D8*20251117~EB*1**30**PLAN~EB*D**30~MSG*PATIENT MATCH SCORE – PROBABLE~SE*17*0001~GE*1*3~IEA*1*000000003~"
+        }
+    ]
+}
+```
+
+```typescript title="1ClickHealthEntity Failure Example"
+{
+    "healthDataUuid": "df8f8623-7fee-4ee1-aeba-14e0572b132d",
+    "status": "FAILED",
+    "errors": [
+        {
+            "message": "No coverage found"
+        }
+    ]
+}
+```

@@ -1,0 +1,22 @@
+{/* TODO: add identityUuid when ready */}
+```typescript title="POST /1-click/health Request Body"
+{
+    fullName: {
+        firstName: string, // required
+        middleName?: string,
+        lastName: string // required
+    },
+    birthDate: string, // required
+    address?: {
+        line1?: string,
+        line2?: string,
+        city?: string,
+        state?: string,
+        zipCode?: string,
+        country?: string
+    },
+    sex?: string,
+    ssn?: string,
+    npi?: string
+}
+```

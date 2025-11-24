@@ -6,9 +6,388 @@ sidebar_label: User Experience
 sidebar_class_name: sidebar-header-regular
 description: User Experience for 1-Click Health
 slug: /1-click-health/user-experience
-toc_max_heading_level: 4
+toc_max_heading_level: 3
 ---
 
-import OneClickHealthComingSoonAdmonition from '@site/versioned_docs/version-2.1/reusables/1-click-health-coming-soon-admonition.mdx';
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
+import Chip from '@mui/material/Chip';
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+import { GridContainer, GridRow, GridColumn, GridNonStickyElement, GridStickyElement } from '@site/src/components/Grid';
+import ComponentTypeIndicator from '@site/src/components/ComponentTypeIndicator';
+import ColorIndicator from '@site/src/components/ColorIndicator';
+import PoweredByGraphicVariantsForOneClickSignup from '@site/versioned_docs/version-2.1/reusables/powered-by-graphic-variants-for-1-click-signup.mdx';
 
-<OneClickHealthComingSoonAdmonition/>
+At Verified, we are experts in how to optimize onboarding flows to maximize conversion and give users the best possible experience. We've helped our customers onboard — and delight! — millions of new users. The user experience described in this guide is the result of countless hours of research, design, testing, and iteration by our team. 
+
+{/* :::tip Use Our SDK to Get This UX
+**Our SDK implements this user experience, and we strongly recommend you use it by choosing the SDK [integration type](/1-click-health/guides/setup#integration-type).** If you instead choose the **API** integration type, we recommend you implement a user experience similar to this one.
+::: */}
+
+Full details are below, but the basic user experience is:
+1. Confirm info (autofilled by 1-Click Signup) or enter info manually
+2. Confirm health insurance (autofilled by 1-Click Health)
+
+:::note There Are Only a Few Screens!
+This user experience may look complicated, and in some ways it is: achieving world class UX requires getting many small details right. But at its core, it's simple by design and takes only a few screens. Users complete 1-Click Health in less than 1 minute: try it yourself with a [custom demo](/custom-demo).
+:::
+
+
+## Flow Chart
+
+![](/img/ux-flow-chart-1-click-health.png)
+↗️ [Open in new tab](/img/ux-flow-chart-1-click-health.png) (for easy zooming)
+
+:::important
+To implement this user experience yourself (which is only necessary if you choose the **API** [integration type](/1-click-health/guides/setup#integration-type)), without our SDK, you need to handle each action labeled Verified.
+:::
+
+
+## Screens and Components
+
+<GridContainer>
+    <GridRow>
+        <GridColumn>
+            <GridStickyElement>
+                ---
+                ### Info
+
+                _If you use 1-Click Signup to autofill inputs for 1-Click Health (which we strongly recommend), you can **use the [Confirm Your Info screen](/1-click-signup/user-experience#info) spec for 1-Click Signup.**_
+
+                _If instead you collect inputs manually for 1-Click Health, use the spec below._
+            </GridStickyElement>
+            <GridNonStickyElement>
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Header
+
+                {/* If in view or edit state: */}
+
+                > Enter Your Info
+
+                {/* If in manual signup state:
+
+                > Manual Signup */}
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Description
+
+                {/* If in view or edit state: */}
+
+                > We’ll try to autofill your health insurance based on this info, so you don't have to enter it manually. 
+
+                {/* If in manual signup state:
+
+                > Enter your info below. */}
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>First Name
+
+                - Required
+                - Auto focused
+                - Helper: 
+                    > Legal first name
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Last Name
+
+                - Required
+                - Helper: 
+                    > Legal last name
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Birthday
+
+                > _ _ / _ _ / _ _ _ _
+
+                - Required
+                - “Birthday” not “Birth Date” because the former is friendlier
+                - Helper: 
+                    > MM/DD/YYYY
+                - Calendar icon on right opens date picker (which defaults to 08/01/1989)
+                - Opens numeric keyboard
+                - Accepts only digits
+                - Accepts OS autofill
+                - Validates format
+                - Auto formats to MM/DD/YYYY (most common US format)
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Address
+
+                - Required, optional, or not included
+                - Uses third party service (e.g. [Google Places API](https://developers.google.com/maps/documentation/places/web-service/overview)) to show autofill options when the user types
+                - Expands to show full value (without Address Line 2), in two lines:
+
+                1. `{Address Line 1}, {Address Line 2}`
+                2. `{City}, {State} {ZIP Code}`
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Sex
+
+                - Required, optional, or not included
+                - Dropdown with options: Male, Female, and Non-Binary
+                
+                
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Social Security Number
+
+                > _ _ _ - _ _ - _ _ _ _
+
+                - Required, optional, or not included
+                - “Social Security Number” not “SSN” (unlike view state) for clarity
+                - Opens numeric keyboard
+                - Accepts only digits
+                - Validates format
+                - Auto formats to •••-••-NNNN (most common US format)
+                    - Masks first 5 digits, server side not client side
+                - If starting with value:
+                    - If user starts to edit (by deleting one character), clear entire value
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Consent Language
+
+                > By clicking "Continue", I agree that [Verified](https://verified.inc) (`{Brand Name}`’s service provider) and its vendors may receive my personal info and provide `{Brand Name}` with more info about me, including my health insurance.
+
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Confirm
+
+                > Confirm
+
+                *Submits form with user's info.*
+
+                - [Primary](/1-click-signup/guides/setup#styling-settings) color
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
+
+                - Black and Green variant
+
+                <PoweredByGraphicVariantsForOneClickSignup/>
+
+                
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Opt Out
+
+                > Don't Autofill My Insurance
+
+                *Takes user to manual entry flow.*
+
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
+
+            </GridNonStickyElement>
+        </GridColumn>
+        <GridColumn>
+            <GridStickyElement>
+                
+                ---
+
+                ![](/img/1ch-ux-screens/confirm-info-with-sex.png)
+                *View State* ↗️ [Open in new tab](/img/1ch-ux-screens/confirm-info-with-sex.png)
+                
+                ![](/img/1ch-ux-screens/enter-info-minimal.png)
+                *Modal State* ↗️ [Open in new tab](/img/1ch-ux-screens/enter-info-minimal.png)
+
+                ![](/img/1ch-ux-screens/enter-info-maximal.png)
+                *Edit State* ↗️ [Open in new tab](/img/1ch-ux-screens/enter-info-maximal.png)
+
+                {/* ![](/img/1cs-ux-screens/info-manual_signup.png)
+                *Manual Signup State* ↗️ [Open in new tab](/img/1cs-ux-screens/info-manual_signup.png) */}
+
+            </GridStickyElement>
+        </GridColumn>
+    </GridRow>
+    <GridRow>
+        <GridColumn>
+            <GridStickyElement>
+                ---
+                ### Health Insurance
+            </GridStickyElement>
+            <GridNonStickyElement>
+
+                
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Open Modal
+
+                > ?
+
+                {/* *Appears only for 1-Click Health, not manual signup.* */}
+
+                *Opens [informational modal](#informational).*
+
+                - [Error](/1-click-health/guides/setup#styling-settings) color
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Close Modal
+
+                > X
+
+                {/* *Appears only for 1-Click Health, not manual signup.* */}
+
+                *Closes [informational modal](#informational).*
+
+                - [Error](/1-click-health/guides/setup#styling-settings) color
+                - Clicking anywhere outside the modal should also close it
+
+
+                #### <ComponentTypeIndicator type="modal" isRightMargined={true}/>Informational
+
+                > Verified autofills your info from trusted sources so you don’t have to enter it manually. It’s fast, safe, and secure.
+
+                {/* *Appears only for 1-Click Signup, not manual signup.* */}
+
+                - Graphic
+                - Lock icon with: 
+                    > Protected with bank level encryption
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Header
+
+                {/* If in view or edit state: */}
+
+                > Confirm Your Health Insurance
+
+                {/* If in manual signup state:
+
+                > Manual Signup */}
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Description
+
+                {/* If in view or edit state: */}
+
+                > Make sure everything is accurate.
+
+                {/* If in manual signup state:
+
+                > Enter your info below. */}
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
+
+                - Black and Green variant
+
+                <PoweredByGraphicVariantsForOneClickSignup/>
+
+                {/* *Appears only in the 1-Click Signup states.* */}
+
+                
+                {/*
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Back
+
+                > Back to 1-Click Signup
+
+                *Appears only in the manual signup state, if the user gets there by clicking the [opt out button](#opt-out) on the phone screen.*
+                
+                The user can also get to the manual signup state by clicking the [continue button](#continue) on the birthday screen or by being auto continued on that screen. In those cases, this back button should not appear.
+
+                *Takes user back to [phone screen](#phone).*
+
+                - [Error](/1-click-health/guides/setup#styling-settings) color
+                */}
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Health Insurance
+
+                > Health Insurance
+
+                *Appears in view state.*
+
+                One line, wrapped:
+
+                1. `{Payer Name}, {Member ID}`
+
+                If multiple values are available:
+
+                - Dropdown
+                - Helper: 
+                    > Choose the right insurance plan
+
+                If only one value is available:
+
+                - Static text
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Payer
+
+                > Payer
+
+                *Appears in view state.*
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Member ID
+
+                > Member ID
+
+                *Appears in view state.*
+
+                - Middle characters masked.
+                - Helper: 
+                    > Partially hidden for your privacy
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Edit
+
+                > Edit
+
+                *Switches from view to edit state.*
+
+                The entire data display area should be clickable as the Edit button, not just the button itself.
+
+                - [Error](/1-click-health/guides/setup#styling-settings) color
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Payer
+
+                *Appears in edit state.*
+
+                - Uses value selected in dropdown (from view state), if multiple values are available
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Member ID
+
+                *Appears in edit state.*
+
+                - Opens alphanumeric keyboard
+                - If user starts to edit (by deleting one character), clear entire value
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Accuracy Confirmation
+
+                > By clicking “Confirm”, I agree that the info above is accurate.
+
+                - [Error](/1-click-health/guides/setup#styling-settings) color
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Confirm
+
+                > Confirm
+
+                *Submits form with user's info.*
+
+                - [Primary](/1-click-health/guides/setup#styling-settings) color
+
+            </GridNonStickyElement>
+        </GridColumn>
+        <GridColumn>
+            <GridStickyElement>
+                
+                ---
+
+                ![](/img/1ch-ux-screens/health-insurance-view-tooltip_hidden.png)
+                *View State* ↗️ [Open in new tab](/img/1ch-ux-screens/health-insurance-view-tooltip_hidden.png)
+                
+                ![](/img/1ch-ux-screens/health-insurance-view-tooltip_visible.png)
+                *Modal State* ↗️ [Open in new tab](/img/1ch-ux-screens/health-insurance-view-tooltip_visible.png)
+
+                ![](/img/1ch-ux-screens/health-insurance-edit.png)
+                *Edit State* ↗️ [Open in new tab](/img/1ch-ux-screens/health-insurance-edit.png)
+
+                {/* ![](/img/1cs-ux-screens/info-manual_signup.png)
+                *Manual Signup State* ↗️ [Open in new tab](/img/1cs-ux-screens/info-manual_signup.png) */}
+
+            </GridStickyElement>
+        </GridColumn>
+    </GridRow>
+</GridContainer>

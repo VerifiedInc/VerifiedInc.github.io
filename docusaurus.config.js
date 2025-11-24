@@ -157,6 +157,10 @@ module.exports = {
               label: 'API',
               to: '/reference/api',
             },
+            {
+              label: 'Webhooks',
+              to: '/reference/webhooks',
+            },
           ],
         },
         {

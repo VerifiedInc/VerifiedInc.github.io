@@ -12,7 +12,9 @@ toc_max_heading_level: 5
 import TestUserDisplay from '@site/src/components/TestUserDisplay';
 import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
 
-You can test 1-Click Signup with mock data in [Sandbox](/reference/api/environments#sandbox), using either your own phone number our test users below.
+You can test 1-Click Signup with mock data in [Sandbox](/reference/api/environments#sandbox), using either your own phone number or our dedicated test users below.
+
+**These 1-Click Signup test users are keyed on phone number input data.** In other words, phone number is the unique, required input that distinguishes one test user from another. Other input data and output data may not vary across test users.
 
 <DevelopmentWorkAdmonition />
 
@@ -24,7 +26,7 @@ The test user phone numbers and email addresses are not valid, so sending messag
 
 ### Demo
 
-1. Go to the [Demo](https://1-click.demo.verified.inc) and customize the settings as desired.
+1. Go to the [Demo](https://1-click.demo.verified.inc).
 2. Select _Mock Data (sandbox)_ and click _Start Demo_.
 3. Enter the test user's phone number (varies by user).
 4. Enter the test user's (static) verification code (always 111111).

@@ -11,6 +11,7 @@ toc_max_heading_level: 4
 
 import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
 import Tip from '@site/src/components/Tip';
+import Chip from '@mui/material/Chip';
 import Admonition from '@theme/Admonition';
 import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
@@ -31,6 +32,7 @@ import CredentialRequestTableShared from '@site/versioned_docs/version-2.1/reusa
 import CredentialRequestTableHosted from '@site/versioned_docs/version-2.1/reusables/credential-request-table-sdk.mdx'
 import CredentialRequestTableSemiHostedAndNonHosted from '@site/versioned_docs/version-2.1/reusables/credential-request-table-api.mdx'
 import OneClickEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-entity-example.mdx'
+import OneClickHealthEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-health-entity-example.mdx'
 import OneClickVerificationEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-verification-entity-example.mdx'
 import ErrorType from '@site/versioned_docs/version-2.1/reusables/error-type.mdx'
 import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error-example-oce011.mdx'
@@ -482,6 +484,127 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
 ### Example {#example-1clickentity}
 
 <OneClickEntityExample/>
+
+---
+
+
+## `1ClickHealthEntity`
+
+```typescript title="1ClickHealthEntity Type"
+{
+    "healthDataUuid": string,
+    "status": "PENDING" | "PROCESSING" | "SUCCEEDED" | "FAILED" | "PARTIAL"
+    "results": [
+        {
+            "memberId": string,
+            "payer": {
+                "name": string
+            },
+            "edi_271": string
+        }
+    ],
+    "errors": [
+        { 
+            "message": string
+        }
+    ]
+}
+```
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`healthDataUuid`</td>
+        <td>`string`</td>
+        <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+        <td>Unique identifier for the [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) that will be returned at the end of the 1-Click Health flow</td>
+        <td>`"053cd0be-22e4-4985-84e0-d6493708ac28"`</td>
+    </tr>
+    <tr>
+        <td>`status`</td>
+        <td>
+        <details>
+            <summary>`enum`</summary>
+
+            Possible values:
+            - `"PENDING"`
+            - `"PROCESSING"`
+            - `"SUCCEEDED"`
+            - `"FAILED"`
+            - `"PARTIAL"`
+        </details>
+        </td>
+        <td>`UPPER_SNAKE_CASE`</td>
+        <td>Status of the 1-Click Health flow</td>
+        <td>`"PROCESSING"`</td>
+    </tr>
+    <tr>
+        <td>`results`</td>
+        <td>`array`</td>
+        <td>Array of objects</td>
+        <td>Health insurance plans</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>`results[i].memberId`</td>
+        <td>`string`</td>
+        <td>Alphanumeric</td>
+        <td>Member ID for health insurance plan</td>
+        <td>`"V000000000"`</td>
+    </tr>
+    <tr>
+        <td>`results[i].payer`</td>
+        <td>`Object`</td>
+        <td>Object with keys for all child credentials listed below</td>
+        <td>Payer for health insurance plan</td>
+        <td>
+            ```json
+            {
+                "name": "FGI"
+            }
+            ```
+        </td>
+    </tr>
+    <tr>
+        <td>`results[i].payer.name`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Name of payer for health insurance plan</td>
+        <td>`"FGI"`</td>
+    </tr>
+    <tr>
+        <td>`results[i].edi_271`</td>
+        <td>`string`</td>
+        <td>X12 [EDI 271](https://x12.org/examples/005010x279) (Health Care Eligibility Benefit Response)</td>
+        <td>Address</td>
+        <td>See X12 [EDI 271 examples](https://x12.org/examples/005010x279)</td>
+    </tr>
+    <tr>
+        <td>`errors`</td>
+        <td>`array`</td>
+        <td>Array of objects</td>
+        <td>Errors</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>`errors[i].message`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Error message</td>
+        <td>`"No coverage found"`</td>
+    </tr>
+</table>
+
+
+### Example {#example-1clickhealthentity}
+
+<OneClickHealthEntityExample/>
 
 ---
 

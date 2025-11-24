@@ -2,7 +2,7 @@
   "label": "1-Click Health",
   "className": "sidebar-header-black",
   "position": 3,
-  "collapsed": true,
+  "collapsed": false,
   "link": {
     "type": "generated-index",
     "slug": "/1-click-health"

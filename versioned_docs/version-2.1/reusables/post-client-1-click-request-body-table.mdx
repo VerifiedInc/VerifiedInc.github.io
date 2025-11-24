@@ -1,3 +1,5 @@
+import Chip from '@mui/material/Chip';
+
 <tr>
     <th>Property</th>
     <th>Required?</th>
@@ -9,7 +11,7 @@
 </tr>
 <tr>
     <td>`phone`</td>
-    <td>optional</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
     <td>none</td>
@@ -19,7 +21,7 @@
 {/* Commenting out until we support other inputs */}
 {/* <tr>
     <td>`email`</td>
-    <td>optional</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>email</td>
     <td>none</td>
@@ -28,7 +30,7 @@
 </tr>
 <tr>
     <td>`birthDate`</td>
-    <td>optional</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>`YYYY-MM-DD`</td>
     <td>none</td>
@@ -37,7 +39,7 @@
 </tr>
 <tr>
     <td>`ssn4`</td>
-    <td>optional</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>4 digits (0-9)</td>
     <td>none</td>

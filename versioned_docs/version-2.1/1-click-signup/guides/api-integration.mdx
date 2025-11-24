@@ -19,7 +19,7 @@ import About1ClickSignupAdmonition from '@site/versioned_docs/version-2.1/reusab
 import PrivacyFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/privacy-first-admonition.mdx';
 import IntegrationTypeAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-admonition.mdx';
 import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
-import PromptUserToConfirmTheirData from '@site/versioned_docs/version-2.1/reusables/prompt-user-to-confirm-their-data.mdx';
+import PromptUserToConfirmTheir1ClickSignupData from '@site/versioned_docs/version-2.1/reusables/prompt-user-to-confirm-their-1-click-signup-data.mdx';
 import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
 import UseUserInputAdmonition from '@site/versioned_docs/version-2.1/reusables/use-user-input-admonition.mdx';
 import HowToTestAdmonition from '@site/versioned_docs/version-2.1/reusables/how-to-test-admonition.mdx';
@@ -27,11 +27,11 @@ import BirthDateFormatAdmonition from '@site/versioned_docs/version-2.1/reusable
 import Chip from '@mui/material/Chip';
 import RecencyRequirementAdmonition from '@site/versioned_docs/version-2.1/reusables/recency-requirement-admonition.mdx';
 import WhenStepIsNecessaryAdmonition from '@site/versioned_docs/version-2.1/reusables/when-step-is-necessary-admonition.mdx';
-import IncludeAdditionalInfoIfPossibleAdmonition from '@site/versioned_docs/version-2.1/reusables/include-additional-info-if-possible-admonition.mdx';
+import OneClickSignupIncludeAdditionalInfoAdmonition from '@site/versioned_docs/version-2.1/reusables/1-click-signup-include-additional-info-admonition.mdx';
 import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error-example-oce011.mdx';
 import SandboxValidationAdmonition from '@site/versioned_docs/version-2.1/reusables/sandbox-validation-admonition.mdx';
-import SequenceDiagramSDK from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-sdk.mdx';
-import SequenceDiagramAPI from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-api.mdx';
+import SequenceDiagramOneClickSignupSDK from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-1-click-signup-sdk.mdx';
+import SequenceDiagramOneClickSignupAPI from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-1-click-signup-api.mdx';
 import LocalTestingAdmonition from '@site/versioned_docs/version-2.1/reusables/local-testing-admonition.mdx';
 import {
   CollapsibleGroup,
@@ -75,13 +75,13 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 **Complete the 1-Click Signup [Setup](/1-click-signup/guides/setup) guide before following this API Integration guide.**
 :::
 
-<SequenceDiagramAPI />
+<SequenceDiagramOneClickSignupAPI />
 
 <DevelopmentWorkAdmonition />
 
 ## 1. Prompt user for phone number and verify it.
 
-To start 1-Click Signup for a user (using the Non-Hosted integration type), you'll need their phone number, and you'll need to verify it using your own solution. You can do this however you like, as long as you verify the user's phone number with a **one-time verification code at least 6 digits long.**
+To start 1-Click Signup for a user, you'll need their phone number, and you'll need to verify it using your own solution. You can do this however you like, as long as you verify the user's phone number with a **one-time verification code at least 6 digits long.**
 
 <SupportedPhoneNumbersAdmonition />
 
@@ -90,24 +90,26 @@ _See our [Demo](https://1-click.demo.verified.inc) for an example of this._
 **You'll also need to:**
 
 <ol type='a'>
-  <li>
-    **[Include the Verified consent
-    language](#a-include-the-verified-consent-language).**
-  </li>
-  <li>
-    **[Include a "powered by Verified"
-    graphic](#b-include-a-powered-by-verified-graphic).**
-  </li>
+  <li>**[Include Verified consent language](#a-include-the-verified-consent-language).**</li>
+  <li>**[Include a "Powered by Verified" graphic](#b-include-a-powered-by-verified-graphic).**</li>
 </ol>
 
 We recommend using a phone number input that auto submits when the user enters 10 digits. (See the [Phone](/1-click-signup/user-experience#phone) screen of our User Experience guide for full details.) Here's an example:
 
-![](/img/phone-empty-without-sms-consent.png)
-_Verified consent language, phone number input, and the green signup variant of the "powered by" graphic_
+<div class='two-column-grid-container'>
+  <div class='two-column-grid-row'>
+    <div class='two-column-grid-column'>
+      ![](/img/phone-empty-without-sms-consent.png) _Verified consent language, phone number input, and the green signup variant of the "powered by" graphic_
+    </div>
+    <div class='two-column-grid-column'>
+      {/* Blank just to keep the image from being too wide */}
+    </div>
+  </div>
+</div>
 
 #### a. Include the Verified consent language.
 
-Regulations require that users give informed consent, so you must our consent language where you start the 1-Click Signup flow. It can be included alongside or as part of other legal language you already use, but it must be displayed to the user and not just included in terms you link out to.
+Regulations require that users give informed consent, so you must use our consent language where you start the 1-Click Signup flow. It can be included alongside or as part of other legal language you already use, but it must be displayed to the user — not just included in terms you link out to.
 
 Use this language:
 
@@ -139,7 +141,7 @@ Call [`POST /1-click`](/reference/api/endpoints#post-1-click) with the user's ph
 
 ```typescript title="POST /1-click Request Body"
 {
-  phone: string; // Example: "+12125550010"
+    phone: string; // Example: "+12125550010"
 }
 ```
 
@@ -151,15 +153,15 @@ Call [`POST /1-click`](/reference/api/endpoints#post-1-click) with the user's ph
 
 <ApiKeysAdmonition />
 
-<IncludeAdditionalInfoIfPossibleAdmonition />
+<OneClickSignupIncludeAdditionalInfoAdmonition />
 
 One of two things will happen:
 
-- **Success:** If we can source data based on just the phone number, the [response body](/reference/api/endpoints#post-1-click-response) will contain a [`1ClickEntity`](/reference/api/types#1clickentity) (see this [example](/reference/api/types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. In this case, continue to [step 5](#5-prompt-user-to-confirm-their-data).
+- **Success:** If we can source data based on just the phone number, the [response body](/reference/api/endpoints#post-1-click-response) will contain a [`1ClickEntity`](/reference/api/types#1clickentity) (see this [example](/reference/api/types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. <br/> → _Jump to [step 5](#5-prompt-user-to-confirm-their-data)._
 - **Error:** Otherwise, the response body will contain an [error](/reference/api/errors) with a Verified error code:
-  - **[`OCE011`](/reference/api/errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. → _Continue to [step 3](#3-if-necessary-prompt-user-for-additional-info)_.
-  - **[`OCE013`](/reference/api/errors#oce013)** indicates that Verified found no [credentials](/reference/data/outputs#credentials) for the user. → _Fall back to a manual signup flow._
-  - **[`OCE017`](/reference/api/errors#oce017)** indicates that Verified blocked the user because the risk score was too high. → _Reject the user or flag them and fall back to a manual signup flow._
+  - **[`OCE011`](/reference/api/errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. <br/> → _Continue to [step 3](#3-if-necessary-prompt-user-for-additional-info)_.
+  - **[`OCE013`](/reference/api/errors#oce013)** indicates that Verified found no [credentials](/reference/data/outputs#credentials) for the user. <br/> → _Fall back to a manual signup flow._
+  - **[`OCE017`](/reference/api/errors#oce017)** indicates that Verified blocked the user because the risk score was too high. <br/> → _Reject the user or flag them and fall back to a manual signup flow._
 
 :::tip Data is Retrievable for 30 Minutes
 **You can retrieve data for 30 minutes,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click`](/reference/api/endpoints#get-1-click) instead of `POST /1-click` so that a duplicate 1-Click Signup event isn't created (and so you aren't billed twice).
@@ -227,7 +229,7 @@ One of two things should happen:
 
 ## 5. Prompt user to confirm their data.
 
-<PromptUserToConfirmTheirData />
+<PromptUserToConfirmTheir1ClickSignupData />
 
 ---
 
@@ -250,13 +252,13 @@ One of two things should happen:
 In step 4, you'll be asked to confirm the following:
 
 <input type='checkbox' id='legal' />
-<label for='legal'>We've included a "powered by Verified" graphic and the Verified legal language (see [step 1](#1-prompt-user-for-phone-number-and-verify-it)).</label>
+<label for='legal'>We've included the Verified consent language a "powered by Verified" graphic and  (see [step 1](#1-prompt-user-for-phone-number-and-verify-it)).</label>
 <br />
 <input type='checkbox' id='keys' />
 <label for='keys'>We’re using Verified API keys securely: server side, never client side.</label>
 <br />
 <input type='checkbox' id='phones' />
-<label for='phonse'>We're properly verifying users' phone numbers.</label>
+<label for='phones'>We're properly verifying users' phone numbers.</label>
 <br />
 <input type='checkbox' id='errors' />
 <label for='error'>We’re handling relevant [Verified error codes](/reference/api/errors#verified-error-codes).</label>
@@ -281,61 +283,3 @@ You'll also be prompted to share a link to your Sandbox integration and/or sched
 2. Swap the [Sandbox base URL](/reference/api/environments#sandbox) for the [Production base URL](/reference/api/environments#production).
 
 **Then you'll be live with 1-Click Signup! ✅**
-
-{/* ## User Experience
-
-From the user's perspective, they:
-
-1. Verify their phone number
-2. See their verified data autofilled
-3. Click to confirm
-
-<Tabs groupId='integrationType' queryString='integrationType'>
-  <TabItem value='hosted' label='Hosted' default>
-    <Admonition type='note'>
-      <b>Hosted</b> is one option for Integration Type, a brand setting you can
-      configure in your [Dashboard](https://dashboard.verified.inc).
-    </Admonition>
-  </TabItem>
-  <TabItem value='semi-hosted' label='Semi-Hosted'></TabItem>
-  <TabItem value='non-hosted' label='Non-Hosted'></TabItem>
-</Tabs>
-
-1. Call `POST /1-click` with user's phone number. We'll return `url` and `code`.
-2. Send SMS to user with `code` and redirect user to `url`.
-3. User agrees to share data in Wallet
-4. We redirect user to brand with identityUuid
-5. One of:
-   1. (if brand using push option) We send data to brand’s webhook
-   2. (if brand using pull option) Brand calls GET /1-click with identityUuid, and we return identity
-
-## How to Implement
-
-To enable 1-Click Signup, you'll need to:
-
-- Verify the user's phone number (by sending an SMS)
-- Make an API call to get verified data
-- Display the data to the user for confirmation
-
-It's extremely easy!
-
-### Setup
-
-1. Log into the Verified [Dashboard](https://dashboard.verified.inc) and create a brand.
-2. Adjust the brand settings as needed:
-   - Hosted vs. Non-Hosted
-   - Trusted vs. Non-Trusted
-   - Push vs. Pull
-3. Copy your sandbox API key
-
-### Implement
-
-### Setup
-
-1. Log into the Verified Dashboard
-2. Set company name
-3. Save brand settings
-
-### Call Verified API
-
-### Go Live! \*/}

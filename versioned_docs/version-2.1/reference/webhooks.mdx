@@ -1,0 +1,91 @@
+---
+id: webhooks
+title: Webhooks
+sidebar_label: Webhooks
+sidebar_position: 2
+sidebar_class_name: sidebar-header-regular
+description: How to set up webhooks for Verified
+slug: /reference/webhooks
+toc_max_heading_level: 3
+---
+
+import Admonition from '@theme/Admonition';
+
+You can configure webhooks for 1-Click Health: see [here](/1-click-health/guides/setup#webhook) in the Setup guide. This allows you to receive 1-Click Health [output](/reference/data/outputs#1-click-health) data asynchronously. (You can alternatively poll the [`GET /1-click/health`](/reference/api/endpoints#get-1-clickhealth) endpoint.)
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>URL</th>
+    <td>Defined by [webhook brand setting](/1-click-health/guides/setup#webhook)</td>
+  </tr>
+  <tr>
+    <th>Authentication</th>
+    <td>Defined by [webhook brand setting](/1-click-health/guides/setup#webhook) (None, API Key, or Basic Auth)</td>
+  </tr>
+  <tr>
+    <th>Delivery</th>
+    <td>At least once (multiple deliveries possible)</td>
+  </tr>
+  <tr>
+    <th>Retention</th>
+    <td>DLQ (dead letter queue) retained for 14 days</td>
+  </tr>
+</table>
+
+
+## Payload
+
+```typescript title="GET /1-click/health Response Body"
+{
+    "event": "1-click.health.lookup",
+    "healthDataUuid": string,
+    "sentAt": string,
+    ...1ClickHealthEntity
+}
+```
+
+<table>
+  <tr>
+    <th>Property</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>`event`</td>
+    <td>`string`</td>
+    <td>-</td>
+    <td>Response from the 1-Click Health lookup</td>
+    <td>`"1-click.health.lookup"`</td>
+  </tr>
+  <tr>
+    <td>`healthDataUuid`</td>
+    <td>`string`</td>
+    <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+    <td>Unique identifier for the [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) that will be returned at the end of the 1-Click Health flow</td>
+    <td>`"9e12fe5b-5bb8-410a-ac6b-6e053e4c7e8d"`</td>
+  </tr>
+  <tr>
+    <td>`sentAt`</td>
+    <td>`integer`</td>
+    <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
+    <td>When the payload was sent</td>
+    <td>`1760053705000`</td>
+  </tr>
+  <tr>
+    <td>`...`</td>
+    <td>[`1ClickHealthEntity`](/reference/api/types#1clickhealthentity)</td>
+    <td>See [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity)</td>
+    <td>[`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) for the 1-Click Health flow</td>
+    <td>See [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity)</td>
+  </tr>
+</table>
+
+:::tip Webhooks for 1-Click Signup are Coming Soon!
+We don't yet support webhooks for 1-Click Signup, but those are coming soon. If you'd like to be notified when they're available, please email us at Support@Verified.inc.
+:::

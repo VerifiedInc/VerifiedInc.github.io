@@ -11,33 +11,36 @@ toc_max_heading_level: 2
 
 import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
 
-
 The Verified [Dashboard](https://dashboard.verified.inc) supports SSO. This guide explains how to enable it for your company's account, using Okta as an example identity provider.
 
 :::note OIDC Support is Coming Soon
 **We currently only support SAML.** OIDC support is coming soon.
 :::
 
-
-<SetupLoginToDashboard/>
-
+<SetupLoginToDashboard />
 
 ## 2. Create an SSO organization.
 
-<ol type="a">
-    <b><li>Click Account in the left menu.</li></b>
-    <b><li>Click the SSO tab.</li></b>
-    <b><li>Click the Create Organization button.</li></b>
-    <b><li>Click the Enable button.</li></b>
+<ol type='a'>
+  <b>
+    <li>Click Account in the left menu.</li>
+  </b>
+  <b>
+    <li>Click the SSO tab.</li>
+  </b>
+  <b>
+    <li>Click the Create Organization button.</li>
+  </b>
+  <b>
+    <li>Click the Enable button.</li>
+  </b>
 </ol>
 
 Then, you'll see Configuration and Identities tables on the page.
 
-
 ## 3. Create a configuration.
 
 **Click the Create button next to Configurations.** This will create a new configuration with service provider information that you'll use to set up your identity provider (for example Okta).
-
 
 ## 4. Set up your identity provider.
 
@@ -47,39 +50,72 @@ The steps below describe how to do this in Okta, but the same basic steps apply 
 
 In Okta:
 
-<ol type="a">
-    <b><li>Click Applications and then Applications again in the left menu.</li></b>
-    <b><li>Click the Create App Integration button.</li></b>
-    <b><li>Select SAML 2.0 and click the Next button.</li></b>
-    <b><li>Copy values from the Verified Dashboard into Okta's SAML settings and click the Next button.</li></b>
-        <ul>
-            <li>Copy **Single sign-on URL** and paste into **Single sign-on URL**.</li>
-            <li>Copy **Audience URI (SP Entity ID)** and paste into **Audience URI (SP Entity ID)**.</li>
-            <li>_You can ignore SP Metadata URL._</li>
-        </ul>
-    <b><li>Click the Finish button.</li></b>
-        <ul>
-            <li>_You can ignore all the fields on the Okta Feedback step._</li>
-        </ul>
-    <b><li>Click the Sign On tab.</li></b>
-    <b><li>Copy the Metadata URL under "Metadata details".</li></b>
+<ol type='a'>
+  <b>
+    <li>Click Applications and then Applications again in the left menu.</li>
+  </b>
+  <b>
+    <li>Click the Create App Integration button.</li>
+  </b>
+  <b>
+    <li>Select SAML 2.0 and click the Next button.</li>
+  </b>
+  <b>
+    <li>
+      Copy values from the Verified Dashboard into Okta's SAML settings and
+      click the Next button.
+    </li>
+  </b>
+  <ul>
+    <li>Copy **Single sign-on URL** and paste into **Single sign-on URL**.</li>
+    <li>
+      Copy **Audience URI (SP Entity ID)** and paste into **Audience URI (SP
+      Entity ID)**.
+    </li>
+    <li>_You can ignore SP Metadata URL._</li>
+  </ul>
+  <b>
+    <li>Click the Finish button.</li>
+  </b>
+  <ul>
+    <li>_You can ignore all the fields on the Okta Feedback step._</li>
+  </ul>
+  <b>
+    <li>Click the Sign On tab.</li>
+  </b>
+  <b>
+    <li>Copy the Metadata URL under "Metadata details".</li>
+  </b>
 </ol>
-
 
 ## 5. Edit your configuration.
 
 Back in the Verified Dashboard (on the Accounts page, with the SSO tab active):
 
-<ol type="a">
-    <b><li>Click the arrow on the left of your configuration.</li></b>
-    <b><li>Click the Edit button.</li></b>
-    <b><li>Paste the Metadata URL (copied in the previous step).</li></b>
-        <ul>
-            <li>_This is for a dynamic edit, which is easier. You can alternatively make a manual edit, by clicking the Manual tab in the Edit SSO Configuration dialog and adding values from Okta there._</li>
-        </ul>
-    <b><li>Click the Update button.</li></b>
+<ol type='a'>
+  <b>
+    <li>Click the arrow on the left of your configuration.</li>
+  </b>
+  <b>
+    <li>Click the Edit button.</li>
+  </b>
+  <b>
+    <li>Paste the Metadata URL (copied in the previous step).</li>
+  </b>
+  <ul>
+    <li>
+      _This is for a dynamic edit, which is easier. You can alternatively make a
+      manual edit, by clicking the Manual tab in the Edit SSO Configuration
+      dialog and adding values from Okta there._
+    </li>
+  </ul>
+  <b>
+    <li>Click the Update button.</li>
+  </b>
+  <b>
+    <li>Click the Activate button.</li>
+  </b>
 </ol>
-
 
 ## 6. Assign users in your identity provider.
 

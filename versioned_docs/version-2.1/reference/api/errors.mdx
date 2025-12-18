@@ -46,11 +46,20 @@ import ErrorOCE018 from '@site/versioned_docs/version-2.1/reusables/errors/OCE01
 import ErrorOCE019 from '@site/versioned_docs/version-2.1/reusables/errors/OCE019.mdx';
 import ErrorOCE020 from '@site/versioned_docs/version-2.1/reusables/errors/OCE020.mdx';
 import ErrorOCE021 from '@site/versioned_docs/version-2.1/reusables/errors/OCE021.mdx';
+import ErrorOCV001 from '@site/versioned_docs/version-2.1/reusables/errors/OCV001.mdx';
+import ErrorOCV002 from '@site/versioned_docs/version-2.1/reusables/errors/OCV002.mdx';
+import ErrorOCV003 from '@site/versioned_docs/version-2.1/reusables/errors/OCV003.mdx';
+import ErrorOCV004 from '@site/versioned_docs/version-2.1/reusables/errors/OCV004.mdx';
+import ErrorOCV005 from '@site/versioned_docs/version-2.1/reusables/errors/OCV005.mdx';
+import ErrorOCV006 from '@site/versioned_docs/version-2.1/reusables/errors/OCV006.mdx';
+import ErrorOCV007 from '@site/versioned_docs/version-2.1/reusables/errors/OCV007.mdx';
 import ApiKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/api-keys-admonition.mdx';
+
 
 ## Firewall Errors
 
 You will get a network error if your API request is blocked by our firewall.
+
 
 ### Generic
 
@@ -69,6 +78,7 @@ You will get a network error if your API request is blocked by our firewall.
     "message": "Your request was blocked by our firewall. Please contact us if you believe this was in error."
 }
 ```
+
 
 ### API Key Used Client Side
 
@@ -90,6 +100,7 @@ You will get a network error if your API request is blocked by our firewall.
 
 <ApiKeysAdmonition />
 
+
 ### Rate Limit
 
 <table className='error-table'>
@@ -108,11 +119,14 @@ You will get a network error if your API request is blocked by our firewall.
 }
 ```
 
+
 ## Application Errors
+
 
 ### 1-Click Signup
 
 To handle application level errors (returned by Verified API endpoints) for 1-Click Signup, we recommend that you primarily use the response body's `data.errorCode`, which is a Verified specific error code. See [Verified Error Codes](#verified-error-codes) below for descriptions of what each code means.
+
 
 #### `Error` Type
 
@@ -120,11 +134,13 @@ _This definition is also in [`Error`](/reference/api/types#error) in [Types](/re
 
 <ErrorType />
 
+
 ##### Example {#example-error}
 
 <ErrorExampleOce011 />
 
 ---
+
 
 #### Verified Error Codes
 
@@ -132,7 +148,7 @@ An `errorCode` is a Verified specific error code consisting of 3 letters and 3 n
 
 - Codes that begin with `ERR` are generic.
 - Codes that begin with `SKE` are specific to the [`/client/1-click` path](/reference/api/endpoints#post-client1-click), which creates a session key for use in the Verified client [SDK](/1-click-signup/guides/sdk-integration). (`SKE` refers to a Session Key Error.)
-- Codes that begin with `OCE` are specific to the [`/1-click` path](/reference/api/endpoints#get-1-click). (`OCE` refers to a One Click Error.)
+- Codes that begin with `OCE` are specific to 1-Click Signup: the `/1-click` path. (`OCE` refers to a One Click Error.)
 
 <CollapsibleGroup>
   <CollapsibleSection>
@@ -262,6 +278,76 @@ An `errorCode` is a Verified specific error code consisting of 3 letters and 3 n
   </CollapsibleSection>
 </CollapsibleGroup>
 
+
 ### 1-Click Health
 
 1-Click Health errors are returned via `errors` in a [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity).
+
+
+### 1-Click Verify
+
+
+#### Limits
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Value</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Verification Message Expiration</td>
+    <td>5 minutes</td>
+    <td>Time before a verification message (for example containing a verification code) expires</td>
+  </tr>
+  <tr>
+    <td>Verification Deletion</td>
+    <td>24 hours</td>
+    <td>Time before a [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity) is deleted</td>
+  </tr>
+  <tr>
+    <td>Maximum Verification Attempts</td>
+    <td>3</td>
+    <td>Maximum number of times a user can attempt to verify, for a given verification flow</td>
+  </tr>
+  <tr>
+    <td>Maximum Verification Message Deliveries</td>
+    <td>3</td>
+    <td>Maximum number of times a verification message can be delivered, for a given verification flow</td>
+  </tr>
+</table>
+
+
+#### Verified Error Codes
+
+An `errorCode` is a Verified specific error code consisting of 3 letters and 3 numbers:
+
+- Codes that begin with `ERR` are generic.
+- Codes that begin with `OCV` are specific to 1-Click Verify: the `/1-click/verifications` path. (`OCV` refers to One Click Verify.)
+
+
+<ErrorOCV001 />
+
+---
+
+<ErrorOCV002 />
+
+---
+
+<ErrorOCV003 />
+
+---
+
+<ErrorOCV004 />
+
+---
+
+<ErrorOCV005 />
+
+---
+
+<ErrorOCV006 />
+
+---
+
+<ErrorOCV007 />

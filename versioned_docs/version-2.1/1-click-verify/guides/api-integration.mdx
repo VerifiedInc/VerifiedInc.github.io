@@ -1,0 +1,178 @@
+---
+id: api-integration
+title: API Integration
+sidebar_position: 3
+sidebar_label: API Integration
+sidebar_class_name: sidebar-header-regular
+description: Full details on how to integrate 1-Click Verify with our API
+slug: /1-click-verify/guides/api-integration
+toc_max_heading_level: 3
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
+import SequenceDiagramOneClickVerifyAPI from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-1-click-verify-api.mdx';
+import SendSmsToUser from '@site/versioned_docs/version-2.1/reusables/send-sms-to-user.mdx';
+import About1ClickSignupAdmonition from '@site/versioned_docs/version-2.1/reusables/about-1-click-signup-admonition.mdx';
+import PrivacyFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/privacy-first-admonition.mdx';
+import IntegrationTypeAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-admonition.mdx';
+import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
+import PromptUserToConfirmTheir1ClickSignupData from '@site/versioned_docs/version-2.1/reusables/prompt-user-to-confirm-their-1-click-signup-data.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
+import UseUserInputAdmonition from '@site/versioned_docs/version-2.1/reusables/use-user-input-admonition.mdx';
+import HowToTestAdmonition from '@site/versioned_docs/version-2.1/reusables/how-to-test-admonition.mdx';
+import BirthDateFormatAdmonition from '@site/versioned_docs/version-2.1/reusables/birth-date-format-admonition.mdx';
+import Chip from '@mui/material/Chip';
+import RecencyRequirementAdmonition from '@site/versioned_docs/version-2.1/reusables/recency-requirement-admonition.mdx';
+import WhenStepIsNecessaryAdmonition from '@site/versioned_docs/version-2.1/reusables/when-step-is-necessary-admonition.mdx';
+import OneClickSignupIncludeAdditionalInfoAdmonition from '@site/versioned_docs/version-2.1/reusables/1-click-signup-include-additional-info-admonition.mdx';
+import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error-example-oce011.mdx';
+import SandboxValidationAdmonition from '@site/versioned_docs/version-2.1/reusables/sandbox-validation-admonition.mdx';
+import SequenceDiagramOneClickSignupSDK from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-1-click-signup-sdk.mdx';
+import SequenceDiagramOneClickSignupAPI from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-1-click-signup-api.mdx';
+import LocalTestingAdmonition from '@site/versioned_docs/version-2.1/reusables/local-testing-admonition.mdx';
+import {
+  CollapsibleGroup,
+  CollapsibleSection,
+  CollapsibleHeader,
+} from '@site/src/components/Collapsible';
+import ApiKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/api-keys-admonition.mdx';
+import AnchorOffset from '@site/src/components/AnchorOffset.jsx';
+import SupportedPhoneNumbersAdmonition from '@site/versioned_docs/version-2.1/reusables/supported-phone-numbers-admonition.mdx';
+import PoweredByGraphicVariantsForOneClickSignup from '@site/versioned_docs/version-2.1/reusables/powered-by-graphic-variants-for-1-click-signup.mdx';
+import OCE011InclusiveOrAdmonition from '@site/versioned_docs/version-2.1/reusables/oce011-inclusive-or-admonition.mdx';
+import SyncFromSandboxAdmonition from '@site/versioned_docs/version-2.1/reusables/sync-from-sandbox-admonition.mdx';
+import Post1ClickVerificationsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-response-body-example.mdx';
+import Post1ClickVerificationsDeliverResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-deliver-response-body-example.mdx';
+import Post1ClickVerificationsVerifyResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-verify-response-body-example.mdx';
+import Get1ClickVerificationsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-response-body-example.mdx';
+
+<table>
+  <tr>
+    <th>Time to Complete</th>
+    <td>1-2 hours</td>
+  </tr>
+  <tr>
+    <th>Time to Test and Deploy</th>
+    <td>2-4 hours</td>
+  </tr>
+  <tr>
+    <th>Skills Required</th>
+    <td>Make API calls, build UX</td>
+  </tr>
+</table>
+
+:::tip
+**Complete the 1-Click Verify [Setup](/1-click-verify/guides/setup) guide before following this API Integration guide.**
+:::
+
+<SequenceDiagramOneClickVerifyAPI />
+
+<DevelopmentWorkAdmonition />
+
+## 1. Prompt user for phone number.
+
+To start 1-Click Verify for a user, you'll need their phone number.
+
+<SupportedPhoneNumbersAdmonition />
+
+We recommend using a phone number input that auto submits when the user enters 10 digits. (See the [Phone](/1-click-signup/user-experience#phone) screen of the 1-Click Signup User Experience guide for full details.)
+
+**You'll also need to include this SMS consent language:**
+
+> I authorize [Verified](https://verified.inc) to send me SMS verification texts at the number provided. Msg & Data rates may apply.
+
+- **Link "Verified" to https://verified.inc and make it underlined and a different color than the rest of the text** (so the user knows it's a link).
+- **Make this visible to the user, somewhere on the page, before you call the Verified API.**
+
+_See our [Demo](https://1-click.demo.verified.inc) for an example of this._
+
+
+## 2. Start verification flow.
+
+Call [`POST /1-click/verifications`](/reference/api/endpoints#post-1-click-verifications) with the user's phone number, setting `channel` to `sms`:
+
+```typescript title="POST /1-click/verifications Request Body Example"
+{
+    "channel": "sms"
+}
+```
+
+<ApiKeysAdmonition />
+
+The response body will contain a `uuid` that you'll use in the next step:
+
+<Post1ClickVerificationsResponseBodyExample/>
+
+
+## 3. Deliver verification message.
+
+Call [`POST /1-click/verifications/{uuid}/deliver`](/reference/api/endpoints#post-1-click-verifications-deliver) with the `uuid` from the previous step.
+
+This will trigger Verified to send a verification SMS to the user's phone number. The response body will indicate that the messaging is being sent:
+
+<Post1ClickVerificationsDeliverResponseBodyExample/>
+
+
+## 4. Prompt user for verification code.
+
+We recommend using a 6 separate single digit inputs that auto submit when the user enters 6 digits. (See the [Verification Code](/1-click-signup/user-experience#verification-code) screen of the 1-Click Signup User Experience guide for full details.)
+
+
+## 5. Verify verification code.
+
+Call [`POST /1-click/verifications/{uuid}/verify`](/reference/api/endpoints#post-1-click-verifications-verify) with the `uuid` from the previous steps, including what the user entered in the previous step as `code`:
+
+```typescript title="POST /1-click/verifications/{uuid}/verify Request Body Example"
+{
+    "code": "111111"
+}
+```
+
+This will trigger Verified to check the user's input against the verification code for this verification flow. The response body will indicate whether or not this check succeeds in the `verified` attribute:
+
+<Post1ClickVerificationsVerifyResponseBodyExample/>
+
+
+## 6. (optional) Retrieve verification details.
+
+The verification details are included in the response body of the previous step. But if you ever want to retrieve these details again, you can do so by calling [`GET /1-click/verifications/{uuid}`](/reference/api/endpoints#get-1-click-verifications) with the `uuid` from the previous steps.
+
+The response body will contain the [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity):
+
+<Get1ClickVerificationsResponseBodyExample/>
+
+
+---
+
+
+## Handle Errors
+
+To ensure your integration is robust, handle all the 1-Click Verify [errors](/reference/api/errors##1-click-verify). Most errors should be handled simply by starting a new 1-Click Verify flow.
+
+
+---
+
+
+## Go Live!
+
+**When you're ready to go live, you made need to request approval for [Production](/reference/api/environments#production) access,** depending on how you're using other Verified products:
+
+1. Go to the **Brand Details** page for your brand in the Verified [Dashboard](https://dashboard.verified.inc).
+2. Click the **Production** tab in the upper right, and make sure your brand settings are configured as you intend them to be.
+3. Click the **Request Approval** button under the API Keys section.
+4. Complete the **steps** listed in the dialog.
+5. Click the **Submit Request** button.
+
+
+### Swap Sandbox for Production
+
+**Once you have Production access, just swap Sandbox for Production:**
+
+1. Swap your Sandbox API key for your Production API key.
+2. Swap the [Sandbox base URL](/reference/api/environments#sandbox) for the [Production base URL](/reference/api/environments#production).
+
+**Then you'll be live with 1-Click Verify! ✅**

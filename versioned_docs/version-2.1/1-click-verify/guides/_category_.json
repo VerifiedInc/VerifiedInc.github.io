@@ -1,10 +1,10 @@
 {
-  "label": "SDK",
+  "label": "Guides",
   "className": "sidebar-header-regular",
-  "position": 1,
+  "position": 4,
   "collapsed": false,
   "link": {
     "type": "generated-index",
-    "slug": "/reference/sdk"
+    "slug": "/1-click-verify/guides"
   }
 }

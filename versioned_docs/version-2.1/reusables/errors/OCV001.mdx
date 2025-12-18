@@ -1,0 +1,12 @@
+import Admonition from '@theme/Admonition';
+import ErrorDisplay from '@site/src/components/ErrorDisplay.jsx';
+
+<ErrorDisplay
+  message='Invalid or expired verification code'
+  attemptsRemaining='integer'
+  expiresAt='integer'
+  whenThisIsReturned='When the user submitted verification code is invalid or expired.' 
+  howToHandle='If there are attempts remaining, resend the verification message. Otherwise, start a new verification flow.'
+>
+  ###### `OCV001`
+</ErrorDisplay>

@@ -1,0 +1,50 @@
+```mermaid
+%%{
+    init: {
+    'theme': 'base',
+    'themeVariables': {
+        'primaryColor': '#e6f6e6',
+        'primaryTextColor': '#003100',
+        'primaryBorderColor': '#0dbc3d',
+        'secondaryColor': '#eef9fd',
+        'secondaryTextColor': '#193c47',
+        'secondaryBorderColor': '#164fd6',
+        'activationBkgColor': '#e6f6e6',
+        'activationBorderColor': '#0dbc3d',
+        'labelBoxBkgColor': '#eef9fd',
+        'labelBoxBorderColor': '#164fd6',
+        'labelTextColor': '#193c47',
+        'edgeLabelBackground': '#ffffff',
+        'textColor': '#000000',
+        'fontFamily': 'Lato'
+    }
+}
+}%%
+sequenceDiagram
+    actor U as User
+    participant C as Customer
+    participant V as Verified
+
+    Note left of U: 1. Prompt user for phone number.
+    C ->>+ U: Show phone number field
+    U ->>- C: Enter phone number
+    Note left of U: 2. Start verification flow.
+    C ->>+ V: Call POST /1-click/verifications
+    V ->> V: Create 1ClickVerificationEntity
+    V ->>- C: Return 1ClickVerificationEntity
+    Note left of U: 3. Deliver verification message.
+    C ->>+ V: Call POST /1-click/verifications/{verificationUuid}/deliver
+    V ->> V: Send verification message to user
+    V ->>- C: Return 1ClickVerificationEntity
+    Note left of U: 4. Prompt user for verification code.
+    C ->>+ U: Show verification code field
+    U ->>- C: Enter verification code
+    Note left of U: 5. Verify verification code.
+    C ->>+ V: Call POST /1-click/verifications/{verificationUuid}/verify
+    V ->> V: Check verification code
+    V ->>- C: Return 1ClickVerificationEntity
+    Note left of U: 6. (optional) Retrieve verification status.
+    C ->>+ V: Call GET /1-click/verifications
+    V ->>- C: Return 1ClickVerificationEntity
+```
+<br />

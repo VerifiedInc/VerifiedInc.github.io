@@ -619,6 +619,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
     status: string,
     createdAt: integer,
     expiresAt: integer,
+    deliveredAt?: integer,
     verifiedAt?: integer,
     attemptsRemaining?: integer
 }
@@ -653,8 +654,9 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                 <summary>`enum`</summary>
 
                 Possible values:
-                    - `textToSignup`
-                    - `sms`
+                    - `"textToSignup"`
+                    - `"sms"`
+                    - `"email"` <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/>
             </details>
         </td>
         <td>`camelCase`</td>
@@ -668,17 +670,17 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                 <summary>`enum`</summary>
 
                 Possible values:
-                    - `pending`
-                    - `sending`
-                    - `delivered`
-                    - `verified`
-                    - `expired`
-                    - `failed`
+                    - `"pending"`
+                    - `"sending"`
+                    - `"delivered"`
+                    - `"verified"`
+                    - `"expired"`
+                    - `"failed"`
             </details>
         </td>
         <td>`camelCase`</td>
         <td>The status of the verification</td>
-        <td>`"textToSignup"`</td>
+        <td>`"delivered"`</td>
     </tr>
     <tr>
         <td>`createdAt`</td>
@@ -693,6 +695,13 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
         <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
         <td>When the verification expires (meaning it can no longer succeed)</td>
         <td>`1760053995000`</td>
+    </tr>
+    <tr>
+        <td>`deliveredAt`</td>
+        <td>`integer`</td>
+        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
+        <td>When the verification message was delivered</td>
+        <td>`1760053699054`</td>
     </tr>
     <tr>
         <td>`verifiedAt`</td>

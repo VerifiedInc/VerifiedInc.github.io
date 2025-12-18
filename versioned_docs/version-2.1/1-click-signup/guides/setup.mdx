@@ -109,7 +109,7 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 
         <ImmutableSettingAdmonition/>
 
-        **Choose whether to use Verified's phone verification or your own:**
+        **Choose what to use for phone verification:**
 
         <table>
             <tr>
@@ -117,21 +117,17 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
                 <th>Description</th>
             </tr>
             <tr>
-                <td>Use Verified's</td>
-                <td>Use Verified to send the user verification SMS.</td>
+                <td>Use 1-Click Verify in the SDK</td>
+                <td>Use 1-Click Verify in the SDK to send the user verification SMS.</td>
             </tr>
             <tr>
-                <td>Use your own <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/></td>
-                <td>Use your own solution to send the user verification SMS.</td>
+                <td>Use the 1-Click Verify API or another solution <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/></td>
+                <td>Use the 1-Click Verify API or another solution to send the user verification SMS.</td>
             </tr>
         </table>
 
-        <Admonition type="important" title="You Must Use Your Own with the API Integration Type">
-            If you choose the **API** [integration type](#integration-type), you must use your own phone verification.
-        </Admonition>
-
-        <Admonition type="warning" title="Using Your Own Requires Approval">
-            If you use your own solution for phone verification, we must approve you for [Production](/reference/api/environments#production) access by evaluating that you're properly verifying users' phone numbers.
+        <Admonition type="warning" title="The Second Option Requires Approval">
+            If you choose the second option, we must approve you for [Production](/reference/api/environments#production) access by evaluating that you're properly verifying users' phone numbers.
         </Admonition>
 
     </CollapsibleSection>

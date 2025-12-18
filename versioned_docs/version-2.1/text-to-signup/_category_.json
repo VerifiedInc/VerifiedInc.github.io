@@ -1,8 +1,8 @@
 {
   "label": "Text to Signup",
   "className": "sidebar-header-black",
-  "position": 4,
-  "collapsed": false,
+  "position": 3,
+  "collapsed": true,
   "link": {
     "type": "generated-index",
     "slug": "/text-to-signup"

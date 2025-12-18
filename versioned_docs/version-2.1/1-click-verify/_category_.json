@@ -1,10 +1,10 @@
 {
-  "label": "1-Click Health",
+  "label": "1-Click Verify",
   "className": "sidebar-header-black",
-  "position": 6,
+  "position": 4,
   "collapsed": true,
   "link": {
     "type": "generated-index",
-    "slug": "/1-click-health"
+    "slug": "/1-click-verify"
   }
 }

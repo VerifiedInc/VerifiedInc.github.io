@@ -1,0 +1,124 @@
+---
+id: setup
+title: Setup
+sidebar_position: 0
+sidebar_label: Setup
+sidebar_class_name: sidebar-header-regular
+description: How to get setup to integrate 1-Click Verify
+slug: /1-click-verify/guides/setup
+toc_max_heading_level: 4
+---
+
+import Admonition from '@theme/Admonition';
+import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
+import Chip from '@mui/material/Chip';
+import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-recommendation-admonition.mdx';
+import StylingSettingLogo from '@site/versioned_docs/version-2.1/reusables/styling-setting-logo.mdx';
+import StylingSettingFontFamily from '@site/versioned_docs/version-2.1/reusables/styling-setting-font-family.mdx';
+import StylingSettingButtonBorderRadius from '@site/versioned_docs/version-2.1/reusables/styling-setting-button-border-radius.mdx';
+import StylingSettingPrimaryColor from '@site/versioned_docs/version-2.1/reusables/styling-setting-primary-color.mdx';
+import StylingSettingGraphicColor from '@site/versioned_docs/version-2.1/reusables/styling-setting-graphic-color.mdx';
+import BrandSettingBrandName from '@site/versioned_docs/version-2.1/reusables/brand-setting-brand-name.mdx';
+import ImmutableSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/immutable-setting-admonition.mdx';
+import BrandSettingRiskSignals from '@site/versioned_docs/version-2.1/reusables/brand-setting-risk-signals.mdx';
+import ConfigureBrandSettings from '@site/versioned_docs/version-2.1/reusables/configure-brand-settings.mdx';
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+
+
+{/* 1-Click Signup is the fastest way to onboard new users.
+
+Integrating 1-Click Signup is extremely easy.
+
+:::tip ✅ 1-Hour Guarantee
+We are _obsessed_ with making it as easy as possible for you to implement 1-Click Signup.
+- If it takes you more than 1 hour to implement, we'll send you a free Verified t-shirt! 
+- If it takes you less than 1 hour, we'll send you a free t-shirt _and_ mug!
+::: */}
+
+<table>
+    <tr>
+        <th>Time to Complete</th>
+        <td>5 minutes</td>
+    </tr>
+    <tr>
+        <th>Skills Required</th>
+        <td>No technical skills!</td>
+    </tr>
+</table>
+
+:::tip
+**Complete this Setup guide before following the 1-Click Verify [API Integration](/1-click-signup/guides/api-integration) guide.**
+:::
+
+
+<SetupLoginToDashboard/>
+
+
+<ConfigureBrandSettings/>
+
+
+### Brand Name
+
+<BrandSettingBrandName/>
+
+
+### 1-Click Verify Settings
+
+**The only relevant settings for 1-Click Verify are the following:**
+
+
+#### Integration Type
+
+<ImmutableSettingAdmonition/>
+
+**Choose which integration type you want to use:**
+
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Development Effort</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>**SDK** <Chip label="Recommended" variant="outlined" size="small" color="primary"/> <br/> <span class="font-weight-normal"></span></td>
+        <td>\<1 day</td>
+        <td>You use our (web) client SDK, and we handle the rest</td>
+    </tr>
+    <tr>
+        <td>**API** <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/> <br/> <span class="font-weight-normal"></span></td>
+        <td>1-2 weeks</td>
+        <td>You use our API only and build everything yourself</td>
+    </tr>
+</table>
+
+<IntegrationTypeRecommendationAdmonition/>
+
+
+#### Phone Verification
+
+<ImmutableSettingAdmonition/>
+
+**Choose what to use for phone verification:**
+
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>Use 1-Click Verify in the SDK</td>
+        <td>Use 1-Click Verify in the SDK to send the user verification SMS.</td>
+    </tr>
+    <tr>
+        <td>Use the 1-Click Verify API or another solution <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/></td>
+        <td>Use the 1-Click Verify API or another solution to send the user verification SMS.</td>
+    </tr>
+</table>
+
+<Admonition type="warning" title="The Second Option Requires Approval">
+    If you choose the second option, we must approve you for [Production](/reference/api/environments#production) access by evaluating that you're properly verifying users' phone numbers.
+</Admonition>
+
+If you choose the first option, you're done! There's no need to do any integration work, because the SDK handles everything for you.
+
+If you choose the second option, follow the 1-Click Verify [API Integration](/1-click-verify/guides/api-integration) guide.

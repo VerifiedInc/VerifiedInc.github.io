@@ -2,21 +2,23 @@ import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error
 
 ```typescript title="Error Type"
 {
-    "name": string,
-    "message": string,
-    "code": number,
-    "className": string,
-    "data": {
-        "errorCode": string,
-        "additionalInputs": [string], // only for error code OCE011
-        "inputAttemptsExceeded": [string], // only for error code OCE019
-        "identifiers": {
+    name: string,
+    message: string,
+    code: number,
+    className: string,
+    data: {
+        errorCode?: string,
+        additionalInputs?: [string], // only for error code OCE011
+        inputAttemptsExceeded?: [string], // only for error code OCE019
+        identifiers?: {
             [identifierKey: string]: string
         },
-        "verificationMethod": {
+        verificationMethod?: {
             [identifierKey: string]: string
         },
-        "riskSignals": RiskSignals // only for error codes OCE011, OCE012, OCE013, OCE017, and OCE019
+        riskSignals?: RiskSignals // only for error codes OCE011, OCE012, OCE013, OCE017, and OCE019
+        attemptsRemaining?: integer, // only for OCV error codes
+        expiresAt?: integer // only for OCV error codes
     }
 }
 ```
@@ -119,5 +121,19 @@ import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error
         <td>`Object`</td>
         <td>[Verified risk signals](/reference/data/outputs#risk-signals) associated with the 1-Click Signup event (only included for [`OCE011`](/reference/api/errors#oce011), [`OCE012`](/reference/api/errors#oce012), [`OCE013`](/reference/api/errors#oce013), [`OCE017`](/reference/api/errors#oce017), and [`OCE019`](/reference/api/errors#oce019))</td>
         <td>See [`RiskSignals` example](/reference/api/types#example-risksignals)</td>
+    </tr>
+    <tr>
+        <td>`data.atteptsRemaining`</td>
+        <td>`integer`</td>
+        <td>Any number of digits (0-9)</td>
+        <td>How many verification attempts the user has remaining</td>
+        <td>`3`</td>
+    </tr>
+    <tr>
+        <td>`data.expiresAt`</td>
+        <td>`integer`</td>
+        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
+        <td>When the verification expires (meaning it can no longer succeed)</td>
+        <td>`1760053995000`</td>
     </tr>
 </table>

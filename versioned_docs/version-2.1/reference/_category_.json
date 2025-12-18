@@ -1,7 +1,7 @@
 {
   "label": "Reference",
   "className": "sidebar-header-black",
-  "position": 5,
+  "position": 7,
   "collapsed": false,
   "link": {
     "type": "generated-index",

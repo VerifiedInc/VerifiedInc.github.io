@@ -18,6 +18,8 @@ const ErrorDisplay = ({
   whenThisIsReturned,
   howToHandle,
   youShouldNeverGetThisError,
+  attemptsRemaining,
+  expiresAt,
   children: code,
   sx,
 }) => {
@@ -137,6 +139,32 @@ const ErrorDisplay = ({
       {youShouldNeverGetThisError}
     </Admonition>
   ) : null;
+  const markdownAttemptsRemaining = attemptsRemaining
+    ? `\`${attemptsRemaining}\``
+    : null;
+  const tableRowAttemptsRemaining = attemptsRemaining ? (
+    <tr>
+      <th>
+        <Markdown>`data.attemptsRemaining`</Markdown>
+      </th>
+      <td>
+        <Markdown>{markdownAttemptsRemaining}</Markdown>
+      </td>
+    </tr>
+  ) : null;
+  const markdownExpiresAt = expiresAt
+    ? `\`${expiresAt}\``
+    : null;
+  const tableRowExpiresAt = expiresAt ? (
+    <tr>
+      <th>
+        <Markdown>`data.expiresAt`</Markdown>
+      </th>
+      <td>
+        <Markdown>{markdownExpiresAt}</Markdown>
+      </td>
+    </tr>
+  ) : null;
 
   return (
     <Box sx={{ pt: 2, ...sx }}>
@@ -153,6 +181,8 @@ const ErrorDisplay = ({
           {tableRowRiskSignals}
           {tableRowData}
           {tableRowDataPhone}
+          {tableRowAttemptsRemaining}
+          {tableRowExpiresAt}
         </tbody>
       </table>
 

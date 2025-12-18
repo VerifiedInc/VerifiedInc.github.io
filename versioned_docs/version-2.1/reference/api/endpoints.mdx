@@ -44,6 +44,10 @@ import {
   CollapsibleSection,
   CollapsibleHeader,
 } from '@site/src/components/Collapsible';
+import Post1ClickVerificationsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-response-body-example.mdx';
+import Post1ClickVerificationsDeliverResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-deliver-response-body-example.mdx';
+import Post1ClickVerificationsVerifyResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-verify-response-body-example.mdx';
+import Get1ClickVerificationsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-response-body-example.mdx';
 
 {/* TODO: Update Swagger URLs */}
 
@@ -562,17 +566,16 @@ See [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity).
 ---
 
 
-## Verification
+## 1-Click Verify
+
 
 {/* TODO: Update */}
 {/* <EndpointHeaderWithoutSwagger
-postmanUrl="https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7"
+postmanUrl=''>
 
->
+</EndpointHeaderWithoutSwagger> */}
 
-    ### `POST /1-click/verifications`
-
-</EndpointHeaderWithoutSwagger>
+### `POST /1-click/verifications`
 
 > Begin a verification flow
 
@@ -586,6 +589,7 @@ postmanUrl="https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7"
     <td>`/1-click/verifications`</td>
   </tr>
 </table>
+
 
 #### Request {#post-1-click-verifications-request}
 
@@ -624,6 +628,7 @@ postmanUrl="https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7"
 
                 Possible values:
                     - `"sms"`
+                    - `"email"` <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/>
             </details>
         </td>
         <td>`snake_case`</td>
@@ -631,31 +636,141 @@ postmanUrl="https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7"
         <td>Channel used for verification</td>
         <td>`"sms"`</td>
     </tr>
-
 </table>
+
 
 #### Response {#post-1-click-verifications-response}
 
 ```typescript title="POST /1-click/verifications Response Body"
 {
-    uuid: string,
-    phone: string,
-    channel: string,
-    status: string,
-    expiresAt: number????,
-    createdAt: number????,
-    attemptsRemaining: number????
+    ...1ClickVerificationEntity
 }
 ```
 
-<table></table> */}
+See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity). Here's an example:
+
+<Post1ClickVerificationsResponseBodyExample/>
+
 
 {/* TODO: Update */}
+{/* <EndpointHeaderWithoutSwagger
+postmanUrl=''>
+
+</EndpointHeaderWithoutSwagger> */}
+
+### `POST /1-click/verifications/{uuid}/deliver` {#post-1-click-verifications-deliver}
+
+> Deliver a verification message
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/verifications/{uuid}/deliver`</td>
+  </tr>
+</table>
 
 
-<EndpointHeaderWithoutSwagger postmanUrl=''>
-  ### `GET /1-click/verifications`
-</EndpointHeaderWithoutSwagger>
+#### Request {#post-1-click-verifications-deliver-request}
+
+Call:
+
+```
+POST /1-click/verifications/{uuid}/deliver
+```
+
+- For the `{uuid}` path parameter, use the value of the `uuid` included in the [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity) that's included in the response body of every 1-Click Verify endpoint.
+
+
+#### Response {#post-1-click-verifications-deliver-response}
+
+```typescript title="POST /1-click/verifications/{uuid}/deliver Response Body"
+{
+    ...1ClickVerificationEntity
+}
+```
+
+See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity). Here's an example:
+
+<Post1ClickVerificationsDeliverResponseBodyExample/>
+
+
+{/* TODO: Update */}
+{/* <EndpointHeaderWithoutSwagger
+postmanUrl=''>
+
+</EndpointHeaderWithoutSwagger> */}
+
+### `POST /1-click/verifications/{uuid}/verify` {#post-1-click-verifications-verify}
+
+> Verify a user submitted verification code
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/verifications/{uuid}/verify`</td>
+  </tr>
+</table>
+
+
+#### Request {#post-1-click-verifications-verify-request}
+
+```typescript title="POST /1-click/verifications/{uuid}/verify Request Body"
+{
+    code: string
+}
+```
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Required?</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Default</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`code`</td>
+        <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
+        <td>`string`</td>
+        <td>6 digits (0-9)</td>
+        <td>none</td>
+        <td>User submitted verification code</td>
+        <td>`"111111"`</td>
+    </tr>
+</table>
+
+- For the `{uuid}` path parameter, use the value of the `uuid` included in the [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity) that's included in the response body of every 1-Click Verify endpoint.
+
+
+#### Response {#post-1-click-verifications-verify-response}
+
+```typescript title="POST /1-click/verifications/{uuid}/verify Response Body"
+{
+    ...1ClickVerificationEntity
+}
+```
+
+See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity). Here's an example:
+
+<Post1ClickVerificationsVerifyResponseBodyExample/>
+
+
+{/* TODO: Update */}
+{/* <EndpointHeaderWithoutSwagger postmanUrl=''>
+  
+</EndpointHeaderWithoutSwagger> */}
+
+### `GET /1-click/verifications`
 
 > Check the status of a verification flow
 
@@ -666,7 +781,7 @@ postmanUrl="https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7"
   </tr>
   <tr>
     <th>Path</th>
-    <td>`/1-click/verifications/{verificationUuid}`</td>
+    <td>`/1-click/verifications/{uuid}`</td>
   </tr>
 </table>
 
@@ -676,10 +791,12 @@ postmanUrl="https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7"
 Call:
 
 ```
-GET /1-click/verifications/{verificationUuid}
+GET /1-click/verifications/{uuid}
 ```
 
-- For the `{verificationUuid}` path parameter, use the value of the `verificationUuid` included as a URL parameter on the redirect URL.
+- For the `{uuid}` path parameter:
+  - In Text to Signup flows, use the value of the `verificationUuid` included as a URL parameter on the redirect URL.
+  - In 1-Click Verify flows, use the value of the `uuid` included in the [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity) that's included in the response body of every 1-Click Verify endpoint.
 
 
 #### Response {#get-1-click-verifications-response}
@@ -690,4 +807,6 @@ GET /1-click/verifications/{verificationUuid}
 }
 ```
 
-See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).
+See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity). Here's an example:
+
+<Get1ClickVerificationsResponseBodyExample/>

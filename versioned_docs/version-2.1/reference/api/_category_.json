@@ -2,7 +2,7 @@
   "label": "API",
   "className": "sidebar-header-regular",
   "position": 2,
-  "collapsed": true,
+  "collapsed": false,
   "link": {
     "type": "generated-index",
     "slug": "/reference/api"

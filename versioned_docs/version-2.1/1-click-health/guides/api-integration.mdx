@@ -43,6 +43,7 @@ import OCE011InclusiveOrAdmonition from '@site/versioned_docs/version-2.1/reusab
 import Post1ClickHealthRequestBody from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body.mdx';
 import Post1ClickHealthResponseBody from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-response-body.mdx';
 import SyncFromSandboxAdmonition from '@site/versioned_docs/version-2.1/reusables/sync-from-sandbox-admonition.mdx';
+import MostProbablePlansAreListedFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/most-probable-plans-are-listed-first-admonition.mdx';
 
 <table>
   <tr>
@@ -184,6 +185,8 @@ The response will contain a [`1ClickHealthEntity`](/reference/api/types#1clickhe
 
 - **Success:** If we can source health insurance data for the user, the `1ClickHealthEntity` will contain `results` with one or more health insurance plans. <br/> → _Continue to [step 4](#4-prompt-user-to-confirm)._
 - **Failure:** Otherwise, the `1ClickHealthEntity` will contain `errors` indicating that the lookup failed. <br/> → _Fall back to a manual health insurance entry flow._
+
+<MostProbablePlansAreListedFirstAdmonition/>
 
 
 ## 4. Prompt user to confirm.

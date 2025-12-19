@@ -48,23 +48,23 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 
 ```typescript title="1ClickEntity Type"
 {
-    "identifiers": {
+    identifiers: {
         [identifierKey: string]: string
     },
-    "credentials": {
+    credentials: {
         [credentialKey: string]: 
             string     // Single string value when `multi` is false and `children` isn't included in the credential requests
             | [string] // Array of string values when `multi` is true and `children` isn't included in the credential requests
             | Object   // Single object value when `multi` is false and `children` is included in the credential requests
             | [Object] // Array of object values when `multi` is true and `children` is included in the credential requests
     },
-    "metadata": {
-        "identifiers": {
+    metadata: {
+        identifiers: {
             [identifierKey: string]: {
                 [metadataKey: string]: string
             }
         },
-        "credentials": {
+        credentials: {
             [credentialKey: string]: {
                 // Follows the same structure as `credentials` and maintains the same order for array items when `multi` is set to `true`
                 [metadataKey: string]: 
@@ -490,22 +490,25 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
 
 ## `1ClickHealthEntity`
 
+{/* TODO: Add logoUrl?: string, when ready */}
 ```typescript title="1ClickHealthEntity Type"
 {
-    "healthDataUuid": string,
-    "status": "PENDING" | "PROCESSING" | "SUCCEEDED" | "FAILED" | "PARTIAL"
-    "results": [
+    healthDataUuid: string,
+    status: "PENDING" | "PROCESSING" | "SUCCEEDED" | "FAILED" | "PARTIAL"
+    results?: [
         {
-            "memberId": string,
-            "payer": {
-                "name": string
+            memberId: string,
+            payer: {
+                name: string,
+                verifiedId: string,
+                ids: [string]
             },
-            "edi_271": string
+            edi_271: string
         }
     ],
-    "errors": [
+    errors?: [
         { 
-            "message": string
+            message: string
         }
     ]
 }
@@ -547,7 +550,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
     <tr>
         <td>`results`</td>
         <td>`array`</td>
-        <td>Array of objects</td>
+        <td>Array of `Object`s</td>
         <td>Health insurance plans</td>
         <td>-</td>
     </tr>
@@ -566,7 +569,9 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
         <td>
             ```json
             {
-                "name": "FGI"
+                "name": "Aviato Health Insurance Of California",
+                "verifiedId": "V431835",
+                "ids": ["0000A"]
             }
             ```
         </td>
@@ -576,7 +581,28 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
         <td>`string`</td>
         <td>`Title Case`</td>
         <td>Name of payer for health insurance plan</td>
-        <td>`"FGI"`</td>
+        <td>`"Aviato Health Insurance Of California"`</td>
+    </tr>
+    {/* <tr>
+        <td>`results[i].payer.logoUrl`</td>
+        <td>`string`</td>
+        <td>URL</td>
+        <td>URL for logo of payer for health insurance plan</td>
+        <td>`"https://verified.inc/payers/logos/V431835"`</td>
+    </tr> */}
+    <tr>
+        <td>`results[i].payer.verifiedId`</td>
+        <td>`string`</td>
+        <td>V followed by 6 digits (0-9)</td>
+        <td>Verified ID (never changes) of payer for health insurance plan</td>
+        <td>`"V431835"`</td>
+    </tr>
+    <tr>
+        <td>`results[i].payer.ids`</td>
+        <td>`array`</td>
+        <td>Array of `string`s</td>
+        <td>IDs (can change) of payer for health insurance plan — `ids[0]` is considered primary</td>
+        <td>`["0000A"]`</td>
     </tr>
     <tr>
         <td>`results[i].edi_271`</td>
@@ -737,21 +763,21 @@ See [Risk Signals](/reference/data/outputs#risk-signals) on the Data page for de
 
 ```typescript title="RiskSignals Type"
 {
-    "overall": {
-        "score": integer, // included with Basic (default) and Advanced
-        "level": "low" | "medium-low" | "medium" | "medium-high" | "high", // included with Basic (default) and Advanced
-        "recommendation": "allow" | "flag" | "block", // included with Basic (default) and Advanced
-        "reasonCodes": [string] // included with Advanced
+    overall: {
+        score: integer, // included with Basic (default) and Advanced
+        level: "low" | "medium-low" | "medium" | "medium-high" | "high", // included with Basic (default) and Advanced
+        recommendation: "allow" | "flag" | "block", // included with Basic (default) and Advanced
+        reasonCodes?: [string] // included with Advanced
     },
-    "phone": { // included with Advanced
-        "carrier": {
-            "id": integer,
-            "name": string
+    phone?: { // included with Advanced
+        carrier: {
+            id: integer,
+            name: string
         }
-        "reasonCodes": [string]
+        reasonCodes: [string]
     },
-    "email": { // included with Advanced
-        "reasonCodes": [string]
+    email?: { // included with Advanced
+        reasonCodes: [string]
     }
 }
 ```

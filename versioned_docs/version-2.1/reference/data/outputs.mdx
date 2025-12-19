@@ -33,6 +33,7 @@ import OneClickEntityExample from '@site/versioned_docs/version-2.1/reusables/1-
 import Chip from '@mui/material/Chip';
 import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
 import RiskSignalsSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/risk-signals-setting-admonition.mdx';
+import MostProbablePlansAreListedFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/most-probable-plans-are-listed-first-admonition.mdx';
 
 > An **output** is a piece of data we return from the SDK or API.
 
@@ -3062,6 +3063,8 @@ We can source the data below for **~80% of US adults.** _Exact coverage depends 
 See [Coverage](/1-click-health/overview#coverage) for more information.
 :::
 
+<MostProbablePlansAreListedFirstAdmonition/>
+
 <table>
     <tr>
         <th>Output</th>
@@ -3088,7 +3091,9 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
         <td>
             ```json
             {
-                "name": "FGI"
+                "name": "Aviato Health Insurance Of California",
+                "verifiedId": "V431835",
+                "ids": ["0000A"]
             }
             ```
         </td>
@@ -3099,7 +3104,31 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
         <td>`string`</td>
         <td>`Title Case`</td>
         <td>Name of payer for health insurance plan</td>
-        <td>`"FGI"`</td>
+        <td>`"Aviato Health Insurance Of California"`</td>
+    </tr>
+    {/* <tr>
+        <td>↳ Logo URL</td>
+        <td>`payer.logoUrl`</td>
+        <td>`string`</td>
+        <td>URL</td>
+        <td>URL for logo of payer for health insurance plan</td>
+        <td>`"https://verified.inc/payers/logos/V431835"`</td>
+    </tr> */}
+    <tr>
+        <td>↳ Verified ID</td>
+        <td>`payer.verifiedId`</td>
+        <td>`string`</td>
+        <td>V followed by 6 digits (0-9)</td>
+        <td>Verified ID (never changes) of payer for health insurance plan</td>
+        <td>`"V431835"`</td>
+    </tr>
+    <tr>
+        <td>↳ IDs</td>
+        <td>`payer.ids`</td>
+        <td>`array`</td>
+        <td>Array of `string`s</td>
+        <td>IDs (can change) of payer for health insurance plan — `ids[0]` is considered primary</td>
+        <td>`["0000A"]`</td>
     </tr>
     <tr>
         <td>EDI 271</td>

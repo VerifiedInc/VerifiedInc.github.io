@@ -6,7 +6,7 @@ sidebar_label: Test Users
 sidebar_class_name: sidebar-header-regular
 description: Test Users for 1-Click Health
 slug: /1-click-health/test-users
-toc_max_heading_level: 4
+toc_max_heading_level: 5
 ---
 
 import TestUserDisplay from '@site/src/components/TestUserDisplay';
@@ -62,6 +62,12 @@ You can use a [custom demo](/custom-demo) by generating one or opening one with 
 See the later sections for full details on how each of these test users is designed to be used.
 :::
 
+
+### Success
+
+
+#### Mock Payers
+
 <table>
   <tr>
     <th>Outputs</th>
@@ -87,6 +93,42 @@ See the later sections for full details on how each of these test users is desig
     <td>Monica</td>
     <td>Hall</td>
   </tr>
+</table>
+
+
+#### Real Payers
+
+<table>
+  <tr>
+    <th>Outputs</th>
+    <th>Birth Date</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+  </tr>
+  <tr>
+    <td>Multiple Plans</td>
+    <td>1989-08-02</td>
+    <td>Richard</td>
+    <td>Hendricks</td>
+  </tr>
+  <tr>
+    <td>Single Plan</td>
+    <td>1990-01-02</td>
+    <td>Monica</td>
+    <td>Hall</td>
+  </tr>
+</table>
+
+
+### Failure
+
+<table>
+  <tr>
+    <th>Outputs</th>
+    <th>Birth Date</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+  </tr>
   <tr>
     <td>No Plans</td>
     <td>1991-01-01</td>
@@ -94,6 +136,8 @@ See the later sections for full details on how each of these test users is desig
     <td>Belson</td>
   </tr>
 </table>
+
+
 
 ---
 
@@ -108,7 +152,12 @@ Use these test users to go through successful 1-Click Signup flows (where Verifi
 For these users, only a first name, last name, and birth date inputs are needed to source [outputs](/reference/data/outputs#1-click-health). */}
 
 
-#### Multiple Plans
+#### Mock Payers
+
+These test users have health insurance plans with mock payers. These payers won't be recognized in any other system, for example if you use their `ids`, since they're mocks specific to Verified. If you need test users that have plans with real payers, see the [Real Payers](#real-payers) section below.
+
+
+##### Multiple Plans
 
 
 ###### \{Any Birth Date\}
@@ -317,7 +366,7 @@ Outputs:
 </table>
 
 
-#### Single Plan
+##### Single Plan
 
 
 ###### 1990-01-01
@@ -412,6 +461,214 @@ Outputs:
         <tr>
             <th>Payer Name</th>
             <td>Aviato Health Insurance of California</td>
+        </tr>
+    </tbody>
+</table>
+
+
+#### Real Payers
+
+These test users have health insurance plans with real payers (but mock member IDs). These payers will be recognized in other systems, for example if you use the payer `ids`, which can be useful for testing. If you'd prefer to use test users that have plans with mock payers instead, see the [Mock Payers](#mock-payers) section above.
+
+
+##### Multiple Plans
+
+
+###### 1989-08-02
+
+For this test user, you will get multiple health insurance plans.
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Birth Date</th>
+            <td>1989-08-02</td>
+        </tr>
+        <tr>
+            <th>Full Name</th>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th>↳ First Name</th>
+            <td>Richard</td>
+        </tr>
+        <tr>
+            <th>↳ Last Name</th>
+            <td>Hendricks</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Harrison</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ Line 1</th>
+                <td>5320 Newell Rd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Palo Alto</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>94303</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
+            <tr>
+                <th>Sex</th>
+                <td>Male</td>
+            </tr>
+            <tr>
+                <th>SSN</th>
+                <td>000456789</td>
+            </tr>
+        </tbody>
+    </table>
+
+</details>
+
+Outputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th></th>
+            <th>Plan 1</th>
+            <th>Plan 2</th>
+        </tr>
+        <tr>
+            <th>Member ID</th>
+            <td>A484069</td>
+            <td>B231615071</td>
+        </tr>
+        <tr>
+            <th>Payer Name</th>
+            <td>Aetna</td>
+            <td>UnitedHealthcare</td>
+        </tr>
+    </tbody>
+</table>
+
+
+##### Single Plan
+
+
+###### 1990-01-02
+
+For this test user, you will get a single health insurance plan.
+
+Required inputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th>Birth Date</th>
+            <td>1990-01-02</td>
+        </tr>
+        <tr>
+            <th>Full Name</th>
+            <td>-</td>
+        </tr>
+        <tr>
+            <th>↳ First Name</th>
+            <td>Monica</td>
+        </tr>
+        <tr>
+            <th>↳ Last Name</th>
+            <td>Hall</td>
+        </tr>
+    </tbody>
+</table>
+
+<details>
+    <summary>Optional inputs:</summary>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Full Name</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ Middle Name</th>
+                <td>Amanda</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th>↳ Line 1</th>
+                <td>7500 N Glenoaks Blvd</td>
+            </tr>
+            <tr>
+                <th>↳ City</th>
+                <td>Burbank</td>
+            </tr>
+            <tr>
+                <th>↳ State</th>
+                <td>CA</td>
+            </tr>
+            <tr>
+                <th>↳ ZIP Code</th>
+                <td>91504</td>
+            </tr>
+            <tr>
+                <th>↳ Country</th>
+                <td>US</td>
+            </tr>
+            <tr>
+                <th>Sex</th>
+                <td>Female</td>
+            </tr>
+            <tr>
+                <th>SSN</th>
+                <td>000456789</td>
+            </tr>
+        </tbody>
+    </table>
+
+</details>
+
+Outputs:
+
+<table>
+    <tbody>
+        <tr>
+            <th></th>
+            <th>Plan 1</th>
+        </tr>
+        <tr>
+            <th>Member ID</th>
+            <td>A664048</td>
+        </tr>
+        <tr>
+            <th>Payer Name</th>
+            <td>Aetna</td>
         </tr>
     </tbody>
 </table>

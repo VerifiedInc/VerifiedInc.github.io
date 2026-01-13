@@ -1,0 +1,15 @@
+```typescript title="Example: Inputs from 1-Click Signup, With User Edits"
+{
+  "identityUuid": "f90b96d9-9d64-4675-8855-9ee1e188a38a", // from 1-Click Signup response body
+  // Other inputs included are for 1-Click Signup data that user edited
+  "address": { // Full address must be included for clarity, even if only one part was edited
+    "line1": "5320 Newell Rd",
+    "line2": "#1", // from user edit
+    "city": "Palo Alto",
+    "state": "CA",
+    "zipCode": "94303",
+    "country": "US"
+  }
+  // All other inputs can be included for clarity but don't have to be
+}
+```

@@ -44,6 +44,10 @@ import Post1ClickHealthRequestBody from '@site/versioned_docs/version-2.1/reusab
 import Post1ClickHealthResponseBody from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-response-body.mdx';
 import SyncFromSandboxAdmonition from '@site/versioned_docs/version-2.1/reusables/sync-from-sandbox-admonition.mdx';
 import MostProbablePlansAreListedFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/most-probable-plans-are-listed-first-admonition.mdx';
+import Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithoutUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-1-click-signup-without-user-edits.mdx';
+import Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-1-click-signup-with-user-edits.mdx';
+import Post1ClickHealthRequestBodyExampleInputsFromManualSignupMinimalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-manual-signup-minimal-inputs.mdx';
+import Post1ClickHealthRequestBodyExampleInputsFromManualSignupMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-manual-signup-maximal-inputs.mdx';
 
 <table>
   <tr>
@@ -76,7 +80,7 @@ To start 1-Click Health for a user, you'll need to collect [input](/reference/da
 Only First Name, Last Name, and Birth Date are required, but the more inputs you provide, the higher coverage and accuracy will be. Because 1-Click Health is billed per attempt (not just per success), it's well worth collecting more inputs upfront.
 
 :::tip
-**We strongly recommend using [1-Click Signup](/1-click-signup) to collect these inputs.** With 1-Click Signup, you can collect _all_ of these inputs in less than 10 seconds, from as little as a user's phone number!
+**We strongly recommend using [1-Click Signup](/1-click-signup) to collect these inputs!** With 1-Click Signup, you can collect _all_ of these inputs in less than 10 seconds, from as little as a user's phone number.
 :::
 
 {/* _See our [Demo](https://1-click.demo.verified.inc) for an example of this._ */}
@@ -148,9 +152,45 @@ We provide many different variants of the graphic, so you can choose the one tha
 
 ## 2. Call `POST /1-click/health`.
 
-Call [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) with the inputs you collected:
+Call [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth):
 
 <Post1ClickHealthRequestBody/>
+
+**Inputs from 1-Click Signup:**
+
+If you use 1-Click Signup to autofill inputs, you should include `identityUuid` as an input, using the value of `uuid` from the [response body of `POST /1-click`](/reference/api/endpoints#post-1-click-response) (which you call for 1-Click Signup).
+
+If the user didn't edit any of the data autofilled by 1-Click Signup, you can include _only_ the `identityUuid`, and 1-Click Health will hydrate all of the relevant 1-Click Signup outputs as inputs:
+
+<Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithoutUserEdits/>
+
+If the user edited some of the data autofilled by 1-Click Signup, you should include the edited fields alongside the `identityUuid`, and 1-Click Health will hydrate the _rest_ of the 1-Click Signup outputs as inputs:
+
+<Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithUserEdits/>
+
+:::important
+For object type inputs (Full Name and Address), you must include all "standard" fields, or you'll get an error:
+- **Full Name:** You must include First Name and Last Name (but not Middle Name), even if the user only edited, for example, First Name. This is for clarity.
+- **Address:** You must include Line 1, City, State, Zip Code, and Country (but not Line 2), even if the user edited, for example, Line 1. This is for clarity and to ensure that an invalid address isn't formed by implicitly combining edited and unedited pieces.
+:::
+
+:::tip
+One of the reasons we strongly recommend using 1-Click Signup to autofill inputs for 1-Click Health is that _we can then hydrate inputs that are never exposed to you or the user,_ improving the success rate of 1-Click Health! The most important example concerns SSNs:
+
+Most healthcare companies don't collect SSNs and therefore don't want to ask users to provide or confirm them. However, using SSNs as inputs for 1-Click Health can significantly improve success rates — because SSNs are de facto unique, static identifiers for most US adults.
+
+If you use 1-Click Signup to autofill inputs for 1-Click Health, we can hydrate SSNs — never exposing them to you or the user — and then use them to source health insurance data. There are various restrictions on how and when we do this. (For example, we'll only use a hydrated SSN if a user doesn't significantly edit the rest of the autofilled 1-Click Signup data.) But this allows you to improve the success rate of 1-Click Health while never needing to ask for or process SSNs yourselves.
+
+**This is huge advantage of using 1-Click Signup and 1-Click Health in combination.**
+:::
+
+**Inputs from manual signup:**
+
+If you collect inputs from manual signup, there's no `identityUuid` to include:
+
+<Post1ClickHealthRequestBodyExampleInputsFromManualSignupMinimalInputs/>
+
+<Post1ClickHealthRequestBodyExampleInputsFromManualSignupMaximalInputs/>
 
 <ApiKeysAdmonition />
 
@@ -183,26 +223,30 @@ You can alternatively poll the [`GET /1-click/health`](/reference/api/endpoints#
 
 The response will contain a [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) (see this [example](/reference/api/types#example-1clickhealthentity)). There are two cases:
 
-- **Success:** If we can source health insurance data for the user, the `1ClickHealthEntity` will contain `results` with one or more health insurance plans. <br/> → _Continue to [step 4](#4-prompt-user-to-confirm)._
+- **Success:** If we can source health insurance data for the user, the `1ClickHealthEntity` will contain `results` with one or more health insurance plans. <br/> → _Continue to [step 4](#4-optional-prompt-user-to-confirm)._
 - **Failure:** Otherwise, the `1ClickHealthEntity` will contain `errors` indicating that the lookup failed. <br/> → _Fall back to a manual health insurance entry flow._
 
 <MostProbablePlansAreListedFirstAdmonition/>
 
 
-## 4. Prompt user to confirm.
+## 4. (optional) Prompt user to confirm.
 
-**For each health insurance plan you might use for a user, you must display the Payer Name and Member ID for the user to confirm.** These are contained in `memberId` and `payer.name`, respectively, for a given plan within the `results` array of the [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity). 
+**For each health insurance plan you might use for a user, you should consider displaying the Payer Name and Member ID for the user to confirm.** These are contained in `memberId` and `payer.name`, respectively, for a given plan within the `results` array of the [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity).
 
 You don't need to display the full X12 [EDI 271](https://x12.org/examples/005010x279) (Health Care Eligibility Benefit Response, contained in `edi_271`) — and you shouldn't, because it's not human readable!
 
-:::danger User Confirmation is a Requirement
-**You may not store a user's health insurance data if they don't confirm it.** This is a compliance requirement. We will not approve your integration if you don't abide by it.
-:::
-
-<Admonition type="tip" title="Benefits of Doing This">
+<Admonition type="tip" title="We Recommend User Confirmation">
     1. **Transparency:** By displaying the user's data to them, you ensure they're aware of what data you've received about them.
     2. **Accuracy:** Although Verified provides _very_ high quality data, we can never guarantee all data will be perfectly accurate. By having the user confirm their data, you can better avoid inaccuracies. Depending on your use case, you may want to give the user the ability to edit their data.
 </Admonition>
+
+:::important Further Identity Verification is Required
+Whether or not you prompt the user to confirm their insurance info, **you must further verify the user's identity before using that insurance info for billing.** For example, you can prompt the user to verify a government ID, to ensure that the inputs you used to source their insurance info match that ID.
+
+**This is crucial to prevent insurance fraud,** since insurance info can be autofilled from as little as First Name, Last Name, and Birth Date inputs — which a bad actor can find easily.
+
+We strongly recommend using 1-Click Signup to source inputs for 1-Click Health because, among other benefits, it deters fraud. However, even with 1-Click Signup, further identity verification is essential to ensure any insurance info you use for billing is accurate and associated with the correct user.
+:::
 
 <Admonition type="danger" title="Mask Member IDs">
     **We require you to mask Member IDs because they're particularly sensitive:**
@@ -307,4 +351,4 @@ You'll also be prompted to share a link to your Sandbox integration and/or sched
 1. Swap your Sandbox API key for your Production API key.
 2. Swap the [Sandbox base URL](/reference/api/environments#sandbox) for the [Production base URL](/reference/api/environments#production).
 
-**Then you'll be live with 1-Click Signup! ✅**
+**Then you'll be live with 1-Click Health! ✅**

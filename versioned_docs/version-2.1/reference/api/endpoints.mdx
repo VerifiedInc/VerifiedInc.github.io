@@ -48,6 +48,10 @@ import Post1ClickVerificationsResponseBodyExample from '@site/versioned_docs/ver
 import Post1ClickVerificationsDeliverResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-deliver-response-body-example.mdx';
 import Post1ClickVerificationsVerifyResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-verify-response-body-example.mdx';
 import Get1ClickVerificationsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-response-body-example.mdx';
+import Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithoutUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-1-click-signup-without-user-edits.mdx';
+import Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-1-click-signup-with-user-edits.mdx';
+import Post1ClickHealthRequestBodyExampleInputsFromManualSignupMinimalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-manual-signup-minimal-inputs.mdx';
+import Post1ClickHealthRequestBodyExampleInputsFromManualSignupMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-manual-signup-maximal-inputs.mdx';
 
 {/* TODO: Update Swagger URLs */}
 
@@ -56,514 +60,6 @@ Postman API documentation is available at https://api.docs.verified.inc.
 :::
 
 <DevelopmentWorkAdmonition />
-
-
-## 1-Click Signup
-
-
-<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#cde4fdf8-1521-4da0-9280-094e1f550aa8'>
-  ### `POST /client/1-click`
-</EndpointHeaderWithoutSwagger>
-
-> Create a (one time use) session key for the client SDK
-
-<table>
-  <tr>
-    <th>Method</th>
-    <td>`POST`</td>
-  </tr>
-  <tr>
-    <th>Path</th>
-    <td>`/client/1-click`</td>
-  </tr>
-</table>
-
-<IntegrationTypeEndpointAdmonition option='SDK' />
-
-
-#### Request {#post-client-1click-request}
-
-```typescript title="POST /client/1-click Request Body"
-{
-    phone?: string
-}
-```
-
-<table>
-  <PostClient1ClickRequestBodyTable />
-</table>
-
-{/* Commenting out until we support other inputs */}
-{/* ```typescript title="POST /client/1-click Request Body"
-{
-phone?: string,
-email?: string,
-birthDate?: string,
-ssn4?: string
-}
-
-````
-<table>
-    <PostClient1ClickRequestBodyTable/>
-</table> */}
-
-:::tip
-If you don't have a user's phone number yet, call `POST /client/1-click` with an empty request body, and the SDK will prompt the user to enter their phone number.
-:::
-
-
-#### Response {#post-client-1click-response}
-
-```typescript title="POST /client/1-click Response Body"
-{
-    sessionKey: string
-}
-````
-
-<table>
-  <PostClient1ClickResponseBodyTable />
-</table>
-
----
-
-
-<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#e80daa1e-5337-4f6f-b769-d46a9bc72e0c'>
-  ### `GET /1-click`
-</EndpointHeaderWithoutSwagger>
-
-> Get data for a user who has completed a 1-Click Signup flow
-
-<table>
-  <tr>
-    <th>Method</th>
-    <td>`GET`</td>
-  </tr>
-  <tr>
-    <th>Path</th>
-    <td>`/1-click/{identityUuid}`</td>
-  </tr>
-</table>
-
-
-#### Request {#get-1-click-request}
-
-Call:
-
-```
-GET /1-click/{identityUuid}
-```
-
-- For the `{identityUuid}` path parameter, use the value of the `identityUuid` returned by the SDK or included as a URL parameter on the redirect URL.
-
-#### Response {#get-1-click-response}
-
-```typescript title="GET /1-click Response Body"
-{
-    ...1ClickEntity
-}
-```
-
-See [`1ClickEntity`](/reference/api/types#1clickentity).
-
----
-
-
-<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7'>
-  ### `POST /1-click`
-</EndpointHeaderWithoutSwagger>
-
-> Begin a 1-Click Signup flow
-
-<table>
-  <tr>
-    <th>Method</th>
-    <td>`POST`</td>
-  </tr>
-  <tr>
-    <th>Path</th>
-    <td>`/1-click`</td>
-  </tr>
-</table>
-
-<IntegrationTypeEndpointAdmonition option='API' />
-
-
-#### Request {#post-1-click-request}
-
-```typescript title="POST /1-click Request Body"
-{
-    phone: string,
-    email?: string,
-    birthDate?: string,
-    ssn4?: string,
-    fullName?: {
-        firstName?: string,
-        middleName?: string,
-        lastName?: string
-    },
-    address?: {
-        line1?: string,
-        line2?: string,
-        city?: string,
-        state?: string,
-        zipCode?: string,
-        country?: string
-    },
-    credentialRequests?: CredentialRequest[]
-}
-```
-
-<table>
-  <Post1ClickRequestBodyTableShared />
-</table>
-
-
-##### Default Credential Requests
-
-<DefaultCredentialRequestsNotHosted />
-
-
-#### Response {#post-1-click-response}
-
-```typescript title="POST /1-click Response Body"
-{
-    uuid: string,
-    identity: 1ClickEntity
-}
-```
-
-<table>
-  <Post1ClickResponseBodyTableUuid />
-  <Post1ClickResponseBodyTableIdentity />
-</table>
-
----
-
-
-## 1-Click Health
-
-
-{/* TODO: Update Postman URL */}
-<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7'>
-  ### `POST /1-click/health`
-</EndpointHeaderWithoutSwagger>
-
-> Begin a 1-Click Health flow
-
-<table>
-  <tr>
-    <th>Method</th>
-    <td>`POST`</td>
-  </tr>
-  <tr>
-    <th>Path</th>
-    <td>`/1-click/health`</td>
-  </tr>
-</table>
-
-<IntegrationTypeEndpointAdmonition option='API' />
-
-
-#### Request {#post-1-click-health-request}
-
-<Post1ClickHealthRequestBody/>
-
-<table>
-  <tr>
-    <th>Property</th>
-    <th>Required?</th>
-    <th>Type</th>
-    <th>Format</th>
-    <th>Default</th>
-    <th>Description</th>
-    <th>Example</th>
-  </tr>
-  {/* <tr>
-      <td>`identityUuid`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
-      <td>none</td>
-      <td>Unique identifier for the [`1ClickEntity`](/reference/api/types#1clickentity) that will be used to hydrate other input data</td>
-      <td>`"535dba63-d4bd-442a-b3f6-21b785260a08"`</td>
-  </tr> */}
-  <tr>
-      <td>`fullName`</td>
-      <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
-      <td>`Object`</td>
-      <td>Object with keys for one or more child credentials listed below</td>
-      <td>none</td>
-      <td>Full name</td>
-      <td>
-          ```json
-          {
-              "firstName": "Richard",
-              "lastName": "Hendricks"
-          }
-          ```
-      </td>
-  </tr>
-  <tr>
-      <td>↳ `fullName.firstName`</td>
-      <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
-      <td>`string`</td>
-      <td>`cAse inSensiTive`</td>
-      <td>none</td>
-      <td>First name</td>
-      <td>`"Richard"`</td>
-  </tr>
-  <tr>
-      <td>↳ `fullName.middleName`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>`cAse inSensiTive`</td>
-      <td>none</td>
-      <td>Middle name</td>
-      <td>`"Harrison"`</td>
-  </tr>
-  <tr>
-      <td>↳ `fullName.lastName`</td>
-      <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
-      <td>`string`</td>
-      <td>`cAse inSensiTive`</td>
-      <td>none</td>
-      <td>Last name</td>
-      <td>`"Hendricks"`</td>
-  </tr>
-  <tr>
-      <td>`birthDate`</td>
-      <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
-      <td>`string`</td>
-      <td>`YYYY-MM-DD`</td>
-      <td>none</td>
-      <td>Birth date</td>
-      <td>`"1989-08-01"`</td>
-  </tr>
-  <tr>
-      <td>`address`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`Object`</td>
-      <td>Object with keys for one or more child credentials listed below</td>
-      <td>none</td>
-      <td>Address</td>
-      <td>
-          ```json
-          {
-              "line1": "5320 Newell Rd",
-              "city": "Palo Alto",
-              "state": "CA",
-              "zipCode": "94303",
-              "country": "US"
-          }
-          ```
-      </td>
-  </tr>
-  <tr>
-      <td>↳ `address.line1`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>`cAse inSensiTive`</td>
-      <td>none</td>
-      <td>Line 1 of address</td>
-      <td>`"5320 Newell Rd"`</td>
-  </tr>
-  <tr>
-      <td>↳ `address.line2`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>`cAse inSensiTive`</td>
-      <td>none</td>
-      <td>Line 2 of address</td>
-      <td>`""`</td>
-  </tr>
-  <tr>
-      <td>↳ `address.city`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>`cAse inSensiTive`</td>
-      <td>none</td>
-      <td>City of address</td>
-      <td>`"Palo Alto"`</td>
-  </tr>
-  <tr>
-      <td>↳ `address.state`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)</td>
-      {/* Removing until we support multiple input formats */}
-      {/* <td>
-          - 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
-          - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
-      </td> */}
-      <td>none</td>
-      <td>State of address</td>
-      <td>`"CA"`</td>
-      {/* Removing until we support multiple input formats */}
-      {/* <td>
-          - `"CA"`
-          - `"California"`
-      </td> */}
-  </tr>
-  <tr>
-      <td>↳ `address.zipCode`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>[ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9)</td>
-      {/* Removing until we support multiple input formats */}
-      {/* <td>
-          - [ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9)
-          - [ZIP+4](https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4) (5 digits, 0-9 + `-` + 4 digits, 0-9)
-      </td> */}
-      <td>none</td>
-      <td>ZIP Code of address</td>
-      <td>`"94303"`</td>
-      {/* Removing until we support multiple input formats */}
-      {/* <td>
-          - `"94303"`
-          - `"94303-2846"`
-      </td> */}
-  </tr>
-  <tr>
-      <td>↳ `address.country`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)</td>
-      {/* Removing until we support multiple input formats */}
-      {/* <td>
-          - 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
-          - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
-      </td> */}
-      <td>none</td>
-      <td>Country of address</td>
-      <td>`"US"`</td>
-      {/* Removing until we support multiple input formats */}
-      {/* <td>
-          - `"US"`
-          - `"United States of America"`
-      </td> */}
-  </tr>
-  <tr>
-      <td>`sex`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>
-            <details>
-                <summary>`enum`</summary>
-
-                Possible values:
-                    - `"Male"`
-                    - `"Female"`
-                    - `"Non-Binary"`
-            </details>
-        </td>
-      <td>`Title Case`</td>
-      <td>none</td>
-      <td>Sex</td>
-      <td>`"Male"`</td>
-  </tr>
-  <tr>
-      <td>`ssn`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>9 digits (0-9)</td>
-      <td>none</td>
-      <td>Social Security Number</td>
-      <td>`"000456789"`</td>
-  </tr>
-  <tr>
-      <td>`npi`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>10 digits (0-9)</td>
-      <td>Defined by the **providers** brand setting in your [Dashboard](https://dashboard.verified.inc)</td>
-      <td>[National Provider Identifier](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand)</td>
-      <td>`"0123456789"`</td>
-  </tr>
-</table>
-
-
-#### Response {#post-1-click-health-response}
-
-<Post1ClickHealthResponseBody/>
-
-<table>
-  <tr>
-    <th>Property</th>
-    <th>Type</th>
-    <th>Format</th>
-    <th>Description</th>
-    <th>Example</th>
-  </tr>
-  <tr>
-    <td>`healthDataUuid`</td>
-    <td>`string`</td>
-    <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
-    <td>Unique identifier for the [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) that will be returned at the end of the 1-Click Health flow</td>
-    <td>`"9e12fe5b-5bb8-410a-ac6b-6e053e4c7e8d"`</td>
-  </tr>
-  <tr>
-    <td>`status`</td>
-    <td>
-      <details>
-        <summary>`enum`</summary>
-
-        Possible values:
-        - `"PENDING"`
-        - `"PROCESSING"`
-        - `"SUCCEEDED"`
-        - `"FAILED"`
-        - `"PARTIAL"`
-      </details>
-    </td>
-    <td>`UPPER_SNAKE_CASE`</td>
-    <td>Status of the 1-Click Health flow</td>
-    <td>`"PROCESSING"`</td>
-  </tr>
-</table>
-
----
-
-
-{/* TODO: Update Postman URL */}
-<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#e80daa1e-5337-4f6f-b769-d46a9bc72e0c'>
-  ### `GET /1-click/health`
-</EndpointHeaderWithoutSwagger>
-
-> Get data for a user who has completed a 1-Click Health flow
-
-<table>
-  <tr>
-    <th>Method</th>
-    <td>`GET`</td>
-  </tr>
-  <tr>
-    <th>Path</th>
-    <td>`/1-click/health/{healthDataUuid}`</td>
-  </tr>
-</table>
-
-
-#### Request {#get-1-click-health-request}
-
-Call:
-
-```
-GET /1-click/health/{healthDataUuid}
-```
-
-- For the `{healthDataUuid}` path parameter, use the value of the `healthDataUuid` returned by the SDK or [`POST /1-click/health`](#post-1-clickhealth).
-
-
-#### Response {#get-1-click-health-response}
-
-```typescript title="GET /1-click/health Response Body"
-{
-    ...1ClickHealthEntity
-}
-```
-
-See [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity).
-
----
 
 
 ## 1-Click Verify
@@ -770,7 +266,7 @@ See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).
   
 </EndpointHeaderWithoutSwagger> */}
 
-### `GET /1-click/verifications`
+### `GET /1-click/verifications` {#get-1-click-verifications}
 
 > Check the status of a verification flow
 
@@ -810,3 +306,543 @@ GET /1-click/verifications/{uuid}
 See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity). Here's an example:
 
 <Get1ClickVerificationsResponseBodyExample/>
+
+---
+
+
+## 1-Click Signup
+
+
+<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#cde4fdf8-1521-4da0-9280-094e1f550aa8'>
+  ### `POST /client/1-click`
+</EndpointHeaderWithoutSwagger>
+
+> Create a (one time use) session key for the client SDK
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/client/1-click`</td>
+  </tr>
+</table>
+
+<IntegrationTypeEndpointAdmonition option='SDK' />
+
+
+#### Request {#post-client-1-click-request}
+
+```typescript title="POST /client/1-click Request Body"
+{
+    phone?: string
+}
+```
+
+<table>
+  <PostClient1ClickRequestBodyTable />
+</table>
+
+{/* Commenting out until we support other inputs */}
+{/* ```typescript title="POST /client/1-click Request Body"
+{
+phone?: string,
+email?: string,
+birthDate?: string,
+ssn4?: string
+}
+
+````
+<table>
+    <PostClient1ClickRequestBodyTable/>
+</table> */}
+
+:::tip
+If you don't have a user's phone number yet, call `POST /client/1-click` with an empty request body, and the SDK will prompt the user to enter their phone number.
+:::
+
+
+#### Response {#post-client-1-click-response}
+
+```typescript title="POST /client/1-click Response Body"
+{
+    sessionKey: string
+}
+````
+
+<table>
+  <PostClient1ClickResponseBodyTable />
+</table>
+
+---
+
+
+<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#e80daa1e-5337-4f6f-b769-d46a9bc72e0c'>
+  ### `GET /1-click`
+</EndpointHeaderWithoutSwagger>
+
+> Get data for a user who has completed a 1-Click Signup flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`GET`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/{identityUuid}`</td>
+  </tr>
+</table>
+
+
+#### Request {#get-1-click-request}
+
+Call:
+
+```
+GET /1-click/{identityUuid}
+```
+
+- For the `{identityUuid}` path parameter, use the value of the `identityUuid` returned by the SDK or included as a URL parameter on the redirect URL.
+
+#### Response {#get-1-click-response}
+
+```typescript title="GET /1-click Response Body"
+{
+    ...1ClickEntity
+}
+```
+
+See [`1ClickEntity`](/reference/api/types#1clickentity).
+
+---
+
+
+<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7'>
+  ### `POST /1-click`
+</EndpointHeaderWithoutSwagger>
+
+> Begin a 1-Click Signup flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click`</td>
+  </tr>
+</table>
+
+<IntegrationTypeEndpointAdmonition option='API' />
+
+
+#### Request {#post-1-click-request}
+
+```typescript title="POST /1-click Request Body"
+{
+    phone: string,
+    email?: string,
+    birthDate?: string,
+    ssn4?: string,
+    fullName?: {
+        firstName?: string,
+        middleName?: string,
+        lastName?: string
+    },
+    address?: {
+        line1?: string,
+        line2?: string,
+        city?: string,
+        state?: string,
+        zipCode?: string,
+        country?: string
+    },
+    credentialRequests?: CredentialRequest[]
+}
+```
+
+<table>
+  <Post1ClickRequestBodyTableShared />
+</table>
+
+
+##### Default Credential Requests
+
+<DefaultCredentialRequestsNotHosted />
+
+
+#### Response {#post-1-click-response}
+
+```typescript title="POST /1-click Response Body"
+{
+    uuid: string,
+    identity: 1ClickEntity
+}
+```
+
+<table>
+  <Post1ClickResponseBodyTableUuid />
+  <Post1ClickResponseBodyTableIdentity />
+</table>
+
+---
+
+
+## 1-Click Health
+
+
+{/* TODO: Update Postman URL */}
+<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7'>
+  ### `POST /1-click/health`
+</EndpointHeaderWithoutSwagger>
+
+> Begin a 1-Click Health flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/health`</td>
+  </tr>
+</table>
+
+<IntegrationTypeEndpointAdmonition option='API' />
+
+
+#### Request {#post-1-click-health-request}
+
+<Post1ClickHealthRequestBody/>
+
+<details>
+  <summary>**Examples of typical usage:**</summary>
+
+  **Inputs from 1-Click Signup:**
+
+  If the user didn't edit any of the data autofilled by 1-Click Signup, you can include _only_ the `identityUuid`, and 1-Click Health will hydrate all of the relevant 1-Click Signup outputs as inputs:
+
+  <Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithoutUserEdits/>
+
+  If the user edited some of the data autofilled by 1-Click Signup, you should include the edited fields alongside the `identityUuid`, and 1-Click Health will hydrate the rest of the 1-Click Signup outputs as inputs:
+
+  <Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithUserEdits/>
+
+  **Inputs from manual signup:**
+
+  If you collect inputs from manual signup, there's no `identityUuid` to include:
+
+  <Post1ClickHealthRequestBodyExampleInputsFromManualSignupMinimalInputs/>
+
+  <Post1ClickHealthRequestBodyExampleInputsFromManualSignupMaximalInputs/>
+
+</details>
+
+<table>
+  <tr>
+    <th>Property</th>
+    <th>Required?</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Default</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  {/* <tr>
+      <td>`identityUuid`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+      <td>none</td>
+      <td>Unique identifier for the [`1ClickEntity`](/reference/api/types#1clickentity) that will be used to hydrate other input data</td>
+      <td>`"535dba63-d4bd-442a-b3f6-21b785260a08"`</td>
+  </tr> */}
+  <tr>
+      <td>`identityUuid`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+      <td>none</td>
+      <td>Unique identifier for the [`1ClickEntity`](/reference/api/types#1clickentity) that will be returned at the end of the 1-Click Signup flow</td>
+      <td>`"535dba63-d4bd-442a-b3f6-21b785260a08"`</td>
+  </tr>
+  <tr>
+      <td>`fullName`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if no `identityUuid`</td>
+      <td>`Object`</td>
+      <td>Object with keys for one or more child credentials listed below</td>
+      <td>none</td>
+      <td>Full name</td>
+      <td>
+          ```json
+          {
+              "firstName": "Richard",
+              "lastName": "Hendricks"
+          }
+          ```
+      </td>
+  </tr>
+  <tr>
+      <td>↳ `fullName.firstName`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if no `identityUuid`</td>
+      <td>`string`</td>
+      <td>`cAse inSensiTive`</td>
+      <td>none</td>
+      <td>First name</td>
+      <td>`"Richard"`</td>
+  </tr>
+  <tr>
+      <td>↳ `fullName.middleName`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>`cAse inSensiTive`</td>
+      <td>none</td>
+      <td>Middle name</td>
+      <td>`"Harrison"`</td>
+  </tr>
+  <tr>
+      <td>↳ `fullName.lastName`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if no `identityUuid`</td>
+      <td>`string`</td>
+      <td>`cAse inSensiTive`</td>
+      <td>none</td>
+      <td>Last name</td>
+      <td>`"Hendricks"`</td>
+  </tr>
+  <tr>
+      <td>`birthDate`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if no `identityUuid`</td>
+      <td>`string`</td>
+      <td>`YYYY-MM-DD`</td>
+      <td>none</td>
+      <td>Birth date</td>
+      <td>`"1989-08-01"`</td>
+  </tr>
+  <tr>
+      <td>`address`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`Object`</td>
+      <td>Object with keys for one or more child credentials listed below</td>
+      <td>none</td>
+      <td>Address</td>
+      <td>
+          ```json
+          {
+              "line1": "5320 Newell Rd",
+              "city": "Palo Alto",
+              "state": "CA",
+              "zipCode": "94303",
+              "country": "US"
+          }
+          ```
+      </td>
+  </tr>
+  <tr>
+      <td>↳ `address.line1`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>`cAse inSensiTive`</td>
+      <td>none</td>
+      <td>Line 1 of address</td>
+      <td>`"5320 Newell Rd"`</td>
+  </tr>
+  <tr>
+      <td>↳ `address.line2`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>`cAse inSensiTive`</td>
+      <td>none</td>
+      <td>Line 2 of address</td>
+      <td>`""`</td>
+  </tr>
+  <tr>
+      <td>↳ `address.city`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>`cAse inSensiTive`</td>
+      <td>none</td>
+      <td>City of address</td>
+      <td>`"Palo Alto"`</td>
+  </tr>
+  <tr>
+      <td>↳ `address.state`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)</td>
+      {/* Removing until we support multiple input formats */}
+      {/* <td>
+          - 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
+          - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
+      </td> */}
+      <td>none</td>
+      <td>State of address</td>
+      <td>`"CA"`</td>
+      {/* Removing until we support multiple input formats */}
+      {/* <td>
+          - `"CA"`
+          - `"California"`
+      </td> */}
+  </tr>
+  <tr>
+      <td>↳ `address.zipCode`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>[ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9)</td>
+      {/* Removing until we support multiple input formats */}
+      {/* <td>
+          - [ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9)
+          - [ZIP+4](https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4) (5 digits, 0-9 + `-` + 4 digits, 0-9)
+      </td> */}
+      <td>none</td>
+      <td>ZIP Code of address</td>
+      <td>`"94303"`</td>
+      {/* Removing until we support multiple input formats */}
+      {/* <td>
+          - `"94303"`
+          - `"94303-2846"`
+      </td> */}
+  </tr>
+  <tr>
+      <td>↳ `address.country`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)</td>
+      {/* Removing until we support multiple input formats */}
+      {/* <td>
+          - 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
+          - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
+      </td> */}
+      <td>none</td>
+      <td>Country of address</td>
+      <td>`"US"`</td>
+      {/* Removing until we support multiple input formats */}
+      {/* <td>
+          - `"US"`
+          - `"United States of America"`
+      </td> */}
+  </tr>
+  <tr>
+      <td>`sex`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"Male"`
+                    - `"Female"`
+                    - `"Non-Binary"`
+            </details>
+        </td>
+      <td>`Title Case`</td>
+      <td>none</td>
+      <td>Sex</td>
+      <td>`"Male"`</td>
+  </tr>
+  <tr>
+      <td>`ssn`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>9 digits (0-9)</td>
+      <td>none</td>
+      <td>Social Security Number</td>
+      <td>`"000456789"`</td>
+  </tr>
+  <tr>
+      <td>`npi` <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/></td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>10 digits (0-9)</td>
+      <td>Defined by the **providers** brand setting in your [Dashboard](https://dashboard.verified.inc)</td>
+      <td>[National Provider Identifier](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand)</td>
+      <td>`"0123456789"`</td>
+  </tr>
+</table>
+
+
+#### Response {#post-1-click-health-response}
+
+<Post1ClickHealthResponseBody/>
+
+<table>
+  <tr>
+    <th>Property</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>`healthDataUuid`</td>
+    <td>`string`</td>
+    <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+    <td>Unique identifier for the [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) that will be returned at the end of the 1-Click Health flow</td>
+    <td>`"9e12fe5b-5bb8-410a-ac6b-6e053e4c7e8d"`</td>
+  </tr>
+  <tr>
+    <td>`status`</td>
+    <td>
+      <details>
+        <summary>`enum`</summary>
+
+        Possible values:
+        - `"PENDING"`
+        - `"PROCESSING"`
+        - `"SUCCEEDED"`
+        - `"FAILED"`
+        - `"PARTIAL"`
+      </details>
+    </td>
+    <td>`UPPER_SNAKE_CASE`</td>
+    <td>Status of the 1-Click Health flow</td>
+    <td>`"PROCESSING"`</td>
+  </tr>
+</table>
+
+---
+
+
+{/* TODO: Update Postman URL */}
+<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#e80daa1e-5337-4f6f-b769-d46a9bc72e0c'>
+  ### `GET /1-click/health`
+</EndpointHeaderWithoutSwagger>
+
+> Get data for a user who has completed a 1-Click Health flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`GET`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/health/{healthDataUuid}`</td>
+  </tr>
+</table>
+
+
+#### Request {#get-1-click-health-request}
+
+Call:
+
+```
+GET /1-click/health/{healthDataUuid}
+```
+
+- For the `{healthDataUuid}` path parameter, use the value of the `healthDataUuid` returned by the SDK or [`POST /1-click/health`](#post-1-clickhealth).
+
+
+#### Response {#get-1-click-health-response}
+
+```typescript title="GET /1-click/health Response Body"
+{
+    ...1ClickHealthEntity
+}
+```
+
+See [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity).

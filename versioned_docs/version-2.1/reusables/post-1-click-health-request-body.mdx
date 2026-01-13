@@ -1,12 +1,12 @@
-{/* TODO: add identityUuid when ready */}
 ```typescript title="POST /1-click/health Request Body"
 {
-    fullName: {
-        firstName: string, // required
+    identityUuid?: string, // from 1-Click Signup response body
+    fullName?: {
+        firstName?: string, // required if no identityUuid
         middleName?: string,
-        lastName: string // required
+        lastName?: string // required if no identityUuid
     },
-    birthDate: string, // required
+    birthDate?: string, // required if no identityUuid
     address?: {
         line1?: string,
         line2?: string,
@@ -17,6 +17,6 @@
     },
     sex?: string,
     ssn?: string,
-    npi?: string
+    // npi?: string // coming soon
 }
 ```

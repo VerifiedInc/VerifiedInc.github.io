@@ -536,3 +536,34 @@ table ul, table ol {
 .menu__link--sublist {
   padding-right: 0;
 }
+
+/* FOR SEARCHABLE TABLES */
+/* Make column widths behave and prevent jitter */
+.searchableTable {
+  width: 100%;
+  table-layout: fixed;
+}
+/* Sticky header (more reliable than inline styles) */
+.searchableTable.stickyHeader thead th {
+  position: sticky !important;
+  top: 0;
+  z-index: 50;
+  background: var(--ifm-background-surface-color);
+}
+/* Optional: add a subtle separator so it feels "pinned" */
+.searchableTable.stickyHeader thead th {
+  box-shadow: 0 1px 0 var(--ifm-color-emphasis-300);
+}
+/* If wrapping wasn’t working */
+.searchableTable td,
+.searchableTable th {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+/* If you only want wrapping on cells with wrapCell */
+.wrapCell {
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}

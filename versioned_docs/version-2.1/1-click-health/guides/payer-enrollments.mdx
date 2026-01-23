@@ -1,0 +1,230 @@
+---
+id: payer-enrollments
+title: Payer Enrollments
+sidebar_position: 3
+sidebar_label: Payer Enrollments
+sidebar_class_name: sidebar-header-regular
+description: How to enroll with payers that require steps Verified can't handle for you
+slug: /1-click-health/guides/payer-enrollments
+toc_max_heading_level: 4
+---
+
+import Admonition from '@theme/Admonition';
+import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
+import Chip from '@mui/material/Chip';
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+import TellVerifiedAboutPayerEnrollmentAdmonition from '@site/versioned_docs/version-2.1/reusables/tell-verified-about-payer-enrollment-admonition.mdx';
+
+<table>
+    <tr>
+        <th>Time to Complete</th>
+        <td>1-3 hours</td>
+    </tr>
+    <tr>
+        <th>Skills Required</th>
+        <td>No technical skills!</td>
+    </tr>
+</table>
+
+To use 1-Click Health, your company must be a healthcare **provider** with one or more [NPIs (National Provider Identifiers)](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand). Verified uses your NPIs — and the input user data you provide — to source user health insurance data from **payers.** We’re able to source this data from most payers immediately, but some payers require additional enrollment steps to be completed before they start returning data.
+
+We handle as much of the payer enrollment process as possible, to save your team time and effort. We can complete enrollments with many payers on your behalf, without additional work from you. There are some payers, however, that require steps only you can complete. This guide contains comprehensive instructions for how you can complete the steps such payers require.
+
+The Verified team is available at any time to assist. Don’t hesitate to reach out to us at Support@Verified.inc or on Slack, and we’ll help in any way we can.
+
+:::info Completing These Enrollments is Optional
+**You can ignore instructions for any payer that's irrelevant to your use case or that has steps you deem too burdensome.** The downside is simply that we won’t be able to autofill health insurance data for users of such a payer.
+:::
+
+
+## Medicaid 
+
+
+{/* ### California
+
+<table>
+    <tr>
+        <td>Processing Time</td>
+        <td>
+            - 2 weeks (handled by payer) if you already have a PIN
+            - 6 months (handled by payer) if you need to get a PIN (or confirm an existing one)
+        </td>
+    </tr>
+    <tr>
+        <td>Payer Name</td>
+        <td>Medicaid California Medi-Cal</td>
+    </tr>
+    <tr>
+        <td>Payer Verified ID</td>
+        <td>V412283</td>
+    </tr>
+    <tr>
+        <td>Other Payer IDs</td>
+        <td>IAUKR, MDCAL, 1473, 3447, SKCA0, 10055, CACAID, 610442, MC051, MPM18, 100065, 94146</td>
+    </tr>
+</table>
+
+The steps you need to complete depend on whether you already have a PIN: a 7 digit number assigned to you by California Medicaid.
+
+**If you have a PIN:**
+1. 
+
+**If you need to get a PIN (or confirm an existing one):** */}
+
+
+### Iowa
+
+<table>
+    <tr>
+        <td>Processing Time</td>
+        <td>2 weeks (handled by payer)</td>
+    </tr>
+    <tr>
+        <td>Payer Name</td>
+        <td>Medicaid Iowa</td>
+    </tr>
+    <tr>
+        <td>Payer Verified ID</td>
+        <td>V183310</td>
+    </tr>
+    <tr>
+        <td>Other Payer IDs</td>
+        <td>18049, IAMCD, IACAID, 100171, 1469, 1665, GZVQX, 10107, SKIA0</td>
+    </tr>
+</table>
+
+:::tip
+**For this payer, you need to complete enrollment through [EDISS Connect](https://connect.edissweb.com) (Electronic Data Interchange Support Services).** Register for an EDISS account if you don't have one already, and reach out to them if you have any issues: [+1 (800) 967-7902](tel:+18009677902).
+:::
+
+:::note 
+**We use FinThrive Health as an intermediary to connect with this payer.**
+:::
+
+1. Log in to **[EDISS Connect](https://connect.edissweb.com).** 
+2. Click the **Add Transactions** tab.
+3. For each NPI you have, enter the **NPI** and associated **Tax ID** and click **Continue.**
+4. Select **Iowa** as the state for transactions, and then click **Add** and **Continue.**
+5. Select the **Type(s)** of transactions you will be submitting: **Institutional,** **Professional,** and/or **Dental.**
+6. Choose the **Lines of Business** that apply to your NPI(s) and click **Continue.**
+7. Check the **Enroll** box next to 270 Eligibility Benefit Inquiry and click **Add Vendor.**
+8. Select **FinThrive Health (AC101397)** as your vendor, and then click **Add** and **Submit.** _You should arrive at a Summary page that indicates if you need to complete any additional enrollment forms._
+9. **Tell Verified** you've completed this payer enrollment, so we can finalize it on our side.
+
+<TellVerifiedAboutPayerEnrollmentAdmonition/>
+
+
+### Michigan
+
+<table>
+    <tr>
+        <td>Processing Time</td>
+        <td>2 weeks (handled by payer)</td>
+    </tr>
+    <tr>
+        <td>Payer Name</td>
+        <td>Medicaid Michigan</td>
+    </tr>
+    <tr>
+        <td>Payer Verified ID</td>
+        <td>V652160</td>
+    </tr>
+    <tr>
+        <td>Other Payer IDs</td>
+        <td>RFUPF, CKMI1, 2480, MIMCD, 6109, 10392, 2137, SKMI2, D00111, 4581, 10136, MICAID, SKMI0</td>
+    </tr>
+</table>
+
+:::tip
+**For this payer, you need to complete enrollment through [CHAMPS](https://www.michigan.gov/mdhhs/assistance-programs/medicaid/portalhome/medicaid-providers/champs-a) (Community Health Automated
+Medicaid Processing System) via [MiLogin for Business](https://milogintp.michigan.gov).** Register for a MiLogin for Business account if you don't have one already, and then register for CHAMPS if you haven't already. Refer to the [CHAMPS user guide](https://www.michigan.gov/mdhhs/doing-business/providers/providers/medicaid/provider-enrollment/data/pe-pages/step-by-step-enrollment-guides/group) and CHAMPS training resources (accessible at the bottom of the portal page), and reach out to them if you have any issues: [+1 (800) 292-2550](tel:+18002922550), providerenrollment@michigan.gov.
+:::
+
+:::note 
+**We use ClaimRemedi as an intermediary to connect with this payer.**
+:::
+
+1. Log in to **[MiLogin for Business](https://milogintp.michigan.gov).**
+2. Click **CHAMPS** to access the CHAMPS portal.
+3. Start the enrollment process and select **New Enrollment.**
+4. Under the **Providers** tab, click **Manage Provider Information** to access the Business Process Wizard.
+5. For each NPI you have, **complete all steps** of the Business Process Wizard in order, and click **Close.**
+6. Click **Associate Billing Agent** and click **Add**.
+7. Enter **1206586** as the Billing Agent ID and click **Confirm/Search.** _You should see **ClaimRemedi** appear as the Billing Agent Name._
+8. **Tell Verified** you've completed this payer enrollment, so we can finalize it on our side.
+
+<TellVerifiedAboutPayerEnrollmentAdmonition/>
+
+
+{/* ### Nebraska
+
+<table>
+    <tr>
+        <td>Processing Time</td>
+        <td>4 weeks (handled by payer)</td>
+    </tr>
+    <tr>
+        <td>Payer Name</td>
+        <td>Medicaid Nebraska</td>
+    </tr>
+    <tr>
+        <td>Payer Verified ID</td>
+        <td>V135104</td>
+    </tr>
+    <tr>
+        <td>Other Payer IDs</td>
+        <td>MCDNE, RCXIJ, NEMCD, 10966, SKNE0</td>
+    </tr>
+</table> */}
+
+
+### Utah
+
+<table>
+    <tr>
+        <td>Processing Time</td>
+        <td>6 weeks (handled by payer)</td>
+    </tr>
+    <tr>
+        <td>Payer Name</td>
+        <td>Medicaid Utah</td>
+    </tr>
+    <tr>
+        <td>Payer Verified ID</td>
+        <td>V308074</td>
+    </tr>
+    <tr>
+        <td>Other Payer IDs</td>
+        <td>10648, 1486, NLWNP, UTCAID, CKUT1, UTMCD, UDOH0, SKUT0, TNJBD</td>
+    </tr>
+</table>
+
+:::tip
+**For this payer, you need to complete enrollment through [PRISM](https://medicaid.utah.gov/prism/) (Provider Reimbursement Information System for Medicaid) via the [PRISM Provider Portal](https://prism.health.utah.gov).** Register for a PRISM account if you don't have one already, using the application ID the payer included in letters they mailed to you. If you don't have an application ID or have any other issues, reach out to them: [+1 (801) 538-6155](tel:+18015386155), providerenroll@utah.gov.
+:::
+
+:::note 
+**We use UHIN as an intermediary to connect with this payer.**
+:::
+
+1. Log in to the **[PRISM Provider Portal](https://prism.health.utah.gov).**
+2. Under **My Profile** on the left, click **Manage Provider Information** to open the Business Process Wizard.
+3. **Complete all steps marked as required** in the Business Process Wizard:
+    - **Step 8 (Mode of Claim Submission/EDI Exchange):** 
+        1. Check the box by **Mode of** and **Billing Agent/Clearinghouse/UHIN** (under the header of EDI Exchange - Billing Agent/Clearinghouse/UHIN). _Don't select Electronic Batch._
+        2. Select **270/271-Eligibility** as the transaction and click the **right arrow button** (under the Associated Transactions column).
+        3. Click the **OK** button (near the bottom of the page). 
+    - **Step 9 (Associate Billing Agent):**
+        1. Click the **Add** button on the Billing Agent List page.
+        2. Click the **Confirm/Search Billing Agent** button.
+        3. Click the **Filter By** dropdown, select **Billing Agent Name,** enter **UHIN**, and click **Go.**
+        4. Click the check box next to **UHIN** and click the **Select** button. _You'll be taken back to the Associate Billing Agent page._
+        5. Add the current date for **Association Start Date.**
+        6. Click the **Add** button (under the EDI Transaction Authorization header).
+        7. Click the **Electronic Transaction Type** dropdown and select **270/271-Eligibility.**
+        8. Enter **HT006748-001** for **Trading Partner ID** and click the **OK** button. _You'll be taken back to the Associate Billing Agent page._
+        9. Click the **OK** button again.
+    - **Step 17 (Submit Modification Request for Review):** Submit your application.
+4. **Tell Verified** you've completed this payer enrollment, so we can finalize it on our side.
+
+<TellVerifiedAboutPayerEnrollmentAdmonition/>

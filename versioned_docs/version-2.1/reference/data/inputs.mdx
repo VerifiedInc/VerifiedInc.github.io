@@ -87,7 +87,11 @@ To source verified data ([outputs](/reference/data/outputs)) for a user:
 > A **challenge** is a piece of user data that's used as a secondary lookup for [outputs](/reference/data/outputs) and must match the outputs.
 
 :::important
-Unlike [other inputs](#other-inputs), **challenges must match the [outputs](/reference/data/outputs)** sourced for a user. In other words, they have to match the records we find for a user, or you'll get an [`OCE012` error](/reference/api/errors#oce012). That's because birth dates and SSN4s don't vary, while names and addresses do. For example, a user may enter a nickname rather than their legal name, or they might have recently moved.
+Unlike [other inputs](#other-inputs), **challenges must match the [outputs](/reference/data/outputs)** sourced for a user. In other words, they have to match the records we find for a user, or you'll get an [`OCE012` error](/reference/api/errors#oce012). That's because names, birth dates, and SSN4s never or rarely vary, while addresses vary more often. For example, a user may have recently moved.
+:::
+
+:::tip Whether an Input is a Challenge Depends on Your Brand settings
+Each of the inputs listed here can be considered a challenge or _not_ a challenge, depending on your [Challenges](/1-click-signup/guides/setup#challenges) brand setting. This gives you flexibility to require — or not — that a given input matches. _If you need additional guidance about this, don't hesitate to reach out to us at Support@Verified.inc._
 :::
 
 <table>
@@ -99,6 +103,30 @@ Unlike [other inputs](#other-inputs), **challenges must match the [outputs](/ref
         <th>Format(s)</th>
         <th>Description</th>
         <th>Example</th>
+    </tr>
+    <tr>
+        <td>Full Name</td>
+        <td>`fullName`</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+        <td>`Object`</td>
+        <td>Object with keys for one or more child credentials listed below</td>
+        <td>Full name</td>
+        <td>
+            ```json
+            {
+                "firstName": "Richard"
+            }
+            ```
+        </td>
+    </tr>
+    <tr>
+        <td>↳ First Name</td>
+        <td>`fullName.firstName`</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+        <td>`string`</td>
+        <td>`cAse inSensiTive`</td>
+        <td>First name</td>
+        <td>`"Richard"`</td>
     </tr>
     <tr>
         <td>Birth Date</td>
@@ -128,6 +156,10 @@ Unlike [other inputs](#other-inputs), **challenges must match the [outputs](/ref
 
 :::important
 Unlike [challenges](#challenges), these **other inputs do not have to match the [outputs](/reference/data/outputs)** sourced for a user. That's because names and addresses vary, while birth dates and SSN4s don't. For example, a user may enter a nickname rather than their legal name, or they might have recently moved.
+:::
+
+:::tip Whether an Input is a Challenge Depends on Your Brand settings
+Some of the inputs listed here can be considered a challenge or _not_ a challenge, depending on your [Challenges](/1-click-signup/guides/setup#challenges) brand setting. This gives you flexibility to require — or not — that a given input matches. _If you need additional guidance about this, don't hesitate to reach out to us at Support@Verified.inc._
 :::
 
 <table>

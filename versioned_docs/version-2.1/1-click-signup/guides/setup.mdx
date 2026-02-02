@@ -6,7 +6,7 @@ sidebar_label: Setup
 sidebar_class_name: sidebar-header-regular
 description: How to get setup to integrate 1-Click Signup
 slug: /1-click-signup/guides/setup
-toc_max_heading_level: 4
+toc_max_heading_level: 5
 ---
 
 import Admonition from '@theme/Admonition';
@@ -160,29 +160,34 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
                 <th>Description</th>
             </tr>
             <tr>
+                <td>First Name only <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
+                <td>Prompt the user for their first name only — never their birthday or SSN4.</td>
+            </tr>
+            <tr>
                 <td>Birthday only <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
-                <td>Prompt the user for their birthday only — never their SSN4.</td>
+                <td>Prompt the user for their birthday only — never their first name or SSN4.</td>
             </tr>
             <tr>
                 <td>SSN4 only</td>
-                <td>Prompt the user for their SSN4 only — never their birthday.</td>
+                <td>Prompt the user for their SSN4 only — never their first name or birthday.</td>
             </tr>
             <tr>
                 <td>Birthday or SSN4</td>
-                <td>Prompt the user for their birthday, SSN4, or both (only if necessary). Birthday always comes first.</td>
+                <td>Prompt the user for their first name, birthday, SSN4, or multiple (only if necessary, in that order).</td>
             </tr>
         </table>
 
         <details>
-            <summary>Why We Recommend <b>Birthday only</b></summary>
+            <summary>Why We Recommend <b>First Name only</b> and <b>Birthday only</b></summary>
 
-            **Birthday only** is the option we recommend because:
-
-            - We recommend using only one challenge:
+            - One challenge is generally better than multiple:
                 - Every additional input adds friction, with the risk that we won't be able to source data for the user.
                 - We can successfully source data based on phone and one challenge the vast majority of the time.
                 - Prompting for another challenge only slightly increases the chance that we'll be able to source data for the user, and it adds substantial friction.
-            - We recommend using birthday over SSN4:
+            - First Name is generally easiest for the user:
+                - Users are typically comfortable providing their first name.
+                - First names are easy and fast to type.
+            - Birthday is generally better than SSN4:
                 - Users are typically more comfortable providing their birthday.
                 - Some users will have an autofill option for birthday from their browser or OS.
                 - Everyone has a birthday, but not everyone has an SSN.
@@ -560,3 +565,326 @@ The SDK will automaticallly adjust the color of text to achieve good contrast, g
 - If you set **Background Color** to be dark, the SDK will adjust text on the background to be light.
 - If you set **Primary Color** to be light, the SDK will adjust text on buttons to be dark.
 :::
+
+
+#### Advanced Styling
+
+The sections below give examples of how you can use custom code to style the SDK in more complex ways.
+
+:::warning
+It's up to you to ensure that custom code you use in the Advanced Styling setting works reliably — and to adapt it as needed for future versions of the SDK.
+:::
+
+
+##### Wrapper
+
+
+###### Update External SDK Wrapper
+
+```json
+// In some style file that applies style to the wrapper of the parent element of the SDK
+.sdk-iframe-container > iframe {
+  padding: 2rem;
+  margin: 2rem;
+  max-width: 1000px;
+}
+```
+
+
+##### Container
+
+
+###### Change Container Padding
+
+```json
+{
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body": {
+          "[data-testid=\"client-sdk-container\"]": {
+            "padding": "2rem"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+##### Background
+
+
+###### Make Background Transparent
+
+```json
+{
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body": {
+          "&, & .MuiContainer-root > main > .MuiPaper-root": {
+            "backgroundColor": "transparent"
+          },
+          "& [data-testid='phone-input-container'] label.MuiFormLabel-root": {
+            "background": "transparent"
+          },
+          "& [data-testid='phone-input-container'] .MuiInputBase-root::before": {
+            "opacity": 0
+          },
+          "& [data-testid='phone-input-container'] .MuiOutlinedInput-notchedOutline": {
+            "border": "1px solid #ffffff",
+            "zIndex": 0,
+            "m": 0,
+            "top": 0,
+            "&::before": {
+              "content": "none",
+              "position": "relative",
+              "inset": 0,
+              "backgroundColor": "#ffffff",
+              "zIndex": 0
+            },
+            "& legend": {
+              "display": "block"
+            }
+          },
+          "& [data-testid='phone-input-container'] .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+            "border": "1px solid #ffffff"
+          },
+          "& [data-testid='phone-input-container'] .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            "border": "1px solid #ffffff"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+##### Headers
+
+
+###### Change Header Font Sizes
+
+```json
+{
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body": {
+          "[data-testid=\"header\"] h2": {
+            "font-size": "24px"
+          },
+          "[data-testid=\"header\"] #signin-instructions": {
+            "font-size": "20px"
+          },
+          "[data-testid=\"header\"] #verification-instructions *": {
+            "font-size": "20px"
+          },
+          "[data-testid=\"header\"] #form-instructions": {
+            "font-size": "20px"
+          },
+          "[data-testid=\"header\"] #birthday-form-instructions": {
+            "font-size": "20px"
+          },
+          "[data-testid=\"header\"] #ssn4-form-instructions": {
+            "font-size": "20px"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+##### Buttons
+
+
+###### Modify Confirm Button
+
+```json
+{
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body": {
+          "[data-testid=\"confirm-button\"]": {
+            "display": "block",
+            "width": "100%",
+            "box-shadow": "none !important"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+###### Modify Manual Signup Button
+
+```json
+{
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body": {
+          "[data-testid=\"manual-signup-button\"]": {
+            "display": "block",
+            "width": "100%",
+            "box-shadow": "none !important"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+###### Modify Edit Phone Button
+
+```json
+{
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body": {
+          "[data-testid=\"edit-phone-button\"]": {
+            "display": "block",
+            "width": "100%",
+            "box-shadow": "none !important"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+###### Modify Resend Code Button
+
+```json
+{
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body": {
+          "[data-testid=\"resend-code-button\"]": {
+            "display": "block",
+            "width": "100%",
+            "box-shadow": "none !important"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+###### Modify Edit Info Button
+
+```json
+{
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body": {
+          "#credentials-region > div > button": {
+            "display": "block",
+            "width": "100%",
+            "box-shadow": "none !important"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+###### Modify Open Help Modal Button
+
+```json
+{
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body": {
+          "[data-testid=\"help-button\"]": {
+            "display": "block",
+            "width": "100%",
+            "box-shadow": "none !important"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+###### Modify Close Help Modal Button
+
+```json
+{
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body": {
+          "[data-testid=\"data-provider-dialog-close-button\"]": {
+            "display": "block",
+            "width": "100%",
+            "box-shadow": "none !important"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+##### Success Animation
+
+
+###### Hide Confetti
+
+```json
+{
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body": {
+          "[data-testid=\"client-sdk-container\"] > main > div > div+div": {
+            "display": "none"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+###### Hide Verified Checkmark 
+
+```json
+{
+  "components": {
+    "MuiCssBaseline": {
+      "styleOverrides": {
+        "body": {
+          "[data-testid=\"step-success\"] > div": {
+            "display": "none"
+          }
+        }
+      }
+    }
+  }
+}
+```

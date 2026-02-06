@@ -152,6 +152,10 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
             A **challenge** is a piece of information we will prompt the user to input if we're unable to source data for them based on previous inputs (for example, phone).
         </Admonition>
 
+        <Admonition type="important">
+            If multiple challenge types are used, the order is always as listed below.
+        </Admonition>
+
         **Choose which challenge(s) to allow:**
 
         <table>
@@ -160,32 +164,29 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
                 <th>Description</th>
             </tr>
             <tr>
-                <td>First Name only <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
-                <td>Prompt the user for their first name only — never their birthday or SSN4.</td>
+                <td>First Name <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
+                <td>Prompt the user for their first name</td>
             </tr>
             <tr>
-                <td>Birthday only <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
-                <td>Prompt the user for their birthday only — never their first name or SSN4.</td>
+                <td>Birthday <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
+                <td>Prompt the user for their birthday</td>
             </tr>
             <tr>
-                <td>SSN4 only</td>
-                <td>Prompt the user for their SSN4 only — never their first name or birthday.</td>
-            </tr>
-            <tr>
-                <td>Birthday or SSN4</td>
-                <td>Prompt the user for their first name, birthday, SSN4, or multiple (only if necessary, in that order).</td>
+                <td>SSN4</td>
+                <td>Prompt the user for their SSN4</td>
             </tr>
         </table>
 
         <details>
-            <summary>Why We Recommend <b>First Name only</b> and <b>Birthday only</b></summary>
+            <summary>Why We Recommend <b>First Name</b> and <b>Birthday</b></summary>
 
-            - One challenge is generally better than multiple:
+            {/* - One challenge is generally better than multiple:
                 - Every additional input adds friction, with the risk that we won't be able to source data for the user.
                 - We can successfully source data based on phone and one challenge the vast majority of the time.
-                - Prompting for another challenge only slightly increases the chance that we'll be able to source data for the user, and it adds substantial friction.
+                - Prompting for another challenge only slightly increases the chance that we'll be able to source data for the user, and it adds substantial friction. */}
             - First Name is generally easiest for the user:
                 - Users are typically comfortable providing their first name.
+                - Most users will have an autofill option for birthday from their browser or OS.
                 - First names are easy and fast to type.
             - Birthday is generally better than SSN4:
                 - Users are typically more comfortable providing their birthday.

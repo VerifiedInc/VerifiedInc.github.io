@@ -52,6 +52,8 @@ import Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithoutUserEdits 
 import Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-1-click-signup-with-user-edits.mdx';
 import Post1ClickHealthRequestBodyExampleInputsFromManualSignupMinimalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-manual-signup-minimal-inputs.mdx';
 import Post1ClickHealthRequestBodyExampleInputsFromManualSignupMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-manual-signup-maximal-inputs.mdx';
+import PostClient1ClickRequestBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-request-body.mdx';
+import PostClient1ClickResponseBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-response-body.mdx';
 
 {/* TODO: Update Swagger URLs */}
 
@@ -335,11 +337,8 @@ See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).
 
 #### Request {#post-client-1-click-request}
 
-```typescript title="POST /client/1-click Request Body"
-{
-    phone?: string
-}
-```
+{/* Add email, rest of fullName, and address once we support them */}
+<PostClient1ClickRequestBody/>
 
 <table>
   <PostClient1ClickRequestBodyTable />
@@ -366,11 +365,7 @@ If you don't have a user's phone number yet, call `POST /client/1-click` with an
 
 #### Response {#post-client-1-click-response}
 
-```typescript title="POST /client/1-click Response Body"
-{
-    sessionKey: string
-}
-````
+<PostClient1ClickResponseBody/>
 
 <table>
   <PostClient1ClickResponseBodyTable />

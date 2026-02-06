@@ -37,6 +37,8 @@ import OneClickEntityExample from '@site/versioned_docs/version-2.1/reusables/1-
 import SessionKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/session-keys-admonition.mdx';
 import ErrorSKE001 from '@site/versioned_docs/version-2.1/reusables/errors/SKE001.mdx';
 import SyncFromSandboxAdmonition from '@site/versioned_docs/version-2.1/reusables/sync-from-sandbox-admonition.mdx';
+import PostClient1ClickRequestBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-request-body.mdx';
+import PostClient1ClickResponseBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-response-body.mdx';
 
 
 {/* 1-Click Signup is the fastest way to onboard new users.
@@ -130,13 +132,19 @@ Have your client call your server to create a session key. The server should use
 **You can access your API keys in the [Dashboard](https://dashboard.verified.inc):** see the [Setup](/1-click-signup/guides/setup) guide.
 :::
 
+**You can call this endpoint with an empty request body:** 
+
+```typescript title="POST /client/1-click Request Body (empty)"
+{}
+```
+
+That's the typical case. But, if you already have some [input](/reference/data/inputs) user data, you should include that so the SDK can optimize the flow for the user and avoid redundant steps. You can include any of the following, depending on what you have:
+
+<PostClient1ClickRequestBody/>
+
 The response body will contain a `sessionKey`:
 
-```typescript title="POST /client/1-click Response Body"
-{
-    sessionKey: string
-}
-```
+<PostClient1ClickResponseBody/>
 
 If you get an error with [Verified error code `SKE001`](/reference/api/errors#ske001), you need to change your brand's integration type setting. Go to the Brand Details page in the [Dashboard](https://dashboard.verified.inc) and change that setting to **SDK.**
 

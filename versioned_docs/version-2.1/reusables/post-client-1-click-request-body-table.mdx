@@ -27,7 +27,7 @@ import Chip from '@mui/material/Chip';
     <td>none</td>
     <td>User's email address</td>
     <td>`"richard@piedpiper.net"`</td>
-</tr>
+</tr> */}
 <tr>
     <td>`birthDate`</td>
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
@@ -45,4 +45,137 @@ import Chip from '@mui/material/Chip';
     <td>none</td>
     <td>Last 4 digits of user's Social Security Number (in [Sandbox](/reference/api/environments#sandbox), this must be `"6789"` to pass validation)</td>
     <td>`"6789"`</td>
+</tr>
+<tr>
+    <td>`fullName`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`Object`</td>
+    <td>Object with keys for one or more child credentials listed below</td>
+    <td>none</td>
+    <td>Full name</td>
+    <td>
+        ```json
+        {
+            "firstName": "Richard"
+        }
+        ```
+    </td>
+</tr>
+<tr>
+    <td>↳ `fullName.firstName`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> with `fullName`</td>
+    <td>`string`</td>
+    <td>`cAse inSensiTive`</td>
+    <td>none</td>
+    <td>First name</td>
+    <td>`"Richard"`</td>
+</tr>
+{/* <tr>
+    <td>↳ `fullName.middleName`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string`</td>
+    <td>`cAse inSensiTive`</td>
+    <td>none</td>
+    <td>Middle name</td>
+    <td>`"Harrison"`</td>
+</tr>
+<tr>
+    <td>↳ `fullName.lastName`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string`</td>
+    <td>`cAse inSensiTive`</td>
+    <td>none</td>
+    <td>Last name</td>
+    <td>`"Hendricks"`</td>
+</tr> */}
+{/* <tr>
+    <td>`address`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`Object`</td>
+    <td>Object with keys for one or more child credentials listed below</td>
+    <td>none</td>
+    <td>Address</td>
+    <td>
+        ```json
+        {
+            "line1": "5320 Newell Rd",
+            "city": "Palo Alto",
+            "state": "CA",
+            "zipCode": "94303",
+            "country": "US"
+        }
+        ```
+    </td>
+</tr>
+<tr>
+    <td>↳ `address.line1`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string`</td>
+    <td>`cAse inSensiTive`</td>
+    <td>none</td>
+    <td>Line 1 of address</td>
+    <td>`"5320 Newell Rd"`</td>
+</tr>
+<tr>
+    <td>↳ `address.line2`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string`</td>
+    <td>`cAse inSensiTive`</td>
+    <td>none</td>
+    <td>Line 2 of address</td>
+    <td>`""`</td>
+</tr>
+<tr>
+    <td>↳ `address.city`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string`</td>
+    <td>`cAse inSensiTive`</td>
+    <td>none</td>
+    <td>City of address</td>
+    <td>`"Palo Alto"`</td>
+</tr>
+<tr>
+    <td>↳ `address.state`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string`</td>
+    <td>
+        - 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
+        - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
+    </td>
+    <td>none</td>
+    <td>State of address</td>
+    <td>
+        - `"CA"`
+        - `"California"`
+    </td>
+</tr>
+<tr>
+    <td>↳ `address.zipCode`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string`</td>
+    <td>
+        - [ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9)
+        - [ZIP+4](https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4) (5 digits, 0-9 + `-` + 4 digits, 0-9)
+    </td>
+    <td>none</td>
+    <td>ZIP Code of address</td>
+    <td>
+        - `"94303"`
+        - `"94303-2846"`
+    </td>
+</tr>
+<tr>
+    <td>↳ `address.country`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string`</td>
+    <td>
+        - 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
+        - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
+    </td>
+    <td>none</td>
+    <td>Country of address</td>
+    <td>
+        - `"US"`
+        - `"United States of America"`
+    </td>
 </tr> */}

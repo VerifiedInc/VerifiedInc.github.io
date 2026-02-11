@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 
-const API_URL = 'https://core-api.dev-verifiedinc.com/v2/payers';
+const API_URL = 'https://core-api.verified.inc/v2/payers';
 const PAGE_SIZE = 50;
 const DEBOUNCE_MS = 300;
 

@@ -1,13 +1,41 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 
-const API_URL = 'http://localhost:3010/payers';
+const API_URL = 'https://core-api.dev-verifiedinc.com/v2/payers';
 const PAGE_SIZE = 50;
 const DEBOUNCE_MS = 300;
 
-function buildUrl({ limit, skip, search }) {
+function buildUrl({ limit, skip, search, sortField, sortDir }) {
   let url = `${API_URL}?$limit=${limit}&$skip=${skip}`;
   if (search) url += `&$search=${encodeURIComponent(search)}`;
+  if (sortField) url += `&$sort[${sortField}]=${sortDir}`;
   return url;
+}
+
+function SortIcon({ direction }) {
+  return (
+    <svg
+      className={`payerSortIcon${direction ? ' payerSortIconActive' : ''}`}
+      width='12'
+      height='12'
+      viewBox='0 0 12 12'
+      fill='none'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    >
+      {direction === -1 ? (
+        <path d='M6 2v8M3 7l3 3 3-3' />
+      ) : direction === 1 ? (
+        <path d='M6 10V2M3 5l3-3 3 3' />
+      ) : (
+        <>
+          <path d='M3 4.5l3-2.5 3 2.5' opacity='0.4' />
+          <path d='M3 7.5l3 2.5 3-2.5' opacity='0.4' />
+        </>
+      )}
+    </svg>
+  );
 }
 
 function SearchIcon() {
@@ -51,6 +79,8 @@ export default function PayerTable() {
 
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
+  const [sortField, setSortField] = useState(null);
+  const [sortDir, setSortDir] = useState(1);
 
   const debounceRef = useRef(null);
   const scrollRef = useRef(null);
@@ -65,6 +95,17 @@ export default function PayerTable() {
     }, DEBOUNCE_MS);
   }, []);
 
+  const handleSort = useCallback((field) => {
+    setSortField((prev) => {
+      if (prev === field) {
+        setSortDir((d) => (d === 1 ? -1 : 1));
+        return prev;
+      }
+      setSortDir(1);
+      return field;
+    });
+  }, []);
+
   // Fetch first page whenever search query changes (or on initial load)
   useEffect(() => {
     const controller = new AbortController();
@@ -73,8 +114,9 @@ export default function PayerTable() {
     setLoading(true);
     setError(null);
     setPayers([]);
+    setTotal(0);
 
-    fetch(buildUrl({ limit: PAGE_SIZE, skip: 0, search }), {
+    fetch(buildUrl({ limit: PAGE_SIZE, skip: 0, search, sortField, sortDir }), {
       signal: controller.signal,
     })
       .then((r) => r.json())
@@ -92,7 +134,7 @@ export default function PayerTable() {
     return () => {
       controller.abort();
     };
-  }, [debouncedQuery]);
+  }, [debouncedQuery, sortField, sortDir]);
 
   const loadMoreFn = useRef(null);
   loadMoreFn.current = () => {
@@ -102,7 +144,15 @@ export default function PayerTable() {
     setLoadingMore(true);
 
     const search = debouncedQuery.trim();
-    fetch(buildUrl({ limit: PAGE_SIZE, skip: payers.length, search }))
+    fetch(
+      buildUrl({
+        limit: PAGE_SIZE,
+        skip: payers.length,
+        search,
+        sortField,
+        sortDir,
+      })
+    )
       .then((r) => r.json())
       .then((res) => {
         setPayers((prev) => [...prev, ...res.data]);
@@ -142,7 +192,7 @@ export default function PayerTable() {
             type='search'
             value={query}
             onChange={(e) => handleQueryChange(e.target.value)}
-            placeholder='Search by name…'
+            placeholder='Search by name or verified ID…'
             className='payerTableSearch'
           />
         </div>
@@ -164,8 +214,26 @@ export default function PayerTable() {
         <table className='payerTable'>
           <thead>
             <tr>
-              <th className='payerTableTh payerTableThName'>Name &amp; ID</th>
-              <th className='payerTableTh payerTableThId'>Verified ID</th>
+              <th className='payerTableTh payerTableThName'>
+                <button
+                  className='payerSortBtn'
+                  onClick={() => handleSort('name')}
+                >
+                  Name &amp; ID{' '}
+                  <SortIcon direction={sortField === 'name' ? sortDir : null} />
+                </button>
+              </th>
+              <th className='payerTableTh payerTableThId'>
+                <button
+                  className='payerSortBtn'
+                  onClick={() => handleSort('verifiedId')}
+                >
+                  Verified ID{' '}
+                  <SortIcon
+                    direction={sortField === 'verifiedId' ? sortDir : null}
+                  />
+                </button>
+              </th>
               <th className='payerTableTh payerTableThIds'>Other IDs</th>
             </tr>
           </thead>

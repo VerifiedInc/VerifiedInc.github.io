@@ -674,6 +674,29 @@ table ol {
 .payerTableThIds {
   width: 50%;
 }
+.payerSortBtn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+.payerSortBtn:hover {
+  color: var(--ifm-font-color-base);
+}
+.payerSortIcon {
+  flex-shrink: 0;
+  color: var(--ifm-color-emphasis-400);
+  transition: color 0.15s;
+}
+.payerSortIconActive {
+  color: var(--ifm-color-primary);
+}
 
 /* --- Rows --- */
 .payerTableRow {

@@ -163,8 +163,8 @@ One of two things will happen:
   - **[`OCE013`](/reference/api/errors#oce013)** indicates that Verified found no [credentials](/reference/data/outputs#credentials) for the user. <br/> → _Fall back to a manual signup flow._
   - **[`OCE017`](/reference/api/errors#oce017)** indicates that Verified blocked the user because the risk score was too high. <br/> → _Reject the user or flag them and fall back to a manual signup flow._
 
-:::tip Data is Retrievable for 30 Minutes
-**You can retrieve data for 30 minutes,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click`](/reference/api/endpoints#get-1-click) instead of `POST /1-click` so that a duplicate 1-Click Signup event isn't created (and so you aren't billed twice).
+:::tip Data is Retrievable for 60 Minutes
+**You can retrieve data for 60 minutes,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click`](/reference/api/endpoints#get-1-click) instead of `POST /1-click` so that a duplicate 1-Click Signup event isn't created (and so you aren't billed twice).
 :::
 
 ## 3. (if necessary) Prompt user for additional info.

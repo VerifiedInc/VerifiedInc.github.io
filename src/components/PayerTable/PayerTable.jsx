@@ -5,7 +5,7 @@ const PAGE_SIZE = 50;
 const DEBOUNCE_MS = 300;
 
 function buildUrl({ limit, skip, search, sortField, sortDir }) {
-  let url = `${API_URL}?$limit=${limit}&$skip=${skip}`;
+  let url = `${API_URL}?$limit=${limit}&$skip=${skip}&$paginate=true`;
   if (search) url += `&$search=${encodeURIComponent(search)}`;
   if (sortField) url += `&$sort[${sortField}]=${sortDir}`;
   return url;

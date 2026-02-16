@@ -192,7 +192,7 @@ export default function PayerTable() {
             type='search'
             value={query}
             onChange={(e) => handleQueryChange(e.target.value)}
-            placeholder='Search by name or verified ID…'
+            placeholder='Search by name or ID…'
             className='payerTableSearch'
           />
         </div>
@@ -219,22 +219,11 @@ export default function PayerTable() {
                   className='payerSortBtn'
                   onClick={() => handleSort('name')}
                 >
-                  Name &amp; ID{' '}
+                  Logo, Name, Verified ID{' '}
                   <SortIcon direction={sortField === 'name' ? sortDir : null} />
                 </button>
               </th>
-              <th className='payerTableTh payerTableThId'>
-                <button
-                  className='payerSortBtn'
-                  onClick={() => handleSort('verifiedId')}
-                >
-                  Verified ID{' '}
-                  <SortIcon
-                    direction={sortField === 'verifiedId' ? sortDir : null}
-                  />
-                </button>
-              </th>
-              <th className='payerTableTh payerTableThIds'>Other IDs</th>
+              <th className='payerTableTh payerTableThIds'>IDs (green indicates primary)</th>
             </tr>
           </thead>
           <tbody>
@@ -246,9 +235,6 @@ export default function PayerTable() {
                       <div className='payerSkeleton payerSkeletonLogo' />
                       <div className='payerSkeleton payerSkeletonText' />
                     </div>
-                  </td>
-                  <td>
-                    <div className='payerSkeleton payerSkeletonSmall' />
                   </td>
                   <td>
                     <div className='payerSkeleton payerSkeletonWide' />
@@ -285,20 +271,21 @@ export default function PayerTable() {
                       <div>
                         <span>{row.name}</span>
                         <br />
-                        <span className='caption'>{row.verifiedId}</span>
+                        <code className='payerIdChip'>{row.verifiedId}</code>
                       </div>
                     </div>
                   </td>
-                  <td className='payerTableTdId'>
-                    <code>{row.verifiedId}</code>
-                  </td>
                   <td className='payerTableTdIds'>
                     <div className='payerIdChips'>
-                      {(Array.isArray(row.ids) ? row.ids : []).map((id) => (
-                        <span key={id} className='payerIdChip'>
-                          {id}
-                        </span>
-                      ))}
+                      {(Array.isArray(row.ids) ? row.ids : []).map(
+                        (id) => {                          
+                          return (
+                            <code key={id} className='payerIdChip'>
+                              {id}
+                            </code>
+                          );
+                        }
+                      )}
                     </div>
                   </td>
                 </tr>

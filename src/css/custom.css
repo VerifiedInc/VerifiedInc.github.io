@@ -605,6 +605,7 @@ table ol {
 }
 .payerTableSearch {
   width: 100%;
+  font-family: inherit;
   padding: 10px 12px 10px 36px;
   border-radius: 10px;
   border: 1px solid var(--ifm-color-emphasis-300);
@@ -634,8 +635,8 @@ table ol {
 .payerTableScroll {
   overflow: auto;
   max-height: calc(100vh - 280px);
-  border: 1px solid var(--ifm-color-emphasis-200);
-  border-radius: 12px;
+  /* border: 1px solid var(--ifm-color-emphasis-200); */
+  border-radius: 10px;
   background: var(--ifm-background-surface-color);
 }
 
@@ -657,12 +658,8 @@ table ol {
   background: var(--ifm-color-emphasis-100);
   padding: 14px 18px;
   text-align: left;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--ifm-color-emphasis-700);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  font-weight: 700;
+  color: var(--ifm-color-emphasis-900);
   white-space: nowrap;
 }
 .payerTableThName {
@@ -691,7 +688,7 @@ table ol {
 }
 .payerSortIcon {
   flex-shrink: 0;
-  color: var(--ifm-color-emphasis-400);
+  color: var(--ifm-color-emphasis-700);
   transition: color 0.15s;
 }
 .payerSortIconActive {
@@ -707,7 +704,7 @@ table ol {
 }
 .payerTable td {
   padding: 14px 18px;
-  border-bottom: 1px solid var(--ifm-color-emphasis-100);
+  /* border-bottom: 1px solid var(--ifm-color-emphasis-100); */
   font-size: 0.9rem;
   vertical-align: middle;
   white-space: normal;
@@ -731,8 +728,8 @@ table ol {
   color: var(--ifm-color-emphasis-600);
 }
 .payerLogo {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   border-radius: 8px;
   object-fit: contain;
   flex-shrink: 0;
@@ -740,8 +737,8 @@ table ol {
   background: #fff;
 }
 .payerLogoPlaceholder {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   border-radius: 8px;
   flex-shrink: 0;
   background: var(--ifm-color-emphasis-200);
@@ -766,13 +763,17 @@ table ol {
 
 /* --- Other IDs chips --- */
 .payerIdChips {
-  display: flex;
-  flex-wrap: wrap;
   gap: 5px;
+}
+.payerIdChips .payerIdChip:first-child {
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
 }
 .payerIdChip {
   display: inline-block;
-  padding: 2px 8px;
+  margin-right: 2px;
+  padding: 2px 4px;
   border-radius: 6px;
   font-size: 0.75rem;
   font-weight: 500;
@@ -780,6 +781,7 @@ table ol {
   background: var(--ifm-color-emphasis-100);
   color: var(--ifm-color-emphasis-700);
   white-space: nowrap;
+  user-select: all;
 }
 
 /* --- Empty / error states --- */

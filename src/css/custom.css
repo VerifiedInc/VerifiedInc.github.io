@@ -695,13 +695,13 @@ table ol {
 }
 
 .payerTableThName {
-  width: 35%;
+  width: 60%;
 }
 .payerTableThId {
   width: 15%;
 }
 .payerTableThIds {
-  width: 50%;
+  width: 40%;
 }
 .payerSortBtn {
   all: unset;
@@ -800,6 +800,8 @@ table ol {
 
 /* --- Other IDs chips --- */
 .payerIdChips {
+  display: flex;
+  flex-wrap: wrap;
   gap: 5px;
 }
 .payerIdChips .payerIdChip:first-child {
@@ -809,7 +811,7 @@ table ol {
 }
 .payerIdChip {
   display: inline-block;
-  margin-right: 2px;
+  margin-right: 0;
   padding: 2px 4px;
   border-radius: 6px;
   font-size: 0.75rem;

@@ -201,7 +201,15 @@ export default function PayerTable() {
               onClick={() => handleQueryChange('')}
               aria-label='Clear search'
             >
-              <svg width='14' height='14' viewBox='0 0 14 14' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round'>
+              <svg
+                width='14'
+                height='14'
+                viewBox='0 0 14 14'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+              >
                 <line x1='3' y1='3' x2='11' y2='11' />
                 <line x1='11' y1='3' x2='3' y2='11' />
               </svg>
@@ -256,13 +264,13 @@ export default function PayerTable() {
                 </tr>
               ))
             ) : error ? (
-              <tr>
+              <tr style={{ border: 'none' }}>
                 <td colSpan={3} className='payerTableEmpty payerTableError'>
                   Failed to load payers: {error}
                 </td>
               </tr>
             ) : payers.length === 0 ? (
-              <tr>
+              <tr style={{ border: 'none' }}>
                 <td colSpan={3} className='payerTableEmpty'>
                   No payers match your search.
                 </td>

@@ -112,7 +112,8 @@
 .alert a {
   color: var(--ifm-link-color);
   text-decoration: var(--ifm-link-decoration);
-  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+  transition: color var(--ifm-transition-fast)
+    var(--ifm-transition-timing-default);
 }
 
 .alert a:hover {
@@ -166,7 +167,6 @@
 /* add spacing between divs */
 .tooltip div:not(:last-child) {
   padding-bottom: 10px;
-  ;
 }
 
 .tooltip * {
@@ -195,7 +195,7 @@ html[data-theme='dark'] {
 }
 
 .skeleton {
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   background-color: var(--ifm-color-gray-300);
   animation: pulse 2s infinite;
 }
@@ -204,7 +204,10 @@ html[data-theme='dark'] {
   font-family: var(--ifm-font-family-base);
 }
 
-.legal-text, .legal-text a, .generate-demo-button, .work-email-field label {
+.legal-text,
+.legal-text a,
+.generate-demo-button,
+.work-email-field label {
   letter-spacing: normal !important;
 }
 
@@ -228,15 +231,15 @@ html[data-theme='dark'] {
 
 @keyframes pulse {
   0% {
-    opacity: 1
+    opacity: 1;
   }
 
   50% {
-    opacity: .40
+    opacity: 0.4;
   }
 
   100% {
-    opacity: 1
+    opacity: 1;
   }
 }
 
@@ -264,31 +267,31 @@ html[data-theme='dark'] {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 26px;
   width: 26px;
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
-input:checked+.slider {
-  background-color: #2196F3;
+input:checked + .slider {
+  background-color: #2196f3;
 }
 
-input:focus+.slider {
-  box-shadow: 0 0 1px #2196F3;
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
@@ -417,11 +420,9 @@ td:first-child {
 /* Remove bottom margin of the message from ErrorDisplay component */
 .error-table p {
   margin: 0;
-
 }
 #demo-email-card {
   font-family: var(--ifm-font-family-base) !important;
-
 }
 
 /* For grid layout (e.g. on Recommended UX page) */
@@ -476,12 +477,16 @@ td:first-child {
 }
 
 /* For component type and color indicators (e.g. on Recommended UX page) */
-.component-type-indicator, .component-type-indicator-with-right-margin, .color-indicator, .color-indicator-with-right-margin {
+.component-type-indicator,
+.component-type-indicator-with-right-margin,
+.color-indicator,
+.color-indicator-with-right-margin {
   display: inline-block;
   height: 1em;
   margin-bottom: -0.15em;
 }
-.component-type-indicator-with-right-margin, .color-indicator-with-right-margin {
+.component-type-indicator-with-right-margin,
+.color-indicator-with-right-margin {
   margin-right: 0.25em;
 }
 
@@ -498,7 +503,8 @@ td:first-child {
 }
 
 /* Remove space after lists within tables */
-table ul, table ol {
+table ul,
+table ol {
   margin-bottom: 0;
 }
 
@@ -566,4 +572,344 @@ table ul, table ol {
   white-space: normal !important;
   overflow-wrap: anywhere !important;
   word-break: break-word !important;
+}
+
+/* ========== PAYER TABLE ========== */
+.payerTableWrapper {
+  font-family: var(--ifm-font-family-base);
+  width: 100%;
+}
+
+/* --- Top bar: search + count --- */
+.payerTableTopBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.payerSearchWrap {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+  max-width: 420px;
+}
+.payerSearchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ifm-color-emphasis-500);
+  pointer-events: none;
+}
+.payerTableSearch {
+  width: 100%;
+  font-family: inherit;
+  padding: 10px 12px 10px 36px;
+  border-radius: 10px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.9rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.payerTableSearch::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.payerSearchClear {
+  all: unset;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--ifm-color-emphasis-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 50%;
+  transition: color 0.15s;
+}
+.payerSearchClear:hover {
+  color: var(--ifm-font-color-base);
+}
+.payerTableSearch:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 3px rgba(13, 188, 61, 0.12);
+}
+.payerTableCount {
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.payerTableCount strong {
+  color: var(--ifm-font-color-base);
+}
+
+/* --- Scroll container --- */
+.payerTableScroll {
+  overflow: auto;
+  max-height: calc(100vh - 280px);
+  border: 1px solid var(--ifm-color-emphasis-400);
+  border-radius: 10px;
+}
+
+/* --- Table base --- */
+.payerTable {
+  display: table;
+  width: 100%;
+  min-width: 100%;
+  margin-bottom: 0;
+}
+
+/* --- Header --- */
+.payerTableTh {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--ifm-color-emphasis-100);
+  padding: 14px 18px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--ifm-color-emphasis-900);
+  white-space: nowrap;
+  border: none;
+  box-shadow: inset 0 -1px 0 var(--ifm-color-emphasis-400);
+}
+
+.payerTable,
+.payerTable thead,
+.payerTable thead tr {
+  border: none;
+  background: var(--ifm-color-emphasis-100);
+}
+.payerTableTh + .payerTableTh {
+  border-left: 1px solid var(--ifm-color-emphasis-400) !important;
+}
+
+.payerTableThName {
+  width: 60%;
+}
+.payerTableThId {
+  width: 15%;
+}
+.payerTableThIds {
+  width: 40%;
+}
+.payerSortBtn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+.payerSortBtn:hover {
+  color: var(--ifm-font-color-base);
+}
+.payerSortIcon {
+  flex-shrink: 0;
+  color: var(--ifm-color-emphasis-700);
+  transition: color 0.15s;
+}
+.payerSortIconActive {
+  color: var(--ifm-color-primary);
+}
+
+/* --- Rows --- */
+.payerTableRow {
+  transition: background 0.1s;
+  background: var(--ifm-background-surface-color);
+  border: none;
+}
+.payerTableRow:hover {
+  background: var(--ifm-color-emphasis-50, rgba(0, 0, 0, 0.02));
+}
+.payerTable td {
+  padding: 14px 18px;
+  border: none;
+  font-size: 0.9rem;
+}
+.payerTable td + td {
+  border-left: 1px solid var(--ifm-color-emphasis-400) !important;
+  vertical-align: middle;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* --- Name cell --- */
+.payerTableTdName {
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
+}
+.payerNameCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.payerNameCell .caption {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--ifm-color-emphasis-600);
+}
+.payerLogo {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: contain;
+  flex-shrink: 0;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background: #fff;
+}
+.payerLogoPlaceholder {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: var(--ifm-color-emphasis-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--ifm-color-emphasis-600);
+  letter-spacing: 0.02em;
+}
+
+/* --- Verified ID cell --- */
+.payerTableTdId code {
+  font-size: 0.82rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-font-color-base);
+  font-weight: 500;
+}
+
+/* --- Other IDs chips --- */
+.payerIdChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.payerIdChips .payerIdChip:first-child {
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+.payerIdChip {
+  display: inline-block;
+  margin-right: 0;
+  padding: 2px 4px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: var(--ifm-font-family-monospace);
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-emphasis-700);
+  white-space: nowrap;
+  user-select: all;
+}
+
+/* --- Empty / error states --- */
+.payerTableEmpty {
+  text-align: center;
+  padding: 48px 18px !important;
+  color: var(--ifm-color-emphasis-500);
+  font-size: 0.9rem;
+  width: 100%;
+}
+.payerTableError {
+  color: var(--ifm-color-danger);
+}
+
+/* --- Skeleton loading --- */
+.payerSkeleton {
+  border-radius: 6px;
+  background: var(--ifm-color-emphasis-200);
+  animation: payerPulse 1.5s ease-in-out infinite;
+}
+.payerSkeletonLogo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.payerSkeletonText {
+  height: 14px;
+  width: 65%;
+}
+.payerSkeletonSmall {
+  height: 14px;
+  width: 72px;
+}
+.payerSkeletonWide {
+  height: 14px;
+  width: 85%;
+}
+@keyframes payerPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* --- Spinner --- */
+.payerSpinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-top-color: var(--ifm-color-primary);
+  border-radius: 50%;
+  animation: payerSpin 0.6s linear infinite;
+  vertical-align: middle;
+}
+@keyframes payerSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- Sentinel --- */
+.payerTableSentinel {
+  padding: 16px 18px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* --- Footer --- */
+.payerTableFooter {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--ifm-color-emphasis-500);
+  text-align: right;
+}
+
+/* --- Dark mode --- */
+html[data-theme='dark'] .payerLogo {
+  background: var(--ifm-color-emphasis-100);
+}
+html[data-theme='dark'] .payerTableTh {
+  background: var(--ifm-color-emphasis-100);
 }

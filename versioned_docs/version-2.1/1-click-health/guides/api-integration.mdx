@@ -217,8 +217,8 @@ See the [Webhooks](/reference/webhooks) page for general details about how Verif
 
 You can alternatively poll the [`GET /1-click/health`](/reference/api/endpoints#get-1-clickhealth) endpoint until you receive a response. To do so, repeatedly call `GET /1-click/health/{healthDataUuid}`, using the value of `healthDataUuid` from the response body of `POST /1-click/health`.
 
-:::tip Data is Retrievable for 30 Minutes
-**You can retrieve data for 30 minutes,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click/health`](/reference/api/endpoints#get-1-clickhealth) instead of `POST /1-click/health` so that a duplicate 1-Click Health event isn't created (and so you aren't billed twice).
+:::tip Data is Retrievable for 60 Minutes
+**You can retrieve data for 60 minutes,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click/health`](/reference/api/endpoints#get-1-clickhealth) instead of `POST /1-click/health` so that a duplicate 1-Click Health event isn't created (and so you aren't billed twice).
 :::
 
 The response will contain a [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) (see this [example](/reference/api/types#example-1clickhealthentity)). There are two cases:

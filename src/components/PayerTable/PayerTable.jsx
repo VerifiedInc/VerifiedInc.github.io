@@ -195,6 +195,18 @@ export default function PayerTable() {
             placeholder='Search by name or ID…'
             className='payerTableSearch'
           />
+          {query && (
+            <button
+              className='payerSearchClear'
+              onClick={() => handleQueryChange('')}
+              aria-label='Clear search'
+            >
+              <svg width='14' height='14' viewBox='0 0 14 14' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round'>
+                <line x1='3' y1='3' x2='11' y2='11' />
+                <line x1='11' y1='3' x2='3' y2='11' />
+              </svg>
+            </button>
+          )}
         </div>
         <div className='payerTableCount'>
           {loading ? (
@@ -223,7 +235,9 @@ export default function PayerTable() {
                   <SortIcon direction={sortField === 'name' ? sortDir : null} />
                 </button>
               </th>
-              <th className='payerTableTh payerTableThIds'>IDs (green indicates primary)</th>
+              <th className='payerTableTh payerTableThIds'>
+                IDs (green indicates primary)
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -277,15 +291,13 @@ export default function PayerTable() {
                   </td>
                   <td className='payerTableTdIds'>
                     <div className='payerIdChips'>
-                      {(Array.isArray(row.ids) ? row.ids : []).map(
-                        (id) => {                          
-                          return (
-                            <code key={id} className='payerIdChip'>
-                              {id}
-                            </code>
-                          );
-                        }
-                      )}
+                      {(Array.isArray(row.ids) ? row.ids : []).map((id) => {
+                        return (
+                          <code key={id} className='payerIdChip'>
+                            {id}
+                          </code>
+                        );
+                      })}
                     </div>
                   </td>
                 </tr>

@@ -614,6 +614,28 @@ table ol {
   font-size: 0.9rem;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
+.payerTableSearch::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.payerSearchClear {
+  all: unset;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--ifm-color-emphasis-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 50%;
+  transition: color 0.15s;
+}
+.payerSearchClear:hover {
+  color: var(--ifm-font-color-base);
+}
 .payerTableSearch:focus {
   outline: none;
   border-color: var(--ifm-color-primary);
@@ -635,9 +657,8 @@ table ol {
 .payerTableScroll {
   overflow: auto;
   max-height: calc(100vh - 280px);
-  /* border: 1px solid var(--ifm-color-emphasis-200); */
+  border: 1px solid var(--ifm-color-emphasis-400);
   border-radius: 10px;
-  background: var(--ifm-background-surface-color);
 }
 
 /* --- Table base --- */
@@ -645,8 +666,6 @@ table ol {
   display: table;
   width: 100%;
   min-width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
   margin-bottom: 0;
 }
 
@@ -661,7 +680,20 @@ table ol {
   font-weight: 700;
   color: var(--ifm-color-emphasis-900);
   white-space: nowrap;
+  border: none;
+  box-shadow: inset 0 -1px 0 var(--ifm-color-emphasis-400);
 }
+
+.payerTable,
+.payerTable thead,
+.payerTable thead tr {
+  border: none;
+  background: var(--ifm-color-emphasis-100);
+}
+.payerTableTh + .payerTableTh {
+  border-left: 1px solid var(--ifm-color-emphasis-400) !important;
+}
+
 .payerTableThName {
   width: 35%;
 }
@@ -698,14 +730,19 @@ table ol {
 /* --- Rows --- */
 .payerTableRow {
   transition: background 0.1s;
+  background: var(--ifm-background-surface-color);
+  border: none;
 }
 .payerTableRow:hover {
   background: var(--ifm-color-emphasis-50, rgba(0, 0, 0, 0.02));
 }
 .payerTable td {
   padding: 14px 18px;
-  /* border-bottom: 1px solid var(--ifm-color-emphasis-100); */
+  border: none;
   font-size: 0.9rem;
+}
+.payerTable td + td {
+  border-left: 1px solid var(--ifm-color-emphasis-400) !important;
   vertical-align: middle;
   white-space: normal;
   overflow-wrap: anywhere;

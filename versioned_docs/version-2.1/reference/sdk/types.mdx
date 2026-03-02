@@ -197,16 +197,7 @@ See the [`SdkErrorReasons` constant](/reference/sdk/constants#sdkerrorreasons).
 ## `SdkEvent`
 
 ```typescript title="SdkEvent Type"
-type SdkProduct = '1-click-signup' | '1-click-health';
-
-type SdkHealthInsurance = {
-  memberId: string;
-  payer: {
-    name: string;
-    verifiedId?: string;
-    logoUrl?: string;
-  };
-};
+type SdkProduct = '1-click-signup' | '1-click-health' | '1-click-verify';
 
 type SdkMetadata = {
   identityUuid: string | null;
@@ -233,7 +224,7 @@ export type SdkEvent = {
   | { type: 'ONE_CLICK_SIGNUP_FORM_SUBMITTED'; form: Record<string, unknown> }
   | {
       type: 'ONE_CLICK_HEALTH_FORM_SUBMITTED';
-      form: { healthInsurance: SdkHealthInsurance };
+      form: Record<string, unknown>;
     }
 );
 ```

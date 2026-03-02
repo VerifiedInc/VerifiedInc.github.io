@@ -222,10 +222,8 @@ export type SdkEvent = {
   | { type: 'STEP_TIME_SPENT'; step: SdkStep; durationMs: number }
   | { type: 'USER_COMPLETED_PRODUCT'; product: SdkProduct }
   | { type: 'ONE_CLICK_SIGNUP_FORM_SUBMITTED'; form: Record<string, unknown> }
-  | {
-      type: 'ONE_CLICK_HEALTH_FORM_SUBMITTED';
-      form: Record<string, unknown>;
-    }
+  | { type: 'ONE_CLICK_HEALTH_FORM_SUBMITTED'; form: Record<string, unknown> }
+  | { type: 'VERIFICATION_CODE_RESENT' }
 );
 ```
 

@@ -103,6 +103,7 @@ const SdkEventValues = {
   USER_COMPLETED_PRODUCT: 'USER_COMPLETED_PRODUCT',
   ONE_CLICK_SIGNUP_FORM_SUBMITTED: 'ONE_CLICK_SIGNUP_FORM_SUBMITTED',
   ONE_CLICK_HEALTH_FORM_SUBMITTED: 'ONE_CLICK_HEALTH_FORM_SUBMITTED',
+  VERIFICATION_CODE_RESENT: 'VERIFICATION_CODE_RESENT',
 };
 ```
 
@@ -114,6 +115,7 @@ const SdkEventValues = {
 | `USER_COMPLETED_PRODUCT` | User finished the full product flow | `product` |
 | `ONE_CLICK_SIGNUP_FORM_SUBMITTED` | 1-Click Signup form was submitted | `form` |
 | `ONE_CLICK_HEALTH_FORM_SUBMITTED` | 1-Click Health form was submitted | `form` |
+| `VERIFICATION_CODE_RESENT` | User requested a new verification code | — |
 
 ### Example
 
@@ -145,6 +147,10 @@ function handleEvent(event: SdkEvent) {
         // highlight-next-line
         case SdkEventValues.ONE_CLICK_HEALTH_FORM_SUBMITTED:
             // event.form available
+            break;
+        // highlight-next-line
+        case SdkEventValues.VERIFICATION_CODE_RESENT:
+            // User requested a new verification code
             break;
     }
 }

@@ -142,6 +142,9 @@ function handleEvent(event: SdkEvent) {
     case SdkEventValues.ONE_CLICK_HEALTH_FORM_SUBMITTED:
       // event.form available
       break;
+    case SdkEventValues.VERIFICATION_CODE_RESENT:
+      // User requested a new verification code
+      break;
   }
 }
 ```

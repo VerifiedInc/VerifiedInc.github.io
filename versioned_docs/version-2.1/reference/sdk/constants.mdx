@@ -88,3 +88,64 @@ function handleError(error: SdkError) {
     }
 }
 ```
+
+---
+
+## `SdkEventValues`
+
+> Values for SDK intermediary events
+
+```typescript title="SdkEventValues Definition"
+const SdkEventValues = {
+  SDK_READY: 'SDK_READY',
+  USER_STEP_CHANGE: 'USER_STEP_CHANGE',
+  STEP_TIME_SPENT: 'STEP_TIME_SPENT',
+  USER_COMPLETED_PRODUCT: 'USER_COMPLETED_PRODUCT',
+  ONE_CLICK_SIGNUP_FORM_SUBMITTED: 'ONE_CLICK_SIGNUP_FORM_SUBMITTED',
+  ONE_CLICK_HEALTH_FORM_SUBMITTED: 'ONE_CLICK_HEALTH_FORM_SUBMITTED',
+};
+```
+
+| Value | When it fires | Extra fields |
+|-------|---------------|--------------|
+| `SDK_READY` | SDK iframe has loaded and is ready to display | — |
+| `USER_STEP_CHANGE` | User navigated to a new step | `step`, `previousStep?` |
+| `STEP_TIME_SPENT` | User left a step (fired on navigation away) | `step`, `durationMs` |
+| `USER_COMPLETED_PRODUCT` | User finished the full product flow | `product` |
+| `ONE_CLICK_SIGNUP_FORM_SUBMITTED` | 1-Click Signup form was submitted | `form` |
+| `ONE_CLICK_HEALTH_FORM_SUBMITTED` | 1-Click Health form was submitted | `form` |
+
+### Example
+
+```typescript title="Example Usage of SdkEventValues"
+import { SdkEventValues, SdkEvent, ... } from '@verifiedinc-public/client-sdk';
+
+function handleEvent(event: SdkEvent) {
+    switch (event.type) {
+        // highlight-next-line
+        case SdkEventValues.SDK_READY:
+            // SDK iframe loaded and is ready to display
+            break;
+        // highlight-next-line
+        case SdkEventValues.USER_STEP_CHANGE:
+            // event.step, event.previousStep available
+            break;
+        // highlight-next-line
+        case SdkEventValues.STEP_TIME_SPENT:
+            // event.step, event.durationMs available
+            break;
+        // highlight-next-line
+        case SdkEventValues.USER_COMPLETED_PRODUCT:
+            // event.product available
+            break;
+        // highlight-next-line
+        case SdkEventValues.ONE_CLICK_SIGNUP_FORM_SUBMITTED:
+            // event.form available
+            break;
+        // highlight-next-line
+        case SdkEventValues.ONE_CLICK_HEALTH_FORM_SUBMITTED:
+            // event.form available
+            break;
+    }
+}
+```

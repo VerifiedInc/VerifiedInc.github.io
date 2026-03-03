@@ -16,8 +16,10 @@ toc_max_heading_level: 4
 ```typescript title="SdkResultValues Definition"
 const SdkResultValues = {
   USER_SHARED_CREDENTIALS: 'USER_SHARED_CREDENTIALS',
+  USER_SHARED_HEALTH_DATA: 'USER_SHARED_HEALTH_DATA',
   USER_OPTED_OUT: 'USER_OPTED_OUT',
   NO_CREDENTIALS_FOUND: 'NO_CREDENTIALS_FOUND',
+  NO_INSURANCE_FOUND: 'NO_INSURANCE_FOUND',
   RISK_SCORE_TOO_HIGH: 'RISK_SCORE_TOO_HIGH',
   MAX_INPUT_ATTEMPTS_EXCEEDED: 'MAX_INPUT_ATTEMPTS_EXCEEDED',
   MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED:
@@ -36,10 +38,17 @@ function handleResult(data: SdkResult) {
         case SdkResultValues.USER_SHARED_CREDENTIALS: // Success!
             // Pass data.identityUuid to server (to call GET /1-click/{identityUuid})
         // highlight-next-line
+        case SdkResultValues.USER_SHARED_HEALTH_DATA: // Success!
+            // Pass data.dataHealthUuid to server (to call GET /1-click/health/{dataHealthUuid})
+        // highlight-next-line
         case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
             // Take user to manual signup flow
         // highlight-next-line
         case SdkResultValues.NO_CREDENTIALS_FOUND: // OCE013 Verified error code
+            // Take user to manual signup flow. Additional metadata may be available.
+        // highlight-next-line
+        // highlight-next-line
+        case SdkResultValues.NO_INSURANCE_FOUND: // No insurance was found
             // Take user to manual signup flow. Additional metadata may be available.
         // highlight-next-line
         case SdkResultValues.RISK_SCORE_TOO_HIGH: // OCE017 Verified error code
@@ -85,6 +94,73 @@ function handleError(error: SdkError) {
         // highlight-next-line
         case SdkErrorReasons.SHARE_CREDENTIALS_ERROR:
             // Take user to manual signup flow
+    }
+}
+```
+
+---
+
+## `SdkEventValues`
+
+> Values for SDK intermediary events
+
+```typescript title="SdkEventValues Definition"
+const SdkEventValues = {
+  SDK_READY: 'SDK_READY',
+  USER_STEP_CHANGE: 'USER_STEP_CHANGE',
+  STEP_TIME_SPENT: 'STEP_TIME_SPENT',
+  USER_COMPLETED_PRODUCT: 'USER_COMPLETED_PRODUCT',
+  ONE_CLICK_SIGNUP_FORM_SUBMITTED: 'ONE_CLICK_SIGNUP_FORM_SUBMITTED',
+  ONE_CLICK_HEALTH_FORM_SUBMITTED: 'ONE_CLICK_HEALTH_FORM_SUBMITTED',
+  VERIFICATION_CODE_RESENT: 'VERIFICATION_CODE_RESENT',
+};
+```
+
+| Value                             | When it fires                                 | Extra fields            |
+| --------------------------------- | --------------------------------------------- | ----------------------- |
+| `SDK_READY`                       | SDK iframe has loaded and is ready to display | —                       |
+| `USER_STEP_CHANGE`                | User navigated to a new step                  | `step`, `previousStep?` |
+| `STEP_TIME_SPENT`                 | User left a step (fired on navigation away)   | `step`, `durationMs`    |
+| `USER_COMPLETED_PRODUCT`          | User finished the full product flow           | `product`               |
+| `ONE_CLICK_SIGNUP_FORM_SUBMITTED` | 1-Click Signup form was submitted             | `form`                  |
+| `ONE_CLICK_HEALTH_FORM_SUBMITTED` | 1-Click Health form was submitted             | `form`                  |
+| `VERIFICATION_CODE_RESENT`        | User requested a new verification code        | —                       |
+
+### Example
+
+```typescript title="Example Usage of SdkEventValues"
+import { SdkEventValues, SdkEvent, ... } from '@verifiedinc-public/client-sdk';
+
+function handleEvent(event: SdkEvent) {
+    switch (event.type) {
+        // highlight-next-line
+        case SdkEventValues.SDK_READY:
+            // SDK iframe loaded and is ready to display
+            break;
+        // highlight-next-line
+        case SdkEventValues.USER_STEP_CHANGE:
+            // event.step, event.previousStep available
+            break;
+        // highlight-next-line
+        case SdkEventValues.STEP_TIME_SPENT:
+            // event.step, event.durationMs available
+            break;
+        // highlight-next-line
+        case SdkEventValues.USER_COMPLETED_PRODUCT:
+            // event.product available
+            break;
+        // highlight-next-line
+        case SdkEventValues.ONE_CLICK_SIGNUP_FORM_SUBMITTED:
+            // event.form available
+            break;
+        // highlight-next-line
+        case SdkEventValues.ONE_CLICK_HEALTH_FORM_SUBMITTED:
+            // event.form available
+            break;
+        // highlight-next-line
+        case SdkEventValues.VERIFICATION_CODE_RESENT:
+            // User requested a new verification code
+            break;
     }
 }
 ```

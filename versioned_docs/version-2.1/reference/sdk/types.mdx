@@ -191,3 +191,119 @@ See the [`SdkErrorReasons` constant](/reference/sdk/constants#sdkerrorreasons).
   reason: 'SHARE_CREDENTIALS_ERROR';
 }
 ```
+
+---
+
+## `SdkEvent`
+
+```typescript title="SdkEvent Type"
+type SdkProduct = '1-click-signup' | '1-click-health' | '1-click-verify';
+
+type SdkMetadata = {
+  identityUuid: string | null;
+  redirectUrl: string | null;
+  birthDate: string | null;
+  birthDateMismatched: boolean | null;
+  phone: string | null;
+  ssn4: string | null;
+  ssn4Mismatched: boolean | null;
+  fullName: {
+    firstName: string | null;
+  } | null;
+  fullNameMismatched: boolean | null;
+  step: SdkStep;
+};
+
+export type SdkEvent = {
+  metadata: SdkMetadata;
+} & (
+  | { type: 'SDK_READY' }
+  | { type: 'USER_STEP_CHANGE'; step: SdkStep; previousStep?: SdkStep }
+  | { type: 'STEP_TIME_SPENT'; step: SdkStep; durationMs: number }
+  | { type: 'USER_COMPLETED_PRODUCT'; product: SdkProduct }
+  | { type: 'ONE_CLICK_SIGNUP_FORM_SUBMITTED'; form: Record<string, unknown> }
+  | { type: 'ONE_CLICK_HEALTH_FORM_SUBMITTED'; form: Record<string, unknown> }
+  | { type: 'VERIFICATION_CODE_RESENT' }
+);
+```
+
+See the [`SdkEventValues` constant](/reference/sdk/constants#sdkeventvalues).
+
+### Examples
+
+```typescript title="SdkEvent Example (SDK Ready)"
+{
+  type: 'SDK_READY',
+  metadata: {
+    identityUuid: null,
+    redirectUrl: null,
+    birthDate: null,
+    birthDateMismatched: null,
+    phone: null,
+    ssn4: null,
+    ssn4Mismatched: null,
+    fullName: null,
+    fullNameMismatched: null,
+    step: 'consent'
+  }
+}
+```
+
+```typescript title="SdkEvent Example (User Step Change)"
+{
+  type: 'USER_STEP_CHANGE',
+  step: 'verificationCode',
+  previousStep: 'phone',
+  metadata: {
+    identityUuid: null,
+    redirectUrl: null,
+    birthDate: null,
+    birthDateMismatched: null,
+    phone: '+12125550021',
+    ssn4: null,
+    ssn4Mismatched: null,
+    fullName: null,
+    fullNameMismatched: null,
+    step: 'phone'
+  }
+}
+```
+
+```typescript title="SdkEvent Example (Step Time Spent)"
+{
+  type: 'STEP_TIME_SPENT',
+  step: 'phone',
+  durationMs: 3200,
+  metadata: {
+    identityUuid: null,
+    redirectUrl: null,
+    birthDate: null,
+    birthDateMismatched: null,
+    phone: '+12125550021',
+    ssn4: null,
+    ssn4Mismatched: null,
+    fullName: null,
+    fullNameMismatched: null,
+    step: 'phone'
+  }
+}
+```
+
+```typescript title="SdkEvent Example (User Completed Product)"
+{
+  type: 'USER_COMPLETED_PRODUCT',
+  product: '1-click-signup',
+  metadata: {
+    identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
+    redirectUrl: 'https://verified.inc/?identityUuid=3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
+    birthDate: '1989-08-01',
+    birthDateMismatched: null,
+    phone: '+12125550021',
+    ssn4: '6789',
+    ssn4Mismatched: null,
+    fullName: null,
+    fullNameMismatched: null,
+    step: 'info'
+  }
+}
+```

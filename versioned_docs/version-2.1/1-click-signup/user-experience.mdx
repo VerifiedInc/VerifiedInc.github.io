@@ -66,9 +66,9 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Consent Language
 
-                > By entering my phone number, I agree that [Verified](https://verified.inc) (`{Brand Name}`'s service provider) and its vendors may receive my personal info and autofill more info about me, including my social security number.
+                > By entering your phone number, you agree that [Verified](https://verified.inc) (`{Brand Name}`'s service provider) and its vendors may receive your personal info and autofill more info about you, including your social security number.
 
-                If your [credential requests](/1-click-signup/guides/setup#default-credential-requests) do not include SSN, "including my social security number" will be omitted.
+                If your [credential requests](/1-click-signup/guides/setup#default-credential-requests) do not include SSN, "including your social security number" will be omitted.
 
                 - [Muted](/1-click-signup/guides/setup#styling-settings) color
                 - “Verified”:
@@ -94,7 +94,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
 
-                - Black and Green Signup variant
+                - Black and Green variant
 
                 <PoweredByGraphicVariantsForOneClickSignup/>
 
@@ -173,7 +173,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
 
-                - Black and Green Signup variant
+                - Black and Green variant
 
                 <PoweredByGraphicVariantsForOneClickSignup/>
 
@@ -237,6 +237,86 @@ To implement this user experience yourself (which is only necessary if you choos
         <GridColumn>
             <GridStickyElement>
                 ---
+                ### First Name
+            </GridStickyElement>
+            <GridNonStickyElement>
+
+                
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Header
+
+                > Enter Your First Name
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Description
+
+                > Enter your first name, so we can verify you and autofill your info.
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Birthday
+
+                > _ _ / _ _ / _ _ _ _
+
+                - [Primary](/1-click-signup/guides/setup#styling-settings) and [error](/1-click-signup/guides/setup#styling-settings) colors
+                - Auto focused
+                - Helper: 
+                    > Legal first name (if important for your use case)
+                - Accepts OS autofill
+                - Submits on arrow button click or enter
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
+
+                - Black and Green variant
+
+                <PoweredByGraphicVariantsForOneClickSignup/>
+
+                
+                #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Error
+
+                > That didn’t match our records. Please try again.
+
+                *Appears when there's a [first name mismatch error](/reference/api/errors#oce012) (`OCE012`).*
+
+                - [Error](/1-click-signup/guides/setup#styling-settings) color
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Continue
+
+                > Continue Anyway
+
+                *Appears if either of the following conditions are met:*
+
+                <em>
+                    1. There have been 3 seconds of inaction (after error).
+                    2. The user tried a different value than the first value (and also got an error).
+                </em>
+
+                *Takes user to manual signup.*
+
+                If the user tries the same value again, auto continue them.
+
+                - [Error](/1-click-signup/guides/setup#styling-settings) color
+
+            </GridNonStickyElement>
+        </GridColumn>
+        <GridColumn>
+            <GridStickyElement>
+                
+                ---
+
+                ![](/img/1cs-ux-screens/birthday-empty.png)
+                *Starting State* ↗️ [Open in new tab](/img/1cs-ux-screens/birthday-empty.png)
+                
+                ![](/img/1cs-ux-screens/birthday-error.png)
+                *Error State* ↗️ [Open in new tab](/img/1cs-ux-screens/birthday-error.png)
+                
+            </GridStickyElement>
+        </GridColumn>
+    </GridRow>
+    <GridRow>
+        <GridColumn>
+            <GridStickyElement>
+                ---
                 ### Birthday
             </GridStickyElement>
             <GridNonStickyElement>
@@ -272,7 +352,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
 
-                - Black and Green Signup variant
+                - Black and Green variant
 
                 <PoweredByGraphicVariantsForOneClickSignup/>
 
@@ -355,7 +435,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
 
-                - Black and Green Signup variant
+                - Black and Green variant
 
                 <PoweredByGraphicVariantsForOneClickSignup/>
 
@@ -469,7 +549,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
 
-                - Black and Green Signup variant
+                - Black and Green variant
 
                 <PoweredByGraphicVariantsForOneClickSignup/>
 
@@ -620,7 +700,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Accuracy Confirmation
 
-                > By clicking “Confirm”, I agree that the info above is accurate.
+                > By clicking “Confirm”, you agree that the info above is accurate.
 
                 - [Muted](/1-click-signup/guides/setup#styling-settings) color
 

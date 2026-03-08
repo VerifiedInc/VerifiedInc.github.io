@@ -445,9 +445,13 @@ td:first-child {
 .grid-sticky-element {
   position: sticky;
   top: 3.5rem;
-  background: white;
+  background-color: #ffffff;
+  color: var(--ifm-heading-color);
   padding: 1rem 0 0 0;
   z-index: 10;
+}
+html[data-theme='dark'] .grid-sticky-element {
+  background-color: var(--ifm-background-color);
 }
 
 /* For grid layouts */

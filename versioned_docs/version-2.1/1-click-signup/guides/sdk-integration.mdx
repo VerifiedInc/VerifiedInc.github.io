@@ -132,15 +132,27 @@ Have your client call your server to create a session key. The server should use
 **You can access your API keys in the [Dashboard](https://dashboard.verified.inc):** see the [Setup](/1-click-signup/guides/setup) guide.
 :::
 
-**You can call this endpoint with an empty request body:** 
+In typical usage, you call this endpoint with an empty request body: 
 
 ```typescript title="POST /client/1-click Request Body (empty)"
 {}
 ```
 
-That's the typical case. But, if you already have some [input](/reference/data/inputs) user data, you should include that so the SDK can optimize the flow for the user and avoid redundant steps. You can include any of the following, depending on what you have:
+But you can include properties (all of which are optional) if you have them:
 
 <PostClient1ClickRequestBody/>
+
+- Include `verificationUuid` if you're using the SDK after [Text to Signup](/text-to-signup) or a [1-Click Verify API integration](/1-click-verify/guides/api-integration). 
+- Include `phone` if you already verified the user's phone number with your own solution (outside of Verified). _This requires approval through a compliance review._
+- Include other properties if you already have some [input](/reference/data/inputs) user data. This will cause the SDK to optimize the flow to avoid rendundant steps (for example by skipping the [Birthday](/1-click-signup/user-experience#birthday) step if that has already been provided).
+
+If you include either `verificationUuid` or `phone`:
+- The SDK will skip the [Phone](/1-click-signup/user-experience#phone) and [Verification Code](/1-click-signup/user-experience#verification-code) steps, since the user has already verified their phone number. 
+- The SDK will start with a separate Consent step, since the consent language can't be displayed on the Phone step.
+
+:::note
+It doesn't make sense to include both `verificationUuid` and `phone`, since a `verificationUuid` references a [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity), which has its own `phone` property.
+:::
 
 The response body will contain a `sessionKey`:
 

@@ -337,26 +337,11 @@ See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).
 
 #### Request {#post-client-1-click-request}
 
-{/* Add email, rest of fullName, and address once we support them */}
 <PostClient1ClickRequestBody/>
 
 <table>
-  <PostClient1ClickRequestBodyTable />
-</table>
-
-{/* Commenting out until we support other inputs */}
-{/* ```typescript title="POST /client/1-click Request Body"
-{
-phone?: string,
-email?: string,
-birthDate?: string,
-ssn4?: string
-}
-
-````
-<table>
     <PostClient1ClickRequestBodyTable/>
-</table> */}
+</table>
 
 :::tip
 If you don't have a user's phone number yet, call `POST /client/1-click` with an empty request body, and the SDK will prompt the user to enter their phone number.

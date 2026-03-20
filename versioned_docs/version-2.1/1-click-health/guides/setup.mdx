@@ -100,50 +100,108 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
             A **provider** is a covered health care provider identified by a [National Provider Identifier (NPI)](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand).
         </Admonition>
 
-        **Click the Add Provider button to add a provider and, for that provider, fill out the following fields:**
+        **Click the Add Provider button to add a provider with the following fields:**
 
-        <table>
-            <tr>
-                <th>Field</th>
-                <th>Description</th>
-                <th>Example</th>
-            </tr>
-            <tr>
-                <td>Name</td>
-                <td>Name of the provider (e.g. from the [NPPES registry](https://npiregistry.cms.hhs.gov/search))</td>
-                <td>Hooli</td>
-            </tr>
-            <tr>
-                <td>NPI</td>
-                <td>[National Provider Identifier](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand) (10 digits)</td>
-                <td>0123456789</td>
-            </tr>
-            {/* <tr>
-                <td>EIN</td>
-                <td>[Employer Identification Number](https://www.irs.gov/businesses/employer-identification-number) (9 digits)</td>
-                <td>123456789</td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td>Email address of primary contact</td>
-                <td>richard@piedpiper.com</td>
-            </tr>
-            <tr>
-                <td>Phone</td>
-                <td>Phone number of primary contact</td>
-                <td>+1 (212) 555-0010</td>
-            </tr>
-            <tr>
-                <td>Address</td>
-                <td>Address of primary contact</td>
-                <td>5320 Newell Rd Palo Alto, CA 94303</td>
-            </tr>
-            <tr>
-                <td>Line 2</td>
-                <td>Line 2 of address of primary contact</td>
-                <td>Apt 1</td>
-            </tr> */}
-        </table>
+        <details>
+            <summary>
+                For an **Individual** type provider:
+            </summary>
+            <table>
+                <tr>
+                    <th>Field</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>First Name</td>
+                    <td>First name of provider (e.g. from [NPPES registry](https://npiregistry.cms.hhs.gov/search))</td>
+                    <td>Richard</td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td>Last name of provider (e.g. from [NPPES registry](https://npiregistry.cms.hhs.gov/search))</td>
+                    <td>Hendricks</td>
+                </tr>
+                <tr>
+                    <td>NPI</td>
+                    <td>[National Provider Identifier](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand) (10 digits)</td>
+                    <td>0123456789</td>
+                </tr>
+                <tr>
+                    <td>SSN</td>
+                    <td>Social Security Number (9 digits)</td>
+                    <td>000-45-6789</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>Email address of primary contact</td>
+                    <td>richard@hoolihealth.com</td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>Phone number of primary contact</td>
+                    <td>+1 (212) 555-0010</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>(Physical and/or mailing) Address of primary contact</td>
+                    <td>5320 Newell Rd Palo Alto, CA 94303</td>
+                </tr>
+                <tr>
+                    <td>Line 2</td>
+                    <td>Line 2 of address of primary contact</td>
+                    <td>Apt 1</td>
+                </tr>
+            </table>
+        </details>
+
+        <details>
+            <summary>
+                For an **Organization** type provider:
+            </summary>
+            <table>
+                <tr>
+                    <th>Field</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>Name of provider (e.g. from [NPPES registry](https://npiregistry.cms.hhs.gov/search))</td>
+                    <td>Hooli Health</td>
+                </tr>
+                <tr>
+                    <td>NPI</td>
+                    <td>[National Provider Identifier](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand) (10 digits)</td>
+                    <td>0123456789</td>
+                </tr>
+                <tr>
+                    <td>EIN</td>
+                    <td>[Employer Identification Number](https://www.irs.gov/businesses/employer-identification-number) (9 digits)</td>
+                    <td>00-456789</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>Email address of primary contact</td>
+                    <td>richard@hoolihealth.com</td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>Phone number of primary contact</td>
+                    <td>+1 (212) 555-0010</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>(Physical and/or mailing) Address of primary contact</td>
+                    <td>5320 Newell Rd Palo Alto, CA 94303</td>
+                </tr>
+                <tr>
+                    <td>Line 2</td>
+                    <td>Line 2 of address of primary contact</td>
+                    <td>Apt 1</td>
+                </tr>
+            </table>
+        </details>
 
     </CollapsibleSection>
 
@@ -199,6 +257,11 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
     </CollapsibleSection>
 
 </CollapsibleGroup>
+
+
+#### Enable/Disable Toggle
+
+**Click this to enable or disable 1-Click Health for your brand.** It will be enabled by default when you add a [provider](#providers).
 
 
 ### Styling Settings

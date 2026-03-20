@@ -39,6 +39,8 @@ import ErrorSKE001 from '@site/versioned_docs/version-2.1/reusables/errors/SKE00
 import SyncFromSandboxAdmonition from '@site/versioned_docs/version-2.1/reusables/sync-from-sandbox-admonition.mdx';
 import PostClient1ClickRequestBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-request-body.mdx';
 import PostClient1ClickResponseBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-response-body.mdx';
+import SdkWorksOnWebAndMobileAdmonition from '@site/versioned_docs/version-2.1/reusables/sdk-works-on-web-and-mobile-admonition.mdx';
+import SdkIntegrationFullExample from '@site/versioned_docs/version-2.1/reusables/sdk-integration-full-example.mdx';
 
 
 {/* 1-Click Signup is the fastest way to onboard new users.
@@ -70,59 +72,11 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 **Complete the 1-Click Signup [Setup](/1-click-signup/guides/setup) guide before following this SDK Integration guide.**
 :::
 
-:::info This SDK Works for Web and Native Mobile
-**You can use this SDK in both web and native mobile apps!** Many of our customers do exactly this, so they can provide users with a unified (and much easier to maintain) signup experience across web, iOS, and Android. 
-
-**For how to do this, see [Native Mobile App Integration](#native-mobile-app-integration).**
-:::
+<SdkWorksOnWebAndMobileAdmonition/>
 
 <SequenceDiagramOneClickSignupSDK/>
 
-<details>
-    <summary>Full Example</summary>
-
-    ```typescript title="Integrate SDK"
-    // Import SDK
-    import { VerifiedClientSdk, SdkResult, SdkError, SdkResultValues, SdkErrorReasons } from '@verifiedinc-public/client-sdk';
-
-    // Create session key: Call server to call POST /client/1-click with Verified API key
-    const SESSION_KEY = createSessionKey(); // sessionKey from POST /client/1-click
-
-    // Create SDK Instance
-    const verifiedClientSdk = new VerifiedClientSdk({
-        environment: 'sandbox', // 'sandbox' or 'production'
-        sessionKey: SESSION_KEY,
-        onResult: handleResult,
-        onError: handleError
-    });
-
-    // Handle results
-    function handleResult(data: SdkResult): void {
-    switch (data.type) {
-        case SdkResultValues.USER_SHARED_CREDENTIALS: // Success!
-            // Pass data.identityUuid to server (to call GET /1-click/{identityUuid})
-        case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
-            // Take user to manual signup flow
-        case SdkResultValues.NO_CREDENTIALS_FOUND: // OCE013 Verified error code
-            // Take user to manual signup flow. Additional metadata may be available.
-        case SdkResultValues.RISK_SCORE_TOO_HIGH: // OCE017 Verified error code
-            // Take user to manual signup flow. Additional metadata may be available.
-        case SdkResultValues.MAX_INPUT_ATTEMPTS_EXCEEDED: // OCE019 Verified error code
-            // Take user to manual signup flow. Additional metadata may be available.
-        case SdkResultValues.MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED: // User tried verification code too many times
-            // Take user to manual signup flow. Additional metadata may be available.
-    }
-}
-
-    // Handle errors
-    function handleError(error: SdkError): void {
-        // Restart SDK: Create new session key and SDK instance
-    }
-
-    // Show SDK to user (in document.body if no HTML element is passed)
-    verifiedClientSdk.show(document.getElementById('verifiedClientSdk-container')); 
-    ```
-</details>
+<SdkIntegrationFullExample/>
 
 ## 1. Create a session key.
 
@@ -229,7 +183,20 @@ function handleError(error: SdkError) {
 See [step 3b](#b-handle-errors) for how to handle errors.
 
 
-### e. Show the SDK.
+### e. Define an event function.
+
+Define a function to handle events, leveraging the [`SdkEvent` type](/reference/sdk/types#sdkevent):
+
+```typescript
+function handleEvent(event: SdkEvent) {
+    // See step 3c
+}
+```
+
+See [step 3c](#c-handle-events) for how to handle events.
+
+
+### f. Show the SDK.
 
 Show the SDK to the user, leveraging the [`show()` method](/reference/sdk/methods#show).
 
@@ -254,23 +221,37 @@ Complete the `handleResult` function you defined in [step 2c](#c-define-a-result
 function handleResult(data: SdkResult): void {
     switch (data.type) {
         // highlight-next-line
-        case SdkResultValues.USER_SHARED_CREDENTIALS: // Success!
+        case SdkResultValues.USER_SHARED_CREDENTIALS: // 1-Click Signup success!
             // Pass data.identityUuid to server (to call GET /1-click/{identityUuid})
+            break;
+        // Only for 1-Click Health
+        // case SdkResultValues.USER_SHARED_HEALTH_DATA: // 1-Click Health success!
+        //     // Pass data.healthDataUuid to server (to call GET /1-click/health/{healthDataUuid})
+        //     break;
         // highlight-next-line
         case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
             // Take user to manual signup flow
+            break;
         // highlight-next-line
-        case SdkResultValues.NO_CREDENTIALS_FOUND: // OCE013 Verified error code
+        case SdkResultValues.NO_CREDENTIALS_FOUND: // No signup data found (OCE013 Verified error code)
             // Take user to manual signup flow. Additional metadata may be available.
+            break;
+        // Only for 1-Click Health
+        // case SdkResultValues.NO_INSURANCE_FOUND: // No health insurance data found
+        //     // Take user to manual health insurance flow
+        //     break;
         // highlight-next-line
         case SdkResultValues.RISK_SCORE_TOO_HIGH: // OCE017 Verified error code
             // Take user to manual signup flow. Additional metadata may be available.
+            break;
         // highlight-next-line
         case SdkResultValues.MAX_INPUT_ATTEMPTS_EXCEEDED: // OCE019 Verified error code
             // Take user to manual signup flow. Additional metadata may be available.
+            break;
         // highlight-next-line
         case SdkResultValues.MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED: // User tried verification code too many times
             // Take user to manual signup flow. Additional metadata may be available.
+            break;
     }
 }
 ```
@@ -279,7 +260,7 @@ function handleResult(data: SdkResult): void {
 Regardless of the result type, you can access specific metadata properties directly from the <b>data</b> object. See [SdkResult](/reference/sdk/types#sdkresult) type definition for the complete structure.
 :::
 
-There are 6 result values to handle:
+There are 6 result values to handle for 1-Click Signup:
 
 <table>
     <tr>
@@ -299,25 +280,29 @@ There are 6 result values to handle:
     </tr>
     <tr>
         <td>`NO_CREDENTIALS_FOUND`</td>
-        <td>OCE013 Verified error code</td>
+        <td>No signup data found ([`OCE013`](/reference/api/errors#oce013) Verified error code)</td>
         <td>Take user to manual signup flow. Additional metadata may be available.</td>
     </tr>
     <tr>
         <td>`RISK_SCORE_TOO_HIGH`</td>
-        <td>OCE017 Verified error code</td>
+        <td>[`OCE017`](/reference/api/errors#oce017) Verified error code</td>
         <td>Take user to manual signup flow. Additional metadata may be available.</td>
     </tr>
     <tr>
         <td>`MAX_INPUT_ATTEMPTS_EXCEEDED`</td>
-        <td>OCE019 Verified error code</td>
+        <td>[`OCE019`](/reference/api/errors#oce019) Verified error code</td>
         <td>Take user to manual signup flow. Additional metadata may be available.</td>
     </tr>
     <tr>
         <td>`MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED`</td>
-        <td>User tried verification code too many times</td>
+        <td>[`OCE020`](/reference/api/errors#oce020) Verified error code</td>
         <td>Take user to manual signup flow. Additional metadata may be available.</td>
     </tr>
 </table>
+
+:::note
+There are 2 other result values, but these are only relevant for 1-Click Health. See the [1-Click Health SDK Integration guide](/1-click-health/guides/sdk-integration#a-handle-results) for details.
+::
 
 Some [metadata](/reference/data/outputs#metadata) may be available directly in the `data` object (see [`SdkResult`](/reference/sdk/types#sdkresult)). To retrieve all metadata (and [credentials](/reference/data/outputs#credentials) if the result value is `USER_SHARED_CREDENTIALS`), call your server with `data.identityUuid`. The server should use your Verified API key to call [`GET /1-click/{identityUuid}`](/reference/api/endpoints#get-1-click):
 
@@ -352,7 +337,7 @@ function handleError(error: SdkError): void {
 }
 ```
 
-There are 3 error reasons to handle:
+There are 3 error reasons to handle for 1-Click Signup:
 
 <table>
     <tr>
@@ -396,14 +381,92 @@ We recommend you handle all error reasons by restarting the SDK. To do so, creat
     ```
 </details>
 
+
+### c. Handle events.
+
+:::tip
+Handling events is not necessary for the SDK to work, but it will allow you to understand how users are interacting with the SDK and optimize the experience.
+:::
+
+Complete the `handleEvent` function you defined in [step 2e](#e-define-an-event-function), leveraging the [`SdkEventValues` constant](/reference/sdk/constants#sdkeventvalues):
+
+```typescript
+function handleEvents(event: SdkEvent): void {
+    switch (event.type) {
+        // highlight-next-line
+        case SdkEventValues.SDK_READY:
+            // Web app rendered the content
+            break;
+        // highlight-next-line
+        case SdkEventValues.USER_STEP_CHANGE:
+            // User navigated to a new step
+            console.log(event.step, event.previousStep);
+            break;
+        // highlight-next-line
+        case SdkEventValues.STEP_TIME_SPENT:
+            // User left a step, includes duration
+            console.log(event.step, event.durationMs);
+            break;
+        // highlight-next-line
+        case SdkEventValues.USER_COMPLETED_PRODUCT:
+            // User completed a product flow
+            console.log(event.product);
+            break;
+        // highlight-next-line
+        case SdkEventValues.ONE_CLICK_SIGNUP_FORM_SUBMITTED:
+            // User submitted signup form
+            console.log(event.form);
+            break;
+        // Only for 1-Click Health
+        // case SdkEventValues.ONE_CLICK_HEALTH_FORM_SUBMITTED: 
+        //     // User submitted health form
+        //     console.log(event.form);
+        //     break;
+    }
+}
+```
+
+There are 5 event values to handle for 1-Click Signup:
+
+<table>
+    <tr>
+        <th>Event Value</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>`SDK_READY`</td>
+        <td>SDK rendered content for the user</td>
+    </tr>
+    <tr>
+        <td>`USER_STEP_CHANGE`</td>
+        <td>User navigated to a new step</td>
+    </tr>
+    <tr>
+        <td>`STEP_TIME_SPENT`</td>
+        <td>User left a step, includes duration</td>
+    </tr>
+    <tr>
+        <td>`USER_COMPLETED_PRODUCT`</td>
+        <td>User completed a product flow</td>
+    </tr>
+    <tr>
+        <td>`ONE_CLICK_SIGNUP_FORM_SUBMITTED`</td>
+        <td>User submitted signup form</td>
+    </tr>
+</table>
+
+:::note
+There's 1 other event value, but this is only relevant for 1-Click Health. See the [1-Click Health SDK Integration guide](/1-click-health/guides/sdk-integration#c-handle-events) for details.
+:::
+
 ---
 
 ## Native Mobile App Integration
 
-The Verified SDK is a client side SDK that makes it easy to integrate 1-Click Signup into any application. Because it’s web based, **the SDK can be easily used within both web and native mobile apps.** 
+The Verified SDK is a client side SDK that can be integrated into any application. Because it’s web based, **the SDK can be easily used within both web and native mobile apps.** 
 
 :::tip
-**Using a single SDK across all types of apps makes it far easier to maintain.** We highly recommend you do this if you have mobile apps! The result will be unified, easy to maintain signup experience across all platforms.
+**Using a single SDK across all types of apps makes it far easier to maintain.** We highly recommend you do this if you have mobile apps! The result will be unified, easy to maintain experience across all platforms.
 :::
 
 For native mobile apps, the SDK should be rendered within a [WebView](https://en.wikipedia.org/wiki/WebView). By using the right type of WebView, and by opening and closing it on appropriate triggers, the SDK can be made to feel like a seamless part of the native app. Below, we provide guidance for [integration strategy](#integration-strategy) and include a [full example](#full-example) of a React Native app integration.

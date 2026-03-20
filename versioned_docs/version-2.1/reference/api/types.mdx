@@ -38,6 +38,7 @@ import ErrorType from '@site/versioned_docs/version-2.1/reusables/error-type.mdx
 import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error-example-oce011.mdx'
 import ErrorExampleOce017 from '@site/versioned_docs/version-2.1/reusables/error-example-oce017.mdx'
 import RiskSignalsSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/risk-signals-setting-admonition.mdx';
+import PayerIdsAdmonition from '@site/versioned_docs/version-2.1/reusables/payer-ids-admonition.mdx';
 
 {/* :::note
 See also our [Postman docs](https://api.docs.verified.inc/).
@@ -501,7 +502,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
             payer: {
                 name: string,
                 verifiedId: string,
-                ids: [string],
+                ids: [string], // ids[0] is considered primary
                 logoUrl?: string
             },
             edi_271: string
@@ -514,6 +515,8 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
     ]
 }
 ```
+
+<PayerIdsAdmonition/>
 
 <table>
     <tr>

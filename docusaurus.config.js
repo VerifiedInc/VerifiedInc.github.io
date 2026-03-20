@@ -221,18 +221,6 @@ module.exports = {
           lastVersion: '2.1',
           breadcrumbs: true,
           versions: {
-            // Hiding because we no longer want to show v1 Docs
-            // '1.0': {
-            //   label: 'v1.0',
-            //   badge: false,
-            //   path: '/v1.0'
-            // },
-            '2.0': {
-              label: 'v2.0',
-              badge: false,
-              banner: 'none',
-              path: '/v2.0'
-            },
             '2.1': {
               label: 'v2.1',
               badge: false,
@@ -248,76 +236,23 @@ module.exports = {
     ],
   ],
   plugins: [
-    // [
-      // Disabling for now. There's a bug with Lunr (it seems) that's preventing excludeRoutes and includeRoutes from working. We don't want people inadvertently switching versions by searching.
-      // require.resolve('docusaurus-lunr-search'),
-      // {
+    [
+      require.resolve('docusaurus-lunr-search'),
+      {
         // options, ref: https://github.com/praveenn77/docusaurus-lunr-search#options-available
-        // indexBaseUrl: true
-        // NOT WORKING: not sure why
-        // Exclude v2.0 to avoid people accidentally switching versions
-        // excludeRoutes: [
-        //   'versioned_docs/version-2.1/reusables', 
-        //   'versioned_docs/version-2.0'
-        // ],
-        // includeRoutes: ['versioned_docs/version-2.1/**'],
-      // }
-    // ],
+        indexBaseUrl: true,
+        // Exclude reusables
+        excludeRoutes: [
+          '/reusables/**'
+        ],
+        // includeRoutes: [],
+      }
+    ],
     [
       '@docusaurus/plugin-client-redirects',
       {
         // Explicitly handling page redirects for v2.0 because the more sophisticated approach below isn't working
         redirects: [
-          // /X -> /v2.0/X
-          // {
-          //   to: '/v2.0/recommended-ux',
-          //   from: '/recommended-ux',
-          // },
-          // {
-          //   to: '/v2.0/quick-start-guide',
-          //   from: '/quick-start-guide',
-          // },
-          // {
-          //   to: '/v2.0/integration-guide',
-          //   from: '/integration-guide',
-          // },
-          // {
-          //   to: '/v2.0/migration-guide-v1-to-v2',
-          //   from: '/migration-guide-v1-to-v2',
-          // },
-          // {
-          //   to: '/v2.0/example-app',
-          //   from: '/example-app',
-          // },
-          // {
-          //   to: '/v2.0/demo',
-          //   from: '/demo',
-          // },
-          // {
-          //   to: '/v2.0/authentication',
-          //   from: '/authentication',
-          // },
-          // {
-          //   to: '/v2.0/environments',
-          //   from: '/environments',
-          // },
-          // {
-          //   to: '/v2.0/test-users',
-          //   from: '/test-users',
-          // },
-          // {
-          //   to: '/v2.0/endpoints',
-          //   from: '/endpoints',
-          // },
-          // {
-          //   to: '/v2.0/errors',
-          //   from: '/errors',
-          // },
-          // {
-          //   to: '/v2.0/types',
-          //   from: '/types',
-          // },
-          // Effectively redirecting people from v2.0 to v2.1 to avoid confusion (e.g. from using outdated test users)
           {
             to: '/1-click-signup/user-experience',
             from: '/recommended-ux',
@@ -329,11 +264,6 @@ module.exports = {
           {
             to: '/1-click-signup/guides',
             from: '/integration-guide',
-          },
-          // This is the one exception where we won't override v2.0
-          {
-            to: '/v2.0/migration-guide-v1-to-v2',
-            from: '/migration-guide-v1-to-v2',
           },
           {
             to: '/1-click-signup',

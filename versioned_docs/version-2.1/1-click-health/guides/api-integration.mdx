@@ -48,6 +48,7 @@ import Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithoutUserEdits 
 import Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-1-click-signup-with-user-edits.mdx';
 import Post1ClickHealthRequestBodyExampleInputsFromManualSignupMinimalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-manual-signup-minimal-inputs.mdx';
 import Post1ClickHealthRequestBodyExampleInputsFromManualSignupMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-manual-signup-maximal-inputs.mdx';
+import PayerIdsAdmonition from '@site/versioned_docs/version-2.1/reusables/payer-ids-admonition.mdx';
 
 <table>
   <tr>
@@ -227,6 +228,8 @@ The response will contain a [`1ClickHealthEntity`](/reference/api/types#1clickhe
 - **Failure:** Otherwise, the `1ClickHealthEntity` will contain `errors` indicating that the lookup failed. <br/> → _Fall back to a manual health insurance entry flow._
 
 <MostProbablePlansAreListedFirstAdmonition/>
+
+<PayerIdsAdmonition/>
 
 
 ## 4. (optional) Prompt user to confirm.

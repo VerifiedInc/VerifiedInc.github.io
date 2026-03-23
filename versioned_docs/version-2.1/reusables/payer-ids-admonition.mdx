@@ -1,0 +1,8 @@
+import Admonition from '@theme/Admonition';
+
+<Admonition type="tip" title="Payer IDs">
+    1-Click Health can return many different IDs for a given payer:
+    - **`verifiedId`:** This ID identifies the payer within Verified but is not used in external systems. _It never changes,_ so it can reliably used to identify the payer over time.
+    - **`ids[]`:** These IDs identify the payer in external systems, like healthcare clearing houses or the payer's own system. _They may change_ over time.
+        - **`ids[0]`:** This is considered the primary ID for the payer and is generally the ID the payer uses for itself. _It may change_ over time.
+</Admonition>

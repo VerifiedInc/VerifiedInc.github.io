@@ -33,6 +33,14 @@ type SdkResultData = {
 
 type SdkResultDataNullable = Nullable<SdkResultData>;
 
+type SdkResultUserSharedHealthData = {
+  type: typeof SdkResultValues.USER_SHARED_HEALTH_DATA;
+} & SdkResultData;
+
+type SdkResultUserSharedCredentials = {
+  type: typeof SdkResultValues.USER_SHARED_CREDENTIALS;
+} & SdkResultData;
+
 type SdkResultUserOptedOut =
   | (SdkResultDataNullable & {
       type: typeof SdkResultValues.USER_OPTED_OUT;
@@ -47,6 +55,10 @@ type SdkResultNoCredentialsFound = {
   type: typeof SdkResultValues.NO_CREDENTIALS_FOUND;
 } & SdkResultData;
 
+type SdkResultNoInsuranceFound = {
+  type: typeof SdkResultValues.NO_INSURANCE_FOUND;
+} & SdkResultData;
+
 type SdkResultRiskScoreTooHigh = {
   type: typeof SdkResultValues.RISK_SCORE_TOO_HIGH;
 } & SdkResultData;
@@ -59,17 +71,15 @@ type SdkResultMaxVerificationCodeAttemptsExceeded = {
   type: typeof SdkResultValues.MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED;
 } & SdkResultData;
 
-type SdkResultUserSharedCredentials = {
-  type: typeof SdkResultValues.USER_SHARED_CREDENTIALS;
-} & SdkResultData;
-
 export type SdkResult =
+  | SdkResultUserSharedHealthData
+  | SdkResultUserSharedCredentials
   | SdkResultUserOptedOut
   | SdkResultNoCredentialsFound
+  | SdkResultNoInsuranceFound
   | SdkResultRiskScoreTooHigh
   | SdkResultMaxInputsAttemptsExceeded
-  | SdkResultMaxVerificationCodeAttemptsExceeded
-  | SdkResultUserSharedCredentials;
+  | SdkResultMaxVerificationCodeAttemptsExceeded;
 ```
 
 See the [`SdkResultValues` constant](/reference/sdk/constants#sdkresultvalues).
@@ -80,13 +90,28 @@ See the [`SdkResultValues` constant](/reference/sdk/constants#sdkresultvalues).
 {
   type: 'USER_SHARED_CREDENTIALS',
   identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
-  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
+  redirectUrl: "https://verified.inc/?identityUuid=3cf51925-e9fa-44f3-b091-1e1c63f4cc3d",
   birthDate: "1989-08-01",
   birthDateMismatched: null,
-  phone: "+12125550021",
+  phone: "+12125550010",
   ssn4: "6789",
   ssn4Mismatched: null,
   step: 'info'
+}
+```
+
+```typescript title="SdkResult Example (User Shared Health Data)"
+{
+  type: 'USER_SHARED_HEALTH_DATA',
+  identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
+  healthDataUuid: 'c20525b0-1811-4467-92c9-56267588e600',
+  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88&healthDataUuid=c20525b0-1811-4467-92c9-56267588e600",
+  birthDate: "1989-08-01",
+  birthDateMismatched: null,
+  phone: "+12125550010",
+  ssn4: "6789",
+  ssn4Mismatched: null,
+  step: 'healthInfo'
 }
 ```
 
@@ -94,10 +119,10 @@ See the [`SdkResultValues` constant](/reference/sdk/constants#sdkresultvalues).
 {
   type: 'USER_OPTED_OUT',
   identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
-  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
+  redirectUrl: "https://verified.inc/?identityUuid=3cf51925-e9fa-44f3-b091-1e1c63f4cc3d",
   birthDate: null,
   birthDateMismatched: null,
-  phone: "+12125550021",
+  phone: "+12125550010",
   ssn4: null,
   ssn4Mismatched: null,
   step: 'phone'
@@ -108,10 +133,25 @@ See the [`SdkResultValues` constant](/reference/sdk/constants#sdkresultvalues).
 {
   type: 'NO_CREDENTIALS_FOUND',
   identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
-  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
+  redirectUrl: "https://verified.inc/?identityUuid=3cf51925-e9fa-44f3-b091-1e1c63f4cc3d",
   birthDate: "1989-08-01",
   birthDateMismatched: null,
-  phone: "+12125550021",
+  phone: "+12125550010",
+  ssn4: "6789",
+  ssn4Mismatched: null,
+  step: 'ssn4'
+}
+```
+
+```typescript title="SdkResult Example (No Insurance Found)"
+{
+  type: 'NO_INSURANCE_FOUND',
+  identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
+  healthDataUuid: 'c20525b0-1811-4467-92c9-56267588e600',
+  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88&healthDataUuid=c20525b0-1811-4467-92c9-56267588e600",
+  birthDate: "1989-08-01",
+  birthDateMismatched: null,
+  phone: "+12125550010",
   ssn4: "6789",
   ssn4Mismatched: null,
   step: 'ssn4'
@@ -122,10 +162,10 @@ See the [`SdkResultValues` constant](/reference/sdk/constants#sdkresultvalues).
 {
   type: 'RISK_SCORE_TOO_HIGH',
   identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
-  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
+  redirectUrl: "https://verified.inc/?identityUuid=3cf51925-e9fa-44f3-b091-1e1c63f4cc3d",
   birthDate: "1989-08-01",
   birthDateMismatched: null,
-  phone: "+12125550021",
+  phone: "+12125550010",
   ssn4: "6789",
   ssn4Mismatched: null,
   step: 'verificationCode'
@@ -136,10 +176,10 @@ See the [`SdkResultValues` constant](/reference/sdk/constants#sdkresultvalues).
 {
   type: 'MAX_INPUT_ATTEMPTS_EXCEEDED',
   identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
-  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
+  redirectUrl: "https://verified.inc/?identityUuid=3cf51925-e9fa-44f3-b091-1e1c63f4cc3d",
   birthDate: "1989-08-01",
   birthDateMismatched: false,
-  phone: "+12125550021",
+  phone: "+12125550010",
   ssn4: "6789",
   ssn4Mismatched: true,
   step: 'ssn4'
@@ -150,10 +190,10 @@ See the [`SdkResultValues` constant](/reference/sdk/constants#sdkresultvalues).
 {
   type: 'MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED',
   identityUuid: '3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
-  redirectUrl: "https://verified.inc/?identityUuid=5635fbd7-e97f-4af4-9f1f-2769fa17aa88",
+  redirectUrl: "https://verified.inc/?identityUuid=3cf51925-e9fa-44f3-b091-1e1c63f4cc3d",
   birthDate: "1989-08-01",
   birthDateMismatched: null,
-  phone: "+12125550021",
+  phone: "+12125550010",
   ssn4: "6789",
   ssn4Mismatched: null,
   step: 'verificationCode'
@@ -259,7 +299,7 @@ See the [`SdkEventValues` constant](/reference/sdk/constants#sdkeventvalues).
     redirectUrl: null,
     birthDate: null,
     birthDateMismatched: null,
-    phone: '+12125550021',
+    phone: '+12125550010',
     ssn4: null,
     ssn4Mismatched: null,
     fullName: null,
@@ -279,7 +319,7 @@ See the [`SdkEventValues` constant](/reference/sdk/constants#sdkeventvalues).
     redirectUrl: null,
     birthDate: null,
     birthDateMismatched: null,
-    phone: '+12125550021',
+    phone: '+12125550010',
     ssn4: null,
     ssn4Mismatched: null,
     fullName: null,
@@ -298,7 +338,7 @@ See the [`SdkEventValues` constant](/reference/sdk/constants#sdkeventvalues).
     redirectUrl: 'https://verified.inc/?identityUuid=3cf51925-e9fa-44f3-b091-1e1c63f4cc3d',
     birthDate: '1989-08-01',
     birthDateMismatched: null,
-    phone: '+12125550021',
+    phone: '+12125550010',
     ssn4: '6789',
     ssn4Mismatched: null,
     fullName: null,

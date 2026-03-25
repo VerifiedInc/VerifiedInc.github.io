@@ -156,7 +156,7 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
             If multiple challenge types are used, the order is always as listed below.
         </Admonition>
 
-        **Choose which challenge(s) to allow:**
+        **Choose which challenge(s) to use:**
 
         <table>
             <tr>
@@ -177,6 +177,8 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
             </tr>
         </table>
 
+        You must enable at least 1 challenge.
+
         <details>
             <summary>Why We Recommend <b>First Name</b> and <b>Birthday</b></summary>
 
@@ -194,15 +196,7 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
                 - Everyone has a birthday, but not everyone has an SSN.
         </details>
 
-    </CollapsibleSection>
-
-    <CollapsibleSection>
-
-        <CollapsibleHeader>
-        #### Prompt for Challenges
-        </CollapsibleHeader>
-
-        **Choose when to prompt for challenge(s):**
+        **For the enabled challenge(s), choose when to prompt the user for them:**
 
         <table>
             <tr>
@@ -210,24 +204,20 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
                 <th>Description</th>
             </tr>
             <tr>
-                <td>Only if necessary</td>
-                <td>Prompt the user for challenge(s) only if Verified can't source data based on just phone.</td>
+                <td>Always</td>
+                <td>Upfront, every time</td>
             </tr>
             <tr>
-                <td>Always</td>
-                <td>Prompt the user for a challenge upfront, every time.</td>
+                <td>Only if necessary</td>
+                <td>Only if Verified can't source data based on other inputs</td>
             </tr>
         </table>
 
-        <Admonition type="note">
-            If you choose **Always**, the user will only be prompted for one challenge. 
-            - If you chose **Birthday or SSN4** or **Birthday only** for the [Challenges](#challenges) setting, the challenge will be their birthday.
-            - If you chose **SSN4 only** for the [Challenges](#challenges) setting, the challenge will be their SSN4.
+        <Admonition type="tip">
+            We recommend setting at least one challenge to **Always**, because using at least one challenge in addition to Phone as input improves output data quality.
         </Admonition>
 
-        <Admonition type="tip">
-            Always prompting for a challenge can help improve data quality for some user populations.
-        </Admonition>
+        **If you enabled multiple challenges, drag and drop them into the order in which you want the user to be prompted for them.** Challenges set to **Always** will automatically be put before those set to **Only if necessary**.
 
     </CollapsibleSection>
 

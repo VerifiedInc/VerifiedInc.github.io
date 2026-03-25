@@ -64,6 +64,52 @@ Postman API documentation is available at https://api.docs.verified.inc.
 <DevelopmentWorkAdmonition />
 
 
+## Client SDK
+
+<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#cde4fdf8-1521-4da0-9280-094e1f550aa8'>
+  ### `POST /client/1-click`
+</EndpointHeaderWithoutSwagger>
+
+> Create a (one time use) session key for the client SDK
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/client/1-click`</td>
+  </tr>
+</table>
+
+<IntegrationTypeEndpointAdmonition option='SDK' />
+
+
+#### Request {#post-client-1-click-request}
+
+<PostClient1ClickRequestBody/>
+
+<table>
+    <PostClient1ClickRequestBodyTable/>
+</table>
+
+:::tip
+If you don't have a user's phone number yet, call `POST /client/1-click` with an empty request body, and the SDK will prompt the user to enter their phone number.
+:::
+
+
+#### Response {#post-client-1-click-response}
+
+<PostClient1ClickResponseBody/>
+
+<table>
+  <PostClient1ClickResponseBodyTable />
+</table>
+
+---
+
+
 ## 1-Click Verify
 
 
@@ -262,6 +308,10 @@ See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).
 
 <Post1ClickVerificationsVerifyResponseBodyExample/>
 
+---
+
+
+## Text to Signup
 
 {/* TODO: Update */}
 {/* <EndpointHeaderWithoutSwagger postmanUrl=''>
@@ -313,51 +363,6 @@ See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).
 
 
 ## 1-Click Signup
-
-
-<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#cde4fdf8-1521-4da0-9280-094e1f550aa8'>
-  ### `POST /client/1-click`
-</EndpointHeaderWithoutSwagger>
-
-> Create a (one time use) session key for the client SDK
-
-<table>
-  <tr>
-    <th>Method</th>
-    <td>`POST`</td>
-  </tr>
-  <tr>
-    <th>Path</th>
-    <td>`/client/1-click`</td>
-  </tr>
-</table>
-
-<IntegrationTypeEndpointAdmonition option='SDK' />
-
-
-#### Request {#post-client-1-click-request}
-
-<PostClient1ClickRequestBody/>
-
-<table>
-    <PostClient1ClickRequestBodyTable/>
-</table>
-
-:::tip
-If you don't have a user's phone number yet, call `POST /client/1-click` with an empty request body, and the SDK will prompt the user to enter their phone number.
-:::
-
-
-#### Response {#post-client-1-click-response}
-
-<PostClient1ClickResponseBody/>
-
-<table>
-  <PostClient1ClickResponseBodyTable />
-</table>
-
----
-
 
 <EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#e80daa1e-5337-4f6f-b769-d46a9bc72e0c'>
   ### `GET /1-click`
@@ -826,3 +831,164 @@ GET /1-click/health/{healthDataUuid}
 ```
 
 See [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity).
+
+---
+
+
+{/* TODO: Update Postman URL */}
+<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#e80daa1e-5337-4f6f-b769-d46a9bc72e0c'>
+  ### `GET /1-click/health/payers`
+</EndpointHeaderWithoutSwagger>
+
+> Get all supported payers for 1-Click Health
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`GET`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/health/payers`</td>
+  </tr>
+</table>
+
+
+#### Request {#get-1-click-health-payers-request}
+
+Call:
+
+```
+GET /1-click/health/payers
+```
+
+You can optionally include query parameters, for example:
+
+```
+GET /1-click/health/payers?$search=aetna&$limit=10&$skip=0&$paginate=true
+```
+
+<table>
+  <tr>
+    <th>Parameter</th>
+    <th>Required?</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Default</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+      <td>`$search`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>none</td>
+      <td>none</td>
+      <td>Search by payer name or ID</td>
+      <td>`aetna`</td>
+  </tr>
+  <tr>
+      <td>`$limit`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`integer`</td>
+      <td>none</td>
+      <td>10</td>
+      <td>Number of payers per page</td>
+      <td>`100`</td>
+  </tr>
+  <tr>
+      <td>`$skip`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`integer`</td>
+      <td>none</td>
+      <td>0</td>
+      <td>Number of payers to skip</td>
+      <td>`25`</td>
+  </tr>
+  <tr>
+      <td>`$paginate`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`boolean`</td>
+      <td>none</td>
+      <td>none</td>
+      <td>Whether to return paginated results</td>
+      <td>`true`</td>
+  </tr>
+</table>
+
+:::note
+**This endpoint is unauthenticated.**
+:::
+
+
+#### Response {#get-1-click-health-payers-response}
+
+Without query parameters, the response body will be unpaginated:
+
+```typescript title="GET /1-click/health/payers Response Body (unpaginated)"
+[
+    ...Payer
+]
+```
+
+See [`Payer`](/reference/api/types#payer). This includes all [supported payers](/1-click-health/supported-payers).
+
+With query parameters, the response body will be paginated: 
+
+```typescript title="GET /1-click/health/payers?... Response Body (paginated)"
+{
+    total: integer,
+    limit: integer,
+    skip: integer,
+    data: [
+        ...Payer
+    ],
+}
+```
+
+This includes (under `data`) an array of payer objects for all [supported payers](/1-click-health/supported-payers) that match the query, with keys as described in the table below.
+
+<table>
+  <tr>
+    <th>Property</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>`total`</td>
+    <td>`integer`</td>
+    <td>none</td>
+    <td>Number of payers</td>
+    <td>`3460`</td>
+  </tr>
+  <tr>
+    <td>`limit`</td>
+    <td>`integer`</td>
+    <td>none</td>
+    <td>Number of payers per page</td>
+    <td>`100`</td>
+  </tr>
+  <tr>
+    <td>`skip`</td>
+    <td>`integer`</td>
+    <td>none</td>
+    <td>Number of payers to skip</td>
+    <td>`25`</td>
+  </tr>
+  <tr>
+    <td>`data`</td>
+    <td>`array`</td>
+    <td>Array of `Payer`s</td>
+    <td>Payers that match submitted query</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>`data[i]`</td>
+    <td>`Payer`</td>
+    <td>See [`Payer`](/reference/api/types#payer)</td>
+    <td>Payer</td>
+    <td>See `Payer` [Example](/reference/api/types#example-payer)</td>
+  </tr>
+</table>

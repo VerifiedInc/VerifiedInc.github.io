@@ -1,0 +1,12 @@
+{
+  "name": "verified-inc",
+  "version": "15.1.2",
+  "description": "Verified Inc developer assistant — SDK, API, webhooks, and integration guidance for 1-Click Signup, 1-Click Health, 1-Click Verify, and Text to Signup.",
+  "skills": [
+    "skills/sdk-reference/SKILL.md",
+    "skills/api-reference/SKILL.md",
+    "skills/integration-guide/SKILL.md",
+    "skills/sandbox-testing/SKILL.md",
+    "skills/webhooks/SKILL.md"
+  ]
+}

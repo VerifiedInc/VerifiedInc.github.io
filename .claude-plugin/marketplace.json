@@ -1,0 +1,15 @@
+{
+  "name": "verified-inc",
+  "owner": {
+    "name": "Verified Inc",
+    "email": "Support@Verified.inc"
+  },
+  "plugins": [
+    {
+      "name": "verified-inc",
+      "source": "./claude-plugin",
+      "description": "SDK, API, and integration guidance for Verified 1-Click Signup, 1-Click Health, 1-Click Verify, and Text to Signup.",
+      "version": "15.1.2"
+    }
+  ]
+}

@@ -17,7 +17,7 @@ We provide a [Claude Code](https://claude.ai/code) plugin that gives developers 
 claude plugin marketplace add VerifiedInc/VerifiedInc.github.io
 
 # Install the plugin
-claude plugin install verifiedinc-dev-toolkit@verifiedinc-dev-toolkit
+claude plugin install verifiedinc-dev-toolkit@verifiedinc
 ```
 
 ### What it does
@@ -45,7 +45,7 @@ This loads the plugin from the local directory for your current session without 
 The plugin version tracks the docs repo version. When we release a new version, your plugin updates automatically (marketplace auto-update is enabled by default). To manually update:
 
 ```bash
-claude plugin marketplace update verifiedinc-dev-toolkit
+claude plugin marketplace update verifiedinc
 ```
 
 To pin a specific version, configure it in your project's `.claude/settings.json`.

@@ -6,6 +6,42 @@ These docs are built using [Docusaurus](https://v2.docusaurus.io/docs/) (v2), de
 
 **Important:** Publishing to `master` will publish to [docs.verified.inc](https://docs.verified.inc/)! Please don't publish any real documentation yet so we don't run into legal issues with IP protection.
 
+## Claude Code Plugin
+
+We provide a [Claude Code](https://claude.ai/code) plugin that gives developers contextual documentation assistance while integrating Verified products. The plugin includes skills for SDK reference, API reference, integration guides, sandbox testing, and webhooks.
+
+### Install
+
+```bash
+# Add the Verified marketplace
+claude plugin marketplace add VerifiedInc/VerifiedInc.github.io
+
+# Install the plugin
+claude plugin install verifiedinc-dev-toolkit@verifiedinc-dev-toolkit
+```
+
+### What it does
+
+When you're working on code that uses `@verifiedinc-public/client-sdk` or the Verified API, the plugin automatically provides relevant context about:
+
+- **SDK Reference** — Constructor, methods, types, constants, and event handling
+- **API Reference** — All endpoints, authentication, types, and error codes
+- **Integration Guide** — Step-by-step SDK and API setup, Dashboard configuration, going live
+- **Sandbox & Testing** — Test users, verification codes, error simulation, risk signals
+- **Webhooks** — 1-Click Health webhook payload, delivery guarantees, configuration
+
+### Updates
+
+The plugin version tracks the docs repo version. When we release a new version, your plugin updates automatically (marketplace auto-update is enabled by default). To manually update:
+
+```bash
+claude plugin marketplace update verifiedinc-dev-toolkit
+```
+
+To pin a specific version, configure it in your project's `.claude/settings.json`.
+
+---
+
 ## Docusaurus (v2)
 
 **Note:** Make sure _not_ to use the v1 Docusaurus docs.

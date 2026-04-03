@@ -30,6 +30,16 @@ When you're working on code that uses `@verifiedinc-public/client-sdk` or the Ve
 - **Sandbox & Testing** — Test users, verification codes, error simulation, risk signals
 - **Webhooks** — 1-Click Health webhook payload, delivery guarantees, configuration
 
+### Local Development
+
+If you're contributing to the plugin or want to test changes locally, use the `--plugin-dir` flag:
+
+```bash
+claude --plugin-dir ./claude-plugin
+```
+
+This loads the plugin from the local directory for your current session without installing it globally.
+
 ### Updates
 
 The plugin version tracks the docs repo version. When we release a new version, your plugin updates automatically (marketplace auto-update is enabled by default). To manually update:

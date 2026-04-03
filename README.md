@@ -35,7 +35,7 @@ When you're working on code that uses `@verifiedinc-public/client-sdk` or the Ve
 If you're contributing to the plugin or want to test changes locally, use the `--plugin-dir` flag:
 
 ```bash
-claude --plugin-dir ./claude-plugin
+claude --plugin-dir claude-plugins/verifiedinc-dev-toolkit
 ```
 
 This loads the plugin from the local directory for your current session without installing it globally.

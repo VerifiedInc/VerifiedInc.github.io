@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "verifiedinc-dev-toolkit",
-      "source": "./claude-plugin",
+      "source": "./claude-plugins/verifiedinc-dev-toolkit",
       "description": "SDK, API, and integration guidance for Verified 1-Click Signup, 1-Click Health, 1-Click Verify, and Text to Signup.",
       "version": "15.1.2"
     }

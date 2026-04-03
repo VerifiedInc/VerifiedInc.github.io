@@ -12,12 +12,14 @@ We provide a [Claude Code](https://claude.ai/code) plugin that gives developers 
 
 ### Install
 
+Within a Claude Code session:
+
 ```bash
 # Add the Verified marketplace
-claude plugin marketplace add VerifiedInc/VerifiedInc.github.io
+/plugin marketplace add VerifiedInc/VerifiedInc.github.io
 
 # Install the plugin
-claude plugin install verifiedinc-dev-toolkit@verifiedinc
+/plugin install verifiedinc-dev-toolkit@verifiedinc
 ```
 
 ### What it does

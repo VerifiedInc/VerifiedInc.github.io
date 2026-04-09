@@ -1,5 +1,6 @@
 import RiskSignalsOptionsTable from '@site/versioned_docs/version-2.1/reusables/risk-signals-options-table.mdx';
 import ImmutableSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/immutable-setting-admonition.mdx'; 
+import RiskSignalsEnableMultipleAddressesAdmonition from '@site/versioned_docs/version-2.1/reusables/risk-signals-enable-multiple-addresses-admonition.mdx'; 
 
 <ImmutableSettingAdmonition/>
 
@@ -11,10 +12,12 @@ import ImmutableSettingAdmonition from '@site/versioned_docs/version-2.1/reusabl
 
 <RiskSignalsOptionsTable/>
 
-:::tip Advanced Has Extra Cost 
+<RiskSignalsEnableMultipleAddressesAdmonition/>
+
+:::info Advanced Has Extra Cost 
 **Advanced** risk signals come with extra cost. They're particularly relevant if you're using 1-Click Signup for a high sensitivity use case where fraud is a major risk. 
 :::
 
 :::danger
-**Off** is not recommended. It will prevent Verified from sourcing risk signals for a user and blocking them if the risk score is too high.
+**Off** is not recommended. It will prevent us from sourcing risk signals for a user — and blocking them if the risk score is too high. It will also prevent us from returning multiple addresses for a user.
 :::

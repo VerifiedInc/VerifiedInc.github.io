@@ -506,7 +506,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                 ids: [string], // ids[0] is considered primary
                 logoUrl?: string
             },
-            edi_271: string
+            verificationMethod: string
         }
     ],
     errors?: [
@@ -535,16 +535,16 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
     <tr>
         <td>`status`</td>
         <td>
-        <details>
-            <summary>`enum`</summary>
+            <details>
+                <summary>`enum`</summary>
 
-            Possible values:
-            - `"PENDING"`
-            - `"PROCESSING"`
-            - `"SUCCEEDED"`
-            - `"FAILED"`
-            - `"PARTIAL"`
-        </details>
+                Possible values:
+                - `"PENDING"`
+                - `"PROCESSING"`
+                - `"SUCCEEDED"`
+                - `"FAILED"`
+                - `"PARTIAL"`
+            </details>
         </td>
         <td>`UPPER_SNAKE_CASE`</td>
         <td>Status of the 1-Click Health flow</td>
@@ -570,6 +570,22 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
         <td>See [`Payer`](#payer)</td>
         <td>Payer for health insurance plan</td>
         <td>See `Payer` [Example](#example-payer)</td>
+    </tr>
+    <tr>
+        <td>`results[i].verificationMethod`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                - `"clearinghouse"`
+                - `"self_attested"`
+                - `null`
+            </details>
+        </td>
+        <td>`snake_case`</td>
+        <td>How a health insurance plan was verified</td>
+        <td>`"clearinghouse"`</td>
     </tr>
     {/* Removing from here: Will move to /eligibility endpoint/type once it exists */}
     {/* <tr>

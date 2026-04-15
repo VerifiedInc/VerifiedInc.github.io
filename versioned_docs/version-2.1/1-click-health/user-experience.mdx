@@ -294,26 +294,27 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Appears in view state.*
 
-                One line, wrapped:
+                Contains the two fields described below.
 
-                1. `{Payer Name}, {Member ID}`
-
-                If multiple values are available:
+                If multiple plans are available:
 
                 - Dropdown
                 - Helper: 
                     > Choose the right insurance plan
 
-                If only one value is available:
+                If only one plan is available:
 
                 - Static text
 
 
-                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Payer
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Insurer
 
-                > Payer
+                > Insurer
 
                 *Appears in view state.*
+
+                - “Insurer” not “Payer” because the former makes more sense to users
+                - Shows payer name (`results[i].payer.name` from API response)
 
 
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Member ID
@@ -338,11 +339,14 @@ To implement this user experience yourself (which is only necessary if you choos
                 - [Error](/1-click-health/guides/setup#styling-settings) color
 
 
-                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Payer
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Insurer
 
                 *Appears in edit state.*
 
+                - “Insurer” not “Payer” because the former makes more sense to users
                 - Uses value selected in dropdown (from view state), if multiple values are available
+                - Has clear ("X") button on right side that appears if there's any value
+                - Uses [`GET /1-click/health/payers`](/reference/api/endpoints#get-1-clickhealthpayers) to show autofill options when the user types
 
 
                 #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Member ID
@@ -350,6 +354,7 @@ To implement this user experience yourself (which is only necessary if you choos
                 *Appears in edit state.*
 
                 - Opens alphanumeric keyboard
+                - Uses value selected in dropdown (from view state), if multiple values are available
                 - If user starts to edit (by deleting one character), clear entire value
 
 
@@ -375,11 +380,14 @@ To implement this user experience yourself (which is only necessary if you choos
                 
                 ---
 
-                ![](/img/1ch-ux-screens/health-insurance-view-tooltip_hidden.png)
-                *View State* ↗️ [Open in new tab](/img/1ch-ux-screens/health-insurance-view-tooltip_hidden.png)
-                
-                ![](/img/1ch-ux-screens/health-insurance-view-tooltip_visible.png)
-                *Modal State* ↗️ [Open in new tab](/img/1ch-ux-screens/health-insurance-view-tooltip_visible.png)
+                ![](/img/1ch-ux-screens/health-insurance-view-multiple-plans-tooltip-hidden.png)
+                *View State (Multiple Plans)* ↗️ [Open in new tab](/img/1ch-ux-screens/health-insurance-view-multiple-plans-tooltip-hidden.png)
+
+                ![](/img/1ch-ux-screens/health-insurance-view-single-plan-tooltip-hidden.png)
+                *View State (Single Plan)* ↗️ [Open in new tab](/img/1ch-ux-screens/health-insurance-view-single-plan-tooltip-hidden.png)
+
+                ![](/img/1ch-ux-screens/health-insurance-view-tooltip-visible.png)
+                *Modal State* ↗️ [Open in new tab](/img/1ch-ux-screens/health-insurance-view-tooltip-visible.png)
 
                 ![](/img/1ch-ux-screens/health-insurance-edit.png)
                 *Edit State* ↗️ [Open in new tab](/img/1ch-ux-screens/health-insurance-edit.png)

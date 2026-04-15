@@ -3,7 +3,8 @@ import SandboxValidationAdmonition from '@site/versioned_docs/version-2.1/reusab
 import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2.1/reusables/birth-date-over-ssn4-admonition.mdx'; 
 
 <ErrorDisplay 
-  message='BirthDate mismatch." | "SSN4 mismatch." | "BirthDate mismatch and SSN4 mismatch.' 
+  message='BirthDate mismatch." | "SSN4 mismatch." | "FirstName mismatch." | "BirthDate mismatch and SSN4 mismatch." | "BirthDate mismatch and FirstName mismatch." | "SSN4 mismatch and FirstName mismatch." | "BirthDate mismatch and SSN4 mismatch and FirstName mismatch."' 
+  
   identifiers='{ [identifierType: string]: string }'
   verificationMethod='{ [identifierType: string]: string }'
   description=''
@@ -17,8 +18,6 @@ import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2.1/reusab
 </ErrorDisplay>
 <SandboxValidationAdmonition />
 
-<BirthDateOverSsn4Admonition/>
-
 ```typescript title="Example: Birth Date Only"
 {
     ...
@@ -31,22 +30,10 @@ import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2.1/reusab
 }
 ```
 
-```typescript title="Example: SSN4 Only"
+```typescript title="Example: Birth Date and First Name"
 {
     ...
-    "message": "SSN4 mismatch."
-    ...
-    "data": {
-        "errorCode": "OCE012",
-        ...
-    }
-}
-```
-
-```typescript title="Example: Both Birth Date and SSN4"
-{
-    ...
-    "message": "BirthDate mismatch and SSN4 mismatch."
+    "message": "BirthDate mismatch and FirstName mismatch."
     ...
     "data": {
         "errorCode": "OCE012",

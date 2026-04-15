@@ -21,7 +21,7 @@ import OCE011InclusiveOrAdmonition from '@site/versioned_docs/version-2.1/reusab
 
 <OCE011InclusiveOrAdmonition/>
 
-Currently `inputs` will always be birth date, SSN4, or both — see the examples below.
+Currently `inputs` will always include one of more of birth date, SSN4, and first name — see the examples below.
 
 <BirthDateOverSsn4Admonition/>
 
@@ -38,27 +38,27 @@ Currently `inputs` will always be birth date, SSN4, or both — see the example
 }
 ```
 
-```typescript title="Example: SSN4 Only"
+```typescript title="Example: Birth Date and First Name"
 {
     ...
-    "message": "Additional information is required to source data for user: ssn4"
+    "message": "Additional information is required to source data for user: birthDate, fullName.firstName"
     ...
     "data": {
         "errorCode": "OCE011",
-        "additionalInputs": ["ssn4"],
+        "additionalInputs": ["birthDate", "fullName.firstName"], // inclusive OR: can pass one or more in next call
         ...
     }
 }
 ```
 
-```typescript title="Example: Both Birth Date and SSN4"
+```typescript title="Example: Birth Date, First Name and SSN4"
 {
     ...
-    "message": "Additional information is required to source data for user: birthDate, ssn4"
+    "message": "Additional information is required to source data for user: birthDate, fullName.firstName, ssn4"
     ...
     "data": {
         "errorCode": "OCE011",
-        "additionalInputs": ["birthDate", "ssn4"], // inclusive OR: can pass either or both in next call
+        "additionalInputs": ["birthDate", "fullName.firstName", "ssn4"], // inclusive OR: can pass one or more in next call
         ...
     }
 }

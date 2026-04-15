@@ -35,6 +35,7 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
 import RiskSignalsSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/risk-signals-setting-admonition.mdx';
 import MostProbablePlansAreListedFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/most-probable-plans-are-listed-first-admonition.mdx';
 import PayerIdsAdmonition from '@site/versioned_docs/version-2.1/reusables/payer-ids-admonition.mdx';
+import RiskSignalsEnableMultipleAddressesAdmonition from '@site/versioned_docs/version-2.1/reusables/risk-signals-enable-multiple-addresses-admonition.mdx'; 
 
 > An **output** is a piece of data we return from the SDK or API.
 
@@ -254,6 +255,8 @@ See [Coverage](/1-click-signup/overview#coverage) for more information.
         <td>`"richard@piedpiper.net"`</td>
     </tr> */}
 </table>
+
+<RiskSignalsEnableMultipleAddressesAdmonition/>
 
 :::note Coverage for Sex Credential
 If you're using the **API** [integration type](/1-click-signup/guides/setup#integration-type), coverage for the Sex credential is a bit lower than for the other credentials at about **~80% of US adults.** Coverage for your user base may vary.
@@ -3143,6 +3146,60 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
         <td>See X12 [EDI 271 examples](https://x12.org/examples/005010x279)</td>
     </tr>
 </table>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+
+### Metadata
+
+> A piece of **metadata** is additional data that's not a user's identity data — though it's often _about_ that identity data.
+
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+#### Verification Method
+</CollapsibleHeader>
+
+<table>
+    <tr>
+        <th>Output</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Verification Method</td>
+        <td>`verificationMethod`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"clearinghouse"`
+                    - `"self_attested"`
+                    - `null`
+            </details>
+        </td>
+        <td>`snake_case`</td>
+        <td>How a health insurance plan was verified</td>
+        <td>`"clearinghouse"`</td>
+    </tr>
+</table>
+
+<details>
+    <summary>What Verification Method Means</summary>
+
+    **`verificationMethod` describes how a health insurance plan was verified:**
+    - `"clearinghouse"`: verified via clearinghouse records
+    - `"self_attested"`: attested by the user themselves (not verified)
+    - `null`
+
+    You can build custom logic to handle health insurance plans based on their `verificationMethod`, for example applying additional validation if one is `"self_attested"`.
+</details>
 
 </CollapsibleSection>
 </CollapsibleGroup>

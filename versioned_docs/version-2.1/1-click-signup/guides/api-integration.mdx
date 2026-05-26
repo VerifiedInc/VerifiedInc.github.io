@@ -79,15 +79,7 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 
 <DevelopmentWorkAdmonition />
 
-
-## 1. Prompt user for phone number and challenge.
-
-To start 1-Click Signup for a user, you'll need their phone number and a [challenge](/reference/data/inputs#challenges) (first name, birthday, or SSN4).
-
-
-
-
-## 2. Verify user's phone number.
+## 1. Prompt user for phone number and verify it.
 
 To start 1-Click Signup for a user, you'll need their verified phone number. To verify the user's phone number, you can either:
 1. **Use our 1-Click Verify API:** This is our dedicated phone verification solution. 
@@ -203,7 +195,6 @@ One of two things will happen:
 :::tip Data is Retrievable for 60 Minutes
 **You can retrieve data for 60 minutes,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click`](/reference/api/endpoints#get-1-click) instead of `POST /1-click` so that a duplicate 1-Click Signup event isn't created (and so you aren't billed twice).
 :::
-
 
 ## 3. (if necessary) Prompt user for additional info.
 

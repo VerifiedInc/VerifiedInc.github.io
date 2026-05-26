@@ -37,15 +37,24 @@ module.exports = {
           position: 'left',
         },
         {
+          type: 'custom-navbarStatus',
+          position: 'left',
+        },
+        {
+          to: 'https://verified.instatus.com',
+          label: 'Status',
+          position: 'left',
+        },
+        {
           type: 'custom-navbarButton',
           to: 'https://dashboard.verified.inc',
           label: 'Dashboard',
-          position: 'left',
+          position: 'right',
         },
         {
           to: 'https://1-click.demo.verified.inc',
           label: 'Demo',
-          position: 'left',
+          position: 'right',
         },
         {
           to: 'https://verified.inc',
@@ -426,7 +435,11 @@ module.exports = {
     {
       src: '/scripts/brandSettings.js',
       defer: true,
-    }
+    },
+    {
+      src: 'https://api.dashboard.instatus.com/widget?host=verified.instatus.com&code=b8711ff3&locale=en',
+      defer: true,
+    },
   ],
   themes: [
     '@docusaurus/theme-live-codeblock',

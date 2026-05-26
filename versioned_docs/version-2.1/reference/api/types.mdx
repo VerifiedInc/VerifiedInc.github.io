@@ -688,6 +688,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
     phone: string,
     channel: string,
     status: string,
+    verified: boolean,
     createdAt: integer,
     expiresAt: integer,
     deliveredAt?: integer,
@@ -727,7 +728,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                 Possible values:
                     - `"textToSignup"`
                     - `"sms"`
-                    - `"email"` <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/>
+                    {/* - `"email"` <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/> */}
             </details>
         </td>
         <td>`camelCase`</td>
@@ -752,6 +753,13 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
         <td>`camelCase`</td>
         <td>The status of the verification</td>
         <td>`"delivered"`</td>
+    </tr>
+    <tr>
+        <td>`verified`</td>
+        <td>`boolean`</td>
+        <td>`boolean`</td>
+        <td>Whether the phone can currently be considered verified</td>
+        <td>`true`</td>
     </tr>
     <tr>
         <td>`createdAt`</td>

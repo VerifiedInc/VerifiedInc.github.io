@@ -1,0 +1,256 @@
+---
+id: migration-guide-for-amplify-life
+title: Migration Guide (for Amplify Life)
+sidebar_position: 3
+sidebar_label: Migration Guide (for Amplify Life)
+description: How Amplify Life should migrate from 1-Click Signup v2.0 to v2.1
+slug: /migration-guide-for-amplify-life
+toc_max_heading_level: 4
+# unlisted: true
+draft: true
+---
+
+import Chip from '@mui/material/Chip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+
+<table>
+    <tr>
+        <th>Time to Complete</th>
+        <td>2 hours</td>
+    </tr>
+    <tr>
+        <th>Time to Test and Deploy</th>
+        <td>4 hours</td>
+    </tr>
+    <tr>
+        <th>Skills Required</th>
+        <td>Make API calls</td>
+    </tr>
+</table>
+
+:::danger
+**Support for v2.0 will be fully deprecated on TODO.** Please migrate your integration to v2.1 by this date to avoid service disruption.
+:::
+
+:wave: **Hello Amplify Life team!** You're currently using 1-Click Signup with v2.0 of the Verified API, which we're soon deprecating. You'll need to migrate to v2.1, but don't worry: this is very easy to do.
+
+**You need to make one decision: For phone verification, do you want to use our 1-Click Verify API or another solution?** For context:
+- Currently, in v2.0, we're generating the verification code for you, and you're sending an SMS containing that verification code to the user. 
+- In v2.1, this is not an option. Instead, you have two choices:
+    1. **Use our 1-Click Verify API:** This is our dedicated phone verification solution, which didn't exist when you first integrated 1-Click Signup. With this, we will generate the verification code _and_ send the SMS for you. 
+    2. **Use another phone verification solution:** There are plenty of other dedicated phone verification solutions out there, such as Twilio Verify. Or, you can implement your own solution by generating verification codes and sending SMS yourself.
+
+:::info Why We Made This Change
+By requiring a dedicated phone verification solution in v2.1 (whether our 1-Click Verify API or another solution), we enable an easier integration for you (because you don't have to implement SMS sending directly) and better security (because the verification code is _only_ sent to the user).
+:::
+
+:::tip We Recommend 1-Click Verify
+We recommend using our 1-Click Verify API, because it ties directly into 1-Click Signup to make the integration especially easy and secure. Specifically:
+- 1-Click Verify outputs a `verificationUuid`.
+- You can pass this `verificationUuid` directly to 1-Click Signup, which can then hydrate the user's phone number and confirm that it was recently verified.
+
+In other words, if you use 1-Click Verify there's a closed loop with security guarantees, If you use another solution, we can't have such security guarantees, so instead we have to do a manual security and compliance review of your integration to ensure phone verification is being handled properly. 
+:::
+
+<Tabs>
+
+<TabItem value="1-click-verify" label="Use Our 1-Click Verify API" default>
+
+    **All you need to do is the following.** It should take no more than a day.
+
+    1. **Generate and check phone verification codes:** With API integration type in v2.1, Verified does not generate or check phone verification codes for you, so you'll need to do this yourself. You can also use a dedicated third party service (like [Twilio Verify](https://www.twilio.com/en-us/user-authentication-identity/verify)) for this if you prefer.
+    2. **Update your API calls:**
+        1. **Remove the first `POST /1-click` call** (step 2 under Semi-Hosted in the table below). _This call was to have Verified generate a phone verification code, which in API v2.1 you do yourself._
+        2. **Replace the `GET /1-click` call** (step 5 under Semi-Hosted in the table below). Call `POST /1-click` instead. _You'll receive either data or an error. The same error handling you have in place for the `GET` call will work for the `POST` call._
+        3. **Replace the `PATCH /1-click` call** (step 7 under Semi-Hosted in the table below). Call `POST /1-click` instead (with additional info from the user). _You'll receive either data or an error. The same error handling you have in place for the `PATCH` call will work for the `POST` call._
+
+    **That's it!**
+
+    See the v2.1 [API Integration](/guides/api-integration) guide for full details. Here are the differences in steps between the integration types:
+
+    <table>
+        <tr>
+            <th>Version</th>
+            <th>v2.0</th>
+            <th>v2.1</th>
+        </tr>
+        <tr>
+            <th>Integration Type</th>
+            <th>Semi-Hosted</th>
+            <th>API</th>
+        </tr>
+        <tr>
+            <td>Steps</td>
+            <td>
+                1. Prompt user for phone number.
+                2. Call `POST /1-click`.
+                3. Send SMS to user.
+                4. Prompt user for verification code.
+                5. Call `GET /1-click`.
+                6. (if necessary) Prompt user for additional info.
+                7. (if necessary) Call `PATCH /1-click` with additional info.
+                8. Prompt user to confirm their data.
+            </td>
+            <td>
+                1. Prompt user for phone number and verify it.
+                    <ol type="a">
+                        <li>Generate verification code.</li>
+                        <li>Send SMS to user.</li>
+                        <li>Prompt user for verification code.</li>
+                        <li>Check user input against verification code.</li>
+                    </ol>
+                2. Call `POST /1-click`.
+                3. (if necessary) Prompt user for additional info.
+                4. (if necessary) Call `POST /1-click` with additional info.
+                5. Prompt user to confirm their data.
+            </td>
+            <td>
+                1. Prompt user for phone number and verify it.
+                    <ol type="a">
+                        <li>Generate verification code. Call `POST /1-click/verifications`.</li>
+                        <li>Send SMS to user. Call `POST /1-click/verifications/{uuid}/deliver`.</li>
+                        <li>Prompt user for verification code.</li>
+                        <li>Check user input against verification code. Call `POST /1-click/verifications/{uuid}/verify`.</li>
+                    </ol>
+                2. Call `POST /1-click` with `verificationUuid`.
+                3. (if necessary) Prompt user for additional info.
+                4. (if necessary) Call `POST /1-click` with additional info.
+                5. Prompt user to confirm their data.
+            </td>
+        </tr>
+    </table>
+
+</TabItem>
+<TabItem value="another-solution" label="Use Another Solution">
+    This is an orange 🍊
+</TabItem>
+</Tabs>
+
+
+
+## Updates in v2.1
+
+The most significant updates in [v2.1](/) are:
+- **We introduced an [SDK](/guides/sdk-integration),** which is _10x faster_ to integrate. It's highly customizable and handles the [user experience](/guides/user-experience) end to end, including sending SMS to users for phone verification.
+- **We revamped our suite of [test users](/test-users),** making it far easier to test all possible flows of 1-Click Signup. Crucially, the new test users all have phone numbers that pass validation checks, making them much simpler to use for both manual and automated testing.
+- **We changed the available integration types:** The [integration types in v2.0](/v2.0/integration-guide#2-configure-brand-settings) are updated to [integration types in v2.1](/guides/setup#integration-type) as follows:
+    - **Hosted** in v2.0 is replaced by **SDK** in v2.1
+    - **Semi-Hosted** in v2.0 is no longer available in v2.1
+    - **Non-Hosted** in v2.0 is equivalent to **API** in v2.0
+
+
+## Migrate from Semi-Hosted v2.0
+
+
+
+
+What we can migrate for you:
+- Integration Type: Semi-Hosted -> API
+- Phone Verification: -> Use 1-Click Verify API or another solution
+
+with the Semi-Hosted integration type. 
+
+which means you're hosting your own user interface and sending SMS, so you have most of what you need in place to use the **API** integration type in v2.1. So, this would be a good option for you if you want to keep your existing user experience in place.
+
+In v2.1, you should use these brand settings:
+- **[Integration Type](/1-click-signup/guides/setup#integration-type):** API
+- **[Phone Verification](/1-click-signup/guides/setup#phone-verification):** Use the 1-Click Verify API or another solution
+
+Currently, in v2.0, we're generating the verification code for you, and you're sending an SMS containing that verification code to the user. In v2.1, this is not an option. You have two choices:
+1. **Use our 1-Click Verify API:** This is our dedicated phone verification solution. It didn't exist when you integrated 1-Click Signup.
+2. **Use another phone verification solution:** There are plenty of other dedicated phone verification solutions out there, like Twilio Verify. Or, you can implement your own solution.
+
+
+
+Here are the differences between the integration types:
+
+<table>
+    <tr>
+        <th>Version</th>
+        <th>v2.0</th>
+        <th colspan="2">v2.1</th>
+    </tr>
+    <tr>
+        <th>[Integration Type](/1-click-signup/guides/setup#integration-type)</th>
+        <th>Semi-Hosted <Chip label="Current" variant="outlined" size="small" color="error"/></th>
+        <th colspan="2">API <Chip label="After Migration" variant="outlined" size="small" color="primary"/></th>
+    </tr>
+    <tr>
+        <td>[Phone Verification](/1-click-signup/guides/setup#phone-verification) brand setting</td>
+        <td>Use Verified's</td>
+        <td>Hosted by Verified <br/> (embeddable as SDK)</td>
+        <td>Hosted by You</td>
+    </tr>
+    <tr>
+        <td>User Interface</td>
+        <td>Hosted by You</td>
+        <td>Hosted by Verified <br/> (embeddable as SDK)</td>
+        <td>Hosted by You</td>
+    </tr>
+    <tr>
+        <td>Phone Verification Code</td>
+        <td>Generated by Verified</td>
+        <td>Generated by Verified</td>
+        <td>Generated by You</td>
+    </tr>
+    <tr>
+        <td>SMS</td>
+        <td>Sent by You</td>
+        <td>Sent by Verified (or You)</td>
+        <td>Sent by You</td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <th></th>
+        <th>Current</th>
+        <th colSpan={2}>After Migration</th>
+    </tr>
+    <tr>
+        <th>Version</th>
+        <td>v2.0</td>
+        <td colSpan={2}>v2.1</td>
+    </tr>
+    <tr>
+        <th>Phone Verification</th>
+        <td>Code generated by Verified, SMS sent by you</td>
+        <td>1-Click Verify API <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
+        <td>Another solution</td>
+    </tr>
+    <tr>
+        <td>User Interface</td>
+        <td>Hosted by You</td>
+        <td>Hosted by Verified <br/> (embeddable as SDK)</td>
+        <td>Hosted by You</td>
+    </tr>
+    <tr>
+        <td>Phone Verification Code</td>
+        <td>Generated by Verified</td>
+        <td>Generated by Verified</td>
+        <td>Generated by You</td>
+    </tr>
+    <tr>
+        <td>SMS</td>
+        <td>Sent by You</td>
+        <td>Sent by Verified (or You)</td>
+        <td>Sent by You</td>
+    </tr>
+</table>
+
+
+### Migrate to API v2.1
+
+
+#### Use the 1-Click Verify API
+
+Follow the [1-Click Verify API Integration guide](/1-click-verify/guides/api-integration). You're already prompting the user for their phone number and verification code, so following this guide will be easy. 
+
+
+#### Use Another Phone Verification Solution
+
+
+
+

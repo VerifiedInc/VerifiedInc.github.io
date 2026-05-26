@@ -79,9 +79,33 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 
 <DevelopmentWorkAdmonition />
 
-## 1. Prompt user for phone number and verify it.
 
-To start 1-Click Signup for a user, you'll need their phone number, and you'll need to verify it using your own solution. You can do this however you like, as long as you verify the user's phone number with a **one-time verification code at least 6 digits long.**
+## 1. Prompt user for phone number and challenge.
+
+To start 1-Click Signup for a user, you'll need their phone number and a [challenge](/reference/data/inputs#challenges) (first name, birthday, or SSN4).
+
+
+
+
+## 2. Verify user's phone number.
+
+To start 1-Click Signup for a user, you'll need their verified phone number. To verify the user's phone number, you can either:
+1. **Use our 1-Click Verify API:** This is our dedicated phone verification solution. 
+2. **Use another phone verification solution:** This can be one of the many phone verification solutions on the market or one you build yourself. You can do this however you like, as long as you verify the user's phone number with a **one-time verification code at least 6 digits long.**
+
+:::tip We Recommend 1-Click Verify
+We recommend using our 1-Click Verify API, because it ties directly into 1-Click Signup to make the integration especially easy and secure. Specifically, 1-Click Verify outputs a `verificationUuid` that you can pass directly to 1-Click Signup, which can then hydrate the user's phone number and confirm that it was properly verified.
+:::
+
+:::warning A Compliance Review is Required if You Use Another Solution
+If you use another solution for phone verification, we will need to do a compliance review of your integration to ensure that phone verification is being handled properly. If you use 1-Click Verify, there's a closed loop with security guarantees, but if you use another solution, we can't have such security guarantees. So, instead we have to do a manual review of your integration to ensure phone verification is being handled properly. Specifically, we check for:
+- **Recency:** Phone numbers must be verified within 24 hours of when you use 1-Click Signup to autofill user data (to ensure data freshness).
+- **Entropy:** Verification codes must be at least 6 digits long (to prevent brute force attacks).
+- **Expiration:** Verification codes must be short lived, lasting no more than 10 minutes (to prevent staleness).
+- **One-time use:** Verification codes must be able to be used only once (to prevent reuse attacks).
+- **Rate limiting:** Verification code attempts must be rate limited (to prevent brute force attacks).
+- **Attempt limiting:** Verification code attempts must be limited to a small number for a given phone number (to prevent brute force attacks).
+:::
 
 <SupportedPhoneNumbersAdmonition />
 
@@ -113,7 +137,7 @@ Regulations require that users give informed consent, so you must use our consen
 
 Use this language:
 
-> By `{taking this action}`, you agree that [Verified](https://verified.inc) (`{Brand Name}`’s service provider) and its vendors may receive your personal info and autofill more info about you, including your social security number.
+> By `{taking this action}`, you agree that `{Brand Name}`’s service provider [Verified](https://verified.inc) and its vendors may receive your personal info and autofill more info about you, including your social security number.
 
 - **Replace `{taking this action}` with the action the user will take to start 1-Click Signup.** For example:
   - If you use a form with a phone number input that autosubmits (which [we recommend](/1-click-signup/user-experience#phone)), you should use "entering your phone number".
@@ -123,7 +147,7 @@ Use this language:
 
 Here's an example:
 
-> By entering your phone number, you agree that [Verified](https://verified.inc) (Hooli’s service provider) and its vendors may receive your personal info and autofill more info about you, including your social security number.
+> By entering your phone number, you agree that Hooli’s service provider [Verified](https://verified.inc) and its vendors may receive your personal info and autofill more info about you, including your social security number.
 
 #### b. Include a "Powered by Verified" graphic.
 
@@ -134,6 +158,19 @@ The graphic should be placed just below the trigger you use to start the 1-Click
 We provide many different variants of the graphic, so you can choose the one that best fits your use case and the background color of your application:
 
 <PoweredByGraphicVariantsForOneClickSignup />
+
+<Tabs>
+
+<TabItem value="1-click-verify" label="Use 1-Click Verify" default>
+
+  Follow the [1-Click Verify API Integration](/1-click-verify/guides/api-integration) guide. 
+
+</TabItem>
+<TabItem value="another-solution" label="Use Another Solution">
+    This is an orange 🍊
+</TabItem>
+</Tabs>
+
 
 ## 2. Call `POST /1-click`.
 
@@ -166,6 +203,7 @@ One of two things will happen:
 :::tip Data is Retrievable for 60 Minutes
 **You can retrieve data for 60 minutes,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click`](/reference/api/endpoints#get-1-click) instead of `POST /1-click` so that a duplicate 1-Click Signup event isn't created (and so you aren't billed twice).
 :::
+
 
 ## 3. (if necessary) Prompt user for additional info.
 

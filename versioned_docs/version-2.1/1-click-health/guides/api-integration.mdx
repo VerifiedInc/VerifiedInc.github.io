@@ -118,7 +118,7 @@ Regulations require that users give informed consent, so you must use our consen
 
 Use this language:
 
-> By `{taking this action}`, you agree that [Verified](https://verified.inc) (`{Brand Name}`’s service provider) and its vendors may receive your personal info and provide `{Brand Name}` with more info about you, including your health insurance.
+> By `{taking this action}`, you agree that `{Brand Name}`’s service provider [Verified](https://verified.inc) and its vendors may receive your personal info and provide `{Brand Name}` with more info about you, including your health insurance.
 
 - **Replace `{taking this action}` with the action the user will take to start 1-Click Health.** For example:
   - If you start with 1-Click Signup, using a form with a phone number input that autosubmits (which [we recommend](/1-click-signup/user-experience#phone)), you should use "entering your phone number".
@@ -128,15 +128,15 @@ Use this language:
 
 Here's an example:
 
-> By entering your phone number, you agree that [Verified](https://verified.inc) (Hooli’s service provider) and its vendors may receive your personal info and provide to Hooli more info about you, including your health insurance.
+> By entering your phone number, you agree that Hooli’s service provider [Verified](https://verified.inc) and its vendors may receive your personal info and provide to Hooli more info about you, including your health insurance.
 
 :::warning Modify Consent Language if Collecting SSNs
 **If you use 1-Click Signup to autofill SSNs as an input for 1-Click Health, you need to have "including my social security number" in the consent language,** as described [here](/1-click-signup/guides/api-integration#a-include-the-verified-consent-language) in the 1-Click Signup API Integration guide. In this case, the consent language should be:
 
-> By `{taking this action}`, you agree that [Verified](https://verified.inc) (`{Brand Name}`’s service provider) and its vendors may receive your personal info and provide `{Brand Name}` with more info about you, including your social security number and health insurance.
+> By `{taking this action}`, you agree that `{Brand Name}`’s service provider [Verified](https://verified.inc) and its vendors may receive your personal info and provide `{Brand Name}` with more info about you, including your social security number and health insurance.
 
 So, for example:
-> By entering your phone number, you agree that [Verified](https://verified.inc) (Hooli’s service provider) and its vendors may receive your personal info and provide to Hooli more info about you, including your social security number and health insurance.
+> By entering your phone number, you agree that Hooli’s service provider [Verified](https://verified.inc) and its vendors may receive your personal info and provide to Hooli more info about you, including your social security number and health insurance.
 :::
 
 
@@ -253,8 +253,8 @@ We strongly recommend using 1-Click Signup to source inputs for 1-Click Health b
 
 <Admonition type="danger" title="Mask Member IDs">
     **We require you to mask Member IDs because they're particularly sensitive:**
-    - **Mask at least 3 middle characters server side,** so the client only displays the starting and ending characters. This preserves privacy while making it easy for the user to confirm the value. _Note that Member IDs are alphanumeric and variable in length, so masking must be done thoughtfully. Email us at Support@Verified.inc if you need guidance._
-    - **If you allow the user to edit the Member ID, clear the entire value when they start editing**, so they don't just edit visible characters (which could result in another valid Member ID, but one that isn't theirs).
+    - **Mask all except the last 4 characters server side,** so the client only displays the last 4 characters. _Note that Member IDs are alphanumeric and variable in length._ We recommend using the • character to mask, so that (for example) B231615071 is masked as ••••••5071.
+    - **If you allow the user to edit the Member ID, clear the entire value when they start editing (by deleting one character)**, so they don't just edit visible characters (which could result in another valid Member ID, but one that isn't theirs).
 </Admonition>
 
 **We recommend that you:** 

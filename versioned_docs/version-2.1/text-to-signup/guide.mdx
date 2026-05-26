@@ -312,8 +312,8 @@ If neither of these apply to your use case, **_skip this step — you need no c
 
 The integration work you can do depends on the [redirect user after](#redirect-user-after) setting:
 - If it's set to **"Text to Signup"**, you can optionally:
-    - [Confirm the user's phone is verified.](#confirm-users-phone-is-verified)
     - [Pass the user to an integrated 1-Click Signup flow](#pass-user-to-integrated-1-click-signup-flow) on your side.
+    - [Confirm the user's phone is verified](#confirm-users-phone-is-verified), separately from an integrated 1-Click Signup flow (which confirms this automatically).
 - If it's set to **"Hosted 1-Click Signup"**, you need to [retrieve the user's identity info](#retrieve-users-identity-info).
 
 See the sections below for details about how to do each of these.
@@ -324,12 +324,34 @@ See the sections below for details about how to do each of these.
     <CollapsibleSection>
 
         <CollapsibleHeader>
+        ### Pass User to Integrated 1-Click Signup Flow
+        </CollapsibleHeader>
+
+        <Admonition type="note">
+            This integration step is only relevant if the [redirect user after](#redirect-user-after) setting is set to **"Text to Signup".**
+        </Admonition>
+
+        Because Text to Signup verifies a user's phone number, you can pass the user to an integrated 1-Click Signup flow _that skips the standard phone verification process_ (enter phone, receive SMS verification code, enter verification code). The result is a frictionless, delightful user experience!
+
+        How to do this depends on your brand's [integration type](/1-click-signup/guides/setup#integration-type):
+        - **SDK:** Start at [step 1](/1-click-signup/guides/sdk-integration#1-create-a-session-key) in the [SDK Integration](/1-click-signup/guides/sdk-integration) guide, but include `verificationUuid` in the request body of `POST /client/1-click` (instead of using an empty request body). This will make the SDK skip the [Phone](/1-click-signup/user-experience#phone) and [Verification Code](/1-click-signup/user-experience#verification-code) screens.
+        - **API:** Skip step 1 in the [API Integration](/1-click-signup/guides/api-integration) guide and go straight to [step 2](/1-click-signup/guides/api-integration#2-call-post-1-click), using `verificationUuid` instead of `phone` in the request body of `POST /1-click`.
+
+        It's that simple!
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
         ### Confirm User's Phone is Verified
         </CollapsibleHeader>
 
         <Admonition type="note">
         This integration step is only relevant if the [redirect user after](#redirect-user-after) setting is set to **"Text to Signup".**
         </Admonition>
+
+        If you [pass the user to an integrated 1-Click Signup flow](#pass-user-to-integrated-1-click-signup-flow) on your side, that automatically confirms the user's phone is verified. But if you _don't_ want to pass the user to such a flow, you need to separately confirm the user's phone is verified. See below for how to do this (and why it's necessary).
 
         <SequenceDiagramTextToSignupConfirmUsersPhoneIsVerified/>
 
@@ -384,30 +406,6 @@ See the sections below for details about how to do each of these.
         #### c. Check verification `status`.
 
         Check that the value of `status` is `"verified"`, which means the user's phone is verified. Otherwise, it may be spoofed.
-
-    </CollapsibleSection>
-
-    <CollapsibleSection>
-
-        <CollapsibleHeader>
-        ### Pass User to Integrated 1-Click Signup Flow
-        </CollapsibleHeader>
-
-        <Admonition type="note">
-            This integration step is only relevant if the [redirect user after](#redirect-user-after) setting is set to **"Text to Signup".**
-        </Admonition>
-
-        Because Text to Signup verifies a user's phone number, you can pass the user to an integrated 1-Click Signup flow _that skips the standard phone verification process_ (enter phone, receive SMS verification code, enter verification code). The result is a frictionless, delightful user experience!
-
-        <Admonition type="important">
-            **Make sure to [confirm the user's phone is verified](#confirm-users-phone-is-verified)** before passing the user to a 1-Click Signup flow.
-        </Admonition>
-
-        How to do this depends on your brand's [integration type](/1-click-signup/guides/setup#integration-type):
-        - **SDK:** Start at [step 1](/1-click-signup/guides/sdk-integration#1-create-a-session-key) in the [SDK Integration](/1-click-signup/guides/sdk-integration) guide, but include `phone` in the request body of `POST /client/1-click` (instead of using an empty request body). This will make the SDK skip the [Phone](/1-click-signup/user-experience#phone) and [Verification Code](/1-click-signup/user-experience#verification-code) screens.
-        - **API:** Skip step 1 in the [API Integration](/1-click-signup/guides/api-integration) guide and go straight to [step 2](/1-click-signup/guides/api-integration#2-call-post-1-click).
-
-        It's that simple!
 
     </CollapsibleSection>
 

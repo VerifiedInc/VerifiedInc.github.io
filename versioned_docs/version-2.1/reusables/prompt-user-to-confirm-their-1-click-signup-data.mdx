@@ -14,8 +14,8 @@ import { GridContainer, GridRow, GridColumn, GridNonStickyElement, GridStickyEle
 
 <Admonition type="danger" title="Mask Social Security Numbers">
     **We require you to mask Social Security Numbers because they're particularly sensitive:**
-    - **Mask the first 5 digits server side,** so the client only displays the last 4 digits.
-    - **If you allow the user to edit the SSN, clear the entire value when they start editing**, so they don't just edit the last 4 digits (which could result in another valid SSN, but one that isn't theirs).
+    - **Mask the first 5 digits server side,** so the client only displays the last 4 digits. We recommend using the • character to mask, so that (for example) 000456789 is masked as ••••6789, which we recommend displaying as •••-••-6789 for extra clarity.
+    - **If you allow the user to edit the SSN, clear the entire value when they start editing (by deleting one character)**, so they don't just edit the last 4 digits (which could result in another valid SSN, but one that isn't theirs).
 </Admonition>
 
 **We recommend that you:** 

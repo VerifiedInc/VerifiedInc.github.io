@@ -10,6 +10,14 @@ import Chip from '@mui/material/Chip';
     <th>Example</th>
 </tr>
 <tr>
+    <td>`deviceIp`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string`</td>
+    <td>[IPv6](https://en.wikipedia.org/wiki/IPv6_address)</td>
+    <td>IP address of user's device that can be passed to the SDK to override what the SDK determines it to be</td>
+    <td>`"2001:0db8:85a3:0000:0000:8a2e:0370:7334"`</td>
+</tr>
+<tr>
     <td>`verificationUuid`</td>
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
@@ -39,7 +47,7 @@ import Chip from '@mui/material/Chip';
     <td>`birthDate`</td>
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
-    <td>`YYYY-MM-DD`</td>
+    <td>yyyy-MM-dd</td>
     <td>none</td>
     <td>User's birth date (in [Sandbox](/reference/api/environments#sandbox), this must be `"1989-08-01"` to pass validation)</td>
     <td>`"1989-08-01"`</td>
@@ -56,7 +64,7 @@ import Chip from '@mui/material/Chip';
 <tr>
     <td>`fullName`</td>
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-    <td>`Object`</td>
+    <td>`object`</td>
     <td>Object with keys for one or more child credentials listed below</td>
     <td>none</td>
     <td>Full name</td>
@@ -98,7 +106,7 @@ import Chip from '@mui/material/Chip';
 <tr>
     <td>`address`</td>
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-    <td>`Object`</td>
+    <td>`object`</td>
     <td>Object with keys for one or more child credentials listed below</td>
     <td>none</td>
     <td>Address</td>

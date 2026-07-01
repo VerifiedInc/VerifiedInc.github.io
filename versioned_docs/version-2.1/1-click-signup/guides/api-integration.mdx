@@ -6,7 +6,7 @@ sidebar_label: API Integration
 sidebar_class_name: sidebar-header-regular
 description: Full details on how to integrate 1-Click Signup with our API
 slug: /1-click-signup/guides/api-integration
-toc_max_heading_level: 4
+toc_max_heading_level: 3
 ---
 
 import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
@@ -19,7 +19,6 @@ import About1ClickSignupAdmonition from '@site/versioned_docs/version-2.1/reusab
 import PrivacyFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/privacy-first-admonition.mdx';
 import IntegrationTypeAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-admonition.mdx';
 import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
-import PromptUserToConfirmTheir1ClickSignupData from '@site/versioned_docs/version-2.1/reusables/prompt-user-to-confirm-their-1-click-signup-data.mdx';
 import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
 import UseUserInputAdmonition from '@site/versioned_docs/version-2.1/reusables/use-user-input-admonition.mdx';
 import HowToTestAdmonition from '@site/versioned_docs/version-2.1/reusables/how-to-test-admonition.mdx';
@@ -75,40 +74,216 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 **Complete the 1-Click Signup [Setup](/1-click-signup/guides/setup) guide before following this API Integration guide.**
 :::
 
-<SequenceDiagramOneClickSignupAPI />
-
 <DevelopmentWorkAdmonition />
 
-## 1. Prompt user for phone number and verify it.
+<SequenceDiagramOneClickSignupAPI />
 
-To start 1-Click Signup for a user, you'll need their verified phone number. To verify the user's phone number, you can either:
-1. **Use our 1-Click Verify API:** This is our dedicated phone verification solution. 
-2. **Use another phone verification solution:** This can be one of the many phone verification solutions on the market or one you build yourself. You can do this however you like, as long as you verify the user's phone number with a **one-time verification code at least 6 digits long.**
 
-:::tip We Recommend 1-Click Verify
-We recommend using our 1-Click Verify API, because it ties directly into 1-Click Signup to make the integration especially easy and secure. Specifically, 1-Click Verify outputs a `verificationUuid` that you can pass directly to 1-Click Signup, which can then hydrate the user's phone number and confirm that it was properly verified.
+## 1. Prompt user for inputs.
+
+To start 1-Click Signup for a user, you'll need to collect their:
+- [**verified phone number**](#verified-phone),
+- [**challenge**](#challenge) (first name, birth date, or SSN4), and
+- [**consent**](#consent).
+
+:::note Challenge is Optional but Recommended
+1-Click Signup can work without a challenge (with just a verified phone number) for about 20% of users, but the output data quality is lower. We recommend collecting a challenge so the data we autofill is high quality, especially if your use case involves sensitive data like SSNs.
 :::
 
-:::warning A Compliance Review is Required if You Use Another Solution
-If you use another solution for phone verification, we will need to do a compliance review of your integration to ensure that phone verification is being handled properly. If you use 1-Click Verify, there's a closed loop with security guarantees, but if you use another solution, we can't have such security guarantees. So, instead we have to do a manual review of your integration to ensure phone verification is being handled properly. Specifically, we check for:
-- **Recency:** Phone numbers must be verified within 24 hours of when you use 1-Click Signup to autofill user data (to ensure data freshness).
-- **Entropy:** Verification codes must be at least 6 digits long (to prevent brute force attacks).
-- **Expiration:** Verification codes must be short lived, lasting no more than 10 minutes (to prevent staleness).
-- **One-time use:** Verification codes must be able to be used only once (to prevent reuse attacks).
-- **Rate limiting:** Verification code attempts must be rate limited (to prevent brute force attacks).
-- **Attempt limiting:** Verification code attempts must be limited to a small number for a given phone number (to prevent brute force attacks).
-:::
+**See the [Verified Phone](#verified-phone), [Challenge](#challenge), and [Consent](#consent) sections below for important details about each of these.**
+
+**You can collect these inputs in combination and in any order,** but you need to collect all three before calling `POST /1-click` ([step 2](/1-click-signup/guides/api-integration#2-call-post-1-click)). Here are some examples:
+
+<details>
+  <summary>Example Flows</summary>
+
+  <Tabs groupId="combinations-and-orders">
+
+    <TabItem value="phone-and-consent" label="Phone + Consent" default>
+
+      ###### Phone + Consent First
+
+      <div class="three-column-grid-container">
+          <div class="three-column-grid-row">
+              <div class="three-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/phone_and_consent.png)
+                  _1\. **Phone + Consent:** Prompt user for phone and consent._
+              </div>
+              <div class="three-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/verification_code.png)
+                  _2. **Verification Code:** Prompt user for phone verification code._
+              </div>
+              <div class="three-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/first_name.png)
+                  _3. **Challenge:** Prompt user for challenge._
+              </div>
+          </div>
+      </div>
+
+
+      ###### Challenge First
+
+      <div class="three-column-grid-container">
+          <div class="three-column-grid-row">
+              <div class="three-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/first_name.png)
+                  _1\. **Challenge:** Prompt user for challenge._
+              </div>
+              <div class="three-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/phone_and_consent.png)
+                  _2. **Phone + Consent:** Prompt user for phone and consent._
+              </div>
+              <div class="three-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/verification_code.png)
+                  _3. **Verification Code:** Prompt user for phone verification code._
+              </div>
+          </div>
+      </div>
+
+    </TabItem>
+
+    <TabItem value="challenge-and-consent" label="Challenge + Consent">
+
+      ###### Challenge + Consent First
+
+      <div class="three-column-grid-container">
+          <div class="three-column-grid-row">
+              <div class="three-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/first_name_and_consent.png)
+                  _1\. **Challenge + Consent:** Prompt user for challenge and consent._
+              </div>
+              <div class="three-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/phone.png)
+                  _2. **Phone:** Prompt user for phone._
+              </div>
+              <div class="three-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/verification_code.png)
+                  _3. **Verification Code:** Prompt user for phone verification code._
+              </div>
+          </div>
+      </div>
+
+
+      ###### Phone First
+
+      <div class="three-column-grid-container">
+          <div class="three-column-grid-row">
+              <div class="three-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/phone.png)
+                  _1\. **Phone:** Prompt user for phone._
+              </div>
+              <div class="three-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/verification_code.png)
+                  _2. **Verification Code:** Prompt user for phone verification code._
+              </div>
+              <div class="three-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/first_name_and_consent.png)
+                  _3. **Challenge + Consent:** Prompt user for challenge and consent._
+              </div>
+          </div>
+      </div>
+
+    </TabItem>
+
+    <TabItem value="challenge-and-phone-and-consent" label="Challenge + Phone + Consent">
+
+      <div class="two-column-grid-container">
+          <div class="two-column-grid-row">
+              <div class="two-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/first_name_and_phone_and_consent.png)
+                  _1\. **Challenge + Phone + Consent:** Prompt user for challenge, phone, and consent._
+              </div>
+              <div class="two-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/verification_code.png)
+                  _2. **Verification Code:** Prompt user for phone verification code._
+              </div>
+          </div>
+      </div>
+
+    </TabItem>
+
+    <TabItem value="consent-separate" label="Consent Separate">
+      
+      ###### Consent First
+
+      <div class="four-column-grid-container">
+          <div class="four-column-grid-row">
+              <div class="four-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/consent.png)
+                  _1\. **Consent:** Prompt user for consent._
+              </div>
+              <div class="four-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/phone.png)
+                  _2. **Phone:** Prompt user for phone._
+              </div>
+              <div class="four-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/verification_code.png)
+                  _3. **Verification Code:** Prompt user for phone verification code._
+              </div>
+              <div class="four-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/first_name.png)
+                  _4. **Challenge:** Prompt user for challenge._
+              </div>
+          </div>
+      </div>
+
+
+      ###### Consent Last
+
+      <div class="four-column-grid-container">
+          <div class="four-column-grid-row">
+              <div class="four-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/phone.png)
+                  _1\. **Phone:** Prompt user for phone._
+              </div>
+              <div class="four-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/verification_code.png)
+                  _2. **Verification Code:** Prompt user for phone verification code._
+              </div>
+              <div class="four-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/first_name.png)
+                  _3. **Challenge:** Prompt user for challenge._
+              </div>
+              <div class="four-column-grid-column">
+                  ![](/img/1cs-ux-example-combination-screens/consent.png)
+                  _4. **Consent:** Prompt user for consent._
+              </div>
+          </div>
+      </div>
+
+    </TabItem>
+    
+  </Tabs>
+</details>
+
+
+### Verified Phone
+
+To verify the user's phone number, you can either:
+1. **Use our [1-Click Verify API](/1-click-verify/guides/api-integration):** This is our dedicated phone verification solution. 
+2. **Use another phone verification solution:** This can be one of the many phone verification solutions on the market or one you build yourself. You can use any solution you like, as long as it satisfies the requirements listed in the warning below.
+
+<Admonition type="tip" tip="We Recommend 1-Click Verify">
+  **We highly recommend using 1-Click Verify because:** 
+    - **It can autofill verified phone numbers _from nothing!_** When this option is available, the user doesn't have to enter a phone number or SMS verification code at all. It's magical.
+    - **It ties directly into 1-Click Signup to make the integration especially easy and secure.** Specifically, 1-Click Verify outputs a `verificationUuid` that you can pass directly to 1-Click Signup, which we use to hydrate the user's phone number and confirm it was properly verified.
+</Admonition>
+
+<Admonition type="warning" warning="A Compliance Review is Required if You Use Another Solution">
+  **If you use another solution for phone verification, we'll need to do a compliance review of your integration to ensure phone verification is being handled properly.** Specifically, we check for:
+  - **Recency:** Phone numbers must be verified within 24 hours of when you use 1-Click Signup to autofill user data (to ensure data freshness).
+  - **Entropy:** Verification codes must be at least 6 digits long (to prevent brute force attacks).
+  - **Expiration:** Verification codes must be short lived, lasting no more than 10 minutes (to prevent staleness).
+  - **One-time use:** Verification codes must be able to be used only once (to prevent reuse attacks).
+  - **Rate limiting:** Verification code attempts must be rate limited (to prevent brute force attacks).
+  - **Attempt limiting:** Verification code attempts must be limited to a small number for a given phone number (to prevent brute force attacks).
+
+(1-Click Verify, if you choose to use it, handles all of these requirements for you.)
+</Admonition>
 
 <SupportedPhoneNumbersAdmonition />
 
 _See our [Demo](https://1-click.demo.verified.inc) for an example of this._
-
-**You'll also need to:**
-
-<ol type='a'>
-  <li>**[Include Verified consent language](#a-include-the-verified-consent-language).**</li>
-  <li>**[Include a "Powered by Verified" graphic](#b-include-a-powered-by-verified-graphic).**</li>
-</ol>
 
 We recommend using a phone number input that auto submits when the user enters 10 digits. (See the [Phone](/1-click-signup/user-experience#phone) screen of our User Experience guide for full details.) Here's an example:
 
@@ -123,11 +298,96 @@ We recommend using a phone number input that auto submits when the user enters 1
   </div>
 </div>
 
-#### a. Include the Verified consent language.
 
-Regulations require that users give informed consent, so you must use our consent language where you start the 1-Click Signup flow. It can be included alongside or as part of other legal language you already use, but it must be displayed to the user — not just included in terms you link out to.
+### Challenge
 
-Use this language:
+**We support first name, birth date, and SSN4 as [challenges](/reference/data/inputs#challenges)** (secondary inputs alongside verified phone). 
+
+<Admonition type="tip" tip="We Recommend Using One Challenge">
+  You can use one or more challenges, but we recommend using only one to streamline the user experience.
+</Admonition>
+
+<Tabs>
+
+<TabItem value="first-name" label="First Name" default>
+
+  See the [First Name](/1-click-signup/user-experience#first-name) screen of our User Experience guide for our detailed recommendations.
+
+  We recommend using a numeric input (formatted as MM/DD/YYYY for birthday) that automatically submits when the user enters enough digits (8 for birth date and 4 for SSN4). (See the [Birthday](/1-click-signup/user-experience#birthday) and [SSN4](/1-click-signup/user-experience#ssn4) screens of our User Experience guide for full details.)
+
+  <BirthDateFormatAdmonition />
+
+  Here are examples:
+
+  <div class='two-column-grid-container'>
+    <div class='two-column-grid-row'>
+      <div class='two-column-grid-column'>
+        ![](/img/1cs-ux-screens/birthday-empty.png) *Numeric input, formatted as
+        MM/DD/YYYY, and the green signup variant of the "powered by" graphic*
+      </div>
+      <div class='two-column-grid-column'>
+        ![](/img/1cs-ux-screens/ssn4-empty.png) *Numeric input and the green
+        signup variant of the "powered by" graphic*
+      </div>
+    </div>
+  </div>
+
+</TabItem>
+<TabItem value="birth-date" label="Birth Date">
+    
+  See the [Birthday](/1-click-signup/user-experience#birthday) screen of our User Experience guide for our detailed recommendations.
+
+  <BirthDateFormatAdmonition />
+
+  Here are examples:
+
+  <div class='two-column-grid-container'>
+    <div class='two-column-grid-row'>
+      <div class='two-column-grid-column'>
+        ![](/img/1cs-ux-screens/birthday-empty.png) *Numeric input, formatted as
+        MM/DD/YYYY, and the green signup variant of the "powered by" graphic*
+      </div>
+      <div class='two-column-grid-column'>
+        ![](/img/1cs-ux-screens/ssn4-empty.png) *Numeric input and the green
+        signup variant of the "powered by" graphic*
+      </div>
+    </div>
+  </div>
+
+</TabItem>
+<TabItem value="ssn4" label="SSN4">
+    
+  We recommend using a numeric input (formatted as MM/DD/YYYY for birthday) that automatically submits when the user enters enough digits (8 for birth date and 4 for SSN4). (See the [Birthday](/1-click-signup/user-experience#birthday) and [SSN4](/1-click-signup/user-experience#ssn4) screens of our User Experience guide for full details.)
+
+  <BirthDateFormatAdmonition />
+
+  Here are examples:
+
+  <div class='two-column-grid-container'>
+    <div class='two-column-grid-row'>
+      <div class='two-column-grid-column'>
+        ![](/img/1cs-ux-screens/birthday-empty.png) *Numeric input, formatted as
+        MM/DD/YYYY, and the green signup variant of the "powered by" graphic*
+      </div>
+      <div class='two-column-grid-column'>
+        ![](/img/1cs-ux-screens/ssn4-empty.png) *Numeric input and the green
+        signup variant of the "powered by" graphic*
+      </div>
+    </div>
+  </div>
+
+</TabItem>
+</Tabs>
+
+
+### Consent
+
+**Users must give informed consent for their info to be autofilled with 1-Click Signup.** To collect this consent, you need to use our 1-Click Signup [consent language](#consent-language) and a [Powered by Verified graphic](#powered-by-verified-graphic).
+
+
+#### Consent Language
+
+**You must use this 1-Click Signup consent language:**
 
 > By `{taking this action}`, you agree that `{Brand Name}`’s service provider [Verified](https://verified.inc) and its vendors may receive your personal info and autofill more info about you, including your social security number.
 
@@ -136,129 +396,268 @@ Use this language:
   - If you use a Continue button, you should use "clicking Continue".
 - **Link "Verified" to https://verified.inc and make it underlined and a different color than the rest of the text** (so the user knows it's a link).
 - **Replace `{Brand Name}` with your brand name.**
+- **Omit "including your social security number" if won't autofill SSNs with 1-Click Signup:** that is, if you didn't include SSN in your [Default Credential Requests](/1-click-signup/guides/setup#default-credential-requests) setting.
 
 Here's an example:
 
 > By entering your phone number, you agree that Hooli’s service provider [Verified](https://verified.inc) and its vendors may receive your personal info and autofill more info about you, including your social security number.
 
-#### b. Include a "Powered by Verified" graphic.
+<Admonition type="important">
+  This consent language can be included alongside or as part of other legal language you already use, but it must be displayed to the user — not just included in terms you link out to.
+</Admonition>
 
-We require you to include a "Powered by Verified" graphic, which helps ensure the user gives legally valid consent for us to source data for them.
+<Admonition type="warning">
+  **You may not modify this consent language except as described above.** It's the result of extensive legal review to ensure it meets all requirements for informed consent.
+</Admonition>
 
-The graphic should be placed just below the trigger you use to start the 1-Click Signup flow. Usually, this is a phone number or birthday input or a button.
+#### Powered by Verified Graphic
+
+Because "verified" is itself a common word, our company name alone doesn't unambiguously indicate to users which specific company they're consenting to. Including a Powered by Verified graphic with our logo makes it unambiguous and satisfies the requirement of informed consent.
+
+Therefore, you must include a "Powered by Verified" graphic, which should be placed just below the trigger you use to start the 1-Click Signup flow. For example, this may be a phone number input or a button.
 
 We provide many different variants of the graphic, so you can choose the one that best fits your use case and the background color of your application:
 
 <PoweredByGraphicVariantsForOneClickSignup />
 
-<Tabs>
-
-<TabItem value="1-click-verify" label="Use 1-Click Verify" default>
-
-  Follow the [1-Click Verify API Integration](/1-click-verify/guides/api-integration) guide. 
-
-</TabItem>
-<TabItem value="another-solution" label="Use Another Solution">
-    This is an orange 🍊
-</TabItem>
-</Tabs>
-
 
 ## 2. Call `POST /1-click`.
 
-Call [`POST /1-click`](/reference/api/endpoints#post-1-click) with the user's phone number:
-
-```typescript title="POST /1-click Request Body"
-{
-    phone: string; // Example: "+12125550010"
-}
-```
-
-<Admonition type='danger' title='Recency Requirement'>
+<Admonition type='warning' title='Recency Requirement'>
   **You must call `POST /1-click` within 24 hours of verifying the user's
-  phone number ([step 1](#1-prompt-user-for-phone-number-and-verify-it)).** This
-  is an important anti-fraud measure.
+  phone number.** This ensures we source fresh, accurate data.
 </Admonition>
 
 <ApiKeysAdmonition />
 
+**Call [`POST /1-click`](/reference/api/endpoints#post-1-click):** 
+- If you used 1-Click Verify to verify the user's phone number, use `verificationUuid` in the request body. If you use another phone verification solution, use `phone`.
+- If you collected a challenge (first name, birth date, or SSN4), include it in the request body (as `fullName.firstName`, `birthDate`, or `ssn4`).
+
+<Tabs groupId="phone-verification-solution">
+
+<TabItem value="1-click-verify" label="From 1-Click Verify" default>
+
+  <Tabs groupId="challenge-type">
+
+  <TabItem value="first-name" label="First Name" default>
+
+  ```typescript title="POST /1-click Request Body: From 1-Click Verify with First Name Challenge"
+  {
+      verificationUuid: string, // Example: "f3e2c1d0-4b5a-6789-0abc-def123456789"
+      fullName: {
+          firstName: string // Example: "Richard"
+      }
+  }
+  ```
+
+  </TabItem>
+  <TabItem value="birth-date" label="Birth Date">
+
+  ```typescript title="POST /1-click Request Body: From 1-Click Verify with Birth Date Challenge"
+  {
+      verificationUuid: string, // Example: "f3e2c1d0-4b5a-6789-0abc-def123456789"
+      birthDate: string // Example: "1989-08-01"
+  }
+  ```
+
+  </TabItem>
+  <TabItem value="ssn4" label="SSN4">
+
+  ```typescript title="POST /1-click Request Body: From 1-Click Verify with SSN4 Challenge"
+  {
+      verificationUuid: string, // Example: "f3e2c1d0-4b5a-6789-0abc-def123456789"
+      ssn4: string // Example: "6789"
+  }
+  ```
+
+  </TabItem>
+
+  </Tabs>
+
+</TabItem>
+<TabItem value="another-solution" label="From Another Phone Verification Solution">
+
+  <Tabs groupId="challenge-type">
+
+  <TabItem value="first-name" label="First Name" default>
+
+  ```typescript title="POST /1-click Request Body: From Another Phone Verification Solution with First Name Challenge"
+  {
+      phone: string, // Example: "+12125550010", must have been verified within 24 hours
+      fullName: {
+          firstName: string // Example: "Richard"
+      }
+  }
+  ```
+
+  </TabItem>
+  <TabItem value="birth-date" label="Birth Date">
+
+  ```typescript title="POST /1-click Request Body: From Another Phone Verification Solution with Birth Date Challenge"
+  {
+      phone: string, // Example: "+12125550010", must have been verified within 24 hours
+      birthDate: string // Example: "1989-08-01"
+  }
+  ```
+
+  </TabItem>
+  <TabItem value="ssn4" label="SSN4">
+
+  ```typescript title="POST /1-click Request Body: From Another Phone Verification Solution with SSN4 Challenge"
+  {
+      phone: string, // Example: "+12125550010", must have been verified within 24 hours
+      ssn4: string // Example: "6789"
+  }
+
+  ```
+
+  </TabItem>
+
+  </Tabs>
+
+</TabItem>
+</Tabs>
+
 <OneClickSignupIncludeAdditionalInfoAdmonition />
 
-One of two things will happen:
+If we can source data for the user, the [response body](/reference/api/endpoints#post-1-click-response) will contain a [`1ClickEntity`](/reference/api/types#1clickentity), keyed on `identity`, that contains the user's data and metadata about it. 
 
-- **Success:** If we can source data based on just the phone number, the [response body](/reference/api/endpoints#post-1-click-response) will contain a [`1ClickEntity`](/reference/api/types#1clickentity) (see this [example](/reference/api/types#example-1clickentity)), keyed on `identity`, that contains the user's data and metadata about it. <br/> → _Jump to [step 5](#5-prompt-user-to-confirm-their-data)._
-- **Error:** Otherwise, the response body will contain an [error](/reference/api/errors) with a Verified error code:
-  - **[`OCE011`](/reference/api/errors#oce011)** indicates that we need additional information (the user's birth date and/or SSN4) to source data. <br/> → _Continue to [step 3](#3-if-necessary-prompt-user-for-additional-info)_.
-  - **[`OCE013`](/reference/api/errors#oce013)** indicates that Verified found no [credentials](/reference/data/outputs#credentials) for the user. <br/> → _Fall back to a manual signup flow._
-  - **[`OCE017`](/reference/api/errors#oce017)** indicates that Verified blocked the user because the risk score was too high. <br/> → _Reject the user or flag them and fall back to a manual signup flow._
+If we can't source data, the response body will contain an [error](/reference/api/errors) with a Verified error code. (Note that this error code, which is Verified specific, is `data.errorCode` in the error object, _not_ `code` (which is a standard HTTP response status code).) See [step 2a](#handle-errors) below for how to handle Verified error codes.
 
-:::tip Data is Retrievable for 60 Minutes
-**You can retrieve data for 60 minutes,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click`](/reference/api/endpoints#get-1-click) instead of `POST /1-click` so that a duplicate 1-Click Signup event isn't created (and so you aren't billed twice).
+:::tip Data is Retrievable for 1 Hour
+**You can retrieve data for 1 hour,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click`](/reference/api/endpoints#get-1-click) instead of `POST /1-click` so that a duplicate 1-Click Signup event isn't created (and so you aren't billed twice).
 :::
 
-## 3. (if necessary) Prompt user for additional info.
 
-<WhenStepIsNecessaryAdmonition
-  stepName='step 2'
-  stepLink='#2-call-post-1-click'
-/>
+### a. (if needed) Handle errors.
+
+The simplest 1-Click Signup integrations can treat all Verified error codes as generic errors, but you can improve your integration substantially by handling the ones listed below. There are [other ones](/reference/api/errors#verified-error-codes) as well, but you can generally ignore those.
+
+
+#### `OCE011`
+
+The [`OCE011`](/reference/api/errors#oce011) Verified error code indicates that we need additional information (another challenge) to source data.
 
 <OCE011InclusiveOrAdmonition />
 
-We recommend using a numeric input (formatted as MM/DD/YYYY for birthday) that automatically submits when the user enters enough digits (8 for birth date and 4 for SSN4). (See the [Birthday](/1-click-signup/user-experience#birthday) and [SSN4](/1-click-signup/user-experience#ssn4) screens of our User Experience guide for full details.)
 
-<BirthDateFormatAdmonition />
+#### `OCE012`
 
-Here are examples:
+The [`OCE012`](/reference/api/errors#oce012) Verified error code indicates that the challenge provided mismatched. 
 
-<div class='two-column-grid-container'>
-  <div class='two-column-grid-row'>
-    <div class='two-column-grid-column'>
-      ![](/img/1cs-ux-screens/birthday-empty.png) *Numeric input, formatted as
-      MM/DD/YYYY, and the green signup variant of the "powered by" graphic*
-    </div>
-    <div class='two-column-grid-column'>
-      ![](/img/1cs-ux-screens/ssn4-empty.png) *Numeric input and the green
-      signup variant of the "powered by" graphic*
-    </div>
-  </div>
-</div>
 
-## 4. (if necessary) Call `POST /1-click` with additional info.
+#### `OCE013`
 
-<WhenStepIsNecessaryAdmonition
-  stepName='step 2'
-  stepLink='#2-call-post-1-click'
-/>
+The [`OCE013`](/reference/api/errors#oce013) Verified error code indicates that Verified found no [credentials](/reference/data/outputs#credentials) for the user.
 
-Call [`POST /1-click`](/reference/api/endpoints#post-1-click) with the user's phone number and birth date or SSN4 (or both):
 
-```typescript title="POST /1-click Request Body"
-{
-    phone: string, // Example: "+12125550010"
-    birthDate: string, // Example: "1989-08-01"
-    ssn4: string // Example: "6789"
-}
-```
+#### `OCE017`
 
-<SandboxValidationAdmonition />
-<Admonition type='danger' title='Recency Requirement'>
-  **You must call `POST /1-click` within 24 hours of verifying the user's
-  phone number ([step 1](#1-prompt-user-for-phone-number-and-verify-it)).** This
-  is an important anti-fraud measure.
+The [`OCE017`](/reference/api/errors#oce017) Verified error code indicates that Verified blocked the user because the risk score was too high.
+
+
+#### `OCE019`
+
+The [`OCE019`](/reference/api/errors#oce019) Verified error code indicates that the maximum number of attempts has been reached for one or more of the challenges.
+
+
+## 3. Prompt user to confirm info.
+
+**You must display the user's [credential](/reference/data/outputs#credentials) data to them and have them confirm it's correct.** The credential data is contained in `credentials` in the [`1ClickEntity`](/reference/api/types#example-1clickentity) from the API response. You don't need to display any [metadata](/reference/data/outputs#metadata) (contained in `metadata` in the [`1ClickEntity`](/reference/api/types#example-1clickentity)) though you can choose to if it's relevant.
+
+:::danger User Confirmation is a Requirement
+**You may not store a user's credential data if they don't confirm it.** This is a compliance requirement. We will not approve your integration if you don't abide by it.
+:::
+
+<Admonition type="tip" title="Benefits of Doing This">
+    1. **Transparency:** By displaying the user's data to them, you ensure they're aware of what data you've received about them.
+    2. **Accuracy:** Although Verified provides _very_ high quality data, we can never guarantee all data will be perfectly accurate. By having the user confirm their data, you can better avoid inaccuracies. Depending on your use case, you may want to give the user the ability to edit their data.
 </Admonition>
 
-One of two things should happen:
 
-- **Success:** If we can source data based on the phone number and birth date, the [response body](/reference/api/endpoints#post-1-click-response) will be a [`1ClickEntity`](/reference/api/types#1clickentity) (see this [example](/reference/api/types#example-1clickentity)), which contains the user's data and metadata about it. → _Continue to [step 5](#5-prompt-user-to-confirm-their-data)._
-- **Error:** Otherwise, the response body will contain an [error](/reference/api/errors) with a Verified error code:
-  - **[`OCE012`](/reference/api/errors#oce012)** indicates that one or more of the additional inputs you passed (the user's birth date and/or SSN4) mismatched. → _Return to [step 3](#3-if-necessary-prompt-user-for-additional-info)._
-  - **[`OCE013`](/reference/api/errors#oce013)** indicates that Verified found no [credentials](/reference/data/outputs#credentials) for the user. → _Fall back to a manual signup flow._
-  - **[`OCE019`](/reference/api/errors#oce019)** indicates that the maximum number of attempts has been reached for one or more of the additional inputs. → _Fall back to a manual signup flow._
+### a. Mask sensitive info.
 
-## 5. Prompt user to confirm their data.
+If you receive a birth date or SSN from Verified as an autofilled [output](/reference/data/outputs#1-click-signup), you must mask it as described below before displaying it to the user.
 
-<PromptUserToConfirmTheir1ClickSignupData />
+:::danger This is a Compliance Requirement
+Masking sensitive info is a compliance requirement. We cannot approve you for [Production](/reference/api/environments#production) access until you implement what's described below.
+:::
+
+:::tip 
+**There's one exception:** If you collect a birth date or SSN from the user as an [_input_](/reference/data/inputs#1-click-signup), then you don't need to mask it — because the user provided it themselves, in full! This case typically applies if you collect birth date upfront as a [challenge](#challenge) input (instead of first name or SSN4).
+:::
+
+
+#### Birth Date
+
+**Mask the last 4 digits (server side),** so the client only displays the last 4 digits. We recommend using the • character to mask and the most common US format MM/DD/YYYY, so that (for example) 1989-08-01 is displayed as 08/01/••••.
+
+**If you allow the user to edit the birth date, clear the entire value when they start editing (by deleting one character)**, so they don't just edit the first 4 digits (which could result in another valid birth date, but one that isn't theirs).
+
+
+#### Social Security Number (SSN)
+
+**Mask the first 5 digits (server side),** so the client only displays the last 4 digits. We recommend using the • character to mask and the most common US format NNN–NN-NNNN, so that (for example) 000456789 is displayed as •••-••-6789.
+
+**If you allow the user to edit the SSN, clear the entire value when they start editing (by deleting one character)**, so they don't just edit the last 4 digits (which could result in another valid SSN, but one that isn't theirs).
+
+
+### b. Display info for editing or confirmation.
+
+**We recommend that you:** 
+<ol type="i">
+    <li>**[Use a static display for view mode](#a-use-a-static-display-for-view-mode).**</li>
+    <li>**[Use a form with autofilled inputs for edit mode](#b-use-a-form-with-autofilled-inputs-for-edit-mode).**</li>
+    <li>**[Include information about where the data comes from](#c-include-information-about-where-the-data-comes-from).**</li>
+</ol>
+
+(See the [Info](/1-click-signup/user-experience#info) screen of our User Experience guide for full details.) Here's an example:
+
+<div class="three-column-grid-container">
+    <div class="three-column-grid-row">
+        <div class="three-column-grid-column">
+            ![](/img/1cs-ux-screens/info-view-tooltip_hidden.png)
+            *Static display for view mode, question mark button to see information about where data comes from*
+        </div>
+        <div class="three-column-grid-column">
+            ![](/img/1cs-ux-screens/info-edit.png)
+            *Form with autofilled inputs for edit mode, question mark button to see information about where data comes from*
+        </div>
+        <div class="three-column-grid-column">
+            ![](/img/1cs-ux-screens/info-view-tooltip_visible.png)
+            *Information about where data comes from*
+        </div>
+    </div>
+</div>
+
+
+#### i. Use a static display for view mode.
+
+In edit mode, we recommend that you display the user's data statically and show an edit button that lets them go into edit mode. 
+
+If you receive multiple [credentials](/reference/data/outputs#credentials) of a given type (for example Address), you can display a dropdown of options. If the user goes into edit mode, you should use the selected value in the dropdown to autofill an input for that credential type.
+
+
+#### ii. Use a form with autofilled inputs for edit mode.
+
+In edit mode, we recommend that you display the user's data using a form with autofilled inputs. 
+
+You can enable or disable each input depending on whether you want the user to be able to edit the data it contains. The upside of allowing the user to edit data is that it allows them to correct any inaccuracies. The downside is that user input isn't verified and may make fraud more likely.
+
+
+#### iii. Include information about where the data comes from.
+
+Including some information about where the data comes from helps users understand the magic of 1-Click Signup and feel comfortable with it. We recommend this language:
+> Verified autofills your info from trusted sources so you don’t have to enter it manually. It’s fast, safe, and secure.
+
+<Admonition type="info" title="Possible Data Inaccuracies">
+    The most common inaccuracy is an outdated address. We keep user addresses up to date as much as possible, but if the user has moved very recently, we may not yet have their current address.
+
+    Less commonly, a user may have an outdated name, if they've recently had it legally changed and we haven't yet updated it.
+
+    Some data points, like birth date and SSN, should never change, but it's still possible (in very rare cases) for these to be inaccurate. So, if having perfectly accurate data is crucial for your use case, we recommend that you have users confirm it.
+</Admonition>
 
 ---
 
@@ -266,7 +665,12 @@ One of two things should happen:
 ## Go Live!
 
 
-### Request Approval
+### Test in Sandbox
+
+Test with our 1-Click Signup [test users](/1-click-signup/test-users).
+
+
+### Request Production Approval
 
 **When you're ready to go live, request approval for [Production](/reference/api/environments#production) access:**
 

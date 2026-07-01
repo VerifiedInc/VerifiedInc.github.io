@@ -92,9 +92,17 @@ Step 2 above — prompting for a challenge (birthday/SSN4) — is necessary onl
 
 ## Coverage
 
+<CoverageUsOnlyAdmonition />
+
 We can source verified data for about **95% of US adults (253M people)** — if you provide both phone and a challenge (either birthday or SSN4) as inputs — and for about **20%** if you provide only phone. _Exact coverage depends on your user base._
 
-<CoverageUsOnlyAdmonition />
+Exact coverage depends on your user base and varies widely across companies. Some companies see greater than 97% coverage, while others see only 50%. The most common factor that contributes to low coverage is:
+1. **Younger users:** We tend to see lower coverage for users under 25 because they've had less time to appear in our data sources. 
+
+There are two other common factors, which mostly apply to lower intent use cases (for example gaming, as opposed to healthcare or banking): 
+
+2. **Dummy data:** Users may enter dummy data for [challenges](/reference/data/inputs#challenges) (first name, birthday or SSN4) if they don't think entering their real info is necessary. _You can mitigate this by using description text that stresses to users that thye must use their real info._
+3. **Burner numbers:** Users may use burner or secondary phone numbers if they don't want to share their real ones. _You can mitigate this by blocking common burner numbers and VoIP numbers._
 
 The data is extremely high quality because it comes from phone carriers, credit bureaus, and other trusted providers. Thanks to this quality, the data can be leveraged as part of a KYC/AML process.
 

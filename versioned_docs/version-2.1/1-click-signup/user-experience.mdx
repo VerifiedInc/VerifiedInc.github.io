@@ -99,20 +99,13 @@ To implement this user experience yourself (which is only necessary if you choos
                 <PoweredByGraphicVariantsForOneClickSignup/>
 
 
-                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Divider
-
-                > OR
-
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
-
-
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Opt Out
 
                 > Sign Up Manually Instead
 
                 *Takes user to Info screen in manual signup (edit) state.*
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
 
                 #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Error
@@ -184,7 +177,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Takes user back to phone input.*
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Resend
@@ -193,7 +186,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Sends another SMS with fresh verification code.*
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
                 - Allows for at most 2 resends
 
 
@@ -252,7 +245,7 @@ To implement this user experience yourself (which is only necessary if you choos
                 > Enter your first name, so we can verify you and autofill your info.
 
 
-                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Birthday
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>First Name
 
                 > _ _ / _ _ / _ _ _ _
 
@@ -295,7 +288,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 If the user tries the same value again, auto continue them.
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
             </GridNonStickyElement>
         </GridColumn>
@@ -381,7 +374,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 If the user tries the same value again, auto continue them.
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
             </GridNonStickyElement>
         </GridColumn>
@@ -464,7 +457,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 If the user tries the same value again, auto continue them.
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
             </GridNonStickyElement>
         </GridColumn>
@@ -499,7 +492,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Opens [informational modal](#informational).*
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Close Modal
@@ -510,7 +503,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Closes [informational modal](#informational).*
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
                 - Clicking anywhere outside the modal should also close it
 
 
@@ -567,7 +560,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Takes user back to [phone screen](#phone).*
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
                 */}
 
 
@@ -611,7 +604,8 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Appears in view state.*
 
-                - “Birthday” not “Birth Date” because the former is friendlier.
+                - “Birthday” not “Birth Date” because the former is friendlier
+                - Year digits masked (server side), unless user entered these as input
 
 
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>SSN
@@ -620,8 +614,8 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Appears in view state.*
 
-                - “SSN” not “Social Security Number” for compactness.
-                - First 5 digits masked.
+                - “SSN” not “Social Security Number” for compactness
+                - First 5 digits masked (server side)
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Edit
@@ -632,7 +626,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 The entire data display area should be clickable as the Edit button, not just the button itself.
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
 
                 #### <ComponentTypeIndicator type="input" isRightMargined={true}/>First Name
@@ -682,6 +676,8 @@ To implement this user experience yourself (which is only necessary if you choos
                 - Accepts OS autofill
                 - Validates format
                 - Auto formats to MM/DD/YYYY (most common US format)
+                - If starting with value:
+                    - If user starts to edit (by deleting one character), clear entire value
 
 
                 #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Social Security Number

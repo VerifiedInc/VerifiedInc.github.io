@@ -91,7 +91,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
     </tr>
     <tr>
         <td>`identifiers`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>See above</td>
         <td>User [identifiers](/reference/data/inputs#identifiers), keyed on `identifierKey`</td>
         <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
@@ -113,7 +113,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
     </tr>
     <tr>
         <td>`credentials`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>See above</td>
         <td>User [credentials](/reference/data/outputs#credentials), keyed on `credentialKey`</td>
         <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
@@ -149,7 +149,7 @@ See also our [Postman docs](https://api.docs.verified.inc/).
     </tr>
     <tr>
         <td>`metadata`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>See above</td>
         <td>[Metadata](/reference/data/outputs#metadata), keyed on `metadataKey`</td>
         <td>See [Example `1ClickEntity`](#example-1clickentity)</td>
@@ -176,10 +176,10 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 
 The data keyed on a `credentialKey` will be one or more credential values. This data will have a type that depends on `children` and `multi` in the [credential request](#credentialrequest):
 - Based on `children`:
-    - If the credential request has `children`, each credential value will have type `Object`.
+    - If the credential request has `children`, each credential value will have type `object`.
         <details>
             <summary>
-                Example: Credential Value of Type `Object`
+                Example: Credential Value of Type `object`
             </summary>
             If the credential request has `children`:
             ```typescript title="CredentialRequest with children"
@@ -208,7 +208,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
             }
             ```
 
-            Then, the credential returned will have type `Object` (and so will the corresponding metadata):
+            Then, the credential returned will have type `object` (and so will the corresponding metadata):
             ```typescript title="1ClickEntity for CredentialRequest with children"
             {
                 ...
@@ -434,7 +434,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
             }
             ```
 
-            Then, the data returned will be a single credential value, so it will have type `Object` or `string` (and so will the corresponding metadata):
+            Then, the data returned will be a single credential value, so it will have type `object` or `string` (and so will the corresponding metadata):
             ```typescript title="1ClickEntity for CredentialRequest with multi false, with children"
             {
                 ...
@@ -504,9 +504,11 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
                 name: string,
                 verifiedId: string,
                 ids: [string], // ids[0] is considered primary
-                logoUrl?: string
+                logoUrl?: string // included if available
             },
-            verificationMethod: string
+            verificationMethod: string,
+            edi_271?: string, // included if eligibility check was run
+            eligibility?: object, // parsed version of edi_271: included if eligibility check was run
         }
     ],
     errors?: [
@@ -516,6 +518,16 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
     ]
 }
 ```
+
+:::important
+Eligibility info is returned only if an eligibility check was run. This happens in two cases:
+1. **The [Check After Autofill](/1-click-health/guides/setup#check-after-autofill) brand setting is enabled:** This ensures that we automatically run an eligibility check for a user's insurance after autofilling it.
+2. **You included member ID (and payer) as inputs:** You passed `memberId` (and `payer`) in the request body of [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth).
+
+Eligibilty info consists of:
+- **The raw 271:** The `edi_271` string.
+- **A parsed version of the 271:** The `eligibility` object.
+:::
 
 <table>
     <tr>
@@ -552,27 +564,34 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
     </tr>
     <tr>
         <td>`results`</td>
-        <td>`array`</td>
-        <td>Array of `Object`s</td>
+        <td>`object[]`</td>
+        <td>Array of `object`s</td>
         <td>Health insurance plans</td>
         <td>-</td>
     </tr>
     <tr>
-        <td>`results[i].memberId`</td>
+        <td>↳ `results[i]`</td>
+        <td>`object`</td>
+        <td>Object with keys described below</td>
+        <td>Health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ `results[i].memberId`</td>
         <td>`string`</td>
         <td>Alphanumeric</td>
         <td>Member ID for health insurance plan</td>
         <td>`"V000000000"`</td>
     </tr>
     <tr>
-        <td>`results[i].payer`</td>
+        <td>↳ ↳ `results[i].payer`</td>
         <td>`Payer`</td>
         <td>See [`Payer`](#payer)</td>
         <td>Payer for health insurance plan</td>
         <td>See `Payer` [Example](#example-payer)</td>
     </tr>
     <tr>
-        <td>`results[i].verificationMethod`</td>
+        <td>↳ ↳ `results[i].verificationMethod`</td>
         <td>
             <details>
                 <summary>`enum`</summary>
@@ -587,23 +606,36 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
         <td>How a health insurance plan was verified</td>
         <td>`"clearinghouse"`</td>
     </tr>
-    {/* Removing from here: Will move to /eligibility endpoint/type once it exists */}
-    {/* <tr>
-        <td>`results[i].edi_271`</td>
+    <tr>
+        <td>↳ ↳ `results[i].edi_271`</td>
         <td>`string`</td>
-        <td>X12 [EDI 271](https://x12.org/examples/005010x279) (Health Care Eligibility Benefit Response)</td>
-        <td>Address</td>
+        <td>X12 [EDI 271](https://x12.org/examples/005010x279)</td>
+        <td>Health Care Eligibility Benefit Response</td>
         <td>See X12 [EDI 271 examples](https://x12.org/examples/005010x279)</td>
-    </tr> */}
+    </tr>
+    <tr>
+        <td>↳ ↳ `results[i].eligibility`</td>
+        <td>`ParsedEdi271`</td>
+        <td>See [`ParsedEdi271`](#parsededi271)</td>
+        <td>Parsed version of `edi_271`</td>
+        <td>See `ParsedEdi271` [Example](#example-parsededi271)</td>
+    </tr>
     <tr>
         <td>`errors`</td>
-        <td>`array`</td>
+        <td>`object[]`</td>
         <td>Array of objects</td>
         <td>Errors</td>
         <td>-</td>
     </tr>
     <tr>
-        <td>`errors[i].message`</td>
+        <td>↳ `errors[i]`</td>
+        <td>`object`</td>
+        <td>Object with key described below</td>
+        <td>Error</td>
+        <td>`{ "message": "No coverage found" }`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ `errors[i].message`</td>
         <td>`string`</td>
         <td>-</td>
         <td>Error message</td>
@@ -676,6 +708,422 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
 <PayerExampleAetna/>
 
 <PayerExampleUnitedHealthcare/>
+
+---
+
+
+### `ParsedEdi271`
+
+```typescript title="Payer Type"
+{
+    coverageStatus?: "active" | "indeterminate" | "inactive",
+    coverageType?: string[], // can include "medical", "dental", and "vision"
+    payer?: {
+        name: string,
+    },
+    member?: {
+        memberId: string,
+        fullName?: {
+            firstName?: string,
+            lastName?: string
+        },
+        birthDate?: string,
+        sex?: string
+    },
+    plan?: {
+        name?: string,
+        groupNumber?: string,
+        insuranceType?: string,
+        effectiveDate?: string,
+        terminationDate?: string
+    },
+    benefits?: [
+        {
+            type?: "deductible" | "outOfPocket" | "copay" | "coinsurance" | "limitation",
+            serviceTypeCodes?: string[],
+            level?: "individual" | "family",
+            network?: "in" | "out",
+            amount?: string,
+            remaining?: string,
+            percent?: string
+        },
+        ...
+    ],
+    contacts?: [
+        {
+            name?: string,
+            serviceTypeCodes?: string[],
+            phone?: string,
+            fax?: string,
+            email?: string,
+            url?: string
+        },
+        ...
+    ]
+}
+```
+
+:::note Coverage Status Values
+The `coverageStatus` property derives the status of a user's healht insurance plan from the EDI 271:
+- **`"active"`:** The payer confirmed active coverage.
+- **`"indeterminate"`:** The payer returned no clear signal or indicated you need to contact them (EB01 `U`) to confirm. In this latter case, `contacts` contains the number(s) you need to call.
+- **`"inactive"`:** The payer confirmed inactive coverage.
+
+(We don't return inactive plans, so in practice you won't see `"inactive"`.)
+:::
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`coverageStatus`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"active"`
+                    - `"indeterminate"`
+                    - `"inactive"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Coverage status of health insurance plan</td>
+        <td>`"active"`</td>
+    </tr>
+    <tr>
+        <td>`coverageType`</td>
+        <td>
+            <details>
+                <summary>`enum[]`</summary>
+
+                Possible values:
+                    - `"medical"`
+                    - `"dental"`
+                    - `"vision"`
+            </details>
+        </td>
+        <td>`lower case`</td>
+        <td>Coverage type(s) of health insurance plan</td>
+        <td>`"[medical]"`</td>
+    </tr>
+    <tr>
+        <td>`payer`</td>
+        <td>`object`</td>
+        <td>Object with key described below</td>
+        <td>Payer for health insurance plan</td>
+        <td>`["0000A"]`</td>
+    </tr>
+    <tr>
+        <td>↳ `payer.name`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Name of payer for health insurance plan</td>
+        <td>`"Aetna"`</td>
+    </tr>
+    <tr>
+        <td>`member`</td>
+        <td>`object`</td>
+        <td>Object with keys described below</td>
+        <td>Member for health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ `member.memberId`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Member ID of member for health insurance plan</td>
+        <td>`"A484069"`</td>
+    </tr>
+    <tr>
+        <td>↳ `member.fullName`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Full name of member for health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ `member.fullName.firstName`</td>
+        <td>`object`</td>
+        <td>-</td>
+        <td>First name of member for health insurance plan</td>
+        <td>`"Richard"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ `member.fullName.lastName`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Last name of member for health insurance plan</td>
+        <td>`"Hendricks"`</td>
+    </tr>
+    <tr>
+        <td>↳ `member.birthDate`</td>
+        <td>`string`</td>
+        <td>yyyy-MM-dd</td>
+        <td>Birth date of member for health insurance plan</td>
+        <td>`"1989-08-01"`</td>
+    </tr>
+    <tr>
+        <td>↳ `member.sex`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"Male"`
+                    - `"Female"`
+            </details>
+        </td>
+        <td>`Title Case`</td>
+        <td>Sex of member for health insurance plan</td>
+        <td>`"Male"`</td>
+    </tr>
+    <tr>
+        <td>`plan`</td>
+        <td>`object`</td>
+        <td>Object with keys described below</td>
+        <td>Details for health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ `plan.name`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Name for health insurance plan</td>
+        <td>`"Managed Choice Open Access"`</td>
+    </tr>
+    <tr>
+        <td>↳ `plan.groupNumber`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Group number (for employer or purchaser group) for health insurance plan</td>
+        <td>`"123456-123-12345"`</td>
+    </tr>
+    <tr>
+        <td>↳ `plan.insuranceType`</td>
+        <td>`string`</td>
+        <td>[X12 insurance descriptor code](https://x12.org/codes/insurance-descriptor-codes)</td>
+        <td>Type for health insurance plan</td>
+        <td>`"C1"`</td>
+    </tr>
+    <tr>
+        <td>↳ `plan.effectiveDate`</td>
+        <td>`string`</td>
+        <td>yyyy-MM-dd</td>
+        <td>Coverage start date for health insurance plan</td>
+        <td>`"2026-01-01"`</td>
+    </tr>
+    <tr>
+        <td>↳ `plan.terminationDate`</td>
+        <td>`string`</td>
+        <td>yyyy-MM-dd</td>
+        <td>Coverage end date for health insurance plan</td>
+        <td>`"2026-12-31"`</td>
+    </tr>
+    <tr>
+        <td>`benefits`</td>
+        <td>`object[]`</td>
+        <td>Array of objects</td>
+        <td>Benefits for health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ `benefits[i].type`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"deductible"`
+                    - `"outOfPocket"`
+                    - `"copay"`
+                    - `"coinsurance"`
+                    - `"limitation"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Type of cost share for health insurance plan</td>
+        <td>`"deductible"`</td>
+    </tr>
+    <tr>
+        <td>↳ `benefits[i].serviceTypeCodes`</td>
+        <td>`string[]`</td>
+        <td>Array of `string`s</td>
+        <td>List of [X12 service type codes](https://x12.org/codes/service-type-codes) for health insurance plan</td>
+        <td>`["30"]`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ `benefits[i].serviceTypeCodes[j]`</td>
+        <td>`string`</td>
+        <td>1+ characters</td>
+        <td>[X12 service type code](https://x12.org/codes/service-type-codes) for health insurance plan</td>
+        <td>`"30"`</td>
+    </tr>
+    <tr>
+        <td>↳ `benefits[i].level`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"individual"`
+                    - `"family"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Coverage level that `amount` applies to for health insurance plan</td>
+        <td>`"individual"`</td>
+    </tr>
+    <tr>
+        <td>↳ `benefits[i].network`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"in"`
+                    - `"out"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Whether health insurance plan is in or out of network</td>
+        <td>`"in"`</td>
+    </tr>
+    <tr>
+        <td>↳ `benefits[i].amount`</td>
+        <td>`string`</td>
+        <td>decimal</td>
+        <td>Dollar amount applicable (copay, or period total for deductible or out of pocket) for health insurance plan</td>
+        <td>`"1500.00"`</td>
+    </tr>
+    <tr>
+        <td>↳ `benefits[i].remaining`</td>
+        <td>`string`</td>
+        <td>decimal</td>
+        <td>Dollar amount remaining (deductible or out of pocket) for health insurance plan</td>
+        <td>`"750.00"`</td>
+    </tr>
+    <tr>
+        <td>↳ `benefits[i].remaining`</td>
+        <td>`string`</td>
+        <td>decimal fraction</td>
+        <td>Patient coinsurance responsibility for health insurance plan</td>
+        <td>`"0.20"`</td>
+    </tr>
+    <tr>
+        <td>`contacts`</td>
+        <td>`object[]`</td>
+        <td>Array of objects</td>
+        <td>Benefits for health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ `contacts[i].name`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Entity to contact (e.g. the payer's member services or a carve out administrator) about health insurance plan</td>
+        <td>`"Aetna Member Services"`</td>
+    </tr>
+    <tr>
+        <td>↳ `contacts[i].serviceTypeCodes`</td>
+        <td>`string[]`</td>
+        <td>Array of `string`s</td>
+        <td>List of [X12 service type codes](https://x12.org/codes/service-type-codes) relevant to contact for health insurance plan</td>
+        <td>`["30"]`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ `contacts[i].serviceTypeCodes[j]`</td>
+        <td>`string`</td>
+        <td>1+ characters</td>
+        <td>[X12 service type code](https://x12.org/codes/service-type-codes) relevant to contact for health insurance plan</td>
+        <td>`"30"`</td>
+    </tr>
+    <tr>
+        <td>↳ `contacts[i].phone`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Phone number</td>
+        <td>`"8005550000"`</td>
+    </tr>
+    <tr>
+        <td>↳ `contacts[i].fax`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Fax number</td>
+        <td>`"8005550001"`</td>
+    </tr>
+    <tr>
+        <td>↳ `contacts[i].email`</td>
+        <td>`string`</td>
+        <td>email</td>
+        <td>Email address</td>
+        <td>`"memberservices@aetna.com"`</td>
+    </tr>
+    <tr>
+        <td>↳ `contacts[i].url`</td>
+        <td>`string`</td>
+        <td>URL</td>
+        <td>Contact URL</td>
+        <td>`"https://aetna.com/member-services"`</td>
+    </tr>
+</table>
+
+
+#### Example {#example-parsededi271}
+
+```typescript title="Payer Type"
+{
+    "coverageStatus": "active",
+    "coverageType": ["medical"],
+    "payer": {
+        "name": "Aetna",
+    },
+    "member": {
+        "memberId": "A484069",
+        "fullName": {
+            "firstName": "Richard",
+            "lastName": "Hendricks"
+        },
+        "birthDate": "1989-08-01",
+        "sex": "Male"
+    },
+    "plan": {
+        "name": "Managed Choice Open Access",
+        "groupNumber": "123456-123-12345",
+        "insuranceType": "C1",
+        "effectiveDate": "2026-01-01",
+        "terminationDate": "2026-12-31"
+    },
+    "benefits": [
+        {
+            "type": "deductible",
+            "serviceTypeCodes": "[30]",
+            "level": "individual",
+            "network": "in",
+            "amount": "1500.00",
+            "remaining": "750.00",
+            "percent": "0.20"
+        },
+        ...
+    ],
+    contacts?: [
+        {
+            "name": "Aetna Member Services",
+            "serviceTypeCodes": "[30]",
+            "phone": "8005550000",
+            "fax": "8005550001",
+            "email": "memberservices@aetna.com",
+            "url": "https://aetna.com/member-services"
+        },
+        ...
+    ]
+}
+```
 
 ---
 

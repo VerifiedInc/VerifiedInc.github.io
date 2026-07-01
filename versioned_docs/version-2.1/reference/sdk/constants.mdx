@@ -15,6 +15,7 @@ toc_max_heading_level: 4
 
 ```typescript title="SdkResultValues Definition"
 const SdkResultValues = {
+  USER_PHONE_VERIFIED: 'USER_PHONE_VERIFIED',
   USER_SHARED_CREDENTIALS: 'USER_SHARED_CREDENTIALS',
   USER_SHARED_HEALTH_DATA: 'USER_SHARED_HEALTH_DATA',
   USER_OPTED_OUT: 'USER_OPTED_OUT',
@@ -34,6 +35,9 @@ import { SdkResultValues, SdkResult, ... } from '@verifiedinc-public/client-sdk'
 
 function handleResult(data: SdkResult) {
     switch (data.type) {
+        // highlight-next-line
+        case SdkResultValues.USER_PHONE_VERIFIED: // Success!
+            // Pass data.verificationUuid to server (to call GET /1-click/verifications/{verificationUuid})
         // highlight-next-line
         case SdkResultValues.USER_SHARED_CREDENTIALS: // Success!
             // Pass data.identityUuid to server (to call GET /1-click/{identityUuid})

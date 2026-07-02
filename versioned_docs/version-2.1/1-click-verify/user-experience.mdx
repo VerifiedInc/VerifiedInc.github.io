@@ -25,13 +25,13 @@ import PoweredByGraphicVariantsForOneClickSignup from '@site/versioned_docs/vers
 It's in the name: _verify is what we do._ We are experts in how to optimize onboarding flows to maximize conversion and give users the best possible experience. We've helped our customers onboard — and delight! — millions of new users. The user experience described in this guide is the result of countless hours of research, design, testing, and iteration by our team. 
 
 :::tip Use Our SDK to Get This UX
-**Our SDK implements this user experience, and we strongly recommend you use it by choosing the SDK [integration type](/1-click-verify/guides/setup#integration-type).** If you instead choose the **API** integration type, we recommend you implement a user experience similar to this one.
+**Our SDK implements this user experience, and we strongly recommend you use it.** If you instead choose to use our **API**, we recommend you implement a user experience similar to this one.
 :::
 
 Full details are below, but the basic user experience is:
-1. (if autofill available) Trigger autofill (e.g. click a button)
-2. (if necessary) Enter phone number
-3. (if necessary) Enter SMS verification code
+1. (if autofill available) **Trigger autofill** (e.g. click a button)
+2. (if necessary) **Enter phone number**
+3. (if necessary) **Enter SMS verification code**
 
 
 ## Flow Chart
@@ -63,8 +63,6 @@ To implement this user experience yourself (which is only necessary if you choos
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Consent Language
 
                 > By continuing, you agree to our [Terms](https://verified.inc/legal#terms-of-use).
-
-                If your [credential requests](/1-click-signup/guides/setup#default-credential-requests) do not include SSN, "including your social security number" will be omitted.
 
                 - [Muted](/1-click-signup/guides/setup#styling-settings) color
                 - "Terms”:

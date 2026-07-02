@@ -82,9 +82,9 @@ To onboard a user for healthcare, you typically need to do the following:
 2. **Collect the user's health insurance** (Payer and Member ID).
 3. **Run an eligibility check for the user's health insurance** (to see what the insurance covers).
 
-[1-Click Signup](/1-click-signup) solves (1) by letting you autofill the user's PII. 1-Click Health solves (2) and (3) by letting you autofill the user's health insurance and run an eligibility check for that insurance.
+[1-Click Signup](/1-click-signup) solves (1) by letting you autofill the user's PII. 
 
----
+1-Click Health solves (2) and (3) by letting you autofill the user's health insurance and run an eligibility check for that insurance.
 
 1-Click Health has two core capabilities:
 - **Insurance Autofill:** Autofill a user's insurance information.
@@ -97,7 +97,7 @@ We often refer to these simply as **autofill** and **check.**
 :::
 
 :::tip
-**You can use either _or both_ of autofill and check with a single API call:** see [step 2](#2-call-post-1-clickhealth) for details. They're automatically combined if the [**Check After Autofill**](/1-click-health/guides/setup#check-after-autofill) setting is set to **On** in the [Dashboard](https://dashboard.verified.inc) or if the `checkAfterAutofill` field in the request body of `POST /1-click/health` is set to `true`.
+**You can use either _or both_ of autofill and check with a single API call:** see [step 2](#2-call-post-1-clickhealth) for details. They're automatically combined if the [**Check After Autofill**](/1-click-health/guides/setup#check-after-autofill) setting is set to **On** in the [Dashboard](https://dashboard.verified.inc) or if the `checkAfterAutofill` field in the request body of [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) is set to `true`.
 :::
 
 <table>
@@ -135,7 +135,7 @@ We often refer to these simply as **autofill** and **check.**
     </tr>
     <tr>
         <td>Autofill + Check</td>
-        <td>Autofill a user's insurance information <br/> and automatically run an eligibility check for it</td>
+        <td>Autofill a user's insurance information and automatically run an eligibility check for it</td>
         <td>
           - PII
           - (optional) Payer
@@ -168,7 +168,7 @@ Only First Name, Last Name, and Birth Date are required, but the more inputs you
   <li>**[Include a "Powered by Verified" graphic](#b-include-a-powered-by-verified-graphic).**</li>
 </ol>
 
-If you use 1-Click Signup to collect the inputs, you can put the consent language and graphic on the first screen (typically the [Phone](/1-click-signup/user-experience#phone) screen): see the first example below. If you instead ask the user to manually enter the inputs, you can put them on that screen: see the second and third examples below. _We recommend that you use a single screen with fields for each input you want to collect: see the [Info](/1-click-health/user-experience#info) screen of our User Experience guide for full details._ Here are examples:
+If you use 1-Click Signup to collect the inputs, you can put the consent language and graphic on a screen in that flow (for example the [Phone](/1-click-signup/user-experience#phone) screen): see the first example below. If you instead ask the user to manually enter the inputs, you can put them on that screen: see the second and third examples below. _We recommend that you use a single screen with fields for each input you want to collect: see the [Info](/1-click-health/user-experience#info) screen of our User Experience guide for full details._ Here are examples:
 
 <div class='three-column-grid-container'>
   <div class='three-column-grid-row'>
@@ -206,7 +206,7 @@ Here's an example:
 > By entering your phone number, you agree that Hooli’s service provider [Verified](https://verified.inc) and its vendors may receive your personal info and provide to Hooli more info about you, including your health insurance.
 
 :::warning Modify Consent Language if Collecting SSNs
-**If you use 1-Click Signup to autofill SSNs as an input for 1-Click Health, you need to have "including my social security number" in the consent language,** as described [here](/1-click-signup/guides/api-integration#a-include-the-verified-consent-language) in the 1-Click Signup API Integration guide. In this case, the consent language should be:
+**If you use 1-Click Signup to autofill SSNs as an input for 1-Click Health, you need to have "including my social security number" in the consent language,** as described [here](/1-click-signup/guides/api-integration#consent) in the 1-Click Signup API Integration guide. In this case, the consent language should be:
 
 > By `{taking this action}`, you agree that `{Brand Name}`’s service provider [Verified](https://verified.inc) and its vendors may receive your personal info and provide `{Brand Name}` with more info about you, including your social security number and health insurance.
 
@@ -237,13 +237,15 @@ You can automatically combine these by setting [**Check After Autofill**](/1-cli
 <ApiKeysAdmonition />
 
 :::important 1-Click Health is Asynchronous
-**1-Click Health is _asynchronous_,** because it can take awhile to search for a user's health insurance plans across the large number of possible payers. **Response times are typically either 3-5 seconds or 25-30 seconds.** You don't receive data in the response body of `POST /1-click/health` but rather via webhook or by polling `GET /1-click/health`. See [step 3](#3-receive-outputs) for details.
+**1-Click Health is _asynchronous_,** because it can take awhile to search for a user's health insurance plans across the large number of possible payers. **Response times can be as short as 3 seconds or as long as 30+ seconds.** You don't receive data in the response body of `POST /1-click/health` but rather via webhook or by polling `GET /1-click/health`. See [step 3](#3-receive-outputs) for details.
 
 This is in contrast to 1-Click Signup, which is _synchronous_ and almost always has response times under 1 second. You receive data directly in the response body of `POST /1-click`, though you can also receive it via webhook or by polling `GET /1-click`.
 :::
 
 
 ### Insurance Autofill
+
+To autofill insurance, call [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) with **PII (and optionally) payer:**
 
 <Tabs groupId="signup-solution">
 
@@ -278,7 +280,7 @@ See [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) for de
 
 ### Eligibility Check
 
-Call [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) with payer and member ID:
+To run an eligibility check, call [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) with **PII, payer, _and_ member ID:**
 
 <Tabs groupId="signup-solution">
 
@@ -286,7 +288,7 @@ Call [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) with 
 
   If you use 1-Click Signup to autofill inputs, you should include `identityUuid` as an input, using the value of `uuid` from the [response body of `POST /1-click`](/reference/api/endpoints#post-1-click-response) (which you call for 1-Click Signup).
 
-  If the user didn't edit any of the data autofilled by 1-Click Signup, you can include _only_ the `identityUuid`, and 1-Click Health will hydrate all of the relevant 1-Click Signup outputs as inputs:
+  If the user didn't edit any of the data autofilled by 1-Click Signup, you can include the `identityUuid`, and 1-Click Health will hydrate all of the relevant 1-Click Signup outputs as inputs:
 
   <Post1ClickHealthRequestBodyExampleCheckInputsFrom1ClickSignupWithoutUserEdits/>
 
@@ -313,11 +315,11 @@ Call [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) with 
   :::tip
   One of the reasons we strongly recommend using 1-Click Signup to autofill inputs for 1-Click Health is that _we can then hydrate inputs that are never exposed to you or the user,_ improving the success rate of 1-Click Health! The most important example concerns SSNs:
 
-  Most healthcare companies don't collect SSNs and therefore don't want to ask users to provide or confirm them. However, using SSNs as inputs for 1-Click Health can significantly improve success rates — because SSNs are de facto unique, static identifiers for most US adults.
+  Most healthcare companies don't collect SSNs and therefore don't want to ask users to provide or confirm them. However, using SSNs as inputs for 1-Click Health can significantly improve success rates (especially for Medicare) — because SSNs are de facto unique, static identifiers for most US adults.
 
   If you use 1-Click Signup to autofill inputs for 1-Click Health, we can hydrate SSNs — never exposing them to you or the user — and then use them to source health insurance data. There are various restrictions on how and when we do this. (For example, we'll only use a hydrated SSN if a user doesn't significantly edit the rest of the autofilled 1-Click Signup data.) But this allows you to improve the success rate of 1-Click Health while never needing to ask for or process SSNs yourselves.
 
-  **This is huge advantage of using 1-Click Signup and 1-Click Health in combination.**
+  **This is a huge advantage of using 1-Click Signup and 1-Click Health in combination.**
   :::
 
 The [response body](/reference/api/endpoints#post-1-click-health-response) will contain a `healthDataUuid` that identifies the 1-Click Health flow:

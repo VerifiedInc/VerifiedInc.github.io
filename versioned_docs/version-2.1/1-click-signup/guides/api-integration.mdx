@@ -290,7 +290,7 @@ We recommend using a phone number input that auto submits when the user enters 1
 <div class='two-column-grid-container'>
   <div class='two-column-grid-row'>
     <div class='two-column-grid-column'>
-      ![](/img/phone-empty-without-sms-consent.png) _Verified consent language, phone number input, and the green signup variant of the "powered by" graphic_
+      ![](/img/phone-empty-without-sms-consent.png) _Verified consent language, phone number input, and the green variant of the Powered by Verified graphic_
     </div>
     <div class='two-column-grid-column'>
       {/* Blank just to keep the image from being too wide */}
@@ -311,67 +311,71 @@ We recommend using a phone number input that auto submits when the user enters 1
 
 <TabItem value="first-name" label="First Name" default>
 
-  See the [First Name](/1-click-signup/user-experience#first-name) screen of our User Experience guide for our detailed recommendations.
-
-  We recommend using a numeric input (formatted as MM/DD/YYYY for birthday) that automatically submits when the user enters enough digits (8 for birth date and 4 for SSN4). (See the [Birthday](/1-click-signup/user-experience#birthday) and [SSN4](/1-click-signup/user-experience#ssn4) screens of our User Experience guide for full details.)
-
-  <BirthDateFormatAdmonition />
-
-  Here are examples:
+  See the [First Name](/1-click-signup/user-experience#first-name) screen of our User Experience guide for our detailed recommendations. Here's an example:
 
   <div class='two-column-grid-container'>
     <div class='two-column-grid-row'>
       <div class='two-column-grid-column'>
-        ![](/img/1cs-ux-screens/birthday-empty.png) *Numeric input, formatted as
-        MM/DD/YYYY, and the green signup variant of the "powered by" graphic*
+        ![](/img/1cs-ux-screens/firstname-empty.png) *Text input and the green variant of the Powered by Verified graphic*
       </div>
       <div class='two-column-grid-column'>
-        ![](/img/1cs-ux-screens/ssn4-empty.png) *Numeric input and the green
-        signup variant of the "powered by" graphic*
+        {/* Blank just to keep the image from being too wide */}
       </div>
     </div>
   </div>
+
+  Depending on your use case, it can be helpful to stress to the user that they need to use their _real_ first name. Sometimes a user enters a dummy first name, thinking it doesn't matter, but in this case their real name is needed.
+
+  :::important Nicknames Can Work
+  **Some users go by a different first name than their legal first name. Generally, any first name they go by will work!** For example:
+  - One of Verified's founders goes by Liam, but his legal first name is William. 
+  - He can enter either Liam or William and successfully use 1-Click Signup, because we see both of those first names associated with his phone number. 
+  - However, if he enters a different name that he doesn't go by (even a common nickname for William, like Bill), 1-Click Signup won't autofill info for him, because we don't see that name associated with his phone number.
+  :::
+
+  :::tip Prompt for Legal First Name if You Need it Later
+  **Currently, the first name 1-Click Signup _outputs_ matches the first name the user _inputs_.** Therefore, for a user with multiple first names (for example nickname and legal name), the first name they input determines what first name you'll receive from us. Continuing the example above:
+  - One of Verified's founders goes by Liam, but his legal first name is William. 
+  - If he inputs Liam, 1-Click Signup will autofill Liam.
+  - If he inputs William, 1-Click Signup will autofill William.
+
+  This matters if you specifically need the user's _legal_ first name some time in the future, for example if you use [1-Click Health](/1-click-health) after 1-Click Signup. **If you need the user's legal first name later, prompt them to enter their legal first name at the outset.**
+  :::
 
 </TabItem>
 <TabItem value="birth-date" label="Birth Date">
     
-  See the [Birthday](/1-click-signup/user-experience#birthday) screen of our User Experience guide for our detailed recommendations.
-
-  <BirthDateFormatAdmonition />
-
-  Here are examples:
+  We recommend using a numeric input (formatted as MM/DD/YYYY)that automatically submits when the user enters 8 digits. See the [Birthday](/1-click-signup/user-experience#birthday) of our User Experience guide for full details. Here's an example:
 
   <div class='two-column-grid-container'>
     <div class='two-column-grid-row'>
       <div class='two-column-grid-column'>
         ![](/img/1cs-ux-screens/birthday-empty.png) *Numeric input, formatted as
-        MM/DD/YYYY, and the green signup variant of the "powered by" graphic*
+        MM/DD/YYYY, and the green variant of the Powered by Verified graphic*
       </div>
       <div class='two-column-grid-column'>
-        ![](/img/1cs-ux-screens/ssn4-empty.png) *Numeric input and the green
-        signup variant of the "powered by" graphic*
+        {/* Blank just to keep the image from being too wide */}
       </div>
     </div>
   </div>
 
+  Depending on your use case, it can be helpful to stress to the user that they need to use their _real_ birthday. Sometimes a user enters a dummy birthday, thinking it doesn't matter (for example thinking that you only need to know they're 18+), but in this case their real name is needed.
+
+  <BirthDateFormatAdmonition />  
+
 </TabItem>
 <TabItem value="ssn4" label="SSN4">
-    
-  We recommend using a numeric input (formatted as MM/DD/YYYY for birthday) that automatically submits when the user enters enough digits (8 for birth date and 4 for SSN4). (See the [Birthday](/1-click-signup/user-experience#birthday) and [SSN4](/1-click-signup/user-experience#ssn4) screens of our User Experience guide for full details.)
 
-  <BirthDateFormatAdmonition />
-
-  Here are examples:
+  We recommend using a numeric input that automatically submits when the user enters 4 digits. See the [SSN4](/1-click-signup/user-experience#ssn4) of our User Experience guide for full details. Here's an example:
 
   <div class='two-column-grid-container'>
     <div class='two-column-grid-row'>
       <div class='two-column-grid-column'>
-        ![](/img/1cs-ux-screens/birthday-empty.png) *Numeric input, formatted as
-        MM/DD/YYYY, and the green signup variant of the "powered by" graphic*
+        ![](/img/1cs-ux-screens/ssn4-empty.png) *Numeric input and the green
+        signup variant of the Powered by Verified graphic*
       </div>
       <div class='two-column-grid-column'>
-        ![](/img/1cs-ux-screens/ssn4-empty.png) *Numeric input and the green
-        signup variant of the "powered by" graphic*
+        {/* Blank just to keep the image from being too wide */}
       </div>
     </div>
   </div>
@@ -523,7 +527,7 @@ We provide many different variants of the graphic, so you can choose the one tha
 
 If we can source data for the user, the [response body](/reference/api/endpoints#post-1-click-response) will contain a [`1ClickEntity`](/reference/api/types#1clickentity), keyed on `identity`, that contains the user's data and metadata about it. 
 
-If we can't source data, the response body will contain an [error](/reference/api/errors) with a Verified error code. (Note that this error code, which is Verified specific, is `data.errorCode` in the error object, _not_ `code` (which is a standard HTTP response status code).) See [step 2a](#handle-errors) below for how to handle Verified error codes.
+If we can't source data, the response body will contain an [error](/reference/api/errors) with a Verified error code. (Note that this error code, which is Verified specific, is `data.errorCode` in the error object, _not_ `code` (which is a standard HTTP response status code).) See [step 2a](#a-if-needed-handle-errors) below for how to handle Verified error codes.
 
 :::tip Data is Retrievable for 1 Hour
 **You can retrieve data for 1 hour,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click`](/reference/api/endpoints#get-1-click) instead of `POST /1-click` so that a duplicate 1-Click Signup event isn't created (and so you aren't billed twice).
@@ -607,9 +611,9 @@ Masking sensitive info is a compliance requirement. We cannot approve you for [P
 
 **We recommend that you:** 
 <ol type="i">
-    <li>**[Use a static display for view mode](#a-use-a-static-display-for-view-mode).**</li>
-    <li>**[Use a form with autofilled inputs for edit mode](#b-use-a-form-with-autofilled-inputs-for-edit-mode).**</li>
-    <li>**[Include information about where the data comes from](#c-include-information-about-where-the-data-comes-from).**</li>
+    <li>**[Use a static display for view mode](#i-use-a-static-display-for-view-mode).**</li>
+    <li>**[Use a form with autofilled inputs for edit mode](#ii-use-a-form-with-autofilled-inputs-for-edit-mode).**</li>
+    <li>**[Include information about where the data comes from](#iii-include-information-about-where-the-data-comes-from).**</li>
 </ol>
 
 (See the [Info](/1-click-signup/user-experience#info) screen of our User Experience guide for full details.) Here's an example:

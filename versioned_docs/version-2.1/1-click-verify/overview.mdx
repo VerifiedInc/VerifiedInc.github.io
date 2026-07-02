@@ -18,18 +18,20 @@ import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/se
 import HowToTestAdmonition from '@site/versioned_docs/version-2.1/reusables/how-to-test-admonition.mdx'
 import DocCardList from '@theme/DocCardList';
 import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-recommendation-admonition.mdx';
+import PrivacyFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/privacy-first-admonition.mdx';
 
 
 <table>
     <tr>
         <th>Speed</th>
-        <td>\<10 seconds to complete 1-Click Verify</td>
+        <td>\<5 seconds to complete 1-Click Verify</td>
     </tr>
     <tr>
         <th>Benefits</th>
         <td>
-            - Easily verify user phone numbers (and soon more)
-            - Seamlessly integrate with 1-Click Signup and 1-Click Health
+            - Magically autofill verified user phone numbers _with no user input!_
+            - Easily verify user phone numbers (and soon emails) with SMS verification codes
+            - Seamlessly integrate with [1-Click Signup](/1-click-signup) and [1-Click Health](/1-click-health)
         </td>
     </tr>
     <tr>
@@ -49,20 +51,19 @@ import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/versio
 
 ## About 1-Click Verify
 
-**1-Click Verify is our dedicated solution for verifying user phone numbers,** and soon emails and more. Verifying user phone numbers is necessary to use our flagship [1-Click Signup](/1-click-signup) product, so 1-Click Verify provides a powerful and easy to integrate solution.
+**1-Click Verify is our dedicated solution for autofilling and verifying user phone numbers** (and soon emails). Collecting a user's verified phone number is necessary to use our flagship [1-Click Signup](/1-click-signup) product, so 1-Click Verify provides a powerful and easy to integrate solution.
 
-:::tip 
-If you already verify user phone numbers with another provider or your own solution, that's totally fine. You can still use our other Verified products, like [1-Click Signup](/1-click-signup).
-:::
+<PrivacyFirstAdmonition />
 
 
-## SMS Compliance
+## Phone Carrier Compliance
 
-SMS sending in the US is subject to onerous compliance reviews by SMS platforms and phone carriers. We handle all of this complexity, so you don't have to. 
+Autofilling verified phone numbers and sending SMS in the US requires onerous compliance reviews by phone carriers. We handle all of this complexity, so you don't have to.
 
 
 ## Benefits
 
+- **Magically autofill verified user phone numbers:** After years of effort, we've implemented a way to autofill verified phone numbers _with no user input!_ This is the best user experience on the planet. Painless, frictionless phone verification.
 - **Easily verify user phone numbers:** 1-Click Verify makes it extremely easy to verify user phone numbers, with minimal integration work.
 - **Seamlessly integrate with 1-Click Signup and 1-Click Health:** Phone verification is the prerequisite for using our flagship [1-Click Signup](/1-click-signup) product, so 1-Click Verify can smoothly flow into 1-Click Signup (which can then flow into 1-Click Health).
 
@@ -70,6 +71,14 @@ SMS sending in the US is subject to onerous compliance reviews by SMS platforms 
 ## Coverage
 
 1-Click Verify works for 99% of US adults (264M people): anyone with a cell phone!
+
+That said, coverage is different for the two 1-Click Verify channels:
+- **Autofill:** The autofill channel is currently only available a minority of the time. The exact coverage will depend on your use case — the main factors being whether a user is on WiFi vs. cell data and whether their phone carrier supports autofill — but we typically see it work for about 1 in 6 sessions. 
+- **SMS:** The SMS channel works for 99% of users — anyone with a cell phone. It uses industry standard SMS verification codes.
+
+:::tip
+Even if the autofill channel only works for a small percentage of your users, it will substantially boost overall conversion (and user delight!) in your onboarding flow, so we highly recommend it.
+:::
 
 :::important
 **We currently only cover people in the United States,** but we're soon adding new geographies. If there are particular geographies that would be most helpful for your use case, please let us know by emailing Support@Verified.inc, and we'll prioritize accordingly.

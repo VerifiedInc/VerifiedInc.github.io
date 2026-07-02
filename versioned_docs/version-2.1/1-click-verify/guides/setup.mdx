@@ -64,41 +64,12 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 
 ### 1-Click Verify Settings
 
-**The only relevant settings for 1-Click Verify are the following:**
 
-
-#### Integration Type
+#### Channels
 
 <ImmutableSettingAdmonition/>
 
-**Choose which integration type you want to use:**
-
-<table>
-    <tr>
-        <th>Option</th>
-        <th>Development Effort</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td>**SDK** <Chip label="Recommended" variant="outlined" size="small" color="primary"/> <br/> <span class="font-weight-normal"></span></td>
-        <td>\<1 day</td>
-        <td>You use our (web) client SDK, and we handle the rest</td>
-    </tr>
-    <tr>
-        <td>**API** <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/> <br/> <span class="font-weight-normal"></span></td>
-        <td>1-2 weeks</td>
-        <td>You use our API only and build everything yourself</td>
-    </tr>
-</table>
-
-<IntegrationTypeRecommendationAdmonition/>
-
-
-#### Phone Verification
-
-<ImmutableSettingAdmonition/>
-
-**Choose what to use for phone verification:**
+**Choose which channel(s) you want to enable:**
 
 <table>
     <tr>
@@ -106,19 +77,19 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
         <th>Description</th>
     </tr>
     <tr>
-        <td>Use 1-Click Verify in the SDK</td>
-        <td>Use 1-Click Verify in the SDK to send the user verification SMS.</td>
+        <td>**Autofill** <Chip label="Recommended" variant="outlined" size="small" color="primary"/> <br/> <span class="font-weight-normal"></span></td>
+        <td>Autofill verified phone number with no user input</td>
     </tr>
     <tr>
-        <td>Use the 1-Click Verify API or another solution <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/></td>
-        <td>Use the 1-Click Verify API or another solution to send the user verification SMS.</td>
+        <td>**SMS** <Chip label="Always Enabled" variant="outlined" size="small" color="primary"/> <br/> <span class="font-weight-normal"></span></td>
+        <td>Verify phone number with SMS OTP</td>
     </tr>
 </table>
 
-<Admonition type="warning" title="The Second Option Requires Approval">
-    If you choose the second option, we must approve you for [Production](/reference/api/environments#production) access by evaluating that you're properly verifying users' phone numbers.
-</Admonition>
+:::tip We Recommend Using Both Channels
+**The autofill channel lets you autofill a user's phone number with _no user input_** — the best user experience on the planet! But it currently only works for a minority of sessions, so you'll need to fall back to the SMS channel.
+:::
 
-If you choose the first option, you're done! There's no need to do any integration work, because the SDK handles everything for you.
-
-If you choose the second option, follow the 1-Click Verify [API Integration](/1-click-verify/guides/api-integration) guide.
+:::info How Autofill Billing Works
+For the autofill channel, we bill per attempt (per autofill started), _but_ you can use the [`GET /1-click/verifications/channels`](/reference/api/endpoints#get-1-click-verifications-channels) for free to check in advance if autofill will work. Almost 100% of the time, if this endpoint indicates the autofill channel is available, autofill will succeed. The only exceptions are rare edge cases, for example when a user loads the page on cell data but then switches to WiFi before starting autofill (since autofill doesn't yet work on WiFi).
+:::

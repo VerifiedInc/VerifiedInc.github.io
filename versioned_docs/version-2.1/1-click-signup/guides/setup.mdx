@@ -47,7 +47,7 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 </table>
 
 :::tip
-**Complete this Setup guide before following the 1-Click Signup [SDK Integration](/1-click-signup/guides/sdk-integration) or [API Integration](/1-click-signup/guides/api-integration) guide.** (Which integration guide you should follow depends on which [integration type](#integration-type) you choose.)
+**Complete this Setup guide before following the 1-Click Signup [SDK Integration](/1-click-signup/guides/sdk-integration) or [API Integration](/1-click-signup/guides/api-integration) guide.**
 :::
 
 
@@ -72,88 +72,11 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
     <CollapsibleSection>
 
         <CollapsibleHeader>
-        #### Integration Type
-        </CollapsibleHeader>
-
-        <ImmutableSettingAdmonition/>
-
-        **Choose which integration type you want to use:**
-
-        <table>
-            <tr>
-                <th>Option</th>
-                <th>Development Effort</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>**SDK** <Chip label="Recommended" variant="outlined" size="small" color="primary"/> <br/> <span class="font-weight-normal"></span></td>
-                <td>\<1 day</td>
-                <td>You use our (web) client SDK, and we handle the rest</td>
-            </tr>
-            <tr>
-                <td>**API** <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/> <br/> <span class="font-weight-normal"></span></td>
-                <td>1-2 weeks</td>
-                <td>You use our API only and build everything yourself</td>
-            </tr>
-        </table>
-
-        <IntegrationTypeRecommendationAdmonition/>
-
-    </CollapsibleSection>
-    
-    <CollapsibleSection>
-
-        <CollapsibleHeader>
-        #### Phone Verification
-        </CollapsibleHeader>
-
-        <ImmutableSettingAdmonition/>
-
-        **Choose what to use for phone verification:**
-
-        <table>
-            <tr>
-                <th>Option</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>Use 1-Click Verify in the SDK</td>
-                <td>Use 1-Click Verify in the SDK to send the user verification SMS.</td>
-            </tr>
-            <tr>
-                <td>Use the 1-Click Verify API or another solution <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/></td>
-                <td>Use the 1-Click Verify API or another solution to send the user verification SMS.</td>
-            </tr>
-        </table>
-
-        <Admonition type="warning" title="The Second Option Requires Approval">
-            If you choose the second option, we must approve you for [Production](/reference/api/environments#production) access by evaluating that you're properly verifying users' phone numbers.
-        </Admonition>
-
-    </CollapsibleSection>
-
-    <CollapsibleSection>
-
-        <CollapsibleHeader>
-        #### Risk Signals
-        </CollapsibleHeader>
-
-        <BrandSettingRiskSignals/>
-
-    </CollapsibleSection>
-
-    <CollapsibleSection>
-
-        <CollapsibleHeader>
         #### Challenges
         </CollapsibleHeader>
 
         <Admonition type="note" title="Definition">
-            A **challenge** is a piece of information we will prompt the user to input if we're unable to source data for them based on previous inputs (for example, phone).
-        </Admonition>
-
-        <Admonition type="important">
-            If multiple challenge types are used, the order is always as listed below.
+            A **challenge** is a secondary input (alongside verified phone, which is always required) that must match the corresponding output.
         </Admonition>
 
         **Choose which challenge(s) to use:**
@@ -164,11 +87,11 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
                 <th>Description</th>
             </tr>
             <tr>
-                <td>First Name <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
+                <td>First Name</td>
                 <td>Prompt the user for their first name</td>
             </tr>
             <tr>
-                <td>Birthday <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
+                <td>Birthday</td>
                 <td>Prompt the user for their birthday</td>
             </tr>
             <tr>
@@ -176,25 +99,6 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
                 <td>Prompt the user for their SSN4</td>
             </tr>
         </table>
-
-        You must enable at least 1 challenge.
-
-        <details>
-            <summary>Why We Recommend <b>First Name</b> and <b>Birthday</b></summary>
-
-            {/* - One challenge is generally better than multiple:
-                - Every additional input adds friction, with the risk that we won't be able to source data for the user.
-                - We can successfully source data based on phone and one challenge the vast majority of the time.
-                - Prompting for another challenge only slightly increases the chance that we'll be able to source data for the user, and it adds substantial friction. */}
-            - First Name is generally easiest for the user:
-                - Users are typically comfortable providing their first name.
-                - Most users will have an autofill option for birthday from their browser or OS.
-                - First names are easy and fast to type.
-            - Birthday is generally better than SSN4:
-                - Users are typically more comfortable providing their birthday.
-                - Some users will have an autofill option for birthday from their browser or OS.
-                - Everyone has a birthday, but not everyone has an SSN.
-        </details>
 
         **For the enabled challenge(s), choose when to prompt the user for them:**
 
@@ -213,11 +117,32 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
             </tr>
         </table>
 
-        <Admonition type="tip">
-            We recommend setting at least one challenge to **Always**, because using at least one challenge in addition to Phone as input improves output data quality.
+        <Admonition type='important' title='What We Recommend'>
+          **We recommend using a single challenge, either First Name or Birthday, and always requiring it.**
+          
+          <details>
+            <summary>Why We Recommend This</summary>
+
+            - **One challenge is generally better than multiple:**
+                - Every additional input adds friction, with the risk that we won't be able to source data for the user.
+                - We can successfully source data based on phone and one challenge the vast majority of the time.
+                - Prompting for another challenge only slightly increases the chance that we'll be able to source data for the user, and it adds substantial friction.
+            - **First Name is generally easiest for the user:**
+                - Users are typically comfortable providing their first name.
+                - Most users will have an autofill option for first name from their browser or OS.
+                - First names are easy and fast to type.
+            - **Birthday is generally better than SSN4:**
+                - Users are typically more comfortable providing their birthday.
+                - Some users will have an autofill option for birthday from their browser or OS.
+                - Everyone has a birthday, but not everyone has an SSN.
+            - **Data quality is higher with a challenge than without one:**
+                - You can use 1-Click Signup without always requiring any challenge.
+                - If you do, we'll return data if we can source a unique user record based on phone only.
+                - However, for most use cases this isn't worth the slightly lower friction, because data quality is lower with phone only.
+        </details>
         </Admonition>
 
-        **If you enabled multiple challenges, drag and drop them into the order in which you want the user to be prompted for them.** Challenges set to **Always** will automatically be put before those set to **Only if necessary**.
+        **If you enable multiple challenges, drag and drop them into the order in which you want the user to be prompted for them.** Challenges set to **Always** will automatically be put before those set to **Only if necessary**.
 
     </CollapsibleSection>
 
@@ -261,6 +186,16 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
     <CollapsibleSection>
 
         <CollapsibleHeader>
+        #### Risk Signals
+        </CollapsibleHeader>
+
+        <BrandSettingRiskSignals/>
+
+    </CollapsibleSection>
+
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
         #### Default Credential Requests
         </CollapsibleHeader>
 
@@ -276,7 +211,7 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
             <table>
                 <tr>
                     <th>Setting</th>
-                    <th>Relevant to Integration Type</th>
+                    <th>Relevant to Integration With</th>
                     <th>Options</th>
                     <th>Default</th>
                     <th>Description</th>
@@ -338,7 +273,7 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
         </details>
 
         <Admonition type="note">
-            **Field Description,** **Optional or Required,** and **Allow User Input** are only relevant to the **SDK** [integration type](#integration-type) because they affect the user interface the SDK displays. 
+            **Field Description,** **Optional or Required,** and **Allow User Input** are only relevant if you use our **SDK** because they affect the user interface the SDK displays. 
         </Admonition>
 
         <Admonition type="tip" title="What Required If Available Means"> 
@@ -461,9 +396,9 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 ### Styling Settings
 
 :::important
-Styling settings only apply to **1-Click Signup** using the **SDK** [integration type](#integration-type) because they affect the user interface the SDK displays. (They also apply to [**Text to Signup**](/text-to-signup).)
+Styling settings only apply to **1-Click Signup** using the **SDK** because they affect the user interface the SDK displays. (They also apply to [**Text to Signup**](/text-to-signup).)
 
-So, if you are only using **1-Click Signup** with the the **API** [integration type](#integration-type), you can ignore these settings.
+So, if you are only using **1-Click Signup** with the the **API**, you can ignore these settings.
 :::
 
 :::tip Verified Auto-Magically Configures Styling Settings

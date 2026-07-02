@@ -16,7 +16,13 @@
         country?: string
     },
     sex?: string,
-    ssn?: string,
+    ssn?: string,{
+    serviceTypeCodes?: string[],
+    procedureCodes?: {
+        code: string,
+        qualifier?: string,
+        modifiers?: string[]
+    }[]
     // npi?: string // coming soon
 }
 ```

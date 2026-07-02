@@ -36,14 +36,12 @@ import TabItem from '@theme/TabItem';
 
 :wave: **Hello Amplify Life team!** You're currently using 1-Click Signup with v2.0 of the Verified API, which we're soon deprecating. You'll need to migrate to v2.1, but don't worry: this is very easy to do.
 
-**You need to make one decision: For phone verification, do you want to use our 1-Click Verify API or another solution?** For context:
-- Currently, in v2.0, we're generating the verification code for you, and you're sending an SMS containing that verification code to the user. 
-- In v2.1, this is not an option. Instead, you have two choices:
-    1. **Use our 1-Click Verify API:** This is our dedicated phone verification solution, which didn't exist when you first integrated 1-Click Signup. With this, we will generate the verification code _and_ send the SMS for you. 
-    2. **Use another phone verification solution:** There are plenty of other dedicated phone verification solutions out there, such as Twilio Verify. Or, you can implement your own solution by generating verification codes and sending SMS yourself.
+**You need to make one decision: For phone verification, do you want to use our 1-Click Verify API or another solution?** For context: Currently, in v2.0, we're generating the verification code for you, and you're sending an SMS containing that verification code to the user. In v2.1, this is not an option. Instead, you have two choices:
+1. **Use our 1-Click Verify API:** This is our dedicated phone verification solution, which didn't exist when you first integrated 1-Click Signup. With 1-Click Verify, we generate the verification code _and_ send the SMS for you. 
+2. **Use another phone verification solution:** There are plenty of other dedicated phone verification solutions out there, such as Twilio Verify. Or, you can implement your own solution by generating verification codes (and still sending) SMS yourself.
 
 :::info Why We Made This Change
-By requiring a dedicated phone verification solution in v2.1 (whether our 1-Click Verify API or another solution), we enable an easier integration for you (because you don't have to implement SMS sending directly) and better security (because the verification code is _only_ sent to the user).
+By requiring a dedicated phone verification solution in v2.1 — whether our 1-Click Verify API or another solution — we enable an easier integration for you (because you don't have to implement SMS sending directly) and better security (because the verification code is _only_ exposed to the user).
 :::
 
 :::tip We Recommend 1-Click Verify
@@ -51,7 +49,7 @@ We recommend using our 1-Click Verify API, because it ties directly into 1-Click
 - 1-Click Verify outputs a `verificationUuid`.
 - You can pass this `verificationUuid` directly to 1-Click Signup, which can then hydrate the user's phone number and confirm that it was recently verified.
 
-In other words, if you use 1-Click Verify there's a closed loop with security guarantees, If you use another solution, we can't have such security guarantees, so instead we have to do a manual security and compliance review of your integration to ensure phone verification is being handled properly. 
+In other words, if you use 1-Click Verify there's a closed loop with security guarantees, If you use another solution, we can't have such security guarantees, so instead we have to do a manual security and compliance review of your integration to ensure you're handling phone verification properly. 
 :::
 
 <Tabs>

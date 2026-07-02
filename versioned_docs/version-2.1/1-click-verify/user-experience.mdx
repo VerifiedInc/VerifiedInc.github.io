@@ -1,0 +1,276 @@
+---
+id: user-experience
+title: User Experience
+sidebar_position: 1
+sidebar_label: User Experience
+sidebar_class_name: sidebar-header-regular
+description: User Experience for 1-Click Verify
+slug: /1-click-verify/user-experience
+toc_max_heading_level: 3
+---
+
+import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
+import Tip from '@site/src/components/Tip';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
+import Chip from '@mui/material/Chip';
+import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+import { GridContainer, GridRow, GridColumn, GridNonStickyElement, GridStickyElement } from '@site/src/components/Grid';
+import ComponentTypeIndicator from '@site/src/components/ComponentTypeIndicator';
+import ColorIndicator from '@site/src/components/ColorIndicator';
+import PoweredByGraphicVariantsForOneClickSignup from '@site/versioned_docs/version-2.1/reusables/powered-by-graphic-variants-for-1-click-signup.mdx';
+
+
+It's in the name: _verify is what we do._ We are experts in how to optimize onboarding flows to maximize conversion and give users the best possible experience. We've helped our customers onboard — and delight! — millions of new users. The user experience described in this guide is the result of countless hours of research, design, testing, and iteration by our team. 
+
+:::tip Use Our SDK to Get This UX
+**Our SDK implements this user experience, and we strongly recommend you use it.** If you instead choose to use our **API**, we recommend you implement a user experience similar to this one.
+:::
+
+Full details are below, but the basic user experience is:
+1. (if autofill available) **Trigger autofill** (e.g. click a button)
+2. (if necessary) **Enter phone number**
+3. (if necessary) **Enter SMS verification code**
+
+
+## Flow Chart
+
+![](/img/ux-flow-chart-1-click-verify.png)
+↗️ [Open in new tab](/img/ux-flow-chart-1-click-verify.png) (for easy zooming)
+
+:::important
+To implement this user experience yourself (which is only necessary if you choose the **API** [integration type](/1-click-verify/guides/setup#integration-type)), without our SDK, you need to handle each action labeled Verified.
+:::
+
+
+## Screens and Components
+
+<GridContainer>
+    <GridRow>
+        <GridColumn>
+            <GridStickyElement>
+                ### Autofill
+            </GridStickyElement>
+            <GridNonStickyElement>
+
+            
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Header
+
+                > Verify Yourself
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Consent Language
+
+                > By continuing, you agree to our [Terms](https://verified.inc/legal#terms-of-use).
+
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
+                - "Terms”:
+                    - Hyperlinked to https://verified.inc/legal#terms-of-use (or your terms)
+                    - [Primary](/1-click-signup/guides/setup#styling-settings) color
+                    - Underlined
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Opt In
+
+                > Tap to Verify
+
+                *Triggers autofill.*
+
+                - [Primary](/1-click-signup/guides/setup#styling-settings) color
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
+
+                - Black and Green variant
+
+                <PoweredByGraphicVariantsForOneClickSignup/>
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Opt Out
+
+                > Enter Phone Instead
+
+                *Takes user to Phone screen.*
+
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
+
+            </GridNonStickyElement>
+        </GridColumn>
+        <GridColumn>
+            <GridStickyElement>
+                ![](/img/1cv-ux-screens/autofill.png)
+                ↗️ [Open in new tab](/img/1cv-ux-screens/autofill.png)
+            </GridStickyElement>
+        </GridColumn>
+    </GridRow>
+    <GridRow>
+        <GridColumn>
+            <GridStickyElement>
+                ---
+                ### Phone
+            </GridStickyElement>
+            <GridNonStickyElement>
+
+            
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Header
+
+                > Enter Your Phone Number
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Consent Language
+
+                > By entering your phone number, you authorize `{Brand Name}`'s service provider [Verified](https://verified.inc) and its vendors to send you SMS verification texts at the number provided. Msg & Data rates may apply.
+
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
+                - “Verified”:
+                    - Hyperlinked to https://verified.inc
+                    - [Primary](/1-click-signup/guides/setup#styling-settings) color
+                    - Underlined
+                - `{Brand Name}`: replaced with your brand name
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Phone
+
+                > +1 (_ _ _) _ _ _ - _ _ _ _ 
+
+                - [Primary](/1-click-signup/guides/setup#styling-settings) and [error](/1-click-signup/guides/setup#styling-settings) colors
+                - Auto focused
+                - Opens numeric keyboard
+                - Accepts only digits
+                - Accepts OS autofill
+                - Validates US phone number
+                - Auto formats to +1 (NNN) NNN-NNNN (most common US format)
+                - Auto submits on 10 digits
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
+
+                - Black and Green variant
+
+                <PoweredByGraphicVariantsForOneClickSignup/>
+
+
+                #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Error
+
+                > That phone number is invalid. Please try again.
+
+                *Appears when phone number is invalid.*
+
+                - [Error](/1-click-signup/guides/setup#styling-settings) color
+
+            </GridNonStickyElement>
+        </GridColumn>
+        <GridColumn>
+            <GridStickyElement>
+
+                ---
+
+                ![](/img/1cv-ux-screens/phone-empty.png)
+                *Starting State* ↗️ [Open in new tab](/img/1cv-ux-screens/phone-empty.png)
+
+                ![](/img/1cv-ux-screens/phone-error.png)
+                *Error State* ↗️ [Open in new tab](/img/1cv-ux-screens/phone-error.png)
+                
+            </GridStickyElement>
+        </GridColumn>
+    </GridRow>
+    <GridRow>
+        <GridColumn>
+            <GridStickyElement>
+                ---
+                ### Verification Code
+            </GridStickyElement>
+            <GridNonStickyElement>
+
+                
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Header
+
+                > Verify Your Phone Number
+
+
+                #### <ComponentTypeIndicator type="text" isRightMargined={true}/>Description
+
+                > Enter the verification code we texted to 
+                **`{phone}`**.
+
+                - New line before `{phone}`
+                - Bold `{phone}`
+
+
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Verification Code
+
+                - [Primary](/1-click-signup/guides/setup#styling-settings) and [error](/1-click-signup/guides/setup#styling-settings) colors
+                - Auto focused
+                - 6 separate boxes
+                - En dash (–) in between first and last 3 boxes, to indicate hypen in verification code sent by SMS, which is included for readability:
+                    > 123-456
+                - Opens numeric keyboard
+                - Accepts only digits
+                - Accepts OS autofill
+                - Auto submits on 6 digits
+
+
+                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Powered by Verified
+
+                - Black and Green variant
+
+                <PoweredByGraphicVariantsForOneClickSignup/>
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Edit
+
+                > Edit Phone
+
+                *Takes user back to phone input.*
+
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
+
+
+                #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Resend
+
+                > Resend Code
+
+                *Sends another SMS with fresh verification code.*
+
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
+                - Allows for at most 2 resends
+
+
+                #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Error
+
+                > That code didn’t match. Please try again.
+
+                *Appears when verification code is invalid or expired.*
+
+                - [Error](/1-click-signup/guides/setup#styling-settings) color
+
+
+                #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Code Resent
+
+                > We sent you a new verification code.
+
+                *Appears when user clicks [resend button](#resend).*
+
+                - [Primary](/1-click-signup/guides/setup#styling-settings) color
+
+            </GridNonStickyElement>
+        </GridColumn>
+        <GridColumn>
+            <GridStickyElement>
+                
+                ---
+
+                ![](/img/1cv-ux-screens/verification_code-empty.png)
+                *Starting State* ↗️ [Open in new tab](/img/1cv-ux-screens/verification_code-empty.png)
+                
+                ![](/img/1cv-ux-screens/verification_code-error.png)
+                *Error State* ↗️ [Open in new tab](/img/1cv-ux-screens/verification_code-error.png)
+
+                ![](/img/1cv-ux-screens/verification_code-resent.png)
+                *Resent Code State* ↗️ [Open in new tab](/img/1cv-ux-screens/verification_code-resent.png)
+
+            </GridStickyElement>
+        </GridColumn>
+    </GridRow>
+</GridContainer>

@@ -25,14 +25,9 @@ sequenceDiagram
     participant C as Customer
     participant V as Verified
 
-    Note left of U: 1. Verify phone number.
-    C ->>+ U: Show phone number field
-    U ->>- C: Enter phone number
-    C ->> C: Generate verification code
-    C ->> U: Send SMS with code
-    C ->>+ U: Show verification code field
-    U ->>- C: Enter verification code
-    C ->> C: Verify code
+    Note left of U: 1. Prompt user for inputs.
+    C ->>+ U: Collect verified phone, challenge, and consent
+    U ->>- C: Provide verified phone, challenge, and consent
     Note left of U: 2. Call POST /1-click.
     C ->>+ V: Call POST /1-click
     alt Additional info required

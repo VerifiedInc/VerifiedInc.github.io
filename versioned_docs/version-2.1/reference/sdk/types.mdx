@@ -14,32 +14,35 @@ toc_max_heading_level: 4
 ```typescript title="SdkResult Type"
 export type SdkStep =
   | 'consent'
+  | 'autoPhone'
   | 'phone'
   | 'verificationCode'
   | 'birthday'
   | 'ssn4'
-  | 'info';
+  | 'fullName.firstName'
+  | 'info'
+  | 'healthManualInput'
+  | 'healthDataLoading'
+  | 'healthInfo';
 
-type SdkResultData = {
-  identityUuid: string;
+export type SdkResultData = {
+  healthDataUuid: string | null;
+  identityUuid: string | null;
+  verificationUuid: string | null;
   redirectUrl: string | null;
   birthDate: string | null;
   birthDateMismatched: boolean | null;
   phone: string | null;
   ssn4: string | null;
   ssn4Mismatched: boolean | null;
+  fullName: {
+    firstName: string | null;
+  } | null;
+  fullNameMismatched: boolean | null;
   step: SdkStep;
 };
 
 type SdkResultDataNullable = Nullable<SdkResultData>;
-
-type SdkResultUserSharedHealthData = {
-  type: typeof SdkResultValues.USER_SHARED_HEALTH_DATA;
-} & SdkResultData;
-
-type SdkResultUserSharedCredentials = {
-  type: typeof SdkResultValues.USER_SHARED_CREDENTIALS;
-} & SdkResultData;
 
 type SdkResultUserOptedOut =
   | (SdkResultDataNullable & {
@@ -71,20 +74,54 @@ type SdkResultMaxVerificationCodeAttemptsExceeded = {
   type: typeof SdkResultValues.MAX_VERIFICATION_CODE_ATTEMPTS_EXCEEDED;
 } & SdkResultData;
 
+export type SdkResultUserSharedCredentials = {
+  type: typeof SdkResultValues.USER_SHARED_CREDENTIALS;
+  identityUuid: string;
+} & SdkResultData;
+
+export type SdkResultUserSharedHealthData = {
+  type: typeof SdkResultValues.USER_SHARED_HEALTH_DATA;
+  healthDataUuid: string;
+} & SdkResultData;
+
+export type SdkResultUserPhoneVerified = {
+  type: typeof SdkResultValues.USER_PHONE_VERIFIED;
+  verificationUuid: string;
+} & SdkResultData;
+
 export type SdkResult =
-  | SdkResultUserSharedHealthData
-  | SdkResultUserSharedCredentials
   | SdkResultUserOptedOut
   | SdkResultNoCredentialsFound
   | SdkResultNoInsuranceFound
   | SdkResultRiskScoreTooHigh
   | SdkResultMaxInputsAttemptsExceeded
-  | SdkResultMaxVerificationCodeAttemptsExceeded;
+  | SdkResultMaxVerificationCodeAttemptsExceeded
+  | SdkResultUserSharedCredentials
+  | SdkResultUserSharedHealthData
+  | SdkResultUserPhoneVerified;
 ```
 
 See the [`SdkResultValues` constant](/reference/sdk/constants#sdkresultvalues).
 
 ### Examples
+
+```typescript title="SdkResult Example (User Phone Verified)"
+{
+  "type": "USER_PHONE_VERIFIED"
+  "identityUuid": null,
+  "healthDataUuid": null,
+  "verificationUuid": "96c15f15-e726-40e7-bb2f-882a37b9f31f",
+  "redirectUrl": "https://verified.inc/",
+  "birthDate": null,
+  "birthDateMismatched": null,
+  "phone": "+12125550010",
+  "ssn4": null,
+  "ssn4Mismatched": null,
+  "fullName": null,
+  "fullNameMismatched": null,
+  "step": "verificationCode",
+}
+```
 
 ```typescript title="SdkResult Example (User Shared Credentials)"
 {

@@ -25,13 +25,13 @@ import PoweredByGraphicVariantsForOneClickSignup from '@site/versioned_docs/vers
 At Verified, _signup is what we do._ We are experts in how to optimize onboarding flows to maximize conversion and give users the best possible experience. We've helped our customers onboard — and delight! — millions of new users. The user experience described in this guide is the result of countless hours of research, design, testing, and iteration by our team. 
 
 :::tip Use Our SDK to Get This UX
-**Our SDK implements this user experience, and we strongly recommend you use it by choosing the SDK [integration type](/1-click-signup/guides/setup#integration-type).** If you instead choose the **API** integration type, we recommend you implement a user experience similar to this one.
+**Our SDK implements this user experience, and we strongly recommend you use it.** If you instead choose to use our **API**, we recommend you implement a user experience similar to this one.
 :::
 
 Full details are below, but the basic user experience is:
-1. Enter and verify phone number
-2. (if necessary) Enter birthday/SSN4
-3. Confirm autofilled info
+1. **Enter and verify phone number**
+2. (if necessary) **Enter challenge** (first name, birthday, or SSN4)
+3. **Confirm autofilled info**
 
 :::note There Are Only a Few Screens!
 This user experience may look complicated, and in some ways it is: achieving world class UX requires getting many small details right. But at its core, it's simple by design and takes only a few screens. Users complete 1-Click Signup in less than 10 seconds: try it yourself with a [custom demo](/custom-demo).
@@ -99,20 +99,13 @@ To implement this user experience yourself (which is only necessary if you choos
                 <PoweredByGraphicVariantsForOneClickSignup/>
 
 
-                #### <ComponentTypeIndicator type="graphic" isRightMargined={true}/>Divider
-
-                > OR
-
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
-
-
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Opt Out
 
                 > Sign Up Manually Instead
 
                 *Takes user to Info screen in manual signup (edit) state.*
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
 
                 #### <ComponentTypeIndicator type="alert" isRightMargined={true}/>Error
@@ -184,7 +177,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Takes user back to phone input.*
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Resend
@@ -193,7 +186,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Sends another SMS with fresh verification code.*
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
                 - Allows for at most 2 resends
 
 
@@ -252,9 +245,7 @@ To implement this user experience yourself (which is only necessary if you choos
                 > Enter your first name, so we can verify you and autofill your info.
 
 
-                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Birthday
-
-                > _ _ / _ _ / _ _ _ _
+                #### <ComponentTypeIndicator type="input" isRightMargined={true}/>First Name
 
                 - [Primary](/1-click-signup/guides/setup#styling-settings) and [error](/1-click-signup/guides/setup#styling-settings) colors
                 - Auto focused
@@ -295,7 +286,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 If the user tries the same value again, auto continue them.
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
             </GridNonStickyElement>
         </GridColumn>
@@ -381,7 +372,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 If the user tries the same value again, auto continue them.
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
             </GridNonStickyElement>
         </GridColumn>
@@ -464,7 +455,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 If the user tries the same value again, auto continue them.
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
             </GridNonStickyElement>
         </GridColumn>
@@ -499,7 +490,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Opens [informational modal](#informational).*
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Close Modal
@@ -510,7 +501,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Closes [informational modal](#informational).*
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
                 - Clicking anywhere outside the modal should also close it
 
 
@@ -567,7 +558,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Takes user back to [phone screen](#phone).*
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
                 */}
 
 
@@ -611,7 +602,8 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Appears in view state.*
 
-                - “Birthday” not “Birth Date” because the former is friendlier.
+                - “Birthday” not “Birth Date” because the former is friendlier
+                - Year digits masked (server side), unless user entered these as input
 
 
                 #### <ComponentTypeIndicator type="text" isRightMargined={true}/>SSN
@@ -620,8 +612,8 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 *Appears in view state.*
 
-                - “SSN” not “Social Security Number” for compactness.
-                - First 5 digits masked.
+                - “SSN” not “Social Security Number” for compactness
+                - First 5 digits masked (server side)
 
 
                 #### <ComponentTypeIndicator type="button" isRightMargined={true}/>Edit
@@ -632,7 +624,7 @@ To implement this user experience yourself (which is only necessary if you choos
 
                 The entire data display area should be clickable as the Edit button, not just the button itself.
 
-                - [Error](/1-click-signup/guides/setup#styling-settings) color
+                - [Muted](/1-click-signup/guides/setup#styling-settings) color
 
 
                 #### <ComponentTypeIndicator type="input" isRightMargined={true}/>First Name
@@ -682,6 +674,8 @@ To implement this user experience yourself (which is only necessary if you choos
                 - Accepts OS autofill
                 - Validates format
                 - Auto formats to MM/DD/YYYY (most common US format)
+                - If starting with value:
+                    - If user starts to edit (by deleting one character), clear entire value
 
 
                 #### <ComponentTypeIndicator type="input" isRightMargined={true}/>Social Security Number

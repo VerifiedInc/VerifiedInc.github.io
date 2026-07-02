@@ -44,14 +44,16 @@ import {
   CollapsibleSection,
   CollapsibleHeader,
 } from '@site/src/components/Collapsible';
-import Post1ClickVerificationsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-response-body-example.mdx';
+import Get1ClickVerificationsChannelsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-channels-response-body-example.mdx';
+import Post1ClickVerificationsResponseBodyVerifiedExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-response-body-verified-example.mdx';
+import Post1ClickVerificationsResponseBodyPendingExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-response-body-pending-example.mdx';
 import Post1ClickVerificationsDeliverResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-deliver-response-body-example.mdx';
 import Post1ClickVerificationsVerifyResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-verify-response-body-example.mdx';
 import Get1ClickVerificationsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-response-body-example.mdx';
-import Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithoutUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-1-click-signup-without-user-edits.mdx';
-import Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-1-click-signup-with-user-edits.mdx';
-import Post1ClickHealthRequestBodyExampleInputsFromManualSignupMinimalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-manual-signup-minimal-inputs.mdx';
-import Post1ClickHealthRequestBodyExampleInputsFromManualSignupMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-inputs-from-manual-signup-maximal-inputs.mdx';
+import Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithoutUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-1-click-signup-without-user-edits.mdx';
+import Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-1-click-signup-with-user-edits.mdx';
+import Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupMinimalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-manual-signup-minimal-inputs.mdx';
+import Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-manual-signup-maximal-inputs.mdx';
 import PostClient1ClickRequestBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-request-body.mdx';
 import PostClient1ClickResponseBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-response-body.mdx';
 
@@ -107,10 +109,141 @@ If you don't have a user's phone number yet, call `POST /client/1-click` with an
   <PostClient1ClickResponseBodyTable />
 </table>
 
----
+<hr />
 
 
 ## 1-Click Verify
+
+
+{/* TODO: Update */}
+{/* <EndpointHeaderWithoutSwagger postmanUrl=''>
+  
+</EndpointHeaderWithoutSwagger> */}
+
+### `GET /1-click/verifications/channels` {#get-1-click-verifications-channels}
+
+> Check the availability of 1-Click Verify channels
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`GET`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/verifications/channels?deviceIp={deviceIp}`</td>
+  </tr>
+</table>
+
+
+#### Request {#get-1-click-verifications-channels-request}
+
+Call:
+
+```
+GET /1-click/verifications/channels[?deviceIp={deviceIp}]
+```
+
+- For the `{deviceIp}` query parameter value:
+  - Use the IP address of the user's device (in [IPv6](https://en.wikipedia.org/wiki/IPv6_address) format).
+
+
+#### Response {#get-1-click-verifications-channels-response}
+
+<Get1ClickVerificationsChannelsResponseBodyExample/>
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`channels`</td>
+        <td>`object`</td>
+        <td>Object with keys for all channels</td>
+        <td>Availability for all channels</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>`channels.autofill`</td>
+        <td>`object`</td>
+        <td>Object with keys for autofill channel</td>
+        <td>Availability for the autofill channel</td>
+        <td>
+          ```json
+          {
+              "available": boolean, // brandApproved && deviceIpEligible
+              "brandApproved": boolean,
+              "deviceIpEligible": boolean
+          }
+          ```
+        </td>
+    </tr>
+    <tr>
+        <td>`channels.autofill.available`</td>
+        <td>`boolean`</td>
+        <td>none</td>
+        <td>Whether the autofill channel is available (`= brandApproved && deviceIpEligible`)</td>
+        <td>`true`</td>
+    </tr>
+    <tr>
+        <td>`channels.autofill.brandApproved`</td>
+        <td>`boolean`</td>
+        <td>none</td>
+        <td>Whether your brand is approved for the autofill channel</td>
+        <td>`true`</td>
+    </tr>
+    <tr>
+        <td>`channels.autofill.deviceIpEligible`</td>
+        <td>`boolean`</td>
+        <td>none</td>
+        <td>Whether the user's device IP is eligible for the autofill channel</td>
+        <td>`true`</td>
+    </tr>
+    <tr>
+        <td>`channels.sms`</td>
+        <td>`object`</td>
+        <td>Object with keys for SMS channel</td>
+        <td>Availability for the SMS channel</td>
+        <td>
+          ```json
+          {
+              "available": boolean
+          }
+          ```
+        </td>
+    </tr>
+    <tr>
+        <td>`channels.sms.available`</td>
+        <td>`boolean`</td>
+        <td>none</td>
+        <td>Whether the SMS channel is available</td>
+        <td>`true`</td>
+    </tr>
+    <tr>
+        <td>`channels.email`</td>
+        <td>`object`</td>
+        <td>Object with keys for email channel</td>
+        <td>Availability for the email channel</td>
+        <td>
+          ```json
+          {
+              "available": boolean
+          }
+          ```
+        </td>
+    </tr>
+    <tr>
+        <td>`channels.email.available`</td>
+        <td>`boolean`</td>
+        <td>none</td>
+        <td>Whether the email channel is available</td>
+        <td>`true`</td>
+    </tr>
+</table>
 
 
 {/* TODO: Update */}
@@ -139,8 +272,9 @@ postmanUrl=''>
 
 ```typescript title="POST /1-click/verifications Request Body"
 {
-    phone: string,
-    channel: string
+    channel: "autofill" | "sms" | "email",
+    deviceIp?: string, // only relevant if using autofill channel
+    phone?: string // only relevant if using SMS channel or if wanting to match user input to autofill output
 }
 ```
 
@@ -155,22 +289,14 @@ postmanUrl=''>
         <th>Example</th>
     </tr>
     <tr>
-        <td>`phone`</td>
-        <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
-        <td>`string`</td>
-        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
-        <td>none</td>
-        <td>User's phone number (in [E.164](https://www.twilio.com/docs/glossary/what-e164) format)</td>
-        <td>`"+12125550010"`</td>
-    </tr>
-    <tr>
         <td>`channel`</td>
-        <td><Chip label="Required" variant="outlined" size="small" color="primary"/></td>
+        <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
         <td>
             <details>
                 <summary>`enum`</summary>
 
                 Possible values:
+                    - `"autofill"`
                     - `"sms"`
                     - `"email"` <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/>
             </details>
@@ -178,7 +304,25 @@ postmanUrl=''>
         <td>`snake_case`</td>
         <td>none</td>
         <td>Channel used for verification</td>
-        <td>`"sms"`</td>
+        <td>`"autofill"`</td>
+    </tr>
+    <tr>
+        <td>`deviceIp`</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+        <td>`string`</td>
+        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
+        <td>none</td>
+        <td>User's phone number (in [E.164](https://www.twilio.com/docs/glossary/what-e164) format)</td>
+        <td>`"+12125550010"`</td>
+    </tr>
+    <tr>
+        <td>`phone`</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required if `channel` is `"sms"`)</td>
+        <td>`string`</td>
+        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
+        <td>none</td>
+        <td>User's phone number (in [E.164](https://www.twilio.com/docs/glossary/what-e164) format)</td>
+        <td>`"+12125550010"`</td>
     </tr>
 </table>
 
@@ -187,13 +331,21 @@ postmanUrl=''>
 
 ```typescript title="POST /1-click/verifications Response Body"
 {
-    ...1ClickVerificationEntity
+    ...1ClickVerificationEntity // includes phone and verified status if autofill succeeds (and matches phone input if provided)
 }
 ```
 
-See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity). Here's an example:
+See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity). 
 
-<Post1ClickVerificationsResponseBodyExample/>
+
+Here's an example with a verified status from the autofill channel:
+
+<Post1ClickVerificationsResponseBodyVerifiedExample/>
+
+
+Here's an example with a pending status from the SMS channel:
+
+<Post1ClickVerificationsResponseBodyPendingExample/>
 
 
 {/* TODO: Update */}
@@ -308,10 +460,6 @@ See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).
 
 <Post1ClickVerificationsVerifyResponseBodyExample/>
 
----
-
-
-## Text to Signup
 
 {/* TODO: Update */}
 {/* <EndpointHeaderWithoutSwagger postmanUrl=''>
@@ -359,7 +507,7 @@ See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).
 
 <Get1ClickVerificationsResponseBodyExample/>
 
----
+<hr />
 
 
 ## 1-Click Signup
@@ -402,7 +550,7 @@ GET /1-click/{identityUuid}
 
 See [`1ClickEntity`](/reference/api/types#1clickentity).
 
----
+<hr />
 
 
 <EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7'>
@@ -474,7 +622,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
   <Post1ClickResponseBodyTableIdentity />
 </table>
 
----
+<hr />
 
 
 ## 1-Click Health
@@ -508,23 +656,23 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
 <details>
   <summary>**Examples of typical usage:**</summary>
 
-  **Inputs from 1-Click Signup:**
+  **Autofill, with inputs from 1-Click Signup:**
 
   If the user didn't edit any of the data autofilled by 1-Click Signup, you can include _only_ the `identityUuid`, and 1-Click Health will hydrate all of the relevant 1-Click Signup outputs as inputs:
 
-  <Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithoutUserEdits/>
+  <Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithoutUserEdits/>
 
   If the user edited some of the data autofilled by 1-Click Signup, you should include the edited fields alongside the `identityUuid`, and 1-Click Health will hydrate the rest of the 1-Click Signup outputs as inputs:
 
-  <Post1ClickHealthRequestBodyExampleInputsFrom1ClickSignupWithUserEdits/>
+  <Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithUserEdits/>
 
-  **Inputs from manual signup:**
+  **Autofill, with inputs from manual signup:**
 
   If you collect inputs from manual signup, there's no `identityUuid` to include:
 
-  <Post1ClickHealthRequestBodyExampleInputsFromManualSignupMinimalInputs/>
+  <Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupMinimalInputs/>
 
-  <Post1ClickHealthRequestBodyExampleInputsFromManualSignupMaximalInputs/>
+  <Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupMaximalInputs/>
 
 </details>
 
@@ -538,15 +686,15 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
     <th>Description</th>
     <th>Example</th>
   </tr>
-  {/* <tr>
-      <td>`identityUuid`</td>
+  <tr>
+      <td>`checkAfterAutofill`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+      <td>`boolean`</td>
       <td>none</td>
-      <td>Unique identifier for the [`1ClickEntity`](/reference/api/types#1clickentity) that will be used to hydrate other input data</td>
-      <td>`"535dba63-d4bd-442a-b3f6-21b785260a08"`</td>
-  </tr> */}
+      <td>Defined by the [Check After Autofill](/1-click-health/guides/setup#check-after-autofill) setting</td>
+      <td>Whether to automatically run an eligibility check for an autofilled health insurance plan</td>
+      <td>`true`</td>
+  </tr>
   <tr>
       <td>`identityUuid`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
@@ -559,7 +707,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
   <tr>
       <td>`fullName`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if no `identityUuid`</td>
-      <td>`Object`</td>
+      <td>`object`</td>
       <td>Object with keys for one or more child credentials listed below</td>
       <td>none</td>
       <td>Full name</td>
@@ -603,7 +751,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td>`birthDate`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if no `identityUuid`</td>
       <td>`string`</td>
-      <td>`YYYY-MM-DD`</td>
+      <td>yyyy-MM-dd</td>
       <td>none</td>
       <td>Birth date</td>
       <td>`"1989-08-01"`</td>
@@ -611,7 +759,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
   <tr>
       <td>`address`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`Object`</td>
+      <td>`object`</td>
       <td>Object with keys for one or more child credentials listed below</td>
       <td>none</td>
       <td>Address</td>
@@ -747,6 +895,95 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td>[National Provider Identifier](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand)</td>
       <td>`"0123456789"`</td>
   </tr>
+  <tr>
+      <td>`serviceTypeCodes`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string[]`</td>
+      <td>Array of `string`s</td>
+      <td>`["30"]`</td>
+      <td>List of [X12 service type codes](https://x12.org/codes/service-type-codes) for patient service</td>
+      <td>`["47", "AL", "F6"]`</td>
+  </tr>
+  <tr>
+      <td>↳ `serviceTypeCodes[i]`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>1+ characters</td>
+      <td>`"30"`</td>
+      <td>[X12 service type code](https://x12.org/codes/service-type-codes)</td>
+      <td>`"F6"`</td>
+  </tr>
+  <tr>
+      <td>`procedureCodes`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`object[]`</td>
+      <td>Array of `object`s</td>
+      <td>`"30"`</td>
+      <td>[National Provider Identifier](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand)</td>
+      <td>`[{ "code": "99213", "qualifier": "HC", "modifiers": ["25"] }]`</td>
+  </tr>
+  <tr>
+      <td>↳ `procedureCodes[i]`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`object`</td>
+      <td>Object with keys described below</td>
+      <td>`"30"`</td>
+      <td>[National Provider Identifier](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand)</td>
+      <td>`{ "code": "99213", "qualifier": "HC", "modifiers": ["25"] }`</td>
+  </tr>
+  <tr>
+      <td>↳ `procedureCodes[i].code`</td>
+      <td><Chip label="Required" variant="outlined" size="small" color="error"/> (if procedure code object is included)</td>
+      <td>`string`</td>
+      <td>
+        - 5 digits (for CPT code)
+        - 1 letter and 4 digits (for HCPCS code)
+      </td>
+      <td>none</td>
+      <td>[CPT or HCPCS procedure code](https://www.cms.gov/medicare/regulations-guidance/physician-self-referral/list-cpt-hcpcs-codes)</td>
+      <td>`"99213""`</td>
+  </tr>
+  <tr>
+      <td>↳ `procedureCodes[i].qualifier`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>
+        <details>
+          <summary>`string enum`</summary>
+
+          Possible values:
+          - `"AD"`: American Dental Association Codes)
+          - `"CJ"`: Current Procedural Terminology (CPT) Codes
+          - `"HC"`: Health Care Financing Administration Common Procedural Coding System (HCPCS) Codes
+          - `"ID"`: International Classification of Diseases, 9th Revision, Clinical Modification (ICD-9-CM) - Procedure
+          - `"IV"`: Home Infusion EDI Coalition (HIEC) Product/Service Code
+          - `"N4"`: National Drug Code in 5-4-2 Format
+          - `"ZZ"`: Mutually Defined
+          Code identifying the type/source of the procedureCode. You can set this to AD - , CJ - , HC - , ID - , IV - , N4 - , or ZZ - .
+        </details>
+      </td>
+      <td>2 letters</td>
+      <td>`"HC"`</td>
+      <td>Type or source of procedure code</td>
+      <td>`"HC"`</td>
+  </tr>
+  <tr>
+      <td>↳ `procedureCodes[i].modifiers`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string[]`</td>
+      <td>Array of `string`s</td>
+      <td>none</td>
+      <td>Array of [medical coding modifiers](https://www.aapc.com/resources/what-are-medical-coding-modifiers?srsltid=AfmBOoqpfNXqsgfTYsbnXiHBVGhUOJbewkkGbe4r98wp8tCDGPtiztjv)</td>
+      <td>`["25"]`</td>
+  </tr>
+  <tr>
+      <td>↳ ↳ `procedureCodes[i].modifiers[j]`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>2 characters</td>
+      <td>none</td>
+      <td>[Medical coding modifier](https://www.aapc.com/resources/what-are-medical-coding-modifiers?srsltid=AfmBOoqpfNXqsgfTYsbnXiHBVGhUOJbewkkGbe4r98wp8tCDGPtiztjv)</td>
+      <td>`"25"`</td>
+  </tr>
 </table>
 
 
@@ -789,7 +1026,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
   </tr>
 </table>
 
----
+<hr />
 
 
 {/* TODO: Update Postman URL */}
@@ -832,7 +1069,7 @@ GET /1-click/health/{healthDataUuid}
 
 See [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity).
 
----
+<hr />
 
 
 {/* TODO: Update Postman URL */}

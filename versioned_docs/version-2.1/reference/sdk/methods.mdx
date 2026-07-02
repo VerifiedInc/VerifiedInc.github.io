@@ -87,8 +87,14 @@ const sdk = new VerifiedClientSdk({
 
 function handleResult(result: SdkResult) {
   switch (result.type) {
+    case SdkResultValues.USER_PHONE_VERIFIED:
+      // Pass data.verificationUuid to your server (to call GET /1-click/verifications/{verificationUuid})
+      break;
     case SdkResultValues.USER_SHARED_CREDENTIALS:
       // Pass result.identityUuid to your server (call GET /1-click/{identityUuid})
+      break;
+    case SdkResultValues.USER_SHARED_HEALTH_DATA:
+        // Pass data.dataHealthUuid to your server (to call GET /1-click/health/{dataHealthUuid})
       break;
     case SdkResultValues.USER_OPTED_OUT:
       // Take user to manual signup flow

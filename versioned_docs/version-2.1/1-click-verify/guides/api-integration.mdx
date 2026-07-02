@@ -20,7 +20,6 @@ import About1ClickSignupAdmonition from '@site/versioned_docs/version-2.1/reusab
 import PrivacyFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/privacy-first-admonition.mdx';
 import IntegrationTypeAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-admonition.mdx';
 import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
-import PromptUserToConfirmTheir1ClickSignupData from '@site/versioned_docs/version-2.1/reusables/prompt-user-to-confirm-their-1-click-signup-data.mdx';
 import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
 import UseUserInputAdmonition from '@site/versioned_docs/version-2.1/reusables/use-user-input-admonition.mdx';
 import HowToTestAdmonition from '@site/versioned_docs/version-2.1/reusables/how-to-test-admonition.mdx';
@@ -45,7 +44,9 @@ import SupportedPhoneNumbersAdmonition from '@site/versioned_docs/version-2.1/re
 import PoweredByGraphicVariantsForOneClickSignup from '@site/versioned_docs/version-2.1/reusables/powered-by-graphic-variants-for-1-click-signup.mdx';
 import OCE011InclusiveOrAdmonition from '@site/versioned_docs/version-2.1/reusables/oce011-inclusive-or-admonition.mdx';
 import SyncFromSandboxAdmonition from '@site/versioned_docs/version-2.1/reusables/sync-from-sandbox-admonition.mdx';
-import Post1ClickVerificationsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-response-body-example.mdx';
+import Get1ClickVerificationsChannelsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-channels-response-body-example.mdx';
+import Post1ClickVerificationsResponseBodyVerifiedExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-response-body-verified-example.mdx';
+import Post1ClickVerificationsResponseBodyPendingExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-response-body-pending-example.mdx';
 import Post1ClickVerificationsDeliverResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-deliver-response-body-example.mdx';
 import Post1ClickVerificationsVerifyResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-verify-response-body-example.mdx';
 import Get1ClickVerificationsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-response-body-example.mdx';
@@ -69,47 +70,114 @@ import Get1ClickVerificationsResponseBodyExample from '@site/versioned_docs/vers
 **Complete the 1-Click Verify [Setup](/1-click-verify/guides/setup) guide before following this API Integration guide.**
 :::
 
-<SequenceDiagramOneClickVerifyAPI />
-
 <DevelopmentWorkAdmonition />
 
-## 1. Prompt user for phone number.
-
-To start 1-Click Verify for a user, you'll need their phone number.
-
-<SupportedPhoneNumbersAdmonition />
-
-We recommend using a phone number input that auto submits when the user enters 10 digits. (See the [Phone](/1-click-signup/user-experience#phone) screen of the 1-Click Signup User Experience guide for full details.)
-
-**You'll also need to include this SMS consent language:**
-
-> I authorize [Verified](https://verified.inc) to send me SMS verification texts at the number provided. Msg & Data rates may apply.
-
-- **Link "Verified" to https://verified.inc and make it underlined and a different color than the rest of the text** (so the user knows it's a link).
-- **Make this visible to the user, somewhere on the page, before you call the Verified API.**
-
-_See our [Demo](https://1-click.demo.verified.inc) for an example of this._
+<SequenceDiagramOneClickVerifyAPI />
 
 
-## 2. Start verification flow.
+## 1. Try autofill channel.
 
-Call [`POST /1-click/verifications`](/reference/api/endpoints#post-1-click-verifications) with the user's phone number, setting `channel` to `sms`:
+
+### a. Check if autofill is available.
+
+Determine the IP address of the user's device (in [IPv6](https://en.wikipedia.org/wiki/IPv6_address) format). Pass it to your server, and include it as the value of the `deviceIp` query parameter, calling [`GET /1-click/verifications/channels?deviceIp={deviceIp}`](/reference/api/endpoints#get-1-click-verifications-channels).
+
+:::important Only IPv6 is Accepted
+You must determine the IPv6 (not IPv4) address of the user's device.
+:::
+
+The response body will indicate which channels are available:
+
+<Get1ClickVerificationsChannelsResponseBodyExample/>
+
+If `channels.autofill.available` is `true`, proceed to [step 1b](#b-if-available-autofill-verified-phone-number) to autofill the user's verified phone number. If it's  `false`, jump to [step 2](#2-if-necessary-use-sms-channel) to fall back to the SMS channel.
+
+
+### b. (if available) Autofill verified phone number.
+
+**Sometime before you make the API call described in the paragraph below, you must have the user agree to your terms, and those terms must include this 1-Click Verify autofill channel consent language:**
+
+> You authorize your wireless carrier to use or disclose information about your account and your wireless device, if available, to `{Brand Name}` or its service providers for the duration of your business relationship, solely to help us identify you or your wireless device and to prevent fraud. See our Privacy Policy to see how we treat your data.
+
+- **Replace `{Brand Name}` with your brand name.**
+
+For example, as our User Experience guide describes [here](/1-click-verify/user-experience#opt-in), you can use a button with language that indicates that the user agrees to your terms by continuing:
+
+<div class='two-column-grid-container'>
+  <div class='two-column-grid-row'>
+    <div class='two-column-grid-column'>
+      ![](/img/1cv-ux-screens/autofill.png) _Terms consent language, button, and the green variant of the Powered by Verified graphic_
+    </div>
+    <div class='two-column-grid-column'>
+      {/* Blank just to keep the image from being too wide */}
+    </div>
+  </div>
+</div>
+
+If you have earlier steps in your flow, you can use one of those as the trigger instead of using a dedicated autofill button. For example, if you start by asking the user to enter their email, you can include the terms consent language on that step and then trigger verified phone autofill as soon they enter their email.
+
+To trigger the autofill, call [`POST /1-click/verifications`](/reference/api/endpoints#post-1-click-verifications), using `autofill` for `channel` and the user's device IP address from the previous step for `deviceIp`:
 
 ```typescript title="POST /1-click/verifications Request Body Example"
 {
-    "phone": "+12125550010",
-    "channel": "sms"
+    "channel": "autofill",
+    "deviceIp": "::1"
 }
 ```
 
 <ApiKeysAdmonition />
 
+If autofill succeeds, the response body will contain the user's _verified_ phone number — like magic! You're done.
+
+<Post1ClickVerificationsResponseBodyVerifiedExample/>
+
+:::tip Yes, The Autofilled Phone Number Is Verified!
+We use frontier technology to autofill and verify the user's phone number directly from the SIM/eSIM in their device, without any need for user input or an SMS verification code. It's both far easier for the user and far more secure.
+:::
+
+:::note 
+**Although we're rapidly expanding coverage, 1-Click Verify autofill is currently only available a minority of the time.** The exact coverage will depend on your use case — the main factors being whether a user is on WiFi vs. cell data and whether their phone carrier supports autofill — but we typically see it work for about 1 in 6 sessions. However, using it for even a small percentage of users substantially boosts overall conversion (and user delight!) in onboarding flows, so we highly recommend it!
+:::
+
+
+## 2. (if necessary) Use SMS channel.
+
+If you aren't able to autofill a user's verified phone number, you'll need to have them enter and verify it manually with an SMS verification code.
+
+
+### a. Prompt user for phone number.
+
+<SupportedPhoneNumbersAdmonition />
+
+We recommend using a phone number input that auto submits when the user enters 10 digits. (See the [Phone](/1-click-signup/user-experience#phone) screen of the 1-Click Signup User Experience guide for full details.)
+
+**You must include this 1-Click Verify SMS channel consent language:**
+
+> I authorize [Verified](https://verified.inc) to send me SMS verification texts at the number provided. Msg & Data rates may apply.
+
+- **Link "Verified" to https://verified.inc and make it underlined and a different color than the rest of the text** (so the user knows it's a link).
+- **Make this visible to the user, somewhere on the page, before you call `POST /1-click/verifications` (step 2b).**
+
+_See our [Demo](https://1-click.demo.verified.inc) for an example of this._
+
+
+### b. Start verification flow.
+
+Call [`POST /1-click/verifications`](/reference/api/endpoints#post-1-click-verifications), setting `channel` to `sms` and including the user's `phone`:
+
+```typescript title="POST /1-click/verifications Request Body Example"
+{
+    "channel": "sms",
+    "phone": "+12125550010"
+}
+```
+
 The response body will contain a `uuid` that you'll use in the next step:
 
-<Post1ClickVerificationsResponseBodyExample/>
+<Post1ClickVerificationsResponseBodyPendingExample/>
 
 
-## 3. Deliver verification message.
+### c. Deliver verification message.
 
 Call [`POST /1-click/verifications/{uuid}/deliver`](/reference/api/endpoints#post-1-click-verifications-deliver) with the `uuid` from the previous step.
 
@@ -118,12 +186,12 @@ This will trigger Verified to send a verification SMS to the user's phone number
 <Post1ClickVerificationsDeliverResponseBodyExample/>
 
 
-## 4. Prompt user for verification code.
+### d. Prompt user for verification code.
 
 We recommend using a 6 separate single digit inputs that auto submit when the user enters 6 digits. (See the [Verification Code](/1-click-signup/user-experience#verification-code) screen of the 1-Click Signup User Experience guide for full details.)
 
 
-## 5. Verify verification code.
+### e. Verify verification code.
 
 Call [`POST /1-click/verifications/{uuid}/verify`](/reference/api/endpoints#post-1-click-verifications-verify) with the `uuid` from the previous steps, including what the user entered in the previous step as `code`:
 
@@ -138,7 +206,7 @@ This will trigger Verified to check the user's input against the verification co
 <Post1ClickVerificationsVerifyResponseBodyExample/>
 
 
-## 6. (optional) Retrieve verification details.
+### f. (optional) Retrieve verification details.
 
 The verification details are included in the response body of the previous step. But if you ever want to retrieve these details again, you can do so by calling [`GET /1-click/verifications/{uuid}`](/reference/api/endpoints#get-1-click-verifications) with the `uuid` from the previous steps.
 
@@ -152,7 +220,7 @@ The response body will contain the [`1ClickVerificationEntity`](/reference/api/t
 
 ## Handle Errors
 
-To ensure your integration is robust, handle all the 1-Click Verify [errors](/reference/api/errors##1-click-verify). Most errors should be handled simply by starting a new 1-Click Verify flow.
+To ensure your integration is robust, handle all the 1-Click Verify [errors](/reference/api/errors#1-click-verify). Most errors should be handled simply by starting a new 1-Click Verify flow.
 
 
 ---

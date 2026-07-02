@@ -40,6 +40,9 @@ import RiskSignalsEnableMultipleAddressesAdmonition from '@site/versioned_docs/v
 > An **output** is a piece of data we return from the SDK or API.
 
 
+## 1-Click Verify
+
+
 ## 1-Click Signup
 
 
@@ -58,9 +61,9 @@ import RiskSignalsEnableMultipleAddressesAdmonition from '@site/versioned_docs/v
 </CollapsibleHeader>
 
 :::note Coverage
-We can source the data below for **~95% of US adults** if you provide both phone and a challenge (either birthday or SSN4) as [inputs](/reference/data/inputs) — and for about **20%** if you provide only phone. _Exact coverage depends on your user base._
+We can source the data below for **~95% of US adults** if you provide both phone and a challenge (either birthday or SSN4) as [inputs](/reference/data/inputs) — and for about **20%** if you provide only phone. (The one exception is the Sex credential, which we can source for ~80% of US adults.)
 
-See [Coverage](/1-click-signup/overview#coverage) for more information.
+_Exact coverage depends on your user base and varies widely across companies. Some companies see >97% coverage, while a few see only 50%. See [Coverage](/1-click-signup/overview#coverage) for more information._
 :::
 
 <table>
@@ -84,7 +87,7 @@ See [Coverage](/1-click-signup/overview#coverage) for more information.
         <td>Full Name</td>
         <td>`fullName`</td>
         <td>
-            - **Default:** `Object`
+            - **Default:** `object`
             - `string`
         </td>
         <td>
@@ -125,7 +128,7 @@ See [Coverage](/1-click-signup/overview#coverage) for more information.
         <td>Address</td>
         <td>`address`</td>
         <td>
-            - **Default:** `Object`
+            - **Default:** `object`
             - `string`
         </td>
         <td>
@@ -208,17 +211,18 @@ See [Coverage](/1-click-signup/overview#coverage) for more information.
             - Any combination of `y`(year), `M`(month), `d`(day), `/`(slash), and `-`(dash)
             - [Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)
         </td>
-	<td>
-            - `"617947200000"`
+	    <td>
+            - `"1989-08-01"`
             - `"08/01/1989"`
+            - `"617947200000"`
         </td>
     </tr>
     <tr>
-        <td>SSN</td>
+        <td>SSN (or ITIN)</td>
         <td>`ssn`</td>
         <td>`string`</td>
         <td>9 digits (0-9)</td>
-        <td>Social Security Number</td>
+        <td>Social Security Number (or Individual Taxpayer Identification Number)</td>
         <td>`"000456789"`</td>
     </tr>
     {/* <tr>
@@ -258,8 +262,8 @@ See [Coverage](/1-click-signup/overview#coverage) for more information.
 
 <RiskSignalsEnableMultipleAddressesAdmonition/>
 
-:::note Coverage for Sex Credential
-If you're using the **API** [integration type](/1-click-signup/guides/setup#integration-type), coverage for the Sex credential is a bit lower than for the other credentials at about **~80% of US adults.** Coverage for your user base may vary.
+:::info We Return ITINs When Applicable
+**If we find an ITIN but not an SSN for a user, we return the ITIN under the `ssn` key.** ITINs and SSNs are both 9 digit numbers, and ITINs are easily distinguishable because they start with the number 9.
 :::
 
 {/* :::warning[Email Reliability]
@@ -291,7 +295,7 @@ Access to driver's license data varies state by state, so coverage and recency a
     <tr>
         <td>Driver's License</td>
         <td>`driversLicense`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for all child credentials listed below</td>
         <td>Driver's license</td>
         <td>-</td>
@@ -350,7 +354,7 @@ Access to driver's license data varies state by state, so coverage and recency a
         <td>↳ Address</td>
         <td>`driversLicense.address`</td>
         <td>
-            - **Default:** `Object`
+            - **Default:** `object`
             - `string`
         </td>
         <td>
@@ -426,7 +430,7 @@ Access to driver's license data varies state by state, so coverage and recency a
     {/* <tr>
         <td>Government ID</td>
         <td>`governmentId`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for all child credentials listed below</td>
         <td>Government ID</td>
         <td>-</td>
@@ -537,7 +541,7 @@ We're working on adding support for new types of government ID. Let us know what
     <tr>
         <td>Credit Card</td>
         <td>`creditCard`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for all child credentials listed below</td>
         <td>Credit card information</td>
         <td>-</td>
@@ -594,7 +598,7 @@ We're working on adding support for new types of government ID. Let us know what
         <td>↳ Billing Address</td>
         <td>`creditCard.billingAddress`</td>
         <td>
-            - **Default:** `Object`
+            - **Default:** `object`
             - `string`
         </td>
         <td>
@@ -689,7 +693,7 @@ We're working on adding support for new types of government ID. Let us know what
     <tr>
         <td>Vehicle</td>
         <td>`vehicle`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for all child credentials listed below</td>
         <td>Vehicle information</td>
         <td>-</td>
@@ -800,7 +804,7 @@ We're working on adding support for new types of government ID. Let us know what
     <tr>
         <td>Employer</td>
         <td>`employer`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for all child credentials listed below</td>
         <td>Employer information</td>
         <td>-</td>
@@ -817,7 +821,7 @@ We're working on adding support for new types of government ID. Let us know what
         <td>↳ Address</td>
         <td>`employer.address`</td>
         <td>
-            - **Default:** `Object`
+            - **Default:** `object`
             - `string`
         </td>
         <td>
@@ -934,7 +938,7 @@ We're working on adding support for new types of government ID. Let us know what
     <tr>
         <td>Property</td>
         <td>`property`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for all child credentials listed below</td>
         <td>Property information</td>
         <td>-</td>
@@ -943,7 +947,7 @@ We're working on adding support for new types of government ID. Let us know what
         <td>↳ Address</td>
         <td>`property.address`</td>
         <td>
-            - **Default:** `Object`
+            - **Default:** `object`
             - `string`
         </td>
         <td>
@@ -1218,7 +1222,7 @@ We're working on adding support for new types of government ID. Let us know what
     <tr>
         <td>Risk Signals</td>
         <td>`riskSignals`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>
             - Identifiers
         </td>
@@ -1250,7 +1254,7 @@ We and other companies assign specific services — called "risky services" — 
     <tr>
         <td>Overall</td>
         <td>`overall`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for all overall risk signals listed below</td>
         <td>Overall risk signals, considering all identifiers provided</td>
         <td>
@@ -1336,7 +1340,7 @@ We and other companies assign specific services — called "risky services" — 
     <tr>
         <td>Phone</td>
         <td>`phone`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for all phone identifier risk signals listed below</td>
         <td>Phone identifier risk signals</td>
         <td>
@@ -1346,7 +1350,7 @@ We and other companies assign specific services — called "risky services" — 
     <tr>
         <td>↳ Carrier</td>
         <td>`phone.carrier`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for all carrier details listed below</td>
         <td>Carrier information</td>
         <td>
@@ -1390,7 +1394,7 @@ We and other companies assign specific services — called "risky services" — 
     <tr>
         <td>Email</td>
         <td>`email`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for all email identifier risk signals listed below</td>
         <td>Email identifier risk signals</td>
         <td>
@@ -1419,7 +1423,7 @@ We and other companies assign specific services — called "risky services" — 
     {/* <tr>
         <td>IP Address</td>
         <td>`ipAddress`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for all IP address identifier risk signals listed below</td>
         <td>IP address identifier risk signals</td>
         <td>
@@ -3092,7 +3096,7 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
     <tr>
         <td>Payer</td>
         <td>`payer`</td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for all child credentials listed below</td>
         <td>Payer for health insurance plan</td>
         <td>

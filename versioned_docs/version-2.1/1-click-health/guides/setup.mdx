@@ -27,7 +27,7 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
 <table>
     <tr>
         <th>Time to Complete</th>
-        <td>15 minutes</td>
+        <td>5 minutes</td>
     </tr>
     <tr>
         <th>Skills Required</th>
@@ -36,7 +36,7 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
 </table>
 
 :::tip
-**Complete this Setup guide before following the 1-Click Health [SDK Integration](/1-click-health/guides/sdk-integration) or [API Integration](/1-click-health/guides/api-integration) guide.** (Which integration guide you should follow depends on which [integration type](#integration-type) you choose.)
+**Complete this Setup guide before following the 1-Click Health [SDK Integration](/1-click-health/guides/sdk-integration) or [API Integration](/1-click-health/guides/api-integration) guide.**
 :::
 
 
@@ -61,35 +61,40 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
     <CollapsibleSection>
 
         <CollapsibleHeader>
-        #### Integration Type
+        #### Check After Autofill
         </CollapsibleHeader>
 
-        <ImmutableSettingAdmonition/>
+        <Admonition type="note" title="Definitions">
+            **Autofill** and **check** are the two core capabilities of 1-Click Health:
+            - Insurance **autofill**: Autofilling a user's insurance info based on their PII (Name, Birthday, etc.) and optionally payer.
+            - Eligibility **check**: Running an eligibility check for the user's insurance. 
+        </Admonition>
 
-        **Choose which integration type you want to use:**
+        **Choose whether to automatically run an eligibility check for a user's insurance after we successfully autofill it:**
 
         <table>
             <tr>
                 <th>Option</th>
-                <th>Development Effort</th>
                 <th>Description</th>
             </tr>
             <tr>
-                <td>**SDK** <Chip label="Recommended" variant="outlined" size="small" color="primary"/> <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/></td>
-                <td>\<1 day</td>
-                <td>You use our (web) client SDK, and we handle the rest</td>
+                <td>On <Chip label="Recommended" variant="outlined" size="small" color="primary"/></td>
+                <td>Automatically run eligibility check after autofill</td>
             </tr>
             <tr>
-                <td>**API** <Chip label="Requires Approval" variant="outlined" size="small" color="warning"/> <br/> <span class="font-weight-normal"></span></td>
-                <td>3-5 days</td>
-                <td>You use our API only and build everything yourself</td>
+                <td>Off</td>
+                <td>Don't automatically run eligibility check after autofill</td>
             </tr>
         </table>
 
-        <IntegrationTypeRecommendationAdmonition/>
+        If you set this to **On**, we will run an eligibility check and return full insurance details: a 271 in raw and parsed form.
+
+        <Admonition type="tip" title="We Recommend Setting This to On">
+            Most use cases require running an eligibility check for the user's insurance. We can do this automatically for you, after autofilling the insurance, so you don't have to make another API call to do it.
+        </Admonition>
 
     </CollapsibleSection>
-
+    
     <CollapsibleSection>
 
         <CollapsibleHeader>
@@ -267,9 +272,9 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
 ### Styling Settings
 
 :::important
-Styling settings only apply to **1-Click Health** using the **SDK** [integration type](#integration-type) because they affect the user interface the SDK displays. (They also apply to [**Text to Signup**](/text-to-signup).)
+Styling settings only apply to **1-Click Health** using the **SDK** because they affect the user interface the SDK displays. (They also apply to [**Text to Signup**](/text-to-signup).)
 
-So, if you are only using **1-Click Health** with the the **API** [integration type](#integration-type), you can ignore these settings.
+So, if you are only using **1-Click Health** with the the **API**, you can ignore these settings.
 :::
 
 :::tip Verified Auto-Magically Configures Styling Settings

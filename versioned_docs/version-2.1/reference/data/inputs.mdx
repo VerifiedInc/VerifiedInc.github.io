@@ -36,20 +36,57 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
 
 > An **input** is a piece of data you pass to the SDK or API.
 
+
+## 1-Click Verify
+
+<table>
+    <tr>
+        <th>Input</th>
+        <th>Key</th>
+        <th>Required?</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Device IP</td>
+        <td>`deviceIp`</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+        <td>`string`</td>
+        <td>[IPv6](https://en.wikipedia.org/wiki/IPv6_address)</td>
+        <td>IPv6 address of user's device</td>
+        <td>`"2001:0db8:85a3:0000:0000:8a2e:0370:7334"`</td>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td>`phone`</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+        <td>`string`</td>
+        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
+        <td>Phone number a user uses to verify for 1-Click Signup</td>
+        <td>`"+12125550010"`</td>
+    </tr>
+</table>
+
+
+## 1-Click Signup
+
 :::note
-To source verified data ([outputs](/reference/data/outputs)) for a user:
+To source verified 1-Click Signup ([outputs](/reference/data/outputs)) for a user:
 - **[Identifiers](#identifiers):** Phone is always required. Email is optional, but including it helps source better and more metadata — especially [risk signals](/reference/data/outputs#risk-signals). It cannot be used on its own to source [credentials](/reference/data/outputs#credentials) (user identity data).
 - **[Challenges](#challenges):** These are only required sometimes: if you get the [`OCE11`](/reference/api/errors#oce011) error code, which indicates that additional information is required. This happens when Verified is unable to narrow down to a single user based on the inputs already provided.
 - **[Other Inputs](#other-inputs):** These are optional. For name, we'll try to match against _all_ names we find associated with the user. This often means, for example, that a user's nickname will match as well as their legal name, but that depends on which names we can source for the user.
 :::
 
 
-## 1-Click Signup
-
-
 ### Identifiers
 
 > An **identifier** is a piece of user data that's used as a primary lookup for [outputs](/reference/data/outputs) and must match the outputs.
+
+:::tip
+**We highly recommend using [1-Click Verify](/1-click-verify) to autofill and verify a user's phone number,** which is always a required input for 1-Click Signup.
+:::
 
 <table>
     <tr>
@@ -94,6 +131,10 @@ Unlike [other inputs](#other-inputs), **challenges must match the [outputs](/ref
 Each of the inputs listed here can be considered a challenge or _not_ a challenge, depending on your [Challenges](/1-click-signup/guides/setup#challenges) brand setting. This gives you flexibility to require — or not — that a given input matches. _If you need additional guidance about this, don't hesitate to reach out to us at Support@Verified.inc._
 :::
 
+:::note At Least One Challenge is Required
+We require you to include at least one challenge, and we recommend you use only one to streamline the user experience.
+:::
+
 <table>
     <tr>
         <th>Input</th>
@@ -108,7 +149,7 @@ Each of the inputs listed here can be considered a challenge or _not_ a challeng
         <td>Full Name</td>
         <td>`fullName`</td>
         <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for one or more child credentials listed below</td>
         <td>Full name</td>
         <td>
@@ -122,7 +163,7 @@ Each of the inputs listed here can be considered a challenge or _not_ a challeng
     <tr>
         <td>↳ First Name</td>
         <td>`fullName.firstName`</td>
-        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required after some [`OCE011` errors](/reference/api/errors#oce011))</td>
         <td>`string`</td>
         <td>`cAse inSensiTive`</td>
         <td>First name</td>
@@ -131,16 +172,16 @@ Each of the inputs listed here can be considered a challenge or _not_ a challeng
     <tr>
         <td>Birth Date</td>
         <td>`birthDate`</td>
-        <td>optional (but required after some [`OCE011` errors](/reference/api/errors#oce011))</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required after some [`OCE011` errors](/reference/api/errors#oce011))</td>
         <td>`string`</td>
-        <td>`YYYY-MM-DD`</td>
+        <td>yyyy-MM-dd</td>
         <td>Birth date</td>
         <td>`"1989-08-01"`</td>
     </tr>
     <tr>
         <td>SSN4</td>
         <td>`ssn4`</td>
-        <td>optional (but required after some [`OCE011` errors](/reference/api/errors#oce011))</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required after some [`OCE011` errors](/reference/api/errors#oce011))</td>
         <td>`string`</td>
         <td>4 digits (0-9)</td>
         <td>Last 4 digits of Social Security Number</td>
@@ -176,7 +217,7 @@ Some of the inputs listed here can be considered a challenge or _not_ a challeng
         <td>Full Name</td>
         <td>`fullName`</td>
         <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for one or more child credentials listed below</td>
         <td>Full name</td>
         <td>
@@ -219,7 +260,7 @@ Some of the inputs listed here can be considered a challenge or _not_ a challeng
         <td>Address</td>
         <td>`address`</td>
         <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for one or more child credentials listed below</td>
         <td>Address</td>
         <td>
@@ -322,6 +363,10 @@ Whether 1-Click Health returns health data for a user depends on a complex match
 **We recommend using [1-Click Signup](/1-click-signup) to source inputs for 1-Click Health!** Using the two products together results in the fastest, easiest user experience.
 :::
 
+:::tip
+**We highly recommend using [1-Click Signup](/1-click-signup) to autofill a user's identity info,** which are inputs for 1-Click Health.
+:::
+
 <table>
     <tr>
         <th>Input</th>
@@ -336,7 +381,7 @@ Whether 1-Click Health returns health data for a user depends on a complex match
         <td>Full Name</td>
         <td>`fullName`</td>
         <td><Chip label="Mixed" variant="outlined" size="small" color="warning"/></td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for one or more child credentials listed below</td>
         <td>Full name</td>
         <td>
@@ -380,7 +425,7 @@ Whether 1-Click Health returns health data for a user depends on a complex match
         <td>`birthDate`</td>
         <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
         <td>`string`</td>
-        <td>`YYYY-MM-DD`</td>
+        <td>yyyy-MM-dd</td>
         <td>Birth date</td>
         <td>`"1989-08-01"`</td>
     </tr>
@@ -388,7 +433,7 @@ Whether 1-Click Health returns health data for a user depends on a complex match
         <td>Address</td>
         <td>`address`</td>
         <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-        <td>`Object`</td>
+        <td>`object`</td>
         <td>Object with keys for one or more child credentials listed below</td>
         <td>Address</td>
         <td>

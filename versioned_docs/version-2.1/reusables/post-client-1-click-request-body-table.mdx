@@ -14,6 +14,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>[IPv6](https://en.wikipedia.org/wiki/IPv6_address)</td>
+    <td>-</td>
     <td>IP address of user's device that can be passed to the SDK to override what the SDK determines it to be</td>
     <td>`"2001:0db8:85a3:0000:0000:8a2e:0370:7334"`</td>
 </tr>
@@ -22,6 +23,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+    <td>-</td>
     <td>Unique identifier for a [`1ClickVerificationEntity`](/reference/api/types#1clickentity) that can be passed to the SDK to skip the phone entry and verification steps</td>
     <td>`"487246b0-e68c-451d-be8e-45cea0b1c7a2"`</td>
 </tr>
@@ -30,7 +32,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
-    <td>none</td>
+    <td>-</td>
     <td>User's phone number (in [E.164](https://www.twilio.com/docs/glossary/what-e164) format)</td>
     <td>`"+12125550010"`</td>
 </tr>
@@ -38,8 +40,8 @@ import Chip from '@mui/material/Chip';
     <td>`email`</td>
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
-    <td>email</td>
-    <td>none</td>
+    <td>Email</td>
+    <td>-</td>
     <td>User's email address</td>
     <td>`"richard@piedpiper.net"`</td>
 </tr>
@@ -48,7 +50,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>yyyy-MM-dd</td>
-    <td>none</td>
+    <td>-</td>
     <td>User's birth date (in [Sandbox](/reference/api/environments#sandbox), this must be `"1989-08-01"` to pass validation)</td>
     <td>`"1989-08-01"`</td>
 </tr>
@@ -57,7 +59,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>4 digits (0-9)</td>
-    <td>none</td>
+    <td>-</td>
     <td>Last 4 digits of user's Social Security Number (in [Sandbox](/reference/api/environments#sandbox), this must be `"6789"` to pass validation)</td>
     <td>`"6789"`</td>
 </tr>
@@ -66,7 +68,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`object`</td>
     <td>Object with keys for one or more child credentials listed below</td>
-    <td>none</td>
+    <td>-</td>
     <td>Full name</td>
     <td>
         ```json
@@ -81,7 +83,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> with `fullName`</td>
     <td>`string`</td>
     <td>`cAse inSensiTive`</td>
-    <td>none</td>
+    <td>-</td>
     <td>First name</td>
     <td>`"Richard"`</td>
 </tr>
@@ -90,7 +92,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>`cAse inSensiTive`</td>
-    <td>none</td>
+    <td>-</td>
     <td>Middle name</td>
     <td>`"Harrison"`</td>
 </tr>
@@ -99,7 +101,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>`cAse inSensiTive`</td>
-    <td>none</td>
+    <td>-</td>
     <td>Last name</td>
     <td>`"Hendricks"`</td>
 </tr>
@@ -108,7 +110,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`object`</td>
     <td>Object with keys for one or more child credentials listed below</td>
-    <td>none</td>
+    <td>-</td>
     <td>Address</td>
     <td>
         ```json
@@ -127,7 +129,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>`cAse inSensiTive`</td>
-    <td>none</td>
+    <td>-</td>
     <td>Line 1 of address</td>
     <td>`"5320 Newell Rd"`</td>
 </tr>
@@ -136,7 +138,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>`cAse inSensiTive`</td>
-    <td>none</td>
+    <td>-</td>
     <td>Line 2 of address</td>
     <td>`""`</td>
 </tr>
@@ -145,7 +147,7 @@ import Chip from '@mui/material/Chip';
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
     <td>`string`</td>
     <td>`cAse inSensiTive`</td>
-    <td>none</td>
+    <td>-</td>
     <td>City of address</td>
     <td>`"Palo Alto"`</td>
 </tr>
@@ -157,7 +159,7 @@ import Chip from '@mui/material/Chip';
         - 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
         - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
     </td>
-    <td>none</td>
+    <td>-</td>
     <td>State of address</td>
     <td>
         - `"CA"`
@@ -172,7 +174,7 @@ import Chip from '@mui/material/Chip';
         - [ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9)
         - [ZIP+4](https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4) (5 digits, 0-9 + `-` + 4 digits, 0-9)
     </td>
-    <td>none</td>
+    <td>-</td>
     <td>ZIP Code of address</td>
     <td>
         - `"94303"`
@@ -187,7 +189,7 @@ import Chip from '@mui/material/Chip';
         - 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
         - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
     </td>
-    <td>none</td>
+    <td>-</td>
     <td>Country of address</td>
     <td>
         - `"US"`

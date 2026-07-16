@@ -2,9 +2,9 @@
 {
     "identityUuid": "f90b96d9-9d64-4675-8855-9ee1e188a38a", // from 1-Click Signup response body
     // No other PII inputs implies user didn't edit 1-Click Signup data
-    // Payer can be optionally included to autofill only for a specific payer (or payer group)
-    // "payer": {
-    //     "id": "VERIFIED_MEDICARE"
-    // }
+    "payer": { // Payer can be optionally included to autofill only for a specific payer (or payer group)
+        "id": "VERIFIED_MEDICARE"
+        // "name": "Verified Medicare" // Only use if payer ID is not known
+    }
 }
 ```

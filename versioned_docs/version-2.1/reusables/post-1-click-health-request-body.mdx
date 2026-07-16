@@ -19,7 +19,8 @@
     sex?: string,
     ssn?: string,
     payer?: {
-        id: string, // optional: specifies p
+        id?: string, // specifies payer (or payer group)
+        name?: string, // searches for payer (or payer group): only use if id is not known
     },
     memberId?: string,
     serviceTypeCodes?: string[],

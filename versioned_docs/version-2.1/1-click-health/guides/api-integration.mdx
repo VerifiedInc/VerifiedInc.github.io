@@ -6,7 +6,7 @@ sidebar_label: API Integration
 sidebar_class_name: sidebar-header-regular
 description: Full details on how to integrate 1-Click Health with our API
 slug: /1-click-health/guides/api-integration
-toc_max_heading_level: 3
+toc_max_heading_level: 4
 ---
 
 import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
@@ -44,13 +44,17 @@ import Post1ClickHealthRequestBody from '@site/versioned_docs/version-2.1/reusab
 import Post1ClickHealthResponseBody from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-response-body.mdx';
 import SyncFromSandboxAdmonition from '@site/versioned_docs/version-2.1/reusables/sync-from-sandbox-admonition.mdx';
 import MostProbablePlansAreListedFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/most-probable-plans-are-listed-first-admonition.mdx';
-import Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithoutUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-1-click-signup-without-user-edits.mdx';
+import Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithoutPayerWithoutUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-1-click-signup-without-payer-without-user-edits.mdx';
+import Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithPayerWithoutUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-1-click-signup-with-payer-without-user-edits.mdx';
 import Post1ClickHealthRequestBodyExampleCheckInputsFrom1ClickSignupWithoutUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-check-inputs-from-1-click-signup-without-user-edits.mdx';
-import Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-1-click-signup-with-user-edits.mdx';
+import Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithoutPayerWithUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-1-click-signup-without-payer-with-user-edits.mdx';
+import Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithPayerWithUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-1-click-signup-with-payer-with-user-edits.mdx';
 import Post1ClickHealthRequestBodyExampleCheckInputsFrom1ClickSignupWithUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-check-inputs-from-1-click-signup-with-user-edits.mdx';
-import Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupMinimalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-manual-signup-minimal-inputs.mdx';
+import Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupWithoutPayerMinimalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-manual-signup-without-payer-minimal-inputs.mdx';
+import Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupWithPayerMinimalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-manual-signup-with-payer-minimal-inputs.mdx';
 import Post1ClickHealthRequestBodyExampleCheckInputsFromManualSignupMinimalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-check-inputs-from-manual-signup-minimal-inputs.mdx';
-import Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-manual-signup-maximal-inputs.mdx';
+import Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupWithoutPayerMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-manual-signup-without-payer-maximal-inputs.mdx';
+import Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupWithPayerMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-manual-signup-with-payer-maximal-inputs.mdx';
 import Post1ClickHealthRequestBodyExampleCheckInputsFromManualSignupMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-check-inputs-from-manual-signup-maximal-inputs.mdx';
 import PayerIdsAdmonition from '@site/versioned_docs/version-2.1/reusables/payer-ids-admonition.mdx';
 
@@ -82,23 +86,13 @@ To onboard a user for healthcare, you typically need to do the following:
 2. **Collect the user's health insurance** (Payer and Member ID).
 3. **Run an eligibility check for the user's health insurance** (to see what the insurance covers).
 
-[1-Click Signup](/1-click-signup) solves (1) by letting you autofill the user's PII. 
-
-1-Click Health solves (2) and (3) by letting you autofill the user's health insurance and run an eligibility check for that insurance.
+[1-Click Signup](/1-click-signup) solves (1) by letting you autofill the user's PII, and 1-Click Health solves (2) and (3) by letting you autofill the user's health insurance and run an eligibility check for that insurance.
 
 1-Click Health has two core capabilities:
 - **Insurance Autofill:** Autofill a user's insurance information.
 - **Eligibility Check:** Run an eligibility check for a user's insurance.
 
-We often refer to these simply as **autofill** and **check.**
-
-:::note
-**Autofill can be used with or without specifying a payer (or payer group).** Specifying a payer can be helpful if, for example, you want to autofill insurance just from Medicare or "the Blues" (Blue Cross Blue Shield affiliated payers), for which we have specific payer groups.
-:::
-
-:::tip
-**You can use either _or both_ of autofill and check with a single API call:** see [step 2](#2-call-post-1-clickhealth) for details. They're automatically combined if the [**Check After Autofill**](/1-click-health/guides/setup#check-after-autofill) setting is set to **On** in the [Dashboard](https://dashboard.verified.inc) or if the `checkAfterAutofill` field in the request body of [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) is set to `true`.
-:::
+We often refer to these simply as **autofill** and **check:**
 
 <table>
     <tr>
@@ -147,6 +141,14 @@ We often refer to these simply as **autofill** and **check.**
         </td>
     </tr>
 </table>
+
+:::note
+**You can use autofill with or without specifying a payer (or payer group).** Specifying a payer can be helpful if, for example, you want to autofill insurance just from Medicare or "the Blues" (Blue Cross Blue Shield affiliated payers), for which we have specific payer groups.
+:::
+
+:::tip
+**You can use either _or both_ of autofill and check with a single API call:** see [step 2](#2-call-post-1-clickhealth) for details. They're automatically combined if the [**Check After Autofill**](/1-click-health/guides/setup#check-after-autofill) setting is set to **On** in the [Dashboard](https://dashboard.verified.inc) or if the `checkAfterAutofill` field in the request body of [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) is set to `true`.
+:::
 
 
 ## 1. Collect inputs.
@@ -245,31 +247,96 @@ This is in contrast to 1-Click Signup, which is _synchronous_ and almost always 
 
 ### Insurance Autofill
 
-To autofill insurance, call [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) with **PII (and optionally) payer:**
+To autofill insurance, call [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) with **PII (and optionally payer):**
 
-<Tabs groupId="signup-solution">
 
-<TabItem value="1-click-signup" label="From 1-Click Signup" default>
+<CollapsibleGroup firstSectionExpanded={false}>
 
-  If you use 1-Click Signup to autofill inputs, you should include `identityUuid` as an input, using the value of `uuid` from the [response body of `POST /1-click`](/reference/api/endpoints#post-1-click-response) (which you call for 1-Click Signup).
+    <CollapsibleSection>
 
-  If the user didn't edit any of the data autofilled by 1-Click Signup, you can include _only_ the `identityUuid`, and 1-Click Health will hydrate all of the relevant 1-Click Signup outputs as inputs:
+        <CollapsibleHeader>
+        #### Without Payer
+        </CollapsibleHeader>
 
-  <Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithoutUserEdits/>
+        Autofilling insurance without specifying a payer is the most common use case. 
 
-  If the user edited some of the data autofilled by 1-Click Signup, you should include the edited fields alongside the `identityUuid`, and 1-Click Health will hydrate the _rest_ of the 1-Click Signup outputs as inputs:
+        <Tabs groupId="signup-solution">
 
-  <Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithUserEdits/>
+        <TabItem value="1-click-signup" label="From 1-Click Signup" default>
 
-</TabItem>
-<TabItem value="manual-signup" label="From Manual Signup">
+          If you used [1-Click Signup](/1-click-signup) to autofill inputs, you should include `identityUuid` as an input with the value of `uuid` from the [response body of `POST /1-click`](/reference/api/endpoints#post-1-click-response) (which you call for 1-Click Signup):
 
-  <Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupMinimalInputs/>
+          <Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithoutPayerWithoutUserEdits/>
 
-  <Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupMaximalInputs/>
+          If the user didn't edit any of the data autofilled by 1-Click Signup, you can include _only_ the `identityUuid`, and 1-Click Health will hydrate all of the relevant 1-Click Signup outputs as inputs.
 
-</TabItem>
-</Tabs>
+          If the user edited some of the data autofilled by 1-Click Signup, you should include the edited fields alongside the `identityUuid`, and 1-Click Health will hydrate the _rest_ of the 1-Click Signup outputs as inputs:
+
+          <Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithoutPayerWithUserEdits/>
+
+        </TabItem>
+        <TabItem value="manual-signup" label="From Manual Signup">
+
+          If the user manually entered inputs, you should include them directly in the request body:
+
+          <Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupWithoutPayerMinimalInputs/>
+
+          You must include at least first name, last name, and birth date as inputs, but **we strongly recommend also including at least state or ZIP code if possible.** In general, the more inputs you provide, the higher coverage and accuracy will be. Because 1-Click Health is billed per attempt (not just per success), it's well worth collecting more inputs upfront.
+
+          <Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupWithoutPayerMaximalInputs/>
+
+        </TabItem>
+        </Tabs>
+
+    </CollapsibleSection>
+    
+    <CollapsibleSection>
+
+        <CollapsibleHeader>
+        #### With Payer
+        </CollapsibleHeader>
+
+        Autofilling insurance with a payer specified can be helpful if you already know the user's payer, want to have the user select a payer upfront, or want to look for insurance from only a specific payer (or payer group). You can include any payer from our [Supported Payers](/1-click-health/supported-payers) list, including these special payer groups:
+        - `VERIFIED_MEDICARE` (all Medicare payers)
+        - `VERIFIED_BLUES` (all Blue Cross Blue Shield affiliated payers)
+
+        <Admonition type="warning" title="Medicare Autofill Works More Often with SSNs">
+          **Medicare autofill is much more likely to succeed if you include SSN as an input,** because CMS historically used SSNs as member IDs before switching to MBIs (Medicare Beneficiary Identifiers) in 2020 and still uses SSNs as unique identifiers. If you use 1-Click Signup to autofill inputs for 1-Click Health, we can hydrate SSNs — never exposing them to you or the user — and then use them to source health insurance data.
+        </Admonition>
+
+        <Tabs groupId="signup-solution">
+
+        <TabItem value="1-click-signup" label="From 1-Click Signup" default>
+
+          If you use 1-Click Signup to autofill inputs, you should include `identityUuid` as an input, using the value of `uuid` from the [response body of `POST /1-click`](/reference/api/endpoints#post-1-click-response) (which you call for 1-Click Signup).
+
+          If the user didn't edit any of the data autofilled by 1-Click Signup, you can include _only_ the `identityUuid`, and 1-Click Health will hydrate all of the relevant 1-Click Signup outputs as inputs:
+
+          <Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithPayerWithoutUserEdits/>
+
+          If the user edited some of the data autofilled by 1-Click Signup, you should include the edited fields alongside the `identityUuid`, and 1-Click Health will hydrate the _rest_ of the 1-Click Signup outputs as inputs:
+
+          <Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithPayerWithUserEdits/>
+
+        </TabItem>
+        <TabItem value="manual-signup" label="From Manual Signup">
+
+          If the user manually entered inputs, you should include them directly in the request body:
+
+          <Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupWithPayerMinimalInputs/>
+
+          You must include at least first name, last name, and birth date as inputs, but **we strongly recommend also including at least state or ZIP code if possible.** In general, the more inputs you provide, the higher coverage and accuracy will be. Because 1-Click Health is billed per attempt (not just per success), it's well worth collecting more inputs upfront.
+
+          <Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupWithPayerMaximalInputs/>
+
+        </TabItem>
+        </Tabs>
+
+    </CollapsibleSection>
+
+</CollapsibleGroup>
+
+---
 
 The [response body](/reference/api/endpoints#post-1-click-health-response) will contain a `healthDataUuid` that identifies the 1-Click Health flow:
 
@@ -286,11 +353,11 @@ To run an eligibility check, call [`POST /1-click/health`](/reference/api/endpoi
 
 <TabItem value="1-click-signup" label="From 1-Click Signup" default>
 
-  If you use 1-Click Signup to autofill inputs, you should include `identityUuid` as an input, using the value of `uuid` from the [response body of `POST /1-click`](/reference/api/endpoints#post-1-click-response) (which you call for 1-Click Signup).
-
-  If the user didn't edit any of the data autofilled by 1-Click Signup, you can include the `identityUuid`, and 1-Click Health will hydrate all of the relevant 1-Click Signup outputs as inputs:
+  If you used [1-Click Signup](/1-click-signup) to autofill inputs, you should include `identityUuid` as an input with the value of `uuid` from the [response body of `POST /1-click`](/reference/api/endpoints#post-1-click-response) (which you call for 1-Click Signup):
 
   <Post1ClickHealthRequestBodyExampleCheckInputsFrom1ClickSignupWithoutUserEdits/>
+
+  If the user didn't edit any of the data autofilled by 1-Click Signup, you can include the `identityUuid`, and 1-Click Health will hydrate all of the relevant 1-Click Signup outputs as inputs.
 
   If the user edited some of the data autofilled by 1-Click Signup, you should include the edited fields alongside the `identityUuid`, and 1-Click Health will hydrate the _rest_ of the 1-Click Signup outputs as inputs:
 
@@ -299,28 +366,32 @@ To run an eligibility check, call [`POST /1-click/health`](/reference/api/endpoi
 </TabItem>
 <TabItem value="manual-signup" label="From Manual Signup">
 
+  If the user manually entered inputs, you should include them directly in the request body:
+
   <Post1ClickHealthRequestBodyExampleCheckInputsFromManualSignupMinimalInputs/>
+
+  You must include at least first name, last name, and birth date as inputs, but **we strongly recommend also including at least state or ZIP code if possible.** In general, the more inputs you provide, the higher coverage and accuracy will be. Because 1-Click Health is billed per attempt (not just per success), it's well worth collecting more inputs upfront.
 
   <Post1ClickHealthRequestBodyExampleCheckInputsFromManualSignupMaximalInputs/>
 
 </TabItem>
 </Tabs>
 
-:::important
-  For object type inputs (Full Name and Address), you must include all "standard" fields, or you'll get an error:
-  - **Full Name:** You must include First Name and Last Name (but not Middle Name), even if the user only edited, for example, First Name. This is for clarity.
-  - **Address:** You must include Line 1, City, State, Zip Code, and Country (but not Line 2), even if the user edited, for example, Line 1. This is for clarity and to ensure that an invalid address isn't formed by implicitly combining edited and unedited pieces.
-  :::
-
-  :::tip
-  One of the reasons we strongly recommend using 1-Click Signup to autofill inputs for 1-Click Health is that _we can then hydrate inputs that are never exposed to you or the user,_ improving the success rate of 1-Click Health! The most important example concerns SSNs:
+:::tip
+  One of the reasons we strongly recommend using 1-Click Signup to autofill inputs for 1-Click Health is that _we can then hydrate inputs that are never exposed to you or the user,_ improving the success rate of 1-Click Health! The most important example concerns Social Security Numbers (SSNs):
 
   Most healthcare companies don't collect SSNs and therefore don't want to ask users to provide or confirm them. However, using SSNs as inputs for 1-Click Health can significantly improve success rates (especially for Medicare) — because SSNs are de facto unique, static identifiers for most US adults.
 
   If you use 1-Click Signup to autofill inputs for 1-Click Health, we can hydrate SSNs — never exposing them to you or the user — and then use them to source health insurance data. There are various restrictions on how and when we do this. (For example, we'll only use a hydrated SSN if a user doesn't significantly edit the rest of the autofilled 1-Click Signup data.) But this allows you to improve the success rate of 1-Click Health while never needing to ask for or process SSNs yourselves.
 
   **This is a huge advantage of using 1-Click Signup and 1-Click Health in combination.**
-  :::
+:::
+
+:::important
+  For object type inputs (Full Name and Address), you must include all "standard" fields, or you'll get an error:
+  - **Full Name:** You must include First Name and Last Name (but not Middle Name), even if the user only edited, for example, First Name. This is for clarity.
+  - **Address:** You must include Line 1, City, State, Zip Code, and Country (but not Line 2), even if the user edited, for example, Line 1. This is for clarity and to ensure that an invalid address isn't formed by implicitly combining edited and unedited pieces.
+:::
 
 The [response body](/reference/api/endpoints#post-1-click-health-response) will contain a `healthDataUuid` that identifies the 1-Click Health flow:
 

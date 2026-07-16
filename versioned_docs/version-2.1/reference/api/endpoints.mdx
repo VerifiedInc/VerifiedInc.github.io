@@ -50,10 +50,6 @@ import Post1ClickVerificationsResponseBodyPendingExample from '@site/versioned_d
 import Post1ClickVerificationsDeliverResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-deliver-response-body-example.mdx';
 import Post1ClickVerificationsVerifyResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-verify-response-body-example.mdx';
 import Get1ClickVerificationsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-response-body-example.mdx';
-import Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithoutUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-1-click-signup-without-user-edits.mdx';
-import Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithUserEdits from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-1-click-signup-with-user-edits.mdx';
-import Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupMinimalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-manual-signup-minimal-inputs.mdx';
-import Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-manual-signup-maximal-inputs.mdx';
 import PostClient1ClickRequestBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-request-body.mdx';
 import PostClient1ClickResponseBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-response-body.mdx';
 
@@ -185,21 +181,21 @@ GET /1-click/verifications/channels[?deviceIp={deviceIp}]
     <tr>
         <td>`channels.autofill.available`</td>
         <td>`boolean`</td>
-        <td>none</td>
+        <td>-</td>
         <td>Whether the autofill channel is available (`= brandApproved && deviceIpEligible`)</td>
         <td>`true`</td>
     </tr>
     <tr>
         <td>`channels.autofill.brandApproved`</td>
         <td>`boolean`</td>
-        <td>none</td>
+        <td>-</td>
         <td>Whether your brand is approved for the autofill channel</td>
         <td>`true`</td>
     </tr>
     <tr>
         <td>`channels.autofill.deviceIpEligible`</td>
         <td>`boolean`</td>
-        <td>none</td>
+        <td>-</td>
         <td>Whether the user's device IP is eligible for the autofill channel</td>
         <td>`true`</td>
     </tr>
@@ -219,7 +215,7 @@ GET /1-click/verifications/channels[?deviceIp={deviceIp}]
     <tr>
         <td>`channels.sms.available`</td>
         <td>`boolean`</td>
-        <td>none</td>
+        <td>-</td>
         <td>Whether the SMS channel is available</td>
         <td>`true`</td>
     </tr>
@@ -239,7 +235,7 @@ GET /1-click/verifications/channels[?deviceIp={deviceIp}]
     <tr>
         <td>`channels.email.available`</td>
         <td>`boolean`</td>
-        <td>none</td>
+        <td>-</td>
         <td>Whether the email channel is available</td>
         <td>`true`</td>
     </tr>
@@ -302,25 +298,25 @@ postmanUrl=''>
             </details>
         </td>
         <td>`snake_case`</td>
-        <td>none</td>
+        <td>-</td>
         <td>Channel used for verification</td>
         <td>`"autofill"`</td>
     </tr>
     <tr>
         <td>`deviceIp`</td>
-        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required if `channel` is `"autofill"`)</td>
         <td>`string`</td>
-        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
-        <td>none</td>
-        <td>User's phone number (in [E.164](https://www.twilio.com/docs/glossary/what-e164) format)</td>
-        <td>`"+12125550010"`</td>
+        <td>[IPv6](https://en.wikipedia.org/wiki/IPv6_address)</td>
+        <td>-</td>
+        <td>IP address of user's device</td>
+        <td>`"2001:0db8:85a3:0000:0000:8a2e:0370:7334"`</td>
     </tr>
     <tr>
         <td>`phone`</td>
         <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required if `channel` is `"sms"`)</td>
         <td>`string`</td>
         <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
-        <td>none</td>
+        <td>-</td>
         <td>User's phone number (in [E.164](https://www.twilio.com/docs/glossary/what-e164) format)</td>
         <td>`"+12125550010"`</td>
     </tr>
@@ -439,7 +435,7 @@ postmanUrl=''>
         <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
         <td>`string`</td>
         <td>6 digits (0-9)</td>
-        <td>none</td>
+        <td>-</td>
         <td>User submitted verification code</td>
         <td>`"111111"`</td>
     </tr>
@@ -653,29 +649,6 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
 
 <Post1ClickHealthRequestBody/>
 
-<details>
-  <summary>**Examples of typical usage:**</summary>
-
-  **Autofill, with inputs from 1-Click Signup:**
-
-  If the user didn't edit any of the data autofilled by 1-Click Signup, you can include _only_ the `identityUuid`, and 1-Click Health will hydrate all of the relevant 1-Click Signup outputs as inputs:
-
-  <Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithoutUserEdits/>
-
-  If the user edited some of the data autofilled by 1-Click Signup, you should include the edited fields alongside the `identityUuid`, and 1-Click Health will hydrate the rest of the 1-Click Signup outputs as inputs:
-
-  <Post1ClickHealthRequestBodyExampleAutofillInputsFrom1ClickSignupWithUserEdits/>
-
-  **Autofill, with inputs from manual signup:**
-
-  If you collect inputs from manual signup, there's no `identityUuid` to include:
-
-  <Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupMinimalInputs/>
-
-  <Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupMaximalInputs/>
-
-</details>
-
 <table>
   <tr>
     <th>Property</th>
@@ -690,7 +663,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td>`checkAfterAutofill`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`boolean`</td>
-      <td>none</td>
+      <td>-</td>
       <td>Defined by the [Check After Autofill](/1-click-health/guides/setup#check-after-autofill) setting</td>
       <td>Whether to automatically run an eligibility check for an autofilled health insurance plan</td>
       <td>`true`</td>
@@ -700,7 +673,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string`</td>
       <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
-      <td>none</td>
+      <td>-</td>
       <td>Unique identifier for the [`1ClickEntity`](/reference/api/types#1clickentity) that will be returned at the end of the 1-Click Signup flow</td>
       <td>`"535dba63-d4bd-442a-b3f6-21b785260a08"`</td>
   </tr>
@@ -709,7 +682,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if no `identityUuid`</td>
       <td>`object`</td>
       <td>Object with keys for one or more child credentials listed below</td>
-      <td>none</td>
+      <td>-</td>
       <td>Full name</td>
       <td>
           ```json
@@ -725,7 +698,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if no `identityUuid`</td>
       <td>`string`</td>
       <td>`cAse inSensiTive`</td>
-      <td>none</td>
+      <td>-</td>
       <td>First name</td>
       <td>`"Richard"`</td>
   </tr>
@@ -734,7 +707,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string`</td>
       <td>`cAse inSensiTive`</td>
-      <td>none</td>
+      <td>-</td>
       <td>Middle name</td>
       <td>`"Harrison"`</td>
   </tr>
@@ -743,7 +716,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if no `identityUuid`</td>
       <td>`string`</td>
       <td>`cAse inSensiTive`</td>
-      <td>none</td>
+      <td>-</td>
       <td>Last name</td>
       <td>`"Hendricks"`</td>
   </tr>
@@ -752,7 +725,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if no `identityUuid`</td>
       <td>`string`</td>
       <td>yyyy-MM-dd</td>
-      <td>none</td>
+      <td>-</td>
       <td>Birth date</td>
       <td>`"1989-08-01"`</td>
   </tr>
@@ -761,7 +734,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`object`</td>
       <td>Object with keys for one or more child credentials listed below</td>
-      <td>none</td>
+      <td>-</td>
       <td>Address</td>
       <td>
           ```json
@@ -780,7 +753,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string`</td>
       <td>`cAse inSensiTive`</td>
-      <td>none</td>
+      <td>-</td>
       <td>Line 1 of address</td>
       <td>`"5320 Newell Rd"`</td>
   </tr>
@@ -789,7 +762,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string`</td>
       <td>`cAse inSensiTive`</td>
-      <td>none</td>
+      <td>-</td>
       <td>Line 2 of address</td>
       <td>`""`</td>
   </tr>
@@ -798,7 +771,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string`</td>
       <td>`cAse inSensiTive`</td>
-      <td>none</td>
+      <td>-</td>
       <td>City of address</td>
       <td>`"Palo Alto"`</td>
   </tr>
@@ -812,7 +785,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
           - 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
           - Full state/territory name ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-1) subdivision name)
       </td> */}
-      <td>none</td>
+      <td>-</td>
       <td>State of address</td>
       <td>`"CA"`</td>
       {/* Removing until we support multiple input formats */}
@@ -831,7 +804,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
           - [ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9)
           - [ZIP+4](https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4) (5 digits, 0-9 + `-` + 4 digits, 0-9)
       </td> */}
-      <td>none</td>
+      <td>-</td>
       <td>ZIP Code of address</td>
       <td>`"94303"`</td>
       {/* Removing until we support multiple input formats */}
@@ -850,7 +823,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
           - 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)
           - Full country name ([ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) English short name, currently always `"United States of America"`)
       </td> */}
-      <td>none</td>
+      <td>-</td>
       <td>Country of address</td>
       <td>`"US"`</td>
       {/* Removing until we support multiple input formats */}
@@ -873,7 +846,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
             </details>
         </td>
       <td>`Title Case`</td>
-      <td>none</td>
+      <td>-</td>
       <td>Sex</td>
       <td>`"Male"`</td>
   </tr>
@@ -882,7 +855,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string`</td>
       <td>9 digits (0-9)</td>
-      <td>none</td>
+      <td>-</td>
       <td>Social Security Number</td>
       <td>`"000456789"`</td>
   </tr>
@@ -891,7 +864,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`object`</td>
       <td>Object with key described below</td>
-      <td>none</td>
+      <td>-</td>
       <td>Payer (or payer group) for insurance autofill and/or eligibility check</td>
       <td>-</td>
   </tr>
@@ -899,17 +872,26 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td>↳ `payer.id`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string`</td>
-      <td>none</td>
-      <td>none</td>
+      <td>-</td>
+      <td>-</td>
       <td>Payer (or payer group) ID for insurance autofill and/or eligibility check: see [supported payers](/1-click-health/supported-payers)</td>
       <td>`"VERIFIED_MEDICARE"`</td>
+  </tr>
+  <tr>
+      <td>↳ `payer.name`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>-</td>
+      <td>-</td>
+      <td>Payer (or payer group) name for insurance autofill and/or eligibility check: see [supported payers](/1-click-health/supported-payers) (only use if payer ID is not known)</td>
+      <td>`"Aetna"`</td>
   </tr>
   <tr>
       <td>`memberId`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string`</td>
-      <td>none</td>
-      <td>none</td>
+      <td>-</td>
+      <td>-</td>
       <td>Member ID for eligibility check</td>
       <td>`"A484069"`</td>
   </tr>
@@ -957,7 +939,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
         - 5 digits (for CPT code)
         - 1 letter and 4 digits (for HCPCS code)
       </td>
-      <td>none</td>
+      <td>-</td>
       <td>[CPT or HCPCS procedure code](https://www.cms.gov/medicare/regulations-guidance/physician-self-referral/list-cpt-hcpcs-codes)</td>
       <td>`"99213""`</td>
   </tr>
@@ -989,7 +971,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string[]`</td>
       <td>Array of `string`s</td>
-      <td>none</td>
+      <td>-</td>
       <td>Array of [medical coding modifiers](https://www.aapc.com/resources/what-are-medical-coding-modifiers?srsltid=AfmBOoqpfNXqsgfTYsbnXiHBVGhUOJbewkkGbe4r98wp8tCDGPtiztjv)</td>
       <td>`["25"]`</td>
   </tr>
@@ -998,7 +980,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string`</td>
       <td>2 characters</td>
-      <td>none</td>
+      <td>-</td>
       <td>[Medical coding modifier](https://www.aapc.com/resources/what-are-medical-coding-modifiers?srsltid=AfmBOoqpfNXqsgfTYsbnXiHBVGhUOJbewkkGbe4r98wp8tCDGPtiztjv)</td>
       <td>`"25"`</td>
   </tr>
@@ -1146,8 +1128,8 @@ GET /1-click/health/payers?$search=aetna&$limit=10&$skip=0&$paginate=true
       <td>`$search`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string`</td>
-      <td>none</td>
-      <td>none</td>
+      <td>-</td>
+      <td>-</td>
       <td>Search by payer name or ID</td>
       <td>`aetna`</td>
   </tr>
@@ -1155,7 +1137,7 @@ GET /1-click/health/payers?$search=aetna&$limit=10&$skip=0&$paginate=true
       <td>`$limit`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`integer`</td>
-      <td>none</td>
+      <td>-</td>
       <td>10</td>
       <td>Number of payers per page</td>
       <td>`100`</td>
@@ -1164,7 +1146,7 @@ GET /1-click/health/payers?$search=aetna&$limit=10&$skip=0&$paginate=true
       <td>`$skip`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`integer`</td>
-      <td>none</td>
+      <td>-</td>
       <td>0</td>
       <td>Number of payers to skip</td>
       <td>`25`</td>
@@ -1173,8 +1155,8 @@ GET /1-click/health/payers?$search=aetna&$limit=10&$skip=0&$paginate=true
       <td>`$paginate`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`boolean`</td>
-      <td>none</td>
-      <td>none</td>
+      <td>-</td>
+      <td>-</td>
       <td>Whether to return paginated results</td>
       <td>`true`</td>
   </tr>
@@ -1223,21 +1205,21 @@ This includes (under `data`) an array of payer objects for all [supported payers
   <tr>
     <td>`total`</td>
     <td>`integer`</td>
-    <td>none</td>
+    <td>-</td>
     <td>Number of payers</td>
     <td>`3460`</td>
   </tr>
   <tr>
     <td>`limit`</td>
     <td>`integer`</td>
-    <td>none</td>
+    <td>-</td>
     <td>Number of payers per page</td>
     <td>`100`</td>
   </tr>
   <tr>
     <td>`skip`</td>
     <td>`integer`</td>
-    <td>none</td>
+    <td>-</td>
     <td>Number of payers to skip</td>
     <td>`25`</td>
   </tr>

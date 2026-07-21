@@ -595,7 +595,7 @@ Masking sensitive info is a compliance requirement. We cannot approve you for [P
 
 #### Birth Date
 
-**Mask the last 4 digits (server side),** so the client only displays the last 4 digits. We recommend using the • character to mask and the most common US format MM/DD/YYYY, so that (for example) 1989-08-01 is displayed as 08/01/••••.
+**Mask the last 4 digits (server side),** so the client only displays the first 4 digits. We recommend using the • character to mask and the most common US format MM/DD/YYYY, so that (for example) 1989-08-01 is displayed as 08/01/••••.
 
 **If you allow the user to edit the birth date, clear the entire value when they start editing (by deleting one character)**, so they don't just edit the first 4 digits (which could result in another valid birth date, but one that isn't theirs).
 

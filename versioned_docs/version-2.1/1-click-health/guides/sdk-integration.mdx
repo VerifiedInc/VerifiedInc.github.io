@@ -157,7 +157,7 @@ Handling events is not necessary for the SDK to work, but it will allow you to u
 Update your `handleEvent` function to include the 1 event value specific to 1-Click Health, leveraging the [`SdkEventValues` constant](/reference/sdk/constants#sdkeventvalues):
 
 ```typescript
-function handleEvents(event: SdkEvent): void {
+function handleEvent(event: SdkEvent): void {
     switch (event.type) {
         ...
         // Add for 1-Click Health

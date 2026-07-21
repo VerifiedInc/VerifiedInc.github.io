@@ -93,6 +93,44 @@ module.exports = {
       ],
       links: [
         {
+          title: 'Text to Signup',
+          items: [
+            {
+              label: 'Overview',
+              to: '/text-to-signup/overview',
+            },
+            {
+              label: 'User Experience',
+              to: '/text-to-signup/user-experience',
+            },
+            {
+              label: 'Guide',
+              to: '/text-to-signup/guide',
+            },
+          ],
+        },
+        {
+          title: '1-Click Verify',
+          items: [
+            {
+              label: 'Overview',
+              to: '/1-click-verify/overview',
+            },
+            {
+              label: 'User Experience',
+              to: '/1-click-verify/user-experience',
+            },
+            {
+              label: 'Test Users',
+              to: '/1-click-verify/test-users',
+            },
+            {
+              label: 'Guides',
+              to: '/1-click-verify/guides',
+            },
+          ],
+        },
+        {
           title: '1-Click Signup',
           items: [
             {
@@ -131,23 +169,6 @@ module.exports = {
             {
               label: 'Guides',
               to: '/1-click-health/guides',
-            },
-          ],
-        },
-        {
-          title: 'Text to Signup',
-          items: [
-            {
-              label: 'Overview',
-              to: '/text-to-signup/overview',
-            },
-            {
-              label: 'User Experience',
-              to: '/text-to-signup/user-experience',
-            },
-            {
-              label: 'Guide',
-              to: '/text-to-signup/guide',
             },
           ],
         },

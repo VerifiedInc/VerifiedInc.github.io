@@ -90,10 +90,10 @@ function handleError(error: SdkError) {
     switch (error.reason) {
         // highlight-next-line
         case SdkErrorReasons.INVALID_SESSION_KEY:
-            // Create new session key (call POST /sessionKey server side)
+            // Create new session key (call POST /client/1-click server side)
         // highlight-next-line
         case SdkErrorReasons.SESSION_TIMEOUT:
-            // Create new session key (call POST /sessionKey server side)
+            // Create new session key (call POST /client/1-click server side)
             // Initalize new VerifiedClientSDK instance
         // highlight-next-line
         case SdkErrorReasons.SHARE_CREDENTIALS_ERROR:

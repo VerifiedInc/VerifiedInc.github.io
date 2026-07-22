@@ -249,8 +249,8 @@ This Guide includes lots of detail so you have all the information you might nee
                 <td>After the Text to Signup flow (where we verify the user’s phone number)</td>
             </tr>
             <tr>
-                <td>Hosted 1-Click Signup</td>
-                <td>After a [1-Click Signup](/1-click-signup) flow we host (where we autofill info and have the user confirm it)</td>
+                <td>Hosted 1-Click</td>
+                <td>After a hosted 1-Click flow (where we autofill info and have the user confirm it)</td>
             </tr>
         </table>
 
@@ -264,7 +264,7 @@ This Guide includes lots of detail so you have all the information you might nee
         If you've already integrated 1-Click Signup (following the [SDK Integration](/1-click-signup/guides/sdk-integration) or [API Integration](/1-click-signup/guides/api-integration) guide), the **"Text to Signup"** option is best, because it ensures you can keep your signup flow consistent for all users.
         </Admonition>
 
-        If you choose the **"Hosted 1-Click Signup"** option, we will take the user through a hosted 1-Click Signup flow that autofills identity info and has them confirm it. You'll need to [retrieve the user's info](#retrieve-users-identity-info) to benefit from this: see [step 3](#3-if-necessary-do-integration-work) for how.
+        If you choose the **"Hosted 1-Click"** option, we will take the user through a hosted 1-Click flow that autofills identity info and has them confirm it. You'll need to [retrieve the user's info](#retrieve-users-identity-info) to benefit from this: see [step 3](#3-if-necessary-do-integration-work) for how.
 
     </CollapsibleSection>
 
@@ -305,7 +305,7 @@ We use AI to auto-magically configure styling settings based on your email domai
 :::important You May Not Need to Do Integration Work!
 **You may not need to do any integration work for Text to Signup.** You only need to if:
 1. **You need to confirm the the user's phone is verified.** This is crucial if you want to rely on Text to Signup for phone verification, including if you want to pass the user to an integrated 1-Click Signup flow on your side.
-2. **You chose the "Hosted 1-Click Signup" option for the [redirect user after](#redirect-user-after) setting.** We will take the user through a hosted 1-Click Signup flow that autofills identity info and has them confirm it. You'll need to retrieve the user's info to benefit from this.
+2. **You chose the "Hosted 1-Click" option for the [redirect user after](#redirect-user-after) setting.** We will take the user through a hosted 1-Click flow that autofills identity info and has them confirm it. You'll need to retrieve the user's info to benefit from this.
 
 If neither of these apply to your use case, **_skip this step — you need no code!_**
 :::
@@ -314,7 +314,7 @@ The integration work you can do depends on the [redirect user after](#redirect-u
 - If it's set to **"Text to Signup"**, you can optionally:
     - [Pass the user to an integrated 1-Click Signup flow](#pass-user-to-integrated-1-click-signup-flow) on your side.
     - [Confirm the user's phone is verified](#confirm-users-phone-is-verified), separately from an integrated 1-Click Signup flow (which confirms this automatically).
-- If it's set to **"Hosted 1-Click Signup"**, you need to [retrieve the user's identity info](#retrieve-users-identity-info).
+- If it's set to **"Hosted 1-Click"**, you need to [retrieve the user's identity info](#retrieve-users-identity-info).
 
 See the sections below for details about how to do each of these.
 
@@ -416,7 +416,7 @@ See the sections below for details about how to do each of these.
         </CollapsibleHeader>
 
         <Admonition type="note">
-            This integration step is only relevant if the [redirect user after](#redirect-user-after) setting is set to **"Hosted 1-Click Signup".**
+            This integration step is only relevant if the [redirect user after](#redirect-user-after) setting is set to **"Hosted 1-Click".**
         </Admonition>
 
         <SequenceDiagramTextToSignupRetrieveUsersIdentityInfo/>
@@ -424,7 +424,7 @@ See the sections below for details about how to do each of these.
 
         #### a. Parse the `identityUuid` URL parameter.
 
-        When a user completes Text to Signup, we redirect them to your campaign's [redirect URL](#redirect-url), appending a URL parameter that depends on the [redirect user after](#redirect-user-after) setting. When it's set to **"Hosted 1-Click Signup"**, we take the user through a hosted 1-Click Signup flow that autofills identity info and has them confirm it. Therefore, we append an `identityUuid` parameter, which lets you retrieve data the user shared.
+        When a user completes Text to Signup, we redirect them to your campaign's [redirect URL](#redirect-url), appending a URL parameter that depends on the [redirect user after](#redirect-user-after) setting. When it's set to **"Hosted 1-Click"**, we take the user through a hosted 1-Click flow that autofills identity info and has them confirm it. Therefore, we append an `identityUuid` parameter, which lets you retrieve data the user shared.
         ```
         {redirectUrl}?identityUuid={identityUuid}
 

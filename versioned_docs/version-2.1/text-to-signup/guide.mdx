@@ -365,6 +365,10 @@ See the sections below for details about how to do each of these.
         https://hooli.com/verified/text-to-signup?verificationUuid=68b7bf30-1a2d-4fcc-a2c8-be7de29e5b19
         ```
 
+        <Admonition type="note" title="Sandbox Environment">
+        In the [Sandbox](/reference/api/environments#sandbox) environment, we also append an `env=sandbox` parameter (for example `...?verificationUuid={verificationUuid}&env=sandbox`). This lets you tell test requests apart from live ones when you use the same redirect URL in both environments.
+        </Admonition>
+
         Parse the value of this parameter, which you'll use in the next step. 
 
         <Admonition type="danger">
@@ -430,6 +434,10 @@ See the sections below for details about how to do each of these.
 
         https://hooli.com/verified/text-to-signup?identityUuid=68b7bf30-1a2d-4fcc-a2c8-be7de29e5b19
         ```
+
+        <Admonition type="note" title="Sandbox Environment">
+        In the [Sandbox](/reference/api/environments#sandbox) environment, we also append an `env=sandbox` parameter (for example `...?identityUuid={identityUuid}&env=sandbox`). This lets you tell test requests apart from live ones when you use the same redirect URL in both environments.
+        </Admonition>
 
         Parse the value of this parameter, which you'll use in the next step. 
 

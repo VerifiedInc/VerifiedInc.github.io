@@ -105,7 +105,7 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
             A **provider** is a covered health care provider identified by a [National Provider Identifier (NPI)](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand).
         </Admonition>
 
-        **Click the Add Provider button to add a provider with the following fields:**
+        **Click the Add Provider button to add one or more providers with the following fields:**
 
         <details>
             <summary>
@@ -207,6 +207,8 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
                 </tr>
             </table>
         </details>
+
+        **If necessary, click the star icon button to set one provider as the default.** You can override this default by specifying a different provider `npi` in the request body of [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth): see the [API Integration](/1-click-health/guides/api-integration) guide for details.
 
     </CollapsibleSection>
 

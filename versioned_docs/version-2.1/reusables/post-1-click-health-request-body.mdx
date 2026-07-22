@@ -1,6 +1,7 @@
 ```typescript title="POST /1-click/health Request Body"
 {
     checkAfterAutofill?: boolean, // default defined by the Check After Autofill brand setting in the Verified Dashboard
+    npi?: string, // default defined by the Providers brand setting in the Verified Dashboard
     identityUuid?: string, // from 1-Click Signup response body
     fullName?: {
         firstName?: string, // required if no identityUuid
@@ -29,6 +30,5 @@
         qualifier?: string,
         modifiers?: string[]
     }[]
-    // npi?: string // coming soon
 }
 ```

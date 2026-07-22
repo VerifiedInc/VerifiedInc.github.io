@@ -43,7 +43,7 @@ function handleResult(data: SdkResult) {
             // Pass data.identityUuid to your server (to call GET /1-click/{identityUuid})
         // highlight-next-line
         case SdkResultValues.USER_SHARED_HEALTH_DATA: // Success!
-            // Pass data.dataHealthUuid to your server (to call GET /1-click/health/{dataHealthUuid})
+            // Pass data.healthDataUuid to your server (to call GET /1-click/health/{healthDataUuid})
         // highlight-next-line
         case SdkResultValues.USER_OPTED_OUT: // User clicked 'Sign Up Manually Instead'
             // Take user to manual signup flow
@@ -90,10 +90,10 @@ function handleError(error: SdkError) {
     switch (error.reason) {
         // highlight-next-line
         case SdkErrorReasons.INVALID_SESSION_KEY:
-            // Create new session key (call POST /sessionKey server side)
+            // Create new session key (call POST /client/1-click server side)
         // highlight-next-line
         case SdkErrorReasons.SESSION_TIMEOUT:
-            // Create new session key (call POST /sessionKey server side)
+            // Create new session key (call POST /client/1-click server side)
             // Initalize new VerifiedClientSDK instance
         // highlight-next-line
         case SdkErrorReasons.SHARE_CREDENTIALS_ERROR:

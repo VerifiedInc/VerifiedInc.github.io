@@ -37,6 +37,11 @@ See also our [Postman docs](https://api.docs.verified.inc/).
 
 Requests to authenticated Verified API endpoints require an API key as an `Authorization` header value (*without* a `Bearer` prefix).
 
+```bash title="Example Request"
+curl https://core-api.sandbox-verifiedinc.com/v2/1-click/verifications/channels \
+  -H "Authorization: YOUR_API_KEY"
+```
+
 You can access and manage the API keys for your brands in the Verified [Dashboard](https://dashboard.verified.inc).
 
 <ApiKeysAdmonition/>

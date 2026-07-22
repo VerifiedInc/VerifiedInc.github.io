@@ -669,8 +669,23 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td>`true`</td>
   </tr>
   <tr>
-      <td>`npi`</td>
+      <td>`provider`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`object`</td>
+      <td>Object with key listed below</td>
+      <td>-</td>
+      <td>Provider information</td>
+      <td>
+          ```json
+          {
+              "npi": "0123456789"
+          }
+          ```
+      </td>
+  </tr>
+  <tr>
+      <td>↳ `provider.npi`</td>
+      <td><Chip label="Required" variant="outlined" size="small" color="error"/> (if `provider` object is included)</td>
       <td>`string`</td>
       <td>10 digits (0-9)</td>
       <td>Defined by [Providers](/1-click-health/guides/setup#providers) setting</td>
@@ -942,7 +957,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
   </tr>
   <tr>
       <td>↳ `procedureCodes[i].code`</td>
-      <td><Chip label="Required" variant="outlined" size="small" color="error"/> (if procedure code object is included)</td>
+      <td><Chip label="Required" variant="outlined" size="small" color="error"/> (if `procedureCodes` object is included)</td>
       <td>`string`</td>
       <td>
         - 5 digits (for CPT code)

@@ -29,7 +29,7 @@ sequenceDiagram
     actor U as User
     note left of S: 1. Create Session Key
     C ->>+ S: Call server to create session key
-    S ->>+ V: Call POST /sessionKey with API key
+    S ->>+ V: Call POST /client/1-click with API key
     V -->>- S: Return sessionKey
     S -->>- C: Return sessionKey
     note left of S: 2. Initialize SDK
@@ -82,7 +82,7 @@ sequenceDiagram
     participant V as Verified
     rect rgb(200,200,200,0.25)
         note left of S: 1. Call Session Key Endpoint
-        S->>+V: Call POST /sessionKey
+        S->>+V: Call POST /client/1-click
         V-->>-S: Return sessionKey
         S->>C: Pass sessionKey
         note left of S: 2. Initialize SDK

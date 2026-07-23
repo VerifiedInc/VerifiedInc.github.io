@@ -47,6 +47,7 @@ export const CollapsibleSection = ({ activeId, setActiveId, id, children }) => {
   const rootRef = useRef(null);
   const bodyRef = useRef(null);
   const { hash } = useLocation();
+
   const header = React.Children.toArray(children).find(
     (child) => child.type === CollapsibleHeader
   );
@@ -57,23 +58,35 @@ export const CollapsibleSection = ({ activeId, setActiveId, id, children }) => {
 
   const handleClick = (e) => {
     // Don’t toggle if the user clicked the built-in Docusaurus hash icon/link
-    if (e.target.classList?.contains('hash-link')) return;
+    if (e.target.classList?.contains('hash-link')) {
+      return;
+    }
+
     setActiveId(isActive ? undefined : id);
   };
 
   // Find the first rendered heading inside this section (h1–h6) and read its id.
   const getHeadingId = () => {
     const el = rootRef.current;
-    if (!el) return null;
+
+    if (!el) {
+      return null;
+    }
+
     const heading = el.querySelector('h1, h2, h3, h4, h5, h6');
+
     return heading?.id || null;
   };
 
   // When the URL hash matches our heading id, open this section.
   useEffect(() => {
-    if (!hash) return;
+    if (!hash) {
+      return;
+    }
+
     const current = hash.replace(/^#/, '');
     const myHeadingId = getHeadingId();
+
     if (myHeadingId && current === myHeadingId) {
       setActiveId(id); // group will scroll after state update
     }

@@ -27,6 +27,18 @@ You can configure webhooks for 1-Click Health: see [here](/1-click-health/guides
     <td>Defined by [webhook brand setting](/1-click-health/guides/setup#webhook) (None, API Key, or Basic Auth)</td>
   </tr>
   <tr>
+    <th>Timeout</th>
+    <td>30 seconds per attempt</td>
+  </tr>
+  <tr>
+    <th>Retries</th>
+    <td>Up to 3 attempts, with exponential backoff (about 1 second, then 2 seconds)</td>
+  </tr>
+  <tr>
+    <th>Expected response</th>
+    <td>Respond with a `2xx` status (for example `200`) to acknowledge receipt. Any other status, or a timeout, is treated as a failed delivery and retried.</td>
+  </tr>
+  <tr>
     <th>Delivery</th>
     <td>At least once (multiple deliveries possible)</td>
   </tr>
@@ -56,16 +68,6 @@ Each webhook request includes the following headers:
     <td>`User-Agent`</td>
     <td>`VerifiedInc-Webhook/1.0`</td>
     <td>Identifies the request as coming from Verified.</td>
-  </tr>
-  <tr>
-    <td>`X-Webhook-Signature`</td>
-    <td>-</td>
-    <td>An HMAC-SHA256 signature of the request body.</td>
-  </tr>
-  <tr>
-    <td>`X-Webhook-Signature-Algorithm`</td>
-    <td>`sha256`</td>
-    <td>The algorithm used for the `X-Webhook-Signature`.</td>
   </tr>
 </table>
 

@@ -37,6 +37,41 @@ You can configure webhooks for 1-Click Health: see [here](/1-click-health/guides
 </table>
 
 
+## Headers
+
+Each webhook request includes the following headers:
+
+<table>
+  <tr>
+    <th>Header</th>
+    <th>Value</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>`Content-Type`</td>
+    <td>`application/json`</td>
+    <td>The payload is always sent as JSON.</td>
+  </tr>
+  <tr>
+    <td>`User-Agent`</td>
+    <td>`VerifiedInc-Webhook/1.0`</td>
+    <td>Identifies the request as coming from Verified.</td>
+  </tr>
+  <tr>
+    <td>`X-Webhook-Signature`</td>
+    <td>-</td>
+    <td>An HMAC-SHA256 signature of the request body.</td>
+  </tr>
+  <tr>
+    <td>`X-Webhook-Signature-Algorithm`</td>
+    <td>`sha256`</td>
+    <td>The algorithm used for the `X-Webhook-Signature`.</td>
+  </tr>
+</table>
+
+Any authentication headers you configure in your [webhook brand setting](/1-click-health/guides/setup#webhook) (API Key or Basic Auth) are also included.
+
+
 ## Payload
 
 ```typescript title="GET /1-click/health Response Body"

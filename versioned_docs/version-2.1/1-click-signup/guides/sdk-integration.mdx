@@ -301,7 +301,7 @@ There are 6 result values to handle for 1-Click Signup:
 </table>
 
 :::note
-There are 2 other result values, but these are only relevant for 1-Click Health. See the [1-Click Health SDK Integration guide](/1-click-health/guides/sdk-integration#a-handle-results) for details.
+There are 2 other result values, but these are only relevant for 1-Click Health. See the [1-Click Health SDK Integration guide](/1-click-health/guides/sdk-integration#a-update-how-you-handle-results) for details.
 ::
 
 Some [metadata](/reference/data/outputs#metadata) may be available directly in the `data` object (see [`SdkResult`](/reference/sdk/types#sdkresult)). To retrieve all metadata (and [credentials](/reference/data/outputs#credentials) if the result value is `USER_SHARED_CREDENTIALS`), call your server with `data.identityUuid`. The server should use your Verified API key to call [`GET /1-click/{identityUuid}`](/reference/api/endpoints#get-1-click):
@@ -456,7 +456,7 @@ There are 5 event values to handle for 1-Click Signup:
 </table>
 
 :::note
-There's 1 other event value, but this is only relevant for 1-Click Health. See the [1-Click Health SDK Integration guide](/1-click-health/guides/sdk-integration#c-handle-events) for details.
+There's 1 other event value, but this is only relevant for 1-Click Health. See the [1-Click Health SDK Integration guide](/1-click-health/guides/sdk-integration#b-update-how-you-handle-events) for details.
 :::
 
 ---

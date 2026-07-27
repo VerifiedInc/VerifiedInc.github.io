@@ -1,0 +1,118 @@
+---
+id: claude-connector
+title: Claude Connector
+sidebar_position: 2.5
+sidebar_label: Claude Connector
+sidebar_class_name: sidebar-header-regular
+description: Connect your Verified Dashboard to Claude to ask about your metrics and logs in plain language.
+slug: /claude-connector
+toc_max_heading_level: 2
+---
+
+import HowToCreateADashboardAccount from '@site/versioned_docs/version-2.1/reusables/how-to-create-a-dashboard-account.mdx';
+
+The Verified [Dashboard](https://dashboard.verified.inc) connects to [Claude](https://claude.ai) as a custom connector, so you can ask about your data in plain language (your signup and verification volumes, trends over time, and recent request logs), without leaving the chat.
+
+:::note Read-only and scoped to you
+The connector can **read** your dashboard data but can never change anything, and it only ever sees the brands and data your own Dashboard login can access.
+:::
+
+## What you can ask
+
+Once connected, try prompts like:
+
+- "List my brands."
+- "How many 1-Click Signups did I have last month, broken down by week?"
+- "Compare Text-to-Signup volume this quarter to last quarter."
+- "Show me the errored requests for one of my brands over the last 7 days."
+
+Just ask in natural language, Claude figures out the rest.
+
+## Before you start
+
+To connect, you'll need a couple of things in place:
+
+<ol type="a">
+    <b><li>A Verified Dashboard account (the login you use at dashboard.verified.inc).</li></b>
+    <b><li>A Claude account.</li></b>
+</ol>
+
+Don't have a Dashboard account yet?
+
+<HowToCreateADashboardAccount />
+
+You'll also need the connector URL:
+
+```
+https://dashboard-mcp.verified.inc/mcp
+```
+
+## 1. Add the connector in Claude.
+
+In Claude, open the **+** menu in the message box, then choose **Add connector → Add custom connector**.
+
+![Claude's Add connector menu with Add custom connector highlighted](/img/mcp/select-add-connector.png)
+
+In the dialog:
+
+<ol type="a">
+    <b><li>Give it a name, for example "Verified Dashboard".</li></b>
+    <b><li>Paste the connector URL: https://dashboard-mcp.verified.inc/mcp</li></b>
+    <b><li>Expand Advanced settings and set the Client ID to dashboard-mcp. Leave the OAuth Client Secret blank.</li></b>
+    <b><li>Click Add.</li></b>
+</ol>
+
+![The Add custom connector dialog filled in with the URL and Client ID](/img/mcp/add-custom-connector.png)
+
+## 2. Sign in and authorize.
+
+Connecting opens a Verified page in your browser.
+
+<ol type="a">
+    <b><li>Click Sign in and sign in with your usual Verified Dashboard credentials (including 2FA or SSO if your account uses them).</li></b>
+</ol>
+
+![Sign in to continue screen](/img/mcp/sign-in-to-dashboard.png)
+
+<ol type="a" start="2">
+    <b><li>On the next screen, review the access being requested and click Approve. You'll be returned to Claude automatically.</li></b>
+</ol>
+
+![Authorize Verified Dashboard screen with Approve and Deny buttons](/img/mcp/authorize-mcp.png)
+
+## 3. Confirm it's available.
+
+Open the **+** menu again and go to **Connectors**. You should see **Verified Dashboard** listed and toggled on.
+
+![Connectors menu showing Verified Dashboard enabled](/img/mcp/confirm-its-available.png)
+
+**That's it! Start asking Claude about your dashboard. ✅**
+
+## What Claude can and can't see
+
+<ul>
+    <li><b>Read-only.</b> The connector can't create, change, or delete anything in your dashboard.</li>
+    <li><b>Your data only.</b> Requests run with your own permissions, so you only ever see the brands and data your account can already access.</li>
+    <li><b>No personal data in logs.</b> Request logs leave out end-user personal information, Claude sees operational details like timestamps, products, status codes, and error codes, but not the personal data behind them.</li>
+    <li><b>Live production data.</b> The connector reports on your production environment.</li>
+</ul>
+
+## Managing the connector
+
+You can turn the connector off or remove it at any time from the **Connectors** menu in Claude (**Manage connectors**). Access is also tied to your Verified session: if your session ends or your account needs additional verification, the connector stops returning data until you sign in again.
+
+## Troubleshooting
+
+:::tip
+Most connection issues come down to the URL or the Client ID.
+:::
+
+<ul>
+    <li><b>It won't connect, or keeps asking you to sign in:</b> make sure the URL ends in <code>/mcp</code> and the Client ID is exactly <code>dashboard-mcp</code> with no client secret.</li>
+    <li><b>Connected, but no data:</b> confirm you signed in to the right Verified account and that it has activity in the date range you asked about.</li>
+    <li><b>A date range looks empty:</b> try a wider range, a brand with no activity in that window returns nothing.</li>
+</ul>
+
+## Questions?
+
+Reach us at [Support@Verified.inc](mailto:Support@Verified.inc).

@@ -58,11 +58,10 @@ In the dialog:
 <ol type="a">
     <b><li>Give it a name, for example "Verified Dashboard".</li></b>
     <b><li>Paste the connector URL: https://dashboard-mcp.verified.inc/mcp</li></b>
-    <b><li>Expand Advanced settings and set the Client ID to dashboard-mcp. Leave the OAuth Client Secret blank.</li></b>
     <b><li>Click Add.</li></b>
 </ol>
 
-![The Add custom connector dialog filled in with the URL and Client ID](/img/mcp/add-custom-connector.png)
+![The Add custom connector dialog with the name and URL filled in](/img/mcp/add-custom-connector.png)
 
 ## 2. Sign in and authorize.
 
@@ -78,7 +77,11 @@ Connecting opens a Verified page in your browser.
     <b><li>On the next screen, review the access being requested and click Approve. You'll be returned to Claude automatically.</li></b>
 </ol>
 
-![Authorize Verified Dashboard screen with Approve and Deny buttons](/img/mcp/authorize-mcp.png)
+![Authorize Verified Dashboard screen with the optional user-data checkbox, Approve, and Deny](/img/mcp/authorize-mcp.png)
+
+:::caution Optional: including user data
+The authorization screen has an optional checkbox to also include **end-user personal data** - phone numbers and the input your users provide during their journeys - in log results. It is **off by default**. Only enable it if your company's policies allow sharing that data with AI tools.
+:::
 
 ## 3. Confirm it's available.
 
@@ -93,7 +96,7 @@ Open the **+** menu again and go to **Connectors**. You should see **Verified Da
 <ul>
     <li><b>Read-only.</b> The connector can't create, change, or delete anything in your dashboard.</li>
     <li><b>Your data only.</b> Requests run with your own permissions, so you only ever see the brands and data your account can already access.</li>
-    <li><b>No personal data in logs.</b> Request logs leave out end-user personal information, Claude sees operational details like timestamps, products, status codes, and error codes, but not the personal data behind them.</li>
+    <li><b>Personal data is off by default.</b> Request logs leave out end-user personal information - phone numbers and the data your users enter - unless you opt in on the authorization screen. Otherwise Claude sees only operational details like timestamps, products, status codes, and error codes. Only opt in if your company's policies allow sharing that data with AI tools.</li>
     <li><b>Live production data.</b> The connector reports on your production environment.</li>
 </ul>
 
@@ -104,11 +107,11 @@ You can turn the connector off or remove it at any time from the **Connectors** 
 ## Troubleshooting
 
 :::tip
-Most connection issues come down to the URL or the Client ID.
+Most connection issues come down to the connector URL.
 :::
 
 <ul>
-    <li><b>It won't connect, or keeps asking you to sign in:</b> make sure the URL ends in <code>/mcp</code> and the Client ID is exactly <code>dashboard-mcp</code> with no client secret.</li>
+    <li><b>It won't connect, or keeps asking you to sign in:</b> make sure the URL ends in <code>/mcp</code>, and the Advanced settings fields are blank.</li>
     <li><b>Connected, but no data:</b> confirm you signed in to the right Verified account and that it has activity in the date range you asked about.</li>
     <li><b>A date range looks empty:</b> try a wider range, a brand with no activity in that window returns nothing.</li>
 </ul>

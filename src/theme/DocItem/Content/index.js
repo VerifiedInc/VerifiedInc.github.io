@@ -5,18 +5,11 @@ import { useDoc } from '@docusaurus/plugin-content-docs/client';
 import CopyPageButton from '@site/src/components/CopyPageButton';
 import { DEFAULT_PLACEMENT } from '@site/src/components/CopyPageButton/config';
 
-/**
- * Mounts the "Copy page" button on every doc page, above the content. SSR-safe:
- * the button only touches the DOM on click.
- *
- * Settings layer, most specific wins: `customFields.copyPage` in
- * `docusaurus.config.js`, then the page's `copy_page` front matter (`false` to
- * hide, or an object of any YAML-expressible CopyPageButton prop).
- * See src/components/CopyPageButton/README.md.
- */
+// Renders the "Copy page" button above every doc page. Settings come from
+// `customFields.copyPage`, overridden per page by `copy_page` front matter
+// (`false`, or an object of CopyPageButton props). See the component README.
 
-// `useDoc` throws outside a doc page (another theme reusing Content), so degrade
-// to no front matter. Always called, so hook order stays stable.
+// `useDoc` throws outside a doc page. Called unconditionally, so hook order holds.
 function useDocFrontMatter() {
   try {
     return useDoc().frontMatter || {};

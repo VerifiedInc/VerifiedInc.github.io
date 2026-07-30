@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { htmlToMarkdown } from './htmlToMarkdown';
+import { htmlToMarkdown } from './htmlToMarkdown.mjs';
 import { copyTextToClipboard } from './clipboard';
 import {
   DEFAULT_CONTENT_SELECTOR,
@@ -8,10 +8,16 @@ import {
   defaultBuildSourceNote,
 } from './config';
 
+// Mirrors the file layout written by plugins/markdown-pages.
+function toMarkdownUrl(pathname) {
+  const withoutTrailingSlash = pathname.replace(/\/$/, '');
+
+  return `${withoutTrailingSlash || '/index'}.md`;
+}
+
 /**
- * Headless layer: reads the rendered doc content, converts it to Markdown, and
- * exposes the actions for it. Renders nothing, so any UI can sit on top (button,
- * keyboard shortcut, navbar item). {@link CopyPageButton} is one consumer.
+ * Headless layer: converts the rendered page and exposes the actions for it.
+ * Renders nothing, so any UI can sit on top. {@link CopyPageButton} is one.
  *
  * @param {{
  *   contentSelector?: string,
@@ -28,7 +34,7 @@ export function usePageMarkdown({
   buildSourceNote = defaultBuildSourceNote,
   statusResetMs = DEFAULT_STATUS_RESET_MS,
 } = {}) {
-  // 'idle' | 'copied' | 'error', so the UI can report a blocked clipboard.
+  // 'idle' | 'copied' | 'error' — 'error' means the clipboard was blocked.
   const [copyStatus, setCopyStatus] = useState('idle');
 
   const resetTimeoutRef = useRef(null);
@@ -56,11 +62,16 @@ export function usePageMarkdown({
     [statusResetMs]
   );
 
-  // Read at call time, not render time: the content element is browser-only and
-  // changes as the reader opens tabs and collapsible sections.
+  // Read on call, not on render: the content changes as tabs and collapsibles open.
   const getPage = useCallback(() => {
     if (typeof document === 'undefined') {
-      return { markdown: '', pageUrl: '', pageTitle: '', pathname: '' };
+      return {
+        markdown: '',
+        pageUrl: '',
+        markdownUrl: '',
+        pageTitle: '',
+        pathname: '',
+      };
     }
 
     const contentElement = document.querySelector(contentSelector);
@@ -83,12 +94,26 @@ export function usePageMarkdown({
       markdown = `${markdown}\n\n${buildSourceNote({ pageUrl, pageTitle })}`;
     }
 
-    return { markdown, pageUrl, pageTitle, pathname };
+    return {
+      markdown,
+      pageUrl,
+      markdownUrl: toMarkdownUrl(pathname),
+      pageTitle,
+      pathname,
+    };
   }, [contentSelector, converterOverrides, includeSource, buildSourceNote]);
 
   const getMarkdown = useCallback(() => {
     return getPage().markdown;
   }, [getPage]);
+
+  const getMarkdownUrl = useCallback(() => {
+    if (typeof window === 'undefined') {
+      return '';
+    }
+
+    return toMarkdownUrl(window.location.pathname);
+  }, []);
 
   const copyMarkdown = useCallback(async () => {
     const { markdown } = getPage();
@@ -100,38 +125,27 @@ export function usePageMarkdown({
     return copied;
   }, [getPage, flashCopyStatus]);
 
-  // text/plain, not text/markdown: browsers download the latter instead of
-  // rendering it, and "View" should show the text in a tab.
+  // Opens the file from the markdown-pages plugin, so the URL is shareable.
+  // Only exists in a built site; `postBuild` never runs under `npm start`.
   const openMarkdown = useCallback(() => {
-    const { markdown } = getPage();
+    const markdownUrl = getMarkdownUrl();
 
-    if (!markdown) {
+    if (!markdownUrl) {
       return;
     }
 
-    const blob = new Blob([markdown], { type: 'text/plain;charset=utf-8' });
-
-    const objectUrl = URL.createObjectURL(blob);
-
-    window.open(objectUrl, '_blank', 'noopener');
-
-    // The tab has loaded the blob by now; revoke so it does not leak for the
-    // whole session.
-    setTimeout(() => {
-      URL.revokeObjectURL(objectUrl);
-    }, 60000);
-  }, [getPage]);
+    window.open(markdownUrl, '_blank', 'noopener');
+  }, [getMarkdownUrl]);
 
   /**
-   * Open an AI assistant with a prompt built from the current page.
    * @param {{ buildUrl: (prompt: string) => string }} target
-   * @param {(page: { pageUrl: string, pageTitle: string, markdown: string }) => string} buildPrompt
+   * @param {(page: { pageUrl: string, markdownUrl: string, pageTitle: string, markdown: string }) => string} buildPrompt
    */
   const openInAssistant = useCallback(
     (target, buildPrompt) => {
-      const { markdown, pageUrl, pageTitle } = getPage();
+      const { markdown, pageUrl, markdownUrl, pageTitle } = getPage();
 
-      const prompt = buildPrompt({ pageUrl, pageTitle, markdown });
+      const prompt = buildPrompt({ pageUrl, markdownUrl, pageTitle, markdown });
 
       window.open(target.buildUrl(prompt), '_blank', 'noopener');
     },
@@ -142,6 +156,7 @@ export function usePageMarkdown({
     copyStatus,
     getPage,
     getMarkdown,
+    getMarkdownUrl,
     copyMarkdown,
     openMarkdown,
     openInAssistant,

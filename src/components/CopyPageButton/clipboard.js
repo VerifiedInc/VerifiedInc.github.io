@@ -1,10 +1,3 @@
-/**
- * Clipboard helper for the "Copy page" feature.
- *
- * `navigator.clipboard` is unavailable in insecure contexts (plain http, some
- * embedded webviews), so fall back to a hidden textarea plus `execCommand`.
- */
-
 function copyWithTextarea(text) {
   const textarea = document.createElement('textarea');
 
@@ -27,11 +20,7 @@ function copyWithTextarea(text) {
   }
 }
 
-/**
- * Copy text to the clipboard.
- * @param {string} text
- * @returns {Promise<boolean>} whether the copy succeeded
- */
+/** @returns {Promise<boolean>} whether the copy succeeded */
 export async function copyTextToClipboard(text) {
   if (!text || typeof document === 'undefined') {
     return false;
@@ -43,7 +32,7 @@ export async function copyTextToClipboard(text) {
 
       return true;
     } catch {
-      // Permission denied or insecure context: try the legacy path below.
+      // Denied or insecure: fall through to the legacy path.
     }
   }
 

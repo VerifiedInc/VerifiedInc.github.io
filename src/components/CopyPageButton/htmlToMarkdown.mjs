@@ -1,13 +1,14 @@
 /**
- * Extensible HTML-to-Markdown converter for the "Copy page" feature. Runs
- * client-side on the rendered doc content, so MDX components (Tabs, admonitions,
- * tables, code blocks) are converted from their output, not from raw MDX.
+ * HTML-to-Markdown converter for the "Copy page" feature. Runs on rendered
+ * output, so MDX components come through already expanded.
  *
- * Two open maps instead of one switch, both overridable per call, so new element
- * types need no change to the traversal:
- *   - `matchers`: ordered `{ test(element), handle(element, context) }` rules,
- *     checked first, for class/attribute-based elements (admonitions, tabs).
- *   - `handlers`: lowercase tag name -> `handle(element, context)`.
+ * Two open maps, both overridable per call: `matchers` (ordered
+ * `{test, handle}` rules, checked first, for class/attribute cases) and
+ * `handlers` (tag name -> handle). New elements need no traversal changes.
+ *
+ * `.mjs` because Node needs real ESM for the markdown-pages plugin, and
+ * babel-loader only compiles `.js`/`.jsx`, so this ships untranspiled: no
+ * optional chaining.
  */
 
 const ZERO_WIDTH = /[​‌‍﻿]/g;
@@ -22,14 +23,18 @@ const SKIP_SELECTORS = [
   '.clean-btn',
   'button',
   '[aria-hidden="true"]',
-  // Rendered diagrams: SVG text nodes convert to noise and the Mermaid source is
-  // not in the DOM to fall back to.
+  // Rendered diagrams: SVG text nodes convert to noise and the Mermaid source is not in the DOM to fall back to.
   'svg',
   '.docusaurus-mermaid-container',
+  // Not content: server-rendered emotion styles sit inside the article and would otherwise be converted as text.
+  'style',
+  'script',
+  'noscript',
+  'template',
 ];
 
-// `[hidden]` is deliberately not skipped: unselected tab panels and collapsed
-// `hidden="until-found"` bodies are content an assistant should still get.
+// `[hidden]` is deliberately kept: unselected tab panels, collapsed bodies, and
+// the Mermaid source all live behind it.
 
 function cleanText(text) {
   return text
@@ -40,14 +45,16 @@ function cleanText(text) {
 }
 
 function isSkipped(element) {
+  if (typeof element.matches !== 'function') {
+    return false;
+  }
+
   return SKIP_SELECTORS.some((selector) => {
-    return element.matches?.(selector);
+    return element.matches(selector);
   });
 }
 
-// Labels (tab names, summaries, code-block titles) are emphasized by the
-// handler, but the source often bolds them too. Wrap only when needed, so the
-// output never ends up with `****text****`.
+// Labels are often already bold in the source; avoids `****text****`.
 function bold(text) {
   if (!text) {
     return '';
@@ -72,8 +79,7 @@ function toBlockquote(inner) {
   return `\n${body}\n\n`;
 }
 
-// Robust code-block extraction: strips line-number gutters, "Copy" buttons, and
-// zero-width chars, and reads the language from the `language-*` class.
+// Strips line-number gutters, "Copy" buttons, and zero-width chars.
 function extractCodeBlock(preElement) {
   const codeElement = preElement.querySelector('code') || preElement;
 
@@ -108,8 +114,7 @@ function extractCodeBlock(preElement) {
     .replace(/^\s*Copy(\s+to clipboard)?\s*$/gim, '')
     .replace(/\n+$/, '');
 
-  // Docusaurus puts `language-*` on the `<pre>` while the `<code>` carries an
-  // unrelated class, so both have to be searched.
+  // `language-*` sits on the <pre>; the <code> carries an unrelated class.
   const classNames = [codeElement.className, preElement.className].join(' ');
 
   const languageMatch = classNames.match(/language-([\w-]+)/);
@@ -156,13 +161,16 @@ function tableToMarkdown(tableElement, context) {
 
   const getCells = (row) => {
     return Array.from(row.querySelectorAll('th, td')).map((cell) => {
-      return context.inline(cell).trim().replace(/\|/g, '\\|');
+      return context
+        .inline(cell)
+        .replace(/\s*\n\s*/g, ' ')
+        .trim()
+        .replace(/\|/g, '\\|');
     });
   };
 
-  // Markdown always needs a header row, and it has no row headers. A first row
-  // that mixes `th` with `td` is a key/value table, so give it an empty header
-  // instead of promoting (and mislabeling) its first data row.
+  // Markdown has no row headers. A first row mixing th and td is a key/value
+  // table, so it gets an empty header rather than losing its first row.
   const firstRowCells = Array.from(rows[0].querySelectorAll('th, td'));
 
   const hasHeaderRow =
@@ -202,7 +210,6 @@ function heading(level) {
   };
 }
 
-// Handlers keyed by tag name.
 const defaultHandlers = {
   h1: heading(1),
   h2: heading(2),
@@ -249,8 +256,13 @@ const defaultHandlers = {
     return `\`${element.textContent.replace(ZERO_WIDTH, '')}\``;
   },
 
-  pre: (element) => {
+  pre: (element, context, { isInline } = {}) => {
     const { text, language } = extractCodeBlock(element);
+
+    // A fence would break the table row.
+    if (isInline) {
+      return `\`${text.replace(/\s+/g, ' ').trim()}\``;
+    }
 
     return `\n\`\`\`${language}\n${text}\n\`\`\`\n\n`;
   },
@@ -311,7 +323,6 @@ const defaultHandlers = {
     return context.block(element);
   },
 
-  // Definition lists: rendered as a bold term followed by its description.
   dl: (element, context) => {
     return `\n${context.block(element).trim()}\n\n`;
   },
@@ -332,7 +343,7 @@ const defaultHandlers = {
     return `^${context.inline(element).trim()}`;
   },
 
-  // Markdown has no subscript, so keep the text and drop the distinction.
+  // No subscript in Markdown; keep the text.
   sub: (element, context) => {
     return context.inline(element).trim();
   },
@@ -353,7 +364,7 @@ const defaultHandlers = {
     return `\n${bold(context.inline(element).trim())}\n`;
   },
 
-  // Task-list checkboxes, the only input type that carries meaning in docs.
+  // Task-list checkboxes, the only meaningful input in docs.
   input: (element) => {
     if (element.getAttribute('type') !== 'checkbox') {
       return '';
@@ -366,7 +377,6 @@ const defaultHandlers = {
 // Matchers checked before tag handlers (class/attribute based).
 const defaultMatchers = [
   {
-    // Docusaurus/Infima admonitions render as a div with an "admonition" class.
     test: (element) => {
       return (
         element.tagName === 'DIV' &&
@@ -382,7 +392,7 @@ const defaultMatchers = [
       const bodyElement =
         element.querySelector('[class*="admonitionContent"]') || element;
 
-      // An admonition with no custom title renders its type ("tip", "warning").
+      // Untitled admonitions render their type ("tip", "warning").
       const title = titleElement
         ? capitalize(context.inline(titleElement).trim())
         : '';
@@ -393,10 +403,8 @@ const defaultMatchers = [
     },
   },
   {
-    // Docusaurus Tabs: `ul[role=tablist] > li[role=tab]` holds the labels,
-    // `div[role=tabpanel]` the content (unselected ones are `hidden` but still
-    // in the DOM). All panels are exported, each paired with its label by
-    // position, otherwise they read as one blob.
+    // Tabs keep every panel in the DOM (unselected ones just get `hidden`), so
+    // export them all, paired with their label by position.
     test: (element) => {
       return /(^|\s)tabs-container(\s|$)/.test(element.className || '');
     },
@@ -410,7 +418,7 @@ const defaultMatchers = [
           })
         : [];
 
-      // Own panels only, so nested Tabs get their own matcher pass.
+      // Own panels only; nested Tabs get their own pass.
       const panels = Array.from(
         element.querySelectorAll('[role="tabpanel"]')
       ).filter((panel) => {
@@ -433,9 +441,12 @@ const defaultMatchers = [
     },
   },
   {
-    // A tablist outside a `.tabs-container` (custom tabs) is pure UI.
+    // A tablist outside `.tabs-container` is pure UI.
     test: (element) => {
-      return element.getAttribute?.('role') === 'tablist';
+      return (
+        typeof element.getAttribute === 'function' &&
+        element.getAttribute('role') === 'tablist'
+      );
     },
 
     handle: () => {
@@ -443,7 +454,7 @@ const defaultMatchers = [
     },
   },
   {
-    // Code blocks with a `title` prop render the title in a sibling div.
+    // A code block's `title` prop renders in a sibling div.
     test: (element) => {
       return /codeBlockTitle/.test(element.className || '');
     },
@@ -455,9 +466,8 @@ const defaultMatchers = [
 ];
 
 /**
- * Convert a rendered doc-content element to clean Markdown.
  * @param {HTMLElement} rootElement the `.theme-doc-markdown` element
- * @param {{ handlers?: object, matchers?: Array }} [overrides] extend or override conversion
+ * @param {{ handlers?: object, matchers?: Array }} [overrides]
  * @returns {string}
  */
 export function htmlToMarkdown(rootElement, overrides = {}) {
@@ -490,13 +500,12 @@ export function htmlToMarkdown(rootElement, overrides = {}) {
   };
 
   function convert(node, isInline) {
-    // nodeType 3 is Node.TEXT_NODE: raw text, so just clean and return it.
+    // TEXT_NODE
     if (node.nodeType === 3) {
       return cleanText(node.textContent);
     }
 
-    // nodeType 1 is Node.ELEMENT_NODE. Skip anything that is not an element
-    // (comments, etc.) or is UI chrome we do not want in the output.
+    // Not an ELEMENT_NODE (comments and such), or UI chrome.
     if (node.nodeType !== 1 || isSkipped(node)) {
       return '';
     }
@@ -506,13 +515,13 @@ export function htmlToMarkdown(rootElement, overrides = {}) {
     });
 
     if (matcher) {
-      return matcher.handle(node, context);
+      return matcher.handle(node, context, { isInline });
     }
 
     const handler = handlers[node.tagName.toLowerCase()];
 
     if (handler) {
-      return handler(node, context);
+      return handler(node, context, { isInline });
     }
 
     return isInline ? context.inline(node) : context.block(node);

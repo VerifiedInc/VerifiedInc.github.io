@@ -87,6 +87,41 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
     return text.length > 180 ? `${text.slice(0, 177)}...` : text;
   };
 
+  // A heading with neither content nor a subsection under it means the
+  // conversion dropped something, which is otherwise silent. A deeper heading
+  // next is normal nesting, so only a sibling or shallower one counts.
+  const emptyHeadings = (markdown) => {
+    const lines = markdown.split('\n');
+
+    const level = (line) => {
+      const match = /^(#{1,6})\s/.exec(line);
+
+      return match ? match[1].length : 0;
+    };
+
+    return lines
+      .map((line, index) => {
+        const depth = level(line);
+
+        if (!depth) {
+          return null;
+        }
+
+        const next = lines.slice(index + 1).find((candidate) => {
+          return candidate.trim() && candidate.trim() !== '---';
+        });
+
+        if (!next) {
+          return line.trim();
+        }
+
+        const nextDepth = level(next);
+
+        return nextDepth && nextDepth <= depth ? line.trim() : null;
+      })
+      .filter(Boolean);
+  };
+
   const sectionFor = (sections, route) => {
     const match = sections.find((section) => {
       return route.startsWith(section.prefix);
@@ -172,10 +207,33 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
       'Index: ' + toAbsoluteUrl(siteConfig, '/llms.txt'),
     ].join('\n');
 
-    // Pages already carry their `# Title` and `Source:` line.
+    // Pages already carry their `# Title` and `Source:` line. Two edits apply
+    // here and not to the `.md` twins, which stay a faithful mirror of the page:
+    // titles get their section (a bare `# Setup` repeats across products), and
+    // alt-less images are dropped unless they are a link's only content.
     const body = ordered
       .map((page) => {
-        return page.markdown.trim();
+        const qualified =
+          page.section === UNSECTIONED_LABEL ||
+          page.title.startsWith(page.section)
+            ? page.markdown
+            : page.markdown.replace(
+                /^#\s+.*$/m,
+                `# ${page.section}: ${page.title}`
+              );
+
+        return (
+          qualified
+            // Standalone only: an image wrapped in a link is that link's only
+            // text, and removing it leaves `[](url)`, which says even less than
+            // an alt-less image did.
+            .replace(/(?<!\[)!\[\]\([^)]*\)[ \t]*\n?/g, '')
+            // Safety net for any other source of textless links. The `!`
+            // lookbehind keeps it off the `[](...)` inside an image.
+            .replace(/(?<!!)\[\]\(([^)]*)\)/g, '<$1>')
+            .replace(/\n{3,}/g, '\n\n')
+            .trim()
+        );
       })
       .join('\n\n---\n\n');
 
@@ -217,7 +275,10 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
           continue;
         }
 
-        const { window } = new JSDOM(html);
+        const pageUrl = toAbsoluteUrl(siteConfig, route);
+
+        // With a URL, `element.href` resolves and links come out absolute.
+        const { window } = new JSDOM(html, { url: pageUrl });
 
         const { document } = window;
 
@@ -252,8 +313,6 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
           continue;
         }
 
-        const pageUrl = toAbsoluteUrl(siteConfig, route);
-
         if (includeSource) {
           markdown = `${markdown}\n\n---\n\nSource: ${pageUrl}\n`;
         }
@@ -270,12 +329,21 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
           markdown,
           markdownUrl: toMarkdownUrl(siteConfig, route),
           section: sectionFor(sections, route),
+          emptyHeadings: emptyHeadings(markdown),
         });
       }
 
       console.log(
         `[markdown-pages] wrote ${pages.length} .md files (${skipped} routes skipped)`
       );
+
+      pages.forEach((page) => {
+        page.emptyHeadings.forEach((heading) => {
+          console.warn(
+            `[markdown-pages] empty section: ${page.route} -> ${heading}`
+          );
+        });
+      });
 
       if (llms === false || pages.length === 0) {
         return;

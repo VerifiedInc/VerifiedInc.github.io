@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import { htmlToMarkdown } from './htmlToMarkdown.mjs';
 import { copyTextToClipboard } from './clipboard';
@@ -34,6 +35,8 @@ export function usePageMarkdown({
   buildSourceNote = defaultBuildSourceNote,
   statusResetMs = DEFAULT_STATUS_RESET_MS,
 } = {}) {
+  const { siteConfig } = useDocusaurusContext();
+
   // 'idle' | 'copied' | 'error' — 'error' means the clipboard was blocked.
   const [copyStatus, setCopyStatus] = useState('idle');
 
@@ -76,9 +79,17 @@ export function usePageMarkdown({
 
     const contentElement = document.querySelector(contentSelector);
 
-    const pageUrl = window.location.href;
-
     const pathname = window.location.pathname;
+
+    // The DOM resolves links against the current origin, which is localhost in
+    // dev and the proxy host behind a tunnel. Copied Markdown should always
+    // cite the canonical site.
+    const siteOrigin = (siteConfig.url || window.location.origin).replace(
+      /\/$/,
+      ''
+    );
+
+    const pageUrl = `${siteOrigin}${pathname}`;
 
     const headingElement = contentElement?.querySelector('h1');
 
@@ -88,7 +99,9 @@ export function usePageMarkdown({
       ''
     ).trim();
 
-    let markdown = htmlToMarkdown(contentElement, converterOverrides);
+    let markdown = htmlToMarkdown(contentElement, converterOverrides)
+      .split(window.location.origin)
+      .join(siteOrigin);
 
     if (markdown && includeSource) {
       markdown = `${markdown}\n\n${buildSourceNote({ pageUrl, pageTitle })}`;
@@ -101,7 +114,13 @@ export function usePageMarkdown({
       pageTitle,
       pathname,
     };
-  }, [contentSelector, converterOverrides, includeSource, buildSourceNote]);
+  }, [
+    contentSelector,
+    converterOverrides,
+    includeSource,
+    buildSourceNote,
+    siteConfig.url,
+  ]);
 
   const getMarkdown = useCallback(() => {
     return getPage().markdown;

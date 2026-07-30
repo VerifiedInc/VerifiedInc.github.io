@@ -36,6 +36,23 @@ const SKIP_SELECTORS = [
 // `[hidden]` is deliberately kept: unselected tab panels, collapsed bodies, and
 // the Mermaid source all live behind it.
 
+// Unhandled elements are transparent, but block ones still need separating, or
+// a component's label runs into the next line's text.
+const BLOCK_TAGS = new Set([
+  'div',
+  'section',
+  'article',
+  'header',
+  'footer',
+  'aside',
+  'main',
+  'form',
+  'fieldset',
+  'label',
+  'legend',
+  'address',
+]);
+
 function cleanText(text) {
   return text
     .replace(ZERO_WIDTH, '')
@@ -65,6 +82,19 @@ function bold(text) {
 
 function capitalize(text) {
   return text ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+}
+
+// `element.href` is already resolved against the document URL, so links survive
+// being read outside the site. Falls back to the raw attribute when the document
+// has no base URL (jsdom without `url`).
+function absoluteUrl(element, attribute) {
+  const resolved = element[attribute];
+
+  const raw = element.getAttribute(attribute) || '';
+
+  return typeof resolved === 'string' && /^https?:/.test(resolved)
+    ? resolved
+    : raw;
 }
 
 function toBlockquote(inner) {
@@ -128,11 +158,16 @@ function listToMarkdown(listElement, ordered, context) {
   let output = '\n';
   let index = 1;
 
-  listElement.childNodes.forEach((listItem) => {
-    if (listItem.nodeType !== 1 || listItem.tagName.toLowerCase() !== 'li') {
-      return;
+  // Not `children`: the docs wrap items in other tags (`<ol><b><li>`), and a
+  // direct-child walk drops the whole list. Ownership by closest list keeps
+  // nested lists with their own parent.
+  const listItems = Array.from(listElement.querySelectorAll('li')).filter(
+    (listItem) => {
+      return listItem.closest('ul, ol') === listElement;
     }
+  );
 
+  listItems.forEach((listItem) => {
     const marker = ordered ? `${index}. ` : '- ';
 
     const [firstLine, ...remainingLines] = context
@@ -280,7 +315,7 @@ const defaultHandlers = {
       return text;
     }
 
-    return `[${text}](${href})`;
+    return `[${text}](${absoluteUrl(element, 'href')})`;
   },
 
   ul: (element, context) => {
@@ -306,9 +341,7 @@ const defaultHandlers = {
   img: (element) => {
     const alt = element.getAttribute('alt') || '';
 
-    const src = element.getAttribute('src') || '';
-
-    return `![${alt}](${src})`;
+    return `![${alt}](${absoluteUrl(element, 'src')})`;
   },
 
   table: (element, context) => {
@@ -524,7 +557,15 @@ export function htmlToMarkdown(rootElement, overrides = {}) {
       return handler(node, context, { isInline });
     }
 
-    return isInline ? context.inline(node) : context.block(node);
+    if (isInline) {
+      return context.inline(node);
+    }
+
+    if (BLOCK_TAGS.has(node.tagName.toLowerCase())) {
+      return `\n${context.block(node)}\n`;
+    }
+
+    return context.block(node);
   }
 
   return context

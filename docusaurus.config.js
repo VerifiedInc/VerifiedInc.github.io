@@ -1,5 +1,5 @@
-const fs = require('fs')
-const path = require('path')
+const fs = require('fs');
+const path = require('path');
 // Commenting out for now because removing hidden directory
 // const hiddenFiles = fs.readdirSync(path.join(__dirname, 'docs/hidden')).map(file => file.replace('.mdx', ''))
 
@@ -27,7 +27,8 @@ module.exports = {
   },
   themeConfig: {
     announcementBar: {
-      content: 'Announcing <b><a href="/text-to-signup">Text to Signup!</a></b> A marketing <i>superpower</i>',
+      content:
+        'Announcing <b><a href="/text-to-signup">Text to Signup!</a></b> A marketing <i>superpower</i>',
       backgroundColor: '#0dbc3d',
       textColor: '#ffffff',
     },
@@ -261,11 +262,11 @@ module.exports = {
           lastVersion: '2.1',
           breadcrumbs: true,
           versions: {
-            '2.1': {
+            2.1: {
               label: 'v2.1',
               badge: false,
               banner: 'none',
-              path: '/'
+              path: '/',
             },
           },
         },
@@ -276,17 +277,17 @@ module.exports = {
     ],
   ],
   plugins: [
+    // Emits a `.md` twin for every doc page (/x -> /x.md) at build time.
+    require.resolve('./plugins/markdown-pages'),
     [
       require.resolve('docusaurus-lunr-search'),
       {
         // options, ref: https://github.com/praveenn77/docusaurus-lunr-search#options-available
         indexBaseUrl: true,
         // Exclude reusables
-        excludeRoutes: [
-          '/reusables/**'
-        ],
+        excludeRoutes: ['/reusables/**'],
         // includeRoutes: [],
-      }
+      },
     ],
     [
       '@docusaurus/plugin-client-redirects',

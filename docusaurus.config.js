@@ -15,6 +15,16 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'VerifiedInc', // Usually your GitHub org/user name.
   projectName: 'VerifiedInc.github.io', // Usually your repo name.
+  customFields: {
+    // Site-wide defaults for the "Copy page" button, which renders at the top
+    // of the page content. Pages override any of this through their `copy_page`
+    // front matter. See src/components/CopyPageButton/README.md.
+    copyPage: {
+      enabled: true,
+      align: 'right',
+      placement: 'top',
+    },
+  },
   themeConfig: {
     announcementBar: {
       content: 'Announcing <b><a href="/text-to-signup">Text to Signup!</a></b> A marketing <i>superpower</i>',

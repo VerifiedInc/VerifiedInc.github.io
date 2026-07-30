@@ -1,11 +1,8 @@
 import React from 'react';
 import SvgIcon from '@mui/material/SvgIcon';
 
-/**
- * Brand marks for the AI targets, inlined as `SvgIcon` components: no network
- * request, and they inherit `currentColor` so they follow the navbar theme.
- * Paths are the official monochrome marks (simple-icons, viewBox 0 0 24 24).
- */
+// Official monochrome brand marks (simple-icons), inlined so there is no network
+// request and they inherit currentColor.
 
 export function OpenAiIcon(props) {
   return (

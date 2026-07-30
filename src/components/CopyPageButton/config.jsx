@@ -1,19 +1,12 @@
 import { ClaudeIcon, GeminiIcon, OpenAiIcon } from './icons';
 
-/**
- * Defaults for the "Copy page" feature. Every value is overridable per page via
- * {@link CopyPageButton} props, or site wide via `customFields.copyPage` in
- * `docusaurus.config.js`, so restyling, relabeling, and adding AI targets never
- * means editing the component.
- */
+// Defaults for the "Copy page" feature. Each is overridable per page via
+// CopyPageButton props, or site-wide via `customFields.copyPage`.
 
-// The rendered doc-content container the Markdown is read from.
 export const DEFAULT_CONTENT_SELECTOR = '.theme-doc-markdown';
 
-// Where the button sits relative to the page content.
 export const PLACEMENTS = ['top', 'bottom'];
 
-// Horizontal alignment, mapped to the flexbox value used by the container.
 export const ALIGNMENT_TO_JUSTIFY_CONTENT = {
   left: 'flex-start',
   center: 'center',
@@ -24,10 +17,8 @@ export const DEFAULT_PLACEMENT = 'top';
 
 export const DEFAULT_ALIGN = 'right';
 
-// How long the "Copied" (or "Copy failed") confirmation stays visible.
 export const DEFAULT_STATUS_RESET_MS = 2000;
 
-// All user-facing text, in one place (easy to translate or reword).
 export const DEFAULT_LABELS = {
   copyPage: 'Copy page',
   copied: 'Copied',
@@ -38,8 +29,7 @@ export const DEFAULT_LABELS = {
 };
 
 /**
- * AI assistants shown in the dropdown. Each target builds a URL from a prompt.
- * Add, remove, or reorder these through the `aiTargets` prop.
+ * Assistants in the dropdown; add, remove, or reorder via the `aiTargets` prop.
  * @type {{ id: string, label: string, icon: JSX.Element, buildUrl: (prompt: string) => string }[]}
  */
 export const DEFAULT_AI_TARGETS = [
@@ -70,21 +60,22 @@ export const DEFAULT_AI_TARGETS = [
 ];
 
 /**
- * Prompt handed to an assistant. Sends the page URL, not the Markdown: query
- * strings cannot hold a full doc page. `markdown` is available for callers who
- * want to inline it on short pages.
- * @param {{ pageUrl: string, pageTitle: string, markdown: string }} page
+ * Sends a URL, not the Markdown: query strings cannot hold a full page. Points
+ * at the `.md` twin, a better fetch target than the HTML. `markdown` is passed
+ * through for callers who want to inline it on short pages.
+ * @param {{ pageUrl: string, markdownUrl: string, pageTitle: string, markdown: string }} page
  * @returns {string}
  */
-export const defaultBuildPrompt = ({ pageUrl, pageTitle }) => {
+export const defaultBuildPrompt = ({ pageUrl, markdownUrl, pageTitle }) => {
   const subject = pageTitle ? `"${pageTitle}"` : 'page';
 
-  return `Read the Verified documentation ${subject} at ${pageUrl} and help me with questions about it.`;
+  const target = markdownUrl ? new URL(markdownUrl, pageUrl).href : pageUrl;
+
+  return `Read the Verified documentation page ${subject} from the Markdown URL below. Use it as the primary source when answering my questions:\n\n${target}`;
 };
 
 /**
- * Appended to the Markdown so a pasted page still says where it came from.
- * Disable with `includeSource={false}`.
+ * Appended so a pasted page says where it came from. Off via `includeSource`.
  * @param {{ pageUrl: string }} page
  * @returns {string}
  */

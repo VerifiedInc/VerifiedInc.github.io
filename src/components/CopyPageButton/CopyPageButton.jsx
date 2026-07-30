@@ -24,14 +24,13 @@ import {
   defaultBuildPrompt,
 } from './config';
 
-// Stable identities, so optional array props do not invalidate the memo.
+// Stable identities, so optional array props do not break the memo.
 const NO_ACTIONS = [];
 
 const NO_ACTION_IDS = [];
 
-// Vercel-docs-like proportions (roomy padding, 13px label, small quiet icons),
-// expressed in Infima tokens so the control follows the docs theme in light and
-// dark mode instead of the MUI palette.
+// Infima tokens, not the MUI palette, so the control follows the docs theme in
+// both light and dark mode.
 const buttonGroupStyles = {
   borderRadius: '6px',
   '& .MuiButton-root': {
@@ -62,7 +61,7 @@ const buttonGroupStyles = {
   '& .MuiButton-root:not(:last-of-type)': {
     borderRightColor: 'var(--ifm-color-emphasis-300)',
   },
-  // The caret button holds only an icon, so it overrides the MUI group minimum.
+  // Icon-only, so it overrides the MUI group minimum.
   '& .MuiButton-root:last-of-type, & .MuiButtonGroup-grouped:last-of-type': {
     px: 0.5,
     minWidth: 30,
@@ -113,15 +112,10 @@ const menuStyles = {
 };
 
 /**
- * "Copy page" button: exports the current doc page as clean Markdown for
- * ChatGPT, Claude, and Gemini, converted client-side from the rendered HTML (no
- * build step).
- *
- * The default UI over {@link usePageMarkdown}. Labels, AI targets, and styling
- * are props; the action list can be extended (`extraActions`), trimmed
- * (`excludeActionIds`), or replaced (`actions`). For a different UI, use the
- * hook directly. Mounted site wide by `src/theme/DocItem/Content/index.js`, or
- * drop `<CopyPageButton align='left' />` into any MDX page.
+ * Default UI over {@link usePageMarkdown}. Labels, AI targets, and styling are
+ * props; actions can be extended (`extraActions`), trimmed (`excludeActionIds`),
+ * or replaced (`actions`). Mounted site-wide by src/theme/DocItem/Content, or
+ * dropped into any MDX page.
  */
 export function CopyPageButton({
   // Content and conversion.
@@ -233,8 +227,7 @@ export function CopyPageButton({
     return action.id !== primaryAction?.id;
   });
 
-  // Custom actions get the same helpers the built-in ones use, so adding, say,
-  // "Copy for Slack" needs no reimplementation of the conversion.
+  // Custom actions get the same helpers, so "Copy for Slack" needs no new conversion.
   const runAction = async (action) => {
     await action.onSelect({ getPage, getMarkdown, closeMenu });
 

@@ -146,6 +146,9 @@ function CopyLink() {
 The AI targets carry their own brand marks, inlined as `SvgIcon` components in
 `icons.jsx` (official monochrome paths, `currentColor`, no network request).
 
+Gemini is reached through Google Search with `udm=50` (AI Mode) rather than
+`gemini.google.com`, which ignores a prefilled `q`.
+
 ## Markdown twins (`/page` and `/page.md`)
 
 `plugins/markdown-pages` emits a Markdown file next to every doc page at build

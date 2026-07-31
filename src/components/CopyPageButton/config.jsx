@@ -50,11 +50,15 @@ export const DEFAULT_AI_TARGETS = [
     },
   },
   {
+    // gemini.google.com ignores a prefilled `q`, so this goes through Search
+    // with `udm=50`, which opens the query in AI Mode on the same models.
     id: 'gemini',
     label: 'Open in Gemini',
     icon: <GeminiIcon fontSize='small' />,
     buildUrl: (prompt) => {
-      return `https://gemini.google.com/app?q=${encodeURIComponent(prompt)}`;
+      return `https://www.google.com/search?q=${encodeURIComponent(
+        prompt
+      )}&udm=50`;
     },
   },
 ];

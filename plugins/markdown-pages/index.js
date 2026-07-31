@@ -184,6 +184,76 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
     return `${lines.join('\n')}\n`;
   };
 
+  // The docs import the graphic-variant reusables several times per page, so the
+  // same download lists repeat verbatim. Harmless on a rendered page, expensive
+  // in a prompt: they were ~19% of the file and, chunked for RAG, produce chunks
+  // with no unique content. First run is kept in full, later identical runs
+  // become a pointer to it. llms-full.txt only; the .md twins stay faithful.
+  const ASSET_PATTERN = /\/img\/graphics\//;
+
+  const LABEL_PATTERN = /^\*\*[^\n]+\*\*:?$/;
+
+  const collapseRepeatedAssets = (markdown, seenRuns, page) => {
+    const blocks = markdown.split(/\n{2,}/);
+
+    const output = [];
+
+    let run = [];
+
+    const flush = () => {
+      if (run.length === 0) {
+        return;
+      }
+
+      const text = run.join('\n\n');
+
+      // A run of labels and separators with no assets is ordinary content.
+      if (!ASSET_PATTERN.test(text)) {
+        output.push(text);
+        run = [];
+
+        return;
+      }
+
+      const first = seenRuns.get(text);
+
+      if (first) {
+        output.push(`_(Same asset list as ${first.title}: ${first.url})_`);
+      } else {
+        seenRuns.set(text, { title: page.title, url: page.markdownUrl });
+        output.push(text);
+      }
+
+      run = [];
+    };
+
+    blocks.forEach((rawBlock) => {
+      const block = rawBlock.trim();
+
+      if (!block) {
+        return;
+      }
+
+      const isRunnable =
+        ASSET_PATTERN.test(block) ||
+        LABEL_PATTERN.test(block) ||
+        block === '---';
+
+      if (isRunnable) {
+        run.push(block);
+
+        return;
+      }
+
+      flush();
+      output.push(block);
+    });
+
+    flush();
+
+    return output.join('\n\n');
+  };
+
   const buildLlmsFullTxt = (pages, siteConfig, sections) => {
     const ordered = [...pages].sort((a, b) => {
       const rank = (page) => {
@@ -211,19 +281,23 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
     // here and not to the `.md` twins, which stay a faithful mirror of the page:
     // titles get their section (a bare `# Setup` repeats across products), and
     // alt-less images are dropped unless they are a link's only content.
+    const seenRuns = new Map();
+
     const body = ordered
       .map((page) => {
-        const qualified =
+        const heading =
           page.section === UNSECTIONED_LABEL ||
           page.title.startsWith(page.section)
-            ? page.markdown
-            : page.markdown.replace(
-                /^#\s+.*$/m,
-                `# ${page.section}: ${page.title}`
-              );
+            ? `# ${page.title}`
+            : `# ${page.section}: ${page.title}`;
+
+        // A function replacement, so `$` in a title is not read as a reference.
+        const qualified = page.markdown.replace(/^#\s+.*$/m, () => {
+          return `${heading}\nSource: ${page.markdownUrl}`;
+        });
 
         return (
-          qualified
+          collapseRepeatedAssets(qualified, seenRuns, page)
             // Standalone only: an image wrapped in a link is that link's only
             // text, and removing it leaves `[](url)`, which says even less than
             // an alt-less image did.

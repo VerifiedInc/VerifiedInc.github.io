@@ -201,11 +201,11 @@ function tableToMarkdown(tableElement, context) {
           .inline(cell)
           .replace(/\s*\n\s*/g, ' ')
           .trim()
-          // A literal backslash before a pipe would escape the escape below and
-          // split the row. Only those are doubled: escaping every backslash
-          // would corrupt code spans, where GFM treats them literally.
-          .replace(/\\(?=\|)/g, '\\\\')
-          .replace(/\|/g, '\\|')
+          // Pipes split table rows, and a backslash before one would consume the
+          // escape, so both are escaped in a single pass. GFM keeps backslashes
+          // literal inside code spans, so a cell whose code span contains one
+          // shows it doubled; no doc does today, and a broken row is worse.
+          .replace(/[\\|]/g, '\\$&')
       );
     });
   };

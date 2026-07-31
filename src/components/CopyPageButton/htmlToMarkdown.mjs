@@ -196,11 +196,17 @@ function tableToMarkdown(tableElement, context) {
 
   const getCells = (row) => {
     return Array.from(row.querySelectorAll('th, td')).map((cell) => {
-      return context
-        .inline(cell)
-        .replace(/\s*\n\s*/g, ' ')
-        .trim()
-        .replace(/\|/g, '\\|');
+      return (
+        context
+          .inline(cell)
+          .replace(/\s*\n\s*/g, ' ')
+          .trim()
+          // A literal backslash before a pipe would escape the escape below and
+          // split the row. Only those are doubled: escaping every backslash
+          // would corrupt code spans, where GFM treats them literally.
+          .replace(/\\(?=\|)/g, '\\\\')
+          .replace(/\|/g, '\\|')
+      );
     });
   };
 

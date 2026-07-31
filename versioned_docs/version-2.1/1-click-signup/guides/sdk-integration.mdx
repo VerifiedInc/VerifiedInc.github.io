@@ -422,6 +422,11 @@ function handleEvent(event: SdkEvent): void {
         //     // User submitted health form
         //     console.log(event.form);
         //     break;
+        // Only for 1-Click Health
+        // case SdkEventValues.ONE_CLICK_HEALTH_MANUAL_INPUT_FORM_SUBMITTED:
+        //     // User submitted the health manual-input form (fullName/birthDate fallback)
+        //     console.log(event.form);
+        //     break;
     }
 }
 ```
@@ -456,7 +461,7 @@ There are 5 event values to handle for 1-Click Signup:
 </table>
 
 :::note
-There's 1 other event value, but this is only relevant for 1-Click Health. See the [1-Click Health SDK Integration guide](/1-click-health/guides/sdk-integration#c-handle-events) for details.
+There are 2 other event values, but these are only relevant for 1-Click Health. See the [1-Click Health SDK Integration guide](/1-click-health/guides/sdk-integration#c-handle-events) for details.
 :::
 
 ---

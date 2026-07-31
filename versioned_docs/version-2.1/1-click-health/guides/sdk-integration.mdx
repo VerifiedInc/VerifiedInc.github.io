@@ -154,7 +154,7 @@ The response will be a [`1ClickHealthEntity`](/reference/api/types#1clickhealthe
 Handling events is not necessary for the SDK to work, but it will allow you to understand how users are interacting with the SDK and optimize the experience.
 :::
 
-Update your `handleEvent` function to include the 1 event value specific to 1-Click Health, leveraging the [`SdkEventValues` constant](/reference/sdk/constants#sdkeventvalues):
+Update your `handleEvent` function to include the 2 event values specific to 1-Click Health, leveraging the [`SdkEventValues` constant](/reference/sdk/constants#sdkeventvalues):
 
 ```typescript
 function handleEvent(event: SdkEvent): void {
@@ -166,11 +166,17 @@ function handleEvent(event: SdkEvent): void {
             // User submitted health form
             console.log(event.form);
             break;
+        // Add for 1-Click Health
+        // highlight-next-line
+        case SdkEventValues.ONE_CLICK_HEALTH_MANUAL_INPUT_FORM_SUBMITTED:
+            // User submitted the health manual-input form (fullName/birthDate fallback)
+            console.log(event.form);
+            break;
     }
 }
 ```
 
-There's 1 event value to handle for 1-Click Health:
+There are 2 event values to handle for 1-Click Health:
 
 <table>
     <tr>
@@ -180,6 +186,10 @@ There's 1 event value to handle for 1-Click Health:
     <tr>
         <td>`ONE_CLICK_HEALTH_FORM_SUBMITTED`</td>
         <td>User submitted health insurance form</td>
+    </tr>
+    <tr>
+        <td>`ONE_CLICK_HEALTH_MANUAL_INPUT_FORM_SUBMITTED`</td>
+        <td>User submitted the health manual-input form (fullName/birthDate fallback, shown when prior data isn't sufficient to look up insurance automatically)</td>
     </tr>
 </table>
 

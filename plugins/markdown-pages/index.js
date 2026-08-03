@@ -13,6 +13,7 @@ const { pathToFileURL } = require('url');
  * @param {import('@docusaurus/types').LoadContext} context
  * @param {{
  *   contentSelector?: string,
+ *   categorySelector?: string,
  *   exclude?: string[],
  *   includeSource?: boolean,
  *   llms?: false | { title?: string, description?: string, sections?: {prefix: string, label: string}[] },
@@ -21,6 +22,9 @@ const { pathToFileURL } = require('url');
 module.exports = function markdownPagesPlugin(context, options = {}) {
   const {
     contentSelector = '.theme-doc-markdown',
+    // Auto-generated category landing pages (a card list of sub-pages, e.g.
+    // `/1-click-health`) have no `.theme-doc-markdown` of their own.
+    categorySelector = '[class*="generatedIndexPage"]',
     exclude = ['/reusables/'],
     includeSource = true,
     llms = {},
@@ -120,6 +124,97 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
         return nextDepth && nextDepth <= depth ? line.trim() : null;
       })
       .filter(Boolean);
+  };
+
+  // So an agent following a link from one `.md` file lands on another `.md`
+  // file instead of the HTML page. Only same-site doc routes qualify: other
+  // origins (the demo app, Calendly) and paths that already carry their own
+  // extension (assets, files) link through unchanged, as does anything under
+  // an excluded prefix, since those never get a `.md` twin written.
+  const toHrefRewriter = (siteConfig, absoluteUrl) => {
+    const siteOrigin = new URL(siteConfig.url).origin;
+
+    return (element, attribute) => {
+      const href = absoluteUrl(element, attribute);
+
+      let target;
+
+      try {
+        target = new URL(href);
+      } catch {
+        return href;
+      }
+
+      const isDocRoute =
+        target.origin === siteOrigin &&
+        !path.extname(target.pathname) &&
+        !isExcluded(target.pathname);
+
+      if (!isDocRoute) {
+        return href;
+      }
+
+      return `${toMarkdownUrl(siteConfig, target.pathname)}${target.search}${
+        target.hash
+      }`;
+    };
+  };
+
+  const toInternalLinkHandler = (rewriteHref) => {
+    return (element, context) => {
+      const text = context.inline(element).trim();
+
+      if (!text) {
+        return '';
+      }
+
+      const rawHref = element.getAttribute('href') || '';
+
+      if (!rawHref || rawHref.startsWith('#')) {
+        return text;
+      }
+
+      return `[${text}](${rewriteHref(element, 'href')})`;
+    };
+  };
+
+  // Category landing pages (and any hand-authored `<DocCardList>`) render each
+  // link as a card: an `<a>` wrapping its own heading and description, which
+  // the generic `a` handler would inline as garbled nested markdown. Read the
+  // two pieces directly and emit one list item instead.
+  const toCardMatcher = (rewriteHref) => {
+    return {
+      test: (element) => {
+        return (
+          element.tagName === 'A' &&
+          /(^|\s)theme-doc-card-container(\s|$)/.test(element.className || '')
+        );
+      },
+
+      handle: (element) => {
+        const href = element.getAttribute('href') || '';
+
+        const titleElement = element.querySelector('.theme-doc-card-title');
+
+        const title = (titleElement || element).textContent.trim();
+
+        if (!href || !title) {
+          return '';
+        }
+
+        const descriptionElement = element.querySelector(
+          '.theme-doc-card-description'
+        );
+
+        const description = descriptionElement
+          ? descriptionElement.textContent.trim()
+          : '';
+
+        const suffix = description ? `: ${description}` : '';
+
+        return `- [${title}](${rewriteHref(element, 'href')})${suffix}\n`;
+      },
+    };
   };
 
   const sectionFor = (sections, route) => {
@@ -319,11 +414,18 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
 
     async postBuild({ outDir, routesPaths, siteConfig }) {
       // Dynamic import: the converter is ESM because the browser bundle needs it that way.
-      const { htmlToMarkdown } = await import(
+      const { htmlToMarkdown, absoluteUrl } = await import(
         pathToFileURL(converterPath).href
       );
 
       const { JSDOM } = require('jsdom');
+
+      const rewriteHref = toHrefRewriter(siteConfig, absoluteUrl);
+
+      const converterOverrides = {
+        handlers: { a: toInternalLinkHandler(rewriteHref) },
+        matchers: [toCardMatcher(rewriteHref)],
+      };
 
       const sections = llms && llms.sections ? llms.sections : DEFAULT_SECTIONS;
 
@@ -356,7 +458,9 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
 
         const { document } = window;
 
-        const contentElement = document.querySelector(contentSelector);
+        const contentElement =
+          document.querySelector(contentSelector) ||
+          document.querySelector(categorySelector);
 
         if (!contentElement) {
           window.close();
@@ -364,7 +468,7 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
           continue;
         }
 
-        let markdown = htmlToMarkdown(contentElement);
+        let markdown = htmlToMarkdown(contentElement, converterOverrides);
 
         const headingElement = contentElement.querySelector('h1');
 
@@ -376,7 +480,7 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
           route
         ).trim();
 
-        const description = metaElement
+        const metaDescription = metaElement
           ? metaElement.getAttribute('content').trim()
           : '';
 
@@ -386,6 +490,11 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
           skipped += 1;
           continue;
         }
+
+        // Before the `Source:` line is appended, or a list-only page (a
+        // category landing page, say) with no meta description would pick up
+        // its own source line as its "first paragraph".
+        const description = metaDescription || firstParagraph(markdown);
 
         if (includeSource) {
           markdown = `${markdown}\n\n---\n\nSource: ${pageUrl}\n`;
@@ -399,7 +508,7 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
         pages.push({
           route,
           title,
-          description: description || firstParagraph(markdown),
+          description,
           markdown,
           markdownUrl: toMarkdownUrl(siteConfig, route),
           section: sectionFor(sections, route),

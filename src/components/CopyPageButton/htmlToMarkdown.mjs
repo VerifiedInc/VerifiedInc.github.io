@@ -21,6 +21,11 @@ const SKIP_SELECTORS = [
   '.copy-page-button-root',
   '.theme-code-block-buttons',
   '.clean-btn',
+  // Navigation chrome, not content: sits inside category landing pages
+  // alongside their card list, unlike regular doc pages where it lives outside
+  // `.theme-doc-markdown`.
+  '.theme-doc-breadcrumbs',
+  '.pagination-nav',
   'button',
   '[aria-hidden="true"]',
   // Rendered diagrams: SVG text nodes convert to noise and the Mermaid source is not in the DOM to fall back to.
@@ -87,7 +92,7 @@ function capitalize(text) {
 // `element.href` is already resolved against the document URL, so links survive
 // being read outside the site. Falls back to the raw attribute when the document
 // has no base URL (jsdom without `url`).
-function absoluteUrl(element, attribute) {
+export function absoluteUrl(element, attribute) {
   const resolved = element[attribute];
 
   const raw = element.getAttribute(attribute) || '';

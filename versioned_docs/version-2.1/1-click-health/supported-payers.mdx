@@ -12,5 +12,24 @@ draft: false
 ---
 
 import PayerTable from '@site/src/components/PayerTable/PayerTable';
+import MarkdownFallback from '@site/src/components/MarkdownFallback';
 
-<PayerTable />
+<MarkdownFallback
+  markdown={`The payer list on this page is loaded live from the Verified API, so it is not
+included inline here. Fetch it directly instead (no authentication required):
+
+\`\`\`bash
+curl 'https://core-api.verified.inc/v2/1-click/health/payers?$limit=50&$paginate=true'
+\`\`\`
+
+Query parameters:
+
+- \`$limit\` and \`$skip\` page through the results.
+- \`$search\` filters by payer name.
+- \`$sort[name]=1\` sorts by name ascending, \`-1\` descending.
+
+Each payer has a name and one or more IDs, one of which is its primary ID. For
+how a payer is used in a request, see the 1-Click Health API integration guide.`}
+>
+  <PayerTable />
+</MarkdownFallback>

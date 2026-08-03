@@ -31,6 +31,9 @@ const SKIP_SELECTORS = [
   // Rendered diagrams: SVG text nodes convert to noise and the Mermaid source is not in the DOM to fall back to.
   'svg',
   '.docusaurus-mermaid-container',
+  // A widget wrapped in MarkdownFallback: its placeholder markup ("Loading…", an
+  // empty table) is replaced by the fallback's own Markdown.
+  '[data-markdown-ignore]',
   // Not content: server-rendered emotion styles sit inside the article and would otherwise be converted as text.
   'style',
   'script',
@@ -420,6 +423,20 @@ const defaultHandlers = {
 
 // Matchers checked before tag handlers (class/attribute based).
 const defaultMatchers = [
+  {
+    // Markdown supplied by MarkdownFallback, for content that only exists after
+    // a client-side fetch. Emitted verbatim rather than converted.
+    test: (element) => {
+      return (
+        typeof element.getAttribute === 'function' &&
+        element.getAttribute('data-markdown') !== null
+      );
+    },
+
+    handle: (element) => {
+      return `\n${element.getAttribute('data-markdown').trim()}\n\n`;
+    },
+  },
   {
     test: (element) => {
       return (

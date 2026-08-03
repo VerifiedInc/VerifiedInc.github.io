@@ -10,11 +10,10 @@ toc_max_heading_level: 2
 ---
 
 import { DemoEmailForm } from '@site/src/components/DemoEmailForm';
+import MarkdownFallback from '@site/src/components/MarkdownFallback';
 import WorkEmailAdmonition from '@site/versioned_docs/version-2.1/reusables/work-email-admonition.mdx';
 
-
 Our [Demo](https://1-click.demo.verified.inc) lets you experience [1-Click Signup](/1-click-signup) and [Text to Signup](/text-to-signup) firsthand. You can use it both in [Sandbox](/reference/api/environments#sandbox) (with mock data) and [Production](/reference/api/environments#production) (with your real, verified data).
-
 
 ## Generate a Custom Demo
 
@@ -23,22 +22,54 @@ You can instantly generate a custom version of the Demo anytime on our [website]
 <div class="two-column-grid-container">
     <div class="two-column-grid-row">
         <div class="two-column-grid-column">
-            <DemoEmailForm />
-        </div>
-        <div class="two-column-grid-column">
-            {/* Blank just to keep the form from being too wide */}
-        </div>
-    </div>
+            <MarkdownFallback
+              markdown={`The form on this page takes a work email and generates a personalized demo
+link. To build the same link without the form, request a brand in each
+environment and combine the two.
+
+Sandbox:
+
+\`\`\`bash
+curl -X POST 'https://sales-tools-service-api.sandbox-verifiedinc.com/customers/brands' \\
+-H 'content-type: application/json' \\
+--data '{"email":"you@example.com"}'
+\`\`\`
+
+Production:
+
+\`\`\`bash
+curl -X POST 'https://sales-tools-service-api.verified.inc/customers/brands' \\
+-H 'content-type: application/json' \\
+--data '{"email":"you@example.com"}'
+\`\`\`
+
+Each response contains a \`1ClickDemoUrl\`. Take the \`brand\` query parameter out of
+each one: the production brand is the primary, the sandbox brand is the secondary.
+
+\`\`\`
+https://1-click.demo.verified.inc/register?primaryEnvBrand=<production brand>&secondaryEnvBrand=<sandbox brand>
+\`\`\`
+
+Add \`&configOpen=true\` to open the demo's configuration panel on load.`} >
+
+<DemoEmailForm />
+</MarkdownFallback>
+</div>
+<div class="two-column-grid-column">
+{/* Blank just to keep the form from being too wide */}
+</div>
+</div>
+
 </div>
 
 <WorkEmailAdmonition />
 
-
 ## Access the Demo from the Dashboard
 
 You can also open versions of the Demo specific to your brand settings from within the [Dashboard](https://dashboard.verified.inc):
+
 1. Log into your Dashboard account.
 2. Go to the Brand Details page for one of your brands.
-3. Click the **Open Demo with These Settings** button. 
+3. Click the **Open Demo with These Settings** button.
 
 This will open a version of the Demo that reflects the brand settings you have configured in the Dashboard, making it easy to test that the flow works as you want it to.

@@ -19,6 +19,8 @@ const { pathToFileURL } = require('url');
  *   llms?: false | { title?: string, description?: string, sections?: {prefix: string, label: string}[] },
  * }} options
  */
+const ZERO_WIDTH = /[\u200b\u200c\u200d\ufeff]/g;
+
 module.exports = function markdownPagesPlugin(context, options = {}) {
   const {
     contentSelector = '.theme-doc-markdown',
@@ -217,6 +219,75 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
     };
   };
 
+  // A search index of our own, so nothing downstream has to translate HTML
+  // routes into `.md` ones. `search-doc.json` from docusaurus-lunr-search has
+  // the same shape but its URLs point at the HTML pages, and its format is that
+  // plugin's business rather than ours.
+  //
+  // One entry per heading plus one per page, each carrying the section text, so
+  // a keyword match lands on `page.md#section` instead of just the page.
+  const SECTION_HEADINGS = 'h2, h3, h4';
+
+  const headingText = (heading) => {
+    return (heading.textContent || '').replace(ZERO_WIDTH, '').trim();
+  };
+
+  const collectSections = (contentElement, page) => {
+    const sections = [];
+
+    contentElement.querySelectorAll(SECTION_HEADINGS).forEach((heading) => {
+      const anchor = heading.getAttribute('id');
+
+      if (!anchor) {
+        return;
+      }
+
+      // Everything up to the next heading belongs to this section.
+      const body = [];
+
+      let sibling = heading.nextElementSibling;
+
+      while (sibling && !sibling.matches(SECTION_HEADINGS)) {
+        body.push(sibling.textContent || '');
+        sibling = sibling.nextElementSibling;
+      }
+
+      sections.push({
+        type: 'section',
+        title: headingText(heading),
+        page: page.title,
+        section: page.section,
+        url: `${page.markdownUrl}#${anchor}`,
+        content: body.join(' ').replace(/\s+/g, ' ').trim(),
+      });
+    });
+
+    return sections;
+  };
+
+  // Docusaurus renders the sidebar neighbours as a pagination nav, outside the
+  // content element, so the converter never sees them. Read them here and carry
+  // them into the footer: an agent can then walk a product in order instead of
+  // guessing what follows.
+  const readPagination = (document, rewriteHref) => {
+    const read = (modifier) => {
+      const link = document.querySelector(`.pagination-nav__link--${modifier}`);
+
+      if (!link) {
+        return null;
+      }
+
+      const label = link.querySelector('.pagination-nav__label') || link;
+
+      return {
+        title: (label.textContent || '').replace(ZERO_WIDTH, '').trim(),
+        url: rewriteHref(link, 'href'),
+      };
+    };
+
+    return { previous: read('prev'), next: read('next') };
+  };
+
   const sectionFor = (sections, route) => {
     const match = sections.find((section) => {
       return route.startsWith(section.prefix);
@@ -245,6 +316,10 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
       `> ${llms.description || siteConfig.tagline}`,
       '',
       'Every page below is also available as Markdown at the linked `.md` URL.',
+      `Searchable index of every page and section: ${toAbsoluteUrl(
+        siteConfig,
+        '/search-index.json'
+      )}`,
       'The whole documentation set in one file: ' +
         `${toAbsoluteUrl(siteConfig, '/llms-full.txt')}`,
     ];
@@ -285,8 +360,6 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
   // with no unique content. First run is kept in full, later identical runs
   // become a pointer to it. llms-full.txt only; the .md twins stay faithful.
   const ASSET_PATTERN = /\/img\/graphics\//;
-
-  const LINK_PATTERN = /(?<!!)\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g;
 
   const LABEL_PATTERN = /^\*\*[^\n]+\*\*:?$/;
 
@@ -486,6 +559,14 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
           ? metaElement.getAttribute('content').trim()
           : '';
 
+        const pagination = readPagination(document, rewriteHref);
+
+        const pageSections = collectSections(contentElement, {
+          title,
+          section: sectionFor(sections, route),
+          markdownUrl: toMarkdownUrl(siteConfig, route),
+        });
+
         window.close();
 
         if (!markdown) {
@@ -493,14 +574,10 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
           continue;
         }
 
-        // Before the `Source:` line is appended, or a list-only page (a
-        // category landing page, say) with no meta description would pick up
-        // its own source line as its "first paragraph".
+        // Read before the footer is appended, or a list-only page (a category
+        // landing page, say) with no meta description would pick up its own
+        // footer as its "first paragraph".
         const description = metaDescription || firstParagraph(markdown);
-
-        if (includeSource) {
-          markdown = `${markdown}\n\n---\n\nSource: ${pageUrl}\n`;
-        }
 
         pages.push({
           route,
@@ -510,41 +587,95 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
           pageUrl,
           markdownUrl: toMarkdownUrl(siteConfig, route),
           section: sectionFor(sections, route),
+          sections: pageSections,
+          pagination,
           emptyHeadings: emptyHeadings(markdown),
         });
       }
 
-      // Point internal links at the `.md` twins so an agent following one stays
-      // in Markdown. Only rewritten when the twin exists: reusables and non-doc
-      // routes have none, and those links keep pointing at the HTML page.
-      const twinByPageUrl = new Map(
+      // The footer is built once every page is known, because the section link
+      // points at a category landing page that may not have been converted yet.
+      const generatedRoutes = new Set(
         pages.map((page) => {
-          return [page.pageUrl.replace(/\/$/, ''), page.markdownUrl];
+          return page.route;
         })
       );
 
-      let rewritten = 0;
+      const twinUrls = new Set(
+        pages.map((page) => {
+          return page.markdownUrl;
+        })
+      );
 
-      pages.forEach((page) => {
-        page.markdown = page.markdown.replace(
-          LINK_PATTERN,
-          (link, text, url) => {
-            const [, base, suffix = ''] = /^([^#?]*)([#?].*)?$/.exec(url);
+      // A sidebar neighbour can be a page we do not publish, a reusable fragment
+      // for instance. Those links resolve to nothing in Markdown, so leave them out.
+      const navLinkFor = (neighbour, skipUrl) => {
+        if (
+          !neighbour ||
+          !twinUrls.has(neighbour.url) ||
+          neighbour.url === skipUrl
+        ) {
+          return null;
+        }
 
-            const twin = twinByPageUrl.get(base.replace(/\/$/, ''));
+        return neighbour;
+      };
 
-            if (!twin) {
-              return link;
-            }
+      const sectionLinkFor = (route) => {
+        const rule = sections.find((section) => {
+          return route.startsWith(section.prefix);
+        });
 
-            rewritten += 1;
+        // Skip the category page itself, and any section whose landing page has
+        // no twin of its own.
+        if (
+          !rule ||
+          route === rule.prefix ||
+          !generatedRoutes.has(rule.prefix)
+        ) {
+          return null;
+        }
 
-            return `[${text}](${twin}${suffix})`;
-          }
-        );
-      });
+        return {
+          label: rule.label,
+          url: toMarkdownUrl(siteConfig, rule.prefix),
+        };
+      };
 
       for (const page of pages) {
+        const lines = [];
+
+        if (includeSource) {
+          lines.push(`Source: ${page.pageUrl}`);
+        }
+
+        const sectionLink = sectionLinkFor(page.route);
+
+        if (sectionLink) {
+          lines.push(`Section: ${sectionLink.label} — ${sectionLink.url}`);
+        }
+
+        // The category page is the first entry in its own section, so on the
+        // section's first child it is both Section and Previous. Say it once.
+        const previous = navLinkFor(
+          page.pagination.previous,
+          sectionLink && sectionLink.url
+        );
+
+        if (previous) {
+          lines.push(`Previous: ${previous.title} — ${previous.url}`);
+        }
+
+        const next = navLinkFor(page.pagination.next);
+
+        if (next) {
+          lines.push(`Next: ${next.title} — ${next.url}`);
+        }
+
+        if (lines.length > 0) {
+          page.markdown = `${page.markdown}\n\n---\n\n${lines.join('\n')}\n`;
+        }
+
         const markdownPath = toMarkdownPath(outDir, page.route);
 
         await fs.mkdir(path.dirname(markdownPath), { recursive: true });
@@ -552,7 +683,7 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
       }
 
       console.log(
-        `[markdown-pages] wrote ${pages.length} .md files (${skipped} routes skipped, ${rewritten} links pointed at .md twins)`
+        `[markdown-pages] wrote ${pages.length} .md files (${skipped} routes skipped)`
       );
 
       pages.forEach((page) => {
@@ -579,7 +710,28 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
         'utf8'
       );
 
-      console.log('[markdown-pages] wrote llms.txt and llms-full.txt');
+      const searchIndex = pages.flatMap((page) => {
+        return [
+          {
+            type: 'page',
+            title: page.title,
+            section: page.section,
+            url: page.markdownUrl,
+            content: page.description,
+          },
+          ...page.sections,
+        ];
+      });
+
+      await fs.writeFile(
+        path.join(outDir, 'search-index.json'),
+        `${JSON.stringify({ entries: searchIndex }, null, 0)}\n`,
+        'utf8'
+      );
+
+      console.log(
+        `[markdown-pages] wrote llms.txt, llms-full.txt, and search-index.json (${searchIndex.length} entries)`
+      );
     },
   };
 };

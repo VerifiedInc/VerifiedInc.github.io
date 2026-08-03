@@ -286,6 +286,8 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
   // become a pointer to it. llms-full.txt only; the .md twins stay faithful.
   const ASSET_PATTERN = /\/img\/graphics\//;
 
+  const LINK_PATTERN = /(?<!!)\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g;
+
   const LABEL_PATTERN = /^\*\*[^\n]+\*\*:?$/;
 
   const collapseRepeatedAssets = (markdown, seenRuns, page) => {
@@ -500,24 +502,57 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
           markdown = `${markdown}\n\n---\n\nSource: ${pageUrl}\n`;
         }
 
-        const markdownPath = toMarkdownPath(outDir, route);
-
-        await fs.mkdir(path.dirname(markdownPath), { recursive: true });
-        await fs.writeFile(markdownPath, markdown, 'utf8');
-
         pages.push({
           route,
           title,
           description,
           markdown,
+          pageUrl,
           markdownUrl: toMarkdownUrl(siteConfig, route),
           section: sectionFor(sections, route),
           emptyHeadings: emptyHeadings(markdown),
         });
       }
 
+      // Point internal links at the `.md` twins so an agent following one stays
+      // in Markdown. Only rewritten when the twin exists: reusables and non-doc
+      // routes have none, and those links keep pointing at the HTML page.
+      const twinByPageUrl = new Map(
+        pages.map((page) => {
+          return [page.pageUrl.replace(/\/$/, ''), page.markdownUrl];
+        })
+      );
+
+      let rewritten = 0;
+
+      pages.forEach((page) => {
+        page.markdown = page.markdown.replace(
+          LINK_PATTERN,
+          (link, text, url) => {
+            const [, base, suffix = ''] = /^([^#?]*)([#?].*)?$/.exec(url);
+
+            const twin = twinByPageUrl.get(base.replace(/\/$/, ''));
+
+            if (!twin) {
+              return link;
+            }
+
+            rewritten += 1;
+
+            return `[${text}](${twin}${suffix})`;
+          }
+        );
+      });
+
+      for (const page of pages) {
+        const markdownPath = toMarkdownPath(outDir, page.route);
+
+        await fs.mkdir(path.dirname(markdownPath), { recursive: true });
+        await fs.writeFile(markdownPath, page.markdown, 'utf8');
+      }
+
       console.log(
-        `[markdown-pages] wrote ${pages.length} .md files (${skipped} routes skipped)`
+        `[markdown-pages] wrote ${pages.length} .md files (${skipped} routes skipped, ${rewritten} links pointed at .md twins)`
       );
 
       pages.forEach((page) => {

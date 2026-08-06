@@ -715,13 +715,21 @@ table p {
 }
 
 .payerTableThName {
-  width: 60%;
+  width: 34%;
 }
 .payerTableThId {
   width: 15%;
 }
+.payerTableThStates {
+  width: 17%;
+}
+
+.payerTableThEligibility {
+  width: 13%;
+}
+
 .payerTableThIds {
-  width: 40%;
+  width: 36%;
 }
 .payerSortBtn {
   all: unset;
@@ -841,6 +849,16 @@ table p {
   color: var(--ifm-color-emphasis-700);
   white-space: nowrap;
   user-select: all;
+}
+
+.payerChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.payerCellEmpty {
+  color: var(--ifm-color-emphasis-500);
 }
 
 /* --- Empty / error states --- */

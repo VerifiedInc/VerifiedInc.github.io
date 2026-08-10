@@ -21,6 +21,12 @@ const { pathToFileURL } = require('url');
  */
 const ZERO_WIDTH = /[\u200b\u200c\u200d\ufeff]/g;
 
+const humanSize = (text) => {
+  const bytes = Buffer.byteLength(text, 'utf8');
+
+  return bytes < 1024 ? `${bytes} B` : `${Math.round(bytes / 1024)} KB`;
+};
+
 module.exports = function markdownPagesPlugin(context, options = {}) {
   const {
     contentSelector = '.theme-doc-markdown',
@@ -309,18 +315,20 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
     return weigh(a) - weigh(b) || a.route.localeCompare(b.route);
   };
 
-  const buildLlmsTxt = (pages, siteConfig, sections) => {
+  const buildLlmsTxt = (pages, siteConfig, sections, sizes) => {
     const lines = [
       `# ${llms.title || siteConfig.title}`,
       '',
       `> ${llms.description || siteConfig.tagline}`,
       '',
       'Every page below is also available as Markdown at the linked `.md` URL.',
-      `Searchable index of every page and section: ${toAbsoluteUrl(
+      `Searchable index of every page and section (${
+        sizes.index
+      }, meant to be filtered rather than read whole): ${toAbsoluteUrl(
         siteConfig,
         '/search-index.json'
       )}`,
-      'The whole documentation set in one file: ' +
+      `The whole documentation set in one file (${sizes.full}): ` +
         `${toAbsoluteUrl(siteConfig, '/llms-full.txt')}`,
     ];
 
@@ -344,10 +352,28 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
 
       lines.push('', `## ${label}`, '');
 
+      const bundle = sizes.bundles && sizes.bundles.get(label);
+
+      if (bundle) {
+        lines.push(
+          `All of ${label} in one file (${bundle.size}): ${toAbsoluteUrl(
+            siteConfig,
+            bundle.path
+          )}`,
+          ''
+        );
+      }
+
       inSection.forEach((page) => {
         const suffix = page.description ? `: ${page.description}` : '';
 
-        lines.push(`- [${page.title}](${page.markdownUrl})${suffix}`);
+        // Size lets a client decide whether to fetch a page whole, and check
+        // afterwards that it got all of it.
+        lines.push(
+          `- [${page.title}](${page.markdownUrl}) (${humanSize(
+            page.markdown
+          )})${suffix}`
+        );
       });
     });
 
@@ -424,7 +450,7 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
     return output.join('\n\n');
   };
 
-  const buildLlmsFullTxt = (pages, siteConfig, sections) => {
+  const buildLlmsFullTxt = (pages, siteConfig, sections, product) => {
     const ordered = [...pages].sort((a, b) => {
       const rank = (page) => {
         const index = sections.findIndex((section) => {
@@ -438,12 +464,20 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
       return rank(a) - rank(b) || byReadingOrder(a, b);
     });
 
+    const title = product
+      ? `${llms.title || siteConfig.title}: ${product}`
+      : llms.title || siteConfig.title;
+
+    const scope = product
+      ? `Every ${product} page, ${ordered.length} in total.`
+      : `Full documentation, ${ordered.length} pages, one per section below.`;
+
     const header = [
-      `# ${llms.title || siteConfig.title}`,
+      `# ${title}`,
       '',
       `> ${llms.description || siteConfig.tagline}`,
       '',
-      `Full documentation, ${ordered.length} pages, one per section below.`,
+      scope,
       'Index: ' + toAbsoluteUrl(siteConfig, '/llms.txt'),
     ].join('\n');
 
@@ -694,44 +728,89 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
         });
       });
 
-      if (llms === false || pages.length === 0) {
+      if (pages.length === 0) {
         return;
       }
 
-      await fs.writeFile(
-        path.join(outDir, 'llms.txt'),
-        buildLlmsTxt(pages, siteConfig, sections),
-        'utf8'
-      );
+      if (llms !== false) {
+        const bundles = [];
 
-      await fs.writeFile(
-        path.join(outDir, 'llms-full.txt'),
-        buildLlmsFullTxt(pages, siteConfig, sections),
-        'utf8'
-      );
+        const llmsFullTxt = buildLlmsFullTxt(pages, siteConfig, sections);
 
-      const searchIndex = pages.flatMap((page) => {
-        return [
-          {
-            type: 'page',
-            title: page.title,
-            section: page.section,
-            url: page.markdownUrl,
-            content: page.description,
-          },
-          ...page.sections,
-        ];
-      });
+        await fs.writeFile(
+          path.join(outDir, 'llms-full.txt'),
+          llmsFullTxt,
+          'utf8'
+        );
 
-      await fs.writeFile(
-        path.join(outDir, 'search-index.json'),
-        `${JSON.stringify({ entries: searchIndex }, null, 0)}\n`,
-        'utf8'
-      );
+        // Sorted so the file is stable even if route order ever shifts.
+        const searchIndex = pages
+          .flatMap((page) => {
+            return [
+              {
+                type: 'page',
+                title: page.title,
+                section: page.section,
+                url: page.markdownUrl,
+                content: page.description,
+              },
+              ...page.sections,
+            ];
+          })
+          .sort((a, b) => {
+            return a.url.localeCompare(b.url);
+          });
 
-      console.log(
-        `[markdown-pages] wrote llms.txt, llms-full.txt, and search-index.json (${searchIndex.length} entries)`
-      );
+        const searchIndexJson = `${JSON.stringify({ entries: searchIndex })}\n`;
+
+        await fs.writeFile(
+          path.join(outDir, 'search-index.json'),
+          searchIndexJson,
+          'utf8'
+        );
+
+        // A per product bundle, so "walk me through this integration" is one
+        // fetch instead of four, with no page missed.
+        for (const rule of sections) {
+          const productPages = pages.filter((page) => {
+            return page.section === rule.label;
+          });
+
+          if (productPages.length === 0) {
+            continue;
+          }
+
+          const bundle = buildLlmsFullTxt(
+            productPages,
+            siteConfig,
+            sections,
+            rule.label
+          );
+
+          const bundlePath = path.join(outDir, rule.prefix, 'llms-full.txt');
+
+          await fs.mkdir(path.dirname(bundlePath), { recursive: true });
+          await fs.writeFile(bundlePath, bundle, 'utf8');
+
+          bundles.push([rule.label, `${rule.prefix}/llms-full.txt`, bundle]);
+        }
+
+        const llmsTxt = buildLlmsTxt(pages, siteConfig, sections, {
+          full: humanSize(llmsFullTxt),
+          index: humanSize(searchIndexJson),
+          bundles: new Map(
+            bundles.map(([label, bundlePath, bundle]) => {
+              return [label, { path: bundlePath, size: humanSize(bundle) }];
+            })
+          ),
+        });
+
+        await fs.writeFile(path.join(outDir, 'llms.txt'), llmsTxt, 'utf8');
+
+        console.log(
+          `[markdown-pages] wrote llms.txt, llms-full.txt, and search-index.json (${searchIndex.length} entries)`
+        );
+      }
     },
   };
 };

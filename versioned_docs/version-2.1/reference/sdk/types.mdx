@@ -300,6 +300,16 @@ export type SdkEvent = {
   | { type: 'USER_COMPLETED_PRODUCT'; product: SdkProduct }
   | { type: 'ONE_CLICK_SIGNUP_FORM_SUBMITTED'; form: Record<string, unknown> }
   | { type: 'ONE_CLICK_HEALTH_FORM_SUBMITTED'; form: Record<string, unknown> }
+  | {
+      type: 'ONE_CLICK_HEALTH_MANUAL_INPUT_FORM_SUBMITTED';
+      form: {
+        fullName: {
+          firstName: string;
+          lastName: string;
+        };
+        birthDate: string;
+      };
+    }
   | { type: 'VERIFICATION_CODE_RESENT' }
 );
 ```

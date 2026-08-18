@@ -57,6 +57,44 @@ function SearchIcon() {
   );
 }
 
+const ELIGIBILITY_LABELS = {
+  SUPPORTED: 'Supported',
+  ENROLLMENT_REQUIRED: 'Enrollment required',
+  NOT_SUPPORTED: 'Not supported',
+};
+
+function OperatingStates({ states }) {
+  if (!Array.isArray(states) || states.length === 0) {
+    return <span className='payerCellEmpty'>—</span>;
+  }
+
+  const labels = states.includes('NATIONAL') ? ['National'] : states;
+
+  return (
+    <div className='payerChips'>
+      {labels.map((label) => (
+        <code key={label} className='payerIdChip'>
+          {label}
+        </code>
+      ))}
+    </div>
+  );
+}
+
+function EligibilityBadge({ support }) {
+  const label = ELIGIBILITY_LABELS[support];
+
+  if (!label) {
+    return <span className='payerCellEmpty'>—</span>;
+  }
+
+  return (
+    <div className='payerChips'>
+      <code className='payerIdChip'>{label}</code>
+    </div>
+  );
+}
+
 function PayerInitials({ name }) {
   const initials = (name || '?')
     .split(/\s+/)
@@ -243,6 +281,10 @@ export default function PayerTable() {
                   <SortIcon direction={sortField === 'name' ? sortDir : null} />
                 </button>
               </th>
+              <th className='payerTableTh payerTableThStates'>States</th>
+              <th className='payerTableTh payerTableThEligibility'>
+                Eligibility Check
+              </th>
               <th className='payerTableTh payerTableThIds'>
                 IDs (green indicates primary)
               </th>
@@ -261,17 +303,23 @@ export default function PayerTable() {
                   <td>
                     <div className='payerSkeleton payerSkeletonWide' />
                   </td>
+                  <td>
+                    <div className='payerSkeleton payerSkeletonWide' />
+                  </td>
+                  <td>
+                    <div className='payerSkeleton payerSkeletonWide' />
+                  </td>
                 </tr>
               ))
             ) : error ? (
               <tr style={{ border: 'none' }}>
-                <td colSpan={3} className='payerTableEmpty payerTableError'>
+                <td colSpan={4} className='payerTableEmpty payerTableError'>
                   Failed to load payers: {error}
                 </td>
               </tr>
             ) : payers.length === 0 ? (
               <tr style={{ border: 'none' }}>
-                <td colSpan={3} className='payerTableEmpty'>
+                <td colSpan={4} className='payerTableEmpty'>
                   No payers match your search.
                 </td>
               </tr>
@@ -296,6 +344,12 @@ export default function PayerTable() {
                         <code className='payerIdChip'>{row.verifiedId}</code>
                       </div>
                     </div>
+                  </td>
+                  <td className='payerTableTdStates'>
+                    <OperatingStates states={row.operatingStates} />
+                  </td>
+                  <td className='payerTableTdEligibility'>
+                    <EligibilityBadge support={row.eligibilitySupport} />
                   </td>
                   <td className='payerTableTdIds'>
                     <div className='payerIdChips'>

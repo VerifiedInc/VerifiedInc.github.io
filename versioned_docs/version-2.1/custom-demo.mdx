@@ -10,11 +10,10 @@ toc_max_heading_level: 2
 ---
 
 import { DemoEmailForm } from '@site/src/components/DemoEmailForm';
+import MarkdownFallback from '@site/src/components/MarkdownFallback';
 import WorkEmailAdmonition from '@site/versioned_docs/version-2.1/reusables/work-email-admonition.mdx';
 
-
 Our [Demo](https://1-click.demo.verified.inc) lets you experience [1-Click Signup](/1-click-signup) and [Text to Signup](/text-to-signup) firsthand. You can use it both in [Sandbox](/reference/api/environments#sandbox) (with mock data) and [Production](/reference/api/environments#production) (with your real, verified data).
-
 
 ## Generate a Custom Demo
 
@@ -23,22 +22,82 @@ You can instantly generate a custom version of the Demo anytime on our [website]
 <div class="two-column-grid-container">
     <div class="two-column-grid-row">
         <div class="two-column-grid-column">
-            <DemoEmailForm />
-        </div>
-        <div class="two-column-grid-column">
-            {/* Blank just to keep the form from being too wide */}
-        </div>
-    </div>
+            <MarkdownFallback
+              markdown={`The form on this page does this for you. To do it by hand, note that a demo
+that works across **both** environments needs the brand-creation endpoint called
+**twice**, once per environment with the same email, and the two resulting brand
+ids combined into a single URL.
+
+### Step 1: Create the brand in both environments
+
+Call both endpoints with the same email address:
+
+| Environment | Endpoint |
+| --- | --- |
+| Sandbox | \`POST https://sales-tools-service-api.sandbox-verifiedinc.com/customers/brands\` |
+| Production | \`POST https://sales-tools-service-api.verified.inc/customers/brands\` |
+
+Body is \`{"email":"you@company.com"}\`, content type \`application/json\`. Each
+returns a response shaped like:
+
+\`\`\`json
+{
+  "1ClickDemoUrl": "https://1-click.demo.<env>/register?brand=<uuid>",
+  "brandInfo": { }
+}
+\`\`\`
+
+### Step 2: Extract the brand id from each response
+
+The value you need is the \`brand\` query parameter off each response's own
+\`1ClickDemoUrl\`, not the full URL:
+
+\`\`\`bash
+prod_brand=$(curl -s -X POST https://sales-tools-service-api.verified.inc/customers/brands \\
+  -H 'Content-Type: application/json' -d '{"email":"you@company.com"}' \\
+  | jq -r '.["1ClickDemoUrl"]' | sed -n 's/.*brand=//p')
+
+sandbox_brand=$(curl -s -X POST https://sales-tools-service-api.sandbox-verifiedinc.com/customers/brands \\
+  -H 'Content-Type: application/json' -d '{"email":"you@company.com"}' \\
+  | jq -r '.["1ClickDemoUrl"]' | sed -n 's/.*brand=//p')
+\`\`\`
+
+### Step 3: Build the combined demo URL
+
+Production's brand id maps to \`primaryEnvBrand\`, sandbox's to
+\`secondaryEnvBrand\`. The base is production's own \`1ClickDemoUrl\` without its
+query string, which today is \`https://1-click.demo.verified.inc/register\`:
+
+\`\`\`
+https://1-click.demo.verified.inc/register?primaryEnvBrand=\${prod_brand}&secondaryEnvBrand=\${sandbox_brand}&configOpen=true
+\`\`\`
+
+\`configOpen=true\` opens the demo's configuration panel on load, and is optional.
+
+> ⚠️ The two single-env \`1ClickDemoUrl\` values you get back in Step 1 are **not**
+> directly usable as the combined link: they're per-environment demo links in their
+> own right (e.g. \`1-click.demo.sandbox-verifiedinc.com?brand=...\`). The combined,
+> environment-toggling demo lives only at \`1-click.demo.verified.inc/register\` and
+> needs both ids assembled as shown above.`} >
+
+<DemoEmailForm />
+</MarkdownFallback>
+</div>
+<div class="two-column-grid-column">
+{/* Blank just to keep the form from being too wide */}
+</div>
+</div>
+
 </div>
 
 <WorkEmailAdmonition />
 
-
 ## Access the Demo from the Dashboard
 
 You can also open versions of the Demo specific to your brand settings from within the [Dashboard](https://dashboard.verified.inc):
+
 1. Log into your Dashboard account.
 2. Go to the Brand Details page for one of your brands.
-3. Click the **Open Demo with These Settings** button. 
+3. Click the **Open Demo with These Settings** button.
 
 This will open a version of the Demo that reflects the brand settings you have configured in the Dashboard, making it easy to test that the flow works as you want it to.

@@ -57,10 +57,10 @@
         console.error('SDK error:', error.reason);
         switch (error.reason) {
             case SdkErrorReasons.INVALID_SESSION_KEY:
-                // Call POST /sessionKey on server to get a new session key
+                // Call POST /client/1-click on server to get a new session key
                 break;
             case SdkErrorReasons.SESSION_TIMEOUT:
-                // Call POST /sessionKey on server and create new VerifiedClientSdk instance
+                // Call POST /client/1-click on server and create new VerifiedClientSdk instance
                 break;
             case SdkErrorReasons.SHARE_CREDENTIALS_ERROR:
                 // Handle credential sharing error

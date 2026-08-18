@@ -1,0 +1,78 @@
+---
+id: dashboard-passkeys-guide
+title: Dashboard Passkeys Guide
+sidebar_position: 3
+sidebar_label: Dashboard Passkeys Guide
+sidebar_class_name: sidebar-header-regular
+description: How to set up passkeys for the Verified Dashboard
+slug: /dashboard-passkeys-guide
+toc_max_heading_level: 2
+---
+
+import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
+
+
+The Verified [Dashboard](https://dashboard.verified.inc) supports passkeys. This guide explains how to create a passkey for your account so you can sign in instantly, without a verification code.
+
+:::note What Is a Passkey?
+A passkey is a secure, phishing-resistant credential stored by your device or password manager (for example iCloud Keychain, a Chrome profile, or 1Password). It's a convenience layer on top of 1-Click login. You sign in once with 1-Click, then create a passkey to skip the verification code next time.
+:::
+
+:::caution Passkeys Are Not Available with SSO
+If your account signs in through [SSO](/dashboard-sso-guide), you'll use your identity provider to log in, and passkeys don't apply.
+:::
+
+
+<SetupLoginToDashboard/>
+
+
+## 2. Go to the Passkeys tab.
+
+<ol type="a">
+    <b><li>Click Account in the left menu.</li></b>
+    <b><li>Click the Passkeys tab.</li></b>
+</ol>
+
+If you don't have any passkeys yet, you'll see a **"No Passkeys Found"** message with a button to create one. Otherwise, you'll see a **"Your Passkeys"** table listing the passkeys on your account.
+
+
+## 3. Create a passkey.
+
+<ol type="a">
+    <b><li>Click the Create Passkey button (or the Create button, if you already have passkeys).</li></b>
+    <b><li>Follow your browser or password manager's prompt to save the passkey.</li></b>
+        <ul>
+            <li>The prompt depends on your device and browser. For example, iCloud Keychain on Safari, "Choose where to save your passkey" on Chrome, or an extension like 1Password. Choose whichever you prefer.</li>
+        </ul>
+</ol>
+
+Once you finish, you'll see a **"New passkey added successfully"** confirmation, and the passkey will appear in your **"Your Passkeys"** table.
+
+:::tip Create a Passkey Right After Login
+The first time you log in via 1-Click, we'll also offer to create a passkey on a **"Create a Passkey"** screen. You can create one there or click **Skip** and do it later from the Passkeys tab.
+:::
+
+
+## 4. Manage your passkeys.
+
+The **"Your Passkeys"** table shows each passkey's **Authenticator**, when it was **Created**, and when it was **Last Used**.
+
+To remove a passkey:
+
+<ol type="a">
+    <b><li>Click the Delete button next to the passkey.</li></b>
+    <b><li>Confirm in the Delete Passkey? dialog.</li></b>
+</ol>
+
+You'll see a **"Passkey deleted successfully"** confirmation. After deletion, you can no longer sign in with that passkey.
+
+
+## 5. Log in with your passkey.
+
+On the sign-in page, enter your email and continue. If a passkey exists for your account, we'll prompt you to sign in with it instead of emailing you a verification code. If you have multi-factor authentication (MFA) set up, you'll still complete that step afterward.
+
+:::note
+If you cancel the passkey prompt, or sign in on a device without your passkey, we'll fall back to standard 1-Click email login. Your passkeys stay available on any device where they're saved.
+:::
+
+**That's it! You can now sign in to your account with a passkey. ✅**

@@ -127,6 +127,14 @@ To trigger the autofill, call [`POST /1-click/verifications`](/reference/api/end
 
 <ApiKeysAdmonition />
 
+This call is made from your server, but it does not return the result directly. Instead, it responds with an **HTTP `302` redirect** and a `Location` header. Pass that `Location` URL to your frontend and open it on the user's device (the same device whose `deviceIp` you sent), for example by navigating the user's browser to it.
+
+:::caution Follow the Redirect on the User's Device
+The redirect must be followed from the user's device, not from your server. Autofill relies on the redirect being followed from the same device whose `deviceIp` you sent, so following it server side will cause autofill to fail.
+
+This applies to **API** integrations only. If you use our **SDK**, it handles this redirect flow for you automatically.
+:::
+
 If autofill succeeds, the response body will contain the user's _verified_ phone number — like magic! You're done.
 
 <Post1ClickVerificationsResponseBodyVerifiedExample/>

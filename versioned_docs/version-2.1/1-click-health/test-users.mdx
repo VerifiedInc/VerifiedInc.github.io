@@ -773,3 +773,40 @@ Outputs:
         </tr>
     </tbody>
 </table>
+
+
+---
+
+
+## Eligibility Check
+
+The test users above are for insurance **autofill**. To test an **[eligibility check](/1-click-health/guides/api-integration#eligibility-check)** instead, send a `payer` and a `memberId` (any value) along with the user's PII. In [Sandbox](/reference/api/environments#sandbox), the following test users return active coverage. Any other input returns "No coverage found."
+
+<table>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Birth Date</th>
+        <th>Payer</th>
+    </tr>
+    <tr>
+        <td>Bertram</td>
+        <td>Gilfoyle</td>
+        <td>1995-08-19</td>
+        <td>Blue Cross Blue Shield of Michigan</td>
+    </tr>
+    <tr>
+        <td>Bertram</td>
+        <td>Gilfoyle</td>
+        <td>1990-01-01</td>
+        <td>Anthem Blue Cross Blue Shield of New York</td>
+    </tr>
+    <tr>
+        <td>Bertram</td>
+        <td>Gilfoyle</td>
+        <td>1980-03-03</td>
+        <td>Cigna</td>
+    </tr>
+</table>
+
+Send these as the `fullName`, `birthDate`, and `payer` inputs (plus any `memberId`) to [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth). A successful response contains an `eligibility` object and the raw `edi_271`, which indicate that the eligibility check ran.

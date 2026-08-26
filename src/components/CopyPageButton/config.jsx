@@ -20,12 +20,12 @@ export const DEFAULT_ALIGN = 'right';
 export const DEFAULT_STATUS_RESET_MS = 2000;
 
 export const DEFAULT_LABELS = {
-  copyPage: 'Copy page',
+  copyPage: 'Copy Page for AI',
   copied: 'Copied',
-  copyFailed: 'Copy failed',
+  copyFailed: 'Copy Failed',
   copyMarkdown: 'Copy as Markdown',
   viewMarkdown: 'View as Markdown',
-  moreOptions: 'More copy options',
+  moreOptions: 'More Copy Options',
 };
 
 /**

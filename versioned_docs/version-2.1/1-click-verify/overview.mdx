@@ -19,6 +19,7 @@ import HowToTestAdmonition from '@site/versioned_docs/version-2.1/reusables/how-
 import DocCardList from '@theme/DocCardList';
 import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-recommendation-admonition.mdx';
 import PrivacyFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/privacy-first-admonition.mdx';
+import AutofillCoverageCalculator from '@site/src/components/AutofillCoverageCalculator';
 
 
 <table>
@@ -30,13 +31,14 @@ import PrivacyFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/p
         <th>Benefits</th>
         <td>
             - Magically autofill verified user phone numbers _with no user input!_
-            - Easily verify user phone numbers (and soon emails) with SMS verification codes
+            - Silently verify user inputted phone numbers, _with no SMS!_
+            - Easily verify user inputted phone numbers with SMS verification codes and links
             - Seamlessly integrate with [1-Click Signup](/1-click-signup) and [1-Click Health](/1-click-health)
         </td>
     </tr>
     <tr>
         <th>Coverage</th>
-        <td>~99% of US adults (>264M people)</td>
+        <td>~100% of US adults (>270M people)</td>
     </tr>
     <tr>
         <th>Setup Time</th>
@@ -51,7 +53,14 @@ import PrivacyFirstAdmonition from '@site/versioned_docs/version-2.1/reusables/p
 
 ## About 1-Click Verify
 
-**1-Click Verify is our dedicated solution for autofilling and verifying user phone numbers** (and soon emails). Collecting a user's verified phone number is necessary to use our flagship [1-Click Signup](/1-click-signup) product, so 1-Click Verify provides a powerful and easy to integrate solution.
+**1-Click Verify is the _best_ way to capture a user's real phone number.** It works by waterfalling across three channels:
+1. **Autofill:** We autofill the user's _verified_ phone number (with no user input!).
+2. **Silent:** We silently verify a phone number the user inputted (with no user SMS!).
+3. **SMS:** We verify a phone number the user inputted by sending them an SMS with a verification code and/or link.
+
+See [coverage](#coverage) for details on how often each of these channels succeeds.
+
+Collecting a user's verified phone number is necessary to use our flagship [1-Click Signup](/1-click-signup) product, so 1-Click Verify provides a powerful and easy to integrate solution.
 
 <PrivacyFirstAdmonition />
 
@@ -70,16 +79,14 @@ Autofilling verified phone numbers and sending SMS in the US requires onerous co
 
 ## Coverage
 
-1-Click Verify works for 99% of US adults (264M people): anyone with a cell phone!
-
-That said, coverage is different for the two 1-Click Verify channels:
-- **Autofill:** The autofill channel is currently only available a minority of the time. The exact coverage will depend on your use case — the main factors being whether a user is on WiFi vs. cell data and whether their phone carrier supports autofill — but we typically see it work for about 1 in 6 sessions. 
-- **SMS:** The SMS channel works for 99% of users — anyone with a cell phone. It uses industry standard SMS verification codes.
+1-Click Verify works for ~100% of US adults (264M people): anyone with a cell phone! That said, coverage varies across the three channels and depends on some details of your use case and implementation. Use the calculator below to estimate coverage.
 
 :::tip
-Even if the autofill channel only works for a small percentage of your users, it will substantially boost overall conversion (and user delight!) in your onboarding flow, so we highly recommend it.
+Even if the autofill or silent channels only work for a small percentage of your users, they can _substantially_ boost overall conversion (and user delight!) in your onboarding flow, so we highly recommend them.
 :::
 
 :::important
 **We currently only cover people in the United States,** but we're soon adding new geographies. If there are particular geographies that would be most helpful for your use case, please let us know by emailing Support@Verified.inc, and we'll prioritize accordingly.
 :::
+
+<AutofillCoverageCalculator/>

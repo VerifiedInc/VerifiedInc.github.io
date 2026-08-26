@@ -35,7 +35,7 @@ import OneClickEntityExample from '@site/versioned_docs/version-2.1/reusables/1-
 import OneClickHealthEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-health-entity-example.mdx'
 import PayerExampleAetna from '@site/versioned_docs/version-2.1/reusables/payer-example-aetna.mdx'
 import PayerExampleUnitedHealthcare from '@site/versioned_docs/version-2.1/reusables/payer-example-unitedhealthcare.mdx'
-import OneClickVerificationEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-verification-entity-example.mdx'
+import OneClickVerificationEntityExampleAutofill from '@site/versioned_docs/version-2.1/reusables/1-click-verification-entity-example-autofill.mdx'
 import ErrorType from '@site/versioned_docs/version-2.1/reusables/error-type.mdx'
 import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error-example-oce011.mdx'
 import ErrorExampleOce017 from '@site/versioned_docs/version-2.1/reusables/error-example-oce017.mdx'
@@ -1134,8 +1134,9 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
 {
     uuid: string,
     phone: string,
-    channel: string,
-    status: string,
+    channel: "textToSignup" | "autofill" | "silent" | "sms",
+    format?: "code" | "link", // only relevant for the SMS channel
+    status: "pending" | "sending" | "delivered" | "verified" | "expired" | "failed",
     verified: boolean,
     createdAt: integer,
     expiresAt: integer,
@@ -1174,15 +1175,31 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
                 <summary>`enum`</summary>
 
                 Possible values:
-                    - `"autofill"`
                     - `"textToSignup"`
+                    - `"autofill"`
+                    - `"silent"`
                     - `"sms"`
-                    {/* - `"email"` <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/> */}
+                    - `"email"` <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/>
             </details>
         </td>
         <td>`camelCase`</td>
         <td>The channel used for verification</td>
         <td>`"textToSignup"`</td>
+    </tr>
+    <tr>
+        <td>`format`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"code"`
+                    - `"link"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>The format of the verification message (only relevant for the SMS channel)</td>
+        <td>`"link"`</td>
     </tr>
     <tr>
         <td>`status`</td>
@@ -1250,7 +1267,7 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
 
 ### Example {#example-1clickverificationentity}
 
-<OneClickVerificationEntityExample/>
+<OneClickVerificationEntityExampleAutofill/>
 
 ---
 

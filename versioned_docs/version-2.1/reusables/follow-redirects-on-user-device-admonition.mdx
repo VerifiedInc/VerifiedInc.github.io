@@ -1,0 +1,3 @@
+:::warning Follow Redirects on the User's Device
+**You must follow redirects on the user's device, _not_ on your server.** The autofill and silent channels rely on redirects being followed on the same device whose `deviceIp` you sent to `POST /1-click/verifications`, so following them server side will cause an error.
+:::

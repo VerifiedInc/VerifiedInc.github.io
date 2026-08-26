@@ -40,7 +40,56 @@ import RiskSignalsEnableMultipleAddressesAdmonition from '@site/versioned_docs/v
 > An **output** is a piece of data we return from the SDK or API.
 
 
+## Text to Signup
+
+<table>
+    <tr>
+        <th>Output</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td>`phone`</td>
+        <td>`string`</td>
+        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
+        <td>Phone number a user uses to verify for 1-Click Signup</td>
+        <td>`"+12125550010"`</td>
+    </tr>
+</table>
+
+
 ## 1-Click Verify
+
+<table>
+    <tr>
+        <th>Output</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Device IP</td>
+        <td>`deviceIp`</td>
+        <td>`string`</td>
+        <td>[IPv6](https://en.wikipedia.org/wiki/IPv6_address)</td>
+        <td>IPv6 address of user's device</td>
+        <td>`"::121:2555:0010"`</td>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td>`phone`</td>
+        <td>`string`</td>
+        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
+        <td>Phone number a user uses to verify for 1-Click Signup</td>
+        <td>`"+12125550010"`</td>
+    </tr>
+</table>
 
 
 ## 1-Click Signup
@@ -836,7 +885,7 @@ We're working on adding support for new types of government ID. Let us know what
     </tr>
     <tr>
         <td>↳ ↳ Line 1</td>
-        <td>`property.address.line1`</td>
+        <td>`employer.address.line1`</td>
         <td>`string`</td>
         <td>`Title Case`</td>
         <td>Line 1 of address</td>
@@ -844,7 +893,7 @@ We're working on adding support for new types of government ID. Let us know what
     </tr>
     <tr>
         <td>↳ ↳ Line 2</td>
-        <td>`property.address.line2`</td>
+        <td>`employer.address.line2`</td>
         <td>`string`</td>
         <td>`Title Case`</td>
         <td>Line 2 of address</td>
@@ -852,7 +901,7 @@ We're working on adding support for new types of government ID. Let us know what
     </tr>
     <tr>
         <td>↳ ↳ City</td>
-        <td>`property.address.city`</td>
+        <td>`employer.address.city`</td>
         <td>`string`</td>
         <td>`Title Case`</td>
         <td>City of address</td>
@@ -860,7 +909,7 @@ We're working on adding support for new types of government ID. Let us know what
     </tr>
     <tr>
         <td>↳ ↳ State</td>
-        <td>`property.address.state`</td>
+        <td>`employer.address.state`</td>
         <td>`string`</td>
         <td>
             - **Default:** 2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)
@@ -874,7 +923,7 @@ We're working on adding support for new types of government ID. Let us know what
     </tr>
     <tr>
         <td>↳ ↳ ZIP Code</td>
-        <td>`property.address.zipCode`</td>
+        <td>`employer.address.zipCode`</td>
         <td>`string`</td>
         <td>[ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9) or [ZIP+4](https://en.wikipedia.org/wiki/ZIP_Code#ZIP+4) (9 digits, 0-9, with a hypen after the first 5)</td>
         <td>ZIP code of address</td>
@@ -882,7 +931,7 @@ We're working on adding support for new types of government ID. Let us know what
     </tr>
     <tr>
         <td>↳ ↳ Country</td>
-        <td>`property.address.country`</td>
+        <td>`employer.address.country`</td>
         <td>`string`</td>
         <td>
             - **Default:** 2 letter abbreviation ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, currently always `"US"`)

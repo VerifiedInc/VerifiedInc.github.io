@@ -54,6 +54,7 @@ import DeviceIpEndpointAdmonition from '@site/versioned_docs/version-2.1/reusabl
 import OneClickVerificationEntityExampleSmsLink from '@site/versioned_docs/version-2.1/reusables/1-click-verification-entity-example-sms-link.mdx'
 import VerificationSmsFormatsAdmonition from '@site/versioned_docs/version-2.1/reusables/verification-sms-formats-admonition.mdx';
 import FollowRedirectsSection from '@site/versioned_docs/version-2.1/reusables/follow-redirects-section.mdx';
+import EndpointRequiresAuthenticationAdmonition from '@site/versioned_docs/version-2.1/reusables/endpoint-requires-authentication-admonition.mdx';
 
 <table>
   <tr>
@@ -123,7 +124,7 @@ Implementing the 1-Click Verify API is as simple as getting the user's device IP
 
 ## 1. Get user's device IP.
 
-Get the user's device IP address (over a cellular connection if possible), which you'll use in [step 2](#2-get-channel-availability), [step 3](#3-use-autofill-channel), and [step 4b](#b-use-silent-channel). You should do this slightly differently on native mobile vs. web, as described in the sections below.
+Get the user's device IP address (over a cellular connection if possible), which you'll use in [step 2](#2-try-autofill-channel), and [step 3b](#b-try-silent-channel). You should do this slightly differently on native mobile vs. web, as described in the sections below.
 
 :::tip Native Mobile vs. Web
 **On native mobile (but not on web), you can and should choose a cellular connection even if the user is on WiFi.** Doing this results in much higher success rates, because the autofill and silent channels (which have higher conversion than the SMS channel) only work with device IPs determined over cellular connections.
@@ -142,7 +143,7 @@ We don't distribute this as a package so that you don't need to introduce any ne
 
 Call `VerifiedCellular.getDeviceIp()`. It will return the user's device IP address, determined over a cellular connection:
 
-```typescript title="getDeviceIp() Return Value Example"
+```typescript title="VerifiedCellular.getDeviceIp() Return Value Example"
 "::121:2555:0010"
 ```
 
@@ -165,27 +166,28 @@ Call [`GET /1-click/verifications/device-ip`](/reference/api/endpoints#get-1-cli
 The [`GET /1-click/verifications/device-ip`](/reference/api/endpoints#get-1-click-verifications-device-ip) endpoint handles everything for you, and it's completely free to use, so we strongly recommend using it.
 :::
 
-If you aren't able to get the user's device IP, fall back to [step 4c](#c-if-necessary-fall-back-to-sms-channel).
+If you aren't able to get the user's device IP, fall back to [step 3c](#c-if-necessary-fall-back-to-sms-channel).
+
+<details>
+  <summary>(Optional) Getting Channel Availability in Advance</summary>
+
+  You can optionally get channel availability in advance, based on the user's device IP. This isn't necessary because, when you try each channel, we'll respond if the channel isn't available. That only takes about 0.5 seconds, and there's no charge for it. However, if you prefer to check once, upfront, which channels are available, we provide a way to do that:
+
+  Call [`GET /1-click/verifications/channels?deviceIp={deviceIp}`](/reference/api/endpoints#get-1-click-verifications-channels), server side, with the user's device IP address from [step 1](#1-get-users-device-ip) as the value of the `deviceIp` query parameter.
+
+  <EndpointRequiresAuthenticationAdmonition/>
+
+  <ApiKeysAdmonition/>
+
+  The response body will indicate which channels are available:
+
+  <Get1ClickVerificationsChannelsResponseBodyExample/>
+
+  Your implementation logic should follow the rest of this guide based on which channels are available.
+</details>
 
 
-## 2. Get channel availability.
-
-Call [`GET /1-click/verifications/channels?deviceIp={deviceIp}`](/reference/api/endpoints#get-1-click-verifications-channels), server side, with the user's device IP address from [step 1](#1-get-users-device-ip) as the value of the `deviceIp` query parameter.
-
-:::important
-**This endpoint requires authentication** (like most Verified API endpoints and all of the other ones referenced in this guide). You should call it from your server, with your Verified API key.
-:::
-
-<ApiKeysAdmonition />
-
-The response body will indicate which channels are available:
-
-<Get1ClickVerificationsChannelsResponseBodyExample/>
-
-Your implementation logic should follow the rest of this guide based on which channels are available.
-
-
-## 3. Use autofill channel.
+## 2. Try autofill channel.
 
 Call [`POST /1-click/verifications`](/reference/api/endpoints#post-1-click-verifications), setting `channel` to `autofill` and `deviceIp` to the user's device IP address from [step 1](#1-get-users-device-ip):
 
@@ -195,6 +197,10 @@ Call [`POST /1-click/verifications`](/reference/api/endpoints#post-1-click-verif
     "deviceIp": "::121:2555:0010"
 }
 ```
+
+<EndpointRequiresAuthenticationAdmonition/>
+
+<ApiKeysAdmonition />
 
 <FollowRedirectsSection/>
 
@@ -207,7 +213,7 @@ We use autofill and verify the user's phone number directly from the SIM/eSIM in
 :::
 
 
-## 4. (if necessary) Fall back to silent channel.
+## 3. (if necessary) Fall back to silent channel.
 
 If the autofill channel isn't available or fails, fall back to the silent channel. For this channel, the user will have to input their phone number, but they won't have to receive an SMS or use a verification code or link.
 
@@ -219,9 +225,9 @@ If the autofill channel isn't available or fails, fall back to the silent channe
 We recommend using a phone number input that auto submits when the user enters 10 digits. (See the [Phone](/1-click-signup/user-experience#phone) screen of the 1-Click Signup User Experience guide for full details.)
 
 
-### b. Use silent channel.
+### b. Try silent channel.
 
-Call [`POST /1-click/verifications`](/reference/api/endpoints#post-1-click-verifications), setting `channel` to `silent`, `deviceIp` to the user's device IP address from [step 1](#1-get-users-device-ip), and `phone` to the user's phone number from [step 4a](#a-prompt-user-for-phone-number):
+Call [`POST /1-click/verifications`](/reference/api/endpoints#post-1-click-verifications), setting `channel` to `silent`, `deviceIp` to the user's device IP address from [step 1](#1-get-users-device-ip), and `phone` to the user's phone number from [step 3a](#a-prompt-user-for-phone-number):
 
 ```typescript title="POST /1-click/verifications Request Body Example (silent channel)"
 {
@@ -249,7 +255,7 @@ If the silent channel isn't available or fails, fall back to the SMS channel. Fo
 
 #### i. Start verification flow.
 
-Call [`POST /1-click/verifications`](/reference/api/endpoints#post-1-click-verifications), setting `channel` to `sms` and `phone` to the user's phone number from [step 4a](#a-prompt-user-for-phone-number):
+Call [`POST /1-click/verifications`](/reference/api/endpoints#post-1-click-verifications), setting `channel` to `sms` and `phone` to the user's phone number from [step 3a](#a-prompt-user-for-phone-number):
 
 ```typescript title="POST /1-click/verifications Request Body Example (SMS channel)"
 {
@@ -338,13 +344,13 @@ In the [Sandbox](/reference/api/environments#sandbox) environment, we also appen
 </Admonition>
 
 <Admonition type="danger">
-**A user arriving at your [redirect URL](#redirect-url) with a `verificationUuid` URL parameter is NOT a technical guarantee that the user's phone is verified!** If your use case needs such a guarantee, you must confirm the phone is verified using [step 4ciiiB](#b-get-verification-status) and [step 4ciiiC](#c-check-verified).
+**A user arriving at your [redirect URL](#redirect-url) with a `verificationUuid` URL parameter is NOT a technical guarantee that the user's phone is verified!** If your use case needs such a guarantee, you must confirm the phone is verified using [step 3ciiiB](#b-get-verification-status) and [step 3ciiiC](#c-check-verified).
 <details>
     <summary>Why is this the case?</summary>
 
     A bad actor can figure out what the redirect URL is (for example by simply going through the flow themselves) and then append a `verificationUuid` parameter with a random UUID value.
 
-    So, to confirm the user's phone is verified, you need to _use_ the value of the `verificationUuid` parameter to call `GET /1-click/verifications/{uuid}` (see [step 4ciiiB](#b-get-verification-status)) and then check `verified` in the response (see [step 4ciiiC](#c-check-verified)). This _can't_ be spoofed, because a bad actor doesn't have any way of correctly guessing a _valid_ UUID value for `verificationUuid`.
+    So, to confirm the user's phone is verified, you need to _use_ the value of the `verificationUuid` parameter to call `GET /1-click/verifications/{uuid}` (see [step 3ciiiB](#b-get-verification-status)) and then check `verified` in the response (see [step 3ciiiC](#c-check-verified)). This _can't_ be spoofed, because a bad actor doesn't have any way of correctly guessing a _valid_ UUID value for `verificationUuid`.
 </details>
 </Admonition>
 
@@ -407,7 +413,7 @@ Autofilling phone numbers, verifying phone numbers, and sending SMS are subject 
 
 ### Autofill and Silent Channels
 
-Before you call `POST /1-click/verifications` ([step 3](#3-use-autofill-channel) and [step 4b](#b-use-silent-channel)), you must have the user agree to your terms, and those terms must include this 1-Click Verify autofill channel consent language:
+Before you call `POST /1-click/verifications` (for [step 2](#2-try-autofill-channel) and [step 3b](#b-try-silent-channel)), you must have the user agree to your terms, and those terms must include this 1-Click Verify autofill channel consent language:
 
 > You authorize your wireless carrier to use or disclose information about your account and your wireless device, if available, to `{Brand Name}` or its service providers for the duration of your business relationship, solely to help us identify you or your wireless device and to prevent fraud. See our Privacy Policy to see how we treat your data.
 
@@ -435,7 +441,7 @@ If you have earlier steps in your flow, you can use one of those as the trigger 
 
 ### SMS Channel
 
-Before you call `POST /1-click/verifications/{uuid}/deliver` ([step 4cii](#ii-deliver-verification-message)), you must include this 1-Click Verify SMS channel consent language:
+Before you call `POST /1-click/verifications/{uuid}/deliver` ([step 3cii](#ii-deliver-verification-message)), you must include this 1-Click Verify SMS channel consent language:
 
 > I authorize [Verified](https://verified.inc) to send me SMS verification texts at the number provided. Msg & Data rates may apply.
 

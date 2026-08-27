@@ -33,12 +33,8 @@ sequenceDiagram
         C ->>+ V: Call GET /1-click/verifications/device-ip
         V ->>- C: Return device IP
     end
-
-    Note left of U: 2. Get channel availability.
-    C ->>+ V: Call GET /1-click/verifications/channels?deviceIp={deviceIp}
-    V ->>- C: Return availability
     
-    Note left of U: 3. Use autofill channel.
+    Note left of U: 2. Use autofill channel.
     C ->>+ V: Call POST /1-click/verifications (with autofill channel)
     V ->>- C: Return 302 redirect with Location URL
     alt Native Mobile
@@ -52,11 +48,11 @@ sequenceDiagram
     else Error
         V ->> C: Return error
 
-        Note left of U: 4a. Prompt user for phone number.
+        Note left of U: 3a. Prompt user for phone number.
         C ->>+ U: Show phone number field
         U ->>- C: Enter phone number
 
-        Note left of U: 4b. Use silent channel.
+        Note left of U: 3b. Use silent channel.
         C ->>+ V: Call POST /1-click/verifications (with silent channel)
         V ->>- C: Return 302 redirect with Location URL
         alt Native Mobile
@@ -70,33 +66,33 @@ sequenceDiagram
         else Error
             V ->> C: Return error
 
-            Note left of U: 4c. Fall back to SMS channel.
+            Note left of U: 3c. Fall back to SMS channel.
 
-            Note left of U: 4ci. Start verification flow.
+            Note left of U: 3ci. Start verification flow.
             C ->>+ V: Call POST /1-click/verifications (with SMS channel)
             V ->>- C: Return pending 1ClickVerificationEntity
 
-            Note left of U: 4cii. Deliver verification message.
+            Note left of U: 3cii. Deliver verification message.
             C ->>+ V: Call POST /1-click/verifications/{uuid}/deliver
             V ->>- C: Return sending 1ClickVerificationEntity
 
-            Note left of U: 4ciii. Finish verification flow.
+            Note left of U: 3ciii. Finish verification flow.
             alt Code
 
-                Note left of U: 4ciiiA. Prompt user for verification code.
+                Note left of U: 3ciiiA. Prompt user for verification code.
                 C ->>+ U: Show verification code field
                 U ->>- C: Enter verification code
 
-                Note left of U: 4ciiiB. Verify verification code.
+                Note left of U: 3ciiiB. Verify verification code.
                 C ->>+ V: Call POST /1-click/verifications/{uuid}/verify
                 V ->>- C: Return verified 1ClickVerificationEntity
                 Note left of C: Done!
             else Link
 
-                Note left of U: 4ciiiA. Parse URL parameter.
+                Note left of U: 3ciiiA. Parse URL parameter.
                 C ->> C: Parse verificationUuid value.
 
-                Note left of U: 4ciiiB. Get verification status.
+                Note left of U: 3ciiiB. Get verification status.
                 C ->>+ V: Call GET /1-click/verifications/{uuid}.
                 V ->>- C: Return verified 1ClickVerificationEntity
                 Note left of C: Done!

@@ -6,7 +6,7 @@ sidebar_position: 1
 sidebar_class_name: sidebar-header-regular
 description: Output data returned by the Verified API
 slug: /reference/data/outputs
-toc_max_heading_level: 5
+toc_max_heading_level: 6
 ---
 
 import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
@@ -1305,7 +1305,7 @@ We and other companies assign specific services — called "risky services" — 
         <td>`overall`</td>
         <td>`object`</td>
         <td>Object with keys for all overall risk signals listed below</td>
-        <td>Overall risk signals, considering all identifiers provided</td>
+        <td>Overall risk signals, considering all relevant inputs provided</td>
         <td>
             See [`RiskSignals` example](/reference/api/types#example-risksignals)
         </td>
@@ -1319,7 +1319,7 @@ We and other companies assign specific services — called "risky services" — 
         <td>
             Number from 0 (low risk) to 1000 (high risk)
         </td>
-        <td>Overall risk score, considering all identifiers provided. (If the score is over 600, Verified blocks the user and returns a [`OCE017` error](/reference/api/errors#oce017).)</td>
+        <td>Overall risk score, considering all relevant inputs provided. (If the score is over 600, Verified blocks the user and returns a [`OCE017` error](/reference/api/errors#oce017).)</td>
         <td>
             `463`
         </td>
@@ -1342,7 +1342,7 @@ We and other companies assign specific services — called "risky services" — 
         <td>
             `kebab-case`
         </td>
-        <td>Overall risk level, considering all identifiers provided. (This is a bucketing of the risk score, where `0`-`200` is `"low"`, `201`-`400` is `"medium-low"`, `401`-`600` is `"medium"`, `601`-`800` is `"medium-high"`, and `801`-`1000` is `"high"`.)</td>
+        <td>Overall risk level, considering all relevant inputs provided. (This is a bucketing of the risk score, where `0`-`200` is `"low"`, `201`-`400` is `"medium-low"`, `401`-`600` is `"medium"`, `601`-`800` is `"medium-high"`, and `801`-`1000` is `"high"`.)</td>
         <td>
             `"medium"`
         </td>
@@ -1363,7 +1363,7 @@ We and other companies assign specific services — called "risky services" — 
         <td>
             `kebab-case`
         </td>
-        <td>Overall risk recommendation, considering all identifiers provided. (This is a bucketing of the risk level, where `"low"` and `"medium-low"` are `"allow"`, `"medium"` is `"flag"`, and `"medium-high"` and `"high"` are `"block"`.)</td>
+        <td>Overall risk recommendation, considering all relevant inputs provided. (This is a bucketing of the risk level, where `"low"` and `"medium-low"` are `"allow"`, `"medium"` is `"flag"`, and `"medium-high"` and `"high"` are `"block"`.)</td>
         <td>
             `"flag"`
         </td>
@@ -1381,7 +1381,7 @@ We and other companies assign specific services — called "risky services" — 
         <td>
             `"OCR"` (for One Click Reason) followed by 5 digits (0-9)
         </td>
-        <td>Overall reason codes for risk score/level/recommendation, considering all identifiers provided</td>
+        <td>Overall reason codes for risk score/level/recommendation, considering all relevant inputs provided</td>
         <td>
             `"OCR10021"`
         </td>
@@ -1390,8 +1390,8 @@ We and other companies assign specific services — called "risky services" — 
         <td>Phone</td>
         <td>`phone`</td>
         <td>`object`</td>
-        <td>Object with keys for all phone identifier risk signals listed below</td>
-        <td>Phone identifier risk signals</td>
+        <td>Object with keys for all phone risk signals listed below</td>
+        <td>Phone risk signals</td>
         <td>
             See [`RiskSignals` example](/reference/api/types#example-risksignals)
         </td>
@@ -1435,7 +1435,7 @@ We and other companies assign specific services — called "risky services" — 
         <td>
             `"OCR"` (for One Click Reason) followed by 5 digits (0-9)
         </td>
-        <td>Phone identifier reason codes for risk score/level/recommendation</td>
+        <td>Phone reason codes for risk score/level/recommendation</td>
         <td>
             `"OCR20004"`
         </td>
@@ -1444,8 +1444,8 @@ We and other companies assign specific services — called "risky services" — 
         <td>Email</td>
         <td>`email`</td>
         <td>`object`</td>
-        <td>Object with keys for all email identifier risk signals listed below</td>
-        <td>Email identifier risk signals</td>
+        <td>Object with keys for all email risk signals listed below</td>
+        <td>Email risk signals</td>
         <td>
             See [`RiskSignals` example](/reference/api/types#example-risksignals)
         </td>
@@ -1463,17 +1463,16 @@ We and other companies assign specific services — called "risky services" — 
         <td>
             `"OCR"` (for One Click Reason) followed by 5 digits (0-9)
         </td>
-        <td>Email identifier reason codes for risk score/level/recommendation</td>
+        <td>Email reason codes for risk score/level/recommendation</td>
         <td>
             `"OCR60001"`
         </td>
     </tr>
-    {/* Commenting out until we support IP address identifiers */}
-    {/* <tr>
-        <td>IP Address</td>
-        <td>`ipAddress`</td>
+    <tr>
+        <td>Device IP</td>
+        <td>`deviceIp`</td>
         <td>`object`</td>
-        <td>Object with keys for all IP address identifier risk signals listed below</td>
+        <td>Object with keys for all device IP risk signals listed below</td>
         <td>IP address identifier risk signals</td>
         <td>
             See [`RiskSignals` example](/reference/api/types#example-risksignals)
@@ -1481,32 +1480,32 @@ We and other companies assign specific services — called "risky services" — 
     </tr>
     <tr>
         <td>↳ Reason Codes</td>
-        <td>`ipAddress.reasonCodes`</td>
+        <td>`deviceIp.reasonCodes`</td>
         <td>
             <details>
                 <summary>`enum[]`</summary>
-                Possible values: see [IP Address](#ip-address) reason codes
+                Possible values: see [Device IP](#device-ip) reason codes
             </details>
         </td>
         <td>
             `"OCR"` (for One Click Reason) followed by 5 digits (0-9)
         </td>
-        <td>IP address identifier reason codes for risk score/level/recommendation</td>
+        <td>Device IP reason codes for risk score/level/recommendation</td>
         <td>
             `"OCR50001"`
         </td>
-    </tr> */}
+    </tr>
 </table>
 
-</CollapsibleSection>
 
-</CollapsibleGroup>
-
-
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
 ##### Reason Codes {#reason-codes}
+</CollapsibleHeader>
 
 
-<CollapsibleGroup firstSectionExpanded={false}>
+<CollapsibleGroup>
 <CollapsibleSection>
 <CollapsibleHeader>
 ###### Overall {#overall}
@@ -1644,7 +1643,10 @@ We and other companies assign specific services — called "risky services" — 
 </table>
 
 </CollapsibleSection>
+</CollapsibleGroup>
 
+
+<CollapsibleGroup>
 <CollapsibleSection>
 <CollapsibleHeader>
 ###### Phone {#phone}
@@ -2665,7 +2667,10 @@ We and other companies assign specific services — called "risky services" — 
 </table>
 
 </CollapsibleSection>
+</CollapsibleGroup>
 
+
+<CollapsibleGroup>
 <CollapsibleSection>
 <CollapsibleHeader>
 ###### Email {#email}
@@ -2787,12 +2792,14 @@ We and other companies assign specific services — called "risky services" — 
     </tr>
 </table>
 
-{/* Commenting out until we support IP address identifiers */}
+</CollapsibleSection>
+</CollapsibleGroup>
 
-{/* 
+
+<CollapsibleGroup>
 <CollapsibleSection>
 <CollapsibleHeader>
-###### IP Address {#ip-address}
+###### Device IP {#device-ip}
 </CollapsibleHeader>
 
 <table>
@@ -3101,7 +3108,13 @@ We and other companies assign specific services — called "risky services" — 
         <td>
         </td>
     </tr>
-</table> */}
+</table>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+</CollapsibleSection>
+</CollapsibleGroup>
 
 </CollapsibleSection>
 </CollapsibleGroup>

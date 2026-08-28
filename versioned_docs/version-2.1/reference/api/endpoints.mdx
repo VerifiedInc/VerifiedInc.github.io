@@ -57,6 +57,7 @@ import PostClient1ClickRequestBody from '@site/versioned_docs/version-2.1/reusab
 import PostClient1ClickResponseBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-response-body.mdx';
 import DeviceIpEndpointAdmonition from '@site/versioned_docs/version-2.1/reusables/device-ip-endpoint-admonition.mdx';
 import VerificationSmsFormatsAdmonition from '@site/versioned_docs/version-2.1/reusables/verification-sms-formats-admonition.mdx';
+import FollowRedirectsOnUserDeviceAdmonition from '@site/versioned_docs/version-2.1/reusables/follow-redirects-on-user-device-admonition.mdx';
 
 {/* TODO: Update Swagger URLs */}
 
@@ -370,7 +371,7 @@ postmanUrl=''>
     </tr>
     <tr>
         <td>`deviceIp`</td>
-        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required if `channel` is `"autofill"` or `"silent"`)</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if `channel` is `"autofill"` or `"silent"`</td>
         <td>`string`</td>
         <td>[IPv6 address](https://en.wikipedia.org/wiki/IPv6_address)</td>
         <td>-</td>
@@ -379,7 +380,7 @@ postmanUrl=''>
     </tr>
     <tr>
         <td>`phone`</td>
-        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required if `channel` is `"silent"` or `"sms"`)</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if `channel` is `"silent"` or `"sms"`</td>
         <td>`string`</td>
         <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
         <td>-</td>
@@ -390,6 +391,11 @@ postmanUrl=''>
 
 
 #### Response {#post-1-click-verifications-response}
+
+When `channel` is set to `autofill` or `silent`, the response will be an HTTP `302` redirect and a `Location` header with a URL value. You should pass this URL to your client, on the user's device, and handle it as described in the 1-Click Verify API Integration guide, [for autofill](/1-click-verify/guides/api-integration#2-try-autofill-channel) and [for silent](/1-click-verify/guides/api-integration#b-try-silent-channel). The end result will be as shown below.
+
+Then `channel` is set to `sms`, the response body is directly as shown below.
+
 
 ```typescript title="POST /1-click/verifications Response Body"
 {
@@ -641,46 +647,6 @@ See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).
 
 ## 1-Click Signup
 
-<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#e80daa1e-5337-4f6f-b769-d46a9bc72e0c'>
-  ### `GET /1-click`
-</EndpointHeaderWithoutSwagger>
-
-> Get data for a user who has completed a 1-Click Signup flow
-
-<table>
-  <tr>
-    <th>Method</th>
-    <td>`GET`</td>
-  </tr>
-  <tr>
-    <th>Path</th>
-    <td>`/1-click/{identityUuid}`</td>
-  </tr>
-</table>
-
-
-#### Request {#get-1-click-request}
-
-Call:
-
-```
-GET /1-click/{identityUuid}
-```
-
-- For the `{identityUuid}` path parameter, use the value of the `identityUuid` returned by the SDK or included as a URL parameter on the redirect URL.
-
-#### Response {#get-1-click-response}
-
-```typescript title="GET /1-click Response Body"
-{
-    ...1ClickEntity
-}
-```
-
-See [`1ClickEntity`](/reference/api/types#1clickentity).
-
-<hr />
-
 
 <EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#6e50c931-255c-4318-9b82-020d6661f6a7'>
   ### `POST /1-click`
@@ -706,8 +672,10 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
 
 ```typescript title="POST /1-click Request Body"
 {
-    phone: string,
+    verificationUuid?: string,
+    phone?: string,
     email?: string,
+    deviceIp?: string,
     birthDate?: string,
     ssn4?: string,
     fullName?: {
@@ -750,6 +718,47 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
   <Post1ClickResponseBodyTableUuid />
   <Post1ClickResponseBodyTableIdentity />
 </table>
+
+<hr />
+
+
+<EndpointHeaderWithoutSwagger postmanUrl='https://api.docs.verified.inc/#e80daa1e-5337-4f6f-b769-d46a9bc72e0c'>
+  ### `GET /1-click`
+</EndpointHeaderWithoutSwagger>
+
+> Get data for a user who has completed a 1-Click Signup flow
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`GET`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/{identityUuid}`</td>
+  </tr>
+</table>
+
+
+#### Request {#get-1-click-request}
+
+Call:
+
+```
+GET /1-click/{identityUuid}
+```
+
+- For the `{identityUuid}` path parameter, use the value of the `identityUuid` returned by the SDK or included as a URL parameter on the redirect URL.
+
+#### Response {#get-1-click-response}
+
+```typescript title="GET /1-click Response Body"
+{
+    ...1ClickEntity
+}
+```
+
+See [`1ClickEntity`](/reference/api/types#1clickentity).
 
 <hr />
 

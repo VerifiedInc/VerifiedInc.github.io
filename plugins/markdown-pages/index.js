@@ -17,6 +17,7 @@ const { pathToFileURL } = require('url');
  *   exclude?: string[],
  *   includeSource?: boolean,
  *   llms?: false | { title?: string, description?: string, sections?: {prefix: string, label: string}[] },
+ *   skillPath?: false | string,
  * }} options
  */
 const ZERO_WIDTH = /[\u200b\u200c\u200d\ufeff]/g;
@@ -36,6 +37,9 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
     exclude = ['/reusables/'],
     includeSource = true,
     llms = {},
+    // Copied into `outDir` by Docusaurus's own static-file step before
+    // `postBuild` runs, so it's already there to read by the time we get here.
+    skillPath = 'skills/verified-docs/SKILL.md',
   } = options;
 
   // Root-level pages head the sidebar, so they head the index too.
@@ -331,6 +335,12 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
       `The whole documentation set in one file (${sizes.full}): ` +
         `${toAbsoluteUrl(siteConfig, '/llms-full.txt')}`,
     ];
+
+    if (sizes.skill) {
+      lines.push(
+        `Agent skill for using these Docs to understand and integrate Verified's products (${sizes.skill.size}): ${sizes.skill.url}`
+      );
+    }
 
     const labels = [
       UNSECTIONED_LABEL,
@@ -735,6 +745,17 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
       if (llms !== false) {
         const bundles = [];
 
+        // Read, not just linked: a missing or moved file fails the build
+        // instead of silently shipping a dead link in llms.txt.
+        const skill = skillPath
+          ? {
+              size: humanSize(
+                await fs.readFile(path.join(outDir, skillPath), 'utf8')
+              ),
+              url: toAbsoluteUrl(siteConfig, `/${skillPath}`),
+            }
+          : null;
+
         const llmsFullTxt = buildLlmsFullTxt(pages, siteConfig, sections);
 
         await fs.writeFile(
@@ -798,6 +819,7 @@ module.exports = function markdownPagesPlugin(context, options = {}) {
         const llmsTxt = buildLlmsTxt(pages, siteConfig, sections, {
           full: humanSize(llmsFullTxt),
           index: humanSize(searchIndexJson),
+          skill,
           bundles: new Map(
             bundles.map(([label, bundlePath, bundle]) => {
               return [label, { path: bundlePath, size: humanSize(bundle) }];

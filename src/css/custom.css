@@ -358,6 +358,11 @@ td:first-child {
   white-space: nowrap;
 }
 
+/* Opt out of the global bold-first-column table styling above */
+.no-bold-first-column td:first-child {
+  font-weight: normal;
+}
+
 .hidden {
   display: none !important;
 }

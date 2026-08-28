@@ -307,7 +307,7 @@ We recommend using a phone number input that auto submits when the user enters 1
   You can use one or more challenges, but we recommend using only one to streamline the user experience.
 </Admonition>
 
-<Tabs>
+<Tabs groupId="challenge" queryString>
 
 <TabItem value="first-name" label="First Name" default>
 
@@ -435,14 +435,14 @@ We provide many different variants of the graphic, so you can choose the one tha
 <ApiKeysAdmonition />
 
 **Call [`POST /1-click`](/reference/api/endpoints#post-1-click):** 
-- If you used 1-Click Verify to verify the user's phone number, use `verificationUuid` in the request body. If you use another phone verification solution, use `phone`.
+- If you used 1-Click Verify to verify the user's phone number, use `verificationUuid` in the request body. If you used another phone verification solution, use `phone`.
 - If you collected a challenge (first name, birth date, or SSN4), include it in the request body (as `fullName.firstName`, `birthDate`, or `ssn4`).
 
-<Tabs groupId="phone-verification-solution">
+<Tabs groupId="phone-verification-solution" queryString>
 
-<TabItem value="1-click-verify" label="From 1-Click Verify" default>
+<TabItem label="From 1-Click Verify" value="1-click-verify" default>
 
-  <Tabs groupId="challenge-type">
+  <Tabs groupId="challenge" queryString>
 
   <TabItem value="first-name" label="First Name" default>
 
@@ -480,9 +480,9 @@ We provide many different variants of the graphic, so you can choose the one tha
   </Tabs>
 
 </TabItem>
-<TabItem value="another-solution" label="From Another Phone Verification Solution">
+<TabItem label="From Another Phone Verification Solution" value="another-solution" >
 
-  <Tabs groupId="challenge-type">
+  <Tabs groupId="challenge" queryString>
 
   <TabItem value="first-name" label="First Name" default>
 
@@ -530,7 +530,7 @@ If we can source data for the user, the [response body](/reference/api/endpoints
 If we can't source data, the response body will contain an [error](/reference/api/errors) with a Verified error code. (Note that this error code, which is Verified specific, is `data.errorCode` in the error object, _not_ `code` (which is a standard HTTP response status code).) See [step 2a](#a-if-needed-handle-errors) below for how to handle Verified error codes.
 
 :::tip Data is Retrievable for 1 Hour
-**You can retrieve data for 1 hour,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click`](/reference/api/endpoints#get-1-click) instead of `POST /1-click` so that a duplicate 1-Click Signup event isn't created (and so you aren't billed twice).
+**You can retrieve data for 1 hour,** at which point it's deleted. Use [`GET /1-click`](/reference/api/endpoints#get-1-click) instead of `POST /1-click`, so that a duplicate 1-Click Signup event isn't created (and so you aren't billed twice).
 :::
 
 

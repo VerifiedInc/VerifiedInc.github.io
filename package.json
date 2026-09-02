@@ -64,7 +64,7 @@
     "lodash": "^4.18.0",
     "serialize-javascript": "^7.0.5",
     "yaml": "^1.10.3",
-    "fast-uri": "^3.1.5",
+    "fast-uri": "^3.1.7",
     "nanoid@^3": "^3.3.18",
     "openapi-to-postmanv2": {
       "ajv": "^8.18.0"

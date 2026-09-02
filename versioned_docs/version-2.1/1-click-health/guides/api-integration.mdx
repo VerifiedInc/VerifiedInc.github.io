@@ -260,7 +260,7 @@ To autofill insurance, call [`POST /1-click/health`](/reference/api/endpoints#po
 
         Autofilling insurance without specifying a payer is the most common use case. 
 
-        <Tabs groupId="signup-solution">
+        <Tabs groupId="signup-solution" queryString>
 
         <TabItem value="1-click-signup" label="From 1-Click Signup" default>
 
@@ -304,7 +304,7 @@ To autofill insurance, call [`POST /1-click/health`](/reference/api/endpoints#po
           **Medicare autofill is much more likely to succeed if you include SSN as an input,** because CMS historically used SSNs as member IDs before switching to MBIs (Medicare Beneficiary Identifiers) in 2020 and still uses SSNs as unique identifiers. If you use 1-Click Signup to autofill inputs for 1-Click Health, we can hydrate SSNs — never exposing them to you or the user — and then use them to source health insurance data.
         </Admonition>
 
-        <Tabs groupId="signup-solution">
+        <Tabs groupId="signup-solution" queryString>
 
         <TabItem value="1-click-signup" label="From 1-Click Signup" default>
 
@@ -353,7 +353,7 @@ To run an eligibility check, call [`POST /1-click/health`](/reference/api/endpoi
 To test an eligibility check with mock coverage, use the [eligibility check test users](/1-click-health/test-users#eligibility-check).
 :::
 
-<Tabs groupId="signup-solution">
+<Tabs groupId="signup-solution" queryString>
 
 <TabItem value="1-click-signup" label="From 1-Click Signup" default>
 

@@ -10,8 +10,17 @@ import Chip from '@mui/material/Chip';
     <th>Example</th>
 </tr>
 <tr>
+    <td>`verificationUuid`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if `phone` is not included</td>
+    <td>`string`</td>
+    <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+    <td>-</td>
+    <td>Unique identifier for a [`1ClickVerificationEntity`](/reference/api/types#1clickentity) that can be passed to the SDK to skip the phone entry and verification steps</td>
+    <td>`"487246b0-e68c-451d-be8e-45cea0b1c7a2"`</td>
+</tr>
+<tr>
     <td>`phone`</td>
-    <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if `verificationUuid` is not included</td>
     <td>`string`</td>
     <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
     <td>-</td>
@@ -26,6 +35,15 @@ import Chip from '@mui/material/Chip';
     <td>-</td>
     <td>User's email address</td>
     <td>`"richard@piedpiper.net"`</td>
+</tr>
+<tr>
+    <td>`deviceIp`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string`</td>
+    <td>[IPv6 address](https://en.wikipedia.org/wiki/IPv6_address)</td>
+    <td>-</td>
+    <td>IP address of user's device (which you can get using [`GET /1-click/verifications/device-ip`](/reference/api/endpoints#get-1-click-verifications-device-ip))</td>
+    <td>`"::121:2555:0010"`</td>
 </tr>
 <tr>
     <td>`birthDate`</td>

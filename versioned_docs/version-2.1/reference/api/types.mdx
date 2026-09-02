@@ -6,7 +6,7 @@ sidebar_position: 4
 sidebar_class_name: sidebar-header-regular
 description: Types used in the Verified API
 slug: /reference/api/types
-toc_max_heading_level: 4
+toc_max_heading_level: 5
 ---
 
 import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
@@ -32,7 +32,8 @@ import CredentialRequestTableShared from '@site/versioned_docs/version-2.1/reusa
 import CredentialRequestTableHosted from '@site/versioned_docs/version-2.1/reusables/credential-request-table-sdk.mdx'
 import CredentialRequestTableSemiHostedAndNonHosted from '@site/versioned_docs/version-2.1/reusables/credential-request-table-api.mdx'
 import OneClickEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-entity-example.mdx'
-import OneClickHealthEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-health-entity-example.mdx'
+import OneClickHealthEntityExampleSucceeded from '@site/versioned_docs/version-2.1/reusables/1-click-health-entity-example-succeeded.mdx'
+import OneClickHealthEntityExampleFailed from '@site/versioned_docs/version-2.1/reusables/1-click-health-entity-example-failed.mdx'
 import PayerExampleAetna from '@site/versioned_docs/version-2.1/reusables/payer-example-aetna.mdx'
 import PayerExampleUnitedHealthcare from '@site/versioned_docs/version-2.1/reusables/payer-example-unitedhealthcare.mdx'
 import OneClickVerificationEntityExampleAutofill from '@site/versioned_docs/version-2.1/reusables/1-click-verification-entity-example-autofill.mdx'
@@ -41,13 +42,225 @@ import ErrorExampleOce011 from '@site/versioned_docs/version-2.1/reusables/error
 import ErrorExampleOce017 from '@site/versioned_docs/version-2.1/reusables/error-example-oce017.mdx'
 import RiskSignalsSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/risk-signals-setting-admonition.mdx';
 import PayerIdsAdmonition from '@site/versioned_docs/version-2.1/reusables/payer-ids-admonition.mdx';
-
-{/* :::note
-See also our [Postman docs](https://api.docs.verified.inc/).
-::: */}
+import ParsedEdi271ExampleAetna from '@site/versioned_docs/version-2.1/reusables/parsed-edi-271-example-aetna.mdx';
+import ParsedEdi271ExampleUnitedHealthcare from '@site/versioned_docs/version-2.1/reusables/parsed-edi-271-example-unitedhealthcare.mdx';
 
 
-## `1ClickEntity`
+## 1-Click Verify
+
+
+### `1ClickVerificationEntity`
+
+```typescript title="1ClickVerificationEntity Type"
+{
+    uuid: string,
+    deviceIp?: string,
+    phone?: string,
+    channel: "textToSignup" | "autofill" | "silent" | "sms",
+    format?: "code" | "link" | "codeAndLink" | "linkAndCode", // only relevant for the SMS channel
+    status: "pending" | "sending" | "delivered" | "verified" | "expired" | "failed",
+    verified: boolean,
+    createdAt: integer,
+    expiresAt: integer,
+    deliveredAt?: integer,
+    verifiedAt?: integer,
+    attemptsRemaining?: integer
+}
+```
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`uuid`</td>
+        <td>`string`</td>
+        <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+        <td>Unique identifier for the `1ClickVerificationEntity`</td>
+        <td>`"535dba63-d4bd-442a-b3f6-21b785260a08"`</td>
+    </tr>
+    <tr>
+        <td>`deviceIp`</td>
+        <td>`string`</td>
+        <td>[IPv6 address](https://en.wikipedia.org/wiki/IPv6_address)</td>
+        <td>IP address of user's device (which you can get using [`GET /1-click/verifications/device-ip`](/reference/api/endpoints#get-1-click-verifications-device-ip))</td>
+        <td>`"::121:2555:0010"`</td>
+    </tr>
+    <tr>
+        <td>`phone`</td>
+        <td>`string`</td>
+        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
+        <td>User's phone number (in [E.164](https://www.twilio.com/docs/glossary/what-e164) format)</td>
+        <td>`"+12125550010"`</td>
+    </tr>
+    <tr>
+        <td>`channel`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"textToSignup"`
+                    - `"autofill"`
+                    - `"silent"`
+                    - `"sms"`
+                    - `"email"` <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/>
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>The channel used for verification</td>
+        <td>`"textToSignup"`</td>
+    </tr>
+    <tr>
+        <td>`format`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"code"`
+                    - `"link"`
+                    - `"codeAndLink"`
+                    - `"linkAndCode"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>The format of the verification message (only relevant for the SMS channel)</td>
+        <td>`"link"`</td>
+    </tr>
+    <tr>
+        <td>`status`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"pending"`
+                    - `"sending"`
+                    - `"delivered"`
+                    - `"verified"`
+                    - `"expired"`
+                    - `"failed"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>The status of the verification</td>
+        <td>`"delivered"`</td>
+    </tr>
+    <tr>
+        <td>`verified`</td>
+        <td>`boolean`</td>
+        <td>`boolean`</td>
+        <td>Whether the phone can currently be considered verified</td>
+        <td>`true`</td>
+    </tr>
+    <tr>
+        <td>`createdAt`</td>
+        <td>`integer`</td>
+        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
+        <td>When the verification started</td>
+        <td>`1760053695000`</td>
+    </tr>
+    <tr>
+        <td>`expiresAt`</td>
+        <td>`integer`</td>
+        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
+        <td>When the verification expires (meaning it can no longer succeed)</td>
+        <td>`1760053995000`</td>
+    </tr>
+    <tr>
+        <td>`deliveredAt`</td>
+        <td>`integer`</td>
+        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
+        <td>When the verification message was delivered</td>
+        <td>`1760053699054`</td>
+    </tr>
+    <tr>
+        <td>`verifiedAt`</td>
+        <td>`integer`</td>
+        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
+        <td>When the verification succeeded</td>
+        <td>`1760053705000`</td>
+    </tr>
+    <tr>
+        <td>`attemptsRemaining`</td>
+        <td>`integer`</td>
+        <td>Any number of digits (0-9)</td>
+        <td>How many verification attempts the user has remaining</td>
+        <td>`3`</td>
+    </tr>
+</table>
+
+
+#### Example {#example-1clickverificationentity}
+
+<OneClickVerificationEntityExampleAutofill/>
+
+---
+
+
+## 1-Click Signup
+
+
+### `CredentialRequest`
+
+```typescript title="CredentialRequest Type"
+{
+    type: string,
+    mandatory?: "yes" | "no" | "if_available",
+    children?: CredentialRequest[],
+    multi?: boolean
+}
+```
+<table>
+    <CredentialRequestTableShared/>
+    <CredentialRequestTableSemiHostedAndNonHosted/>
+</table>
+
+
+#### Example {#example-credentialrequest}
+
+```typescript title="CredentialRequest"
+{
+    "type": "AddressCredential",
+    "multi": true,
+    "children": [
+        {
+            "type": "Line1Credential",
+            "mandatory": "if_available"
+        },
+        {
+            "type": "Line2Credential",
+            "mandatory": "no"
+        },
+        {
+            "type": "CityCredential",
+            "mandatory": "if_available"
+        },
+        {
+            "type": "StateCredential",
+            "mandatory": "if_available"
+        },
+        {
+            "type": "ZipCodeCredential",
+            "mandatory": "if_available"
+        },
+        {
+            "type": "CountryCredential",
+            "mandatory": "if_available"
+        }
+    ]
+}
+```
+
+---
+
+
+### `1ClickEntity`
 
 ```typescript title="1ClickEntity Type"
 {
@@ -484,14 +697,140 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
         </details>
 
 
-### Example {#example-1clickentity}
+#### Example {#example-1clickentity}
 
 <OneClickEntityExample/>
 
 ---
 
 
-## `1ClickHealthEntity`
+#### `RiskSignals`
+
+See [Risk Signals](/reference/data/outputs#risk-signals) on the Data page for details about the attributes and when they're included.
+
+<RiskSignalsSettingAdmonition/>
+
+{/* Should add ipAddress when we enable support for it */}
+
+```typescript title="RiskSignals Type"
+{
+    overall: {
+        score: integer,
+        level: "low" | "medium-low" | "medium" | "medium-high" | "high",
+        recommendation: "allow" | "flag" | "block",
+        reasonCodes: [string]
+    },
+    phone: {
+        carrier: {
+            id: integer,
+            name: string
+        }
+        reasonCodes: [string]
+    },
+    email?: {
+        reasonCodes: [string]
+    },
+    deviceIp?: {
+        reasonCodes: [string]
+    }
+}
+```
+
+When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntity`](#1clickentity) and in some errors for [Verified error codes](/reference/api/errors#verified-error-codes), such as [`OCE017`](/reference/api/errors#oce017):
+
+```typescript title="1ClickEntity"
+{
+    ...
+    "metadata": {
+        "identifiers": {
+            "riskSignals": RiskSignals,
+            ...
+        },
+        ...
+    }
+}
+```
+```typescript title="OCE017 Error"
+{
+    "name": "BadRequest",
+    "message": "1-Click Blocked: Risk Score Too High",
+    "code": 400,
+    "className": "bad-request",
+    "data": {
+        "errorCode": "OCE017",
+        "riskSignals": RiskSignals
+    }
+}
+```
+
+
+##### Example {#example-risksignals}
+
+```typescript title="RiskSignals Example"
+{
+    ...
+    "metadata": {
+        "identifiers": {
+            ...
+            "riskSignals": {
+                "overall": {
+                    "score": 0,
+                    "level": "low",
+                    "recommendation": "allow",
+                    "reasonCodes": [
+                        "OCR10021"
+                    ]
+                },
+                "phone": {
+                    "carrier": {
+                        "id": 0,
+                        "name": "Example Carrier"
+                    }
+                    "reasonCodes": [
+                        "OCR20004",
+                        "OCR20005",
+                        "OCR20007",
+                        "OCR20101"
+                    ]
+                },
+                "email": {
+                    "reasonCodes": [
+                        "OCR60001",
+                        "OCR60002"
+                    ]
+                },
+                "deviceIp": {
+                    "reasonCodes": [
+                        "OCR50001",
+                        "OCR50002"
+                    ]
+                }
+            }
+        },
+        ...
+    }
+}
+```
+
+---
+
+
+### `Error`
+
+<ErrorType/>
+
+
+#### Example {#example-error}
+
+<ErrorExampleOce017/>
+
+---
+
+
+## 1-Click Health
+
+
+### `1ClickHealthEntity`
 
 ```typescript title="1ClickHealthEntity Type"
 {
@@ -500,15 +839,10 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
     results?: [
         {
             memberId: string,
-            payer: {
-                name: string,
-                verifiedId: string,
-                ids: [string], // ids[0] is considered primary
-                logoUrl?: string // included if available
-            },
+            payer: Payer,
             verificationMethod: string,
             edi_271?: string, // included if eligibility check was run
-            eligibility?: object, // parsed version of edi_271: included if eligibility check was run
+            eligibility?: ParsedEdi271, // see ParsedEdi271 type; included if eligibility check was run
         }
     ],
     errors?: [
@@ -644,14 +978,16 @@ Eligibilty info consists of:
 </table>
 
 
-### Example {#example-1clickhealthentity}
+#### Example {#example-1clickhealthentity}
 
-<OneClickHealthEntityExample/>
+<OneClickHealthEntityExampleSucceeded/>
+
+<OneClickHealthEntityExampleFailed/>
 
 ---
 
 
-### `Payer`
+#### `Payer`
 
 ```typescript title="Payer Type"
 {
@@ -703,7 +1039,7 @@ Eligibilty info consists of:
 </table>
 
 
-#### Example {#example-payer}
+##### Example {#example-payer}
 
 <PayerExampleAetna/>
 
@@ -712,9 +1048,9 @@ Eligibilty info consists of:
 ---
 
 
-### `ParsedEdi271`
+#### `ParsedEdi271`
 
-```typescript title="Payer Type"
+```typescript title="ParsedEdi271 Type"
 {
     coverageStatus?: "active" | "indeterminate" | "inactive",
     coverageType?: string[], // can include "medical", "dental", and "vision"
@@ -1074,367 +1410,8 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
 </table>
 
 
-#### Example {#example-parsededi271}
+##### Example {#example-parsededi271}
 
-```typescript title="Payer Type"
-{
-    "coverageStatus": "active",
-    "coverageType": ["medical"],
-    "payer": {
-        "name": "Aetna",
-    },
-    "member": {
-        "memberId": "A484069",
-        "fullName": {
-            "firstName": "Richard",
-            "lastName": "Hendricks"
-        },
-        "birthDate": "1989-08-01",
-        "sex": "Male"
-    },
-    "plan": {
-        "name": "Managed Choice Open Access",
-        "groupNumber": "123456-123-12345",
-        "insuranceType": "C1",
-        "effectiveDate": "2026-01-01",
-        "terminationDate": "2026-12-31"
-    },
-    "benefits": [
-        {
-            "type": "deductible",
-            "serviceTypeCodes": "[30]",
-            "level": "individual",
-            "network": "in",
-            "amount": "1500.00",
-            "remaining": "750.00",
-            "percent": "0.20"
-        },
-        ...
-    ],
-    contacts?: [
-        {
-            "name": "Aetna Member Services",
-            "serviceTypeCodes": "[30]",
-            "phone": "8005550000",
-            "fax": "8005550001",
-            "email": "memberservices@aetna.com",
-            "url": "https://aetna.com/member-services"
-        },
-        ...
-    ]
-}
-```
+<ParsedEdi271ExampleAetna/>
 
----
-
-
-## `1ClickVerificationEntity`
-
-```typescript title="1ClickVerificationEntity Type"
-{
-    uuid: string,
-    phone: string,
-    channel: "textToSignup" | "autofill" | "silent" | "sms",
-    format?: "code" | "link", // only relevant for the SMS channel
-    status: "pending" | "sending" | "delivered" | "verified" | "expired" | "failed",
-    verified: boolean,
-    createdAt: integer,
-    expiresAt: integer,
-    deliveredAt?: integer,
-    verifiedAt?: integer,
-    attemptsRemaining?: integer
-}
-```
-
-<table>
-    <tr>
-        <th>Property</th>
-        <th>Type</th>
-        <th>Format</th>
-        <th>Description</th>
-        <th>Example</th>
-    </tr>
-    <tr>
-        <td>`uuid`</td>
-        <td>`string`</td>
-        <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
-        <td>Unique identifier for the `1ClickVerificationEntity`</td>
-        <td>`"535dba63-d4bd-442a-b3f6-21b785260a08"`</td>
-    </tr>
-    <tr>
-        <td>`phone`</td>
-        <td>`string`</td>
-        <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
-        <td>User's phone number (in [E.164](https://www.twilio.com/docs/glossary/what-e164) format)</td>
-        <td>`"+12125550010"`</td>
-    </tr>
-    <tr>
-        <td>`channel`</td>
-        <td>
-            <details>
-                <summary>`enum`</summary>
-
-                Possible values:
-                    - `"textToSignup"`
-                    - `"autofill"`
-                    - `"silent"`
-                    - `"sms"`
-                    - `"email"` <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/>
-            </details>
-        </td>
-        <td>`camelCase`</td>
-        <td>The channel used for verification</td>
-        <td>`"textToSignup"`</td>
-    </tr>
-    <tr>
-        <td>`format`</td>
-        <td>
-            <details>
-                <summary>`enum`</summary>
-
-                Possible values:
-                    - `"code"`
-                    - `"link"`
-            </details>
-        </td>
-        <td>`camelCase`</td>
-        <td>The format of the verification message (only relevant for the SMS channel)</td>
-        <td>`"link"`</td>
-    </tr>
-    <tr>
-        <td>`status`</td>
-        <td>
-            <details>
-                <summary>`enum`</summary>
-
-                Possible values:
-                    - `"pending"`
-                    - `"sending"`
-                    - `"delivered"`
-                    - `"verified"`
-                    - `"expired"`
-                    - `"failed"`
-            </details>
-        </td>
-        <td>`camelCase`</td>
-        <td>The status of the verification</td>
-        <td>`"delivered"`</td>
-    </tr>
-    <tr>
-        <td>`verified`</td>
-        <td>`boolean`</td>
-        <td>`boolean`</td>
-        <td>Whether the phone can currently be considered verified</td>
-        <td>`true`</td>
-    </tr>
-    <tr>
-        <td>`createdAt`</td>
-        <td>`integer`</td>
-        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
-        <td>When the verification started</td>
-        <td>`1760053695000`</td>
-    </tr>
-    <tr>
-        <td>`expiresAt`</td>
-        <td>`integer`</td>
-        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
-        <td>When the verification expires (meaning it can no longer succeed)</td>
-        <td>`1760053995000`</td>
-    </tr>
-    <tr>
-        <td>`deliveredAt`</td>
-        <td>`integer`</td>
-        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
-        <td>When the verification message was delivered</td>
-        <td>`1760053699054`</td>
-    </tr>
-    <tr>
-        <td>`verifiedAt`</td>
-        <td>`integer`</td>
-        <td>[Unix time](https://en.wikipedia.org/wiki/Unix_time) (milliseconds)</td>
-        <td>When the verification succeeded</td>
-        <td>`1760053705000`</td>
-    </tr>
-    <tr>
-        <td>`attemptsRemaining`</td>
-        <td>`integer`</td>
-        <td>Any number of digits (0-9)</td>
-        <td>How many verification attempts the user has remaining</td>
-        <td>`3`</td>
-    </tr>
-</table>
-
-
-### Example {#example-1clickverificationentity}
-
-<OneClickVerificationEntityExampleAutofill/>
-
----
-
-
-## `RiskSignals`
-
-See [Risk Signals](/reference/data/outputs#risk-signals) on the Data page for details about the attributes and when they're included.
-
-<RiskSignalsSettingAdmonition/>
-
-{/* Should add ipAddress when we enable support for it */}
-
-```typescript title="RiskSignals Type"
-{
-    overall: {
-        score: integer,
-        level: "low" | "medium-low" | "medium" | "medium-high" | "high",
-        recommendation: "allow" | "flag" | "block",
-        reasonCodes: [string]
-    },
-    phone: {
-        carrier: {
-            id: integer,
-            name: string
-        }
-        reasonCodes: [string]
-    },
-    email?: {
-        reasonCodes: [string]
-    }
-}
-```
-
-When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntity`](#1clickentity) and in an error for the [`OCE017` error code](/reference/api/errors#oce017):
-
-```typescript title="1ClickEntity"
-{
-    ...
-    "metadata": {
-        "identifiers": {
-            "riskSignals": RiskSignals,
-            ...
-        },
-        ...
-    }
-}
-```
-```typescript title="OCE017 Error"
-{
-    "name": "BadRequest",
-    "message": "1-Click Blocked: Risk Score Too High",
-    "code": 400,
-    "className": "bad-request",
-    "data": {
-        "errorCode": "OCE017",
-        "riskSignals": RiskSignals
-    }
-}
-```
-
-
-### Example {#example-risksignals}
-
-{/* Should add ipAddress when we enable support for it */}
-
-```typescript title="RiskSignals Example"
-{
-    ...
-    "metadata": {
-        "identifiers": {
-            ...
-            "riskSignals": {
-                "overall": {
-                    "score": 0,
-                    "level": "low",
-                    "recommendation": "allow",
-                    "reasonCodes": [
-                        "OCR10021"
-                    ]
-                },
-                "phone": {
-                    "carrier": {
-                        "id": 0,
-                        "name": "Example Carrier"
-                    }
-                    "reasonCodes": [
-                        "OCR20004",
-                        "OCR20005",
-                        "OCR20007",
-                        "OCR20101"
-                    ]
-                },
-                "email": {
-                    "reasonCodes": [
-                        "OCR60001",
-                        "OCR60002"
-                    ]
-                }
-            }
-        },
-        ...
-    }
-}
-```
-
-
----
-
-
-## `Error`
-
-<ErrorType/>
-
-
-### Example {#example-error}
-
-<ErrorExampleOce017/>
-
----
-
-## `CredentialRequest`
-
-```typescript title="CredentialRequest Type"
-{
-    type: string,
-    mandatory?: "yes" | "no" | "if_available",
-    children?: CredentialRequest[],
-    multi?: boolean
-}
-```
-<table>
-    <CredentialRequestTableShared/>
-    <CredentialRequestTableSemiHostedAndNonHosted/>
-</table>
-
-
-### Example {#example-credentialrequest}
-
-```typescript title="CredentialRequest"
-{
-    "type": "AddressCredential",
-    "multi": true,
-    "children": [
-        {
-            "type": "Line1Credential",
-            "mandatory": "if_available"
-        },
-        {
-            "type": "Line2Credential",
-            "mandatory": "no"
-        },
-        {
-            "type": "CityCredential",
-            "mandatory": "if_available"
-        },
-        {
-            "type": "StateCredential",
-            "mandatory": "if_available"
-        },
-        {
-            "type": "ZipCodeCredential",
-            "mandatory": "if_available"
-        },
-        {
-            "type": "CountryCredential",
-            "mandatory": "if_available"
-        }
-    ]
-}
-```
+<ParsedEdi271ExampleUnitedHealthcare/>

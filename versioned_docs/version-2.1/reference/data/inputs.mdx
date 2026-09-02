@@ -74,9 +74,9 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
 
 :::note
 To source verified 1-Click Signup ([outputs](/reference/data/outputs)) for a user:
-- **[Identifiers](#identifiers):** Phone is always required. Email is optional, but including it helps source better and more metadata — especially [risk signals](/reference/data/outputs#risk-signals). It cannot be used on its own to source [credentials](/reference/data/outputs#credentials) (user identity data).
-- **[Challenges](#challenges):** These are only required sometimes: if you get the [`OCE11`](/reference/api/errors#oce011) error code, which indicates that additional information is required. This happens when Verified is unable to narrow down to a single user based on the inputs already provided.
-- **[Other Inputs](#other-inputs):** These are optional. For name, we'll try to match against _all_ names we find associated with the user. This often means, for example, that a user's nickname will match as well as their legal name, but that depends on which names we can source for the user.
+- **[Identifiers](#identifiers):** Phone is always required. Email and device IP are used only to source metadata, specifically [risk signals](/reference/data/outputs#risk-signals).
+- **[Challenges](#challenges):** These are only required sometimes: if you get the [`OCE11`](/reference/api/errors#oce011) error code, which indicates that additional information is required. This happens when we're unable to narrow down to a single user based on the inputs already provided.
+- **[Other Inputs](#other-inputs):** These are optional. For name, we'll try to match against all names we find associated with the user. This often means, for example, that a user's nickname will match as well as their legal name, but that depends on which names we can source for the user.
 :::
 
 
@@ -115,6 +115,15 @@ To source verified 1-Click Signup ([outputs](/reference/data/outputs)) for a use
         <td>Email</td>
         <td>Email address a user uses to verify for 1-Click Signup</td>
         <td>`"richard@piedpiper.net"`</td>
+    </tr>
+    <tr>
+        <td>Device IP</td>
+        <td>`deviceIp`</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+        <td>`string`</td>
+        <td>[IPv6 address](https://en.wikipedia.org/wiki/IPv6_address)</td>
+        <td>IP address of user's device (which you can get using [`GET /1-click/verifications/device-ip`](/reference/api/endpoints#get-1-click-verifications-device-ip))</td>
+        <td>`"::121:2555:0010"`</td>
     </tr>
 </table>
 
@@ -163,7 +172,7 @@ We require you to include at least one challenge, and we recommend you use only 
     <tr>
         <td>↳ First Name</td>
         <td>`fullName.firstName`</td>
-        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required after some [`OCE011` errors](/reference/api/errors#oce011))</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> after some [`OCE011` errors](/reference/api/errors#oce011)</td>
         <td>`string`</td>
         <td>`cAse inSensiTive`</td>
         <td>First name</td>
@@ -172,7 +181,7 @@ We require you to include at least one challenge, and we recommend you use only 
     <tr>
         <td>Birth Date</td>
         <td>`birthDate`</td>
-        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required after some [`OCE011` errors](/reference/api/errors#oce011))</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> after some [`OCE011` errors](/reference/api/errors#oce011)</td>
         <td>`string`</td>
         <td>yyyy-MM-dd</td>
         <td>Birth date</td>
@@ -181,7 +190,7 @@ We require you to include at least one challenge, and we recommend you use only 
     <tr>
         <td>SSN4</td>
         <td>`ssn4`</td>
-        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required after some [`OCE011` errors](/reference/api/errors#oce011))</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> after some [`OCE011` errors](/reference/api/errors#oce011)</td>
         <td>`string`</td>
         <td>4 digits (0-9)</td>
         <td>Last 4 digits of Social Security Number</td>
@@ -190,10 +199,11 @@ We require you to include at least one challenge, and we recommend you use only 
 </table>
 
 
-
 ### Other Inputs
 
 > An **other input** is a piece of user data that's used as an additional lookup for [outputs](/reference/data/outputs) and does not have to match the outputs.
+
+For name, we'll try to match against _all_ names we find associated with the user. This often means, for example, that a user's nickname will match as well as their legal name, but that depends on which names we can source for the user.
 
 :::important
 Unlike [challenges](#challenges), these **other inputs do not have to match the [outputs](/reference/data/outputs)** sourced for a user. That's because names and addresses vary, while birth dates and SSN4s don't. For example, a user may enter a nickname rather than their legal name, or they might have recently moved.

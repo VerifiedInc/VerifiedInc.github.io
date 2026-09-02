@@ -44,6 +44,9 @@ import {
   CollapsibleSection,
   CollapsibleHeader,
 } from '@site/src/components/Collapsible';
+import Get1ClickVerificationsDeviceIpResponseBody from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-device-ip-response-body.mdx';
+import Get1ClickVerificationsDeviceIpResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-device-ip-response-body-example.mdx';
+import Get1ClickVerificationsChannelsResponseBody from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-channels-response-body.mdx';
 import Get1ClickVerificationsChannelsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-channels-response-body-example.mdx';
 import Post1ClickVerificationsResponseBodyVerifiedExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-response-body-verified-example.mdx';
 import Post1ClickVerificationsResponseBodyPendingExample from '@site/versioned_docs/version-2.1/reusables/post-1-click-verifications-response-body-pending-example.mdx';
@@ -52,6 +55,8 @@ import Post1ClickVerificationsVerifyResponseBodyExample from '@site/versioned_do
 import Get1ClickVerificationsResponseBodyExample from '@site/versioned_docs/version-2.1/reusables/get-1-click-verifications-response-body-example.mdx';
 import PostClient1ClickRequestBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-request-body.mdx';
 import PostClient1ClickResponseBody from '@site/versioned_docs/version-2.1/reusables/post-client-1-click-response-body.mdx';
+import DeviceIpEndpointAdmonition from '@site/versioned_docs/version-2.1/reusables/device-ip-endpoint-admonition.mdx';
+import VerificationSmsFormatsAdmonition from '@site/versioned_docs/version-2.1/reusables/verification-sms-formats-admonition.mdx';
 
 {/* TODO: Update Swagger URLs */}
 
@@ -116,6 +121,64 @@ If you don't have a user's phone number yet, call `POST /client/1-click` with an
   
 </EndpointHeaderWithoutSwagger> */}
 
+### `GET /1-click/verifications/device-ip` {#get-1-click-verifications-device-ip}
+
+> Get the IP address of a user's device
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`GET`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/1-click/verifications/device-ip`</td>
+  </tr>
+</table>
+
+
+#### Request {#get-1-click-verifications-device-ip-request}
+
+Call:
+
+```
+GET /1-click/verifications/device-ip
+```
+
+**client side, from the user's device.**
+
+<DeviceIpEndpointAdmonition/>
+
+
+#### Response {#get-1-click-verifications-device-ip-response}
+
+<Get1ClickVerificationsDeviceIpResponseBody/>
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`deviceIp`</td>
+        <td>`string`</td>
+        <td>[IPv6 address](https://en.wikipedia.org/wiki/IPv6_address)</td>
+        <td>The IP address of the user's device</td>
+        <td>`::121:2555:0010`</td>
+    </tr>
+</table>
+
+<hr />
+
+
+{/* TODO: Update */}
+{/* <EndpointHeaderWithoutSwagger postmanUrl=''>
+  
+</EndpointHeaderWithoutSwagger> */}
+
 ### `GET /1-click/verifications/channels` {#get-1-click-verifications-channels}
 
 > Check the availability of 1-Click Verify channels
@@ -137,16 +200,16 @@ If you don't have a user's phone number yet, call `POST /client/1-click` with an
 Call:
 
 ```
-GET /1-click/verifications/channels[?deviceIp={deviceIp}]
+GET /1-click/verifications/channels?deviceIp={deviceIp}
 ```
 
 - For the `{deviceIp}` query parameter value:
-  - Use the IP address of the user's device (in [IPv6](https://en.wikipedia.org/wiki/IPv6_address) format).
+  - Use the IP address of the user's device returned by [`GET /1-click/verifications/device-ip`](#get-1-click-verifications-device-ip).
 
 
 #### Response {#get-1-click-verifications-channels-response}
 
-<Get1ClickVerificationsChannelsResponseBodyExample/>
+<Get1ClickVerificationsChannelsResponseBody/>
 
 <table>
     <tr>
@@ -241,6 +304,8 @@ GET /1-click/verifications/channels[?deviceIp={deviceIp}]
     </tr>
 </table>
 
+<hr />
+
 
 {/* TODO: Update */}
 {/* <EndpointHeaderWithoutSwagger
@@ -268,9 +333,9 @@ postmanUrl=''>
 
 ```typescript title="POST /1-click/verifications Request Body"
 {
-    channel: "autofill" | "sms" | "email",
-    deviceIp?: string, // only relevant if using autofill channel
-    phone?: string // only relevant if using SMS channel or if wanting to match user input to autofill output
+    channel: "autofill" | "silent" | "sms", // email coming soon
+    deviceIp?: string, // required for autofill and silent channels
+    phone?: string // required for silent and SMS channels, or if wanting to match user input to autofill output
 }
 ```
 
@@ -293,6 +358,7 @@ postmanUrl=''>
 
                 Possible values:
                     - `"autofill"`
+                    - `"silent"`
                     - `"sms"`
                     - `"email"` <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/>
             </details>
@@ -304,16 +370,16 @@ postmanUrl=''>
     </tr>
     <tr>
         <td>`deviceIp`</td>
-        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required if `channel` is `"autofill"`)</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required if `channel` is `"autofill"` or `"silent"`)</td>
         <td>`string`</td>
-        <td>[IPv6](https://en.wikipedia.org/wiki/IPv6_address)</td>
+        <td>[IPv6 address](https://en.wikipedia.org/wiki/IPv6_address)</td>
         <td>-</td>
         <td>IP address of user's device</td>
-        <td>`"2001:0db8:85a3:0000:0000:8a2e:0370:7334"`</td>
+        <td>`"::121:2555:0010"`</td>
     </tr>
     <tr>
         <td>`phone`</td>
-        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required if `channel` is `"sms"`)</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> (but required if `channel` is `"silent"` or `"sms"`)</td>
         <td>`string`</td>
         <td>[E.164](https://www.twilio.com/docs/glossary/what-e164)</td>
         <td>-</td>
@@ -343,6 +409,8 @@ Here's an example with a pending status from the SMS channel:
 
 <Post1ClickVerificationsResponseBodyPendingExample/>
 
+<hr />
+
 
 {/* TODO: Update */}
 {/* <EndpointHeaderWithoutSwagger
@@ -368,13 +436,74 @@ postmanUrl=''>
 
 #### Request {#post-1-click-verifications-deliver-request}
 
-Call:
-
-```
-POST /1-click/verifications/{uuid}/deliver
+```typescript title="POST /1-click/verifications/{uuid}/deliver Request Body"
+{
+    format?: "code" | "link" | "codeAndLink" | "linkAndCode", // defaults to code
+    redirectUrl?: string, // only relevant if link format is included
+    redirectUserAfter?: "phoneVerification" | "infoConfirmation" // only relevant if link format is included
+}
 ```
 
 - For the `{uuid}` path parameter, use the value of the `uuid` included in the [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity) that's included in the response body of every 1-Click Verify endpoint.
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Required?</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Default</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`format`</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"code"`
+                    - `"link"`
+                    - `"codeAndLink"`
+                    - `"linkAndCode"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>`"code"`</td>
+        <td>Format used for verification message (see Verification SMS Formats below)</td>
+        <td>`"linkAndCode"`</td>
+    </tr>
+    <tr>
+        <td>`redirectUrl`</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+        <td>`string`</td>
+        <td>[URL](https://url.spec.whatwg.org/)</td>
+        <td>Defined by the [**redirect URL**](/1-click-verify/guides/setup#redirect-url) brand setting in the [Dashboard](https://dashboard.verified.inc)</td>
+        <td>Where 1-Click Verify redirects a user to (only relevant if link format is included)</td>
+        <td>`"https://hooli.com/verified/1-click/verify"`</td>
+    </tr>
+    <tr>
+        <td>`redirectUserAfter`</td>
+        <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"phoneVerification"` (redirect after 1-Click Verify)
+                    - `"infoConfirmation"` (redirect after hosted 1-Click Signup/Health)
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Defined by the [**redirect user after**](/1-click-verify/guides/setup#redirect-user-after) brand setting in the [Dashboard](https://dashboard.verified.inc)</td>
+        <td>When a user is redirected to the redirect URL (only relevant if link format is included)</td>
+        <td>`"phoneVerification"`</td>
+    </tr>
+</table>
+
+<VerificationSmsFormatsAdmonition/>
 
 
 #### Response {#post-1-click-verifications-deliver-response}
@@ -388,6 +517,8 @@ POST /1-click/verifications/{uuid}/deliver
 See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity). Here's an example:
 
 <Post1ClickVerificationsDeliverResponseBodyExample/>
+
+<hr />
 
 
 {/* TODO: Update */}
@@ -420,6 +551,8 @@ postmanUrl=''>
 }
 ```
 
+- For the `{uuid}` path parameter, use the value of the `uuid` included in the [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity) that's included in the response body of every 1-Click Verify endpoint.
+
 <table>
     <tr>
         <th>Property</th>
@@ -441,8 +574,6 @@ postmanUrl=''>
     </tr>
 </table>
 
-- For the `{uuid}` path parameter, use the value of the `uuid` included in the [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity) that's included in the response body of every 1-Click Verify endpoint.
-
 
 #### Response {#post-1-click-verifications-verify-response}
 
@@ -455,6 +586,8 @@ postmanUrl=''>
 See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity). Here's an example:
 
 <Post1ClickVerificationsVerifyResponseBodyExample/>
+
+<hr />
 
 
 {/* TODO: Update */}
@@ -487,8 +620,8 @@ GET /1-click/verifications/{uuid}
 ```
 
 - For the `{uuid}` path parameter:
-  - In Text to Signup flows, use the value of the `verificationUuid` included as a URL parameter on the redirect URL.
-  - In 1-Click Verify flows, use the value of the `uuid` included in the [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity) that's included in the response body of every 1-Click Verify endpoint.
+  - If the user comes from a redirect, use the value of the `verificationUuid` included as a URL parameter on the redirect URL.
+  - Otherwise, use the value of the `uuid` included in the [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity) that's included in the response body of a relevant 1-Click Verify endpoint.
 
 
 #### Response {#get-1-click-verifications-response}

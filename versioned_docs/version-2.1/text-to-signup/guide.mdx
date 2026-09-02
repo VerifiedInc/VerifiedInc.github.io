@@ -29,7 +29,8 @@ import SessionKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/se
 import ErrorSKE001 from '@site/versioned_docs/version-2.1/reusables/errors/SKE001.mdx';
 import SequenceDiagramTextToSignupConfirmUsersPhoneIsVerified from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-text-to-signup-confirm-users-phone-is-verified.mdx';
 import SequenceDiagramTextToSignupRetrieveUsersIdentityInfo from '@site/versioned_docs/version-2.1/reusables/sequence-diagram-text-to-signup-retrieve-users-identity-info.mdx';
-import OneClickVerificationEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-verification-entity-example.mdx'
+import OneClickVerificationEntityExampleTextToSignup from '@site/versioned_docs/version-2.1/reusables/1-click-verification-entity-example-text-to-signup.mdx'
+import OneClickHealthEntityExample from '@site/versioned_docs/version-2.1/reusables/1-click-health-entity-example.mdx'
 import PoweredByGraphicVariantsForTextToSignup from '@site/versioned_docs/version-2.1/reusables/powered-by-graphic-variants-for-text-to-signup.mdx';
 import SyncFromSandboxAdmonition from '@site/versioned_docs/version-2.1/reusables/sync-from-sandbox-admonition.mdx';
 
@@ -249,8 +250,8 @@ This Guide includes lots of detail so you have all the information you might nee
                 <td>After the Text to Signup flow (where we verify the user’s phone number)</td>
             </tr>
             <tr>
-                <td>Hosted 1-Click Signup</td>
-                <td>After a [1-Click Signup](/1-click-signup) flow we host (where we autofill info and have the user confirm it)</td>
+                <td>Hosted 1-Click Signup/Health</td>
+                <td>After a [1-Click Signup](/1-click-signup) and/or [1-Click health](/1-click-health) flow we host (where we autofill info and have the user confirm it)</td>
             </tr>
         </table>
 
@@ -261,10 +262,10 @@ This Guide includes lots of detail so you have all the information you might nee
         See [step 3](#3-if-necessary-do-integration-work) for how to do this.
         
         <Admonition type="tip">
-        If you've already integrated 1-Click Signup (following the [SDK Integration](/1-click-signup/guides/sdk-integration) or [API Integration](/1-click-signup/guides/api-integration) guide), the **"Text to Signup"** option is best, because it ensures you can keep your signup flow consistent for all users.
+        If you've already integrated 1-Click Signup/Health (following the [1-Click Signup guides](/1-click-signup/guides) or [1-Click Health guides](/1-click-health/guides) [SDK Integration](/1-click-signup/guides/sdk-integration) or [API Integration](/1-click-signup/guides/api-integration) guide), the **"Text to Signup"** option is best, because it ensures you can keep your signup flow consistent for all users.
         </Admonition>
 
-        If you choose the **"Hosted 1-Click Signup"** option, we will take the user through a hosted 1-Click Signup flow that autofills identity info and has them confirm it. You'll need to [retrieve the user's info](#retrieve-users-identity-info) to benefit from this: see [step 3](#3-if-necessary-do-integration-work) for how.
+        If you choose the **"Hosted 1-Click Signup/Health"** option, we will take the user through a hosted [1-Click Signup](/1-click-signup) and/or [1-Click health](/1-click-health) flow that autofills identity and/or health insurance info and has them confirm it. You'll need to [retrieve the user's info](#retrieve-users-info) to benefit from this: see [step 3](#3-if-necessary-do-integration-work) for how.
 
     </CollapsibleSection>
 
@@ -356,39 +357,40 @@ See the sections below for details about how to do each of these.
         <SequenceDiagramTextToSignupConfirmUsersPhoneIsVerified/>
 
 
-        #### a. Parse the `verificationUuid` URL parameter.
+        #### a. Parse `verificationUuid` URL parameter.
 
-        When a user completes Text to Signup, we redirect them to your campaign's [redirect URL](#redirect-url), appending a URL parameter that depends on the [redirect user after](#redirect-user-after) setting. When it's set to **"Text to Signup"**, we redirect the user after we verify their phone number. Therefore, we append a `verificationUuid` parameter, which lets you check that the user's phone was verified:
+        When a user completes Text to Signup, we redirect them to your campaign's [redirect URL](#redirect-url), appending a URL parameter that depends on the [redirect user after](#redirect-user-after) setting. When it's set to **"Text to Signup"**, we redirect the user after we verify their phone number and append a `verificationUuid` parameter, which lets you check that the user's phone was verified:
+
         ```
         {redirectUrl}?verificationUuid={verificationUuid}
 
         https://hooli.com/verified/text-to-signup?verificationUuid=68b7bf30-1a2d-4fcc-a2c8-be7de29e5b19
         ```
 
+        **Parse the value of this `verificationUuid` parameter,** which you'll use in the next step.
+
         <Admonition type="note" title="Sandbox Environment">
         In the [Sandbox](/reference/api/environments#sandbox) environment, we also append an `env=sandbox` parameter (for example `...?verificationUuid={verificationUuid}&env=sandbox`). This lets you tell test requests apart from live ones when you use the same redirect URL in both environments.
         </Admonition>
 
-        Parse the value of this parameter, which you'll use in the next step. 
-
         <Admonition type="danger">
-        **A user arriving at your campaign [redirect URL](#redirect-url) with a `verificationUuid` URL parameter is NOT a technical guarantee that the user's phone is verified!** If your use case needs such a guarantee, you must confirm the phone is verified using [step b](#b-call-get-1-clickverifications) and [step c](#c-check-verification-status). 
+        **A user arriving at your [redirect URL](#redirect-url) with a `verificationUuid` URL parameter is NOT a technical guarantee that the user's phone is verified!** If your use case needs such a guarantee, you must confirm the phone is verified using [step b](#b-call-get-1-clickverifications) and [step c](#c-check-verification-status). 
         <details>
             <summary>Why is this the case?</summary>
 
-            A bad actor can figure out what the redirect URL is (for example by simply going through the campaign flow themselves) and then append a `verificationUuid` parameter with a random UUID value.
+            A bad actor can figure out what the redirect URL is (for example by simply going through the flow themselves) and then append a `verificationUuid` parameter with a random UUID value.
 
-            So, to confirm the user's phone is verified, you need to _use_ the value of the `verificationUuid` parameter to call `GET /1-click/verifications/{verificationUuid}` (see [step b](#b-call-get-1-clickverifications)) and then check the verification `status` in the response (see [step c](#c-check-verification-status)). This _can't_ be spoofed, because a bad actor doesn't have any way of correctly guessing a _valid_ UUID value for `verificationUuid`.
+            So, to confirm the user's phone is verified, you need to _use_ the value of the `verificationUuid` parameter to call `GET /1-click/verifications/{uuid}` (see [step b](#b-call-get-1-clickverifications)) and then check `verified` in the response (see [step c](#c-check-verification-status)). This _can't_ be spoofed, because a bad actor doesn't have any way of correctly guessing a _valid_ UUID value for `verificationUuid`.
         </details>
         </Admonition>
 
 
         #### b. Call `GET /1-click/verifications`.
 
-        Call your server with `verificationUuid`, which you parsed in the previous step. The server should use your Verified API key to call [`GET /1-click/verifications/{verificationUuid}`](/reference/api/endpoints#get-1-click-verifications):
+        Pass the `verificationUuid`, which you parsed in the previous step, to your server. The server should use your Verified API key to call [`GET /1-click/verifications/{uuid}`](/reference/api/endpoints#get-1-click-verifications):
 
         ```
-        GET /1-click/verifications/{verificationUuid}
+        GET /1-click/verifications/{uuid}
         ```
 
         <Admonition type="note">
@@ -397,38 +399,44 @@ See the sections below for details about how to do each of these.
 
         <ApiKeysAdmonition/>
 
-        The response will be a [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity):
+        The response body will be a [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity):
 
         ```typescript title="GET /1-click/verifications Response Body"
         {
             ...1ClickVerificationEntity
         }
         ```
-        <OneClickVerificationEntityExample/>
+        <OneClickVerificationEntityExampleTextToSignup/>
 
 
-        #### c. Check verification `status`.
+        #### c. Check `verified`.
 
-        Check that the value of `status` is `"verified"`, which means the user's phone is verified. Otherwise, it may be spoofed.
+        Check that `verified` is `true` (or, equivalently, that `status` is `"verified"`), which means the user's phone is verified. Otherwise, it may be spoofed.
 
     </CollapsibleSection>
 
     <CollapsibleSection>
 
         <CollapsibleHeader>
-        ### Retrieve User's Identity Info
+        ### Retrieve User's Info
         </CollapsibleHeader>
 
         <Admonition type="note">
-            This integration step is only relevant if the [redirect user after](#redirect-user-after) setting is set to **"Hosted 1-Click Signup".**
+            This integration step is only relevant if the [redirect user after](#redirect-user-after) setting is set to **"Hosted 1-Click Signup/Health".**
         </Admonition>
 
         <SequenceDiagramTextToSignupRetrieveUsersIdentityInfo/>
 
+        When a user completes Text to Signup, we redirect them to your campaign's [redirect URL](#redirect-url), appending one or more URL parameters that depend on the [redirect user after](#redirect-user-after) setting. When it's set to **"Hosted 1-Click Signup/Health"**, we take the user through a hosted 1-Click Signup and/or Health flow that autofills identity and/or health insurance info and has them confirm it. In that case, we append an `identityUuid` and/or `healthDataUuid` parameter, which let(s) you retrieve data the user shared.
 
-        #### a. Parse the `identityUuid` URL parameter.
 
-        When a user completes Text to Signup, we redirect them to your campaign's [redirect URL](#redirect-url), appending a URL parameter that depends on the [redirect user after](#redirect-user-after) setting. When it's set to **"Hosted 1-Click Signup"**, we take the user through a hosted 1-Click Signup flow that autofills identity info and has them confirm it. Therefore, we append an `identityUuid` parameter, which lets you retrieve data the user shared.
+        #### 1-Click Signup
+        
+        
+        ##### a. Parse the `identityUuid` URL parameter.
+
+        Parse the value of the `identityUuid` URL parameter"
+
         ```
         {redirectUrl}?identityUuid={identityUuid}
 
@@ -442,7 +450,7 @@ See the sections below for details about how to do each of these.
         Parse the value of this parameter, which you'll use in the next step. 
 
 
-        #### b. Call `GET /1-click`.
+        ##### b. Call `GET /1-click`.
 
         Call your server with `verificationUuid`, which you parsed in the previous step. The server should use your Verified API key to call [`GET /1-click/{identityUuid}`](/reference/api/endpoints#get-1-click):
 
@@ -468,6 +476,54 @@ See the sections below for details about how to do each of these.
             <summary><code>1ClickEntity</code> Example</summary>
 
             <OneClickEntityExample/>
+        </details>
+
+
+        #### 1-Click Health
+
+        ##### a. Parse the `healthDataUuid` URL parameter.
+
+        Parse the value of the `healthDataUuid` URL parameter"
+
+        ```
+        {redirectUrl}?healthDataUuid={healthDataUuid}
+
+        https://hooli.com/verified/text-to-signup?healthDataUuid=f23812ce-9337-49f9-a96c-77fda4f8247b
+        ```
+
+        <Admonition type="note" title="Sandbox Environment">
+        In the [Sandbox](/reference/api/environments#sandbox) environment, we also append an `env=sandbox` parameter (for example `...?healthDataUuid={healthDataUuid}&env=sandbox`). This lets you tell test requests apart from live ones when you use the same redirect URL in both environments.
+        </Admonition>
+
+        Parse the value of this parameter, which you'll use in the next step. 
+
+
+        ##### b. Call `GET /1-click/health`.
+
+        Call your server with `healthDataUuid`, which you parsed in the previous step. The server should use your Verified API key to call [`GET /1-click/health/{healthDataUuid}`](/reference/api/endpoints#get-1-clickhealth):
+
+        ```
+        GET /1-click/health/{healthDataUuid}
+        ```
+
+        <Admonition type="note">
+        The endpoint you should use here is **`GET /1-click/health`**, which is different than `GET /1-click/verifications`.
+        </Admonition>
+
+        <ApiKeysAdmonition/>
+
+        The response will be a [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) that contains user health insurance data:
+
+        ```typescript title="GET /1-click/health Response Body"
+        {
+            ...1ClickHealthEntity
+        }
+        ```
+
+        <details>
+            <summary><code>1ClickHealthEntity</code> Example</summary>
+
+            <OneClickHealthEntityExample/>
         </details>
 
     </CollapsibleSection>

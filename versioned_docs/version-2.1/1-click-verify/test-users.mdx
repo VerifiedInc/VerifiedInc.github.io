@@ -9,6 +9,87 @@ slug: /1-click-verify/test-users
 toc_max_heading_level: 5
 ---
 
-You can use any of the [1-Click Signup test users](/1-click-signup/test-users) with 1-Click Verify. 
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
 
-No SMS will be sent to the test user phone numbers, since they aren't real phone numbers. Unless otherwise noted, you can verify for any test user using the static verification code **111111**.
+You can test 1-Click Verify with mock data in [Sandbox](/reference/api/environments#sandbox), using either a random device IP and/or your own phone number, or our dedicated test users below.
+
+**All test users are keyed on device IP and/or phone number input data.** In other words, device IP and/or phone number are the unique inputs that distinguish one test user from another.
+
+<DevelopmentWorkAdmonition />
+
+:::warning Don't Send Messages to Test User Phones/Emails
+The test user phone numbers and email addresses are not valid, so sending messages to them won't work. To simulate SMS verification, for example, use the test user (static) verification codes. To test real SMS verification, use your own (real) phone number.
+:::
+
+
+## How to Use Test Users
+
+
+### Demo
+
+1. Go to the [Demo](https://1-click.demo.verified.inc).
+2. Select _Mock Data (sandbox)_ and click _Start Demo_.
+3. Enter the test user's phone number (varies by user).
+4. Enter the test user's (static) verification code (always 111111).
+
+:::tip
+You can use a [custom demo](/custom-demo) by generating one or opening one with your brand's settings from within the Dashboard.
+:::
+
+
+### SDK
+
+1. Complete the [SDK Integration](/1-click-signup/guides/sdk-integration) guide and run the SDK.
+2. Enter the test user's phone number (varies by user).
+3. Enter the test user's (static) verification code (always 111111).
+
+
+### API
+
+1. Access the [Dashboard](https://dashboard.verified.inc) and go the Brand Details page for your brand.
+2. Copy a [Sandbox](/reference/api/environments#sandbox) API key for your brand.
+3. Call [1-Click Verify endpoints](/reference/api/endpoints#1-click-verify) with the test user's device IP and/or phone number (varies by user).
+
+---
+
+
+## Device IPs and Phone Numbers
+
+
+### 1-Click Signup Test Users
+
+You can use any of the [1-Click Signup test users](/1-click-signup/test-users) with 1-Click Verify. Each of these is identified by a unique phone number, which you can resolve to with a corresponding, unique device IP. For example: 
+- Device IP `::121:2555:0010` resolves to phone number +12125550010.
+- Device IP `::165:6555:0000` resolves to phone number +16565550000.
+- Device IP `::140:4555:1300` resolves to phone number +14045551300.
+- ...
+
+Any device IP that doesn't resolve to a specific 1-Click Signup test user phone number (or match one of the [error code](#error-codes) ones below) will resolve to our [primary test user](/1-click-signup/test-users#primary-test-user) phone number, +12125550010.
+
+:::note How This Works
+1-Click Verify only accepts device IPs in IPv6 format. An [IPv6 address](https://en.wikipedia.org/wiki/IPv6_address) is a 128-bit number written as 8 groups of 4 hexadecimal digits separated by colons, for example:
+```
+0000:0000:0000:0000:0000:0121:2555:0010
+```
+However, there are 2 shortening rules to write these addresses in a more compact form:
+1. **Remove leading zeros:** Remove extra zeros at the start of any group. _For example, `0121` becomes `121`._
+2. **Replace consecutive groups of zeros:** Replace consecutive groups of all zeros with a double colon, once per address. _For example, `0000:0000:0000:0000:0000` becomes `::`._
+
+So, the address above becomes:
+```
+::121:2555:0010
+```
+We resolve this to phone number +12125550010.
+:::
+
+
+### Error Codes
+
+There are 2 device IPs that resolve to [Verified error codes](/reference/api/errors#verified-error-codes-1) for 1-Click Verify:
+- `::8` resolves to [`OCV008`](/reference/api/errors#ocv008).
+- `::10` resolves to [`OCV010`](/reference/api/errors#ocv010).
+
+
+## Verification Codes
+
+We won't send SMS to the test user phone numbers, since they aren't real phone numbers. However, unless otherwise noted, you can use the static verification code **111111** to verify any test user number.

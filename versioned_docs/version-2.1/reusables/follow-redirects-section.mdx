@@ -1,0 +1,15 @@
+import FollowRedirectsOnUserDeviceAdmonition from '@site/versioned_docs/version-2.1/reusables/follow-redirects-on-user-device-admonition.mdx';
+
+This will return a HTTP `302` redirect and a `Location` header with a URL value. Pass this URL to your client, on the user's device. You should handle this slightly differently on native mobile vs. web, as described in the sections below.
+
+
+<h3 id="follow-redirects-native-mobile">Native Mobile</h3>
+
+Call `VerifiedCellular.followRedirects(url)`. This will follow all redirects over a cellular connection.
+
+
+<h3 id="follow-redirects-web">Web</h3>
+
+Fetch the URL, headlessly, setting `redirect` to `"follow"` to follow all redirects.
+
+<FollowRedirectsOnUserDeviceAdmonition/>

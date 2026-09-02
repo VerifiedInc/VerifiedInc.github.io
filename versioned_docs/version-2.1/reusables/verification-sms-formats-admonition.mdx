@@ -1,0 +1,79 @@
+import Chip from '@mui/material/Chip';
+
+:::tip Verification SMS Formats
+
+The content of the verification SMS depends on the format:
+
+<table>
+    <tr>
+        <th>Format</th>
+        <th>`format`</th>
+        <th>SMS Template</th>
+        <th>SMS Example</th>
+    </tr>
+    <tr>
+        <td>Code <Chip label="Default" variant="outlined" size="small" color="primary"/></td>
+        <td>`code`</td>
+        <td>
+            <blockquote>
+                Enter this code to verify for `{Brand Name}`: 111111
+            </blockquote>
+        </td>
+        <td>
+            <blockquote>
+                Enter this code to verify for Hooli: 111111
+            </blockquote>
+        </td>
+    </tr>
+    <tr>
+        <td>Link</td>
+        <td>`link`</td>
+        <td>
+            <blockquote>
+                Click this link to verify for `{Brand Name}`: https://1-click.verified.inc/abcd1234
+            </blockquote>
+        </td>
+        <td>
+            <blockquote>
+                Click this link to verify for Hooli: https://1-click.verified.inc/abcd1234
+            </blockquote>
+        </td>
+    </tr>
+    <tr>
+        <td>Code and Link</td>
+        <td>`codeAndLink`</td>
+        <td>
+            <blockquote>
+                Enter this code to verify for `{Brand Name}`: 111111
+                <br/>
+                Or, click this link: https://1-click.verified.inc/abcd1234
+            </blockquote>
+        </td>
+        <td>
+            <blockquote>
+                Enter this code to verify for Hooli: 111111
+                <br/>
+                Or, click this link: https://1-click.verified.inc/abcd1234
+            </blockquote>
+        </td>
+    </tr>
+    <tr>
+        <td>Link and Code</td>
+        <td>`linkAndCode`</td>
+        <td>
+            <blockquote>
+                Click this link to verify for `{Brand Name}`: https://1-click.verified.inc/abcd1234
+                <br/>
+                Or, enter this code: 111111
+            </blockquote>
+        </td>
+        <td>
+            <blockquote>
+                Click this link to verify for Hooli: https://1-click.verified.inc/abcd1234
+                <br/>
+                Or, enter this code: 111111
+            </blockquote>
+        </td>
+    </tr>
+</table>
+:::

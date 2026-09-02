@@ -6,7 +6,7 @@ sidebar_label: Setup
 sidebar_class_name: sidebar-header-regular
 description: How to get setup to integrate 1-Click Verify
 slug: /1-click-verify/guides/setup
-toc_max_heading_level: 4
+toc_max_heading_level: 5
 ---
 
 import Admonition from '@theme/Admonition';
@@ -62,19 +62,10 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 <BrandSettingBrandName/>
 
 
-### Integration Type
-
-**Choose how you'll integrate 1-Click Verify: with our SDK or our API.**
-
-<IntegrationTypeRecommendationAdmonition/>
-
-
 ### 1-Click Verify Settings
 
 
 #### Channels
-
-<ImmutableSettingAdmonition/>
 
 **Choose which channel(s) you want to enable:**
 
@@ -88,15 +79,68 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
         <td>Autofill verified phone number with no user input</td>
     </tr>
     <tr>
+        <td>**Silent** <Chip label="Recommended" variant="outlined" size="small" color="primary"/> <br/> <span class="font-weight-normal"></span></td>
+        <td>Autofill verified phone number with no user input</td>
+    </tr>
+    <tr>
         <td>**SMS** <Chip label="Always Enabled" variant="outlined" size="small" color="primary"/> <br/> <span class="font-weight-normal"></span></td>
         <td>Verify phone number with SMS OTP</td>
     </tr>
 </table>
 
-:::tip We Recommend Using Both Channels
-**The autofill channel lets you autofill a user's phone number with _no user input_** — the best user experience on the planet! But it currently only works for a minority of sessions, so you'll need to fall back to the SMS channel.
+:::tip We Recommend Using All Channels
+**The autofill channel lets you autofill a user's phone number with _no user input_** — the best user experience on the planet! And the silent channel lets you verify a user inputted phone number without sending an SMS. But these channels don't yet work for all user sessions, so it's best to fall back from autofill to silent to SMS.
 :::
 
-:::info How Autofill Billing Works
-For the autofill channel, we bill per attempt (per autofill started), _but_ you can use the [`GET /1-click/verifications/channels`](/reference/api/endpoints#get-1-click-verifications-channels) for free to check in advance if autofill will work. Almost 100% of the time, if this endpoint indicates the autofill channel is available, autofill will succeed. The only exceptions are rare edge cases, for example when a user loads the page on cell data but then switches to WiFi before starting autofill (since autofill doesn't yet work on WiFi).
+:::info How Billing Works
+- **Autofill and Silent:** We bill per autofill/silent started (not succeeded), _but_ you can use the [`GET /1-click/verifications/channels`](/reference/api/endpoints#get-1-click-verifications-channels) for free to check in advance if autofill will succeeded. Almost 100% of the time, if this endpoint indicates the autofill channel is available, autofill will succeed. The only exceptions are rare edge cases, for example when a user loads the page on cell data but then switches to WiFi before starting autofill (since autofill doesn't yet work on WiFi).
+- **SMS:** We bill per SMS sent.
+- **All channels:** We bill per verification succeeded.
 :::
+
+
+#### Link Delivery Format
+
+:::note
+This setting is only relevant if you use the link format with the SMS channel: that is, if you send SMS with verification links (instead of verification codes).
+:::
+
+
+##### Redirect URL
+
+**Set a redirect URL,** which is where 1-Click Verify redirects a user to. The redirect URL can be any valid URL — whether a website link, app store link, or otherwise.
+
+
+##### Redirect User After
+
+**Choose when a user should be redirected:**
+
+<table>
+    <tr>
+        <th>Option</th>
+        <th>`redirectUserAfter`</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>1-Click Verify</td>
+        <td>`"phoneVerification"`</td>
+        <td>After the 1-Click Verify flow (where we verify the user’s phone number)</td>
+    </tr>
+    <tr>
+        <td>Hosted 1-Click Signup/Health</td>
+        <td>`"infoConfirmation"`</td>
+        <td>After a [1-Click Signup](/1-click-signup) and/or [1-Click health](/1-click-health) flow we host (where we autofill info and have the user confirm it)</td>
+    </tr>
+</table>
+
+If you choose the **"1-Click Verify"** option, we will redirect the user after we verify their phone number. You can then optionally:
+- [Confirm the user's phone is verified.](#confirm-users-phone-is-verified)
+- [Pass the user to an integrated 1-Click Signup flow](#pass-user-to-integrated-1-click-signup-flow) on your side.
+
+See [step 3](#3-if-necessary-do-integration-work) for how to do this.
+
+<Admonition type="tip">
+If you've already integrated 1-Click Signup (following the [SDK Integration](/1-click-signup/guides/sdk-integration) or [API Integration](/1-click-signup/guides/api-integration) guide), the **"Text to Signup"** option is best, because it ensures you can keep your signup flow consistent for all users.
+</Admonition>
+
+If you choose the **"Hosted 1-Click Signup"** option, we will take the user through a hosted 1-Click Signup flow that autofills identity info and has them confirm it. You'll need to [retrieve the user's info](#retrieve-users-identity-info) to benefit from this: see [step 3](#3-if-necessary-do-integration-work) for how.

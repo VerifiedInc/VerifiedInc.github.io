@@ -78,7 +78,8 @@ const menuStyles = {
   '& .MuiPaper-root': {
     mt: 0.75,
     p: 0.5,
-    minWidth: 232,
+    width: 'max-content',
+    minWidth: 176,
     borderRadius: '8px',
     border: '1px solid var(--ifm-color-emphasis-200)',
     backgroundColor: 'var(--ifm-background-surface-color)',
@@ -98,13 +99,15 @@ const menuStyles = {
     px: 1,
     py: 0.75,
     gap: 0,
+    whiteSpace: 'nowrap',
     '&:hover': {
       backgroundColor: 'var(--ifm-hover-overlay)',
     },
   },
   '& .MuiListItemIcon-root': {
     color: 'var(--ifm-color-emphasis-700)',
-    minWidth: 26,
+    minWidth: 'auto',
+    mr: 1,
   },
   '& .MuiSvgIcon-root': {
     fontSize: 15,

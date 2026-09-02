@@ -1,17 +1,23 @@
-```typescript title="GET /1-click/verifications/channels Response Body"
+```typescript title="GET /1-click/verifications/channels Response Body Example"
 {
    "channels": {
         "autofill": {
-            "available": boolean, // brandApproved && deviceIpEligible
-            "brandApproved": boolean,
-            "deviceIpEligible": boolean
+            "available": true, // = brandApproved && deviceIpEligible
+            "brandApproved": true,
+            "deviceIpEligible": true
+        },
+        "silent": {
+            "available": true, // = brandApproved && deviceIpEligible
+            "brandApproved": true,
+            "deviceIpEligible": true
         },
         "sms": {
-            "available": boolean
+            "available": true, // = brandApproved, currently
+            "brandApproved": true
         },
         // Coming soon
         // "email": {
-        //     "available": boolean
+        //     "available": true
         // }
    }
 }

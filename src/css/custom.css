@@ -121,6 +121,16 @@
   text-decoration: var(--ifm-link-hover-decoration);
 }
 
+/* keep links muted like surrounding text within blockquotes nested inside
+   admonitions (needs .alert blockquote specificity to beat .alert a above).
+   Hover is included too so there's no color fade — matches every other link,
+   which never visibly changes color on hover (only the underline toggles,
+   instantly). */
+.alert blockquote a,
+.alert blockquote a:hover {
+  color: inherit;
+}
+
 /* NAVBAR */
 /* adjust spacing between rightmost navbar iem and dark mode toggle */
 .navbar__items--right .react-toggle {
@@ -384,6 +394,23 @@ td:first-child {
   font-family: var(--ifm-font-family-base) !important;
   font-weight: 700 !important;
   text-align: center !important;
+}
+
+/* Autofill Coverage Calculator opts out of the global centered/bold CardContent styling above */
+.autofill-coverage-calculator .MuiCardContent-root {
+  text-align: left !important;
+  font-weight: 400 !important;
+}
+
+/* --ifm-color-emphasis-100 is nearly identical to the page background in dark mode,
+   so use the elevated surface color there instead to keep the card visually distinct */
+html[data-theme='dark'] .autofill-coverage-calculator {
+  background-color: var(--ifm-background-surface-color);
+}
+
+/* The Mermaid theme forces a solid white diagram background, which clashes in dark mode */
+.autofill-coverage-calculator .docusaurus-mermaid-container {
+  background-color: transparent;
 }
 
 /* To make MUI use lato, TODO: Wrap the app in a MuiThemeProvider and change the font */

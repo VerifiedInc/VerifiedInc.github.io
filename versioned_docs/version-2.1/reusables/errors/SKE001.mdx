@@ -9,8 +9,16 @@ import Admonition from '@theme/Admonition';
   riskSignals=''
   description=''
   integrationType='SDK'
-  whenThisIsReturned='When an API key used to call POST /client/1-click (to create a session key for initializing the SDK) is for a brand whose integration type is not set to SDK.' 
-  howToHandle="Change the brand's integration type setting to SDK in the Dashboard (or create a new brand), and then try again."
+  whenThisIsReturned={
+    <>
+      When <code>POST /client/1-click</code> is called for a brand not approved for the <strong>SDK</strong> integration type.
+    </>
+  }
+  howToHandle={
+    <>
+      Get approval for the <strong>SDK</strong> integration type, and then try the request again.
+    </>
+  }
   youShouldNeverGetThisError=''
 >
   ###### `SKE001`

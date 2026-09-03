@@ -277,7 +277,7 @@ This Guide includes lots of detail so you have all the information you might nee
 **Click the Styling tab to access these settings.**
 
 :::important
-Only the styling settings listed below apply to **Text to Signup**. There are other styling settings that apply to [**1-Click Signup**](/1-click-signup) (if you're using the **SDK** [integration type](/1-click-signup/guides/setup#integration-type)). See [here](/1-click-signup/guides/setup#styling-settings) in the 1-Click Signup Setup guide for details.
+Only the styling settings listed below apply to **Text to Signup**. There are other styling settings that apply to [**1-Click Signup**](/1-click-signup) (if you're using the **SDK** integration type). See [here](/1-click-signup/guides/setup#styling-settings) in the 1-Click Signup Setup guide for details.
 :::
 
 :::tip Verified Auto-Magically Configures Styling Settings
@@ -334,7 +334,7 @@ See the sections below for details about how to do each of these.
 
         Because Text to Signup verifies a user's phone number, you can pass the user to an integrated 1-Click Signup flow _that skips the standard phone verification process_ (enter phone, receive SMS verification code, enter verification code). The result is a frictionless, delightful user experience!
 
-        How to do this depends on your brand's [integration type](/1-click-signup/guides/setup#integration-type):
+        How to do this depends on the integration type you choose:
         - **SDK:** Start at [step 1](/1-click-signup/guides/sdk-integration#1-create-a-session-key) in the [SDK Integration](/1-click-signup/guides/sdk-integration) guide, but include `verificationUuid` in the request body of `POST /client/1-click` (instead of using an empty request body). This will make the SDK skip the [Phone](/1-click-signup/user-experience#phone) and [Verification Code](/1-click-signup/user-experience#verification-code) screens.
         - **API:** Skip step 1 in the [API Integration](/1-click-signup/guides/api-integration) guide and go straight to [step 2](/1-click-signup/guides/api-integration#2-call-post-1-click), using `verificationUuid` instead of `phone` in the request body of `POST /1-click`.
 

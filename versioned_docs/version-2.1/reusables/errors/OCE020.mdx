@@ -11,15 +11,12 @@ import BirthDateOverSsn4Admonition from '@site/versioned_docs/version-2.1/reusab
   integrationType=''
   whenThisIsReturned={
     <>
-      If the integration type is <strong>SDK</strong> and the customer attempts
-      to call POST <strong>/1-click</strong> with <strong>phone</strong> in the
-      request body.
+      When <code>POST /1-click</code> is called for a brand not approved for the <strong>API</strong> integration type.
     </>
   }
   howToHandle={
     <>
-      Create a new brand with the <strong>integrationType</strong> set to{' '}
-      <strong>API</strong> in the Dashboard, then try the request again.
+      Get approval for the <strong>API</strong> integration type, and then try the request again.
     </>
   }
   youShouldNeverGetThisError=''

@@ -62,344 +62,312 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 <BrandSettingBrandName/>
 
 
-### Integration Type
-
-**Choose how you'll integrate 1-Click Signup: with our SDK or our API.**
-
-<IntegrationTypeRecommendationAdmonition/>
-
-
 ### 1-Click Signup Settings
 
 **Click the 1-Click Signup tab to access these settings.**
 
 
-<CollapsibleGroup firstSectionExpanded={false}>
+#### Challenges
 
-    <CollapsibleSection>
+<Admonition type="note" title="Definition">
+    A **challenge** is a secondary input (alongside verified phone, which is always required) that must match the corresponding output.
+</Admonition>
 
-        <CollapsibleHeader>
-        #### Challenges
-        </CollapsibleHeader>
+By default, **First Name** is set to **Always**, and **Birth Date** and **SSN4** are disabled.
 
-        <Admonition type="note" title="Definition">
-            A **challenge** is a secondary input (alongside verified phone, which is always required) that must match the corresponding output.
-        </Admonition>
+**Choose which challenge(s) to use:**
 
-        By default, **First Name** is set to **Always**, and **Birth Date** and **SSN4** are disabled.
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>First Name</td>
+        <td>Prompt the user for their first name</td>
+    </tr>
+    <tr>
+        <td>Birthday</td>
+        <td>Prompt the user for their birthday</td>
+    </tr>
+    <tr>
+        <td>SSN4</td>
+        <td>Prompt the user for their SSN4</td>
+    </tr>
+</table>
 
-        **Choose which challenge(s) to use:**
+**For the enabled challenge(s), choose when to prompt the user for them:**
 
-        <table>
-            <tr>
-                <th>Option</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>First Name</td>
-                <td>Prompt the user for their first name</td>
-            </tr>
-            <tr>
-                <td>Birthday</td>
-                <td>Prompt the user for their birthday</td>
-            </tr>
-            <tr>
-                <td>SSN4</td>
-                <td>Prompt the user for their SSN4</td>
-            </tr>
-        </table>
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>Always</td>
+        <td>Upfront, every time</td>
+    </tr>
+    <tr>
+        <td>Only if necessary</td>
+        <td>Only if Verified can't source data based on other inputs</td>
+    </tr>
+</table>
 
-        **For the enabled challenge(s), choose when to prompt the user for them:**
+<Admonition type='important' title='What We Recommend'>
+  **We recommend using a single challenge, either First Name or Birthday, and always requiring it.**
+  
+  <details>
+    <summary>Why We Recommend This</summary>
 
-        <table>
-            <tr>
-                <th>Option</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>Always</td>
-                <td>Upfront, every time</td>
-            </tr>
-            <tr>
-                <td>Only if necessary</td>
-                <td>Only if Verified can't source data based on other inputs</td>
-            </tr>
-        </table>
+    - **One challenge is generally better than multiple:**
+        - Every additional input adds friction, with the risk that we won't be able to source data for the user.
+        - We can successfully source data based on phone and one challenge the vast majority of the time.
+        - Prompting for another challenge only slightly increases the chance that we'll be able to source data for the user, and it adds substantial friction.
+    - **First Name is generally easiest for the user:**
+        - Users are typically comfortable providing their first name.
+        - Most users will have an autofill option for first name from their browser or OS.
+        - First names are easy and fast to type.
+    - **Birthday is generally better than SSN4:**
+        - Users are typically more comfortable providing their birthday.
+        - Some users will have an autofill option for birthday from their browser or OS.
+        - Everyone has a birthday, but not everyone has an SSN.
+    - **Data quality is higher with a challenge than without one:**
+        - You can use 1-Click Signup without always requiring any challenge.
+        - If you do, we'll return data if we can source a unique user record based on phone only.
+        - However, for most use cases this isn't worth the slightly lower friction, because data quality is lower with phone only.
+</details>
+</Admonition>
 
-        <Admonition type='important' title='What We Recommend'>
-          **We recommend using a single challenge, either First Name or Birthday, and always requiring it.**
-          
-          <details>
-            <summary>Why We Recommend This</summary>
+**If you enable multiple challenges, drag and drop them into the order in which you want the user to be prompted for them.** Challenges set to **Always** will automatically be put before those set to **Only if necessary**.
 
-            - **One challenge is generally better than multiple:**
-                - Every additional input adds friction, with the risk that we won't be able to source data for the user.
-                - We can successfully source data based on phone and one challenge the vast majority of the time.
-                - Prompting for another challenge only slightly increases the chance that we'll be able to source data for the user, and it adds substantial friction.
-            - **First Name is generally easiest for the user:**
-                - Users are typically comfortable providing their first name.
-                - Most users will have an autofill option for first name from their browser or OS.
-                - First names are easy and fast to type.
-            - **Birthday is generally better than SSN4:**
-                - Users are typically more comfortable providing their birthday.
-                - Some users will have an autofill option for birthday from their browser or OS.
-                - Everyone has a birthday, but not everyone has an SSN.
-            - **Data quality is higher with a challenge than without one:**
-                - You can use 1-Click Signup without always requiring any challenge.
-                - If you do, we'll return data if we can source a unique user record based on phone only.
-                - However, for most use cases this isn't worth the slightly lower friction, because data quality is lower with phone only.
-        </details>
-        </Admonition>
 
-        **If you enable multiple challenges, drag and drop them into the order in which you want the user to be prompted for them.** Challenges set to **Always** will automatically be put before those set to **Only if necessary**.
+#### Manual Signup
 
-    </CollapsibleSection>
+**Choose how to handle manual signup:**
 
-    <CollapsibleSection>
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>Use Verified's <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/></td>
+        <td>Use Verified to handle manual signup</td>
+    </tr>
+    <tr>
+        <td>Use your own</td>
+        <td>Use your own manual signup flow</td>
+    </tr>
+    <tr>
+        <td>Hide</td>
+        <td>Don’t show user manual signup button</td>
+    </tr>
+</table>
 
-        <CollapsibleHeader>
-        #### Manual Signup
-        </CollapsibleHeader>
+<Admonition type="note">
+    A manual signup flow begins if the user clicks the “Sign Up Manually Instead” button on the [phone screen](/1-click-signup/user-experience#phone). If you select the Hide option below, this button will be hidden.
+</Admonition>
 
-        **Choose how to handle manual signup:**
+<Admonition type="tip">
+    Hiding the manual signup option could reduce conversion or it could reduce fraud — it depends on your use case and implementation.
+</Admonition>
 
-        <table>
-            <tr>
-                <th>Option</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>Use Verified's <Chip label="Coming Soon" variant="outlined" size="small" color="primary"/></td>
-                <td>Use Verified to handle manual signup</td>
-            </tr>
-            <tr>
-                <td>Use your own</td>
-                <td>Use your own manual signup flow</td>
-            </tr>
-            <tr>
-                <td>Hide</td>
-                <td>Don’t show user manual signup button</td>
-            </tr>
-        </table>
 
-        <Admonition type="note">
-            A manual signup flow begins if the user clicks the “Sign Up Manually Instead” button on the [phone screen](/1-click-signup/user-experience#phone). If you select the Hide option below, this button will be hidden.
-        </Admonition>
+#### Risk Signals
 
-        <Admonition type="tip">
-            Hiding the manual signup option could reduce conversion or it could reduce fraud — it depends on your use case and implementation.
-        </Admonition>
+<BrandSettingRiskSignals/>
 
-    </CollapsibleSection>
 
-    <CollapsibleSection>
+#### Default Credential Requests
 
-        <CollapsibleHeader>
-        #### Risk Signals
-        </CollapsibleHeader>
+<Admonition type="note" title="Definitions"> 
+    - A [**credential**](/reference/data/outputs#credentials) is a piece of identity data about a user (like a first name or address).
+    - A **credential request** is how you ask Verified for a particular credential. It encodes what type of data you're asking for, whether it's required or optional, whether multiple values should be returned, etc. See the [`CredentialRequest`](/reference/api/types#credentialrequest) type for full details.
+</Admonition>
 
-        <BrandSettingRiskSignals/>
+**Choose which [credentials](/reference/data/outputs#credentials) Verified should try to source about the user:**
 
-    </CollapsibleSection>
+<details>
+    <summary>Settings for a Credential Request</summary>
+    <table>
+        <tr>
+            <th>Setting</th>
+            <th>Relevant to Integration With</th>
+            <th>Options</th>
+            <th>Default</th>
+            <th>Description</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td>Field Type</td>
+            <td>SDK and API</td>
+            <td>[Credential](/reference/data/outputs#credentials) type</td>
+            <td>-</td>
+            <td>Type of user data this field is for</td>
+            <td>Full Name</td>
+        </tr>
+        <tr>
+            <td>Field Description</td>
+            <td>SDK only</td>
+            <td>Text</td>
+            <td>-</td>
+            <td>Text that appears under the field</td>
+            <td>Legal name (for Full Name field type)</td>
+        </tr>
+        <tr>
+            <td>Optional or Required</td>
+            <td>SDK only</td>
+            <td>
+                - Optional
+                - Required if available (see note below)
+            </td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Whether the field is optional or required</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+        </tr>
+        <tr>
+            <td>Allow User Input</td>
+            <td>SDK only</td>
+            <td>
+                - Yes
+                - No
+            </td>
+            <td>Yes</td>
+            <td>Whether the user is allowed data returned for the field</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>Multiple Values</td>
+            <td>SDK and API</td>
+            <td>
+                - Yes
+                - No
+            </td>
+            <td>
+                - Yes for Address field type
+                - No for all other field types
+            </td>
+            <td>Whether the user can choose among multiple values (if they're returned)</td>
+            <td>No</td>
+        </tr>
+    </table>
+</details>
 
-    <CollapsibleSection>
+<Admonition type="note">
+    **Field Description,** **Optional or Required,** and **Allow User Input** are only relevant if you use our **SDK** because they affect the user interface the SDK displays. 
+</Admonition>
 
-        <CollapsibleHeader>
-        #### Default Credential Requests
-        </CollapsibleHeader>
+<Admonition type="tip" title="What Required If Available Means"> 
+    If **Optional or Required** is set to **Required if available**:
+    - If data is returned for the field, the user is required to share it. (If **Allow User Input** is set to **Yes**, the user can edit the data.)
+    - If data is not returned for the field, the user can optionally share it. (If **Allow User Input** is set to **Yes**, the user can edit the data. If it's set to **No**, the field is not displayed to the user.)
+</Admonition>
 
-        <Admonition type="note" title="Definitions"> 
-            - A [**credential**](/reference/data/outputs#credentials) is a piece of identity data about a user (like a first name or address).
-            - A **credential request** is how you ask Verified for a particular credential. It encodes what type of data you're asking for, whether it's required or optional, whether multiple values should be returned, etc. See the [`CredentialRequest`](/reference/api/types#credentialrequest) type for full details.
-        </Admonition>
+When you create a new brand, the Dashboard starts you off with standard credential requests to provide you with a helpful starting point:
 
-        **Choose which [credentials](/reference/data/outputs#credentials) Verified should try to source about the user:**
-
-        <details>
-            <summary>Settings for a Credential Request</summary>
-            <table>
-                <tr>
-                    <th>Setting</th>
-                    <th>Relevant to Integration With</th>
-                    <th>Options</th>
-                    <th>Default</th>
-                    <th>Description</th>
-                    <th>Example</th>
-                </tr>
-                <tr>
-                    <td>Field Type</td>
-                    <td>SDK and API</td>
-                    <td>[Credential](/reference/data/outputs#credentials) type</td>
-                    <td>-</td>
-                    <td>Type of user data this field is for</td>
-                    <td>Full Name</td>
-                </tr>
-                <tr>
-                    <td>Field Description</td>
-                    <td>SDK only</td>
-                    <td>Text</td>
-                    <td>-</td>
-                    <td>Text that appears under the field</td>
-                    <td>Legal name (for Full Name field type)</td>
-                </tr>
-                <tr>
-                    <td>Optional or Required</td>
-                    <td>SDK only</td>
-                    <td>
-                        - Optional
-                        - Required if available (see note below)
-                    </td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Whether the field is optional or required</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                </tr>
-                <tr>
-                    <td>Allow User Input</td>
-                    <td>SDK only</td>
-                    <td>
-                        - Yes
-                        - No
-                    </td>
-                    <td>Yes</td>
-                    <td>Whether the user is allowed data returned for the field</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>Multiple Values</td>
-                    <td>SDK and API</td>
-                    <td>
-                        - Yes
-                        - No
-                    </td>
-                    <td>
-                        - Yes for Address field type
-                        - No for all other field types
-                    </td>
-                    <td>Whether the user can choose among multiple values (if they're returned)</td>
-                    <td>No</td>
-                </tr>
-            </table>
-        </details>
-
-        <Admonition type="note">
-            **Field Description,** **Optional or Required,** and **Allow User Input** are only relevant if you use our **SDK** because they affect the user interface the SDK displays. 
-        </Admonition>
-
-        <Admonition type="tip" title="What Required If Available Means"> 
-            If **Optional or Required** is set to **Required if available**:
-            - If data is returned for the field, the user is required to share it. (If **Allow User Input** is set to **Yes**, the user can edit the data.)
-            - If data is not returned for the field, the user can optionally share it. (If **Allow User Input** is set to **Yes**, the user can edit the data. If it's set to **No**, the field is not displayed to the user.)
-        </Admonition>
-
-        When you create a new brand, the Dashboard starts you off with standard credential requests to provide you with a helpful starting point:
-
-        <details>
-            <summary>Standard Credential Requests</summary>
-            <table>
-                <tr>
-                    <th>Field Type</th>
-                    <th>Field Description</th>
-                    <th>Optional or Required</th>
-                    <th>Allow User Input</th>
-                    <th>Multiple Values</th>
-                </tr>
-                <tr>
-                    <td>Full Name</td>
-                    <td>-</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>↳ First Name</td>
-                    <td>-</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>↳ Last Name</td>
-                    <td>-</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>Phone</td>
-                    <td>-</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>No</td>
-                </tr>
-                <tr>
-                    <td>Address</td>
-                    <td>-</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>↳ Line 1</td>
-                    <td>-</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>↳ Line 2</td>
-                    <td>Apt, Unit, etc.</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>↳ City</td>
-                    <td>-</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>↳ State</td>
-                    <td>-</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>↳ ZIP Code</td>
-                    <td>-</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>↳ Country</td>
-                    <td>-</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>Birth Date</td>
-                    <td>-</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>SSN</td>
-                    <td>-</td>
-                    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-                    <td>Yes</td>
-                    <td>-</td>
-                </tr>
-            </table>
-        </details>
-
-    </CollapsibleSection>
-
-</CollapsibleGroup>
+<details>
+    <summary>Standard Credential Requests</summary>
+    <table>
+        <tr>
+            <th>Field Type</th>
+            <th>Field Description</th>
+            <th>Optional or Required</th>
+            <th>Allow User Input</th>
+            <th>Multiple Values</th>
+        </tr>
+        <tr>
+            <td>Full Name</td>
+            <td>-</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>↳ First Name</td>
+            <td>-</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>↳ Last Name</td>
+            <td>-</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td>-</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>-</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>↳ Line 1</td>
+            <td>-</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>↳ Line 2</td>
+            <td>Apt, Unit, etc.</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>↳ City</td>
+            <td>-</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>↳ State</td>
+            <td>-</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>↳ ZIP Code</td>
+            <td>-</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>↳ Country</td>
+            <td>-</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Birth Date</td>
+            <td>-</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>SSN</td>
+            <td>-</td>
+            <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+            <td>Yes</td>
+            <td>-</td>
+        </tr>
+    </table>
+</details>
 
 
 ### Styling Settings
@@ -823,3 +791,9 @@ It's up to you to ensure that custom code you use in the Advanced Styling settin
   }
 }
 ```
+
+---
+
+**You're done with this Setup guide! ✅**
+
+Now, follow the [SDK Integration](/1-click-signup/guides/sdk-integration) or [API Integration](/1-click-signup/guides/api-integration) guide to integrate 1-Click Health into your application.

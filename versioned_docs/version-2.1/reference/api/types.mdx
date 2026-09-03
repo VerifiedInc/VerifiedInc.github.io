@@ -284,10 +284,10 @@ import ParsedEdi271ExampleUnitedHealthcare from '@site/versioned_docs/version-2.
             [credentialKey: string]: {
                 // Follows the same structure as `credentials` and maintains the same order for array items when `multi` is set to `true`
                 [metadataKey: string]: 
-                string     // Single string value when `multi` is false and `children` isn't included in the credential requests
-                | [string] // Array of string values when `multi` is true and `children` isn't included in the credential requests
-                | Object   // Single object value when `multi` is false and `children` is included in the credential requests
-                | [Object] // Array of object values when `multi` is true and `children` is included in the credential requests
+                    string     // Single string value when `multi` is false and `children` isn't included in the credential requests
+                    | [string] // Array of string values when `multi` is true and `children` isn't included in the credential requests
+                    | Object   // Single object value when `multi` is false and `children` is included in the credential requests
+                    | [Object] // Array of object values when `multi` is true and `children` is included in the credential requests
             }
         }
     }

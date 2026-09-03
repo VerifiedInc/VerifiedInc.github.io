@@ -1,0 +1,183 @@
+---
+id: quick-start
+title: Quick Start
+sidebar_position: 0.5
+sidebar_label: Quick Start
+sidebar_class_name: sidebar-header-regular
+description: Get started with Verified in a few steps
+slug: /quick-start
+toc_max_heading_level: 2
+---
+
+import SetupLoginToDashboard from '@site/versioned_docs/version-2.1/reusables/setup-login-to-dashboard.mdx';
+import ConfigureBrandSettings from '@site/versioned_docs/version-2.1/reusables/configure-brand-settings.mdx';
+import IntegrationTypeRecommendationAdmonition from '@site/versioned_docs/version-2.1/reusables/integration-type-recommendation-admonition.mdx';
+import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
+import Admonition from '@theme/Admonition';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+
+This guide gets you from zero to a working Verified integration. Verified helps you onboard real people faster using the **1-Click** concept: a user's phone number is the anchor we use to autofill and verify their info, so signups that used to take minutes take seconds.
+
+New here? Read [Welcome to Verified](/) first for the big picture, then come back.
+
+<table>
+    <tr>
+        <th>Time to Complete</th>
+        <td>15 minutes to set up, plus about 1 hour for a 1-Click Signup SDK integration</td>
+    </tr>
+    <tr>
+        <th>You'll Need</th>
+        <td>A [Dashboard](https://dashboard.verified.inc) account (free, created in step 1)</td>
+    </tr>
+</table>
+
+:::tip Fastest Path
+Not sure where to start? The quickest way to see Verified working is **1-Click Signup with the SDK, in Sandbox.** The steps below walk you through exactly that, and the other products follow the same shape.
+:::
+
+
+## Choose your products
+
+Verified offers four products you can use on their own or combine like puzzle pieces:
+
+<table>
+    <tr>
+        <th>Product</th>
+        <th>What it does</th>
+        <th>Integrate via</th>
+        <th>Guides</th>
+    </tr>
+    <tr>
+        <td>[Text to Signup](/text-to-signup)</td>
+        <td>Turn online and offline ads into instant, verified signups</td>
+        <td>No code (optional API)</td>
+        <td>[Guide](/text-to-signup/guide)</td>
+    </tr>
+    <tr>
+        <td>[1-Click Verify](/1-click-verify)</td>
+        <td>Verify a user's phone number (sometimes with no input at all)</td>
+        <td>SDK or API</td>
+        <td>[Setup](/1-click-verify/guides/setup), [API](/1-click-verify/guides/api-integration)</td>
+    </tr>
+    <tr>
+        <td>[1-Click Signup](/1-click-signup)</td>
+        <td>Autofill a user's identity (Name, Birthday, Address, and more) from their verified phone</td>
+        <td>SDK or API</td>
+        <td>[Setup](/1-click-signup/guides/setup), [SDK](/1-click-signup/guides/sdk-integration), [API](/1-click-signup/guides/api-integration)</td>
+    </tr>
+    <tr>
+        <td>[1-Click Health](/1-click-health)</td>
+        <td>Autofill a user's health insurance and run eligibility checks</td>
+        <td>SDK or API</td>
+        <td>[Setup](/1-click-health/guides/setup), [SDK](/1-click-health/guides/sdk-integration), [API](/1-click-health/guides/api-integration)</td>
+    </tr>
+</table>
+
+They fit together: 1-Click Verify feeds a verified phone into 1-Click Signup, 1-Click Signup autofills the inputs for 1-Click Health, and Text to Signup funnels users into the flow. See [Welcome to Verified](/) for how to combine them.
+
+Once you know which products you want, follow the steps below to get integrated.
+
+
+<SetupLoginToDashboard/>
+
+
+<ConfigureBrandSettings/>
+
+
+## 3. Make your first request.
+
+Before building the full flow, confirm your setup works. Create an API key for your brand on its Brand Details page (use a [Sandbox](/reference/api/environments#sandbox) key), then run this single request:
+
+```bash
+curl https://core-api.sandbox-verifiedinc.com/v2/1-click/verifications/channels \
+  -H "Authorization: YOUR_API_KEY"
+```
+
+You'll get a JSON response listing the available verification channels. That's your first successful Verified API call.
+
+:::note
+Autofilling a user's actual info takes a few more steps (verify a phone number, then retrieve the data), which the product guides below walk you through. This first call just confirms your API key and connection work.
+:::
+
+
+## 4. Choose your integration type.
+
+The 1-Click products (Verify, Signup, and Health) offer two integration types: **SDK** and **API**. (Text to Signup is primarily no code, so you can skip this step for it.)
+
+<IntegrationTypeRecommendationAdmonition/>
+
+Set your brand's integration type on its Brand Details page in the [Dashboard](https://dashboard.verified.inc) to match how you plan to integrate.
+
+
+## 5. Get set up to integrate.
+
+Pick up the basics for your integration type, then follow your product's guide.
+
+<Tabs groupId="integration-type">
+<TabItem value="sdk" label="SDK" default>
+
+Install the client SDK:
+
+```bash
+npm i @verifiedinc-public/client-sdk
+```
+
+Your server creates a session key (via `POST /client/1-click`) and returns it to your client, which initializes the SDK with it:
+
+```typescript
+import { VerifiedClientSdk } from '@verifiedinc-public/client-sdk';
+
+const sdk = new VerifiedClientSdk({
+  environment: 'sandbox', // 'sandbox' or 'production'
+  sessionKey: 'SESSION_KEY', // from POST /client/1-click on your server
+  onResult: handleResult,
+  onError: handleError,
+});
+```
+
+See [Installation](/reference/sdk/installation) and your product's SDK Integration guide for the full flow.
+
+</TabItem>
+<TabItem value="api" label="API">
+
+Create an API key on your brand's Brand Details page, then send it as the `Authorization` header value (without a `Bearer` prefix). For example:
+
+```bash
+curl https://core-api.sandbox-verifiedinc.com/v2/1-click/verifications/channels \
+  -H "Authorization: YOUR_API_KEY"
+```
+
+See [Authentication](/reference/api/authentication) and your product's API Integration guide for the full flow.
+
+</TabItem>
+</Tabs>
+
+Then follow the setup and integration guides for the product you chose, linked in the [table above](#choose-your-products).
+
+
+## 6. Build and test in Sandbox.
+
+<DevelopmentWorkAdmonition/>
+
+Sandbox returns mock data, so you can build and test the whole flow without real users. Use your own phone number or a product's test users (see each product's Test Users page). For base URLs and details, see [Environments](/reference/api/environments#sandbox).
+
+
+## 7. Go live.
+
+When you're ready, switch to [Production](/reference/api/environments#production): grab a Production API key from your brand's Brand Details page and point your requests at the Production base URL.
+
+- **SDK integration:** you can go live right away.
+- **API integration:** you need Production approval from us first. Request it from the Production tab on your brand's Brand Details page and complete the checklist.
+
+See your product's integration guide for the full Go Live steps.
+
+
+## Next steps
+
+- Try a [custom demo](/custom-demo) of the live experience with your own branding.
+- Dive into the guide for each product you chose (linked above).
+- Questions? Email us at Support@Verified.inc or [book a call](https://calendly.com/verified-inc/intro-with-verified) anytime.
+
+We're excited to support your growth! ✅

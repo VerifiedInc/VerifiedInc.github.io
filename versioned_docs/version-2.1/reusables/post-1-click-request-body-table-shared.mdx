@@ -19,6 +19,15 @@ import Chip from '@mui/material/Chip';
     <td>`"487246b0-e68c-451d-be8e-45cea0b1c7a2"`</td>
 </tr>
 <tr>
+    <td>`identityUuid`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string`</td>
+    <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+    <td>-</td>
+    <td>`uuid` returned by an earlier `POST /1-click` for this user, to continue that 1-Click instead of starting a new one: a [risk signals only](/1-click-signup/guides/risk-signals-only) call being continued as a full signup, or a call that returned [`OCE011`](/reference/api/errors#oce011) being retried with the challenge. Both calls share one 1-Click, so the risk signals are billed once. `phone` must match the earlier call.</td>
+    <td>`"94365d9f-721d-4400-9e71-9ae97b5e02b0"`</td>
+</tr>
+<tr>
     <td>`phone`</td>
     <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if `verificationUuid` is not included</td>
     <td>`string`</td>
@@ -203,6 +212,6 @@ import Chip from '@mui/material/Chip';
     <td>`CredentialRequest[]`</td>
     <td>See [`CredentialRequest`](/reference/api/types#credentialrequest)</td>
     <td>Defined by the **default credential requests** brand setting in the [Dashboard](https://dashboard.verified.inc)</td>
-    <td>List of [`CredentialRequest`](/reference/api/types#credentialrequest) objects (which encode which credentials you're asking for)</td>
+    <td>List of [`CredentialRequest`](/reference/api/types#credentialrequest) objects (which encode which credentials you're asking for). Pass an empty array (`[]`) to get [risk signals only](/1-click-signup/guides/risk-signals-only), with no credentials.</td>
     <td>See [`CredentialRequest` example](/reference/api/types#example-credentialrequest)</td>
 </tr>

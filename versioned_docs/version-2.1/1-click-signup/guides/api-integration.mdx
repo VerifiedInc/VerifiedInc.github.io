@@ -533,6 +533,10 @@ If we can't source data, the response body will contain an [error](/reference/ap
 **You can retrieve data for 1 hour,** at which point it's deleted. Use [`GET /1-click`](/reference/api/endpoints#get-1-click) instead of `POST /1-click`, so that a duplicate 1-Click Signup event isn't created (and so you aren't billed twice).
 :::
 
+:::tip Risk Signals First
+**Want to screen a user for fraud before the full signup?** Call `POST /1-click` with `credentialRequests: []` to get [risk signals only](/1-click-signup/guides/risk-signals-only), then continue the same 1-Click later by passing its `uuid` as `identityUuid`. You're billed for the risk signals once.
+:::
+
 
 ### a. (if needed) Handle errors.
 

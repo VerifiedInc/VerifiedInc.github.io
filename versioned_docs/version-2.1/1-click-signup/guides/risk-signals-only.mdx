@@ -1,0 +1,152 @@
+---
+id: risk-signals-only
+title: Risk Signals Only
+sidebar_position: 4
+sidebar_label: Risk Signals Only
+sidebar_class_name: sidebar-header-regular
+description: Get a user's risk signals before (or without) the full 1-Click Signup flow, then upgrade to a full signup without being billed for the risk signals twice
+slug: /1-click-signup/guides/risk-signals-only
+toc_max_heading_level: 4
+---
+
+import Admonition from '@theme/Admonition';
+import ApiKeysAdmonition from '@site/versioned_docs/version-2.1/reusables/api-keys-admonition.mdx';
+import RiskSignalsSettingAdmonition from '@site/versioned_docs/version-2.1/reusables/risk-signals-setting-admonition.mdx';
+
+**Risk signals only** lets you call [`POST /1-click`](/reference/api/endpoints#post-1-click) for a user's [risk signals](/reference/data/outputs#risk-signals) alone, with no credentials. You can then continue the _same_ 1-Click as a full signup later, and you're billed for the risk signals once.
+
+Use it when you want to screen a user for fraud before you collect anything else from them, or when you only need risk signals.
+
+<Admonition type='info' title='API Integration Only'>
+  This guide applies to the [API integration](/1-click-signup/guides/api-integration) of 1-Click Signup. The SDK always runs the full flow.
+</Admonition>
+
+<RiskSignalsSettingAdmonition />
+
+## 1. Call `POST /1-click` with `credentialRequests: []`.
+
+Call [`POST /1-click`](/reference/api/endpoints#post-1-click) with the user's phone number and an **empty** `credentialRequests` array. The empty array tells us to skip the credential fetch and return risk signals only.
+
+Include the user's email and device IP too if you have them: each identifier adds its own [risk signals](/reference/data/outputs#risk-signals). You can get the device IP from [`GET /1-click/verifications/device-ip`](/reference/api/endpoints#get-1-click-verifications-device-ip).
+
+```typescript title="POST /1-click Request Body: Risk Signals Only"
+{
+    phone: string, // Example: "+12125550010"
+    email?: string, // Example: "richard@piedpiper.net"
+    deviceIp?: string, // Example: "2001:db8::1"
+    credentialRequests: [] // Empty: return risk signals only, no credentials
+}
+```
+
+<ApiKeysAdmonition />
+
+You don't need to have verified the user's phone number before this call. You do need to verify it before the full signup in [step 2](#2-optional-continue-as-a-full-signup-with-identityuuid).
+
+One of two things will happen:
+
+- **Success:** The [response body](/reference/api/endpoints#post-1-click-response) contains a `uuid` and a [`1ClickEntity`](/reference/api/types#1clickentity), keyed on `identity`, whose `credentials` object is empty and whose `metadata.identifiers.riskSignals` holds the risk signals. **Store the `uuid`:** it's what you'll pass as `identityUuid` in step 2.
+- **Error:** The response body contains an [error](/reference/api/errors). In particular, **[`OCE017`](/reference/api/errors#oce017)** means we blocked the user because the risk score was too high. The risk signals are included in `data.riskSignals` of the error. A blocked 1-Click can't be continued as a full signup. → _Reject the user or flag them and fall back to a manual signup flow._
+
+```typescript title="POST /1-click Response Body: Risk Signals Only"
+{
+    "uuid": "94365d9f-721d-4400-9e71-9ae97b5e02b0",
+    "identity": {
+        "identifiers": {
+            "phone": "+12125550010",
+            "email": "richard@piedpiper.net"
+        },
+        "credentials": {}, // Always empty for a risk signals only call
+        "metadata": {
+            "identifiers": {
+                "verificationMethod": {
+                    "phone": "customer_otp",
+                    "email": "customer_otp"
+                },
+                "riskSignals": {
+                    "overall": {
+                        "score": 0,
+                        "level": "low",
+                        "recommendation": "allow",
+                        "reasonCodes": ["OCR10002"]
+                    },
+                    "phone": {
+                        "carrier": {
+                            "id": 0,
+                            "name": "Example Carrier"
+                        },
+                        "reasonCodes": ["OCR20001", "OCR20101"]
+                    },
+                    "email": {
+                        "reasonCodes": ["OCR60003"]
+                    }
+                }
+            },
+            "credentials": {
+                "verificationMethod": {}
+            }
+        }
+    }
+}
+```
+
+## 2. (optional) Continue as a full signup with `identityUuid`.
+
+When you're ready to sign the user up, follow the [API integration guide](/1-click-signup/guides/api-integration) as usual (verify the phone number, collect a challenge, and get consent), but add `identityUuid` to the `POST /1-click` request body, set to the `uuid` from [step 1](#1-call-post-1-click-with-credentialrequests-).
+
+```typescript title="POST /1-click Request Body: Continue as a Full Signup"
+{
+    identityUuid: string, // Example: "94365d9f-721d-4400-9e71-9ae97b5e02b0", the uuid from step 1
+    phone: string, // Example: "+12125550010", the same phone number as step 1
+    email?: string, // Example: "richard@piedpiper.net"
+    deviceIp?: string, // Example: "2001:db8::1"
+    fullName?: {
+        firstName?: string // Example: "Richard"
+    },
+    birthDate?: string, // Example: "1989-08-01"
+    ssn4?: string, // Example: "6789"
+    credentialRequests?: CredentialRequest[] // Omit to use your brand's default credential requests
+}
+```
+
+Instead of starting a new 1-Click, we continue the one from step 1: the [response body](/reference/api/endpoints#post-1-click-response) has the **same `uuid`**, and its `identity` contains the user's credentials plus the risk signals. Everything in the [API integration guide](/1-click-signup/guides/api-integration#2-call-post-1-click) about handling the response applies, including [`OCE011`](/reference/api/errors#oce011): if we need another challenge, call `POST /1-click` again with `identityUuid`, the phone number, and the challenge.
+
+- **`phone` must match step 1.** The risk signals describe that phone number. A different phone number is a different 1-Click, so start over from step 1.
+- **Keep `email` and `deviceIp` the same as step 1** and we reuse the risk signals from step 1 without checking again. If you send a different email or device IP, we source fresh risk signals for the new identifiers on the same 1-Click. Either way, you're billed once.
+- **`credentialRequests` is optional.** Omit it to use the default credential requests from your brand settings, or pass the credential requests you want.
+
+<Admonition type='warning' title='Time Limit'>
+  **`identityUuid` is valid for 1 hour after the risk signals only call** (5 minutes in Sandbox), the same window during which the 1-Click's data is [retrievable](/1-click-signup/guides/api-integration#2-call-post-1-click). After that, a request with the `identityUuid` fails with a `400` error whose message is `"identityUuid" is invalid or expired`. → _Start over from step 1._
+</Admonition>
+
+## Billing
+
+Both calls share one 1-Click, so the risk signals are billed once for the pair:
+
+<table>
+  <tr>
+    <th>Journey</th>
+    <th>Billed as</th>
+  </tr>
+  <tr>
+    <td>Risk signals only (success or [`OCE017`](/reference/api/errors#oce017))</td>
+    <td>1 × Risk Signals</td>
+  </tr>
+  <tr>
+    <td>Risk signals only, then continued as a full signup</td>
+    <td>1 × Risk Signals + 1 × 1-Click Signup</td>
+  </tr>
+  <tr>
+    <td>Full signup with no risk signals only call first</td>
+    <td>1 × Risk Signals + 1 × 1-Click Signup</td>
+  </tr>
+</table>
+
+A two-call journey costs the same as a one-call full signup. A risk signals only call is never billed as a 1-Click Signup.
+
+## Errors specific to `identityUuid`
+
+| Message | Meaning | What to do |
+| --- | --- | --- |
+| `"identityUuid" is invalid or expired` | We have no 1-Click with that `uuid` for your brand, or its time limit has passed. | Start over from [step 1](#1-call-post-1-click-with-credentialrequests-). |
+| `"identityUuid" must reference a completed risk-signals-only 1-Click or a 1-Click waiting for additional inputs` | The 1-Click was blocked ([`OCE017`](/reference/api/errors#oce017)), was already a full signup, or has already been continued. | Use [`GET /1-click`](/reference/api/endpoints#get-1-click) to retrieve data you already have, or start over from step 1. |
+| `"phone" does not match the 1-Click referenced by "identityUuid"` | The phone number differs from the one in step 1. | Start over from step 1 with the new phone number. |

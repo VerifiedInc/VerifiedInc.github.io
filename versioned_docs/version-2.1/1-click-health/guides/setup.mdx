@@ -98,7 +98,7 @@ If you set this to **On**, we will run an eligibility check and return full insu
 > A **service type code** is an [X12](https://x12.org/codes/service-type-codes) code that identifies business groupings for health care services or benefits.
 
 <Admonition type="info">
-    This setting determines a default value, which you can override anytime by including `serviceTypeCodes` in the request body of [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth).
+    This setting determines a default value, which you can override anytime by including `serviceCodes.serviceTypeCodes` in the request body of [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth).
 </Admonition>
 
 **Optionally, choose which service type codes to include in the health insurance lookup** (in the EDI 270). The most general code (`30`, for Plan Coverage and General Benefits) is included by default. See the full list of service type codes below.
@@ -259,10 +259,10 @@ We don't recommend changing the default unless you have a specific reason and kn
 > A **network rule** defines the network status of a health insurance plan: whether you consider that plan in or out of network, based on various conditions you define.
 
 <Admonition type="info">
-    Network status results are included in outputs (as `network` in a [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity)).
+    [Network decisions](/reference/data/outputs#network-decision) are included in outputs (as the `network` object in a [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity)), when an eligibility check is run and at least one network rule is defined.
 </Admonition>
 
-**Optionally, define one or more network rules.** All are included by default.
+**Optionally, define one or more network rules.** Each rule can have one or more conditions.
 
 <table>
     <tr>
@@ -295,7 +295,7 @@ We don't recommend changing the default unless you have a specific reason and kn
     </tr>
     <tr>
         <td>Ends</td>
-        <td>Any date</td>
+        <td>Any date (after Starts)</td>
         <td>Date the rule should stop applying (at start of day, UTC)</td>
         <td>2027-10-01</td>
     </tr>
@@ -322,7 +322,7 @@ We don't recommend changing the default unless you have a specific reason and kn
     </tr>
     <tr>
         <td>↳ Key</td>
-        <td>Any string</td>
+        <td>Any string (up to 64 characters)</td>
         <td>Metadata key</td>
         <td>`selfPay`</td>
     </tr>
@@ -338,7 +338,7 @@ We don't recommend changing the default unless you have a specific reason and kn
     </tr>
     <tr>
         <td>↳ Value</td>
-        <td>Any string, number or boolean (depends on type)</td>
+        <td>Any string, number or boolean (depends on type, up to 200 characters)</td>
         <td>Metadata value</td>
         <td>`true`</td>
     </tr>

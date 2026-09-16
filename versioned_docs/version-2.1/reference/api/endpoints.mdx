@@ -1067,7 +1067,16 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td>`"A484069"`</td>
   </tr>
   <tr>
-      <td>`serviceTypeCodes`</td>
+      <td>`serviceCodes`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`object`</td>
+      <td>Object with key described below</td>
+      <td>-</td>
+      <td>Service codes for autofill and/or check</td>
+      <td>-</td>
+  </tr>
+  <tr>
+      <td>↳ `serviceTypeCodes`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string[]`</td>
       <td>Array of `string`s</td>
@@ -1076,34 +1085,43 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td>`["47", "AL", "F6"]`</td>
   </tr>
   <tr>
-      <td>↳ `serviceTypeCodes[i]`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>1+ characters</td>
-      <td>`"30"`</td>
-      <td>[X12 service type code](https://x12.org/codes/service-type-codes)</td>
-      <td>`"F6"`</td>
-  </tr>
-  <tr>
-      <td>`procedureCodes`</td>
+      <td>↳ `procedureCodes`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`object[]`</td>
       <td>Array of `object`s</td>
       <td>`"30"`</td>
       <td>[National Provider Identifier](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand)</td>
-      <td>`[{ "code": "99213", "qualifier": "HC", "modifiers": ["25"] }]`</td>
+      <td>
+          ```json
+          [
+              { 
+                  "code": "99213", 
+                  "qualifier": "HC", 
+                  "modifiers": ["25"] 
+              }
+          ]
+          ```
+      </td>
   </tr>
   <tr>
-      <td>↳ `procedureCodes[i]`</td>
+      <td>↳ ↳ `procedureCodes[i]`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`object`</td>
       <td>Object with keys described below</td>
-      <td>`"30"`</td>
+      <td>-</td>
       <td>[National Provider Identifier](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand)</td>
-      <td>`{ "code": "99213", "qualifier": "HC", "modifiers": ["25"] }`</td>
+      <td>
+        ```json
+        { 
+            "code": "99213", 
+            "qualifier": "HC", 
+            "modifiers": ["25"] 
+        }
+          ```
+      </td>
   </tr>
   <tr>
-      <td>↳ `procedureCodes[i].code`</td>
+      <td>↳ ↳ ↳ `procedureCodes[i].code`</td>
       <td><Chip label="Required" variant="outlined" size="small" color="error"/> (if `procedureCodes` object is included)</td>
       <td>`string`</td>
       <td>
@@ -1115,7 +1133,7 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td>`"99213""`</td>
   </tr>
   <tr>
-      <td>↳ `procedureCodes[i].qualifier`</td>
+      <td>↳ ↳ ↳ `procedureCodes[i].qualifier`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>
         <details>
@@ -1138,22 +1156,13 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td>`"HC"`</td>
   </tr>
   <tr>
-      <td>↳ `procedureCodes[i].modifiers`</td>
+      <td>↳ ↳ ↳ `procedureCodes[i].modifiers`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string[]`</td>
       <td>Array of `string`s</td>
       <td>-</td>
       <td>Array of [medical coding modifiers](https://www.aapc.com/resources/what-are-medical-coding-modifiers?srsltid=AfmBOoqpfNXqsgfTYsbnXiHBVGhUOJbewkkGbe4r98wp8tCDGPtiztjv)</td>
       <td>`["25"]`</td>
-  </tr>
-  <tr>
-      <td>↳ ↳ `procedureCodes[i].modifiers[j]`</td>
-      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
-      <td>`string`</td>
-      <td>2 characters</td>
-      <td>-</td>
-      <td>[Medical coding modifier](https://www.aapc.com/resources/what-are-medical-coding-modifiers?srsltid=AfmBOoqpfNXqsgfTYsbnXiHBVGhUOJbewkkGbe4r98wp8tCDGPtiztjv)</td>
-      <td>`"25"`</td>
   </tr>
 </table>
 

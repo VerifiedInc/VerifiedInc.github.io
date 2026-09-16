@@ -3236,8 +3236,12 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
 <CollapsibleGroup>
 <CollapsibleSection>
 <CollapsibleHeader>
-#### Verification Method
+#### Additional Info
 </CollapsibleHeader>
+
+<Admonition type="note">
+    Unlike member ID and payer, this additional info isn't generally user facing.
+</Admonition>
 
 <table>
     <tr>
@@ -3264,6 +3268,39 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
         <td>`snake_case`</td>
         <td>How a health insurance plan was verified</td>
         <td>`"clearinghouse"`</td>
+    </tr>
+    <tr>
+        <td>Coverage Types</td>
+        <td>`coverageTypes`</td>
+        <td>
+            <details>
+                <summary>`enum[]`</summary>
+
+                Possible values:
+                    - `"medical"`
+                    - `"dental"`
+                    - `"vision"`
+            </details>
+        </td>
+        <td>`lower case`</td>
+        <td>Coverage type(s) of health insurance plan</td>
+        <td>`"[medical]"`</td>
+    </tr>
+    <tr>
+        <td>Service Type Codes</td>
+        <td>`serviceTypeCodes`</td>
+        <td>`string[]`</td>
+        <td>Array of `string`s</td>
+        <td>List of [X12 service type codes](https://x12.org/codes/service-type-codes) for health insurance plans</td>
+        <td>`["30"]`</td>
+    </tr>
+    <tr>
+        <td>Is Medicare</td>
+        <td>`isMedicare`</td>
+        <td>`boolean`</td>
+        <td>-</td>
+        <td>Whether health insurance plan is for Medicare</td>
+        <td>`true`</td>
     </tr>
 </table>
 
@@ -3381,6 +3418,14 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
         <td>`"[medical]"`</td>
     </tr>
     <tr>
+        <td>↳ Service Type Codes</td>
+        <td>`eligibility.serviceTypeCodes`</td>
+        <td>`string[]`</td>
+        <td>Array of `string`s</td>
+        <td>List of [X12 service type codes](https://x12.org/codes/service-type-codes) for health insurance plan</td>
+        <td>`["30"]`</td>
+    </tr>
+    <tr>
         <td>↳ Payer</td>
         <td>`eligibility.payer`</td>
         <td>`object`</td>
@@ -3461,6 +3506,81 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
         <td>`"Male"`</td>
     </tr>
     <tr>
+        <td>↳ ↳ Full Name</td>
+        <td>`eligibility.member.fullName`</td>
+        <td>`object`</td>
+        <td>-</td>
+        <td>Full name of member for health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ First Name</td>
+        <td>`eligibility.member.fullName.firstName`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>First name of member for health insurance plan</td>
+        <td>`"Richard"`</td>
+    </tr>
+
+    <tr>
+        <td>↳ ↳ Address</td>
+        <td>`eligibility.member.address`</td>
+        <td>`object`</td>
+        <td>Object with keys described below</td>
+        <td>Address of member for health insurance plan</td>
+        <td>
+            ```typescript
+            {
+                "line1": "5320 Newell Rd",
+                "line2": "",
+                "city": "Palo Alto",
+                "state": "CA",
+                "zipCode": "94303"
+            }
+            ```
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ Line 1</td>
+        <td>`eligibility.member.address.line1`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Line 1 of address of member for health insurance plan</td>
+        <td>`"5320 Newell Rd"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ Line 2</td>
+        <td>`eligibility.member.address.line2`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>Line 2 of address of member for health insurance plan</td>
+        <td>`""`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ City</td>
+        <td>`eligibility.member.address.city`</td>
+        <td>`string`</td>
+        <td>`Title Case`</td>
+        <td>City of address of member for health insurance plan</td>
+        <td>`"Palo Alto"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ State</td>
+        <td>`eligibility.member.address.state`</td>
+        <td>`string`</td>
+        <td>2 letter abbreviation (last 2 characters of [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) code for US state/territory)</td>
+        <td>State of address of member for health insurance plan</td>
+        <td>`"CA"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ ZIP Code</td>
+        <td>`eligibility.member.address.zipCode`</td>
+        <td>`string`</td>
+        <td>[ZIP Code](https://en.wikipedia.org/wiki/ZIP_Code) (5 digits, 0-9)</td>
+        <td>ZIP Code of address of member for health insurance plan</td>
+        <td>`"94303"`</td>
+    </tr>
+    <tr>
         <td>↳ Plan</td>
         <td>`eligibility.plan`</td>
         <td>`object`</td>
@@ -3485,12 +3605,20 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
         <td>`"123456-123-12345"`</td>
     </tr>
     <tr>
-        <td>↳ ↳ Insurance Type</td>
-        <td>`eligibility.plan.insuranceType`</td>
+        <td>↳ ↳ Group Name</td>
+        <td>`eligibility.plan.groupName`</td>
         <td>`string`</td>
-        <td>[X12 insurance descriptor code](https://x12.org/codes/insurance-descriptor-codes)</td>
-        <td>Type for health insurance plan</td>
-        <td>`"C1"`</td>
+        <td>-</td>
+        <td>Group name (for employer or purchaser group) for health insurance plan</td>
+        <td>`"Pied Piper"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Insurance Types</td>
+        <td>`eligibility.plan.insuranceTypeCodes`</td>
+        <td>`string[]`</td>
+        <td>Array of `string`s</td>
+        <td>List of [X12 insurance descriptor codes](https://x12.org/codes/insurance-descriptor-codes) relevant to benefit of health insurance plan</td>
+        <td>`["C1"]`</td>
     </tr>
     <tr>
         <td>↳ ↳ Effective Date</td>
@@ -3540,8 +3668,16 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
         <td>`eligibility.benefits[i].serviceTypeCodes`</td>
         <td>`string[]`</td>
         <td>Array of `string`s</td>
-        <td>List of [X12 service type codes](https://x12.org/codes/service-type-codes) for health insurance plan</td>
+        <td>List of [X12 service type codes](https://x12.org/codes/service-type-codes) relevant to benefit for health insurance plan</td>
         <td>`["30"]`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Insurance Type</td>
+        <td>`eligibility.benefits[i].insuranceTypeCode`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>[X12 insurance descriptor code](https://x12.org/codes/insurance-descriptor-codes) for health insurance plan</td>
+        <td>`"C1"`</td>
     </tr>
     <tr>
         <td>↳ ↳ Level</td>
@@ -3572,7 +3708,7 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
             </details>
         </td>
         <td>`camelCase`</td>
-        <td>Whether health insurance plan is in or out of network</td>
+        <td>Whether 271 says health insurance plan is in or out of network (different from the `network` object of type `NetworkDecision`, which is based on network rules you define)</td>
         <td>`"in"`</td>
     </tr>
     <tr>
@@ -3604,7 +3740,7 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
         <td>`eligibility.contacts`</td>
         <td>`object[]`</td>
         <td>Array of objects</td>
-        <td>Benefits for health insurance plan</td>
+        <td>Contacts for health insurance plan</td>
         <td>-</td>
     </tr>
     <tr>
@@ -3665,8 +3801,12 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
 <CollapsibleGroup>
 <CollapsibleSection>
 <CollapsibleHeader>
-#### Network Status
+#### Network Decision
 </CollapsibleHeader>
+
+<Admonition type="info">
+    Network decisions are included in outputs when an eligibility check is run and at least one [network rule](/1-click-health/guides/setup#network-rules) is defined.
+</Admonition>
 
 <table>
     <tr>
@@ -3680,10 +3820,10 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
     <tr>
         <td>Network</td>
         <td>`network`</td>
-        <td>`NetworkStatus`</td>
-        <td>See [`NetworkStatus`](/reference/api/types#networkstatus)</td>
+        <td>`NetworkDecision`</td>
+        <td>See [`NetworkDecision`](/reference/api/types#networkdecision)</td>
         <td>Parsed version of `edi_271`</td>
-        <td>See `NetworkStatus` [Example](/reference/api/types##example-networkstatus)</td>
+        <td>See `NetworkDecision` [Example](/reference/api/types#example-networkdecision)</td>
     </tr>
     <tr>
         <td>↳ Status</td>

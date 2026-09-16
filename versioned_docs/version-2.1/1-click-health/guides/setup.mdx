@@ -23,6 +23,7 @@ import ImmutableSettingAdmonition from '@site/versioned_docs/version-2.1/reusabl
 import BrandSettingRiskSignals from '@site/versioned_docs/version-2.1/reusables/brand-setting-risk-signals.mdx';
 import ConfigureBrandSettings from '@site/versioned_docs/version-2.1/reusables/configure-brand-settings.mdx';
 import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/src/components/Collapsible';
+import ServiceTypeCodeTable from '@site/src/components/ServiceTypeCodeTable/ServiceTypeCodeTable';
 
 <table>
     <tr>
@@ -64,6 +65,10 @@ import { CollapsibleGroup, CollapsibleSection, CollapsibleHeader } from '@site/s
     - Eligibility **check**: Running an eligibility check for the user's insurance. 
 </Admonition>
 
+<Admonition type="info">
+    This setting determines a default value, which you can override anytime by including `checkAfterAutofill` in the request body of [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth).
+</Admonition>
+
 **Choose whether to automatically run an eligibility check for a user's insurance after we successfully autofill it:**
 
 <table>
@@ -88,10 +93,29 @@ If you set this to **On**, we will run an eligibility check and return full insu
 </Admonition>
 
 
+#### Service Type Codes
+
+> A **service type code** is an [X12](https://x12.org/codes/service-type-codes) code that identifies business groupings for health care services or benefits.
+
+<Admonition type="info">
+    This setting determines a default value, which you can override anytime by including `serviceTypeCodes` in the request body of [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth).
+</Admonition>
+
+**Optionally, choose which service type codes to include in the health insurance lookup** (in the EDI 270). The most general code (`30`, for Plan Coverage and General Benefits) is included by default. See the full list of service type codes below.
+
+:::warning
+We don't recommend changing the default unless you have a specific reason and know what you're doing. In general, shorter lists produce more reliable results.
+:::
+
+<ServiceTypeCodeTable />
+
+
 #### Providers
 
-<Admonition type="note" title="Definition">
-    A **provider** is a covered health care provider identified by a [National Provider Identifier (NPI)](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand).
+> A **provider** is a covered health care provider identified by a [National Provider Identifier (NPI)](https://www.cms.gov/regulations-and-guidance/administrative-simplification/nationalprovidentstand).
+
+<Admonition type="info">
+    This setting allows you to choose a default provider, which you can override anytime by including `provider.npi` in the request body of [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth).
 </Admonition>
 
 **Click the Add Provider button to add one or more providers with the following fields:**
@@ -197,10 +221,169 @@ If you set this to **On**, we will run an eligibility check and return full insu
     </table>
 </details>
 
-**If necessary, click the star icon button to set one provider as the default.** You can override this default by specifying a different provider `npi` in the request body of [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth): see the [API Integration](/1-click-health/guides/api-integration) guide for details.
+**If necessary, click the star icon button to set one provider as the default.**
 
 
-#### Webhook
+#### Coverage Types
+
+> A **coverage type** is a type of health insurance plan that we determine based on the full insurance details (in the EDI 271), which are available when an eligibility check is run.
+
+<Admonition type="info">
+    Coverage types are included in outputs (as `coverageTypes` in a [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity)).
+</Admonition>
+
+**Choose one or more coverage types to filter output health insurance plans by.** All are included by default, and you must have at least one selected.
+
+<table>
+    <tr>
+        <th>Option</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>Medical</td>
+        <td>Health insurance plan covers medical expenses</td>
+    </tr>
+    <tr>
+        <td>Dental</td>
+        <td>Health insurance plan covers dental expenses</td>
+    </tr>
+    <tr>
+        <td>Vision</td>
+        <td>Health insurance plan covers vision expenses</td>
+    </tr>
+</table>
+
+
+#### Network Rules
+
+> A **network rule** defines the network status of a health insurance plan: whether you consider that plan in or out of network, based on various conditions you define.
+
+<Admonition type="info">
+    Network status results are included in outputs (as `network` in a [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity)).
+</Admonition>
+
+**Optionally, define one or more network rules.** All are included by default.
+
+<table>
+    <tr>
+        <th>Field</th>
+        <th>Options</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td>Any string</td>
+        <td>Name for the rule</td>
+        <td>Rule 1: Aetna | MA, NY, WA | PPO | Hooli Health | Pied Piper - INN</td>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td>
+            - In Network
+            - Out of Network
+            - Indeterminate
+        </td>
+        <td>Network status the rule returns when it matches a health insurance plan</td>
+        <td>In Network</td>
+    </tr>
+    <tr>
+        <td>Starts</td>
+        <td>Any date</td>
+        <td>Date the rule should start applying (at start of day, UTC)</td>
+        <td>2026-10-01</td>
+    </tr>
+    <tr>
+        <td>Ends</td>
+        <td>Any date</td>
+        <td>Date the rule should stop applying (at start of day, UTC)</td>
+        <td>2027-10-01</td>
+    </tr>
+    <tr>
+        <td>Notes</td>
+        <td>Any string</td>
+        <td>Notes for the rule</td>
+        <td>Requires manual review</td>
+    </tr>
+    <tr>
+        <td>Enabled</td>
+        <td>
+            - Enabled (toggle on)
+            - Disabled (toggle off)
+        </td>
+        <td>Whether the rule is enabled</td>
+        <td>Enabled</td>
+    </tr>
+    <tr>
+        <td>Metadata</td>
+        <td>One or more key/type/value sets</td>
+        <td>Metadata for the rule</td>
+        <td>`selfPay`/`boolean`/`true`</td>
+    </tr>
+    <tr>
+        <td>↳ Key</td>
+        <td>Any string</td>
+        <td>Metadata key</td>
+        <td>`selfPay`</td>
+    </tr>
+    <tr>
+        <td>↳ Type</td>
+        <td>
+            - `string`
+            - `number`
+            - `boolean`
+        </td>
+        <td>Metadata value type</td>
+        <td>`boolean`</td>
+    </tr>
+    <tr>
+        <td>↳ Value</td>
+        <td>Any string, number or boolean (depends on type)</td>
+        <td>Metadata value</td>
+        <td>`true`</td>
+    </tr>
+    <tr>
+        <td>Conditions</td>
+        <td>One or more key/operator/values sets</td>
+        <td>Conditions for the rule</td>
+        <td>Payer Name includes UnitedHealthcare, United Healthcare</td>
+    </tr>
+    <tr>
+        <td>↳ Key</td>
+        <td>
+            - Payer
+            - Payer Name
+            - Patient State
+            - Insurance Types
+            - Plan Name
+            - Related Entities
+            - Group Number
+            - Group Name
+        </td>
+        <td>Condition key</td>
+        <td>Payer Name</td>
+    </tr>
+    <tr>
+        <td>↳ Operator</td>
+        <td>
+            - equals
+            - does not equal
+            - includes
+            - does not include
+        </td>
+        <td>Condition operator (depends on key)</td>
+        <td>includes</td>
+    </tr>
+    <tr>
+        <td>↳ Values</td>
+        <td>One or more strings</td>
+        <td>Condition value</td>
+        <td>UnitedHealthcare, United Healthcare</td>
+    </tr>
+</table>
+
+
+#### Webhooks
 
 **Optionally, click the Add Webhook button to add a webhook, and fill out the following fields:**
 

@@ -6,7 +6,7 @@ sidebar_position: 4
 sidebar_class_name: sidebar-header-regular
 description: Types used in the Verified API
 slug: /reference/api/types
-toc_max_heading_level: 5
+toc_max_heading_level: 6
 ---
 
 import TooltipWithDefaults from '@site/src/components/TooltipWithDefaults';
@@ -44,6 +44,11 @@ import RiskSignalsSettingAdmonition from '@site/versioned_docs/version-2.1/reusa
 import PayerIdsAdmonition from '@site/versioned_docs/version-2.1/reusables/payer-ids-admonition.mdx';
 import ParsedEdi271ExampleAetna from '@site/versioned_docs/version-2.1/reusables/parsed-edi-271-example-aetna.mdx';
 import ParsedEdi271ExampleUnitedHealthcare from '@site/versioned_docs/version-2.1/reusables/parsed-edi-271-example-unitedhealthcare.mdx';
+import NetworkRuleExampleInNetwork from '@site/versioned_docs/version-2.1/reusables/network-rule-example-in-network.mdx';
+import NetworkRuleExampleOutOfNetwork from '@site/versioned_docs/version-2.1/reusables/network-rule-example-out-of-network.mdx';
+import NetworkStatusExampleInNetwork from '@site/versioned_docs/version-2.1/reusables/network-status-example-in-network.mdx';
+import NetworkStatusExampleOutOfNetwork from '@site/versioned_docs/version-2.1/reusables/network-status-example-out-of-network.mdx';
+import NetworkStatusExampleIndeterminate from '@site/versioned_docs/version-2.1/reusables/network-status-example-indeterminate.mdx';
 
 
 ## 1-Click Verify
@@ -270,7 +275,7 @@ import ParsedEdi271ExampleUnitedHealthcare from '@site/versioned_docs/version-2.
     credentials: {
         [credentialKey: string]: 
             string     // Single string value when `multi` is false and `children` isn't included in the credential requests
-            | [string] // Array of string values when `multi` is true and `children` isn't included in the credential requests
+            | string[] // Array of string values when `multi` is true and `children` isn't included in the credential requests
             | Object   // Single object value when `multi` is false and `children` is included in the credential requests
             | [Object] // Array of object values when `multi` is true and `children` is included in the credential requests
     },
@@ -284,10 +289,10 @@ import ParsedEdi271ExampleUnitedHealthcare from '@site/versioned_docs/version-2.
             [credentialKey: string]: {
                 // Follows the same structure as `credentials` and maintains the same order for array items when `multi` is set to `true`
                 [metadataKey: string]: 
-                string     // Single string value when `multi` is false and `children` isn't included in the credential requests
-                | [string] // Array of string values when `multi` is true and `children` isn't included in the credential requests
-                | Object   // Single object value when `multi` is false and `children` is included in the credential requests
-                | [Object] // Array of object values when `multi` is true and `children` is included in the credential requests
+                    string     // Single string value when `multi` is false and `children` isn't included in the credential requests
+                    | string[] // Array of string values when `multi` is true and `children` isn't included in the credential requests
+                    | Object   // Single object value when `multi` is false and `children` is included in the credential requests
+                    | [Object] // Array of object values when `multi` is true and `children` is included in the credential requests
             }
         }
     }
@@ -524,7 +529,7 @@ The data keyed on a `credentialKey` will be one or more credential values. This 
             }
             ```
 
-            Then, the data returned will be an array of credential values, so it will have type `[Object]` or `[string]` (and so will the corresponding metadata):
+            Then, the data returned will be an array of credential values, so it will have type `[Object]` or `string[]` (and so will the corresponding metadata):
             ```typescript title="1ClickEntity for CredentialRequest with multi true, with children"
             {
                 ...
@@ -718,20 +723,20 @@ See [Risk Signals](/reference/data/outputs#risk-signals) on the Data page for de
         score: integer,
         level: "low" | "medium-low" | "medium" | "medium-high" | "high",
         recommendation: "allow" | "flag" | "block",
-        reasonCodes: [string]
+        reasonCodes: string[]
     },
     phone: {
         carrier: {
             id: integer,
             name: string
         }
-        reasonCodes: [string]
+        reasonCodes: string[]
     },
     email?: {
-        reasonCodes: [string]
+        reasonCodes: string[]
     },
     deviceIp?: {
-        reasonCodes: [string]
+        reasonCodes: string[]
     }
 }
 ```
@@ -843,6 +848,7 @@ When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntit
             verificationMethod: string,
             edi_271?: string, // included if eligibility check was run
             eligibility?: ParsedEdi271, // see ParsedEdi271 type; included if eligibility check was run
+            network?: NetworkStatus // see NetworkStatus type; included if network rules are defined (in the Dashboard)
         }
     ],
     errors?: [
@@ -955,6 +961,13 @@ Eligibilty info consists of:
         <td>See `ParsedEdi271` [Example](#example-parsededi271)</td>
     </tr>
     <tr>
+        <td>↳ ↳ `results[i].network`</td>
+        <td>`NetworkStatus`</td>
+        <td>See [`NetworkStatus`](#networkstatus)</td>
+        <td>Network status for health insurance plan, based on your network rules</td>
+        <td>See `NetworkStatus` [Example](#example-networkstatus)</td>
+    </tr>
+    <tr>
         <td>`errors`</td>
         <td>`object[]`</td>
         <td>Array of objects</td>
@@ -993,7 +1006,7 @@ Eligibilty info consists of:
 {
     name: string,
     verifiedId: string,
-    ids: [string], // ids[0] is considered primary
+    ids: string[], // ids[0] is considered primary
     logoUrl?: string
 }
 ```
@@ -1024,7 +1037,7 @@ Eligibilty info consists of:
     </tr>
     <tr>
         <td>`ids`</td>
-        <td>`array`</td>
+        <td>`string[]`</td>
         <td>Array of `string`s</td>
         <td>IDs (can change) of payer for health insurance plan — `ids[0]` is considered primary</td>
         <td>`["0000A"]`</td>
@@ -1034,7 +1047,7 @@ Eligibilty info consists of:
         <td>`string`</td>
         <td>URL</td>
         <td>URL for logo of payer for health insurance plan</td>
-        <td>`"https://verified.inc/payers/logos/V431835"`</td>
+        <td>`"https://assets.verified.inc/1-click/health/payers/11145919-80e4-4cb0-8518-cffbf44ee9fb.png"`</td>
     </tr>
 </table>
 
@@ -1117,6 +1130,7 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
         <th>Example</th>
     </tr>
     <tr>
+
         <td>`coverageStatus`</td>
         <td>
             <details>
@@ -1294,13 +1308,6 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
         <td>`["30"]`</td>
     </tr>
     <tr>
-        <td>↳ ↳ `benefits[i].serviceTypeCodes[j]`</td>
-        <td>`string`</td>
-        <td>1+ characters</td>
-        <td>[X12 service type code](https://x12.org/codes/service-type-codes) for health insurance plan</td>
-        <td>`"30"`</td>
-    </tr>
-    <tr>
         <td>↳ `benefits[i].level`</td>
         <td>
             <details>
@@ -1345,7 +1352,7 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
         <td>`"750.00"`</td>
     </tr>
     <tr>
-        <td>↳ `benefits[i].remaining`</td>
+        <td>↳ `benefits[i].percent`</td>
         <td>`string`</td>
         <td>decimal fraction</td>
         <td>Patient coinsurance responsibility for health insurance plan</td>
@@ -1371,13 +1378,6 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
         <td>Array of `string`s</td>
         <td>List of [X12 service type codes](https://x12.org/codes/service-type-codes) relevant to contact for health insurance plan</td>
         <td>`["30"]`</td>
-    </tr>
-    <tr>
-        <td>↳ ↳ `contacts[i].serviceTypeCodes[j]`</td>
-        <td>`string`</td>
-        <td>1+ characters</td>
-        <td>[X12 service type code](https://x12.org/codes/service-type-codes) relevant to contact for health insurance plan</td>
-        <td>`"30"`</td>
     </tr>
     <tr>
         <td>↳ `contacts[i].phone`</td>
@@ -1415,3 +1415,290 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
 <ParsedEdi271ExampleAetna/>
 
 <ParsedEdi271ExampleUnitedHealthcare/>
+
+---
+
+
+#### `NetworkStatus`
+
+```typescript title="NetworkStatus Type"
+{
+    status: string,
+    rules: NetworkRule[]
+}
+```
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`status`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                - `"IN_NETWORK"`
+                - `"OUT_OF_NETWORK"`
+                - `"INDETERMINATE"`
+            </details>
+        </td>
+        <td>`UPPER_SNAKE_CASE`</td>
+        <td>Network status of health insurance plan, based on your network rules</td>
+        <td>`"IN_NETWORK"`</td>
+    </tr>
+    <tr>
+        <td>`rules`</td>
+        <td>`NetworkRule[]`</td>
+        <td>Array of `NetworkRule`s</td>
+        <td>List of network rules that matched health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ `rules[i]`</td>
+        <td>`NetworkRule`</td>
+        <td>See [`NetworkRule`](#networkrule)</td>
+        <td>Network rule that matched health insurance plan</td>
+        <td>See `NetworkRule` [Example](#example-networkrule)</td>
+    </tr>
+</table>
+
+
+##### Example {#example-networkstatus}
+
+<NetworkStatusExampleInNetwork/>
+
+<NetworkStatusExampleOutOfNetwork/>
+
+<NetworkStatusExampleIndeterminate/>
+
+---
+
+
+##### `NetworkRule`
+
+```typescript title="NetworkRule Type"
+{
+    uuid: string,
+    name: string,
+    status: "IN_NETWORK" | "OUT_OF_NETWORK" | "INDETERMINATE",
+    notes?: string,
+    metadata?: {
+        [key: string]: string | number | boolean
+    },
+    startDate?: string,
+    endDate?: string,
+    conditions: {
+        key: "payerId" | "payerName" | "state" | "insuranceTypeCodes" | "planName" | "relatedEntites" | "groupNumber" | "groupName",
+        operator: "EQUAL" | "NOT_EQUAL" | "INCLUDE" | "NOT_INCLUDE",
+        values: string[]
+    }[]
+}
+```
+
+<table>
+    <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`uuid`</td>
+        <td>`string`</td>
+        <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+        <td>Unique identifier for the network rule</td>
+        <td>`"ab280ee0-5f66-4076-9d1b-255d5f0024e3"`</td>
+    </tr>
+    <tr>
+        <td>`name`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Name for the network rule</td>
+        <td>`"Rule 1: Aetna - INN"`</td>
+    </tr>
+    <tr>
+        <td>`status`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                - `"IN_NETWORK"`
+                - `"OUT_OF_NETWORK"`
+                - `"INDETERMINATE"`
+            </details>
+        </td>
+        <td>`UPPER_SNAKE_CASE`</td>
+        <td>Network status the network rule returns</td>
+        <td>`"IN_NETWORK"`</td>
+    </tr>
+    <tr>
+        <td>`notes`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Notes about the network rule</td>
+        <td>`"Requires manual review"`</td>
+    </tr>
+    <tr>
+        <td>`metadata`</td>
+        <td>`object`</td>
+        <td>-</td>
+        <td>Metadata for the network rule</td>
+        <td>
+            ```typescript
+            {
+                "selfPay": false,
+                "priority": 1,
+                "packageId": "123456"
+            }
+            ```
+        </td>
+    </tr>
+    <tr>
+        <td>↳ `metadata[key]`</td>
+        <td>`string` | `number` | `boolean`</td>
+        <td>-</td>
+        <td>Piece of metadata for the network rule</td>
+        <td>`"selfPay": false`</td>
+    </tr>
+    <tr>
+        <td>`startDate`</td>
+        <td>`string`</td>
+        <td>yyyy-MM-dd</td>
+        <td>Start date for the network rule</td>
+        <td>`"2026-10-01"`</td>
+    </tr>
+    <tr>
+        <td>`endDate`</td>
+        <td>`string`</td>
+        <td>yyyy-MM-dd</td>
+        <td>End date for the network rule</td>
+        <td>`"2027-09-30"`</td>
+    </tr>
+    <tr>
+        <td>`conditions`</td>
+        <td>`object[]`</td>
+        <td>Array of objects</td>
+        <td>Conditions for when the network rule matches</td>
+        <td>
+            ```typescript
+            [
+                {
+                    "key": "payerId",
+                    "operator": "EQUAL",
+                    "values": ["V404110"]
+                },
+                {
+                    "key": "payerName",
+                    "operator": "INCLUDE",
+                    "values": ["Aetna"]
+                },
+                {
+                    "key": "state",
+                    "operator": "EQUAL",
+                    "values": ["MA", "NY", "WA"]
+                },
+                {
+                    "key": "insuranceTypeCodes",
+                    "operator": "INCLUDE",
+                    "values": ["PR"]
+                },
+                {
+                    "key": "planName",
+                    "operator": "INCLUDE",
+                    "values": ["PPO"]
+                },
+                {
+                    "key": "relatedEntites",
+                    "operator": "INCLUDE",
+                    "values": ["Hooli Health"]
+                },
+                {
+                    "key": "groupNumber",
+                    "operator": "EQUAL",
+                    "values": ["123456-123-12345"]
+                },
+                {
+                    "key": "groupName",
+                    "operator": "INCLUDE",
+                    "values": ["Pied Piper"]
+                }
+            ]
+            ```
+        </td>
+    </tr>
+    <tr>
+        <td>↳ `conditions[i]`</td>
+        <td>`object`</td>
+        <td>-</td>
+        <td>Condition for when the network rule matches</td>
+        <td>
+            ```typescript
+            {
+                "key": "payerId",
+                "operator": "EQUAL",
+                "values": ["V404110"]
+            },
+            ```
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ `conditions[i].key`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                - `"payerId"`
+                - `"payerName"`
+                - `"state"`
+                - `"insuranceTypeCodes"`
+                - `"planName"`
+                - `"relatedEntites"`
+                - `"groupNumber"`
+                - `"groupName"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Key for condition</td>
+        <td>`"payerId"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ `conditions[i].operator`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                - `"EQUAL"`
+                - `"NOT_EQUAL"`
+                - `"INCLUDE"`
+                - `"NOT_INCLUDE"`
+            </details>
+        </td>
+        <td>`UPPER_SNAKE_CASE`</td>
+        <td>Operator for condition</td>
+        <td>`"EQUAL"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ `conditions[i].values`</td>
+        <td>`string[]`</td>
+        <td>`camelCase`</td>
+        <td>Value(s) for condition</td>
+        <td>`["V404110"]`</td>
+    </tr>
+</table>
+
+
+###### Example {#example-networkrule}
+
+<NetworkRuleExampleInNetwork/>
+
+<NetworkRuleExampleOutOfNetwork/>

@@ -57,6 +57,7 @@ import Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupWithoutPa
 import Post1ClickHealthRequestBodyExampleAutofillInputsFromManualSignupWithPayerMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-autofill-inputs-from-manual-signup-with-payer-maximal-inputs.mdx';
 import Post1ClickHealthRequestBodyExampleCheckInputsFromManualSignupMaximalInputs from '@site/versioned_docs/version-2.1/reusables/post-1-click-health-request-body-check-inputs-from-manual-signup-maximal-inputs.mdx';
 import PayerIdsAdmonition from '@site/versioned_docs/version-2.1/reusables/payer-ids-admonition.mdx';
+import OneClickHealthEntityExampleSucceeded from '@site/versioned_docs/version-2.1/reusables/1-click-health-entity-example-succeeded.mdx'
 
 <table>
   <tr>
@@ -420,14 +421,23 @@ Each response includes a `status`. Keep polling while it's `PENDING` or `PROCESS
 **You can retrieve data for 60 minutes,** at which point it's deleted. If you need to retrieve the same data again, use [`GET /1-click/health`](/reference/api/endpoints#get-1-clickhealth) instead of `POST /1-click/health` so that a duplicate 1-Click Health event isn't created (and so you aren't billed twice).
 :::
 
-The response will contain a [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) (see this [example](/reference/api/types#example-1clickhealthentity)). There are two cases:
+The response will contain a [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) (see [examples](/reference/api/types#example-1clickhealthentity)). There are two cases:
 
-- **Success:** If we can source health insurance data for the user, the `1ClickHealthEntity` will contain `results` with one or more health insurance plans. <br/> → _Continue to [step 4](#4-optional-prompt-user-to-confirm)._
-- **Failure:** Otherwise, the `1ClickHealthEntity` will contain `errors` indicating that the lookup failed. <br/> → _Fall back to a manual health insurance entry flow._
+- **Success:** If we can source health insurance data for the user, the `1ClickHealthEntity` will contain `results` with one or more health insurance plans. 
+  - If you ran an eligibility check, this will include a full EDI 271 (raw and parsed) with eligibility details. 
+  - If you have [network rules](/1-click-health/guides/setup#network-rules) defined in the Verified [Dashboard](https://dashboard.verified.inc), it will include network status details (in network, out of network, or indeterminate) based on those rules. 
+
+  → _Continue to [step 4](#4-optional-prompt-user-to-confirm)._
+  
+- **Failure:** Otherwise, the `1ClickHealthEntity` will contain `errors` indicating that the lookup failed.
+  
+  → _Fall back to a manual health insurance entry flow._
 
 <MostProbablePlansAreListedFirstAdmonition/>
 
 <PayerIdsAdmonition/>
+
+<OneClickHealthEntityExampleSucceeded/>
 
 
 ## 4. (optional) Prompt user to confirm.

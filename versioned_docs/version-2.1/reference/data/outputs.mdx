@@ -3125,12 +3125,6 @@ We and other companies assign specific services — called "risky services" — 
 
 ## 1-Click Health
 
-<CollapsibleGroup>
-<CollapsibleSection>
-<CollapsibleHeader>
-### Health Insurance Plans
-</CollapsibleHeader>
-
 :::note Coverage
 We can source the data below for **~80% of US adults.** _Exact coverage depends on your user base._
 
@@ -3140,6 +3134,20 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
 <MostProbablePlansAreListedFirstAdmonition/>
 
 <PayerIdsAdmonition/>
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+### Basic Insurance Details
+</CollapsibleHeader>
+
+> **Basic insurance details** include high level information about health insurance plans, like the member ID and payer. [Full insurance details](#full-insurance-details) are available when an eligibility check is run.
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+#### Member ID
+</CollapsibleHeader>
 
 <table>
     <tr>
@@ -3158,21 +3166,34 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
         <td>Member ID for health insurance plan</td>
         <td>`"V000000000"`</td>
     </tr>
+</table>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+#### Payer
+</CollapsibleHeader>
+
+<table>
+    <tr>
+        <th>Output</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format(s)</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
     <tr>
         <td>Payer</td>
         <td>`payer`</td>
-        <td>`object`</td>
-        <td>Object with keys for all child credentials listed below</td>
+        <td>`Payer`</td>
+        <td>See [`Payer`](/reference/api/types#payer)</td>
         <td>Payer for health insurance plan</td>
-        <td>
-            ```json
-            {
-                "name": "Aviato Health Insurance Of California",
-                "verifiedId": "V431835",
-                "ids": ["0000A"]
-            }
-            ```
-        </td>
+        <td>See `Payer` [Example](/reference/api/types#example-payer)</td>
     </tr>
     <tr>
         <td>↳ Name</td>
@@ -3182,14 +3203,6 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
         <td>Name of payer for health insurance plan</td>
         <td>`"Aviato Health Insurance Of California"`</td>
     </tr>
-    {/* <tr>
-        <td>↳ Logo URL</td>
-        <td>`payer.logoUrl`</td>
-        <td>`string`</td>
-        <td>URL</td>
-        <td>URL for logo of payer for health insurance plan</td>
-        <td>`"https://verified.inc/payers/logos/V431835"`</td>
-    </tr> */}
     <tr>
         <td>↳ Verified ID</td>
         <td>`payer.verifiedId`</td>
@@ -3201,28 +3214,23 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
     <tr>
         <td>↳ IDs</td>
         <td>`payer.ids`</td>
-        <td>`array`</td>
+        <td>`string[]`</td>
         <td>Array of `string`s</td>
         <td>IDs (can change) of payer for health insurance plan — `ids[0]` is considered primary</td>
         <td>`["0000A"]`</td>
     </tr>
     <tr>
-        <td>EDI 271</td>
-        <td>`edi_271`</td>
+        <td>↳ Logo URL</td>
+        <td>`payer.logoUrl`</td>
         <td>`string`</td>
-        <td>X12 [EDI 271](https://x12.org/examples/005010x279) (Health Care Eligibility Benefit Response)</td>
-        <td>Address</td>
-        <td>See X12 [EDI 271 examples](https://x12.org/examples/005010x279)</td>
+        <td>URL</td>
+        <td>URL for logo of payer for health insurance plan</td>
+        <td>`"https://assets.verified.inc/1-click/health/payers/11145919-80e4-4cb0-8518-cffbf44ee9fb.png"`</td>
     </tr>
 </table>
 
 </CollapsibleSection>
 </CollapsibleGroup>
-
-
-### Metadata
-
-> A piece of **metadata** is additional data that's not a user's identity data — though it's often _about_ that identity data.
 
 
 <CollapsibleGroup>
@@ -3236,7 +3244,7 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
         <th>Output</th>
         <th>Key</th>
         <th>Type</th>
-        <th>Format</th>
+        <th>Format(s)</th>
         <th>Description</th>
         <th>Example</th>
     </tr>
@@ -3269,6 +3277,649 @@ See [Coverage](/1-click-health/overview#coverage) for more information.
 
     You can build custom logic to handle health insurance plans based on their `verificationMethod`, for example applying additional validation if one is `"self_attested"`.
 </details>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+### Full Insurance Details
+</CollapsibleHeader>
+
+> **Full insurance details** include all known information about a health insurance plan and are available when an eligibility check is run.
+
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+#### EDI 271
+</CollapsibleHeader>
+
+<table>
+    <tr>
+        <th>Output</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>EDI 271</td>
+        <td>`edi_271`</td>
+        <td>`string`</td>
+        <td>X12 [EDI 271](https://x12.org/examples/005010x279) (Health Care Eligibility Benefit Response)</td>
+        <td>Address</td>
+        <td>See X12 [EDI 271 examples](https://x12.org/examples/005010x279)</td>
+    </tr>
+</table>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+#### Eligibility
+</CollapsibleHeader>
+
+<table>
+    <tr>
+        <th>Output</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Eligibility</td>
+        <td>`eligibility`</td>
+        <td>`ParsedEdi271`</td>
+        <td>See [`ParsedEdi271`](/reference/api/types#parsededi271)</td>
+        <td>Parsed version of `edi_271`</td>
+        <td>See `ParsedEdi271` [Example](/reference/api/types##example-parsededi271)</td>
+    </tr>
+    <tr>
+        <td>↳ Coverage Status</td>
+        <td>`eligibility.coverageStatus`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"active"`
+                    - `"indeterminate"`
+                    - `"inactive"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Coverage status of health insurance plan</td>
+        <td>`"active"`</td>
+    </tr>
+    <tr>
+        <td>↳ Coverage Type</td>
+        <td>`eligibility.coverageType`</td>
+        <td>
+            <details>
+                <summary>`enum[]`</summary>
+
+                Possible values:
+                    - `"medical"`
+                    - `"dental"`
+                    - `"vision"`
+            </details>
+        </td>
+        <td>`lower case`</td>
+        <td>Coverage type(s) of health insurance plan</td>
+        <td>`"[medical]"`</td>
+    </tr>
+    <tr>
+        <td>↳ Payer</td>
+        <td>`eligibility.payer`</td>
+        <td>`object`</td>
+        <td>Object with key described below</td>
+        <td>Payer for health insurance plan</td>
+        <td>`["0000A"]`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Payer Name</td>
+        <td>`eligibility.payer.name`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Name of payer for health insurance plan</td>
+        <td>`"Aetna"`</td>
+    </tr>
+    <tr>
+        <td>↳ Member</td>
+        <td>`eligibility.member`</td>
+        <td>`object`</td>
+        <td>Object with keys described below</td>
+        <td>Member for health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Member ID</td>
+        <td>`eligibility.member.memberId`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Member ID of member for health insurance plan</td>
+        <td>`"A484069"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Full Name</td>
+        <td>`eligibility.member.fullName`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Full name of member for health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ First Name</td>
+        <td>`eligibility.member.fullName.firstName`</td>
+        <td>`object`</td>
+        <td>-</td>
+        <td>First name of member for health insurance plan</td>
+        <td>`"Richard"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ Last Name</td>
+        <td>`eligibility.member.fullName.lastName`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Last name of member for health insurance plan</td>
+        <td>`"Hendricks"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Birth Date</td>
+        <td>`eligibility.member.birthDate`</td>
+        <td>`string`</td>
+        <td>yyyy-MM-dd</td>
+        <td>Birth date of member for health insurance plan</td>
+        <td>`"1989-08-01"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Sex</td>
+        <td>`eligibility.member.sex`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"Male"`
+                    - `"Female"`
+            </details>
+        </td>
+        <td>`Title Case`</td>
+        <td>Sex of member for health insurance plan</td>
+        <td>`"Male"`</td>
+    </tr>
+    <tr>
+        <td>↳ Plan</td>
+        <td>`eligibility.plan`</td>
+        <td>`object`</td>
+        <td>Object with keys described below</td>
+        <td>Details for health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Name</td>
+        <td>`eligibility.plan.name`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Name for health insurance plan</td>
+        <td>`"Managed Choice Open Access"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Group Number</td>
+        <td>`eligibility.plan.groupNumber`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Group number (for employer or purchaser group) for health insurance plan</td>
+        <td>`"123456-123-12345"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Insurance Type</td>
+        <td>`eligibility.plan.insuranceType`</td>
+        <td>`string`</td>
+        <td>[X12 insurance descriptor code](https://x12.org/codes/insurance-descriptor-codes)</td>
+        <td>Type for health insurance plan</td>
+        <td>`"C1"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Effective Date</td>
+        <td>`eligibility.plan.effectiveDate`</td>
+        <td>`string`</td>
+        <td>yyyy-MM-dd</td>
+        <td>Coverage start date for health insurance plan</td>
+        <td>`"2026-01-01"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Termination Date</td>
+        <td>`eligibility.plan.terminationDate`</td>
+        <td>`string`</td>
+        <td>yyyy-MM-dd</td>
+        <td>Coverage end date for health insurance plan</td>
+        <td>`"2026-12-31"`</td>
+    </tr>
+    <tr>
+        <td>↳ Benefits</td>
+        <td>`eligibility.benefits`</td>
+        <td>`object[]`</td>
+        <td>Array of objects</td>
+        <td>Benefits for health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Type</td>
+        <td>`eligibility.benefits[i].type`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"deductible"`
+                    - `"outOfPocket"`
+                    - `"copay"`
+                    - `"coinsurance"`
+                    - `"limitation"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Type of cost share for health insurance plan</td>
+        <td>`"deductible"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Service Type Codes</td>
+        <td>`eligibility.benefits[i].serviceTypeCodes`</td>
+        <td>`string[]`</td>
+        <td>Array of `string`s</td>
+        <td>List of [X12 service type codes](https://x12.org/codes/service-type-codes) for health insurance plan</td>
+        <td>`["30"]`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Level</td>
+        <td>`eligibility.benefits[i].level`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"individual"`
+                    - `"family"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Coverage level that `amount` applies to for health insurance plan</td>
+        <td>`"individual"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Network</td>
+        <td>`eligibility.benefits[i].network`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                    - `"in"`
+                    - `"out"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Whether health insurance plan is in or out of network</td>
+        <td>`"in"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Amount</td>
+        <td>`eligibility.benefits[i].amount`</td>
+        <td>`string`</td>
+        <td>decimal</td>
+        <td>Dollar amount applicable (copay, or period total for deductible or out of pocket) for health insurance plan</td>
+        <td>`"1500.00"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Remaining</td>
+        <td>`eligibility.benefits[i].remaining`</td>
+        <td>`string`</td>
+        <td>decimal</td>
+        <td>Dollar amount remaining (deductible or out of pocket) for health insurance plan</td>
+        <td>`"750.00"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Percent</td>
+        <td>`eligibility.benefits[i].percent`</td>
+        <td>`string`</td>
+        <td>decimal fraction</td>
+        <td>Patient coinsurance responsibility for health insurance plan</td>
+        <td>`"0.20"`</td>
+    </tr>
+    <tr>
+        <td>↳ Contacts</td>
+        <td>`eligibility.contacts`</td>
+        <td>`object[]`</td>
+        <td>Array of objects</td>
+        <td>Benefits for health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Name</td>
+        <td>`eligibility.contacts[i].name`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Entity to contact (e.g. the payer's member services or a carve out administrator) about health insurance plan</td>
+        <td>`"Aetna Member Services"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Service Type Codes</td>
+        <td>`eligibility.contacts[i].serviceTypeCodes`</td>
+        <td>`string[]`</td>
+        <td>Array of `string`s</td>
+        <td>List of [X12 service type codes](https://x12.org/codes/service-type-codes) relevant to contact for health insurance plan</td>
+        <td>`["30"]`</td>
+    </tr>
+    <tr>
+    
+        <td>↳ ↳ Phone</td>
+        <td>`eligibility.contacts[i].phone`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Phone number</td>
+        <td>`"8005550000"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Fax</td>
+        <td>`eligibility.contacts[i].fax`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Fax number</td>
+        <td>`"8005550001"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Email</td>
+        <td>`eligibility.contacts[i].email`</td>
+        <td>`string`</td>
+        <td>Email</td>
+        <td>Email address</td>
+        <td>`"memberservices@aetna.com"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ URL</td>
+        <td>`eligibility.contacts[i].url`</td>
+        <td>`string`</td>
+        <td>URL</td>
+        <td>Contact URL</td>
+        <td>`"https://aetna.com/member-services"`</td>
+    </tr>
+</table>
+
+</CollapsibleSection>
+</CollapsibleGroup>
+
+
+<CollapsibleGroup>
+<CollapsibleSection>
+<CollapsibleHeader>
+#### Network Status
+</CollapsibleHeader>
+
+<table>
+    <tr>
+        <th>Output</th>
+        <th>Key</th>
+        <th>Type</th>
+        <th>Format</th>
+        <th>Description</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Network</td>
+        <td>`network`</td>
+        <td>`NetworkStatus`</td>
+        <td>See [`NetworkStatus`](/reference/api/types#networkstatus)</td>
+        <td>Parsed version of `edi_271`</td>
+        <td>See `NetworkStatus` [Example](/reference/api/types##example-networkstatus)</td>
+    </tr>
+    <tr>
+        <td>↳ Status</td>
+        <td>`network.status`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                - `"IN_NETWORK"`
+                - `"OUT_OF_NETWORK"`
+                - `"INDETERMINATE"`
+            </details>
+        </td>
+        <td>`UPPER_SNAKE_CASE`</td>
+        <td>Network status of health insurance plan, based on your network rules</td>
+        <td>`"IN_NETWORK"`</td>
+    </tr>
+    <tr>
+        <td>↳ Rules</td>
+        <td>`network.rules`</td>
+        <td>`NetworkRule[]`</td>
+        <td>Array of `NetworkRule`s</td>
+        <td>List of network rules that matched health insurance plan</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ Rule</td>
+        <td>`network.rules[i]`</td>
+        <td>`NetworkRule`</td>
+        <td>See [`NetworkRule`](#networkrule)</td>
+        <td>Network rule that matched health insurance plan</td>
+        <td>See `NetworkRule` [Example](#example-networkrule)</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ UUID</td>
+        <td>`network.rules[i].uuid`</td>
+        <td>`string`</td>
+        <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
+        <td>Unique identifier for the network rule</td>
+        <td>`"ab280ee0-5f66-4076-9d1b-255d5f0024e3"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ Name</td>
+        <td>`network.rules[i].name`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Name for the network rule</td>
+        <td>`"Rule 1: Aetna - INN"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ Status</td>
+        <td>`network.rules[i].status`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                - `"IN_NETWORK"`
+                - `"OUT_OF_NETWORK"`
+                - `"INDETERMINATE"`
+            </details>
+        </td>
+        <td>`UPPER_SNAKE_CASE`</td>
+        <td>Network status the network rule returns</td>
+        <td>`"IN_NETWORK"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ Notes</td>
+        <td>`network.rules[i].notes`</td>
+        <td>`string`</td>
+        <td>-</td>
+        <td>Notes about the network rule</td>
+        <td>`"Requires manual review"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ Metadata</td>
+        <td>`network.rules[i].metadata`</td>
+        <td>`object`</td>
+        <td>-</td>
+        <td>Metadata for the network rule</td>
+        <td>
+            ```typescript
+            {
+                "selfPay": false,
+                "priority": 1,
+                "packageId": "123456"
+            }
+            ```
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ ↳ Metadata</td>
+        <td>`network.rules[i].metadata[key]`</td>
+        <td>`string` | `number` | `boolean`</td>
+        <td>-</td>
+        <td>Piece of metadata for the network rule</td>
+        <td>`"selfPay": false`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ Start Date</td>
+        <td>`network.rules[i].startDate`</td>
+        <td>`string`</td>
+        <td>yyyy-MM-dd</td>
+        <td>Start date for the network rule</td>
+        <td>`"2026-10-01"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ End Date</td>
+        <td>`network.rules[i].endDate`</td>
+        <td>`string`</td>
+        <td>yyyy-MM-dd</td>
+        <td>End date for the network rule</td>
+        <td>`"2027-09-30"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ Conditions</td>
+        <td>`network.rules[i].conditions`</td>
+        <td>`object[]`</td>
+        <td>Array of objects</td>
+        <td>Conditions for when the network rule matches</td>
+        <td>
+            ```typescript
+            [
+                {
+                    "key": "payerId",
+                    "operator": "EQUAL",
+                    "values": ["V404110"]
+                },
+                {
+                    "key": "payerName",
+                    "operator": "INCLUDE",
+                    "values": ["Aetna"]
+                },
+                {
+                    "key": "state",
+                    "operator": "EQUAL",
+                    "values": ["MA", "NY", "WA"]
+                },
+                {
+                    "key": "insuranceTypeCodes",
+                    "operator": "INCLUDE",
+                    "values": ["PR"]
+                },
+                {
+                    "key": "planName",
+                    "operator": "INCLUDE",
+                    "values": ["PPO"]
+                },
+                {
+                    "key": "relatedEntites",
+                    "operator": "INCLUDE",
+                    "values": ["Hooli Health"]
+                },
+                {
+                    "key": "groupNumber",
+                    "operator": "EQUAL",
+                    "values": ["123456-123-12345"]
+                },
+                {
+                    "key": "groupName",
+                    "operator": "INCLUDE",
+                    "values": ["Pied Piper"]
+                }
+            ]
+            ```
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ ↳ Condition</td>
+        <td>`network.rules[i].conditions[j]`</td>
+        <td>`object`</td>
+        <td>-</td>
+        <td>Condition for when the network rule matches</td>
+        <td>
+            ```typescript
+            {
+                "key": "payerId",
+                "operator": "EQUAL",
+                "values": ["V404110"]
+            },
+            ```
+        </td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ ↳ ↳ Key</td>
+        <td>`network.rules[i].conditions[j].key`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                - `"payerId"`
+                - `"payerName"`
+                - `"state"`
+                - `"insuranceTypeCodes"`
+                - `"planName"`
+                - `"relatedEntites"`
+                - `"groupNumber"`
+                - `"groupName"`
+            </details>
+        </td>
+        <td>`camelCase`</td>
+        <td>Key for condition</td>
+        <td>`"payerId"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ ↳ ↳ Operator</td>
+        <td>`network.rules[i].conditions[j].operator`</td>
+        <td>
+            <details>
+                <summary>`enum`</summary>
+
+                Possible values:
+                - `"EQUAL"`
+                - `"NOT_EQUAL"`
+                - `"INCLUDE"`
+                - `"NOT_INCLUDE"`
+            </details>
+        </td>
+        <td>`UPPER_SNAKE_CASE`</td>
+        <td>Operator for condition</td>
+        <td>`"EQUAL"`</td>
+    </tr>
+    <tr>
+        <td>↳ ↳ ↳ ↳ ↳ Values</td>
+        <td>`network.rules[i].conditions[j].values`</td>
+        <td>`string[]`</td>
+        <td>`camelCase`</td>
+        <td>Value(s) for condition</td>
+        <td>`["V404110"]`</td>
+    </tr>
+</table>
+
+</CollapsibleSection>
+</CollapsibleGroup>
 
 </CollapsibleSection>
 </CollapsibleGroup>

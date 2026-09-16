@@ -26,11 +26,13 @@
         name?: string, // searches for payer (or payer group): only use if id is not known
     },
     memberId?: string,
-    serviceTypeCodes?: string[],
-    procedureCodes?: {
-        code: string,
-        qualifier?: string,
-        modifiers?: string[]
-    }[]
+    serviceCodes?: {
+        serviceTypeCodes?: string[],
+        procedureCodes?: {
+            code: string,
+            qualifier?: string,
+            modifiers?: string[]
+        }[]
+    }
 }
 ```

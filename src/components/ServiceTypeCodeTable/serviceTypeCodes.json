@@ -1,0 +1,1255 @@
+[
+  {
+    "code": "1",
+    "name": "Medical Care",
+    "description": "Medical services to diagnose and/or treat a medical condition, illness, or injury",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "2",
+    "name": "Surgical",
+    "description": "Surgical services provided by a healthcare provider",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "3",
+    "name": "Consultation",
+    "description": "Counseling and/or coordination of care with other Physicians, other qualified Healthcare Providers or agencies",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "4",
+    "name": "Diagnostic X-Ray",
+    "description": "Diagnostic x-ray provided by a healthcare provider",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "5",
+    "name": "Diagnostic Lab",
+    "description": "Diagnostic lab provided by a healthcare provider",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "6",
+    "name": "Radiation Therapy",
+    "description": "Radiation therapy provided by a healthcare provider",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "7",
+    "name": "Anesthesia",
+    "description": "Anesthesia services provided by a healthcare provider",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "8",
+    "name": "Surgical Assistance",
+    "description": "Assistant surgeon/surgical assistance provided by a healthcare provider if required because of the complexity of the surgical procedures",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "9",
+    "name": "Hearing Aid",
+    "description": "Small electronic device that is worn in or above the ear.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/01/2023"
+    ]
+  },
+  {
+    "code": "10",
+    "name": "Blood",
+    "description": "The allotment of whole blood, blood plasma, or blood derivatives",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "11",
+    "name": "Durable Medical Equipment Used",
+    "description": "Used equipment needed for medical reasons to be used by a person that is ill or injured and is ordered by a health care provider for use in the home.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "12",
+    "name": "Durable Medical Equipment Purchased",
+    "description": "Purchased equipment needed for medical reasons to be used by a person that is ill or injured and is ordered by a healthcare provider for use in the home.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "13",
+    "name": "Hearing Aid Power Source",
+    "description": "Batteries or other type of device used to charge a hearing aid",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/01/2023"
+    ]
+  },
+  {
+    "code": "18",
+    "name": "Durable Medical Equipment Rental",
+    "description": "Rental equipment needed for medical reasons to be used by a person that is ill or injured and is ordered by a healthcare provider for use in the home.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "19",
+    "name": "Pneumonia Vaccine",
+    "description": "Services provided by a physician or other healthcare provider related to administration of Pneumococcal Pneumonia vaccination.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "20",
+    "name": "Second Surgical Opinion",
+    "description": "Second professional opinion sought to verify or confirm the necessity for surgical procedures",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "23",
+    "name": "Diagnostic Dental",
+    "description": "The translation of data gathered by clinical and radiographic examination into an organized, classified definition of conditions present.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "24",
+    "name": "Periodontics",
+    "description": "The art and science of examination, diagnosis, and treatment of diseases affecting the periodontium; a study of the supporting structures of the teeth, normal anatomy and physiology and the deviations.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "25",
+    "name": "Restorative",
+    "description": "Broad term applied to any restorations to the tooth/teeth structure(s). Anterior teeth include up to five surface classifications - Mesial, Distal, Incisal, Lingual and Labial. Posterior teeth include up to five surface classifications: Mesial, Distal, Occlusal, Lingual and Buccal.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "26",
+    "name": "Endodontics",
+    "description": "The branch of dentistry that is concerned with the morphology, physiology and pathology of the dental pulp and periradicular (gum) tissues.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "27",
+    "name": "Maxillofacial Prosthetics",
+    "description": "The branch of prosthetics is concerned with the restoration of stomatognathic and associated facial structure that have been affected by disease, injury, surgery, or congenital defect.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "28",
+    "name": "Adjunctive Dental Services",
+    "description": "Typically these services involve a drug such as anesthesia or other substances that serve as a supplemental purpose in dental therapy.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "30",
+    "name": "Plan Coverage and General Benefits",
+    "description": "Plan coverage and general benefits for the member's policy or contract.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009",
+      "Last Modified: 11/01/2019"
+    ]
+  },
+  {
+    "code": "33",
+    "name": "Chiropractic",
+    "description": "Manipulations and modalities provided by a healthcare provider",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "35",
+    "name": "Dental Care",
+    "description": "The treatment of the teeth and their supporting structures.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "36",
+    "name": "Dental Crowns",
+    "description": "An artificial replacement for the natural crown of the tooth covering all five surfaces (Anterior teeth surface classifications - Mesial, Distal, Incisal, Lingual and Labial. Posterior teeth surface classifications: Mesial, Distal, Occlusal, Lingual and Buccal.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "37",
+    "name": "Dental Accident",
+    "description": "Supplies or appliances for care of teeth due to accidental injury provided by healthcare provider",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "38",
+    "name": "Orthodontics",
+    "description": "The area of dentistry concerned with the supervision, guidance, and correction of the growing and mature orofacial structures. This includes conditions that require movement of the teeth or correction of the malrelationships and malformations of related structures by the adjustment of relationships between and among teeth and facial bones by the application of forces or the stimulation and redirection of functional forces within the craniofacial complex.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "39",
+    "name": "Prosthodontics",
+    "description": "The part of dentistry pertaining to the restoration and maintenance of oral function, comfort, appearance and health of the patient by replacement of missing teeth and contiguous tissues with artificial substitutes. It has three main branches: removable prosthodontics, fixed prosthodontics and maxillofacial prosthetics.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "40",
+    "name": "Oral Surgery",
+    "description": "Diagnosis and treatment of disorders of the mouth, teeth, jaws and facial structure provided by a healthcare provider",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "41",
+    "name": "Preventive Dental",
+    "description": "The dental procedures in dental practice and health programs that prevent the occurrence of oral diseases.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009",
+      "Last Modified: 01/24/2010"
+    ]
+  },
+  {
+    "code": "42",
+    "name": "Home Health Care",
+    "description": "Healthcare services rendered in the home by a healthcare provider",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "45",
+    "name": "Hospice",
+    "description": "An integrated set of services and supplies to provide palliative and supportive care to terminally ill patients.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "47",
+    "name": "Hospitalization",
+    "description": "Hospital Inpatient and Outpatient services and supplies for a patient who may or may not have been admitted to a hospital, for the purpose of receiving medical care or other health services.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "54",
+    "name": "Long Term Care",
+    "description": "Care provided for an individual when they cannot care for themselves within the home or in a facility",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "56",
+    "name": "Medically Related Transportation",
+    "description": "Ambulance, Ambulate or other Medical transport services",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "60",
+    "name": "Plan Coverage",
+    "description": "Indicates whether a patient has active or inactive coverage for the service date requested.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009",
+      "Last Modified: 11/01/2019"
+    ]
+  },
+  {
+    "code": "61",
+    "name": "In-vitro Fertilization",
+    "description": "Services to treat infertility",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "62",
+    "name": "MRI Scan",
+    "description": "Diagnostic MRI (Magnetic Resonance Imaging) services.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "64",
+    "name": "Acupuncture",
+    "description": "A system of alternative treatment that involves pricking the skin or tissues with needles",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "65",
+    "name": "Newborn Care",
+    "description": "Management of the infant during the transition to extra uterine life and subsequent period of stabilization",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "66",
+    "name": "Pathology",
+    "description": "Creation of slides from tissues and its interpretation provided by a healthcare provider",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "67",
+    "name": "Smoking Cessation",
+    "description": "Treatment to assist in the discontinuation of the use of nicotine",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "68",
+    "name": "Well Baby Care",
+    "description": "Medical services and physician visits which are recommended by the American Pediatric Association as appropriate and routine care for a child to a specific age limit.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "69",
+    "name": "Maternity",
+    "description": "Services related to maternity care including related conditions resulting in childbirth when provided, or ordered and billed by a physician or nurse midwife",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "70",
+    "name": "Transplants",
+    "description": "Services related to the transfer of living organs or tissue from one body to another.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "71",
+    "name": "Audiology",
+    "description": "Services related to hearing disorders, including evaluation of hearing function and rehabilitation of patients with hearing impairment",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "74",
+    "name": "Private Duty Nursing",
+    "description": "A nurse who is hired to provide focused care to an individual patient in a hospital, clinic, nursing home or patient's home",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "75",
+    "name": "Prosthetics",
+    "description": "A device that is used to replace a part of the body that is missing.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009",
+      "Last Modified: 07/01/2016"
+    ]
+  },
+  {
+    "code": "76",
+    "name": "Dialysis",
+    "description": "The process by which uric acid and urea are removed from circulating blood by means of a dialyzer",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "78",
+    "name": "Chemotherapy",
+    "description": "The treatment of disease by means of chemicals that have a specific toxic effect upon the disease-producing microorganisms or that selectively destroy cancerous tissue.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "79",
+    "name": "Allergy Testing",
+    "description": "A skin or blood test to determine what substance, or allergen, may trigger an allergic response in a person",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "80",
+    "name": "Immunizations",
+    "description": "The introduction of a vaccine with the goal of producing immunity",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "81",
+    "name": "Routine Physical",
+    "description": "A physical examination performed on asymptomatic patients for medical screening purposes.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "82",
+    "name": "Family Planning",
+    "description": "Educational services that assists individuals and couples to anticipate and attain their desired number of children and the spacing and timing of their births. It is achieved through use of contraceptive methods and the treatment of involuntary infertility.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "84",
+    "name": "Abortion",
+    "description": "Services related to the elective termination of a pregnancy",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "86",
+    "name": "Emergency Services",
+    "description": "Services provided by healthcare providers for the treatment of a sudden and unexpected medical condition or injury which requires immediate medical attention",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "88",
+    "name": "Retail/Independent Pharmacy",
+    "description": "A licensed entity that dispenses prescription drugs and provides professional pharmacy services, such as clinical pharmacy consulting respective to the dispensing function. The entity may be a retail/chain or independent pharmacy or any other entity which dispenses prescription drugs.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009",
+      "Last Modified: 05/01/2017"
+    ]
+  },
+  {
+    "code": "90",
+    "name": "Mail Order Pharmacy",
+    "description": "A mail order pharmacy delivers medications directly to patients through the mail.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009",
+      "Last Modified: 05/01/2017"
+    ]
+  },
+  {
+    "code": "91",
+    "name": "Brand Name Prescription Drug",
+    "description": "The original formulation of a prescription drug, approved by the FDA for distribution.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "92",
+    "name": "Generic Prescription Drug",
+    "description": "Generic drugs are copies of brand-name drugs that have exactly the same dosage, intended use, effects, side effects, route of administration, risks, safety, and strength as the original drug. In other words, their pharmacological effects are exactly the same as those of their brand-name counterparts.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "93",
+    "name": "Podiatry",
+    "description": "Professional services of a physician or other healthcare provider for the care or treatment of conditions of the foot.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "A6",
+    "name": "Psychotherapy",
+    "description": "Professional services, including individual or group therapy by providers such as psychiatrists, psychologists, clinical social workers, or psychiatric nurses.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "AD",
+    "name": "Occupational Therapy",
+    "description": "Professional and facility occupational therapy services performed by an occupational therapist, physician or other healthcare provider at a hospital, office or other covered facility.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "AF",
+    "name": "Speech Therapy",
+    "description": "Professional and facility speech therapy services performed by a speech therapist, physician or other healthcare provider at a hospital, office or other covered facility.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "AG",
+    "name": "Skilled Nursing Care",
+    "description": "Services for a patient in a skilled nursing facility for the purpose of receiving medical care or other health services.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "AI",
+    "name": "Substance Abuse",
+    "description": "Services provided at a hospital, office or other covered facility as they are related to the diagnosis and treatment of Substance Abuse.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "AL",
+    "name": "Optometry",
+    "description": "Routine vision services furnished by an optometrist. May include coverage for eyeglasses, contact lenses, routine eye exams, and/or vision testing for the prescribing or fitting of eyeglasses or contact lenses.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "AM",
+    "name": "Frames",
+    "description": "The framework for a pair of eyeglasses",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "AO",
+    "name": "Lenses",
+    "description": "A piece of transparent substance having two opposite surfaces either both curved or one curved and one plane, used in an optical device in correcting defects of vision.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "AP",
+    "name": "Routine Eye Exam",
+    "description": "A series of tests to evaluate an individual's vision and check for eye diseases.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "AQ",
+    "name": "Nonmedically Necessary Physical (These physicals are required by other entities e.g., insurance application, pilot license, employment or school)",
+    "description": "A physical examination performed on asymptomatic patients for medical screening purposes.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "B2",
+    "name": "Brand Name Prescription Drug - Formulary",
+    "description": "Lists of brand name drugs covered and published by the health plan/payer/processor/PBM to help physicians reach clinically and economically appropriate prescribing decisions for patients.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "B3",
+    "name": "Brand Name Prescription Drug - Non-Formulary",
+    "description": "A brand name drug that is not listed on the covered and published list of the health plan/payer/processor/PBM.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "BB",
+    "name": "Psychiatric Treatment Partial Hospitalization",
+    "description": "",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009",
+      "Last Modified: 03/01/2023"
+    ]
+  },
+  {
+    "code": "BC",
+    "name": "Day Care (Psychiatric)",
+    "description": "",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009",
+      "Last Modified: 03/01/2023"
+    ]
+  },
+  {
+    "code": "BE",
+    "name": "Massage Therapy",
+    "description": "The manipulation of muscles and other soft tissues of the body by a therapist for the treatment of health conditions such as pain, cancer, fibromyalgia, HIV/AIDS, depression.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "BF",
+    "name": "Pulmonary Rehabilitation",
+    "description": "Services and instructional guidance administered to an individual suffering from respiratory disease in an attempt to improve the quality of life for the patient.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "BG",
+    "name": "Cardiac Rehabilitation",
+    "description": "Services and instructional guidance rendered by a physician or other healthcare provider in a hospital or covered facility that are designed to help an individual recover from a cardiovascular event",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "BT",
+    "name": "Gynecological",
+    "description": "Medical care and management of the female reproductive system and associated disorders provided by a physician or other healthcare provider.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "BU",
+    "name": "Obstetrical",
+    "description": "Medical care and management related to the care of a woman prior, during and after pregnancy, provided by a physician or other healthcare provider.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "BY",
+    "name": "Physician Visit - Sick",
+    "description": "Professional services rendered by a physician or other healthcare provider during a non-routine visit related to a illness.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "BZ",
+    "name": "Physician Visit - Well",
+    "description": "Professional services rendered by a physician or other healthcare provider during a routine or preventative care visit.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "CK",
+    "name": "Screening X-ray",
+    "description": "X-ray services provided by a physician or other healthcare provider for the purpose of preventative care.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "CL",
+    "name": "Screening laboratory",
+    "description": "Laboratory services provided by a physician or other healthcare provider for the purpose of preventative care.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "CM",
+    "name": "Mammogram, High Risk Patient",
+    "description": "Mammography services for patients that have been identified with a greater than normal risk for breast cancers and related diseases.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "CN",
+    "name": "Mammogram, Low Risk Patient",
+    "description": "Mammography services for patients that have been identified with a normal risk for breast cancers and related diseases.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "CO",
+    "name": "Flu Vaccination",
+    "description": "Services provided by a physician or other healthcare provider related to the administration of influenza virus vaccination.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "DG",
+    "name": "Dermatology",
+    "description": "Services provided by a physician or other healthcare provider involving the skin and its diseases.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "DS",
+    "name": "Diabetic Supplies",
+    "description": "Blood sugar (glucose) test strips, monitors, insulin, lancet devices and lancets, glucose control solutions used to monitor and assist in the treatment of diabetes.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "E0",
+    "name": "Applied Behavioral Analysis Therapy",
+    "description": "Services related to the assessment and treatment of learning and/or developmental disabilities to include techniques and principles to bring about meaningful and positive changes in behavior, improve attention, focus, memory, academics and/or increase language, communication and social skills.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009",
+      "Last Modified: 07/01/2017"
+    ]
+  },
+  {
+    "code": "E10",
+    "name": "Radiographs",
+    "description": "An image or picture produced on a radiation-sensitive film emulsion by exposure to ionizing radiation direct through an area, region, or substance of interest, followed by chemical processing of the film",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/24/2010"
+    ]
+  },
+  {
+    "code": "E11",
+    "name": "Diagnostic Imaging",
+    "description": "The use of radiographic, sonographic, and other technologies to create a graphic depiction of the body parts in question.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/24/2010"
+    ]
+  },
+  {
+    "code": "E14",
+    "name": "Fixed Prosthodontics",
+    "description": "The branch of prosthodontics concerned with the replacement or restoration of teeth by artificial substitutes that are not readily removable such as fixed partial dentures, pontics and abutments.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/24/2010"
+    ]
+  },
+  {
+    "code": "E15",
+    "name": "Removable Prosthodontics",
+    "description": "The branch of prosthodontics concerned with the replacement or restoration of teeth by artificial substitutes that are readily removable such as a denture, partial denture and interim prosthesis.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/24/2010"
+    ]
+  },
+  {
+    "code": "E16",
+    "name": "Intraoral Images - Complete Series",
+    "description": "Complete set of images using radiographic, sonographic, and other technologies representing an image or set of images within the oral cavity.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/24/2010"
+    ]
+  },
+  {
+    "code": "E17",
+    "name": "Oral Evaluation",
+    "description": "The art and science of evaluation to make a clinical judgment or appraisal of a patient's dental health or condition.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/24/2010"
+    ]
+  },
+  {
+    "code": "E18",
+    "name": "Dental Prophylaxis",
+    "description": "A series of procedures where plaque, calculus, and stain are removed from the teeth often referred to as \"prophy\" or teeth cleaning.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/24/2010"
+    ]
+  },
+  {
+    "code": "E19",
+    "name": "Panoramic Images",
+    "description": "A tomogram of the jaws, taken with a specialized machine designed to present a panoramic view of the full circumferential length of the jaws on a single film.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/24/2010"
+    ]
+  },
+  {
+    "code": "E20",
+    "name": "Sealants",
+    "description": "A resinous material designed for application to the occlusal surfaces of posterior teeth to seal the surface irregularities and prevent the carious process.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/24/2010"
+    ]
+  },
+  {
+    "code": "E21",
+    "name": "Fluoride Treatments",
+    "description": "A separate process from dental prophylaxis of applying prescription strength fluoride product designed to prevent caries.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/24/2010"
+    ]
+  },
+  {
+    "code": "E22",
+    "name": "Dental Implants",
+    "description": "A device, usually alloplastic, that is surgically inserted into or onto the oral tissue. To be used as a prosthodontic abutment, it should remain quiescent and purely secondary to local tissue physiology.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/24/2010"
+    ]
+  },
+  {
+    "code": "E23",
+    "name": "Temporomandibular Joint Dysfunction",
+    "description": "Services related to the Impaired function of the temporomandibular articulation of the jaw.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/24/2010"
+    ]
+  },
+  {
+    "code": "E24",
+    "name": "Retail Pharmacy Prescription Drug",
+    "description": "Dispenses prescription drugs and provides professional pharmacy services, such as clinical pharmacy consulting respective to the dispensing function. The entity may be a retail/chain or independent pharmacy or any other entity which dispenses prescription drugs.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 06/06/2010",
+      "Last Modified: 11/01/2017",
+      "Stop: 11/01/2017"
+    ]
+  },
+  {
+    "code": "E25",
+    "name": "Long Term Care Pharmacy",
+    "description": "Long term care pharmacy serve the residents of nursing homes, assisted care facilities, extended care facilities, retirement homes, or post acute care. These are considered \"closed door pharmacies\"",
+    "technicalNote": null,
+    "dates": [
+      "Start: 06/06/2010"
+    ]
+  },
+  {
+    "code": "E28",
+    "name": "Dietary/Nutritional Services",
+    "description": "Nutrition and diet counseling such as: weight management, eating disorders, pregnancy, pediatric, food allergy, diabetes, celiac disease",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/29/2012"
+    ]
+  },
+  {
+    "code": "E33",
+    "name": "Intensive Cardiac Rehabilitation",
+    "description": "A group of physical activities designed to help a patient recover from a cardiovascular event",
+    "technicalNote": null,
+    "dates": [
+      "Start: 06/02/2013"
+    ]
+  },
+  {
+    "code": "E36",
+    "name": "Convenience Care",
+    "description": "A category of walk-in clinic located in retail stores, supermarkets and pharmacies that treat uncomplicated minor illnesses",
+    "technicalNote": null,
+    "dates": [
+      "Start: 06/02/2013"
+    ]
+  },
+  {
+    "code": "E37",
+    "name": "Telemedicine",
+    "description": "Services provided via telecommunication and/or information technology venues to provide clinical health services.",
+    "technicalNote": "Services performed that are related to telemedicine; not a place of service.",
+    "dates": [
+      "Start: 07/01/2015"
+    ]
+  },
+  {
+    "code": "E38",
+    "name": "Pharmacist Services",
+    "description": "Clinical services provided by a pharmacist",
+    "technicalNote": null,
+    "dates": [
+      "Start: 07/01/2015"
+    ]
+  },
+  {
+    "code": "E39",
+    "name": "Diabetic Education",
+    "description": "Patient educational program designed to bring awareness of diabetes, what it takes to treat it, and the necessary changes that should be made to improve their lifestyle.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 03/01/2016"
+    ]
+  },
+  {
+    "code": "E40",
+    "name": "Early Intervention",
+    "description": "Services related to treatment for babies or toddlers with developmental delays or disabilities.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 11/01/2016"
+    ]
+  },
+  {
+    "code": "EA",
+    "name": "Preventive Services",
+    "description": "Preventive services such as check-ups, patient counseling and screenings to prevent illness, disease and other health-related problems.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "EB",
+    "name": "Specialty Pharmacy",
+    "description": "Specialty pharmacies are designed to efficiently deliver medications with specialized handling, storage, and distribution requirements. Specialty pharmacies are also designed to improve clinical and economic outcomes for patients with complex, often chronic and rare conditions, with close contact and management by clinicians.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "EC",
+    "name": "Durable Medical Equipment New",
+    "description": "New equipment needed for medical reasons to be used by a person that is ill or injured and is ordered by a health care provider for use in the home.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "ED",
+    "name": "CAT Scan",
+    "description": "A multi-dimensional diagnostic image of a cross section of the body that is useful in diagnosing disease",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "EF",
+    "name": "Contact Lenses",
+    "description": "A thin lens placed directly on the surface of the eye. Contact Lenses are considered medical devices",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "EH",
+    "name": "Medically Tailored Meals (MTM)",
+    "description": "Meals approved by a medical professional or healthcare plan that reflect appropriate dietary therapy for the individual",
+    "technicalNote": null,
+    "dates": [
+      "Start: 03/01/2023"
+    ]
+  },
+  {
+    "code": "EJ",
+    "name": "IV Therapy",
+    "description": "Intravenous (IV) therapy is a medical technique of administering fluids directly into a vein.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 03/01/2023"
+    ]
+  },
+  {
+    "code": "F1",
+    "name": "Medical Coverage",
+    "description": "This code will be used by the payer on the 271 response to show coverage type. This code cannot be submitted with the 270 Inquiry.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 11/01/2015"
+    ]
+  },
+  {
+    "code": "F2",
+    "name": "Social Work Coverage",
+    "description": "This code will be used by the payer on the 271 response to show coverage type. This code cannot be submitted with the 270 Inquiry.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 11/01/2015"
+    ]
+  },
+  {
+    "code": "F3",
+    "name": "Dental Coverage",
+    "description": "This code will be used by the payer on the 271 response to show coverage type. This code cannot be submitted with the 270 Inquiry.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 11/01/2015"
+    ]
+  },
+  {
+    "code": "F4",
+    "name": "Hearing Coverage",
+    "description": "This code will be used by the payer on the 271 response to show coverage type. This code cannot be submitted with the 270 Inquiry.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 11/01/2015"
+    ]
+  },
+  {
+    "code": "F5",
+    "name": "Prescription Drug Coverage",
+    "description": "This code will be used by the payer on the 271 response to show coverage type. This code cannot be submitted with the 270 Inquiry.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 11/01/2015"
+    ]
+  },
+  {
+    "code": "F6",
+    "name": "Vision Coverage",
+    "description": "This code will be used by the payer on the 271 response to show coverage type. This code cannot be submitted with the 270 Inquiry.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 11/01/2015"
+    ]
+  },
+  {
+    "code": "F7",
+    "name": "Orthodontia Coverage",
+    "description": "This code will be used by the payer on the 271 response to show coverage type. This code cannot be submitted with the 270 Inquiry.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 11/01/2015"
+    ]
+  },
+  {
+    "code": "F8",
+    "name": "Mental Health Coverage",
+    "description": "This code will be used by the payer on the 271 response to show coverage type. This code cannot be submitted with the 270 Inquiry.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 11/01/2015"
+    ]
+  },
+  {
+    "code": "GF",
+    "name": "Generic Prescription Drug - Formulary",
+    "description": "Lists of generic drugs covered and published by the health plan/payer/processor/PBM to help physicians reach clinically and economically appropriate prescribing decisions for patients.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "GN",
+    "name": "Generic Prescription Drug - Non-Formulary",
+    "description": "A generic drug that is not listed on the covered and published list of the health plan/payer/processor/PBM.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "MH",
+    "name": "Mental Health",
+    "description": "Mental Health services provided by a physician or other healthcare providers who are trained and educated to perform services related to mental health and may be licensed or practice within the scope or licensure or training.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "PE",
+    "name": "Positron Emission Tomography (PET) Scan",
+    "description": "A nuclear imaging examination which reveals molecular function and activity.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "PT",
+    "name": "Physical Therapy",
+    "description": "Services and care related to evaluation and treatment of injury or disorders",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "SMH",
+    "name": "Serious Mental Health",
+    "description": "Services for disorders characterized by severe deficits and pervasive impairment in multiple areas of development.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 01/30/2011"
+    ]
+  },
+  {
+    "code": "UC",
+    "name": "Urgent Care",
+    "description": "Medical services and supplies provided by physicians or other healthcare providers for the treatment of an urgent medical condition or injury which requires medical attention.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 09/20/2009"
+    ]
+  },
+  {
+    "code": "UP",
+    "name": "Remote Patient Monitoring",
+    "description": "A telehealth method using digital devices to collect patient health data and transmit to their provider.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 03/01/2026"
+    ]
+  },
+  {
+    "code": "UR",
+    "name": "Remote Therapeutic Monitoring",
+    "description": "Services involving the remote collection, transmission, and clinical use of non-physiologic therapeutic data to monitor patient progress and adjust treatment plans. For example, musculoskeletal, respiratory, or other therapy-related metrics.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 03/01/2026"
+    ]
+  },
+  {
+    "code": "US",
+    "name": "Special Supplemental Benefits",
+    "description": "Additional non-medical benefits provided to a member by their health plan. Examples may include over-the-counter (OTC) drugs, plan-approved food items, and/or utilities.",
+    "technicalNote": null,
+    "dates": [
+      "Start: 03/01/2026"
+    ]
+  },
+  {
+    "code": "UT",
+    "name": "Dental Sleep Related Breathing Disorders and Airway Management Services",
+    "description": "Services for the treatment, adjustment, and ongoing management of sleep-related breathing disorders (SRBD), including airway management procedures and oral appliance therapy (OAT).",
+    "technicalNote": null,
+    "dates": [
+      "Start: 07/01/2026"
+    ]
+  }
+]

@@ -672,6 +672,7 @@ See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).
 
 ```typescript title="POST /1-click Request Body"
 {
+    identityUuid?: string,
     verificationUuid?: string,
     phone?: string,
     email?: string,
@@ -703,6 +704,10 @@ See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).
 ##### Default Credential Requests
 
 <DefaultCredentialRequestsNotHosted />
+
+:::tip An Empty Array Means Metadata Only
+If you pass an empty array for `credentialRequests`, we'll source only [metadata](/reference/data/outputs#metadata), not any [credentials](/reference/data/outputs#credentials). This is how you can source metadata only, if that's relevant for your use case. _You can do this without verifying the user's phone number, though you **must** verify their phone number before sourcing any credentials._
+:::
 
 
 #### Response {#post-1-click-response}
@@ -1382,7 +1387,7 @@ This includes (under `data`) an array of payer objects for all [supported payers
   </tr>
   <tr>
     <td>`data`</td>
-    <td>`array`</td>
+    <td>`Payer[]`</td>
     <td>Array of `Payer`s</td>
     <td>Payers that match submitted query</td>
     <td>-</td>

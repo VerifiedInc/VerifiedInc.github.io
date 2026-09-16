@@ -52,11 +52,3 @@ export const payerUnitedHealthcareJson = `{
     ],
     "logoUrl": "https://assets.verified.inc/1-click/health/payers/ff5e124c-f19f-475c-9757-7fa011e5221a.png"
 }`;
-
-// Re-indents every line after the first so a standalone JSON snippet can be
-// spliced as a nested value inside a larger JSON example.
-export const indentJson = (json, spaces) =>
-    json
-        .split('\n')
-        .map((line, index) => (index === 0 ? line : ' '.repeat(spaces) + line))
-        .join('\n');

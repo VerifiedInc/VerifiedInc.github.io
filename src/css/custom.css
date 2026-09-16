@@ -983,3 +983,211 @@ html[data-theme='dark'] .payerLogo {
 html[data-theme='dark'] .payerTableTh {
   background: var(--ifm-color-emphasis-100);
 }
+
+/* ========== SERVICE TYPE CODE TABLE ========== */
+.svcCodeTableWrapper {
+  font-family: var(--ifm-font-family-base);
+  width: 100%;
+}
+
+/* --- Top bar: search + count --- */
+.svcCodeTableTopBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.svcCodeSearchWrap {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+  max-width: 420px;
+}
+.svcCodeSearchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ifm-color-emphasis-500);
+  pointer-events: none;
+}
+.svcCodeTableSearch {
+  width: 100%;
+  font-family: inherit;
+  padding: 10px 12px 10px 36px;
+  border-radius: 10px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.9rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.svcCodeTableSearch::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.svcCodeSearchClear {
+  all: unset;
+  position: absolute !important;
+  right: 10px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  cursor: pointer;
+  color: var(--ifm-color-emphasis-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 50%;
+  transition: color 0.15s;
+}
+.svcCodeSearchClear:hover {
+  color: var(--ifm-font-color-base);
+}
+.svcCodeTableSearch:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 3px rgba(13, 188, 61, 0.12);
+}
+.svcCodeTableCount {
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.svcCodeTableCount strong {
+  color: var(--ifm-font-color-base);
+}
+
+/* --- Scroll container --- */
+.svcCodeTableScroll {
+  overflow: auto;
+  max-height: 560px;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  border-radius: 10px;
+}
+
+/* --- Table base --- */
+.svcCodeTable {
+  display: table;
+  width: 100%;
+  min-width: 100%;
+  margin-bottom: 0;
+}
+
+/* --- Header --- */
+.svcCodeTableTh {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--ifm-color-emphasis-100);
+  padding: 14px 18px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--ifm-color-emphasis-900);
+  white-space: nowrap;
+  border: none;
+  box-shadow: inset 0 -1px 0 var(--ifm-color-emphasis-400);
+}
+.svcCodeTable,
+.svcCodeTable thead,
+.svcCodeTable thead tr {
+  border: none;
+  background: var(--ifm-color-emphasis-100);
+}
+.svcCodeTableTh + .svcCodeTableTh {
+  border-left: 1px solid var(--ifm-color-emphasis-400) !important;
+}
+.svcCodeTableThCode {
+  width: 8%;
+}
+.svcCodeTableThName {
+  width: 22%;
+}
+.svcCodeTableThDescription {
+  width: 50%;
+}
+.svcCodeTableThDates {
+  width: 20%;
+}
+.svcCodeSortBtn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+.svcCodeSortBtn:hover {
+  color: var(--ifm-font-color-base);
+}
+.svcCodeSortIcon {
+  flex-shrink: 0;
+  color: var(--ifm-color-emphasis-700);
+  transition: color 0.15s;
+}
+.svcCodeSortIconActive {
+  color: var(--ifm-color-primary);
+}
+
+/* --- Rows --- */
+.svcCodeTableRow {
+  transition: background 0.1s;
+  background: var(--ifm-background-surface-color);
+  border: none;
+}
+.svcCodeTableRow:hover {
+  background: var(--ifm-color-emphasis-50, rgba(0, 0, 0, 0.02));
+}
+.svcCodeTable td {
+  padding: 14px 18px;
+  border: none;
+  font-size: 0.9rem;
+  vertical-align: top;
+}
+.svcCodeTable td + td {
+  border-left: 1px solid var(--ifm-color-emphasis-400) !important;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.svcCodeTableTdCode {
+  font-weight: 600;
+}
+.svcCodeTableTdName {
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
+}
+.svcCodeChip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: var(--ifm-font-family-monospace);
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-primary);
+  white-space: nowrap;
+  user-select: all;
+}
+.svcCodeCellEmpty {
+  color: var(--ifm-color-emphasis-500);
+}
+
+/* --- Empty state --- */
+.svcCodeTableEmpty {
+  text-align: center;
+  padding: 48px 18px !important;
+  color: var(--ifm-color-emphasis-500);
+  font-size: 0.9rem;
+  width: 100%;
+}

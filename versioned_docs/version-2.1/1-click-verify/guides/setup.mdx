@@ -99,19 +99,120 @@ We are _obsessed_ with making it as easy as possible for you to implement 1-Clic
 :::
 
 
-#### Link Delivery Format
+#### Delivery Format
+
+**Configure a default delivery format for SMS verification messages.**
+
+
+##### Default Format
+
+<Admonition type="info">
+    This setting determines a default value, which you can override anytime by including `format` in the request body of [`POST /1-click/verifications/{uuid}/deliver`](/reference/api/endpoints#post-1-click-verifications-deliver).
+</Admonition>
+
+**Choose a format for the SMS verification message:**
+
+<table>
+    <tr>
+        <th>Option</th>
+        <th>`format`</th>
+        <th>Description</th>
+        <th>Template</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>Code</td>
+        <td>`"code"`</td>
+        <td>A one-time code the user types in</td>
+        <td>
+            <blockquote>
+                Enter this code to verify for `{Brand Name}`: 111111
+            </blockquote>
+        </td>
+        <td>
+            <blockquote>
+                Enter this code to verify for Hooli: 111111
+            </blockquote>
+        </td>
+    </tr>
+    <tr>
+        <td>Link</td>
+        <td>`"link"`</td>
+        <td>A one-time link the user clicks</td>
+        <td>
+            <blockquote>
+                Click this link to verify for `{Brand Name}`: https://1-click.verified.inc/abcd1234
+            </blockquote>
+        </td>
+        <td>
+            <blockquote>
+                Click this link to verify for Hooli: https://1-click.verified.inc/abcd1234
+            </blockquote>
+        </td>
+    </tr>
+    <tr>
+        <td>Code and Link</td>
+        <td>`"codeAndLink"`</td>
+        <td>Both, with the code first</td>
+        <td>
+            <blockquote>
+                Enter this code to verify for `{Brand Name}`: 111111
+                <br/><br/>
+                Or, click this link: https://1-click.verified.inc/abcd1234
+            </blockquote>
+        </td>
+        <td>
+            <blockquote>
+                Enter this code to verify for Hooli: 111111
+                <br/><br/>
+                Or, click this link: https://1-click.verified.inc/abcd1234
+            </blockquote>
+        </td>
+    </tr>
+    <tr>
+        <td>Link and Code</td>
+        <td>`"linkAndCode"`</td>
+        <td>Both, with the link first</td>
+        <td>
+            <blockquote>
+                Click this link to verify for `{Brand Name}`: https://1-click.verified.inc/abcd1234
+                <br/><br/>
+                Or, enter this code: 111111
+            </blockquote>
+        </td>
+        <td>
+            <blockquote>
+                Click this link to verify for Hooli: https://1-click.verified.inc/abcd1234
+                <br/><br/>
+                Or, enter this code: 111111
+            </blockquote>
+        </td>
+    </tr>
+</table>
+
+
+##### Redirect URL
 
 :::note
 This setting is only relevant if you use the link format with the SMS channel: that is, if you send SMS with verification links (instead of verification codes).
 :::
 
-
-##### Redirect URL
+<Admonition type="info">
+    This setting determines a default value, which you can override anytime by including `redirectUrl` in the request body of [`POST /1-click/verifications/{uuid}/deliver`](/reference/api/endpoints#post-1-click-verifications-deliver).
+</Admonition>
 
 **Set a redirect URL,** which is where 1-Click Verify redirects a user to. The redirect URL can be any valid URL — whether a website link, app store link, or otherwise.
 
 
 ##### Redirect User After
+
+:::note
+This setting is only relevant if you use the link format with the SMS channel: that is, if you send SMS with verification links (instead of verification codes).
+:::
+
+<Admonition type="info">
+    This setting determines a default value, which you can override anytime by including `redirectUserAfter` in the request body of [`POST /1-click/verifications/{uuid}/deliver`](/reference/api/endpoints#post-1-click-verifications-deliver).
+</Admonition>
 
 **Choose when a user should be redirected:**
 

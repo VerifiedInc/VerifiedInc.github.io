@@ -1,6 +1,8 @@
 import CodeBlock from '@theme/CodeBlock';
-import { payerAetnaJson, payerUnitedHealthcareJson, indentJson } from '@site/versioned_docs/version-2.1/reusables/payer-examples-data.js';
+import { payerAetnaJson, payerUnitedHealthcareJson } from '@site/versioned_docs/version-2.1/reusables/payer-examples-data.js';
 import { parsedEdi271AetnaJson, parsedEdi271UnitedHealthcareJson } from '@site/versioned_docs/version-2.1/reusables/parsed-edi-271-examples-data.js';
+import { networkStatusInNetworkJson, networkStatusOutOfNetworkJson } from '@site/versioned_docs/version-2.1/reusables/network-status-examples-data.js';
+import { indentJson } from '@site/versioned_docs/version-2.1/reusables/json-utils.js';
 
 export const succeededExample = `{
     "healthDataUuid": "9e12fe5b-5bb8-410a-ac6b-6e053e4c7e8d",
@@ -11,14 +13,16 @@ export const succeededExample = `{
             "payer": ${indentJson(payerAetnaJson, 12)},
             "verificationMethod": "clearinghouse",
             "edi_271": ...,
-            "eligibility": ${indentJson(parsedEdi271AetnaJson, 12)}
+            "eligibility": ${indentJson(parsedEdi271AetnaJson, 12)},
+            "network": ${indentJson(networkStatusInNetworkJson, 12)}
         },
         {
             "memberId": "B231615071",
             "payer": ${indentJson(payerUnitedHealthcareJson, 12)},
             "verificationMethod": "clearinghouse",
             "edi_271": ...,
-            "eligibility": ${indentJson(parsedEdi271UnitedHealthcareJson, 12)}
+            "eligibility": ${indentJson(parsedEdi271UnitedHealthcareJson, 12)},
+            "network": ${indentJson(networkStatusOutOfNetworkJson, 12)}
         }
     ]
 }`;

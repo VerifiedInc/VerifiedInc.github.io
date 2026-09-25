@@ -849,6 +849,15 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
       <td>`"535dba63-d4bd-442a-b3f6-21b785260a08"`</td>
   </tr>
   <tr>
+      <td>`externalReference`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>1–256 characters</td>
+      <td>-</td>
+      <td>Your identifier for this request. Returned unchanged in the POST response, the `GET /1-click/health/{healthDataUuid}` response, and the webhook payload. It is not a lookup key.</td>
+      <td>`"appointment-1042"`</td>
+  </tr>
+  <tr>
       <td>`fullName`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/> but <Chip label="Required" variant="outlined" size="small" color="error"/> if no `identityUuid`</td>
       <td>`object`</td>
@@ -1185,6 +1194,13 @@ See [`1ClickEntity`](/reference/api/types#1clickentity).
     <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
     <td>Unique identifier for the [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) that will be returned at the end of the 1-Click Health flow</td>
     <td>`"9e12fe5b-5bb8-410a-ac6b-6e053e4c7e8d"`</td>
+  </tr>
+  <tr>
+    <td>`externalReference`</td>
+    <td>`string`</td>
+    <td>1–256 characters</td>
+    <td>Your identifier from the request, returned unchanged when supplied</td>
+    <td>`"appointment-1042"`</td>
   </tr>
   <tr>
     <td>`status`</td>

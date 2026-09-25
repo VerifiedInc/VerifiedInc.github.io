@@ -840,6 +840,7 @@ When enabled, the risk signals appear in identifiers metadata in a [`1ClickEntit
 ```typescript title="1ClickHealthEntity Type"
 {
     healthDataUuid: string,
+    externalReference?: string,
     status: "PENDING" | "PROCESSING" | "SUCCEEDED" | "FAILED" | "PARTIAL",
     results?: [
         {
@@ -886,6 +887,13 @@ Eligibilty info consists of:
         <td>[Version 4 UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random))</td>
         <td>Unique identifier for the [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) that will be returned at the end of the 1-Click Health flow</td>
         <td>`"053cd0be-22e4-4985-84e0-d6493708ac28"`</td>
+    </tr>
+    <tr>
+        <td>`externalReference`</td>
+        <td>`string`</td>
+        <td>1–256 characters</td>
+        <td>Optional customer identifier echoed unchanged from the `POST /1-click/health` request; not a lookup key</td>
+        <td>`"appointment-1042"`</td>
     </tr>
     <tr>
         <td>`status`</td>

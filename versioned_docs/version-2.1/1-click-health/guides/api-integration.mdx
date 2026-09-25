@@ -240,10 +240,35 @@ You can automatically combine these by setting [**Check After Autofill**](/1-cli
 <ApiKeysAdmonition />
 
 :::important 1-Click Health is Asynchronous
-**1-Click Health is _asynchronous_,** because it can take awhile to search for a user's health insurance plans across the large number of possible payers. **Response times can be as short as 3 seconds or as long as 30+ seconds.** You don't receive data in the response body of `POST /1-click/health` but rather via webhook or by polling `GET /1-click/health`. See [step 3](#3-receive-outputs) for details.
+**1-Click Health is _asynchronous_,** because it can take awhile to search for a user's health insurance plans across the large number of possible payers. **Response times can be as short as 3 seconds or as long as 30+ seconds.** Health results arrive via webhook or by polling `GET /1-click/health`, not in the response body of `POST /1-click/health`. The POST response includes `healthDataUuid` and, when supplied, `externalReference`. See [step 3](#3-receive-outputs) for details.
 
 This is in contrast to 1-Click Signup, which is _synchronous_ and almost always has response times under 1 second. You receive data directly in the response body of `POST /1-click`, though you can also receive it via webhook or by polling `GET /1-click`.
 :::
+
+### Correlate a request with your record
+
+Include an optional `externalReference` (1–256 characters) in the request body to associate the result with your own record. Verified returns it unchanged in the POST response, the GET response, and the webhook payload. It is for correlation only; use `healthDataUuid` to retrieve the result.
+
+For example, include your appointment identifier in the request:
+
+```json
+{
+  "identityUuid": "535dba63-d4bd-442a-b3f6-21b785260a08",
+  "externalReference": "appointment-1042"
+}
+```
+
+The POST response includes the same reference with the new `healthDataUuid`:
+
+```json
+{
+  "healthDataUuid": "9e12fe5b-5bb8-410a-ac6b-6e053e4c7e8d",
+  "externalReference": "appointment-1042",
+  "status": "PENDING"
+}
+```
+
+Use `healthDataUuid` for `GET /1-click/health/{healthDataUuid}`. The GET result and any webhook for that flow also include `externalReference`.
 
 
 ### Insurance Autofill
@@ -407,7 +432,7 @@ See [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) for de
 
 ## 3. Receive outputs.
 
-If you configured the [webhook](/1-click-health/guides/setup#webhook) setting in the Verified Dashboard, we'll send the 1-Click Health response as a [payload](/reference/webhooks#payload) to your webhook. 
+If you configured the [webhook](/1-click-health/guides/setup#webhooks) setting in the Verified Dashboard, we'll send the 1-Click Health response as a [payload](/reference/webhooks#payload) to your webhook.
 
 :::tip
 See the [Webhooks](/reference/webhooks) page for general details about how Verified handles webhooks.

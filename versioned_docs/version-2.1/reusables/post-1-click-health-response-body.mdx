@@ -1,6 +1,7 @@
 ```typescript title="POST /1-click/health Response Body"
 {
     healthDataUuid: string,
+    externalReference?: string,
     status: "PENDING" | "PROCESSING" | "SUCCEEDED" | "FAILED" | "PARTIAL"
 }
 ```

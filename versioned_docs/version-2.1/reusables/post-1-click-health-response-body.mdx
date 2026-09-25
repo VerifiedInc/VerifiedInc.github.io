@@ -1,7 +1,7 @@
 ```typescript title="POST /1-click/health Response Body"
 {
     healthDataUuid: string,
-    externalReference?: string,
+    externalReference?: string, // your own reference string, included if passed to POST /1-click/health
     status: "PENDING" | "PROCESSING" | "SUCCEEDED" | "FAILED" | "PARTIAL"
 }
 ```

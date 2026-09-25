@@ -20,19 +20,19 @@ You can configure webhooks for 1-Click Health: see [here](/1-click-health/guides
   </tr>
   <tr>
     <th>URL</th>
-    <td>Defined by [webhook brand setting](/1-click-health/guides/setup#webhooks)</td>
+    <td>Defined by [webhooks](/1-click-health/guides/setup#webhooks) brand setting</td>
   </tr>
   <tr>
     <th>Authentication</th>
-    <td>Defined by [webhook brand setting](/1-click-health/guides/setup#webhooks) (None, API Key, or Basic Auth)</td>
+    <td>Defined by [webhooks](/1-click-health/guides/setup#webhooks) brand setting (None, API Key, or Basic Auth)</td>
   </tr>
   <tr>
     <th>Retries</th>
-    <td>An immediate attempt, followed by retries after 1 minute, 5 minutes, 30 minutes, 2 hours, 6 hours, and 12 hours (about 22 hours from the first attempt).</td>
+    <td>After 1 minute, 5 minutes, 30 minutes, 2 hours, 6 hours, and 12 hours (in total, about 22 hours from first attempt)</td>
   </tr>
   <tr>
     <th>Expected response</th>
-    <td>Respond with a `2xx` status (for example `200`) to acknowledge receipt. A non-2xx response or a delivery failure is retried according to the schedule.</td>
+    <td>Respond with a `2xx` status (for example `200`) to acknowledge receipt; a timeout or response with any other status is treated as a failed delivery and triggers a retry</td>
   </tr>
   <tr>
     <th>Delivery</th>
@@ -40,7 +40,7 @@ You can configure webhooks for 1-Click Health: see [here](/1-click-health/guides
   </tr>
   <tr>
     <th>Retention</th>
-    <td>After the final retry, an undelivered event is moved to a dead-letter queue (DLQ), where it is retained for 14 days.</td>
+    <td>After final retry, undelivered event is moved to dead-letter queue (DLQ) and retained there for 14 days</td>
   </tr>
 </table>
 
@@ -53,7 +53,7 @@ Each webhook request includes the following headers:
   <tr>
     <th>Header</th>
     <th>Value</th>
-    <th>Description</th>
+    <th>Notes</th>
   </tr>
   <tr>
     <td>`Content-Type`</td>
@@ -77,9 +77,11 @@ Each webhook request includes the following headers:
   </tr>
 </table>
 
-Any authentication headers you configure in your [webhook brand setting](/1-click-health/guides/setup#webhooks) (API Key or Basic Auth) are also included.
+Any authentication headers you configure in your [webhooks](/1-click-health/guides/setup#webhooks) brand setting (API Key or Basic Auth) are also included.
 
-## Verify webhook signatures
+## Signatures
+
+When you define a webhook in the [webhooks](/1-click-health/guides/setup#webhooks) brand setting, or rotate the secret of an existing webhook, we display a new signing secret but only once: store it securely.
 
 Verify each webhook using the signing secret for your webhook:
 
@@ -92,7 +94,9 @@ Verify each webhook using the signing secret for your webhook:
 
 3. Reject requests with a timestamp outside your allowed freshness window to reduce replay risk.
 
-The signing secret is displayed only once when the webhook is created or the secret is rotated. Store it securely when it is shown. For 24 hours after rotation, requests are signed with both the previous and new secrets. During this overlap, accept a valid signature from either secret.
+:::note
+For 24 hours after rotation, we sign requests with both the previous and new secret. During this overlap, accept a valid signature from either secret.
+:::
 
 
 ## Payload
@@ -152,7 +156,7 @@ The signing secret is displayed only once when the webhook is created or the sec
   </tr>
 </table>
 
-Webhook deliveries are at least once. The same event may be delivered more than once, including during retries, so deduplicate using `healthDataUuid` as the idempotency key. The `externalReference` is for correlating the result with your own record; it cannot be used to retrieve the result.
+Webhook payloads are delivered at least once. The same event may be delivered more than once, including during retries, so deduplicate using `healthDataUuid` as the idempotency key. The `externalReference` is for correlating the result with your own record: it can't be used to retrieve the result.
 
 :::tip Webhooks for 1-Click Signup are Coming Soon!
 We don't yet support webhooks for 1-Click Signup, but those are coming soon. If you'd like to be notified when they're available, please email us at Support@Verified.inc.

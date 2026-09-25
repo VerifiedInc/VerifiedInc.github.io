@@ -103,10 +103,10 @@ For 24 hours after rotation, we sign requests with both the previous and new sec
 
 ```typescript title="GET /1-click/health Response Body"
 {
-    "event": "1-click.health.lookup",
-    "healthDataUuid": string,
-    "externalReference"?: string,
-    "sentAt": integer,
+    event: "1-click.health.lookup",
+    healthDataUuid: string,
+    externalReference?: string,
+    sentAt: integer,
     ...1ClickHealthEntity
 }
 ```

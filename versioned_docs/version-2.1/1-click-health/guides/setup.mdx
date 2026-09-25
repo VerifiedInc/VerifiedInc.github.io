@@ -424,6 +424,8 @@ We don't recommend changing the default unless you have a specific reason and kn
     </tr>
 </table>
 
+When you define a webhook, or rotate the secret of an existing webhook, we display a new signing secret but only once: store it securely. See [Signatures](/reference/webhooks#signatures) for how to use it to verify signatures over webhook payloads.
+
 <Admonition type="info" title="The Webhook is Optional">
     Using a webhook is optional: it's just one way to receive [output](/reference/data/outputs#1-click-health) 1-Click Health data. You can alternatively poll the [`GET /1-click/health`](/reference/api/endpoints#get-1-clickhealth) endpoint to achieve the same thing.
 </Admonition>

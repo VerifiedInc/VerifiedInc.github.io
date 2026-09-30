@@ -1,12 +1,21 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const FOCUSABLE = 'a[href], button, input, [tabindex]:not([tabindex="-1"])';
 
+const TRANSITION = { duration: 0.25, ease: [0.32, 0.72, 0, 1] };
+
 // Right-side panel for one payer. It only owns the shell (backdrop, Esc, focus, scroll lock); the
-// table passes the content, so the cell helpers stay in PayerTable.
+// table passes the content, so the cell helpers stay in PayerTable. Render it inside
+// AnimatePresence so the close plays before it unmounts.
 export default function PayerDrawer({ title, onClose, children }) {
   const panelRef = useRef(null);
+  const reduceMotion = useReducedMotion();
+  const offscreen = {
+    x: reduceMotion ? 0 : '100%',
+    opacity: reduceMotion ? 0 : 1,
+  };
 
   useEffect(() => {
     const opener = document.activeElement;
@@ -48,12 +57,20 @@ export default function PayerDrawer({ title, onClose, children }) {
 
   return createPortal(
     <div className='payerDrawerRoot'>
-      <div
+      <motion.div
         className='payerDrawerBackdrop --ifm-modal-overlay'
         onClick={onClose}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={TRANSITION}
       />
-      <aside
+      <motion.aside
         ref={panelRef}
+        initial={offscreen}
+        animate={{ x: 0, opacity: 1 }}
+        exit={offscreen}
+        transition={TRANSITION}
         className='payerDrawer'
         role='dialog'
         aria-modal='true'
@@ -84,7 +101,7 @@ export default function PayerDrawer({ title, onClose, children }) {
           </button>
         </div>
         <div className='payerDrawerBody'>{children}</div>
-      </aside>
+      </motion.aside>
     </div>,
     document.body
   );

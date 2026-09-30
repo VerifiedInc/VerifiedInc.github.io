@@ -1021,7 +1021,6 @@ table p {
 .payerDrawerBackdrop {
   position: absolute;
   inset: 0;
-  animation: payerFadeIn 0.15s ease-out;
 }
 .payerDrawer {
   position: absolute;
@@ -1035,7 +1034,6 @@ table p {
   color: var(--ifm-font-color-base);
   border-left: 1px solid var(--ifm-color-emphasis-300);
   box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12);
-  animation: payerSlideIn 0.2s ease-out;
 }
 .payerDrawerTopBar {
   display: flex;
@@ -1097,22 +1095,6 @@ table p {
 .payerDrawerNames {
   font-size: 0.85rem;
   color: var(--ifm-font-color-base);
-}
-@keyframes payerFadeIn {
-  from {
-    opacity: 0;
-  }
-}
-@keyframes payerSlideIn {
-  from {
-    transform: translateX(100%);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .payerDrawerBackdrop,
-  .payerDrawer {
-    animation: none;
-  }
 }
 
 /* --- Dark mode --- */

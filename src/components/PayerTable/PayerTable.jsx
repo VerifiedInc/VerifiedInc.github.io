@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
+import { AnimatePresence } from 'framer-motion';
 
 import PayerDrawer from './PayerDrawer';
 
@@ -494,11 +495,13 @@ export default function PayerTable() {
         </div>
       )}
 
-      {selectedPayer && (
-        <PayerDrawer title='Payer Details' onClose={closeDrawer}>
-          <PayerDetails payer={selectedPayer} />
-        </PayerDrawer>
-      )}
+      <AnimatePresence>
+        {selectedPayer && (
+          <PayerDrawer title='Payer Details' onClose={closeDrawer}>
+            <PayerDetails payer={selectedPayer} />
+          </PayerDrawer>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

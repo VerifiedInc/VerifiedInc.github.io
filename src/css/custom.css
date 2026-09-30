@@ -894,6 +894,17 @@ table p {
 }
 
 /* --- Other names cell --- */
+/* Names are long, so unlike ID chips they wrap instead of overflowing the column. */
+.payerNameChip {
+  white-space: normal;
+}
+.payerNameChipMore {
+  background: transparent;
+  border: 1px dashed var(--ifm-color-emphasis-400);
+  color: var(--ifm-color-emphasis-600);
+  font-weight: 600;
+  user-select: none;
+}
 .payerOtherNames {
   list-style: none;
   margin: 0;
@@ -903,10 +914,6 @@ table p {
 }
 .payerOtherNames li + li {
   margin-top: 2px;
-}
-.payerOtherNamesMore {
-  color: var(--ifm-color-emphasis-600);
-  font-weight: 600;
 }
 
 .payerCellEmpty {

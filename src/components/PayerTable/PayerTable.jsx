@@ -106,12 +106,16 @@ function OtherNames({ names }) {
   const hidden = names.length - OTHER_NAMES_PREVIEW;
 
   return (
-    <ul className='payerOtherNames'>
+    <div className='payerChips'>
       {names.slice(0, OTHER_NAMES_PREVIEW).map((name) => (
-        <li key={name}>{name}</li>
+        <code key={name} className='payerIdChip payerNameChip'>
+          {name}
+        </code>
       ))}
-      {hidden > 0 && <li className='payerOtherNamesMore'>+{hidden} more</li>}
-    </ul>
+      {hidden > 0 && (
+        <span className='payerIdChip payerNameChipMore'>+{hidden} more</span>
+      )}
+    </div>
   );
 }
 

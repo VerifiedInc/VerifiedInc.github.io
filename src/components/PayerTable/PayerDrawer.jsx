@@ -19,9 +19,16 @@ export default function PayerDrawer({ title, onClose, children }) {
 
   useEffect(() => {
     const opener = document.activeElement;
-    const { overflow } = document.body.style;
+    const { overflow, paddingRight } = document.body.style;
+    // Fill the space the scrollbar leaves when hidden, so the page doesn't shift. Zero with
+    // overlay scrollbars (macOS default), so nothing changes there.
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
 
     document.body.style.overflow = 'hidden';
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
     panelRef.current?.querySelector('button')?.focus();
 
     const handleKeyDown = (event) => {
@@ -51,6 +58,7 @@ export default function PayerDrawer({ title, onClose, children }) {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = overflow;
+      document.body.style.paddingRight = paddingRight;
       opener?.focus?.();
     };
   }, [onClose]);

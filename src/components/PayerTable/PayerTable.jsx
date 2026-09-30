@@ -3,6 +3,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 const API_URL = 'https://core-api.verified.inc/v2/1-click/health/payers';
 const PAGE_SIZE = 50;
 const DEBOUNCE_MS = 300;
+const OTHER_NAMES_PREVIEW = 3;
 
 function buildUrl({ limit, skip, search, sortField, sortDir }) {
   let url = `${API_URL}?$limit=${limit}&$skip=${skip}&$paginate=true`;
@@ -92,6 +93,23 @@ function EligibilityBadge({ support }) {
     <div className='payerChips'>
       <code className='payerIdChip'>{label}</code>
     </div>
+  );
+}
+
+function OtherNames({ names }) {
+  if (!Array.isArray(names) || names.length === 0) {
+    return <span className='payerCellEmpty'>—</span>;
+  }
+
+  const hidden = names.length - OTHER_NAMES_PREVIEW;
+
+  return (
+    <ul className='payerOtherNames'>
+      {names.slice(0, OTHER_NAMES_PREVIEW).map((name) => (
+        <li key={name}>{name}</li>
+      ))}
+      {hidden > 0 && <li className='payerOtherNamesMore'>+{hidden} more</li>}
+    </ul>
   );
 }
 
@@ -288,6 +306,9 @@ export default function PayerTable() {
               <th className='payerTableTh payerTableThIds'>
                 IDs (green indicates primary)
               </th>
+              <th className='payerTableTh payerTableThOtherNames'>
+                Other names
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -309,17 +330,20 @@ export default function PayerTable() {
                   <td>
                     <div className='payerSkeleton payerSkeletonWide' />
                   </td>
+                  <td>
+                    <div className='payerSkeleton payerSkeletonWide' />
+                  </td>
                 </tr>
               ))
             ) : error ? (
               <tr style={{ border: 'none' }}>
-                <td colSpan={4} className='payerTableEmpty payerTableError'>
+                <td colSpan={5} className='payerTableEmpty payerTableError'>
                   Failed to load payers: {error}
                 </td>
               </tr>
             ) : payers.length === 0 ? (
               <tr style={{ border: 'none' }}>
-                <td colSpan={4} className='payerTableEmpty'>
+                <td colSpan={5} className='payerTableEmpty'>
                   No payers match your search.
                 </td>
               </tr>
@@ -361,6 +385,9 @@ export default function PayerTable() {
                         );
                       })}
                     </div>
+                  </td>
+                  <td className='payerTableTdOtherNames'>
+                    <OtherNames names={row.otherNames} />
                   </td>
                 </tr>
               ))

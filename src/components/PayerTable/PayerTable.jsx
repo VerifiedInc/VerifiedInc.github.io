@@ -156,7 +156,7 @@ function PayerDetails({ payer }) {
       <div className='payerNameCell payerDrawerHeader'>
         <PayerLogo payer={payer} />
         <div>
-          <h2 className='payerDrawerTitle'>{payer.name}</h2>
+          <h3 className='payerDrawerTitle'>{payer.name}</h3>
           <code className='payerIdChip'>{payer.verifiedId}</code>
         </div>
       </div>
@@ -495,7 +495,7 @@ export default function PayerTable() {
       )}
 
       {selectedPayer && (
-        <PayerDrawer title={selectedPayer.name} onClose={closeDrawer}>
+        <PayerDrawer title='Payer Details' onClose={closeDrawer}>
           <PayerDetails payer={selectedPayer} />
         </PayerDrawer>
       )}

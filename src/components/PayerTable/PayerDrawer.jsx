@@ -57,9 +57,12 @@ export default function PayerDrawer({ title, onClose, children }) {
         className='payerDrawer'
         role='dialog'
         aria-modal='true'
-        aria-label={title}
+        aria-labelledby='payerDrawerHeading'
       >
         <div className='payerDrawerTopBar'>
+          <h2 id='payerDrawerHeading' className='payerDrawerHeading'>
+            {title}
+          </h2>
           <button
             type='button'
             className='payerDrawerClose'

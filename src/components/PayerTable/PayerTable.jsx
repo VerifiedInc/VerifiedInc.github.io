@@ -77,9 +77,9 @@ function OperatingStates({ states }) {
   return (
     <div className='payerChips'>
       {labels.map((label) => (
-        <code key={label} className='payerIdChip'>
+        <span key={label} className='payerChip'>
           {label}
-        </code>
+        </span>
       ))}
     </div>
   );
@@ -94,7 +94,7 @@ function EligibilityBadge({ support }) {
 
   return (
     <div className='payerChips'>
-      <code className='payerIdChip'>{label}</code>
+      <span className='payerChip'>{label}</span>
     </div>
   );
 }
@@ -107,16 +107,14 @@ function OtherNames({ names }) {
   const hidden = names.length - OTHER_NAMES_PREVIEW;
 
   return (
-    <div className='payerChips'>
-      {names.slice(0, OTHER_NAMES_PREVIEW).map((name) => (
-        <code key={name} className='payerIdChip payerNameChip'>
-          {name}
-        </code>
-      ))}
-      {hidden > 0 && (
-        <span className='payerIdChip payerNameChipMore'>+{hidden} more</span>
-      )}
-    </div>
+    <>
+      <ul className='payerOtherNamesBullets'>
+        {names.slice(0, OTHER_NAMES_PREVIEW).map((name) => (
+          <li key={name}>{name}</li>
+        ))}
+      </ul>
+      {hidden > 0 && <div className='payerOtherNamesMore'>+{hidden} more</div>}
+    </>
   );
 }
 
@@ -178,7 +176,7 @@ function PayerDetails({ payer }) {
         <dd>
           <EligibilityBadge support={payer.eligibilitySupport} />
         </dd>
-        <dt>Other names</dt>
+        <dt>Other Names</dt>
         <dd>
           {otherNames.length > 0 ? (
             <ul className='payerOtherNames payerDrawerNames'>
@@ -390,15 +388,15 @@ export default function PayerTable() {
                   <SortIcon direction={sortField === 'name' ? sortDir : null} />
                 </button>
               </th>
-              <th className='payerTableTh payerTableThStates'>States</th>
-              <th className='payerTableTh payerTableThEligibility'>
-                Eligibility Check
+              <th className='payerTableTh payerTableThOtherNames'>
+                Other Names
               </th>
               <th className='payerTableTh payerTableThIds'>
                 IDs (green indicates primary)
               </th>
-              <th className='payerTableTh payerTableThOtherNames'>
-                Other names
+              <th className='payerTableTh payerTableThStates'>States</th>
+              <th className='payerTableTh payerTableThEligibility'>
+                Eligibility Check
               </th>
             </tr>
           </thead>
@@ -458,17 +456,17 @@ export default function PayerTable() {
                       </div>
                     </div>
                   </td>
+                  <td className='payerTableTdOtherNames'>
+                    <OtherNames names={row.otherNames} />
+                  </td>
+                  <td className='payerTableTdIds'>
+                    <PayerIds ids={row.ids} />
+                  </td>
                   <td className='payerTableTdStates'>
                     <OperatingStates states={row.operatingStates} />
                   </td>
                   <td className='payerTableTdEligibility'>
                     <EligibilityBadge support={row.eligibilitySupport} />
-                  </td>
-                  <td className='payerTableTdIds'>
-                    <PayerIds ids={row.ids} />
-                  </td>
-                  <td className='payerTableTdOtherNames'>
-                    <OtherNames names={row.otherNames} />
                   </td>
                 </tr>
               ))

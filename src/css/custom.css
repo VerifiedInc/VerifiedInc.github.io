@@ -894,16 +894,33 @@ table p {
 }
 
 /* --- Other names cell --- */
-/* Names are long, so unlike ID chips they wrap instead of overflowing the column. */
-.payerNameChip {
-  white-space: normal;
+.payerOtherNamesBullets {
+  list-style: disc;
+  margin: 0;
+  padding-left: 1.1em;
+  font-size: 0.82rem;
+  color: var(--ifm-color-emphasis-800);
 }
-.payerNameChipMore {
-  background: transparent;
-  border: 1px dashed var(--ifm-color-emphasis-400);
-  color: var(--ifm-color-emphasis-600);
+.payerOtherNamesBullets li + li {
+  margin-top: 2px;
+}
+.payerOtherNamesMore {
+  margin-top: 4px;
+  font-size: 0.78rem;
   font-weight: 600;
-  user-select: none;
+  color: var(--ifm-color-emphasis-600);
+}
+
+/* --- Text chips (states, eligibility): body font, unlike the monospace ID chips --- */
+.payerChip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-emphasis-800);
+  white-space: nowrap;
 }
 .payerOtherNames {
   list-style: none;

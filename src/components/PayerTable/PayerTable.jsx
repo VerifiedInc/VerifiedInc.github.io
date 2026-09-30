@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 
+import PayerDrawer from './PayerDrawer';
+
 const API_URL = 'https://core-api.verified.inc/v2/1-click/health/payers';
 const PAGE_SIZE = 50;
 const DEBOUNCE_MS = 300;
@@ -122,6 +124,72 @@ function PayerInitials({ name }) {
   return <div className='payerLogoPlaceholder'>{initials}</div>;
 }
 
+function PayerLogo({ payer }) {
+  return payer.logoUrl ? (
+    <img src={payer.logoUrl} alt='' className='payerLogo' loading='lazy' />
+  ) : (
+    <PayerInitials name={payer.name} />
+  );
+}
+
+function PayerIds({ ids }) {
+  return (
+    <div className='payerIdChips'>
+      {(Array.isArray(ids) ? ids : []).map((id) => (
+        <code key={id} className='payerIdChip'>
+          {id}
+        </code>
+      ))}
+    </div>
+  );
+}
+
+function PayerDetails({ payer }) {
+  const otherNames = Array.isArray(payer.otherNames) ? payer.otherNames : [];
+
+  return (
+    <>
+      <div className='payerNameCell payerDrawerHeader'>
+        <PayerLogo payer={payer} />
+        <div>
+          <h2 className='payerDrawerTitle'>{payer.name}</h2>
+          <code className='payerIdChip'>{payer.verifiedId}</code>
+        </div>
+      </div>
+      <dl className='payerDrawerFields'>
+        <dt>IDs (green indicates primary)</dt>
+        <dd>
+          {Array.isArray(payer.ids) && payer.ids.length > 0 ? (
+            <PayerIds ids={payer.ids} />
+          ) : (
+            <span className='payerCellEmpty'>—</span>
+          )}
+        </dd>
+        <dt>States</dt>
+        <dd>
+          <OperatingStates states={payer.operatingStates} />
+        </dd>
+        <dt>Eligibility check</dt>
+        <dd>
+          <EligibilityBadge support={payer.eligibilitySupport} />
+        </dd>
+        <dt>Other names</dt>
+        <dd>
+          {otherNames.length > 0 ? (
+            <ul className='payerOtherNames payerDrawerNames'>
+              {otherNames.map((name) => (
+                <li key={name}>{name}</li>
+              ))}
+            </ul>
+          ) : (
+            <span className='payerCellEmpty'>—</span>
+          )}
+        </dd>
+      </dl>
+    </>
+  );
+}
+
 function LoadingSpinner() {
   return <span className='payerSpinner' />;
 }
@@ -142,6 +210,24 @@ export default function PayerTable() {
   const scrollRef = useRef(null);
   const sentinelRef = useRef(null);
   const loadingMoreRef = useRef(false);
+
+  const [selectedPayer, setSelectedPayer] = useState(null);
+
+  // Stable, so the drawer's open/close effect runs once per open.
+  const closeDrawer = useCallback(() => setSelectedPayer(null), []);
+
+  const handleRowClick = useCallback((row) => {
+    // Clicking an ID chip selects its text for copying; don't open the drawer over that.
+    if (window.getSelection()?.toString()) return;
+    setSelectedPayer(row);
+  }, []);
+
+  const handleRowKeyDown = useCallback((event, row) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      setSelectedPayer(row);
+    }
+  }, []);
 
   const handleQueryChange = useCallback((value) => {
     setQuery(value);
@@ -349,19 +435,17 @@ export default function PayerTable() {
               </tr>
             ) : (
               payers.map((row, idx) => (
-                <tr key={row.verifiedId ?? idx} className='payerTableRow'>
+                <tr
+                  key={row.verifiedId ?? idx}
+                  className='payerTableRow payerTableRowClickable'
+                  tabIndex={0}
+                  aria-label={`View details for ${row.name}`}
+                  onClick={() => handleRowClick(row)}
+                  onKeyDown={(event) => handleRowKeyDown(event, row)}
+                >
                   <td className='payerTableTdName'>
                     <div className='payerNameCell'>
-                      {row.logoUrl ? (
-                        <img
-                          src={row.logoUrl}
-                          alt=''
-                          className='payerLogo'
-                          loading='lazy'
-                        />
-                      ) : (
-                        <PayerInitials name={row.name} />
-                      )}
+                      <PayerLogo payer={row} />
                       <div>
                         <span>{row.name}</span>
                         <br />
@@ -376,15 +460,7 @@ export default function PayerTable() {
                     <EligibilityBadge support={row.eligibilitySupport} />
                   </td>
                   <td className='payerTableTdIds'>
-                    <div className='payerIdChips'>
-                      {(Array.isArray(row.ids) ? row.ids : []).map((id) => {
-                        return (
-                          <code key={id} className='payerIdChip'>
-                            {id}
-                          </code>
-                        );
-                      })}
-                    </div>
+                    <PayerIds ids={row.ids} />
                   </td>
                   <td className='payerTableTdOtherNames'>
                     <OtherNames names={row.otherNames} />
@@ -412,6 +488,12 @@ export default function PayerTable() {
           payers
           {hasMore && ' — scroll for more'}
         </div>
+      )}
+
+      {selectedPayer && (
+        <PayerDrawer title={selectedPayer.name} onClose={closeDrawer}>
+          <PayerDetails payer={selectedPayer} />
+        </PayerDrawer>
       )}
     </div>
   );

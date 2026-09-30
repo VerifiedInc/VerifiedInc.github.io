@@ -911,15 +911,17 @@ table p {
   color: var(--ifm-color-emphasis-600);
 }
 
-/* --- Text chips (states, eligibility): body font, unlike the monospace ID chips --- */
+/* --- Text chips (states, eligibility): same box as the ID chips, body font instead of monospace.
+   The border repeats the one Infima gives every `code`, which the ID chips get for free. --- */
 .payerChip {
   display: inline-block;
-  padding: 2px 8px;
-  border-radius: 999px;
+  padding: 2px 4px;
+  border: 0.1rem solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
   font-size: 0.75rem;
   font-weight: 500;
   background: var(--ifm-color-emphasis-100);
-  color: var(--ifm-color-emphasis-800);
+  color: var(--ifm-color-emphasis-700);
   white-space: nowrap;
 }
 .payerOtherNames {

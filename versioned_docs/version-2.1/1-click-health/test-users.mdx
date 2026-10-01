@@ -9,43 +9,25 @@ slug: /1-click-health/test-users
 toc_max_heading_level: 5
 ---
 
-import TestUserDisplay from '@site/src/components/TestUserDisplay';
 import DevelopmentWorkAdmonition from '@site/versioned_docs/version-2.1/reusables/development-work-admonition.mdx';
-
-:::tip More Test Users are Coming Soon
-We're working on new test users, to make it easier for you to trigger different cases. If you have specific requests, please email us at Support@Verified.inc!
-:::
 
 You can test 1-Click Health with mock data in [Sandbox](/reference/api/environments#sandbox), using either random inputs or our dedicated test users below.
 
-**These 1-Click Health test users are largely keyed on birth date input data.** In other words, birth date is the unique, required input that distinguishes one test user from another. Other input data and output data may not vary across test users, though member IDs are randomly generated to be unique across test users.
+**These test users are keyed on first name, last name, and birth date.** Birth date is the unique input that distinguishes one test user from another, so always send the documented one. Every test user has plans with **real payers** (the payer `ids` work in other systems), and every plan returns the same information whether you use insurance autofill or an eligibility check.
 
 <DevelopmentWorkAdmonition />
+
+:::info What you get back
+- **Always:** `memberId`, `payer`, `coverageTypes`, `serviceTypeCodes`, and `isMedicare` for each plan.
+- **With an eligibility check** (the [Check After Autofill](/1-click-health/guides/setup#check-after-autofill) brand setting, `checkAfterAutofill: true` in the request, or `memberId` + `payer` as inputs): also the raw `edi_271`, the parsed [`eligibility`](/reference/api/types#parsededi271) with every field populated (plan name, group number and name, insurance type codes, member address, benefits, contacts), and `network` when your brand has [Network Rules](#network-rules).
+- **At most two plans** are returned per lookup.
+- Your brand's [Coverage Types](/1-click-health/guides/setup#coverage-types) and [Service Type Codes](/1-click-health/guides/setup#service-type-codes) settings filter plans: see [Brand settings that hide test users](#brand-settings-that-hide-test-users).
+:::
 
 
 ## How to Use Test Users
 
 {/* Need to be updated when we have support in the Demo and SDK */}
-{/* ### Demo
-
-1. Go to the [Demo](https://1-click.demo.verified.inc).
-2. Select _Mock Data (sandbox)_ and click _Start Demo_.
-3. Enter the test user's phone number (varies by user).
-4. Enter the test user's (static) verification code (always 111111).
-5. (if prompted) Enter the test user's birth date (always 08/01/1989) and/or SSN4 (always 6789).
-6. Confirm the test user's info to complete the flow.
-
-:::tip
-You can use a [custom demo](/custom-demo) by generating one or opening one with your brand's settings from within the Dashboard.
-:::
-
-### SDK
-
-1. Complete the [SDK Integration](/1-click-signup/guides/sdk-integration) guide and run the SDK.
-2. Enter the test user's phone number (varies by user).
-3. Enter the test user's (static) verification code (always 111111).
-4. (if prompted) Enter the test user's birth date (always 08/01/1989) and/or SSN4 (always 6789).
-5. Confirm the test user's info to complete the flow. */}
 
 ### API
 
@@ -53,6 +35,10 @@ You can use a [custom demo](/custom-demo) by generating one or opening one with 
 2. Copy a [Sandbox](/reference/api/environments#sandbox) API key for your brand.
 3. Call [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) with the test user's info (varies by user).
 4. Receive output data via webhook or by polling the [`GET /1-click/health`](/reference/api/endpoints#get-1-clickhealth) endpoint.
+
+:::tip Coming from 1-Click Signup?
+Every [1-Click Signup test user](/1-click-signup/test-users) is Richard Hendricks, born 1989-08-01, so passing its `identityUuid` to 1-Click Health lands on the [main happy path](#1989-08-01) below.
+:::
 
 ---
 
@@ -62,751 +48,392 @@ You can use a [custom demo](/custom-demo) by generating one or opening one with 
 See the later sections for full details on how each of these test users is designed to be used.
 :::
 
-
 ### Success
 
-
-#### Mock Payers
-
-<table>
-  <tr>
-    <th>Outputs</th>
-    <th>Birth Date</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-  </tr>
-  <tr>
-    <td>Multiple Plans</td>
-    <td>Any birth date (yyyy-MM-dd)</td>
-    <td>Any string</td>
-    <td>Any string</td>
-  </tr>
-  <tr>
-    <td>Multiple Plans</td>
-    <td>1989-08-01</td>
-    <td>Richard</td>
-    <td>Hendricks</td>
-  </tr>
-  <tr>
-    <td>Single Plan</td>
-    <td>1990-01-01</td>
-    <td>Monica</td>
-    <td>Hall</td>
-  </tr>
-</table>
-
-
-#### Real Payers
-
-<table>
-  <tr>
-    <th>Outputs</th>
-    <th>Birth Date</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-  </tr>
-  <tr>
-    <td>Multiple Plans</td>
-    <td>1989-08-02</td>
-    <td>Richard</td>
-    <td>Hendricks</td>
-  </tr>
-  <tr>
-    <td>Single Plan</td>
-    <td>1990-01-02</td>
-    <td>Monica</td>
-    <td>Hall</td>
-  </tr>
-</table>
-
+| Outputs | Birth Date | First Name | Last Name |
+| --- | --- | --- | --- |
+| Multiple plans (Aetna PPO + UnitedHealthcare HMO), every field populated | [1989-08-01](#1989-08-01) | Richard | Hendricks |
+| Single plan (Aetna), no insurance type code | [1990-01-01](#1990-01-01) | Monica | Hall |
+| Dental plan | [1988-02-02](#1988-02-02) | Dinesh | Chugtai |
+| Vision plan | [1986-03-03](#1986-03-03) | Jared | Dunn |
+| Medical plan + dental plan | [1979-05-05](#1979-05-05) | Erlich | Bachman |
+| Indeterminate coverage (contact the payer) | [1992-04-04](#1992-04-04) | Nelson | Bighetti |
+| Cigna plan, Texas | [1978-09-09](#1978-09-09) | Russ | Hanneman |
+| Medicare, 65+, MBI member ID, `isMedicare: true` | [1952-03-15](#1952-03-15) | Peter | Gregory |
+| Medicare + Medicaid (dual coverage) | [1955-11-20](#1955-11-20) | Jack | Barker |
+| Medicare Advantage under a commercial payer | [1958-07-07](#1958-07-07) | Ron | LaFlamme |
+| Multiple plans (Aetna + UnitedHealthcare) | [Any other birth date](#any-other-name-and-birth-date) | Any string | Any string |
 
 ### Failure
 
-<table>
-  <tr>
-    <th>Outputs</th>
-    <th>Birth Date</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-  </tr>
-  <tr>
-    <td>No Plans</td>
-    <td>1991-01-01</td>
-    <td>Gavin</td>
-    <td>Belson</td>
-  </tr>
-</table>
+| Outputs | Birth Date | First Name | Last Name |
+| --- | --- | --- | --- |
+| No plans | [1991-01-01](#1991-01-01) | Gavin | Belson |
 
+### Eligibility Check
 
+| Outputs | Birth Date | First Name | Last Name | Payer | Member ID |
+| --- | --- | --- | --- | --- | --- |
+| Active coverage | Any documented user above | | | the plan's payer | the plan's member ID |
+| Active coverage | 1985-04-12 | Jane | Doe | Aetna (`60054`) | `W345876123` |
+| Active coverage | 1995-08-19 | Bertram | Gilfoyle | Blue Cross Blue Shield of Michigan (`00710`) | Any value |
+| Active coverage | 1990-01-01 | Bertram | Gilfoyle | Anthem Blue Cross Blue Shield of New York (`803`) | Any value |
+| Active coverage | 1980-03-03 | Bertram | Gilfoyle | Cigna (`62308`) | Any value |
+| No coverage (inactive plan) | 1970-01-01 | Jane | Doe | Aetna (`60054`) | `INACTIVE60054` |
+| No coverage (subscriber not found) | 1985-04-12 | Jane | Doe | Aetna (`60054`) | `NOTFOUND001` |
 
 ---
 
-
 ## Success
 
-Use these test users to go through successful 1-Click Signup flows (where Verified returns [credentials](/reference/data/outputs#credentials)).
+Use these test users to go through successful 1-Click Health flows (where Verified returns health insurance plans). All inputs other than first name, last name, and birth date are optional; the address shown is the one the payer has on file, and it is echoed back in the 271 if you send one.
 
 
-{/* ### First Name, Last Name, and Birth Date Only
+### Multiple Plans
 
-For these users, only a first name, last name, and birth date inputs are needed to source [outputs](/reference/data/outputs#1-click-health). */}
+#### 1989-08-01
 
-
-#### Mock Payers
-
-These test users have health insurance plans with mock payers. These payers won't be recognized in any other system, for example if you use their `ids`, since they're mocks specific to Verified. If you need test users that have plans with real payers, see the [Real Payers](#real-payers) section below.
-
-
-##### Multiple Plans
-
-
-###### \{Any Birth Date\}
-
-If you use any birth date and name inputs (not matching that of another test user), you will get multiple health insurance plans.
-
-Required inputs:
-
-<table>
-    <tbody>
-        <tr>
-            <th>Birth Date</th>
-            <td>Any birth date (yyyy-MM-dd)</td>
-        </tr>
-        <tr>
-            <th>Full Name</th>
-            <td>-</td>
-        </tr>
-        <tr>
-            <th>↳ First Name</th>
-            <td>Any string</td>
-        </tr>
-        <tr>
-            <th>↳ Last Name</th>
-            <td>Any string</td>
-        </tr>
-    </tbody>
-</table>
-
-<details>
-    <summary>Optional inputs:</summary>
-
-    <table>
-        <tbody>
-            <tr>
-                <th>Full Name</th>
-                <td>-</td>
-            </tr>
-            <tr>
-                <th>↳ Middle Name</th>
-                <td>Any string</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>-</td>
-            </tr>
-            <tr>
-                <th>↳ Line 1</th>
-                <td>Any string</td>
-            </tr>
-            <tr>
-                <th>↳ City</th>
-                <td>Any string</td>
-            </tr>
-            <tr>
-                <th>↳ State</th>
-                <td>Any state (two letter abbreviation)</td>
-            </tr>
-            <tr>
-                <th>↳ ZIP Code</th>
-                <td>Any 5 digits</td>
-            </tr>
-            <tr>
-                <th>↳ Country</th>
-                <td>US</td>
-            </tr>
-            <tr>
-                <th>Sex</th>
-                <td>Male, Female, or Non-Binary</td>
-            </tr>
-            <tr>
-                <th>SSN</th>
-                <td>Any 9 digits</td>
-            </tr>
-        </tbody>
-    </table>
-
-</details>
-
-Outputs:
-
-<table>
-    <tbody>
-        <tr>
-            <th></th>
-            <th>Plan 1</th>
-            <th>Plan 2</th>
-        </tr>
-        <tr>
-            <th>Member ID</th>
-            <td>A618095</td>
-            <td>B895002692</td>
-        </tr>
-        <tr>
-            <th>Payer Name</th>
-            <td>Aviato Health Insurance of California</td>
-            <td>FGI</td>
-        </tr>
-    </tbody>
-</table>
-
-
-###### 1989-08-01
-
-This is our primary test user, Richard Hendricks. 
+This is our primary test user, Richard Hendricks, and the one every [1-Click Signup test user](/1-click-signup/test-users) resolves to. Use him first.
 
 :::tip Yes, You Read That Right
 This is Richard Hendricks from the show _Silicon Valley_! 😂
 :::
 
-For this test user, you will get multiple health insurance plans.
+Inputs:
 
-Required inputs:
-
-<table>
-    <tbody>
-        <tr>
-            <th>Birth Date</th>
-            <td>1989-08-01</td>
-        </tr>
-        <tr>
-            <th>Full Name</th>
-            <td>-</td>
-        </tr>
-        <tr>
-            <th>↳ First Name</th>
-            <td>Richard</td>
-        </tr>
-        <tr>
-            <th>↳ Last Name</th>
-            <td>Hendricks</td>
-        </tr>
-    </tbody>
-</table>
-
-<details>
-    <summary>Optional inputs:</summary>
-
-    <table>
-        <tbody>
-            <tr>
-                <th>Full Name</th>
-                <td>-</td>
-            </tr>
-            <tr>
-                <th>↳ Middle Name</th>
-                <td>Harrison</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>-</td>
-            </tr>
-            <tr>
-                <th>↳ Line 1</th>
-                <td>5320 Newell Rd</td>
-            </tr>
-            <tr>
-                <th>↳ City</th>
-                <td>Palo Alto</td>
-            </tr>
-            <tr>
-                <th>↳ State</th>
-                <td>CA</td>
-            </tr>
-            <tr>
-                <th>↳ ZIP Code</th>
-                <td>94303</td>
-            </tr>
-            <tr>
-                <th>↳ Country</th>
-                <td>US</td>
-            </tr>
-            <tr>
-                <th>Sex</th>
-                <td>Male</td>
-            </tr>
-            <tr>
-                <th>SSN</th>
-                <td>000456789</td>
-            </tr>
-        </tbody>
-    </table>
-
-</details>
+| Input | Value |
+| --- | --- |
+| Birth Date | `1989-08-01` (`1989-08-02` also works, kept for compatibility) |
+| First Name | Richard |
+| Last Name | Hendricks |
+| Middle Name (optional) | Harrison |
+| Address (optional) | 5320 Newell Rd, Ste 200, Palo Alto, CA 94303 |
+| Sex (optional) | Male |
 
 Outputs:
 
-<table>
-    <tbody>
-        <tr>
-            <th></th>
-            <th>Plan 1</th>
-            <th>Plan 2</th>
-        </tr>
-        <tr>
-            <th>Member ID</th>
-            <td>A093102</td>
-            <td>B712487949</td>
-        </tr>
-        <tr>
-            <th>Payer Name</th>
-            <td>Aviato Health Insurance of California</td>
-            <td>FGI</td>
-        </tr>
-    </tbody>
-</table>
+| | Plan 1 | Plan 2 |
+| --- | --- | --- |
+| Member ID | `A484069` | `B231615071` |
+| Payer | Aetna (`60054`) | UnitedHealthcare (`87726`) |
+| Plan name | AETNA CHOICE POS II | UHC CHOICE PLUS HMO |
+| Coverage types | medical | medical |
+| Insurance type codes | `PR` (PPO) | `HM` (HMO) |
+| Group | 123456 · PIED PIPER | 778899 · HOOLI |
+| `isMedicare` | false | false |
+| Related entities | AETNA BEHAVIORAL HEALTH (phone, fax, email) | OPTUMRX (phone, URL) |
+
+With an eligibility check, the parsed `eligibility` of plan 1 populates every field of [`ParsedEdi271`](/reference/api/types#parsededi271): individual and family deductibles with remaining amounts, out-of-pocket maximum, copay, coinsurance, a visit limitation, in-network and out-of-network entries, member address with line 2, and two contacts. See the [sample 271](#sample-271) below.
 
 
-##### Single Plan
+### Single Plan
 
+#### 1990-01-01
 
-###### 1990-01-01
+Inputs:
 
-For this test user, you will get a single health insurance plan.
-
-Required inputs:
-
-<table>
-    <tbody>
-        <tr>
-            <th>Birth Date</th>
-            <td>1990-01-01</td>
-        </tr>
-        <tr>
-            <th>Full Name</th>
-            <td>-</td>
-        </tr>
-        <tr>
-            <th>↳ First Name</th>
-            <td>Monica</td>
-        </tr>
-        <tr>
-            <th>↳ Last Name</th>
-            <td>Hall</td>
-        </tr>
-    </tbody>
-</table>
-
-<details>
-    <summary>Optional inputs:</summary>
-
-    <table>
-        <tbody>
-            <tr>
-                <th>Full Name</th>
-                <td>-</td>
-            </tr>
-            <tr>
-                <th>↳ Middle Name</th>
-                <td>Amanda</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>-</td>
-            </tr>
-            <tr>
-                <th>↳ Line 1</th>
-                <td>7500 N Glenoaks Blvd</td>
-            </tr>
-            <tr>
-                <th>↳ City</th>
-                <td>Burbank</td>
-            </tr>
-            <tr>
-                <th>↳ State</th>
-                <td>CA</td>
-            </tr>
-            <tr>
-                <th>↳ ZIP Code</th>
-                <td>91504</td>
-            </tr>
-            <tr>
-                <th>↳ Country</th>
-                <td>US</td>
-            </tr>
-            <tr>
-                <th>Sex</th>
-                <td>Female</td>
-            </tr>
-            <tr>
-                <th>SSN</th>
-                <td>000456789</td>
-            </tr>
-        </tbody>
-    </table>
-
-</details>
+| Input | Value |
+| --- | --- |
+| Birth Date | `1990-01-01` (`1990-01-02` also works, kept for compatibility) |
+| First Name | Monica |
+| Last Name | Hall |
+| Address (optional) | 7500 N Glenoaks Blvd, Burbank, CA 91504 |
 
 Outputs:
 
-<table>
-    <tbody>
-        <tr>
-            <th></th>
-            <th>Plan 1</th>
-        </tr>
-        <tr>
-            <th>Member ID</th>
-            <td>A726687</td>
-        </tr>
-        <tr>
-            <th>Payer Name</th>
-            <td>Aviato Health Insurance of California</td>
-        </tr>
-    </tbody>
-</table>
+| | Plan 1 |
+| --- | --- |
+| Member ID | `A664048` |
+| Payer | Aetna (`60054`) |
+| Plan name | AETNA OPEN CHOICE |
+| Coverage types | medical |
+| Insurance type codes | none (the payer reported no code) |
+| Group | 654321 |
+| `isMedicare` | false |
 
 
-#### Real Payers
+### Dental and Vision
 
-These test users have health insurance plans with real payers (but mock member IDs). These payers will be recognized in other systems, for example if you use the payer `ids`, which can be useful for testing. If you'd prefer to use test users that have plans with mock payers instead, see the [Mock Payers](#mock-payers) section above.
+#### 1988-02-02
 
+| Input | Value |
+| --- | --- |
+| Birth Date | `1988-02-02` |
+| First Name | Dinesh |
+| Last Name | Chugtai |
 
-##### Multiple Plans
+| | Plan 1 |
+| --- | --- |
+| Member ID | `D726687` |
+| Payer | Aetna (`60054`) |
+| Plan name | AETNA DENTAL PPO |
+| Coverage types | dental |
+| Service type codes | `35`, `23`, `24`, `25`, `26` |
+| Group | 111222 · PIED PIPER |
 
+#### 1986-03-03
 
-###### 1989-08-02
+| Input | Value |
+| --- | --- |
+| Birth Date | `1986-03-03` |
+| First Name | Jared |
+| Last Name | Dunn |
 
-For this test user, you will get multiple health insurance plans.
+| | Plan 1 |
+| --- | --- |
+| Member ID | `V726687` |
+| Payer | Aetna (`60054`) |
+| Plan name | AETNA VISION PREFERRED |
+| Coverage types | vision |
+| Service type codes | `AL`, `AM` |
+| Group | 111222 · PIED PIPER |
 
-Required inputs:
+:::warning
+A brand whose Coverage Types setting is Medical only, or whose Service Type Codes do not include `35` / `AL`, gets "No coverage found" for these two users. See [Brand settings that hide test users](#brand-settings-that-hide-test-users).
+:::
 
-<table>
-    <tbody>
-        <tr>
-            <th>Birth Date</th>
-            <td>1989-08-02</td>
-        </tr>
-        <tr>
-            <th>Full Name</th>
-            <td>-</td>
-        </tr>
-        <tr>
-            <th>↳ First Name</th>
-            <td>Richard</td>
-        </tr>
-        <tr>
-            <th>↳ Last Name</th>
-            <td>Hendricks</td>
-        </tr>
-    </tbody>
-</table>
+#### 1979-05-05
 
-<details>
-    <summary>Optional inputs:</summary>
+Erlich Bachman has a medical plan and a dental plan at two payers, so you can watch the Coverage Types setting remove one of them.
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Full Name</th>
-                <td>-</td>
-            </tr>
-            <tr>
-                <th>↳ Middle Name</th>
-                <td>Harrison</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>-</td>
-            </tr>
-            <tr>
-                <th>↳ Line 1</th>
-                <td>5320 Newell Rd</td>
-            </tr>
-            <tr>
-                <th>↳ City</th>
-                <td>Palo Alto</td>
-            </tr>
-            <tr>
-                <th>↳ State</th>
-                <td>CA</td>
-            </tr>
-            <tr>
-                <th>↳ ZIP Code</th>
-                <td>94303</td>
-            </tr>
-            <tr>
-                <th>↳ Country</th>
-                <td>US</td>
-            </tr>
-            <tr>
-                <th>Sex</th>
-                <td>Male</td>
-            </tr>
-            <tr>
-                <th>SSN</th>
-                <td>000456789</td>
-            </tr>
-        </tbody>
-    </table>
+| Input | Value |
+| --- | --- |
+| Birth Date | `1979-05-05` |
+| First Name | Erlich |
+| Last Name | Bachman |
 
-</details>
-
-Outputs:
-
-<table>
-    <tbody>
-        <tr>
-            <th></th>
-            <th>Plan 1</th>
-            <th>Plan 2</th>
-        </tr>
-        <tr>
-            <th>Member ID</th>
-            <td>A484069</td>
-            <td>B231615071</td>
-        </tr>
-        <tr>
-            <th>Payer Name</th>
-            <td>Aetna</td>
-            <td>UnitedHealthcare</td>
-        </tr>
-    </tbody>
-</table>
+| | Plan 1 | Plan 2 |
+| --- | --- | --- |
+| Member ID | `A700002` | `B700002` |
+| Payer | Aetna (`60054`) | UnitedHealthcare Dental (`52133`) |
+| Plan name | AETNA CHOICE POS II | UHC DENTAL PPO |
+| Coverage types | medical | dental |
+| Insurance type codes | `PR` | none |
+| Group | 333444 · BACHMANITY | 333444 · BACHMANITY |
 
 
-##### Single Plan
+### Indeterminate Coverage
+
+#### 1992-04-04
+
+The payer confirms a plan exists but asks you to call them: `eligibility.coverageStatus` is `indeterminate` and `eligibility.contacts` carries the number.
+
+| Input | Value |
+| --- | --- |
+| Birth Date | `1992-04-04` |
+| First Name | Nelson |
+| Last Name | Bighetti |
+
+| | Plan 1 |
+| --- | --- |
+| Member ID | `A700001` |
+| Payer | Aetna (`60054`) |
+| Coverage status | indeterminate |
+| Contacts | BEHAVIORAL HEALTH CARVE OUT, 800-555-1234 |
+| Network (with rules) | `INDETERMINATE` |
 
 
-###### 1990-01-02
+### Cigna
 
-For this test user, you will get a single health insurance plan.
+#### 1978-09-09
 
-Required inputs:
+| Input | Value |
+| --- | --- |
+| Birth Date | `1978-09-09` |
+| First Name | Russ |
+| Last Name | Hanneman |
+| Address (optional) | 1 Congress Ave, Austin, TX 78701 |
 
-<table>
-    <tbody>
-        <tr>
-            <th>Birth Date</th>
-            <td>1990-01-02</td>
-        </tr>
-        <tr>
-            <th>Full Name</th>
-            <td>-</td>
-        </tr>
-        <tr>
-            <th>↳ First Name</th>
-            <td>Monica</td>
-        </tr>
-        <tr>
-            <th>↳ Last Name</th>
-            <td>Hall</td>
-        </tr>
-    </tbody>
-</table>
+| | Plan 1 |
+| --- | --- |
+| Member ID | `U12345678` |
+| Payer | Cigna (`62308`) |
+| Plan name | CIGNA OPEN ACCESS PLUS |
+| Coverage types | medical |
+| Insurance type codes | `PR` |
+| Group | 445566 · THREE COMMA CLUB |
+| State | TX |
 
-<details>
-    <summary>Optional inputs:</summary>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Full Name</th>
-                <td>-</td>
-            </tr>
-            <tr>
-                <th>↳ Middle Name</th>
-                <td>Amanda</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>-</td>
-            </tr>
-            <tr>
-                <th>↳ Line 1</th>
-                <td>7500 N Glenoaks Blvd</td>
-            </tr>
-            <tr>
-                <th>↳ City</th>
-                <td>Burbank</td>
-            </tr>
-            <tr>
-                <th>↳ State</th>
-                <td>CA</td>
-            </tr>
-            <tr>
-                <th>↳ ZIP Code</th>
-                <td>91504</td>
-            </tr>
-            <tr>
-                <th>↳ Country</th>
-                <td>US</td>
-            </tr>
-            <tr>
-                <th>Sex</th>
-                <td>Female</td>
-            </tr>
-            <tr>
-                <th>SSN</th>
-                <td>000456789</td>
-            </tr>
-        </tbody>
-    </table>
+### Medicare and Medicaid
 
-</details>
+#### 1952-03-15
 
-Outputs:
+A 65+ user with Original Medicare. The member ID is a Medicare Beneficiary Identifier (MBI), so `isMedicare` is `true`. Also reachable by sending `"payer": { "id": "VERIFIED_MEDICARE" }`.
 
-<table>
-    <tbody>
-        <tr>
-            <th></th>
-            <th>Plan 1</th>
-        </tr>
-        <tr>
-            <th>Member ID</th>
-            <td>A664048</td>
-        </tr>
-        <tr>
-            <th>Payer Name</th>
-            <td>Aetna</td>
-        </tr>
-    </tbody>
-</table>
+| Input | Value |
+| --- | --- |
+| Birth Date | `1952-03-15` |
+| First Name | Peter |
+| Last Name | Gregory |
+
+| | Plan 1 |
+| --- | --- |
+| Member ID | `1EG4TE5MK73` |
+| Payer | Medicare (`MEDICARE`) |
+| Plan name | MEDICARE PART A AND PART B |
+| Coverage types | medical |
+| Insurance type codes | `MA`, `MB` |
+| `isMedicare` | true |
+
+#### 1955-11-20
+
+A 65+ user with Medicare and Medicaid (Medi-Cal). `isMedicare` is `true` on the Medicare plan and `false` on the Medicaid plan; the Medicaid plan carries insurance type code `MC`.
+
+| Input | Value |
+| --- | --- |
+| Birth Date | `1955-11-20` |
+| First Name | Jack |
+| Last Name | Barker |
+
+| | Plan 1 | Plan 2 |
+| --- | --- | --- |
+| Member ID | `7W34Q29JT50` | `91234567A` |
+| Payer | Medicare (`MEDICARE`) | Medi-Cal (`MDCAL`) |
+| Plan name | MEDICARE PART A AND PART B | MEDI-CAL |
+| Coverage types | medical | medical |
+| Insurance type codes | `MA`, `MB` | `MC` |
+| `isMedicare` | true | false |
+
+#### 1958-07-07
+
+A Medicare Advantage plan administered by a commercial payer. The member ID is payer-issued (not an MBI), but the 271 carries insurance type code `HN` (HMO Medicare Risk), so `isMedicare` is still `true`.
+
+| Input | Value |
+| --- | --- |
+| Birth Date | `1958-07-07` |
+| First Name | Ron |
+| Last Name | LaFlamme |
+
+| | Plan 1 |
+| --- | --- |
+| Member ID | `101234567890` |
+| Payer | Aetna (`60054`) |
+| Plan name | AETNA MEDICARE ADVANTAGE PPO |
+| Coverage types | medical |
+| Insurance type codes | `HN` |
+| `isMedicare` | true |
+
+
+### Any Other Name and Birth Date
+
+Any first name, last name, and birth date that do not match a test user return two plans with real payers, with your inputs echoed back in the 271. This keeps demos and quick tests easy; use [Gavin Belson](#1991-01-01) to test the no-coverage path.
+
+| | Plan 1 | Plan 2 |
+| --- | --- | --- |
+| Member ID | `A618095` | `B895002692` |
+| Payer | Aetna (`60054`) | UnitedHealthcare (`87726`) |
+| Plan name | AETNA CHOICE POS II | UHC CHOICE PLUS HMO |
+| Coverage types | medical | medical |
+| Insurance type codes | `PR` | `HM` |
+| Group | 123456 · PIED PIPER | 778899 · HOOLI |
 
 
 ## Failure
 
-Use these test users to go through unsuccessful 1-Click Health flows (where Verified does _not_ find [outputs](/reference/data/outputs#1-click-health)) (health insurance plans).
+Use this test user to go through an unsuccessful 1-Click Health flow (where Verified does _not_ find health insurance plans).
 
+#### 1991-01-01
 
-#### No Plans
+| Input | Value |
+| --- | --- |
+| Birth Date | `1991-01-01` |
+| First Name | Gavin |
+| Last Name | Belson |
+| Address (optional) | 3300 Palos Verdes Dr W, Rancho Palos Verdes, CA 90275 |
 
-For this test user, you will get no health insurance plan. The [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) will contain `errors` indicating that no coverage was found.
-
-
-###### 1991-01-01
-
-Required inputs:
-
-<table>
-    <tbody>
-        <tr>
-            <th>Birth Date</th>
-            <td>1991-01-01</td>
-        </tr>
-        <tr>
-            <th>Full Name</th>
-            <td>-</td>
-        </tr>
-        <tr>
-            <th>↳ First Name</th>
-            <td>Gavin</td>
-        </tr>
-        <tr>
-            <th>↳ Last Name</th>
-            <td>Belson</td>
-        </tr>
-    </tbody>
-</table>
-
-<details>
-    <summary>Optional inputs:</summary>
-
-    <table>
-        <tbody>
-            <tr>
-                <th>Full Name</th>
-                <td>-</td>
-            </tr>
-            <tr>
-                <th>↳ Middle Name</th>
-                <td>Matthew</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>-</td>
-            </tr>
-            <tr>
-                <th>↳ Line 1</th>
-                <td>3300 Palos Verdes Dr W</td>
-            </tr>
-            <tr>
-                <th>↳ City</th>
-                <td>Ranchos Palos Verdes</td>
-            </tr>
-            <tr>
-                <th>↳ State</th>
-                <td>CA</td>
-            </tr>
-            <tr>
-                <th>↳ ZIP Code</th>
-                <td>90275</td>
-            </tr>
-            <tr>
-                <th>↳ Country</th>
-                <td>US</td>
-            </tr>
-            <tr>
-                <th>Sex</th>
-                <td>Male</td>
-            </tr>
-            <tr>
-                <th>SSN</th>
-                <td>000456789</td>
-            </tr>
-        </tbody>
-    </table>
-
-</details>
-
-Outputs:
-
-<table>
-    <tbody>
-        <tr>
-            <th></th>
-            <th>Error 1</th>
-        </tr>
-        <tr>
-            <th>Error Message</th>
-            <td>No coverage found</td>
-        </tr>
-    </tbody>
-</table>
-
+Outputs: the [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) has status `FAILED` and `errors: [{ "message": "No coverage found" }]`.
 
 ---
 
-
 ## Eligibility Check
 
-The test users above are for insurance **autofill**. To test an **[eligibility check](/1-click-health/guides/api-integration#eligibility-check)** instead, send a `payer` and a `memberId` (any value) along with the user's PII. In [Sandbox](/reference/api/environments#sandbox), the following test users return active coverage. Any other input returns "No coverage found."
+To test an **[eligibility check](/1-click-health/guides/api-integration#eligibility-check)** instead of insurance autofill, send `memberId` and `payer` along with the user's PII. Any plan above works with its member ID and payer ID (for example Richard Hendricks with `memberId: "A484069"` and `payer: { "id": "60054" }`). Include `checkAfterAutofill: true`, or have the brand setting on, to receive `edi_271` and `eligibility`.
 
-<table className="no-bold-first-column">
-    <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Birth Date</th>
-        <th>Payer</th>
-    </tr>
-    <tr>
-        <td>Bertram</td>
-        <td>Gilfoyle</td>
-        <td>1995-08-19</td>
-        <td>Blue Cross Blue Shield of Michigan</td>
-    </tr>
-    <tr>
-        <td>Bertram</td>
-        <td>Gilfoyle</td>
-        <td>1990-01-01</td>
-        <td>Anthem Blue Cross Blue Shield of New York</td>
-    </tr>
-    <tr>
-        <td>Bertram</td>
-        <td>Gilfoyle</td>
-        <td>1980-03-03</td>
-        <td>Cigna</td>
-    </tr>
-</table>
+The following users exist only on this path:
 
-Send these as the `fullName`, `birthDate`, and `payer` inputs (plus any `memberId`) to [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth). A successful response contains an `eligibility` object and the raw `edi_271`, which indicate that the eligibility check ran.
+| First Name | Last Name | Birth Date | Payer | Member ID | Result |
+| --- | --- | --- | --- | --- | --- |
+| Jane | Doe | 1985-04-12 | Aetna (`60054`) | `W345876123` | Active coverage, AETNA CHOICE POS II |
+| Bertram | Gilfoyle | 1995-08-19 | Blue Cross Blue Shield of Michigan (`00710`) | Any value | Active coverage |
+| Bertram | Gilfoyle | 1990-01-01 | Anthem Blue Cross Blue Shield of New York (`803`) | Any value | Active coverage |
+| Bertram | Gilfoyle | 1980-03-03 | Cigna (`62308`) | Any value | Active coverage |
+| Jane | Doe | 1970-01-01 | Aetna (`60054`) | `INACTIVE60054` | No coverage found (the plan is inactive) |
+| Jane | Doe | 1985-04-12 | Aetna (`60054`) | `NOTFOUND001` | No coverage found (subscriber not found) |
+
+Any other member ID and payer returns "No coverage found".
+
+---
+
+## Brand Settings That Hide Test Users
+
+Two brand settings filter plans after the payer answers, so a test user can legitimately return "No coverage found" on your brand:
+
+- **[Coverage Types](/1-click-health/guides/setup#coverage-types)** set to Medical only removes the dental and vision plans: Dinesh Chugtai and Jared Dunn return no coverage, Erlich Bachman returns his medical plan only.
+- **[Service Type Codes](/1-click-health/guides/setup#service-type-codes)** narrow the question. A plan is dropped when every specific code it answers is outside your list; the plan-level code `30` never filters. With the default (`30`) every user returns; with `30` and `98` the medical users return and the dental / vision users do not; with `30` and `35` only the dental plans return.
+
+---
+
+## Network Rules
+
+[Network Rules](/1-click-health/guides/setup#network-rules) belong to your brand, not to the test user, and the `network` object is only returned when an eligibility check ran. To see every outcome, create these rules on your Sandbox brand in the Dashboard:
+
+| Rule | Status | Test users it matches |
+| --- | --- | --- |
+| Payer equals Aetna (`V404110`) and Insurance Type Codes include `PR` | In Network | Richard Hendricks (Aetna), Erlich Bachman (Aetna) |
+| Payer equals UnitedHealthcare (`V816685`) | Out of Network | Richard Hendricks (UnitedHealthcare) |
+| Payer equals Cigna (`V253146`) and State equals `TX` | In Network | Russ Hanneman |
+| Insurance Type Codes include `MA`, `MB`, `HN` | In Network | Peter Gregory, Jack Barker (Medicare), Ron LaFlamme |
+| Insurance Type Codes include `MC`, notes "Self-pay" | Out of Network | Jack Barker (Medi-Cal) |
+| Insurance Type Codes include "No insurance type code" | Indeterminate | Monica Hall, Nelson Bighetti, Dinesh Chugtai, Jared Dunn, Erlich Bachman (dental) |
+| (optional) Group Name includes `HOOLI` | In Network | Richard Hendricks (UnitedHealthcare): ties with the UnitedHealthcare rule, the two disagree, so the result is `INDETERMINATE` with both rules listed |
+
+Results come back ordered in network, then indeterminate, then out of network, so Richard Hendricks returns his Aetna plan first and Jack Barker his Medicare plan first.
+
+---
+
+## Sample 271
+
+The raw `edi_271` returned for Richard Hendricks' Aetna plan on an eligibility check, one segment per line for readability (the API returns it as one string). Its parsed form is the [`ParsedEdi271`](/reference/api/types#parsededi271) object.
+
+```text
+ISA*00*          *00*          *ZZ*60054          *ZZ*Verified       *260930*1015*^*00501*000000001*0*P*:~
+GS*HB*60054*Verified*20260930*1015*1*X*005010X279A1~
+ST*271*0001*005010X279A1~
+BHT*0022*11*3E1F2A9C*20260930*101500~
+HL*1**20*1~
+NM1*PR*2*AETNA*****PI*60054~
+PER*IC**TE*8005550154*UR*WWW.AETNA.COM~
+HL*2*1*21*1~
+NM1*1P*2*YOUR PROVIDER NAME*****XX*1234567890~
+HL*3*2*22*0~
+TRN*2*9260930101500001*9012345678~
+NM1*IL*1*HENDRICKS*RICHARD*H***MI*A484069~
+REF*6P*123456*PIED PIPER~
+N3*5320 NEWELL RD*STE 200~
+N4*PALO ALTO*CA*94303~
+DMG*D8*19890801*M~
+INS*Y*18*001*25~
+DTP*291*RD8*20260101-20261231~
+DTP*346*D8*20260101~
+EB*1*IND*30^1^33^47^86^88^98^MH^UC*PR*AETNA CHOICE POS II~
+EB*C*IND*30*PR*AETNA CHOICE POS II*23*1500*****Y~
+EB*C*IND*30*PR*AETNA CHOICE POS II*29*750*****Y~
+EB*C*FAM*30*PR*AETNA CHOICE POS II*23*3000*****Y~
+EB*G*IND*30*PR*AETNA CHOICE POS II*23*8000*****Y~
+EB*G*IND*30*PR*AETNA CHOICE POS II*29*6200*****Y~
+EB*B*IND*98*PR*AETNA CHOICE POS II*27*30*****Y~
+EB*A*IND*98*PR*AETNA CHOICE POS II***0.2****Y~
+EB*F*IND*33*PR*AETNA CHOICE POS II*23***VS*20**Y~
+EB*C*IND*30*PR*AETNA CHOICE POS II*23*3000*****N~
+EB*A*IND*98*PR*AETNA CHOICE POS II***0.4****N~
+EB*1*IND*MH*PR*AETNA CHOICE POS II~
+LS*2120~
+NM1*X3*2*AETNA BEHAVIORAL HEALTH~
+PER*IC**TE*8005550143*FX*8005550144*EM*MEMBERS@AETNABH.COM~
+LE*2120~
+MSG*PRE-CERTIFICATION REQUIRED FOR INPATIENT ADMISSIONS~
+SE*35*0001~
+GE*1*1~
+IEA*1*000000001~
+```

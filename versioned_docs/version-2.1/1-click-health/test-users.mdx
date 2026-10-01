@@ -780,7 +780,7 @@ Outputs:
 
 ## Eligibility Check
 
-The test users above are for insurance **autofill**. To test an **[eligibility check](/1-click-health/guides/api-integration#eligibility-check)** instead, send a `payer` and a `memberId` (any value) along with the user's PII. In [Sandbox](/reference/api/environments#sandbox), the following test users return active coverage. Any other input returns "No coverage found."
+The test users above are for insurance **autofill**. To test an **[eligibility check](/1-click-health/guides/api-integration#eligibility-check)** instead, send a `payer` and a `memberId` (any value) along with the user's PII. In [Sandbox](/reference/api/environments#sandbox), the following test users return active coverage. Any other input returns "No coverage found." (In [Production](/reference/api/environments#production), a plan the payer reports as inactive is returned with `eligibility.coverageStatus` set to `"inactive"` rather than failing.)
 
 <table className="no-bold-first-column">
     <tr>

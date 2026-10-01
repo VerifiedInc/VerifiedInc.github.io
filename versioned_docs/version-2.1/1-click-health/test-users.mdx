@@ -357,18 +357,26 @@ Outputs: the [`1ClickHealthEntity`](/reference/api/types#1clickhealthentity) has
 
 ## Eligibility Check
 
-To test an **[eligibility check](/1-click-health/guides/api-integration#eligibility-check)** instead of insurance autofill, send `memberId` and `payer` along with the user's PII. Any plan above works with its member ID and payer ID (for example Richard Hendricks with `memberId: "A484069"` and `payer: { "id": "60054" }`). Include `checkAfterAutofill: true`, or have the brand setting on, to receive `edi_271` and `eligibility`.
+To test an **[eligibility check](/1-click-health/guides/api-integration#eligibility-check)** instead of insurance autofill, send `memberId` and `payer` (for example Richard Hendricks with `memberId: "A484069"` and `payer: { "id": "60054" }`). Include `checkAfterAutofill: true`, or have the brand setting on, to receive `edi_271` and `eligibility`.
 
-The following users exist only on this path:
+How a test user is matched depends on the user:
 
-| First Name | Last Name | Birth Date | Payer | Member ID | Result |
-| --- | --- | --- | --- | --- | --- |
-| Jane | Doe | 1985-04-12 | Aetna (`60054`) | `W345876123` | Active coverage, AETNA CHOICE POS II |
-| Bertram | Gilfoyle | 1995-08-19 | Blue Cross Blue Shield of Michigan (`00710`) | Any value | Active coverage |
-| Bertram | Gilfoyle | 1990-01-01 | Anthem Blue Cross Blue Shield of New York (`803`) | Any value | Active coverage |
-| Bertram | Gilfoyle | 1980-03-03 | Cigna (`62308`) | Any value | Active coverage |
-| Jane | Doe | 1970-01-01 | Aetna (`60054`) | `INACTIVE60054` | Inactive coverage, AETNA CHOICE POS II terminated 2023-12-31 (`coverageStatus: "inactive"`) |
-| Jane | Doe | 1985-04-12 | Aetna (`60054`) | `NOTFOUND001` | No coverage found (subscriber not found) |
+**Matched on member ID.** First name, last name and birth date can be anything; they are echoed back in the 271.
+
+| Member ID | Payer | Result |
+| --- | --- | --- |
+| `W345876123` | Aetna (`60054`) | Active coverage, AETNA CHOICE POS II |
+| Any member ID from the Success section | That plan's payer | Active coverage, the same plan |
+| `INACTIVE60054` | Aetna (`60054`) | Inactive coverage, AETNA CHOICE POS II terminated 2023-12-31 (`coverageStatus: "inactive"`) |
+| `NOTFOUND001` | Aetna (`60054`) | No coverage found (subscriber not found) |
+
+**Matched on name and birth date.** Send these exactly; the member ID can be anything.
+
+| First Name | Last Name | Birth Date | Payer | Result |
+| --- | --- | --- | --- | --- |
+| Bertram | Gilfoyle | 1995-08-19 | Blue Cross Blue Shield of Michigan (`00710`) | Active coverage |
+| Bertram | Gilfoyle | 1990-01-01 | Anthem Blue Cross Blue Shield of New York (`803`) | Active coverage |
+| Bertram | Gilfoyle | 1980-03-03 | Cigna (`62308`) | Active coverage |
 
 Any other member ID and payer returns "No coverage found".
 

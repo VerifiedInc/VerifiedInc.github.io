@@ -79,7 +79,7 @@ See the later sections for full details on how each of these test users is desig
 | Active coverage | 1995-08-19 | Bertram | Gilfoyle | Blue Cross Blue Shield of Michigan (`00710`) | Any value |
 | Active coverage | 1990-01-01 | Bertram | Gilfoyle | Anthem Blue Cross Blue Shield of New York (`803`) | Any value |
 | Active coverage | 1980-03-03 | Bertram | Gilfoyle | Cigna (`62308`) | Any value |
-| No coverage (inactive plan) | 1970-01-01 | Jane | Doe | Aetna (`60054`) | `INACTIVE60054` |
+| Inactive coverage (`coverageStatus: "inactive"`) | 1970-01-01 | Jane | Doe | Aetna (`60054`) | `INACTIVE60054` |
 | No coverage (subscriber not found) | 1985-04-12 | Jane | Doe | Aetna (`60054`) | `NOTFOUND001` |
 
 ---
@@ -358,10 +358,12 @@ The following users exist only on this path:
 | Bertram | Gilfoyle | 1995-08-19 | Blue Cross Blue Shield of Michigan (`00710`) | Any value | Active coverage |
 | Bertram | Gilfoyle | 1990-01-01 | Anthem Blue Cross Blue Shield of New York (`803`) | Any value | Active coverage |
 | Bertram | Gilfoyle | 1980-03-03 | Cigna (`62308`) | Any value | Active coverage |
-| Jane | Doe | 1970-01-01 | Aetna (`60054`) | `INACTIVE60054` | No coverage found (the plan is inactive) |
+| Jane | Doe | 1970-01-01 | Aetna (`60054`) | `INACTIVE60054` | Inactive coverage, AETNA CHOICE POS II terminated 2023-12-31 (`coverageStatus: "inactive"`) |
 | Jane | Doe | 1985-04-12 | Aetna (`60054`) | `NOTFOUND001` | No coverage found (subscriber not found) |
 
 Any other member ID and payer returns "No coverage found".
+
+An inactive plan is still a result: the payer answered about the member you named, so the request succeeds and the plan comes back with `eligibility.coverageStatus` set to `"inactive"` (and the termination date in `eligibility.plan.terminationDate`). Only an unknown member fails with "No coverage found". Insurance autofill never returns inactive plans.
 
 ---
 

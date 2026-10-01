@@ -25,10 +25,11 @@ curl 'https://core-api.verified.inc/v2/1-click/health/payers?$limit=50&$paginate
 Query parameters:
 
 - \`$limit\` and \`$skip\` page through the results.
-- \`$search\` filters by payer name.
+- \`$search\` filters by payer name, including a payer's other names.
 - \`$sort[name]=1\` sorts by name ascending, \`-1\` descending.
 
-Each payer has a name and one or more IDs, one of which is its primary ID. For
+Each payer has a name, one or more IDs (one of which is its primary ID), and
+\`otherNames\`: the other names the payer is known by, without its own name. For
 how a payer is used in a request, see the 1-Click Health API integration guide.`}
 >
   <PayerTable />

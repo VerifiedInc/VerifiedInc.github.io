@@ -1,8 +1,12 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
+import { AnimatePresence } from 'framer-motion';
+
+import PayerDrawer from './PayerDrawer';
 
 const API_URL = 'https://core-api.verified.inc/v2/1-click/health/payers';
 const PAGE_SIZE = 50;
 const DEBOUNCE_MS = 300;
+const OTHER_NAMES_PREVIEW = 3;
 
 function buildUrl({ limit, skip, search, sortField, sortDir }) {
   let url = `${API_URL}?$limit=${limit}&$skip=${skip}&$paginate=true`;
@@ -73,9 +77,9 @@ function OperatingStates({ states }) {
   return (
     <div className='payerChips'>
       {labels.map((label) => (
-        <code key={label} className='payerIdChip'>
+        <span key={label} className='payerChip'>
           {label}
-        </code>
+        </span>
       ))}
     </div>
   );
@@ -90,8 +94,27 @@ function EligibilityBadge({ support }) {
 
   return (
     <div className='payerChips'>
-      <code className='payerIdChip'>{label}</code>
+      <span className='payerChip'>{label}</span>
     </div>
+  );
+}
+
+function OtherNames({ names }) {
+  if (!Array.isArray(names) || names.length === 0) {
+    return <span className='payerCellEmpty'>—</span>;
+  }
+
+  const hidden = names.length - OTHER_NAMES_PREVIEW;
+
+  return (
+    <>
+      <ul className='payerOtherNamesBullets'>
+        {names.slice(0, OTHER_NAMES_PREVIEW).map((name) => (
+          <li key={name}>{name}</li>
+        ))}
+      </ul>
+      {hidden > 0 && <div className='payerOtherNamesMore'>+{hidden} more</div>}
+    </>
   );
 }
 
@@ -102,6 +125,72 @@ function PayerInitials({ name }) {
     .map((w) => w[0]?.toUpperCase() ?? '')
     .join('');
   return <div className='payerLogoPlaceholder'>{initials}</div>;
+}
+
+function PayerLogo({ payer }) {
+  return payer.logoUrl ? (
+    <img src={payer.logoUrl} alt='' className='payerLogo' loading='lazy' />
+  ) : (
+    <PayerInitials name={payer.name} />
+  );
+}
+
+function PayerIds({ ids }) {
+  return (
+    <div className='payerIdChips'>
+      {(Array.isArray(ids) ? ids : []).map((id) => (
+        <code key={id} className='payerIdChip'>
+          {id}
+        </code>
+      ))}
+    </div>
+  );
+}
+
+function PayerDetails({ payer }) {
+  const otherNames = Array.isArray(payer.otherNames) ? payer.otherNames : [];
+
+  return (
+    <>
+      <div className='payerNameCell payerDrawerHeader'>
+        <PayerLogo payer={payer} />
+        <div>
+          <h3 className='payerDrawerTitle'>{payer.name}</h3>
+          <code className='payerIdChip'>{payer.verifiedId}</code>
+        </div>
+      </div>
+      <dl className='payerDrawerFields'>
+        <dt>IDs (green indicates primary)</dt>
+        <dd>
+          {Array.isArray(payer.ids) && payer.ids.length > 0 ? (
+            <PayerIds ids={payer.ids} />
+          ) : (
+            <span className='payerCellEmpty'>—</span>
+          )}
+        </dd>
+        <dt>States</dt>
+        <dd>
+          <OperatingStates states={payer.operatingStates} />
+        </dd>
+        <dt>Eligibility check</dt>
+        <dd>
+          <EligibilityBadge support={payer.eligibilitySupport} />
+        </dd>
+        <dt>Other Names</dt>
+        <dd>
+          {otherNames.length > 0 ? (
+            <ul className='payerOtherNames payerDrawerNames'>
+              {otherNames.map((name) => (
+                <li key={name}>{name}</li>
+              ))}
+            </ul>
+          ) : (
+            <span className='payerCellEmpty'>—</span>
+          )}
+        </dd>
+      </dl>
+    </>
+  );
 }
 
 function LoadingSpinner() {
@@ -124,6 +213,24 @@ export default function PayerTable() {
   const scrollRef = useRef(null);
   const sentinelRef = useRef(null);
   const loadingMoreRef = useRef(false);
+
+  const [selectedPayer, setSelectedPayer] = useState(null);
+
+  // Stable, so the drawer's open/close effect runs once per open.
+  const closeDrawer = useCallback(() => setSelectedPayer(null), []);
+
+  const handleRowClick = useCallback((row) => {
+    // Clicking an ID chip selects its text for copying; don't open the drawer over that.
+    if (window.getSelection()?.toString()) return;
+    setSelectedPayer(row);
+  }, []);
+
+  const handleRowKeyDown = useCallback((event, row) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      setSelectedPayer(row);
+    }
+  }, []);
 
   const handleQueryChange = useCallback((value) => {
     setQuery(value);
@@ -281,12 +388,15 @@ export default function PayerTable() {
                   <SortIcon direction={sortField === 'name' ? sortDir : null} />
                 </button>
               </th>
-              <th className='payerTableTh payerTableThStates'>States</th>
-              <th className='payerTableTh payerTableThEligibility'>
-                Eligibility Check
+              <th className='payerTableTh payerTableThOtherNames'>
+                Other Names
               </th>
               <th className='payerTableTh payerTableThIds'>
                 IDs (green indicates primary)
+              </th>
+              <th className='payerTableTh payerTableThStates'>States</th>
+              <th className='payerTableTh payerTableThEligibility'>
+                Eligibility Check
               </th>
             </tr>
           </thead>
@@ -309,35 +419,36 @@ export default function PayerTable() {
                   <td>
                     <div className='payerSkeleton payerSkeletonWide' />
                   </td>
+                  <td>
+                    <div className='payerSkeleton payerSkeletonWide' />
+                  </td>
                 </tr>
               ))
             ) : error ? (
               <tr style={{ border: 'none' }}>
-                <td colSpan={4} className='payerTableEmpty payerTableError'>
+                <td colSpan={5} className='payerTableEmpty payerTableError'>
                   Failed to load payers: {error}
                 </td>
               </tr>
             ) : payers.length === 0 ? (
               <tr style={{ border: 'none' }}>
-                <td colSpan={4} className='payerTableEmpty'>
+                <td colSpan={5} className='payerTableEmpty'>
                   No payers match your search.
                 </td>
               </tr>
             ) : (
               payers.map((row, idx) => (
-                <tr key={row.verifiedId ?? idx} className='payerTableRow'>
+                <tr
+                  key={row.verifiedId ?? idx}
+                  className='payerTableRow payerTableRowClickable'
+                  tabIndex={0}
+                  aria-label={`View details for ${row.name}`}
+                  onClick={() => handleRowClick(row)}
+                  onKeyDown={(event) => handleRowKeyDown(event, row)}
+                >
                   <td className='payerTableTdName'>
                     <div className='payerNameCell'>
-                      {row.logoUrl ? (
-                        <img
-                          src={row.logoUrl}
-                          alt=''
-                          className='payerLogo'
-                          loading='lazy'
-                        />
-                      ) : (
-                        <PayerInitials name={row.name} />
-                      )}
+                      <PayerLogo payer={row} />
                       <div>
                         <span>{row.name}</span>
                         <br />
@@ -345,22 +456,17 @@ export default function PayerTable() {
                       </div>
                     </div>
                   </td>
+                  <td className='payerTableTdOtherNames'>
+                    <OtherNames names={row.otherNames} />
+                  </td>
+                  <td className='payerTableTdIds'>
+                    <PayerIds ids={row.ids} />
+                  </td>
                   <td className='payerTableTdStates'>
                     <OperatingStates states={row.operatingStates} />
                   </td>
                   <td className='payerTableTdEligibility'>
                     <EligibilityBadge support={row.eligibilitySupport} />
-                  </td>
-                  <td className='payerTableTdIds'>
-                    <div className='payerIdChips'>
-                      {(Array.isArray(row.ids) ? row.ids : []).map((id) => {
-                        return (
-                          <code key={id} className='payerIdChip'>
-                            {id}
-                          </code>
-                        );
-                      })}
-                    </div>
                   </td>
                 </tr>
               ))
@@ -386,6 +492,14 @@ export default function PayerTable() {
           {hasMore && ' — scroll for more'}
         </div>
       )}
+
+      <AnimatePresence>
+        {selectedPayer && (
+          <PayerDrawer title='Payer Details' onClose={closeDrawer}>
+            <PayerDetails payer={selectedPayer} />
+          </PayerDrawer>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

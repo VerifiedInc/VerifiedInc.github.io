@@ -1600,6 +1600,10 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
 
 ##### `NetworkRule`
 
+<Admonition type="info">
+    This is the shape of a rule as it appears in a `NetworkDecision`. The [Network Rules endpoints](/reference/api/endpoints#settings-brand-health-network-rules), which let you manage rules programmatically, return the same object plus `number`, `enabled`, `createdAt` and `updatedAt`.
+</Admonition>
+
 ```typescript title="NetworkRule Type"
 {
     uuid: string,
@@ -1612,7 +1616,7 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
     startDate?: string,
     endDate?: string,
     conditions: {
-        key: "payerId" | "payerName" | "state" | "insuranceTypeCodes" | "planName" | "relatedEntites" | "groupNumber" | "groupName",
+        key: "payerId" | "payerName" | "state" | "insuranceTypeCodes" | "planName" | "relatedEntities" | "groupNumber" | "groupName",
         operator: "EQUAL" | "NOT_EQUAL" | "INCLUDE" | "NOT_INCLUDE",
         values: string[]
     }[]
@@ -1734,7 +1738,7 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
                     "values": ["PPO"]
                 },
                 {
-                    "key": "relatedEntites",
+                    "key": "relatedEntities",
                     "operator": "INCLUDE",
                     "values": ["Hooli Health"]
                 },
@@ -1779,7 +1783,7 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
                 - `"state"`
                 - `"insuranceTypeCodes"`
                 - `"planName"`
-                - `"relatedEntites"`
+                - `"relatedEntities"`
                 - `"groupNumber"`
                 - `"groupName"`
             </details>

@@ -37,7 +37,7 @@ export const networkRuleInNetworkJson = `{
             "values": ["PPO"]
         },
         {
-            "key": "relatedEntites",
+            "key": "relatedEntities",
             "operator": "INCLUDE",
             "values": ["Hooli Health"]
         },
@@ -70,7 +70,7 @@ export const networkRuleOutOfNetworkJson = `{
             "values": ["HM"]
         },
         {
-            "key": "relatedEntites",
+            "key": "relatedEntities",
             "operator": "INCLUDE",
             "values": ["Hooli Health"]
         }

@@ -1425,3 +1425,838 @@ This includes (under `data`) an array of payer objects for all [supported payers
     <td>See `Payer` [Example](/reference/api/types#example-payer)</td>
   </tr>
 </table>
+
+
+
+## Settings
+
+These endpoints allow you to manage your settings programmatically (rather than manually through the [Dashboard](https://dashboard.verified.inc)). Settings are defined within an [environment](/reference/api/environments), so to configure them in both Sandbox and Production, you need to use the appropriate API key and base URL for each environment.
+
+<Admonition type="info">
+    The path pattern is `/settings/{scope}/{product}/{resource}`. 
+    
+    Currently, we support the `brand` scope, `health` product (for 1-Click Health), and `network-rules` resource.
+</Admonition>
+
+
+### Network Rules {#settings-brand-health-network-rules}
+
+> Manage the [network rules](/1-click-health/guides/setup#network-rules) that produce the `network` objects (of [`NetworkDecision`](/reference/api/types#networkdecision) type) in 1-Click Health results
+
+These endpoints are equivalent to the Network Rules section of the [Dashboard](https://dashboard.verified.inc): a rule written here and a rule written there are indistinguishable, and the same validation applies to both. 
+
+:::tip Example Use
+You can keep your payer network mapping (and anything you attach to it in `metadata`, such as an internal package or plan ID) in your own system and use these endpoints to update the network rules whenever anything changes.
+:::
+
+<table>
+  <tr>
+    <th>Method</th>
+    <th>Path</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>`GET`</td>
+    <td>[`/settings/brand/health/network-rules`](#get-settings-brand-health-network-rules)</td>
+    <td>List your brand's network rules</td>
+  </tr>
+    <tr>
+    <td>`GET`</td>
+    <td>[`/settings/brand/health/network-rules/{uuid}`](#get-settings-brand-health-network-rules-uuid)</td>
+    <td>Retrieve one network rule</td>
+  </tr>
+  <tr>
+    <td>`POST`</td>
+    <td>[`/settings/brand/health/network-rules`](#post-settings-brand-health-network-rules)</td>
+    <td>Create one network rule, or several at once</td>
+  </tr>
+  <tr>
+    <td>`POST`</td>
+    <td>[`/settings/brand/health/network-rules/replace`](#post-settings-brand-health-network-rules-replace)</td>
+    <td>Replace all of your brand's network rules in one call</td>
+  </tr>
+  <tr>
+    <td>`PATCH`</td>
+    <td>[`/settings/brand/health/network-rules/{uuid}`](#patch-settings-brand-health-network-rules-uuid)</td>
+    <td>Update a network rule</td>
+  </tr>
+  <tr>
+    <td>`DELETE`</td>
+    <td>[`/settings/brand/health/network-rules/{uuid}`](#delete-settings-brand-health-network-rules-uuid)</td>
+    <td>Delete a network rule</td>
+  </tr>
+</table>
+
+
+#### Rule Object {#settings-network-rule-object}
+
+Every endpoint returns network rules as [`NetworkRule`](/reference/api/types#networkrule) objects with four additional properties that only the Network Rules endpoints expose:
+
+<table>
+  <tr>
+    <th>Property</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>`number`</td>
+    <td>`integer`</td>
+    <td>Positive integer</td>
+    <td>Per-brand sequence number in creation order. Assigned by Verified, never changes, never reused. Used for the default `name` (`"Rule 7"`)</td>
+    <td>`7`</td>
+  </tr>
+  <tr>
+    <td>`enabled`</td>
+    <td>`boolean`</td>
+    <td>-</td>
+    <td>Whether the rule is applied. A disabled rule is stored but never matches</td>
+    <td>`true`</td>
+  </tr>
+  <tr>
+    <td>`createdAt`</td>
+    <td>`integer`</td>
+    <td>Unix epoch, milliseconds</td>
+    <td>When the rule was created</td>
+    <td>`1790000000000`</td>
+  </tr>
+  <tr>
+    <td>`updatedAt`</td>
+    <td>`integer`</td>
+    <td>Unix epoch, milliseconds</td>
+    <td>When the rule was last updated</td>
+    <td>`1790000000000`</td>
+  </tr>
+</table>
+
+
+#### Rule Body {#settings-network-rule-body}
+
+- `POST` (create) and `POST .../replace` take rule bodies. 
+- `PATCH` takes any subset of the same properties. 
+- `uuid`, `number`, `createdAt` and `updatedAt` are assigned by Verified and are rejected if sent.
+
+<table>
+  <tr>
+    <th>Property</th>
+    <th>Required?</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Default</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>`status`</td>
+    <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
+    <td>`enum`</td>
+    <td>`"IN_NETWORK"` | `"OUT_OF_NETWORK"` | `"INDETERMINATE"`</td>
+    <td>-</td>
+    <td>Network status the rule returns when it matches a health insurance plan</td>
+    <td>`"IN_NETWORK"`</td>
+  </tr>
+  <tr>
+    <td>`conditions`</td>
+    <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
+    <td>`object[]`</td>
+    <td>At least one condition; see [Conditions](#settings-network-rule-conditions)</td>
+    <td>-</td>
+    <td>Conditions that must all hold (AND) for the rule to match</td>
+    <td>See [Conditions](#settings-network-rule-conditions)</td>
+  </tr>
+  <tr>
+    <td>`name`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string`</td>
+    <td>Non-empty</td>
+    <td>`"Rule {number}"`</td>
+    <td>Name for the rule</td>
+    <td>`"Aetna PPO - INN"`</td>
+  </tr>
+  <tr>
+    <td>`notes`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string` | `null`</td>
+    <td>-</td>
+    <td>`null`</td>
+    <td>Free text, returned with the decision so your app can branch on it</td>
+    <td>`"No self pay"`</td>
+  </tr>
+  <tr>
+    <td>`metadata`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`object`</td>
+    <td>Flat object of up to 20 entries; keys up to 64 characters; values `string` (up to 200 characters), `number` or `boolean`</td>
+    <td>`{}`</td>
+    <td>Your own key/value pairs, returned with the decision as `network.rules[i].metadata`. On `PATCH`, replaces the whole object</td>
+    <td>
+        ```json
+        { "packageId": "4471", "selfPay": false }
+        ```
+    </td>
+  </tr>
+  <tr>
+    <td>`enabled`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`boolean`</td>
+    <td>-</td>
+    <td>`true`</td>
+    <td>Whether the rule is applied</td>
+    <td>`true`</td>
+  </tr>
+  <tr>
+    <td>`startDate`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string` | `null`</td>
+    <td>yyyy-MM-dd</td>
+    <td>`null`</td>
+    <td>Date the rule starts applying (at start of day, UTC, inclusive)</td>
+    <td>`"2026-10-01"`</td>
+  </tr>
+  <tr>
+    <td>`endDate`</td>
+    <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+    <td>`string` | `null`</td>
+    <td>yyyy-MM-dd, after `startDate`</td>
+    <td>`null`</td>
+    <td>Date the rule stops applying (at start of day, UTC, exclusive)</td>
+    <td>`"2027-10-01"`</td>
+  </tr>
+</table>
+
+
+#### Conditions {#settings-network-rule-conditions}
+
+- A condition is `{ key, operator, values }`. 
+- `values` is a non-empty array of strings, and several values amount to an inclusive OR. For example, `{ state EQUAL ["MN", "CA"] }` matches either Minnesota or California.
+- All conditions of a rule must hold. When several rules match a plan, the most specific one wins.
+
+<table>
+  <tr>
+    <th>`key`</th>
+    <th>Type</th>
+    <th>Allowed `operator`s</th>
+    <th>Allowed `values`</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>`payerId`</td>
+    <td>enum</td>
+    <td>`EQUAL`, `NOT_EQUAL`</td>
+    <td>Verified payer IDs or payer group IDs from [`GET /1-click/health/payers`](#get-1-click-health-payers). A payer group (for example Verified Blues) matches every payer in the group</td>
+    <td>`["V404110"]`</td>
+  </tr>
+  <tr>
+    <td>`payerName`</td>
+    <td>text</td>
+    <td>`EQUAL`, `NOT_EQUAL`, `INCLUDE`, `NOT_INCLUDE`</td>
+    <td>Any text. `INCLUDE` is a case-insensitive substring match</td>
+    <td>`["Aetna"]`</td>
+  </tr>
+  <tr>
+    <td>`state`</td>
+    <td>enum</td>
+    <td>`EQUAL`, `NOT_EQUAL`</td>
+    <td>Two-letter US state or territory codes (the patient's address state)</td>
+    <td>`["MA", "NY", "WA"]`</td>
+  </tr>
+  <tr>
+    <td>`insuranceTypeCodes`</td>
+    <td>enum</td>
+    <td>`INCLUDE`, `NOT_INCLUDE`</td>
+    <td>X12 EB04 insurance type codes (listed below), plus `"NONE"` meaning the eligibility response carried no code. About 7 in 10 plans carry none, so `INCLUDE ["PR", "NONE"]` reads "PPO, or unknown"</td>
+    <td>`["PR", "PS"]`</td>
+  </tr>
+  <tr>
+    <td>`planName`</td>
+    <td>text</td>
+    <td>`EQUAL`, `NOT_EQUAL`, `INCLUDE`, `NOT_INCLUDE`</td>
+    <td>Any text</td>
+    <td>`["PPO"]`</td>
+  </tr>
+  <tr>
+    <td>`relatedEntities`</td>
+    <td>text</td>
+    <td>`EQUAL`, `NOT_EQUAL`, `INCLUDE`, `NOT_INCLUDE`</td>
+    <td>Any text (names of related entities on the eligibility response, for example a PBM or TPA)</td>
+    <td>`["OPTUMRX"]`</td>
+  </tr>
+  <tr>
+    <td>`groupNumber`</td>
+    <td>text</td>
+    <td>`EQUAL`, `NOT_EQUAL`, `INCLUDE`, `NOT_INCLUDE`</td>
+    <td>Any text</td>
+    <td>`["123456-123-12345"]`</td>
+  </tr>
+  <tr>
+    <td>`groupName`</td>
+    <td>text</td>
+    <td>`EQUAL`, `NOT_EQUAL`, `INCLUDE`, `NOT_INCLUDE`</td>
+    <td>Any text</td>
+    <td>`["Pied Piper"]`</td>
+  </tr>
+</table>
+
+<Admonition type="warning" title="No PHI in rules">
+    Rules describe plans, not people. A text value that looks like a member ID (optional letters followed by six or more digits) or a date is rejected with the `PHI_SUSPECTED` error code. `groupNumber` is exempt from the member ID check, since group numbers legitimately look like one.
+</Admonition>
+
+<details>
+    <summary>Insurance type codes (`insuranceTypeCodes` values)</summary>
+
+    | Code | Meaning |
+    | --- | --- |
+    | `NONE` | No insurance type code on the eligibility response |
+    | `12` | Medicare Secondary Working Aged Beneficiary or Spouse with Employer Group Health Plan |
+    | `13` | Medicare Secondary End-Stage Renal Disease Beneficiary in the Mandated Coordination Period |
+    | `14` | Medicare Secondary, No-fault Insurance including Auto is Primary |
+    | `15` | Medicare Secondary Worker's Compensation |
+    | `16` | Medicare Secondary Public Health Service (PHS) or Other Federal Agency |
+    | `41` | Medicare Secondary Black Lung |
+    | `42` | Medicare Secondary Veteran's Administration |
+    | `43` | Medicare Secondary Disabled Beneficiary Under Age 65 with Large Group Health Plan (LGHP) |
+    | `47` | Medicare Secondary, Other Liability Insurance is Primary |
+    | `AP` | Auto Insurance Policy |
+    | `C1` | Commercial |
+    | `CO` | COBRA |
+    | `CP` | Medicare Conditionally Primary |
+    | `D` | Disability |
+    | `DB` | Disability Benefits |
+    | `EP` | Exclusive Provider Organization (EPO) |
+    | `FF` | Family or Friends |
+    | `GP` | Group Policy |
+    | `HM` | Health Maintenance Organization (HMO) |
+    | `HN` | HMO - Medicare Risk (Medicare Advantage) |
+    | `HS` | Special Low Income Medicare Beneficiary |
+    | `IN` | Indemnity |
+    | `IP` | Individual Policy |
+    | `LC` | Long Term Care |
+    | `LD` | Long Term Policy |
+    | `LI` | Life Insurance |
+    | `LT` | Litigation |
+    | `MA` | Medicare Part A |
+    | `MB` | Medicare Part B |
+    | `MC` | Medicaid |
+    | `MH` | Medigap Part A |
+    | `MI` | Medigap Part B |
+    | `MP` | Medicare Primary |
+    | `OT` | Other |
+    | `PE` | Property Insurance - Personal |
+    | `PL` | Personal |
+    | `PP` | Personal Payment (Cash - No Insurance) |
+    | `PR` | Preferred Provider Organization (PPO) |
+    | `PS` | Point of Service (POS) |
+    | `QM` | Qualified Medicare Beneficiary |
+    | `RP` | Property Insurance - Real |
+    | `SP` | Supplemental Policy |
+    | `TF` | Tax Equity Fiscal Responsibility Act (TEFRA) |
+    | `WC` | Workers Compensation |
+    | `WU` | Wrap Up Policy |
+</details>
+
+#### Errors {#settings-network-rule-errors}
+
+<table>
+  <tr>
+    <th>Status</th>
+    <th>`name`</th>
+    <th>When</th>
+  </tr>
+  <tr>
+    <td>`400`</td>
+    <td>`BadRequest`</td>
+    <td>The body or query has the wrong shape (`message: "validation failed"`), or a rule is invalid: `message` is `"Invalid network rule"` (or `"Invalid network rules"` for a batch) and `data.errors` lists every problem, see below</td>
+  </tr>
+  <tr>
+    <td>`401`</td>
+    <td>`NotAuthenticated`</td>
+    <td>Missing or invalid API key, or a key blocked by an IP allowlist</td>
+  </tr>
+  <tr>
+    <td>`403`</td>
+    <td>`Forbidden`</td>
+    <td>1-Click Health is not contracted or is disabled for the brand</td>
+  </tr>
+  <tr>
+    <td>`404`</td>
+    <td>`NotFound`</td>
+    <td>No rule with that `uuid` belongs to your brand</td>
+  </tr>
+</table>
+
+- Each entry of `data.errors` has a stable `code`, a human-readable `message`, and (when it concerns one condition) the condition's `index` plus its `key`, `operator` and offending `value`(s). 
+- For a batch (an array sent to `POST`) or a `replace`, each entry also has `ruleIndex`, the position of the rule in the array you sent. 
+- Every problem is reported at once, so one request tells you everything to fix.
+
+<table>
+  <tr>
+    <th>`code`</th>
+    <th>Meaning</th>
+  </tr>
+  <tr>
+    <td>`UNKNOWN_KEY`</td>
+    <td>`key` is not one of the condition keys above</td>
+  </tr>
+  <tr>
+    <td>`OPERATOR_NOT_ALLOWED_FOR_KEY`</td>
+    <td>`operator` is not allowed for that `key` (for example `INCLUDE` on `state`)</td>
+  </tr>
+  <tr>
+    <td>`VALUE_SHAPE`</td>
+    <td>`values` is not a non-empty array of non-empty strings</td>
+  </tr>
+  <tr>
+    <td>`UNKNOWN_ENUM_VALUE`</td>
+    <td>A value is not a known payer ID, state code or insurance type code</td>
+  </tr>
+  <tr>
+    <td>`PHI_SUSPECTED`</td>
+    <td>A text value looks like a member ID or a date</td>
+  </tr>
+  <tr>
+    <td>`DUPLICATE_CONDITIONS`</td>
+    <td>Another rule of your brand (its `uuid` is in `value`), or another rule in the same request, has exactly these conditions</td>
+  </tr>
+  <tr>
+    <td>`DATE_RANGE_INVERTED`</td>
+    <td>`startDate` is not before `endDate`</td>
+  </tr>
+  <tr>
+    <td>`METADATA_INVALID`</td>
+    <td>`metadata` exceeds the limits above</td>
+  </tr>
+</table>
+
+```json title="400 Response Body Example"
+{
+    "name": "BadRequest",
+    "message": "Invalid network rule",
+    "code": 400,
+    "className": "bad-request",
+    "data": {
+        "errors": [
+            {
+                "code": "UNKNOWN_ENUM_VALUE",
+                "index": 1,
+                "key": "insuranceTypeCodes",
+                "operator": "INCLUDE",
+                "value": ["XX"],
+                "message": "Unknown value(s) for \"insuranceTypeCodes\": XX"
+            }
+        ]
+    }
+}
+```
+
+
+### `GET /settings/brand/health/network-rules` {#get-settings-brand-health-network-rules}
+
+> List your brand's network rules
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`GET`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/settings/brand/health/network-rules`</td>
+  </tr>
+</table>
+
+#### Request {#get-settings-brand-health-network-rules-request}
+
+Call:
+
+```
+GET /settings/brand/health/network-rules
+```
+
+You can optionally include query parameters, for example:
+
+```
+GET /settings/brand/health/network-rules?status=IN_NETWORK&metadata[key]=packageId&$limit=50
+```
+
+<table>
+  <tr>
+    <th>Parameter</th>
+    <th>Required?</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Default</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+      <td>`$limit`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`integer`</td>
+      <td>1 to 100</td>
+      <td>10</td>
+      <td>Number of rules per page</td>
+      <td>`50`</td>
+  </tr>
+  <tr>
+      <td>`$skip`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`integer`</td>
+      <td>-</td>
+      <td>0</td>
+      <td>Number of rules to skip</td>
+      <td>`50`</td>
+  </tr>
+  <tr>
+      <td>`$sort[field]`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`1` | `-1`</td>
+      <td>`field` is `number`, `name`, `status`, `enabled`, `createdAt` or `updatedAt`</td>
+      <td>`createdAt` ascending, then `number`</td>
+      <td>Sort order</td>
+      <td>`$sort[updatedAt]=-1`</td>
+  </tr>
+  <tr>
+      <td>`uuid`,<br/>`number`,<br/>`name`,<br/>`status`,<br/>`enabled`,<br/>`createdAt`,<br/>`updatedAt`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>-</td>
+      <td>Exact value, or an operator object: `$in`, `$nin`, `$ne`, `$lt`, `$lte`, `$gt`, `$gte`</td>
+      <td>-</td>
+      <td>Filter on a rule property</td>
+      <td>`status=OUT_OF_NETWORK`, `updatedAt[$gt]=1790000000000`</td>
+  </tr>
+  <tr>
+      <td>`search`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string`</td>
+      <td>1 to 120 characters</td>
+      <td>-</td>
+      <td>Case-insensitive substring over `name` and `notes`</td>
+      <td>`search=self%20pay`</td>
+  </tr>
+  <tr>
+      <td>`condition[key]`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string` | `string[]`</td>
+      <td>Condition key(s)</td>
+      <td>-</td>
+      <td>Rules that have a condition on any of these keys</td>
+      <td>`condition[key]=state`</td>
+  </tr>
+  <tr>
+      <td>`condition[payerId]`,<br/>`condition[state]`,<br/>`condition[insuranceTypeCodes]`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string` | `string[]`</td>
+      <td>One code or several</td>
+      <td>-</td>
+      <td>Rules whose condition on that key includes the code (exact match)</td>
+      <td>`condition[payerId]=V404110`</td>
+  </tr>
+  <tr>
+      <td>`condition[payerName]`,<br/>`condition[planName]`,<br/>`condition[relatedEntities]`,<br/>`condition[groupNumber]`,<br/>`condition[groupName]`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`object`</td>
+      <td>`{ value, operator? }` with `operator` one of `contains` (default), `equals`, `startsWith`, `endsWith`</td>
+      <td>-</td>
+      <td>Rules whose condition on that key matches the text</td>
+      <td>`condition[planName][value]=PPO`</td>
+  </tr>
+  <tr>
+      <td>`metadata[key]`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`string` | `string[]`</td>
+      <td>Metadata key(s)</td>
+      <td>-</td>
+      <td>Rules whose `metadata` has any of these keys</td>
+      <td>`metadata[key]=packageId`</td>
+  </tr>
+  <tr>
+      <td>`metadata[value]`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`object`</td>
+      <td>`{ key, value, operator? }`, same text operators as above</td>
+      <td>-</td>
+      <td>Rules whose `metadata[key]` matches the text</td>
+      <td>`metadata[value][key]=packageId&metadata[value][value]=4471`</td>
+  </tr>
+</table>
+
+All filters combine with AND.
+
+#### Response {#get-settings-brand-health-network-rules-response}
+
+```typescript title="GET /settings/brand/health/network-rules Response Body"
+{
+    total: integer,
+    limit: integer,
+    skip: integer,
+    data: [
+        ...NetworkRule  // with number, enabled, createdAt, updatedAt
+    ],
+}
+```
+
+`data` holds the rules that match the query, oldest first unless sorted otherwise, each as described under [Rule Object](#settings-network-rule-object).
+
+
+### `GET /settings/brand/health/network-rules/{uuid}` {#get-settings-brand-health-network-rules-uuid}
+
+> Retrieve one network rule
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`GET`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/settings/brand/health/network-rules/{uuid}`</td>
+  </tr>
+</table>
+
+#### Request {#get-settings-brand-health-network-rules-uuid-request}
+
+Call:
+
+```
+GET /settings/brand/health/network-rules/ab280ee0-5f66-4076-9d1b-255d5f0024e3
+```
+
+#### Response {#get-settings-brand-health-network-rules-uuid-response}
+
+`200` with the rule as described under [Rule Object](#settings-network-rule-object), or `404` if no rule with that `uuid` belongs to your brand.
+
+
+### `POST /settings/brand/health/network-rules` {#post-settings-brand-health-network-rules}
+
+> Create one network rule, or several at once
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/settings/brand/health/network-rules`</td>
+  </tr>
+</table>
+
+#### Request {#post-settings-brand-health-network-rules-request}
+
+Send one [rule body](#settings-network-rule-body), or an array of 1 to 100 rule bodies to create several rules at once.
+
+```json title="POST /settings/brand/health/network-rules Request Body (one rule)"
+{
+    "name": "Aetna PPO - INN",
+    "status": "IN_NETWORK",
+    "metadata": { "packageId": "4471" },
+    "conditions": [
+        { "key": "payerId", "operator": "EQUAL", "values": ["V404110"] },
+        { "key": "insuranceTypeCodes", "operator": "INCLUDE", "values": ["PR"] }
+    ]
+}
+```
+
+```json title="POST /settings/brand/health/network-rules Request Body (several rules)"
+[
+    {
+        "status": "IN_NETWORK",
+        "metadata": { "packageId": "4471" },
+        "conditions": [{ "key": "payerId", "operator": "EQUAL", "values": ["V404110"] }]
+    },
+    {
+        "status": "OUT_OF_NETWORK",
+        "notes": "No self pay",
+        "metadata": { "packageId": "0000", "selfPay": false },
+        "conditions": [{ "key": "insuranceTypeCodes", "operator": "INCLUDE", "values": ["MC"] }]
+    }
+]
+```
+
+A rule whose conditions exactly match another rule of your brand (regardless of order or letter case) is rejected with `DUPLICATE_CONDITIONS`, so retrying a create you are unsure about is safe.
+
+An array is all or nothing: every rule is validated against your existing rules and against the others in the array, and if any is invalid nothing is written and each error carries its `ruleIndex`. Rules are numbered consecutively in the order sent.
+
+#### Response {#post-settings-brand-health-network-rules-response}
+
+`201` with the created rule as described under [Rule Object](#settings-network-rule-object), or an array of them in the order sent.
+
+```json title="POST /settings/brand/health/network-rules Response Body (one rule)"
+{
+    "uuid": "ab280ee0-5f66-4076-9d1b-255d5f0024e3",
+    "number": 7,
+    "name": "Aetna PPO - INN",
+    "status": "IN_NETWORK",
+    "notes": null,
+    "metadata": { "packageId": "4471" },
+    "enabled": true,
+    "startDate": null,
+    "endDate": null,
+    "conditions": [
+        { "key": "payerId", "operator": "EQUAL", "values": ["V404110"] },
+        { "key": "insuranceTypeCodes", "operator": "INCLUDE", "values": ["PR"] }
+    ],
+    "createdAt": 1790000000000,
+    "updatedAt": 1790000000000
+}
+```
+
+From the next eligibility check that matches this rule, the result carries `network.status: "IN_NETWORK"` and `network.rules[0].metadata.packageId: "4471"`; see [`NetworkDecision`](/reference/api/types#networkdecision).
+
+
+### `POST /settings/brand/health/network-rules/replace` {#post-settings-brand-health-network-rules-replace}
+
+> Replace all of your brand's network rules in one call
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`POST`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/settings/brand/health/network-rules/replace`</td>
+  </tr>
+</table>
+
+Use this when your rules live in your own system and you push the whole list on every change, instead of diffing against ours rule by rule. Every rule you send is validated first (including duplicates within the list). Then, in a single transaction, all of your brand's existing rules are deleted and the new ones inserted, numbered from 1 in the order sent. If anything is invalid, nothing is written.
+
+<Admonition type="warning">
+    Rules get new `uuid`s on every replace. If your system needs to refer back to a rule, key on something you put in `metadata`, not on `uuid`.
+</Admonition>
+
+#### Request {#post-settings-brand-health-network-rules-replace-request}
+
+<table>
+  <tr>
+    <th>Property</th>
+    <th>Required?</th>
+    <th>Type</th>
+    <th>Format</th>
+    <th>Default</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+      <td>`rules`</td>
+      <td><Chip label="Required" variant="outlined" size="small" color="error"/></td>
+      <td>`object[]`</td>
+      <td>Array of [rule bodies](#settings-network-rule-body). An empty array removes all of your rules</td>
+      <td>-</td>
+      <td>The complete new set of rules</td>
+      <td>See below</td>
+  </tr>
+  <tr>
+      <td>`dryRun`</td>
+      <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
+      <td>`boolean`</td>
+      <td>-</td>
+      <td>`false`</td>
+      <td>Validate and report what would happen without writing anything. Call with `true` first, check the result, then call again without it</td>
+      <td>`true`</td>
+  </tr>
+</table>
+
+```json title="POST /settings/brand/health/network-rules/replace Request Body"
+{
+    "dryRun": true,
+    "rules": [
+        {
+            "name": "Aetna PPO - INN",
+            "status": "IN_NETWORK",
+            "metadata": { "packageId": "4471" },
+            "conditions": [
+                { "key": "payerId", "operator": "EQUAL", "values": ["V404110"] },
+                { "key": "insuranceTypeCodes", "operator": "INCLUDE", "values": ["PR"] }
+            ]
+        },
+        {
+            "name": "Medicaid - self pay",
+            "status": "OUT_OF_NETWORK",
+            "notes": "No self pay",
+            "metadata": { "packageId": "0000", "selfPay": false },
+            "conditions": [{ "key": "insuranceTypeCodes", "operator": "INCLUDE", "values": ["MC"] }]
+        }
+    ]
+}
+```
+
+#### Response {#post-settings-brand-health-network-rules-replace-response}
+
+```typescript title="POST /settings/brand/health/network-rules/replace Response Body"
+{
+    dryRun: boolean,  // echoes the request
+    removed: integer, // rules your brand had before (all of them)
+    created: integer  // rules in the new set
+}
+```
+
+```json title="POST /settings/brand/health/network-rules/replace Response Body Example"
+{
+    "dryRun": true,
+    "removed": 12,
+    "created": 2
+}
+```
+
+On a validation failure the response is a `400` whose `data.errors` entries each carry `ruleIndex`; see [Errors](#settings-network-rule-errors).
+
+
+### `PATCH /settings/brand/health/network-rules/{uuid}` {#patch-settings-brand-health-network-rules-uuid}
+
+> Update a network rule
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`PATCH`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/settings/brand/health/network-rules/{uuid}`</td>
+  </tr>
+</table>
+
+#### Request {#patch-settings-brand-health-network-rules-uuid-request}
+
+Send any subset of the [rule body](#settings-network-rule-body) properties. The whole rule, as it would be after the update, is validated again. `metadata` and `conditions` replace the stored value rather than merging into it.
+
+```json title="PATCH /settings/brand/health/network-rules/{uuid} Request Body"
+{
+    "metadata": { "packageId": "4472" },
+    "enabled": false
+}
+```
+
+#### Response {#patch-settings-brand-health-network-rules-uuid-response}
+
+`200` with the updated rule as described under [Rule Object](#settings-network-rule-object) (`updatedAt` changes), or `404` if no rule with that `uuid` belongs to your brand.
+
+
+### `DELETE /settings/brand/health/network-rules/{uuid}` {#delete-settings-brand-health-network-rules-uuid}
+
+> Delete a network rule
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`DELETE`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/settings/brand/health/network-rules/{uuid}`</td>
+  </tr>
+</table>
+
+#### Request {#delete-settings-brand-health-network-rules-uuid-request}
+
+Call:
+
+```
+DELETE /settings/brand/health/network-rules/ab280ee0-5f66-4076-9d1b-255d5f0024e3
+```
+
+#### Response {#delete-settings-brand-health-network-rules-uuid-response}
+
+`200` with the deleted rule, or `404` if no rule with that `uuid` belongs to your brand. Rule numbers are not reused.

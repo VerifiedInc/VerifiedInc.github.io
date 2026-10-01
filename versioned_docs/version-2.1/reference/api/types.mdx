@@ -1157,12 +1157,12 @@ Eligibilty info consists of:
 ```
 
 :::note Coverage Status Values
-The `coverageStatus` property derives the status of a user's healht insurance plan from the EDI 271:
+The `coverageStatus` property derives the status of a user's health insurance plan from the EDI 271:
 - **`"active"`:** The payer confirmed active coverage.
 - **`"indeterminate"`:** The payer returned no clear signal or indicated you need to contact them (EB01 `U`) to confirm. In this latter case, `contacts` contains the number(s) you need to call.
 - **`"inactive"`:** The payer confirmed inactive coverage.
 
-(We don't return inactive plans, so in practice you won't see `"inactive"`.)
+We don't _autofill_ inactive plans, but if you run an eligibility check and the plan is inactive, the response will reflect that status.
 :::
 
 <table>
@@ -1600,6 +1600,10 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
 
 ##### `NetworkRule`
 
+<Admonition type="info">
+    This is the shape of a rule as it appears in a `NetworkDecision`. The [Network Rules endpoints](/reference/api/endpoints#settings-brand-health-network-rules), which let you manage rules programmatically, return the same object plus `number`, `enabled`, `createdAt` and `updatedAt`.
+</Admonition>
+
 ```typescript title="NetworkRule Type"
 {
     uuid: string,
@@ -1612,7 +1616,7 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
     startDate?: string,
     endDate?: string,
     conditions: {
-        key: "payerId" | "payerName" | "state" | "insuranceTypeCodes" | "planName" | "relatedEntites" | "groupNumber" | "groupName",
+        key: "payerId" | "payerName" | "state" | "insuranceTypeCodes" | "planName" | "relatedEntities" | "groupNumber" | "groupName",
         operator: "EQUAL" | "NOT_EQUAL" | "INCLUDE" | "NOT_INCLUDE",
         values: string[]
     }[]
@@ -1734,7 +1738,7 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
                     "values": ["PPO"]
                 },
                 {
-                    "key": "relatedEntites",
+                    "key": "relatedEntities",
                     "operator": "INCLUDE",
                     "values": ["Hooli Health"]
                 },
@@ -1779,7 +1783,7 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
                 - `"state"`
                 - `"insuranceTypeCodes"`
                 - `"planName"`
-                - `"relatedEntites"`
+                - `"relatedEntities"`
                 - `"groupNumber"`
                 - `"groupName"`
             </details>

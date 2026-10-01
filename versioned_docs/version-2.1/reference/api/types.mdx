@@ -1162,7 +1162,7 @@ The `coverageStatus` property derives the status of a user's healht insurance pl
 - **`"indeterminate"`:** The payer returned no clear signal or indicated you need to contact them (EB01 `U`) to confirm. In this latter case, `contacts` contains the number(s) you need to call.
 - **`"inactive"`:** The payer confirmed inactive coverage.
 
-(We don't return inactive plans, so in practice you won't see `"inactive"`.)
+We don't _autofill_ inactive plans, but if you run an eligibility check and the plan is inactive, the response will reflect that status.
 :::
 
 <table>

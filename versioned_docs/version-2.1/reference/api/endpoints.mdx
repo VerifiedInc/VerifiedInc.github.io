@@ -1430,18 +1430,24 @@ This includes (under `data`) an array of payer objects for all [supported payers
 
 ## Settings
 
-Endpoints for managing your brand's settings programmatically, so a system you already own can stay the source of truth. They are authenticated with a brand [API key](/reference/api/authentication), and the key determines the brand and [environment](/reference/api/environments) they apply to: a Sandbox key manages Sandbox settings, a Production key manages Production settings.
+These endpoints allow you to manage your settings programmatically (rather than manually through the [Dashboard](https://dashboard.verified.inc)). Settings are defined within an [environment](/reference/api/environments), so to configure them in both Sandbox and Production, you need to use the appropriate API key and base URL for each environment.
 
 <Admonition type="info">
-    The path pattern is `/settings/{scope}/{product}/{resource}`. Today the only resource is 1-Click Health **network rules**, under the `brand` scope.
+    The path pattern is `/settings/{scope}/{product}/{resource}`. 
+    
+    Currently, we support the `brand` scope, `health` product (for 1-Click Health), and `network-rules` resource.
 </Admonition>
 
 
 ### Network Rules {#settings-brand-health-network-rules}
 
-> Manage the [network rules](/1-click-health/guides/setup#network-rules) that produce the `network` object ([`NetworkDecision`](/reference/api/types#networkdecision)) on 1-Click Health results
+> Manage the [network rules](/1-click-health/guides/setup#network-rules) that produce the `network` objects (of [`NetworkDecision`](/reference/api/types#networkdecision) type) in 1-Click Health results
 
-These endpoints are equivalent to the Network Rules section of the [Dashboard](https://dashboard.verified.inc): a rule written here and a rule written there are indistinguishable, and the same validation applies to both. Typical use: keep your payer-network mapping (and anything you attach to it in `metadata`, such as an internal package or plan id) in your own system, and push it here whenever it changes.
+These endpoints are equivalent to the Network Rules section of the [Dashboard](https://dashboard.verified.inc): a rule written here and a rule written there are indistinguishable, and the same validation applies to both. 
+
+:::tip Example Use
+You can keep your payer network mapping (and anything you attach to it in `metadata`, such as an internal package or plan ID) in your own system and use these endpoints to update the network rules whenever anything changes.
+:::
 
 <table>
   <tr>
@@ -1454,15 +1460,20 @@ These endpoints are equivalent to the Network Rules section of the [Dashboard](h
     <td>[`/settings/brand/health/network-rules`](#get-settings-brand-health-network-rules)</td>
     <td>List your brand's network rules</td>
   </tr>
+    <tr>
+    <td>`GET`</td>
+    <td>[`/settings/brand/health/network-rules/{uuid}`](#get-settings-brand-health-network-rules-uuid)</td>
+    <td>Retrieve one network rule</td>
+  </tr>
   <tr>
     <td>`POST`</td>
     <td>[`/settings/brand/health/network-rules`](#post-settings-brand-health-network-rules)</td>
     <td>Create one network rule, or several at once</td>
   </tr>
   <tr>
-    <td>`GET`</td>
-    <td>[`/settings/brand/health/network-rules/{uuid}`](#get-settings-brand-health-network-rules-uuid)</td>
-    <td>Retrieve one network rule</td>
+    <td>`POST`</td>
+    <td>[`/settings/brand/health/network-rules/replace`](#post-settings-brand-health-network-rules-replace)</td>
+    <td>Replace all of your brand's network rules in one call</td>
   </tr>
   <tr>
     <td>`PATCH`</td>
@@ -1474,12 +1485,8 @@ These endpoints are equivalent to the Network Rules section of the [Dashboard](h
     <td>[`/settings/brand/health/network-rules/{uuid}`](#delete-settings-brand-health-network-rules-uuid)</td>
     <td>Delete a network rule</td>
   </tr>
-  <tr>
-    <td>`POST`</td>
-    <td>[`/settings/brand/health/network-rules/replace`](#post-settings-brand-health-network-rules-replace)</td>
-    <td>Replace all of your brand's network rules in one call</td>
-  </tr>
 </table>
+
 
 #### Rule Object {#settings-network-rule-object}
 
@@ -1523,9 +1530,12 @@ Every endpoint returns network rules as [`NetworkRule`](/reference/api/types#net
   </tr>
 </table>
 
+
 #### Rule Body {#settings-network-rule-body}
 
-`POST` (create) and `POST .../replace` take rule bodies; `PATCH` takes any subset of the same properties. `uuid`, `number`, `createdAt` and `updatedAt` are assigned by Verified and are rejected if sent.
+- `POST` (create) and `POST .../replace` take rule bodies. 
+- `PATCH` takes any subset of the same properties. 
+- `uuid`, `number`, `createdAt` and `updatedAt` are assigned by Verified and are rejected if sent.
 
 <table>
   <tr>
@@ -1615,9 +1625,12 @@ Every endpoint returns network rules as [`NetworkRule`](/reference/api/types#net
   </tr>
 </table>
 
+
 #### Conditions {#settings-network-rule-conditions}
 
-A condition is `{ key, operator, values }`. `values` is a non-empty array of strings; several values are an inclusive OR (`state EQUAL ["MN", "CA"]` matches either state). All conditions of a rule must hold. When several rules match a plan, the most specific one wins; see [Network Rules](/1-click-health/guides/setup#network-rules).
+- A condition is `{ key, operator, values }`. 
+- `values` is a non-empty array of strings, and several values amount to an inclusive OR. For example, `{ state EQUAL ["MN", "CA"] }` matches either Minnesota or California.
+- All conditions of a rule must hold. When several rules match a plan, the most specific one wins.
 
 <table>
   <tr>
@@ -1772,7 +1785,9 @@ A condition is `{ key, operator, values }`. `values` is a non-empty array of str
   </tr>
 </table>
 
-Each entry of `data.errors` has a stable `code`, a human-readable `message`, and, when it concerns one condition, the condition's `index` plus its `key`, `operator` and offending `value`(s). For a batch (an array sent to `POST`) or a `replace`, each entry also has `ruleIndex`, the position of the rule in the array you sent. Every problem is reported at once, so one request tells you everything to fix.
+- Each entry of `data.errors` has a stable `code`, a human-readable `message`, and (when it concerns one condition) the condition's `index` plus its `key`, `operator` and offending `value`(s). 
+- For a batch (an array sent to `POST`) or a `replace`, each entry also has `ruleIndex`, the position of the rule in the array you sent. 
+- Every problem is reported at once, so one request tells you everything to fix.
 
 <table>
   <tr>
@@ -1902,7 +1917,7 @@ GET /settings/brand/health/network-rules?status=IN_NETWORK&metadata[key]=package
       <td>`$sort[updatedAt]=-1`</td>
   </tr>
   <tr>
-      <td>`uuid`, `number`, `name`, `status`, `enabled`, `createdAt`, `updatedAt`</td>
+      <td>`uuid`,<br/>`number`,<br/>`name`,<br/>`status`,<br/>`enabled`,<br/>`createdAt`,<br/>`updatedAt`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>-</td>
       <td>Exact value, or an operator object: `$in`, `$nin`, `$ne`, `$lt`, `$lte`, `$gt`, `$gte`</td>
@@ -1929,7 +1944,7 @@ GET /settings/brand/health/network-rules?status=IN_NETWORK&metadata[key]=package
       <td>`condition[key]=state`</td>
   </tr>
   <tr>
-      <td>`condition[payerId]`, `condition[state]`, `condition[insuranceTypeCodes]`</td>
+      <td>`condition[payerId]`,<br/>`condition[state]`,<br/>`condition[insuranceTypeCodes]`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`string` | `string[]`</td>
       <td>One code or several</td>
@@ -1938,7 +1953,7 @@ GET /settings/brand/health/network-rules?status=IN_NETWORK&metadata[key]=package
       <td>`condition[payerId]=V404110`</td>
   </tr>
   <tr>
-      <td>`condition[payerName]`, `condition[planName]`, `condition[relatedEntities]`, `condition[groupNumber]`, `condition[groupName]`</td>
+      <td>`condition[payerName]`,<br/>`condition[planName]`,<br/>`condition[relatedEntities]`,<br/>`condition[groupNumber]`,<br/>`condition[groupName]`</td>
       <td><Chip label="Optional" variant="outlined" size="small" color="primary"/></td>
       <td>`object`</td>
       <td>`{ value, operator? }` with `operator` one of `contains` (default), `equals`, `startsWith`, `endsWith`</td>
@@ -1982,6 +1997,34 @@ All filters combine with AND.
 ```
 
 `data` holds the rules that match the query, oldest first unless sorted otherwise, each as described under [Rule Object](#settings-network-rule-object).
+
+
+### `GET /settings/brand/health/network-rules/{uuid}` {#get-settings-brand-health-network-rules-uuid}
+
+> Retrieve one network rule
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`GET`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/settings/brand/health/network-rules/{uuid}`</td>
+  </tr>
+</table>
+
+#### Request {#get-settings-brand-health-network-rules-uuid-request}
+
+Call:
+
+```
+GET /settings/brand/health/network-rules/ab280ee0-5f66-4076-9d1b-255d5f0024e3
+```
+
+#### Response {#get-settings-brand-health-network-rules-uuid-response}
+
+`200` with the rule as described under [Rule Object](#settings-network-rule-object), or `404` if no rule with that `uuid` belongs to your brand.
 
 
 ### `POST /settings/brand/health/network-rules` {#post-settings-brand-health-network-rules}
@@ -2062,93 +2105,6 @@ An array is all or nothing: every rule is validated against your existing rules 
 From the next eligibility check that matches this rule, the result carries `network.status: "IN_NETWORK"` and `network.rules[0].metadata.packageId: "4471"`; see [`NetworkDecision`](/reference/api/types#networkdecision).
 
 
-### `GET /settings/brand/health/network-rules/{uuid}` {#get-settings-brand-health-network-rules-uuid}
-
-> Retrieve one network rule
-
-<table>
-  <tr>
-    <th>Method</th>
-    <td>`GET`</td>
-  </tr>
-  <tr>
-    <th>Path</th>
-    <td>`/settings/brand/health/network-rules/{uuid}`</td>
-  </tr>
-</table>
-
-#### Request {#get-settings-brand-health-network-rules-uuid-request}
-
-Call:
-
-```
-GET /settings/brand/health/network-rules/ab280ee0-5f66-4076-9d1b-255d5f0024e3
-```
-
-#### Response {#get-settings-brand-health-network-rules-uuid-response}
-
-`200` with the rule as described under [Rule Object](#settings-network-rule-object), or `404` if no rule with that `uuid` belongs to your brand.
-
-
-### `PATCH /settings/brand/health/network-rules/{uuid}` {#patch-settings-brand-health-network-rules-uuid}
-
-> Update a network rule
-
-<table>
-  <tr>
-    <th>Method</th>
-    <td>`PATCH`</td>
-  </tr>
-  <tr>
-    <th>Path</th>
-    <td>`/settings/brand/health/network-rules/{uuid}`</td>
-  </tr>
-</table>
-
-#### Request {#patch-settings-brand-health-network-rules-uuid-request}
-
-Send any subset of the [rule body](#settings-network-rule-body) properties. The whole rule, as it would be after the update, is validated again. `metadata` and `conditions` replace the stored value rather than merging into it.
-
-```json title="PATCH /settings/brand/health/network-rules/{uuid} Request Body"
-{
-    "metadata": { "packageId": "4472" },
-    "enabled": false
-}
-```
-
-#### Response {#patch-settings-brand-health-network-rules-uuid-response}
-
-`200` with the updated rule as described under [Rule Object](#settings-network-rule-object) (`updatedAt` changes), or `404` if no rule with that `uuid` belongs to your brand.
-
-
-### `DELETE /settings/brand/health/network-rules/{uuid}` {#delete-settings-brand-health-network-rules-uuid}
-
-> Delete a network rule
-
-<table>
-  <tr>
-    <th>Method</th>
-    <td>`DELETE`</td>
-  </tr>
-  <tr>
-    <th>Path</th>
-    <td>`/settings/brand/health/network-rules/{uuid}`</td>
-  </tr>
-</table>
-
-#### Request {#delete-settings-brand-health-network-rules-uuid-request}
-
-Call:
-
-```
-DELETE /settings/brand/health/network-rules/ab280ee0-5f66-4076-9d1b-255d5f0024e3
-```
-
-#### Response {#delete-settings-brand-health-network-rules-uuid-response}
-
-`200` with the deleted rule, or `404` if no rule with that `uuid` belongs to your brand. Rule numbers are not reused.
-
-
 ### `POST /settings/brand/health/network-rules/replace` {#post-settings-brand-health-network-rules-replace}
 
 > Replace all of your brand's network rules in one call
@@ -2164,7 +2120,7 @@ DELETE /settings/brand/health/network-rules/ab280ee0-5f66-4076-9d1b-255d5f0024e3
   </tr>
 </table>
 
-Use this when your rules live in your own system and you push the whole list on every change, instead of diffing against ours rule by rule. Every rule you send is validated first (including duplicates within the list); then, in a single transaction, all of your brand's existing rules are deleted and the new ones inserted, numbered from 1 in the order sent. If anything is invalid, nothing is written.
+Use this when your rules live in your own system and you push the whole list on every change, instead of diffing against ours rule by rule. Every rule you send is validated first (including duplicates within the list). Then, in a single transaction, all of your brand's existing rules are deleted and the new ones inserted, numbered from 1 in the order sent. If anything is invalid, nothing is written.
 
 <Admonition type="warning">
     Rules get new `uuid`s on every replace. If your system needs to refer back to a rule, key on something you put in `metadata`, not on `uuid`.
@@ -2245,3 +2201,62 @@ Use this when your rules live in your own system and you push the whole list on 
 ```
 
 On a validation failure the response is a `400` whose `data.errors` entries each carry `ruleIndex`; see [Errors](#settings-network-rule-errors).
+
+
+### `PATCH /settings/brand/health/network-rules/{uuid}` {#patch-settings-brand-health-network-rules-uuid}
+
+> Update a network rule
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`PATCH`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/settings/brand/health/network-rules/{uuid}`</td>
+  </tr>
+</table>
+
+#### Request {#patch-settings-brand-health-network-rules-uuid-request}
+
+Send any subset of the [rule body](#settings-network-rule-body) properties. The whole rule, as it would be after the update, is validated again. `metadata` and `conditions` replace the stored value rather than merging into it.
+
+```json title="PATCH /settings/brand/health/network-rules/{uuid} Request Body"
+{
+    "metadata": { "packageId": "4472" },
+    "enabled": false
+}
+```
+
+#### Response {#patch-settings-brand-health-network-rules-uuid-response}
+
+`200` with the updated rule as described under [Rule Object](#settings-network-rule-object) (`updatedAt` changes), or `404` if no rule with that `uuid` belongs to your brand.
+
+
+### `DELETE /settings/brand/health/network-rules/{uuid}` {#delete-settings-brand-health-network-rules-uuid}
+
+> Delete a network rule
+
+<table>
+  <tr>
+    <th>Method</th>
+    <td>`DELETE`</td>
+  </tr>
+  <tr>
+    <th>Path</th>
+    <td>`/settings/brand/health/network-rules/{uuid}`</td>
+  </tr>
+</table>
+
+#### Request {#delete-settings-brand-health-network-rules-uuid-request}
+
+Call:
+
+```
+DELETE /settings/brand/health/network-rules/ab280ee0-5f66-4076-9d1b-255d5f0024e3
+```
+
+#### Response {#delete-settings-brand-health-network-rules-uuid-response}
+
+`200` with the deleted rule, or `404` if no rule with that `uuid` belongs to your brand. Rule numbers are not reused.

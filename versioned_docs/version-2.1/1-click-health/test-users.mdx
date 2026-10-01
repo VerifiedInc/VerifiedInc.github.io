@@ -395,7 +395,7 @@ Two brand settings filter plans after the payer answers, so a test user can legi
 
 ## Network Rules
 
-[Network Rules](/1-click-health/guides/setup#network-rules) belong to your brand, not to the test user, and the `network` object is only returned when an eligibility check ran. To see every outcome, create these rules on your Sandbox brand in the Dashboard:
+[Network Rules](/1-click-health/guides/setup#network-rules) belong to your brand, not to the test user, and the `network` object is only returned when an eligibility check ran. To see every outcome, create these rules on your Sandbox brand, either in the Dashboard or with the [Network Rules endpoints](/reference/api/endpoints#settings-brand-health-network-rules):
 
 | Rule | Status | Test users it matches |
 | --- | --- | --- |
@@ -408,6 +408,60 @@ Two brand settings filter plans after the payer answers, so a test user can legi
 | (optional) Group Name includes `HOOLI` | In Network | Richard Hendricks (UnitedHealthcare): ties with the UnitedHealthcare rule, the two disagree, so the result is `INDETERMINATE` with both rules listed |
 
 Results come back ordered in network, then indeterminate, then out of network, so Richard Hendricks returns his Aetna plan first and Jack Barker his Medicare plan first.
+
+To create the first six rules in one call, send this array to [`POST /settings/brand/health/network-rules`](/reference/api/endpoints#post-settings-brand-health-network-rules) with your Sandbox API key. The call is all or nothing, and a rule whose conditions already exist on your brand is rejected as a duplicate, so it is safe to retry. To make these rules your brand's entire Sandbox set instead, send the same array as `rules` to [`POST /settings/brand/health/network-rules/replace`](/reference/api/endpoints#post-settings-brand-health-network-rules-replace), with `"dryRun": true` first to preview what it removes.
+
+```json title="POST /settings/brand/health/network-rules Request Body (test user rules)"
+[
+    {
+        "name": "Aetna PPO - INN",
+        "status": "IN_NETWORK",
+        "conditions": [
+            { "key": "payerId", "operator": "EQUAL", "values": ["V404110"] },
+            { "key": "insuranceTypeCodes", "operator": "INCLUDE", "values": ["PR"] }
+        ]
+    },
+    {
+        "name": "UnitedHealthcare - OON",
+        "status": "OUT_OF_NETWORK",
+        "conditions": [
+            { "key": "payerId", "operator": "EQUAL", "values": ["V816685"] }
+        ]
+    },
+    {
+        "name": "Cigna TX - INN",
+        "status": "IN_NETWORK",
+        "conditions": [
+            { "key": "payerId", "operator": "EQUAL", "values": ["V253146"] },
+            { "key": "state", "operator": "EQUAL", "values": ["TX"] }
+        ]
+    },
+    {
+        "name": "Medicare - INN",
+        "status": "IN_NETWORK",
+        "conditions": [
+            { "key": "insuranceTypeCodes", "operator": "INCLUDE", "values": ["MA", "MB", "HN"] }
+        ]
+    },
+    {
+        "name": "Medicaid - self-pay",
+        "status": "OUT_OF_NETWORK",
+        "notes": "Self-pay",
+        "conditions": [
+            { "key": "insuranceTypeCodes", "operator": "INCLUDE", "values": ["MC"] }
+        ]
+    },
+    {
+        "name": "No insurance type code - indeterminate",
+        "status": "INDETERMINATE",
+        "conditions": [
+            { "key": "insuranceTypeCodes", "operator": "INCLUDE", "values": ["NONE"] }
+        ]
+    }
+]
+```
+
+The optional seventh rule is one more create: `{ "name": "Hooli group - INN", "status": "IN_NETWORK", "conditions": [{ "key": "groupName", "operator": "INCLUDE", "values": ["HOOLI"] }] }`.
 
 ---
 

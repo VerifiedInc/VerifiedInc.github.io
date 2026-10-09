@@ -700,6 +700,16 @@ See [`1ClickVerificationEntity`](/reference/api/types#1clickverificationentity).
   <Post1ClickRequestBodyTableShared />
 </table>
 
+:::caution Unknown Fields Are Rejected
+The request body accepts only the fields listed above. A request with any other top-level field, including a different casing of a valid one (for example `birthdate` instead of `birthDate`), is rejected with a `400` whose message names the field and the closest valid one:
+
+```
+"birthdate" is not a valid field. Did you mean "birthDate"?
+```
+
+The same applies to `PATCH /1-click/{uuid}`.
+:::
+
 
 ##### Default Credential Requests
 

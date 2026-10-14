@@ -26,6 +26,7 @@ module.exports = {
     },
   },
   themeConfig: {
+    image: 'img/og-image.png',
     announcementBar: {
       content:
         'Announcing <b><a href="/text-to-signup">Text to Signup!</a></b> A marketing <i>superpower</i>',

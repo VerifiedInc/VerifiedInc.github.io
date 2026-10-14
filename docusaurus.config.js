@@ -215,6 +215,10 @@ module.exports = {
               label: 'Demo',
               to: 'https://1-click.demo.verified.inc',
             },
+            {
+              label: 'Claude Connector',
+              to: '/claude-connector',
+            },
           ],
         },
         {

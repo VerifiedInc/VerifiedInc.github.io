@@ -1,0 +1,15 @@
+name: Linear Release
+
+# The version tag deploys the docs to production, so it completes the release.
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  linear-release:
+    # ref: https://github.com/VerifiedInc/verified-github-action-workflows
+    uses: verifiedinc/verified-github-action-workflows/.github/workflows/linear-release.yml@v1.2.0
+    with:
+      mode: complete
+    secrets: inherit

@@ -1,0 +1,116 @@
+---
+id: cost-estimates
+title: Cost Estimates
+sidebar_position: 4
+sidebar_label: Cost Estimates (Beta)
+sidebar_class_name: sidebar-header-regular
+description: Show patients what they would pay for a visit, before they book it
+slug: /1-click-health/guides/cost-estimates
+toc_max_heading_level: 3
+---
+
+import Chip from '@mui/material/Chip';
+
+# Cost Estimates <Chip label="Beta" variant="outlined" size="small" color="primary"/>
+
+**Show patients what they would pay for a visit, before they book it.** Send the price of each service with your 1-Click Health request, and we estimate the patient's share from their own insurance plan.
+
+## How It Works
+
+1. **You send the price of each service.** Add a `rate`, in dollars, next to each procedure code in your request.
+2. **We check the patient's insurance plan.** We use the plan details from the eligibility check.
+3. **You get what the patient would pay.** For each service and in total, as an exact amount or a range.
+
+## What You Need
+
+- **An eligibility check.** The estimate comes with the [eligibility details](/1-click-health/guides/api-integration#eligibility-check). If you use insurance autofill, turn on [Check After Autofill](/1-click-health/guides/setup#check-after-autofill) or send `checkAfterAutofill: true`.
+- **A price for each service.** Use the price you agreed with the patient's insurance for that service, not your list price. A service without a price is left out of the estimate.
+
+## Example
+
+### Request
+
+Call [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) with a `rate` for each procedure code:
+
+```json title="POST /1-click/health Request Body"
+{
+  "fullName": { "firstName": "Richard", "lastName": "Hendricks" },
+  "birthDate": "1989-08-01",
+  "serviceCodes": {
+    "procedureCodes": [
+      { "code": "99213", "rate": 150 },
+      { "code": "80053", "rate": 90 }
+    ]
+  },
+  "checkAfterAutofill": true
+}
+```
+
+Here, `99213` is an office visit priced at $150, and `80053` is a lab test priced at $90.
+
+### Response
+
+You get the estimate when you call [`GET /1-click/health`](/reference/api/endpoints#get-1-clickhealth) or receive the webhook. It comes in `eligibility.costEstimate`, one for each plan.
+
+The full response is much bigger: it also has the member, the plan, the benefits and more. This simplified version keeps only the parts about the estimate, for one of the plans:
+
+```json title="GET /1-click/health Response Body (simplified)"
+{
+  "status": "SUCCEEDED",
+  "results": [
+    {
+      "memberId": "A484069",
+      "payer": { "name": "Aetna" },
+      "eligibility": {
+        "coverageStatus": "active",
+        "costEstimate": {
+          "patientPays": { "min": 120, "max": 240 },
+          "procedureCodes": [
+            { "code": "99213", "patientPays": { "min": 30, "max": 150 } },
+            { "code": "80053", "patientPays": { "min": 90, "max": 90 } }
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
+## Reading the Estimate
+
+| What you see | What it means |
+| --- | --- |
+| `min` and `max` are the same | An exact amount |
+| `min` and `max` are different | A range: the patient would pay something between the two |
+| A `reason` instead of `patientPays` | No estimate for that service |
+
+In the example, the office visit is a range ($30 to $150), the lab test is exact ($90), and the total is $120 to $240.
+
+### When There's No Estimate
+
+We'd rather return no estimate than a wrong one. A service without an estimate comes with a `reason`, and there's no total:
+
+| Reason | What it means |
+| --- | --- |
+| `not_covered` | The plan doesn't cover this service. |
+| `coverage_not_active` | The patient's coverage isn't active. |
+| `not_enough_information` | The insurer's response isn't clear enough to estimate. |
+
+```json title="No estimate (simplified)"
+"costEstimate": {
+  "procedureCodes": [
+    { "code": "99213", "reason": "not_enough_information" }
+  ]
+}
+```
+
+## Try It in Sandbox
+
+Send the [example request](#request) with the test user [Richard Hendricks](/1-click-health/test-users#1989-08-01). Both of his plans come back with the estimate above: $120 to $240 in total.
+
+## Good to Know
+
+- **It's an estimate.** The final amount is set by the insurer after the visit.
+- **Recent visits may not be counted yet.** The insurer may not have processed the patient's latest visits.
+- **The billed service can differ from the booked one.** For example, a visit can run longer than planned.
+- **Every field is in the reference:** the `rate` input of [`POST /1-click/health`](/reference/api/endpoints#post-1-clickhealth) and the [`CostEstimate`](/reference/api/types#costestimate) type.

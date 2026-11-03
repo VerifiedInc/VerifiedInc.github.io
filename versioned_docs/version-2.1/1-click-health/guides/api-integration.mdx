@@ -425,6 +425,7 @@ The response will contain a [`1ClickHealthEntity`](/reference/api/types#1clickhe
 - **Success:** If we can source health insurance data for the user, the `1ClickHealthEntity` will contain `results` with one or more health insurance plans. 
   - If you ran an eligibility check, this will include a full EDI 271 (raw and parsed) with eligibility details. 
   - If you have [network rules](/1-click-health/guides/setup#network-rules) defined in the Verified [Dashboard](https://dashboard.verified.inc), it will include network status details (in network, out of network, or indeterminate) based on those rules. 
+  - If you ran an eligibility check and sent a `rate` for a procedure code, `eligibility` will also include a [cost estimate](/1-click-health/guides/cost-estimates) <Chip label="Beta" variant="outlined" size="small" color="primary"/> of what the patient would pay.
 
   → _Continue to [step 4](#4-optional-prompt-user-to-confirm)._
   
